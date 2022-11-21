@@ -1,0 +1,30 @@
+{
+  "name": "impmal-foundryvtt",
+  "version": "1.0.0",
+  "description": "The **official** system for playing Warhammer 40,000: Imperium Maledictum on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.",
+  "main": "foundry-path.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=development rollup --config rollup.config.js --watch",
+    "release": "cross-env NODE_ENV=production rollup --config rollup.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moo-man/ImpMal-FoundryVTT.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moo-man/ImpMal-FoundryVTT/issues"
+  },
+  "homepage": "https://github.com/moo-man/ImpMal-FoundryVTT#readme",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "rollup": "^3.3.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-copy-watch": "^0.0.1",
+    "rollup-plugin-jscc": "^2.0.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.56.1",
+    "scss": "^0.2.4"
+  }
+}
