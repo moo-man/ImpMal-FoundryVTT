@@ -5,7 +5,8 @@
   "main": "foundry-path.js",
   "scripts": {
     "build": "cross-env NODE_ENV=development rollup --config rollup.config.js --watch",
-    "release": "cross-env NODE_ENV=production rollup --config rollup.config.js"
+    "release": "cross-env NODE_ENV=production rollup --config rollup.config.js",
+    "lint" : "npx eslint ./src/**"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/moo-man/ImpMal-FoundryVTT#readme",
   "devDependencies": {
     "cross-env": "^7.0.3",
+    "eslint": "^8.28.0",
     "rollup": "^3.3.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-copy-watch": "^0.0.1",
