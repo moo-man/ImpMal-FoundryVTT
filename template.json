@@ -1,24 +1,353 @@
 {
   "Actor": {
     "types": [
-
+      "patron",
+      "character",
+      "npc"
     ],
     "templates": {
-      
+      "characteristics": {
+        "characteristics": {
+          "ws": {
+            "starting": 0,
+            "modifier": 0,
+            "advances": 0
+          },
+          "bs": {
+            "starting": 0,
+            "modifier": 0,
+            "advances": 0
+          },
+          "str": {
+            "starting": 0,
+            "modifier": 0,
+            "advances": 0
+          },
+          "tgh": {
+            "starting": 0,
+            "modifier": 0,
+            "advances": 0
+          },
+          "ag": {
+            "starting": 0,
+            "modifier": 0,
+            "advances": 0
+          },
+          "int": {
+            "starting": 0,
+            "modifier": 0,
+            "advances": 0
+          },
+          "per": {
+            "starting": 0,
+            "modifier": 0,
+            "advances": 0
+          },
+          "wil": {
+            "starting": 0,
+            "modifier": 0,
+            "advances": 0
+          },
+          "fel": {
+            "starting": 0,
+            "modifier": 0,
+            "advances": 0
+          }
+        }
+      },
+      "wounds": {
+        "wounds": {
+          "max": 0,
+          "value": 0
+        }
+      },
+      "influence": {
+        "influence": {}
+      },
+      "handedness": {
+        "handedness": ""
+      },
+      "solars" : {
+        "solars" : 0
+      },
+      "combat" : {
+        "combat" : {
+          "size" : "medium",
+          "speed" : "normal",
+          "fly" : "none"
+        }
+      },
+      "notes": {
+        "notes": {
+          "player": "",
+          "gm": ""
+        }
+      }
     },
-    "": {
-     
+    "patron": {
+      "templates" : ["influence"],
+      "motivation" : "",
+      "demeanor" : "",
+      "payment" : {
+        "grade" : "stanadrd",
+        "override" : 0
+      }
     },
-    "": {
-    
+    "character": {
+      "templates": [
+        "characteristics",
+        "handedness",
+        "wounds",
+        "influence",
+        "notes",
+        "solars",
+        "combat"
+      ],
+      "xp": {
+        "total" : 0,
+        "spent" : 0,
+        "available" : 0
+      },
+      "details": {
+        "age": 0,
+        "feature": "",
+        "eyes": "",
+        "hair": "",
+        "height": ""
+      },
+      "combat" : {
+        "superiority" : 0
+      },
+      "goal": {
+        "short": "",
+        "long": ""
+      },
+      "connections": {
+        "list": []
+      },
+      "divination": "",
+      "corruption" : 0,
+      "fate": {
+        "max": 3,
+        "current": 3
+      }
+    },
+    "npc" : {
+      "combat" : {
+        "resolve" : 0
+      }
     }
   },
   "Item": {
     "types": [
-   
+      "boon",
+      "origin",
+      "faction",
+      "role",
+      "talent",
+      "duty",
+      "skill",
+      "weapon",
+      "ammo",
+      "modification",
+      "protection",
+      "shield",
+      "equipment",
+      "augmetic",
+      "power"
+
     ],
     "templates": {
-     
+      "physical" : {
+        "encumbrance" : 0,
+        "cost" : 0,
+        "availability" : ""
+      },
+      "traits" : {
+        "qualities" : [],
+        "flaws" : []
+      },
+      "notes" : {
+        "player" : "",
+        "gm" : ""
+      },
+      "influence": {
+        "influence": {}
+      },
+      "damage" : {
+        "damage" : {
+          "value" : "",
+          "characteristic" : ""
+        }
+      }
+    },
+
+    "boon" : {
+      "templates" : ["notes"]
+    },
+
+    
+    "origin" : {
+      "templates" : ["notes"],
+      "equipment" : {
+        "list" : []
+      }
+    },
+    "faction"  : {
+      "patron" : {
+        "duty" : {
+          "list" : []
+        },
+        "influence" : {
+
+        },
+        "notes": {
+          "player": "",
+          "gm": ""
+        }
+      },
+      "character" : {
+        "solars" : 0,
+        "influence" : {
+
+        },
+        "characteristics" : {
+          "base" : {
+            "id" : ""
+          },
+          "choices" : []
+        },
+        "advances" : {
+          "value" : 0,
+          "skills" : []
+        },
+        "talents" : {
+          "list" : []
+        },
+        "equipment" : {
+          "list" : [],
+          "groups" : []
+        },
+        "duty" : {
+          "list" : []
+        },
+        "notes": {
+          "player": "",
+          "gm": ""
+        }
+      }
+    },
+    "duty"  : {
+      "faction" : {
+        "id" : ""
+      },
+      "patron" : {
+        "table" : {
+          "id" : ""
+        },
+        "boon" : {
+          "id" : ""
+        },
+        "notes": {
+          "player": "",
+          "gm": ""
+        }
+      },
+      "character" : {
+        "equipment" : {
+          "list" : []
+        },
+        "characteristics" : {
+          "id" : ""
+        },
+        "notes": {
+          "player": "",
+          "gm": ""
+        }
+      }
+    },
+
+    "role"  : {
+      "templates" : ["notes"],
+      "advances" : {
+        "value" : 0,
+        "skills" : [],
+        "spec" : []
+      },
+      "equipment" : {
+        "list" : [],
+        "groups" : []
+      },
+      "talents" : {
+        "number" : 0,
+        "list" : []
+      }
+    },
+    "skill" : {
+      "templates" : ["notes"],
+      "advances" : 0,
+      "restricted" : false,
+      "specializations" : {
+
+      }
+    },
+    "talent"  : {
+      "templates" : ["notes"],
+      "requirement" : {
+        "value" : ""
+      }
+    },
+    "weapon" : {
+      "templates" : ["notes", "physical", "damage", "traits"],
+      "category" : "",
+      "spec" : "",
+      "range" : "",
+      "mag" : 0,
+      "equipped" : false
+    },
+    "ammo" : {
+      "templates" : ["notes", "traits"],
+      "cost" : 0,
+      "availability" : "",
+      "usedWith" : "",
+      "damage" : 0
+    },
+    "modification" : {
+      "templates" : [],
+      "category" : "",
+      "usedWith" : "",
+      "cost" : 0,
+      "availability" : ""
+    },
+    "protection" : {
+      "templates" : ["notes", "physical", "traits"],
+      "armour" : 0,
+      "locations" : [],
+      "equipped" : false
+    },
+    "shield" : {
+      "templates" : ["notes", "physical"],
+      "force" : false,
+      "protection" : "",
+      "overload" : 0,
+      "equipped" : false
+    },
+    "equipment" : {
+      "templates" : ["notes", "physical"],
+      "equipped" : false
+    },
+    "augmetic" : {
+      "templates" : ["notes", "physical"]          
+    },
+    "power" : {
+      "templates" : ["notes"],
+      "discipline" : "",
+      "rating" : 0,
+      "difficulty" : "",
+      "range" : "",
+      "target" : "",
+      "duration" : "",
+      "overt" : false
     }
   }
 }
