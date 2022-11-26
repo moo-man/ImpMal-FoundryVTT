@@ -1,3 +1,5 @@
+import { DocumentReferenceModel } from "./reference";
+
 let fields = foundry.data.fields;
 
 
@@ -23,14 +25,12 @@ export class ListModel extends foundry.abstracts.DataModel
 
 
 // List of objects that reference some embedded document on the parent
-export class DocumentListModel extends foundry.abstract.DataModel 
+export class DocumentListModel extends ListModel 
 {
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.list = new fields.ArrayField(fields.SchemaField({
-            id : ""
-        }));
+        schema.list = new fields.ArrayField(new fields.EmbeddedDataModel(DocumentReferenceModel));
     }
 
     removeId(id) 
@@ -44,5 +44,16 @@ export class DocumentListModel extends foundry.abstract.DataModel
     findDocuments(collection) 
     {
         this.list.forEach(i => i.document = collection.get(i.id));
+    }
+}
+
+
+// List of objects that reference some embedded document on the parent
+export class GroupedDocumentListModel extends  DocumentListModel
+{
+    static defineSchema() 
+    {
+        let schema = super.defineSchema();
+        schema.groups = new fields.ArrayField();
     }
 }

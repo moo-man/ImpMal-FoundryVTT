@@ -273,15 +273,18 @@
         "availability": ""
       },
       "traits": {
-        "qualities": [],
-        "flaws": []
+        "traits" : {
+          "list" : []
+        }
       },
       "notes": {
         "player": "",
         "gm": ""
       },
       "influence": {
-        "influence": {}
+        "influence": {
+          "factions" : {}
+        }
       },
       "damage": {
         "damage": {
@@ -308,7 +311,9 @@
         "duty": {
           "list": []
         },
-        "influence": {},
+        "influence": {
+          "factions" : {}
+        },
         "notes": {
           "player": "",
           "gm": ""
@@ -316,7 +321,9 @@
       },
       "character": {
         "solars": 0,
-        "influence": {},
+        "influence": {
+          "factions" : {}
+        },
         "characteristics": {
           "base": {
             "id": ""
@@ -396,7 +403,7 @@
       ],
       "advances": 0,
       "restricted": false,
-      "specializations": {}
+      "skill": ""
     },
     "talent": {
       "templates": [
@@ -422,19 +429,16 @@
     "ammo": {
       "templates": [
         "notes",
-        "traits"
+        "traits",
+        "physical"
       ],
-      "cost": 0,
-      "availability": "",
       "usedWith": "",
       "damage": 0
     },
     "modification": {
-      "templates": [],
+      "templates": ["notes", "physical"],
       "category": "",
-      "usedWith": "",
-      "cost": 0,
-      "availability": ""
+      "usedWith": ""
     },
     "protection": {
       "templates": [

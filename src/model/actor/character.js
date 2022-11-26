@@ -1,5 +1,5 @@
 import { CharacterCombatModel } from "./components/combat";
-import { InfluenceModel } from "./components/influence";
+import { InfluenceModel } from "../shared/influence";
 import { ListModel } from "./components/list";
 import { StandardActorModel } from "./standard";
 let fields = foundry.data.fields;

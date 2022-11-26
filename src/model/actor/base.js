@@ -3,6 +3,19 @@
  */
 export class BaseActorModel extends foundry.abstract.DataModel 
 {
+
+    static defineSchema() 
+    {
+        let schema = super.defineSchema();
+        schema.notes = new fields.SchemaField({
+            player : new fields.StringField(),
+            gm : new fields.StringField()
+        });
+
+        return schema;
+    }
+
+    
     preCreateData(data) 
     {
         let preCreateData = {};

@@ -24,10 +24,6 @@ export class StandardActorModel extends BaseActorModel
             value : new fields.NumberField(),
             max : new fields.NumberField(),
         });
-        schema.notes = new fields.SchemaField({
-            player : new fields.StringField(),
-            gm : new fields.StringField()
-        });
         return schema;
     }
 
@@ -40,8 +36,10 @@ export class StandardActorModel extends BaseActorModel
 
     computeDerived() 
     {
-        // Recompute bonuses as active effects may have changed
+        // Recompute bonuses as active effects may have changed it
+        this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
+        this.skills.computeTotals();
         computeWounds();
         computeInitiative();
     }

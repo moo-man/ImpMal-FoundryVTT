@@ -1,5 +1,5 @@
+import { InfluenceModel } from "../shared/influence";
 import { BaseActorModel } from "./base";
-import { InfluenceModel } from "./components/influence";
 let fields = foundry.data.fields;
 
 export class PatronModel extends BaseActorModel 
@@ -14,7 +14,6 @@ export class PatronModel extends BaseActorModel
             grade : new fields.StringField(),
             override : new fields.NumberField()
         });
-
         return schema;
     }
 }
