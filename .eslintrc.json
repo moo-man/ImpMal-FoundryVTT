@@ -13,7 +13,7 @@
     "rules": {
         "indent": [
             "error",
-            2
+            4
         ],
         "linebreak-style": [
             "error",
@@ -31,7 +31,7 @@
             "off"
         ],
         "curly" : ["error"],
-        "brace-style": ["error", "stroustrup"]
+        "brace-style": ["error", "allman", {"allowSingleLine" : true}]
 
     }
 }

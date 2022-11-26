@@ -55,6 +55,110 @@
           }
         }
       },
+      "skills": {
+        "skills": {
+          "athletics": {
+            "characteristic": "str",
+            "advances": 0,
+            "specialisations": []
+          },
+          "awareness": {
+            "characteristic": "per",
+            "advances": 0,
+            "specialisations": []
+          },
+          "dexterity": {
+            "characteristic": "ag",
+            "advances": 0,
+            "specialisations": []
+          },
+          "discipline": {
+            "characteristic": "wil",
+            "advances": 0,
+            "specialisations": []
+          },
+          "fortitude": {
+            "characteristic": "tgh",
+            "advances": 0,
+            "specialisations": []
+          },
+          "intuition": {
+            "characteristic": "per",
+            "advances": 0,
+            "specialisations": []
+          },
+          "linguistics": {
+            "characteristic": "int",
+            "advances": 0,
+            "specialisations": []
+          },
+          "logic": {
+            "characteristic": "int",
+            "advances": 0,
+            "specialisations": []
+          },
+          "lore": {
+            "characteristic": "int",
+            "advances": 0,
+            "specialisations": []
+          },
+          "medicae": {
+            "characteristic": "int",
+            "advances": 0,
+            "specialisations": []
+          },
+          "melee": {
+            "characteristic": "ws",
+            "advances": 0,
+            "specialisations": []
+          },
+          "navigation": {
+            "characteristic": "int",
+            "advances": 0,
+            "specialisations": []
+          },
+          "piloting": {
+            "characteristic": "ag",
+            "advances": 0,
+            "specialisations": []
+          },
+          "presence": {
+            "characteristic": "wil",
+            "advances": 0,
+            "specialisations": []
+          },
+          "psychic": {
+            "characteristic": "wil",
+            "advances": 0,
+            "specialisations": []
+          },
+          "ranged": {
+            "characteristic": "bs",
+            "advances": 0,
+            "specialisations": []
+          },
+          "rapport": {
+            "characteristic": "fel",
+            "advances": 0,
+            "specialisations": []
+          },
+          "reflexes": {
+            "characteristic": "ag",
+            "advances": 0,
+            "specialisations": []
+          },
+          "stealth": {
+            "characteristic": "ag",
+            "advances": 0,
+            "specialisations": []
+          },
+          "tech": {
+            "characteristic": "int",
+            "advances": 0,
+            "specialisations": []
+          }
+        }
+      },
       "wounds": {
         "wounds": {
           "max": 0,
@@ -62,19 +166,23 @@
         }
       },
       "influence": {
-        "influence": {}
+        "influence": {
+          "factions" : {
+            
+          }
+        }
       },
       "handedness": {
-        "handedness": ""
+        "handed": "R"
       },
-      "solars" : {
-        "solars" : 0
+      "solars": {
+        "solars": 0
       },
-      "combat" : {
-        "combat" : {
-          "size" : "medium",
-          "speed" : "normal",
-          "fly" : "none"
+      "combat": {
+        "combat": {
+          "size": "medium",
+          "speed": "normal",
+          "fly": "none"
         }
       },
       "notes": {
@@ -85,12 +193,14 @@
       }
     },
     "patron": {
-      "templates" : ["influence"],
-      "motivation" : "",
-      "demeanor" : "",
-      "payment" : {
-        "grade" : "stanadrd",
-        "override" : 0
+      "templates": [
+        "influence"
+      ],
+      "motivation": "",
+      "demeanor": "",
+      "payment": {
+        "grade": "standard",
+        "override": 0
       }
     },
     "character": {
@@ -104,9 +214,9 @@
         "combat"
       ],
       "xp": {
-        "total" : 0,
-        "spent" : 0,
-        "available" : 0
+        "total": 0,
+        "spent": 0,
+        "available": 0
       },
       "details": {
         "age": 0,
@@ -115,8 +225,8 @@
         "hair": "",
         "height": ""
       },
-      "combat" : {
-        "superiority" : 0
+      "combat": {
+        "superiority": 0
       },
       "goal": {
         "short": "",
@@ -126,15 +236,15 @@
         "list": []
       },
       "divination": "",
-      "corruption" : 0,
+      "corruption": 0,
       "fate": {
         "max": 3,
         "current": 3
       }
     },
-    "npc" : {
-      "combat" : {
-        "resolve" : 0
+    "npc": {
+      "combat": {
+        "resolve": 0
       }
     }
   },
@@ -155,110 +265,77 @@
       "equipment",
       "augmetic",
       "power"
-
     ],
     "templates": {
-      "physical" : {
-        "encumbrance" : 0,
-        "cost" : 0,
-        "availability" : ""
+      "physical": {
+        "encumbrance": 0,
+        "cost": 0,
+        "availability": ""
       },
-      "traits" : {
-        "qualities" : [],
-        "flaws" : []
+      "traits": {
+        "qualities": [],
+        "flaws": []
       },
-      "notes" : {
-        "player" : "",
-        "gm" : ""
+      "notes": {
+        "player": "",
+        "gm": ""
       },
       "influence": {
         "influence": {}
       },
-      "damage" : {
-        "damage" : {
-          "value" : "",
-          "characteristic" : ""
+      "damage": {
+        "damage": {
+          "value": "",
+          "characteristic": ""
         }
       }
     },
-
-    "boon" : {
-      "templates" : ["notes"]
+    "boon": {
+      "templates": [
+        "notes"
+      ]
     },
-
-    
-    "origin" : {
-      "templates" : ["notes"],
-      "equipment" : {
-        "list" : []
+    "origin": {
+      "templates": [
+        "notes"
+      ],
+      "equipment": {
+        "list": []
       }
     },
-    "faction"  : {
-      "patron" : {
-        "duty" : {
-          "list" : []
+    "faction": {
+      "patron": {
+        "duty": {
+          "list": []
         },
-        "influence" : {
-
-        },
+        "influence": {},
         "notes": {
           "player": "",
           "gm": ""
         }
       },
-      "character" : {
-        "solars" : 0,
-        "influence" : {
-
-        },
-        "characteristics" : {
-          "base" : {
-            "id" : ""
+      "character": {
+        "solars": 0,
+        "influence": {},
+        "characteristics": {
+          "base": {
+            "id": ""
           },
-          "choices" : []
+          "choices": []
         },
-        "advances" : {
-          "value" : 0,
-          "skills" : []
+        "advances": {
+          "value": 0,
+          "skills": []
         },
-        "talents" : {
-          "list" : []
+        "talents": {
+          "list": []
         },
-        "equipment" : {
-          "list" : [],
-          "groups" : []
+        "equipment": {
+          "list": [],
+          "groups": []
         },
-        "duty" : {
-          "list" : []
-        },
-        "notes": {
-          "player": "",
-          "gm": ""
-        }
-      }
-    },
-    "duty"  : {
-      "faction" : {
-        "id" : ""
-      },
-      "patron" : {
-        "table" : {
-          "id" : ""
-        },
-        "boon" : {
-          "id" : ""
-        },
-        "notes": {
-          "player": "",
-          "gm": ""
-        }
-      },
-      "character" : {
-        "equipment" : {
-          "list" : []
-        },
-        "characteristics" : {
-          "id" : ""
+        "duty": {
+          "list": []
         },
         "notes": {
           "player": "",
@@ -266,88 +343,143 @@
         }
       }
     },
-
-    "role"  : {
-      "templates" : ["notes"],
-      "advances" : {
-        "value" : 0,
-        "skills" : [],
-        "spec" : []
+    "duty": {
+      "faction": {
+        "id": ""
       },
-      "equipment" : {
-        "list" : [],
-        "groups" : []
+      "patron": {
+        "table": {
+          "id": ""
+        },
+        "boon": {
+          "id": ""
+        },
+        "notes": {
+          "player": "",
+          "gm": ""
+        }
       },
-      "talents" : {
-        "number" : 0,
-        "list" : []
+      "character": {
+        "equipment": {
+          "list": []
+        },
+        "characteristics": {
+          "id": ""
+        },
+        "notes": {
+          "player": "",
+          "gm": ""
+        }
       }
     },
-    "skill" : {
-      "templates" : ["notes"],
-      "advances" : 0,
-      "restricted" : false,
-      "specializations" : {
-
+    "role": {
+      "templates": [
+        "notes"
+      ],
+      "advances": {
+        "value": 0,
+        "skills": [],
+        "spec": []
+      },
+      "equipment": {
+        "list": [],
+        "groups": []
+      },
+      "talents": {
+        "number": 0,
+        "list": []
       }
     },
-    "talent"  : {
-      "templates" : ["notes"],
-      "requirement" : {
-        "value" : ""
+    "skill": {
+      "templates": [
+        "notes"
+      ],
+      "advances": 0,
+      "restricted": false,
+      "specializations": {}
+    },
+    "talent": {
+      "templates": [
+        "notes"
+      ],
+      "requirement": {
+        "value": ""
       }
     },
-    "weapon" : {
-      "templates" : ["notes", "physical", "damage", "traits"],
-      "category" : "",
-      "spec" : "",
-      "range" : "",
-      "mag" : 0,
-      "equipped" : false
+    "weapon": {
+      "templates": [
+        "notes",
+        "physical",
+        "damage",
+        "traits"
+      ],
+      "category": "",
+      "spec": "",
+      "range": "",
+      "mag": 0,
+      "equipped": false
     },
-    "ammo" : {
-      "templates" : ["notes", "traits"],
-      "cost" : 0,
-      "availability" : "",
-      "usedWith" : "",
-      "damage" : 0
+    "ammo": {
+      "templates": [
+        "notes",
+        "traits"
+      ],
+      "cost": 0,
+      "availability": "",
+      "usedWith": "",
+      "damage": 0
     },
-    "modification" : {
-      "templates" : [],
-      "category" : "",
-      "usedWith" : "",
-      "cost" : 0,
-      "availability" : ""
+    "modification": {
+      "templates": [],
+      "category": "",
+      "usedWith": "",
+      "cost": 0,
+      "availability": ""
     },
-    "protection" : {
-      "templates" : ["notes", "physical", "traits"],
-      "armour" : 0,
-      "locations" : [],
-      "equipped" : false
+    "protection": {
+      "templates": [
+        "notes",
+        "physical",
+        "traits"
+      ],
+      "armour": 0,
+      "locations": [],
+      "equipped": false
     },
-    "shield" : {
-      "templates" : ["notes", "physical"],
-      "force" : false,
-      "protection" : "",
-      "overload" : 0,
-      "equipped" : false
+    "shield": {
+      "templates": [
+        "notes",
+        "physical"
+      ],
+      "force": false,
+      "protection": "",
+      "overload": 0,
+      "equipped": false
     },
-    "equipment" : {
-      "templates" : ["notes", "physical"],
-      "equipped" : false
+    "equipment": {
+      "templates": [
+        "notes",
+        "physical"
+      ],
+      "equipped": false
     },
-    "augmetic" : {
-      "templates" : ["notes", "physical"]          
+    "augmetic": {
+      "templates": [
+        "notes",
+        "physical"
+      ]
     },
-    "power" : {
-      "templates" : ["notes"],
-      "discipline" : "",
-      "rating" : 0,
-      "difficulty" : "",
-      "range" : "",
-      "target" : "",
-      "duration" : "",
-      "overt" : false
+    "power": {
+      "templates": [
+        "notes"
+      ],
+      "discipline": "",
+      "rating": 0,
+      "difficulty": "",
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overt": false
     }
   }
 }

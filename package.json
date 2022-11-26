@@ -6,7 +6,8 @@
   "scripts": {
     "build": "cross-env NODE_ENV=development rollup --config rollup.config.js --watch",
     "release": "cross-env NODE_ENV=production rollup --config rollup.config.js",
-    "lint" : "npx eslint ./src/**"
+    "lint" : "npx eslint ./src/**",
+    "fix-lint" : "npx eslint ./src/** --fix"
   },
   "repository": {
     "type": "git",
