@@ -1,5 +1,8 @@
 import { ImpMalActor } from "./document/actor";
 import { ImpMalItem } from "./document/item";
+import { CharacterModel } from "./model/actor/character";
+import { NPCModel } from "./model/actor/npc";
+import { PatronModel } from "./model/actor/patron";
 import { AmmoModel } from "./model/item/ammo";
 import { AugmeticModel } from "./model/item/augmetic";
 import { BoonModel } from "./model/item/boon";
@@ -15,6 +18,7 @@ import { ShieldModel } from "./model/item/shield";
 import { SkillSpecModel } from "./model/item/skill";
 import { TalentModel } from "./model/item/talent";
 import { WeaponModel } from "./model/item/weapon";
+import IMPMAL from "./system/config";
 
 Hooks.once("init", () => 
 {
@@ -29,9 +33,9 @@ Hooks.once("init", () =>
     CONFIG.ActiveEffect.sheetClass = undefined;
     DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });
 
-    CONFIG.Actor.systemDataModels["character"] = CharacterActorDataModel;
-    CONFIG.Actor.systemDataModels["patron"] = FollowerActorDataModel;
-    CONFIG.Actor.systemDataModels["npc"] = StandardActorDataModel;
+    CONFIG.Actor.systemDataModels["character"] = CharacterModel;
+    CONFIG.Actor.systemDataModels["patron"] = PatronModel;
+    CONFIG.Actor.systemDataModels["npc"] = NPCModel;
 
     CONFIG.Item.systemDataModels["boon"] = BoonModel;
     CONFIG.Item.systemDataModels["origin"] = OriginModel;
@@ -50,6 +54,6 @@ Hooks.once("init", () =>
     CONFIG.Item.systemDataModels["power"] = PowerModel;
 
     game.impmal = {
-
+        config : IMPMAL
     };
 });
