@@ -19,6 +19,8 @@ import { SkillSpecModel } from "./model/item/skill";
 import { TalentModel } from "./model/item/talent";
 import { WeaponModel } from "./model/item/weapon";
 import IMPMAL from "./system/config";
+import registerHandlebars from "./system/handlebars";
+import registerSettings from "./system/settings";
 
 Hooks.once("init", () => 
 {
@@ -56,4 +58,25 @@ Hooks.once("init", () =>
     game.impmal = {
         config : IMPMAL
     };
+
+    registerSettings();
+    registerHandlebars();
+    localizeConfig(object);
 });
+
+
+// Recursively localize config object
+function localizeConfig(object)
+{
+    if (typeof object == string)
+    {
+        return game.i18n.localize(object);
+    }
+    else if (typeof object == "object")
+    {
+        for (let key in object)
+        {
+            object[key] = localizeConfig(object[key]);
+        }
+    }
+}

@@ -40,8 +40,9 @@ export class StandardActorModel extends BaseActorModel
         this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
         this.skills.computeTotals();
-        computeWounds();
-        computeInitiative();
+        this.computeWounds();
+        this.computeInitiative();
+        this.computeEncumbrance();
     }
 
     computeWounds() 
@@ -59,6 +60,13 @@ export class StandardActorModel extends BaseActorModel
             this.characteristicsr.ag.bonus;
     }
 
+    computeEncumbrance() 
+    {
+        this.encumbrance = {};
+        this.encumbrance.overburdened = this.characteristics.str.bonus + this.characteristics.tgh.bonus; 
+        this.encumbrance.restrained = this.encumbrance.overburdened * 2;
+        this.encumbrance.value = 0; // To be calculated with items
+    }
 
 }
 

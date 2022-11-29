@@ -1,0 +1,131 @@
+.impmal {
+
+    .sheet-header {
+        display: flex;
+
+        img {
+            flex: 0 0 100px;
+        }
+
+        .header-details {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            .details-row {
+                display: flex;
+
+                .detail-group {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+
+
+    .actor-property {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        .property-label {
+            flex: 0 0 30px;
+            width: 100%;
+        }
+
+        .property-value {
+            flex: 1;
+            width: 100%;
+        }
+    }
+
+    section {
+        display:flex;
+        flex-direction: column;
+        width: 100%;
+        header {
+            display:flex;
+            width: 100%;
+            .section-controls {
+                flex: 0 0 40px;
+            }
+        }
+
+        .section-content {  
+            
+        }
+    }
+
+
+    section.list {
+        display: flex;
+        flex-direction: column;
+
+        .list-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .list-row {
+            display: flex;
+            > * {
+                flex: 1
+            }
+
+            .list-name,
+            .wide {
+                flex: 2
+            }
+
+            .small {
+                flex: 0 0 50px;
+            }
+
+            .list-controls {
+                flex : 0 0 50px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+        }
+
+        .summary {
+
+        }
+
+
+    }
+
+
+    .skill-list {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        header {
+            font-weight: bold;   
+        }
+
+        .skill-row {
+            text-align: center;
+            display: flex;
+
+            .indent,
+            .skill-name,
+            .skill-characteristic {
+                display: flex;
+                flex: 2;
+                > * {
+                    flex: 1
+                }
+            }
+
+            > div {
+                flex: 1
+            }
+        }
+    }
+
+}

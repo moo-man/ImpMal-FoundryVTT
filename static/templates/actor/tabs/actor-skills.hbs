@@ -1,0 +1,31 @@
+<div class="skill-list">
+    <header class="skill-row skill-header">
+        <div class="skill-name ">{{localize "IMPMAL.Skill"}}</div>
+        <div class="skill-characteristic">{{localize "IMPMAL.Characteristic"}}</div>
+        <div>{{localize "IMPMAL.Adv"}}</div>
+        <div>{{localize "IMPMAL.Total"}}</div>
+    </header>
+    {{#each system.skills}}
+        <div class="skill-row">
+            <div class="skill-name ">{{localize "IMPMAL.Skill"}}</div>
+            <div class="skill-characteristic">
+                <div>
+                    {{this.characteristic}}
+                </div>
+                <div>
+                    {{this.characteristic}}
+                </div>
+            </div>
+            <div>{{this.advances}}</div>
+            <div>{{this.total}}</div>
+        </div>
+        {{#each this.specialisations}}
+            <div class="skill-row spec">
+                <div class="indent"></div>
+                <div class="skill-name">{{this.name}}</div>
+                <div>{{this.advances}}</div>
+                <div>{{this.total}}</div>
+            </div>
+        {{/each}}
+    {{/each}}
+</div>
