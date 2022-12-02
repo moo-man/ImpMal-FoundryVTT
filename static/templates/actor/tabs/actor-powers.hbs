@@ -1,0 +1,35 @@
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.PsychicPowers"}}</div>
+        <div>{{localize "IMPMAL.WR"}}</div>
+        <div>{{localize "IMPMAL.Difficulty"}}</div>
+        <div>{{localize "IMPMAL.Range"}}</div>
+        <div>{{localize "IMPMAL.Target"}}</div>
+        <div>{{localize "IMPMAL.Duration"}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="talent"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each items.powers}}
+            <div class="list-item">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a>{{this.name}}</a>
+                    </div>
+                    <div>{{localize "IMPMAL.WR"}}</div>
+                    <div>{{localize "IMPMAL.Difficulty"}}</div>
+                    <div>{{localize "IMPMAL.Range"}}</div>
+                    <div>{{localize "IMPMAL.Target"}}</div>
+                    <div>{{localize "IMPMAL.Duration"}}</div>
+                    <div class="list-controls">
+                        <a class="list-create" data-type="talent"><i class="fa-solid fa-plus"></i></a>
+                        <a class="list-delete" data-type="talent"><i class="fa-solid fa-plus"></i></a>
+                        <a class="list-post" data-type="talent"><i class="fa-solid fa-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

@@ -1,0 +1,104 @@
+<div class="flexrow">
+    <div class="actor-property inline">
+        <label class="property-label">{{localize "IMPMAL.Initiative"}}</label>
+        <div class="property-value">
+            <input type="number" value="{{system.initiative}}" disabled>
+        </div>
+    </div>
+    <div class="actor-property inline">
+        <label class="property-label">{{localize "IMPMAL.Reflexes"}}</label>
+        <div class="property-value">
+            <input type="number" value="{{system.skills.reflexes}}" disabled>
+        </div>
+    </div>
+    <div class="actor-property inline">
+        {{#if (eq actor.type "character")}}
+            <label class="property-label">{{localize "IMPMAL.Superiority"}}</label>
+            <div class="property-value">
+                <input type="number" value="{{system.combat.superiority}}" name="system.combat.superiority">
+            </div>
+        {{else if (eq actor.type "npc")}}
+            <label class="property-label">{{localize "IMPMAL.Resolve"}}</label>
+            <div class="property-value">
+                <input type="number" value="{{system.combat.resolve}}" name="system.combat.resolve">
+            </div>
+        {{/if}}
+    </div>
+    <div class="actor-property inline">
+        <label class="property-label">{{localize "IMPMAL.Size"}}</label>
+        <div class="property-value">
+            <select name="system.combat.size">
+            </select>
+        </div>
+    </div>
+    <div class="actor-property inline">
+        <label class="property-label">{{localize "IMPMAL.Speed"}}</label>
+        <div class="property-value">
+            <input type="text" value="{{system.combat.speed}}" disabled>
+        </div>
+    </div>
+</div>
+
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.MeleeWeapons"}}</div>
+        <div>{{localize "IMPMAL.Specialisation"}}</div>
+        <div>{{localize "IMPMAL.Damage"}}</div>
+    </header>
+    <div class="list-content">
+        {{#each items.equipped.melee}}
+            <div class="list-item">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a>{{this.name}}</a>
+                    </div>
+                    <div>{{localize "IMPMAL.Specialisation"}}</div>
+                    <div>{{localize "IMPMAL.Damage"}}</div>
+                </div>
+                <div class="weapon-traits">
+                    <label>Traits</label>
+                    <div class="trait-list">
+                        {{this.traits}}
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.RangedWeapons"}}</div>
+        <div>{{localize "IMPMAL.Specialisation"}}</div>
+        <div>{{localize "IMPMAL.Damage"}}</div>
+        <div>{{localize "IMPMAL.Range"}}</div>
+        <div>{{localize "IMPMAL.Ammo"}}</div>
+    </header>
+    <div class="list-content">
+        {{#each items.equipped.melee}}
+            <div class="list-item">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a>{{this.name}}</a>
+                    </div>
+                    <div>{{localize "IMPMAL.Specialisation"}}</div>
+                    <div>{{localize "IMPMAL.Damage"}}</div>
+                    <div>{{localize "IMPMAL.Range"}}</div>
+                    <div>{{localize "IMPMAL.Ammo"}}</div>
+                </div>
+                <div class="weapon-traits">
+                    <label>Traits: </label>
+                    <div class="trait-list">
+                        {{this.traits}}
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
+<section class="hit-locations">
+    
+</section>

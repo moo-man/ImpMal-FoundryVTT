@@ -24,6 +24,7 @@
     }
 
 
+    .actor-property.inline, 
     .actor-property {
         flex: 1;
         display: flex;
@@ -39,6 +40,10 @@
             flex: 1;
             width: 100%;
         }
+    }
+
+    .actor-property.inline {
+        flex-direction: row;
     }
 
     section {
@@ -77,6 +82,14 @@
             .list-name,
             .wide {
                 flex: 2
+            }
+
+            .list-name {
+                display: flex;
+                align-items: center;
+            }
+            .list-image {
+                flex: 0 0 30px;
             }
 
             .small {

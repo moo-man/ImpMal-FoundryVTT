@@ -67,6 +67,12 @@ export default function registerHandlebars()
 
 
     loadTemplates([
-        "systems/impmal/templates/actor/character/character-main.html",
+        "systems/impmal/templates/actor/tabs/character-main.html",
+        "systems/impmal/templates/actor/tabs/actor-skills.html",
+        "systems/impmal/templates/actor/tabs/actor-talents.html",
+        "systems/impmal/templates/actor/tabs/actor-combat.html",
+        "systems/impmal/templates/actor/tabs/actor-effects.html",
+        "systems/impmal/templates/actor/tabs/actor-powers.html",
+        "systems/impmal/templates/actor/tabs/character-notes.html"
     ]);
 }

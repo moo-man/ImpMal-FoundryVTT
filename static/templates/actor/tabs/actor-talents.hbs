@@ -2,24 +2,21 @@
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Talents"}}</label>
         <div class="list-controls">
-            <a class="item-create" data-type="talent"><i class="fa-solid fa-plus"></i></a>
+            <a class="list-create" data-type="talent"><i class="fa-solid fa-plus"></i></a>
         </div>
     </header>
     <div class="list-content">
         {{#each items.talents}}
         <div class="list-item">
             <div class="list-row">
-                <div class="list-image">
-                    <img src="{{this.img}}">
-                </div>
                 <div class="list-name">
+                    <img src="{{this.img}}">
                     <a>{{this.name}}</a>
                 </div>
-                <a></a>
                 <div class="list-controls">
-                    <a class="item-create" data-type="talent"><i class="fa-solid fa-plus"></i></a>
-                    <a class="item-delete" data-type="talent"><i class="fa-solid fa-plus"></i></a>
-                    <a class="item-post" data-type="talent"><i class="fa-solid fa-plus"></i></a>
+                    <a class="list-create" data-type="talent"><i class="fa-solid fa-plus"></i></a>
+                    <a class="list-delete" data-type="talent"><i class="fa-solid fa-plus"></i></a>
+                    <a class="list-post" data-type="talent"><i class="fa-solid fa-plus"></i></a>
                 </div>
             </div>
             <div class="summary">

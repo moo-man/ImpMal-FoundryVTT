@@ -21,13 +21,14 @@ export class CharacterModel extends StandardActorModel
             feature : new fields.StringField(),
             eyes : new fields.StringField(),
             hair : new fields.StringField(),
-            height : new fields.StringField()
+            height : new fields.StringField(),
+            weight : new fields.StringField(),
+            divinations : new fields.StringField()
         });
         schema.goal = new fields.SchemaField({
             short : new fields.StringField(),
             long : new fields.StringField()
         });
-        schema.divinations = new fields.StringField();
         schema.corruption = new fields.NumberField();
         schema.fate = new fields.SchemaField({
             max : new fields.NumberField(),

@@ -223,8 +223,10 @@
         "feature": "",
         "eyes": "",
         "hair": "",
-        "height": ""
-      },
+        "height": "",
+        "weight": "",
+        "divination": ""
+    },
       "combat": {
         "superiority": 0
       },
@@ -235,7 +237,6 @@
       "connections": {
         "list": []
       },
-      "divination": "",
       "corruption": 0,
       "fate": {
         "max": 3,
