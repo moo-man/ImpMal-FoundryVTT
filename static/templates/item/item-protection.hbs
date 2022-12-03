@@ -1,0 +1,77 @@
+<form class="{{cssClass}}" autocomplete="off">
+
+    {{> systems/impmal/templates/items/partials/item-header.hbs isPhysical=isPhysical}}
+
+    <section class="tab-section">
+        <nav class="sheet-tabs tabs">
+            <a class="tab-select item active" data-tab="notes">{{localize "IMPMAL.Description"}}</a>
+            <a class="tab-select item" data-tab="details">{{localize "IMPMAL.Details"}}</a>
+            <a class="tab-select item" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
+        </nav>
+        <div class="tab-content">
+            <div class="tab notes" data-tab="notes">
+                {{> systems/impmal/templates/items/partials/item-notes.hbs}}
+            </div>
+            <div class="tab details" data-tab="details">
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Category"}}</label>
+                    <div class="form-fields">
+                        <select name="system.category.value">
+                            {{#each (config "protectionTypes")}}
+                                <option value="{{@key}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Armour"}}</label>
+                    <div class="form-fields">
+                        <input type="number" value="{{system.armour}}" name="system.armour">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Range"}}</label>
+                    <div class="form-fields">
+                        <select name="system.range">
+                            <option value=""></option>
+                            {{#each (config "ranges")}}
+                                <option value="{{@key}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Target"}}</label>
+                    <div class="form-fields">
+                        <input type="text" value="{{system.target}}" name="system.target">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Duration"}}</label>
+                    <div class="form-fields">
+                        <input type="text" value="{{system.duration}}" name="system.duration">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Overt"}}</label>
+                    <div class="form-fields">
+                        <input type="checkbox" name="system.overt" {{checkbox system.overt}}>
+                    </div>
+                </div>
+
+                <div class="traits">
+
+                </div>
+
+                <div class="locations">
+
+                </div>
+            </div>
+            <div class="tab effects" data-tab="effects">
+                {{> systems/impmal/templates/items/partials/item-effects.hbs}}
+            </div>
+        </div>
+    </section>
+</form>

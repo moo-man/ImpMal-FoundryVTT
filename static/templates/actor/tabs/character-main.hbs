@@ -11,7 +11,7 @@
         <td>{{localize "IMPMAL.Starting"}}</td>
         {{#each system.characteristics}}
             <td>
-                {{this.starting}}
+                <input type="number" name="system.characteristics.{{@key}}.starting" value="{{this.starting}}">
             </td>
         {{/each}}
     </tr>
@@ -19,7 +19,7 @@
         <td>{{localize "IMPMAL.Advances"}}</td>
         {{#each system.characteristics}}
             <td>
-                {{this.advances}}
+                <input type="number" name="system.characteristics.{{@key}}.advances" value="{{this.advances}}">
             </td>
         {{/each}}
     </tr>

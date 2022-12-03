@@ -2,7 +2,7 @@ import { PhysicalItemModel } from "./components/physical";
 import { TraitListModel } from "./components/traits";
 let fields = foundry.data.fields;
 
-export class ShieldModel extends PhysicalItemModel
+export class ForceFieldModel extends PhysicalItemModel
 {
     static defineSchema() 
     {

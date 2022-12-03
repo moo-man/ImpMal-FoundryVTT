@@ -10,6 +10,7 @@ export class WeaponModel extends PhysicalItemModel
         let schema = super.defineSchema();
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.traits = new fields.EmbeddedDataField(TraitListModel);
+        schema.attackType = new fields.StringField();
         schema.category = new fields.StringField();
         schema.spec = new fields.StringField();
         schema.range = new fields.StringField();

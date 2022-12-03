@@ -118,14 +118,6 @@ const IMPMAL = {
         brawling : "IMPMAL.Brawling",
     },
 
-    rangedSpecs : {
-        pistol : "IMPMAL.Pistol",
-        longGun : "IMPMAL.LongGun",
-        ordnance : "IMPMAL.Ordnance",
-        thrown : "IMPMAL.Thrown",
-        engineering : "IMPMAL.Engineering",
-    },
-
     rangedTypes : {
         bolt : "IMPMAL.Bolt",
         flame : "IMPMAL.Flame",
@@ -135,6 +127,14 @@ const IMPMAL = {
         plasma : "IMPMAL.Plasma",
         solid : "IMPMAL.Solid",
         specialised : "IMPMAL.Specialised",
+    },
+
+    rangedSpecs : {
+        pistol : "IMPMAL.Pistol",
+        longGun : "IMPMAL.LongGun",
+        ordnance : "IMPMAL.Ordnance",
+        thrown : "IMPMAL.Thrown",
+        engineering : "IMPMAL.Engineering",
     },
 
     paymentGrade : {
@@ -195,6 +195,21 @@ const IMPMAL = {
         shield : true,
         supercharge : true,
         thrown : true,
+    },
+
+    protectionTypes : {
+        mundane : "IMPMAL.Mundane",
+        flak : "IMPMAL.Flak",
+        mesh : "IMPMAL.Mesh",
+        carapace : "IMPMAL.Carapace",
+        power : "IMPMAL.Power",
+        shield : "IMPMAL.Shield"
+    },
+
+    modificationTypes : {
+        combat : "IMPMAL.CombatAttachment",
+        sight : "IMPMAL.SightAttachment", 
+        support : "IMPMAL.SupportAttachment"
     },
 
     disciplines : {

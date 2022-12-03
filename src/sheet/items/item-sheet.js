@@ -1,14 +1,19 @@
-export default class ImpMalActorSheet 
+export default class ImpMalItemSheet extends ItemSheet
 {
     static get defaultOptions() 
     {
         const options = super.defaultOptions;
         options.classes.push("impmal");
-        options.width = 600;
-        options.height = 900;
+        options.width = 400;
+        options.height = 600;
         options.resizable = true;
-        options.tabs = [{ navSelector: "", contentSelector: "", initial: "" }];
+        options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }];
         return options;
+    }
+
+    get template() 
+    {
+        return `systems/impmal/templates/item/item-${this.type}.hbs`;
     }
 
     async getData() 

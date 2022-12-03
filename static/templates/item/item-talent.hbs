@@ -1,0 +1,28 @@
+<form class="{{cssClass}}" autocomplete="off">
+
+    {{> systems/impmal/templates/items/partials/item-header.hbs isPhysical=isPhysical}}
+
+    <section class="tab-section">
+        <nav class="sheet-tabs tabs">
+            <a class="tab-select item active" data-tab="notes">{{localize "IMPMAL.Description"}}</a>
+            <a class="tab-select item" data-tab="details">{{localize "IMPMAL.Details"}}</a>
+            <a class="tab-select item" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
+        </nav>
+        <div class="tab-content">
+            <div class="tab notes" data-tab="notes">
+                {{> systems/impmal/templates/items/partials/item-notes.hbs}}
+            </div>
+            <div class="tab details" data-tab="details">
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Requirement"}}</label>
+                    <div class="form-fields">
+                        <input type="text" name="system.requirement.value" value="{{system.requirement.value}}">
+                    </div>
+                </div>
+            </div>
+            <div class="tab effects" data-tab="effects">
+                {{> systems/impmal/templates/items/partials/item-effects.hbs}}
+            </div>
+        </div>
+    </section>
+</form>

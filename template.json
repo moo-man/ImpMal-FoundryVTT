@@ -262,7 +262,7 @@
       "ammo",
       "modification",
       "protection",
-      "shield",
+      "forceField",
       "equipment",
       "augmetic",
       "power"
@@ -421,6 +421,7 @@
         "damage",
         "traits"
       ],
+      "attackType": "melee",
       "category": "",
       "spec": "",
       "range": "",
@@ -447,16 +448,16 @@
         "physical",
         "traits"
       ],
+      "category" : "",
       "armour": 0,
       "locations": [],
       "equipped": false
     },
-    "shield": {
+    "forceField": {
       "templates": [
         "notes",
         "physical"
       ],
-      "force": false,
       "protection": "",
       "overload": 0,
       "equipped": false

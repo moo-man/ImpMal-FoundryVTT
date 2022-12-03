@@ -14,13 +14,15 @@ import { OriginModel } from "./model/item/origin";
 import { PowerModel } from "./model/item/power";
 import { ProtectionModel } from "./model/item/protection";
 import { RoleModel } from "./model/item/role";
-import { ShieldModel } from "./model/item/shield";
+import { ForceFieldModel } from "./model/item/forceField";
 import { SkillSpecModel } from "./model/item/skill";
 import { TalentModel } from "./model/item/talent";
 import { WeaponModel } from "./model/item/weapon";
 import IMPMAL from "./system/config";
 import registerHandlebars from "./system/handlebars";
 import registerSettings from "./system/settings";
+import ImpMalCharacterSheet from "./sheet/actors/character-sheet";
+import ImpMalItemSheet from "./sheet/items/item-sheet";
 
 Hooks.once("init", () => 
 {
@@ -32,6 +34,11 @@ Hooks.once("init", () =>
     CONFIG.Actor.documentClass = ImpMalActor;
     CONFIG.Item.documentClass = ImpMalItem;
     CONFIG.ActiveEffect.documentClass = undefined;
+
+    Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
+    Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
+
+
     CONFIG.ActiveEffect.sheetClass = undefined;
     DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });
 
@@ -50,7 +57,7 @@ Hooks.once("init", () =>
     CONFIG.Item.systemDataModels["ammo"] = AmmoModel;
     CONFIG.Item.systemDataModels["modification"] = ModificationModel;
     CONFIG.Item.systemDataModels["protection"] = ProtectionModel;
-    CONFIG.Item.systemDataModels["shield"] = ShieldModel;
+    CONFIG.Item.systemDataModels["forceField"] = ForceFieldModel;
     CONFIG.Item.systemDataModels["equipment"] = EquipmentModel;
     CONFIG.Item.systemDataModels["augmetic"] = AugmeticModel;
     CONFIG.Item.systemDataModels["power"] = PowerModel;

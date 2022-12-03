@@ -8,6 +8,7 @@ export class ProtectionModel extends PhysicalItemModel
     {
         let schema = super.defineSchema();
         schema.traits = new fields.EmbeddedDataField(TraitListModel),
+        schema.category = new fields.StringField();
         schema.armour = new fields.NumberField();
         schema.locations = new fields.ObjectField();
         schema.equipped = new fields.BooleanField();
