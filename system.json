@@ -3,7 +3,7 @@
   "name" : "impmal",
   "title": "Warhammer 40,000: Imperium Maledictum",
   "description": "",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "minimumCoreVersion" : 10,
   "compatibility" : {
     "minimum" : 10,
@@ -43,7 +43,7 @@
   "url": "https://github.com/moo-man/ImpMal-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/ImpMal-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/ImpMal-FoundryVTT/releases/download/1.0.0/impmal.zip",
+  "download": "https://github.com/moo-man/ImpMal-FoundryVTT/releases/download/0.0.1/impmal.zip",
   "license": "LICENSE.txt"
 }
 

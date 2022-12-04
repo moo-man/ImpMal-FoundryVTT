@@ -30,16 +30,19 @@ export class StandardActorModel extends BaseActorModel
 
     computeBase() 
     {
+        super.computeBase();
         this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
     }
 
-    computeDerived() 
+    computeDerived(items) 
     {
+        super.computeDerived(items);
         // Recompute bonuses as active effects may have changed it
         this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
-        this.skills.computeTotals();
+        this.skills.computeTotals(this.characteristics);
+        this.skills.findSpecialisations(items.skill);
         this.computeWounds();
         this.computeInitiative();
         this.computeEncumbrance();

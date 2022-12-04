@@ -1,3 +1,4 @@
+let fields = foundry.data.fields;
 /**
  * Abstract class that interfaces with the Actor class
  */
@@ -6,7 +7,7 @@ export class BaseActorModel extends foundry.abstract.DataModel
 
     static defineSchema() 
     {
-        let schema = super.defineSchema();
+        let schema = {};
         schema.notes = new fields.SchemaField({
             player : new fields.StringField(),
             gm : new fields.StringField()

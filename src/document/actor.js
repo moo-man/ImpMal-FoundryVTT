@@ -16,11 +16,12 @@ export class ImpMalActor extends Actor
     prepareBaseData()
     {
         this.system.computeBase();
+        this.itemCategories = this.itemTypes;
     }
 
     prepareDerivedData() 
     {
-        this.system.computeDerived();
+        this.system.computeDerived(this.itemCategories);
     }
 
 

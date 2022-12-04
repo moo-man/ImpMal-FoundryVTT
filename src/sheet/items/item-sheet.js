@@ -3,7 +3,7 @@ export default class ImpMalItemSheet extends ItemSheet
     static get defaultOptions() 
     {
         const options = super.defaultOptions;
-        options.classes.push("impmal");
+        options.classes = options.classes.concat(["impmal", "item"]);
         options.width = 400;
         options.height = 600;
         options.resizable = true;
@@ -13,13 +13,13 @@ export default class ImpMalItemSheet extends ItemSheet
 
     get template() 
     {
-        return `systems/impmal/templates/item/item-${this.type}.hbs`;
+        return `systems/impmal/templates/item/item-${this.item.type}.hbs`;
     }
 
     async getData() 
     {
         let data = super.getData();
-        data.system = data.actor.system;
+        data.system = data.item.system;
         return data;
     }
 

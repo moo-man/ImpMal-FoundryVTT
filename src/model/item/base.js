@@ -3,6 +3,11 @@
  */
 export class BaseItemModel extends foundry.abstract.DataModel 
 {
+    static defineSchema() 
+    {
+        return {};
+    }
+
     preCreateData()//data) 
     {
         return {};

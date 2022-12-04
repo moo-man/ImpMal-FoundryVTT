@@ -3,7 +3,7 @@ export default class ImpMalActorSheet extends ActorSheet
     static get defaultOptions() 
     {
         const options = super.defaultOptions;
-        options.classes.push("impmal");
+        options.classes = options.classes.concat(["impmal", "actor"]);
         options.width = 600;
         options.height = 900;
         options.resizable = true;
@@ -13,7 +13,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
     get template() 
     {
-        return `systems/impmal/templates/actor/${this.type}-sheet.hbs`;
+        return `systems/impmal/templates/actor/${this.actor.type}-sheet.hbs`;
     }
 
     async getData() 

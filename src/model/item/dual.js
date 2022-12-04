@@ -7,7 +7,7 @@ export class DualItemModel extends foundry.abstract.DataModel
 
     static defineSchema() 
     {
-        let schema = super.defineSchema();
+        let schema = {};
         schema.patron = new fields.SchemaField({
             notes : new fields.SchemaField({
                 player : new fields.StringField(),

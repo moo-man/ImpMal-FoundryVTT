@@ -1,12 +1,10 @@
-import { DocumentListModel } from "./list";
-
 let fields = foundry.data.fields;
 
-export class SkillsModel extends foundry.abstracts.DataModel
+export class SkillsModel extends foundry.abstract.DataModel
 {
     static defineSchema() 
     {
-        let schema = super.defineSchema();
+        let schema = {};
         schema.athletics = new fields.EmbeddedDataField(SkillModel);
         schema.awareness = new fields.EmbeddedDataField(SkillModel);
         schema.dexterity = new fields.EmbeddedDataField(SkillModel);
@@ -30,23 +28,48 @@ export class SkillsModel extends foundry.abstracts.DataModel
         return schema;
     }
 
-    computeTotals() 
+    computeTotals(characteristics) 
     {
-        for(let sk of this)
+        for(let sk in this)
         {
-            sk.computeTotal();
+            this[sk].computeTotal(characteristics);
+        }
+    }
+
+    findSpecialisations(skills)
+    {
+        for(let sk in this)
+        {
+            this[sk].specialisations = [];
+        }
+
+        for(let item of skills)
+        {
+            try 
+            {
+                this[item.system.skill].specialisations.push(item);
+            }
+            catch (e)
+            {
+                game.impmal.log("Error assigning skill specialisation:", {args: item});
+            }
         }
     }
 }
 
-export class SkillModel extends foundry.abstracts.DataModel 
+export class SkillModel extends foundry.abstract.DataModel 
 {
+
+    initialize() 
+    {
+
+    }
+
     static defineSchema() 
     {
-        let schema = super.defineSchema();
-        schema.characteristic = new fields.StringField({required: true, nullable : false, default: "ws"});
-        schema.advances = new fields.NumberField({min: 0, max: 4});
-        schema.specialisations = new fields.EmbeddedDataField(DocumentListModel);
+        let schema = {};
+        schema.characteristic = new fields.StringField();
+        schema.advances = new fields.NumberField({min: 0, max: 4, initial: 0});
         return schema;
     }
 

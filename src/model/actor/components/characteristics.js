@@ -4,7 +4,7 @@ export class CharacteristicsModel extends foundry.abstract.DataModel
 {
     static defineSchema() 
     {
-        let schema = super.defineSchema();
+        let schema = {};
         schema.ws = new fields.EmbeddedDataField(CharacteristicModel);
         schema.bs = new fields.EmbeddedDataField(CharacteristicModel);
         schema.str = new fields.EmbeddedDataField(CharacteristicModel);
@@ -19,29 +19,29 @@ export class CharacteristicsModel extends foundry.abstract.DataModel
 
     computeTotals() 
     {
-        for(let ch of this)
+        for(let ch in this)
         {
-            ch.computeTotal();
+            this[ch].computeTotal();
         }
     }
 
     computeBonuses() 
     {
-        for(let ch of this)
+        for(let ch in this)
         {
-            ch.computeBonus();
+            this[ch].computeBonus();
         }
     }
 }
 
-class CharacteristicModel extends foundry.abstracts.DataModel
+class CharacteristicModel extends foundry.abstract.DataModel
 {
     static defineSchema() 
     {
-        let schema = super.defineSchema();
-        schema.starting = fields.NumberField();
-        schema.modifier = fields.NumberField();
-        schema.advances = fields.NumberField();
+        let schema = {};
+        schema.starting = new fields.NumberField();
+        schema.modifier = new fields.NumberField();
+        schema.advances = new fields.NumberField();
         return schema;
     }
 

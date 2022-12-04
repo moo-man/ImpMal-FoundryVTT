@@ -1,10 +1,10 @@
 let fields = foundry.data.fields;
 
-export class InfluenceModel extends foundry.abstracts.DataModel
+export class InfluenceModel extends foundry.abstract.DataModel
 {
     static defineSchema() 
     {
-        let schema = super.defineSchema();
+        let schema = {};
         schema.factions = new fields.ObjectField();
         return schema;
     }

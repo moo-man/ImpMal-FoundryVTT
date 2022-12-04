@@ -4,7 +4,7 @@ export class BaseCombatModel extends foundry.abstract.DataModel
 {
     static defineSchema() 
     {
-        let schema = super.defineSchema();
+        let schema = {};
         schema.size = new fields.StringField();
         schema.speed = new fields.StringField();
         schema.fly = new fields.StringField();
@@ -18,7 +18,7 @@ export class CharacterCombatModel extends BaseCombatModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.superiority = fields.NumberField();
+        schema.superiority = new fields.NumberField();
         return schema;
     }
 }
@@ -28,7 +28,7 @@ export class NPCCombatModel extends BaseCombatModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.resolve = fields.NumberField();
+        schema.resolve = new fields.NumberField();
         return schema;
     }
 }

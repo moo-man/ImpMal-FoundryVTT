@@ -4,12 +4,13 @@ let fields = foundry.data.fields;
 
 
 // Generic list of objects
-export class ListModel extends foundry.abstracts.DataModel
+export class ListModel extends foundry.abstract.DataModel
 {
     static defineSchema() 
     {
-        let schema = super.defineSchema();
-        schema.list = new fields.ArrayField();
+        let schema = {};
+        schema.list = new fields.ArrayField(new fields.ObjectField());
+        return schema;
     }
 
     add(value)
@@ -30,7 +31,8 @@ export class DocumentListModel extends ListModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.list = new fields.ArrayField(new fields.EmbeddedDataModel(DocumentReferenceModel));
+        schema.list = new fields.ArrayField(new fields.EmbeddedDataField(DocumentReferenceModel));
+        return schema;
     }
 
     removeId(id) 
@@ -55,5 +57,6 @@ export class GroupedDocumentListModel extends  DocumentListModel
     {
         let schema = super.defineSchema();
         schema.groups = new fields.ArrayField();
+        return schema;
     }
 }

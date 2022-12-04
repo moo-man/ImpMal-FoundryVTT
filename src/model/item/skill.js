@@ -9,6 +9,7 @@ export class SkillSpecModel extends StandardItemModel
         schema.skill = new fields.StringField();
         schema.advances = new fields.NumberField({min: 0, max: 4});
         schema.restricted = new fields.BooleanField();
+        return schema;
     }
 
 }

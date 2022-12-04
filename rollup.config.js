@@ -1,18 +1,17 @@
-const fs = require("fs")
-const path = require("path")
-const foundryPath = require("./foundry-path.js");
-import copy from 'rollup-plugin-copy-watch'
-import postcss from "rollup-plugin-postcss"
-import jscc from 'rollup-plugin-jscc'
+import fs from "fs";
+import foundryPath from "./foundry-path.js";
+import copy from "rollup-plugin-copy-watch";
+import postcss from "rollup-plugin-postcss";
+import jscc from "rollup-plugin-jscc";
 
-let manifest = JSON.parse(fs.readFileSync("./system.json"))
+let manifest = JSON.parse(fs.readFileSync("./system.json"));
 
-let systemPath = foundryPath.systemPath(manifest.id)
+let systemPath = foundryPath(manifest.id);
 
-console.log("Bundling to " + systemPath)
+console.log("Bundling to " + systemPath);
 
 export default {
-  input: [`./scripts/${manifest.id}.js`, `./style/${manifest.id}.scss`],
+    input: [`./src/${manifest.id}.js`, `./style/${manifest.id}.scss`],
     output: {
         dir : systemPath
     },
@@ -34,6 +33,6 @@ export default {
         postcss({
             extract : `${manifest.id}.css`,
             plugins: []
-          })
+        })
     ]
-}
+};

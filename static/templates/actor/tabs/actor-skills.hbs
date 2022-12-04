@@ -1,13 +1,13 @@
 <div class="skill-list">
     <header class="skill-row skill-header">
-        <div class="skill-name ">{{localize "IMPMAL.Skill"}}</div>
+        <div class="skill-name">{{localize "IMPMAL.Skill"}}</div>
         <div class="skill-characteristic">{{localize "IMPMAL.Characteristic"}}</div>
         <div>{{localize "IMPMAL.Adv"}}</div>
         <div>{{localize "IMPMAL.Total"}}</div>
     </header>
     {{#each system.skills}}
         <div class="skill-row">
-            <div class="skill-name ">{{localize "IMPMAL.Skill"}}</div>
+            <div class="skill-name">{{configLookup "skills" @key}}</div>
             <div class="skill-characteristic">
                 <div>
                     {{this.characteristic}}

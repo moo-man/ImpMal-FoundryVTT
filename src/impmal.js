@@ -23,6 +23,7 @@ import registerHandlebars from "./system/handlebars";
 import registerSettings from "./system/settings";
 import ImpMalCharacterSheet from "./sheet/actors/character-sheet";
 import ImpMalItemSheet from "./sheet/items/item-sheet";
+import log  from "./system/logger";
 
 Hooks.once("init", () => 
 {
@@ -33,14 +34,13 @@ Hooks.once("init", () =>
 
     CONFIG.Actor.documentClass = ImpMalActor;
     CONFIG.Item.documentClass = ImpMalItem;
-    CONFIG.ActiveEffect.documentClass = undefined;
+    // CONFIG.ActiveEffect.documentClass = undefined;
 
     Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
     Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
 
-
-    CONFIG.ActiveEffect.sheetClass = undefined;
-    DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });
+    // CONFIG.ActiveEffect.sheetClass = undefined;
+    // DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });
 
     CONFIG.Actor.systemDataModels["character"] = CharacterModel;
     CONFIG.Actor.systemDataModels["patron"] = PatronModel;
@@ -63,19 +63,20 @@ Hooks.once("init", () =>
     CONFIG.Item.systemDataModels["power"] = PowerModel;
 
     game.impmal = {
-        config : IMPMAL
+        config : IMPMAL,
+        log : log
     };
 
     registerSettings();
     registerHandlebars();
-    localizeConfig(object);
+    localizeConfig(IMPMAL);
 });
 
 
 // Recursively localize config object
 function localizeConfig(object)
 {
-    if (typeof object == string)
+    if (typeof object == "string")
     {
         return game.i18n.localize(object);
     }
@@ -85,5 +86,6 @@ function localizeConfig(object)
         {
             object[key] = localizeConfig(object[key]);
         }
+        return object;
     }
 }

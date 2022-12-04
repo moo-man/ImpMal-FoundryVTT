@@ -1,4 +1,5 @@
 import { BaseItemModel } from "./base";
+let fields = foundry.data.fields;
 
 export class StandardItemModel extends BaseItemModel
 {

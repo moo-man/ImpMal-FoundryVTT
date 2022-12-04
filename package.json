@@ -13,6 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/moo-man/ImpMal-FoundryVTT.git"
   },
+  "type": "module",
   "author": "",
   "license": "ISC",
   "bugs": {

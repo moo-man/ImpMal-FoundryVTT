@@ -59,103 +59,83 @@
         "skills": {
           "athletics": {
             "characteristic": "str",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "awareness": {
             "characteristic": "per",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "dexterity": {
             "characteristic": "ag",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "discipline": {
             "characteristic": "wil",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "fortitude": {
             "characteristic": "tgh",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "intuition": {
             "characteristic": "per",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "linguistics": {
             "characteristic": "int",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "logic": {
             "characteristic": "int",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "lore": {
             "characteristic": "int",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "medicae": {
             "characteristic": "int",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "melee": {
             "characteristic": "ws",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "navigation": {
             "characteristic": "int",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "piloting": {
             "characteristic": "ag",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "presence": {
             "characteristic": "wil",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "psychic": {
             "characteristic": "wil",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "ranged": {
             "characteristic": "bs",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "rapport": {
             "characteristic": "fel",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "reflexes": {
             "characteristic": "ag",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "stealth": {
             "characteristic": "ag",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           },
           "tech": {
             "characteristic": "int",
-            "advances": 0,
-            "specialisations": []
+            "advances": 0
           }
         }
       },
@@ -206,6 +186,7 @@
     "character": {
       "templates": [
         "characteristics",
+        "skills",
         "handedness",
         "wounds",
         "influence",
