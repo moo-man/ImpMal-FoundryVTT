@@ -28,4 +28,14 @@ export class BaseItemModel extends foundry.abstract.DataModel
     {
         // Abstract
     }
+
+    computeOwnerBase() 
+    {
+        // Abstract
+    }
+
+    computeOwnerDerived() 
+    {
+        // Abstract
+    }
 }

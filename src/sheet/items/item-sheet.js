@@ -20,6 +20,7 @@ export default class ImpMalItemSheet extends ItemSheet
     {
         let data = super.getData();
         data.system = data.item.system;
+        data.isPhysical = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical")).includes(data.item.type);
         return data;
     }
 

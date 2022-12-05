@@ -1,0 +1,34 @@
+.impmal.item {
+
+    header {
+        display: flex;
+        width: 100%;
+
+        .item-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 0 0 100px;
+        }
+    }
+
+    .header-details {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        width: calc(100% - 100px);
+
+        text-align: center;
+
+        .details-row {
+            display: flex;
+            margin: 5px;
+
+            .detail-group {
+                display: flex;
+                flex-direction: column;
+                flex: 1
+            }
+        }
+    }
+}

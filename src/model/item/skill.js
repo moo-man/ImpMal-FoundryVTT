@@ -12,4 +12,13 @@ export class SkillSpecModel extends StandardItemModel
         return schema;
     }
 
+
+    computeOwnerDerived(actor) 
+    {
+        if (actor)
+        {
+            this.total = actor.system.skills[this.skill]?.total + (5 * this.advances);
+        }
+    }
+
 }

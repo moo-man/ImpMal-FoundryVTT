@@ -17,10 +17,20 @@ export class ImpMalItem extends Item
     prepareBaseData() 
     {
         this.system.computeBase();
+
     }
 
     prepareDerivedData() 
     {
         this.system.computeDerived();
+    }
+
+    prepareOwnedData()
+    {
+        if (!this.actor)
+        {
+            throw new Error("Cannot compute owned derived data without parent actor", this);
+        }
+        this.system.computeOwnerDerived(this.actor);
     }
 }

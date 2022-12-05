@@ -8,4 +8,6 @@ export class InfluenceModel extends foundry.abstract.DataModel
         schema.factions = new fields.ObjectField();
         return schema;
     }
+
+    
 }

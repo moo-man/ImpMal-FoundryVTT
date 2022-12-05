@@ -152,9 +152,6 @@
           }
         }
       },
-      "handedness": {
-        "handed": "R"
-      },
       "solars": {
         "solars": 0
       },
@@ -187,7 +184,6 @@
       "templates": [
         "characteristics",
         "skills",
-        "handedness",
         "wounds",
         "influence",
         "notes",
@@ -222,7 +218,8 @@
       "fate": {
         "max": 3,
         "current": 3
-      }
+      },
+      "handed" : "r"
     },
     "npc": {
       "combat": {
@@ -250,9 +247,12 @@
     ],
     "templates": {
       "physical": {
-        "encumbrance": 0,
+        "encumbrance": {
+          "value": 0
+        },
         "cost": 0,
-        "availability": ""
+        "availability": "",
+        "quantity" : 1
       },
       "traits": {
         "traits" : {

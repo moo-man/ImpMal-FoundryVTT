@@ -22,6 +22,7 @@ export class ImpMalActor extends Actor
     prepareDerivedData() 
     {
         this.system.computeDerived(this.itemCategories);
+        this.items.forEach(i => i.prepareOwnedData());
     }
 
 

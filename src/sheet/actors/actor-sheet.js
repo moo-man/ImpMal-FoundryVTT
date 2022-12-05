@@ -4,8 +4,6 @@ export default class ImpMalActorSheet extends ActorSheet
     {
         const options = super.defaultOptions;
         options.classes = options.classes.concat(["impmal", "actor"]);
-        options.width = 600;
-        options.height = 900;
         options.resizable = true;
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }];
         return options;
@@ -20,7 +18,15 @@ export default class ImpMalActorSheet extends ActorSheet
     {
         let data = super.getData();
         data.system = data.actor.system;
+        data.items = this.organizeItems(data);
         return data;
+    }
+
+
+    organizeItems(data) 
+    {
+        let sheetItems = data.actor.itemCategories;
+        return sheetItems;
     }
 
     activateListeners(html) 

@@ -72,6 +72,7 @@ export default function registerHandlebars()
         "systems/impmal/templates/actor/tabs/actor-powers.hbs",
         "systems/impmal/templates/actor/tabs/actor-skills.hbs",
         "systems/impmal/templates/actor/tabs/actor-talents.hbs",
+        "systems/impmal/templates/actor/tabs/actor-equipment.hbs",
         "systems/impmal/templates/actor/tabs/character-main.hbs",
         "systems/impmal/templates/actor/tabs/character-notes.hbs",
         "systems/impmal/templates/item/partials/item-character-notes.hbs",

@@ -16,6 +16,7 @@ export class WeaponModel extends PhysicalItemModel
         schema.range = new fields.StringField();
         schema.mag = new fields.NumberField();
         schema.equipped = new fields.BooleanField();
+        return schema;
     }
 
 }

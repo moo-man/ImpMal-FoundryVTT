@@ -10,21 +10,21 @@
             <div class="skill-name">{{configLookup "skills" @key}}</div>
             <div class="skill-characteristic">
                 <div>
-                    {{this.characteristic}}
+                    {{configLookup "characteristicAbbrev" this.characteristic}}
                 </div>
                 <div>
-                    {{this.characteristic}}
+                    {{this.characteristicData.total}}
                 </div>
             </div>
             <div>{{this.advances}}</div>
-            <div>{{this.total}}</div>
+            <div><a>{{this.total}}</a></div>
         </div>
         {{#each this.specialisations}}
             <div class="skill-row spec">
-                <div class="indent"></div>
                 <div class="skill-name">{{this.name}}</div>
-                <div>{{this.advances}}</div>
-                <div>{{this.total}}</div>
+                <div class="skill-characteristic"></div>
+                <div>{{this.system.advances}}</div>
+                <div><a>{{this.system.total}}</a></div>
             </div>
         {{/each}}
     {{/each}}

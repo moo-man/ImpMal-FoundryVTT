@@ -1,9 +1,9 @@
 <header>
     <div class="item-image">
-        <img src="{{item.img}}">
+        <img src="{{item.img}}" data-edit="img">
         Label
     </div>
-    <div class="header-detalis">
+    <div class="header-details">
         <div class="details-row">
             <div class="detail-group">
                 <h3><input type="text" name="name" value="{{item.name}}"></h3>
@@ -13,22 +13,25 @@
             <div class="details-row">
                 <div class="detail-group">
                     <label>{{localize "IMPMAL.Qty."}}</label>
-                    <input type="text" name="{{system.quantity}}" value="{{system.quantity}}">
+                    <input type="text" name="system.quantity" value="{{system.quantity}}">
                 </div>
                 <div class="detail-group">
-                    <label>{{localize "IMPMAL.Encumbrance"}}</label>
-                    <input type="text" name="{{system.encumbrance}}" value="{{system.encumbrance}}">
+                    <label>{{localize "IMPMAL.Enc."}}</label>
+                    <div class="flexrow">
+                        <input type="text" name="system.encumbrance.value" value="{{system.encumbrance.value}}">
+                        <input type="text" value="{{system.encumbrance.total}}" disabled>
+                    </div>
                 </div>
                 <div class="detail-group">
                     <label>{{localize "IMPMAL.Cost"}}</label>
-                    <input type="text" name="{{system.cost}}" value="{{system.cost}}">
+                    <input type="text" name="system.cost" value="{{system.cost}}">
                 </div>
                 <div class="detail-group">
                     <label>{{localize "IMPMAL.Avail."}}</label>
                     <select name="system.availability">
                         <option value=""></option>
                         {{#each (config "availability")}}
-                        <option value="{{@key}}">{{this}}</option>
+                            <option value="{{@key}}">{{this}}</option>
                         {{/each}}
                         <option value="other">{{localize "IMPMAL.Other"}}</option>
                     </select>

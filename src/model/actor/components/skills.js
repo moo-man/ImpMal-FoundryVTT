@@ -59,12 +59,6 @@ export class SkillsModel extends foundry.abstract.DataModel
 
 export class SkillModel extends foundry.abstract.DataModel 
 {
-
-    initialize() 
-    {
-
-    }
-
     static defineSchema() 
     {
         let schema = {};
@@ -75,6 +69,7 @@ export class SkillModel extends foundry.abstract.DataModel
 
     computeTotal(characteristics) 
     {
-        this.total = characteristics[this.characteristic].total + (5 * this.advances);
+        this.characteristicData = characteristics[this.characteristic];
+        this.total = this.characteristicData.total + (5 * this.advances);
     }
 }

@@ -1,46 +1,98 @@
 .impmal.actor {
 
+    // Makes just the tab content scroll instead of the whole sheet
+    .window-content {
+        overflow-y: hidden;
+        height: 100%;
+
+        form {
+            height: 100%;
+
+            .tab-section {
+                height: calc(100% - 120px);
+
+                .tab-content {
+                    height: calc(100% - 35px);
+                    overflow-y: auto;
+
+                    .tab.active {
+                        height: calc(100% - 10px);
+                    }
+                }
+            }
+        }
+    }
+
     .sheet-header {
         display: flex;
         width: 100%;
 
         img {
             flex: 0 0 100px;
+            height: 100px;
         }
+    }
 
-        .header-details {
+    .header-details {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        .details-row {
             display: flex;
-            flex-direction: column;
-            flex: 1;
 
-            .details-row {
+            .detail-group {
                 display: flex;
+                flex-direction: column;
+                flex: 1;
+                margin: 0px 5px;
 
-                .detail-group {
+                .input-group {
+                    border-bottom: 1px solid black;
                     display: flex;
-                    flex-direction: column;
-                    flex: 1
+                    align-items: center;
+
+                    input {
+                        border: none;
+                        background: none;
+                    }
+
+                    input:focus {
+                        box-shadow: none;
+                    }
                 }
             }
+        }
+
+        .details-row.name {
+            text-align: center;
         }
     }
 
 
-    .actor-property.inline, 
+    .actor-properties {
+        display: flex;
+
+    }
+
+    .actor-property.inline,
     .actor-property {
         flex: 1;
         display: flex;
         flex-direction: column;
         text-align: center;
+        margin: 5px;
 
-        .property-label {
-            flex: 0 0 30px;
-            width: 100%;
-        }
+        .property-label {}
 
         .property-value {
             flex: 1;
             width: 100%;
+            display: flex;
+
+            input {
+                margin: 3px;
+            }
         }
     }
 
@@ -48,70 +100,39 @@
         flex-direction: row;
     }
 
-    section {
-        display:flex;
+    .tab-content .section {
+        display: flex;
         flex-direction: column;
         width: 100%;
+
         header {
-            display:flex;
+            display: flex;
             width: 100%;
+
             .section-controls {
                 flex: 0 0 40px;
             }
         }
 
-        .section-content {  
-            
-        }
+        .section-content {}
     }
 
 
-    section.list {
-        display: flex;
-        flex-direction: column;
-
-        .list-item {
-            display: flex;
-            flex-direction: column;
+    section.list.influence {
+        input {
+            border: none;
+            background: none;
+            border-bottom: 1px solid black;
+            border-radius: 0px;
         }
 
-        .list-row {
-            display: flex;
-            > * {
-                flex: 1
-            }
-
-            .list-name,
-            .wide {
-                flex: 2
-            }
-
-            .list-name {
-                display: flex;
-                align-items: center;
-            }
-            .list-image {
-                flex: 0 0 30px;
-            }
-
-            .small {
-                flex: 0 0 50px;
-            }
-
-            .list-controls {
-                flex : 0 0 50px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-            }
-
+        input:focus {
+            box-shadow: none;
         }
 
-        .summary {
-
+        input[type="number"] {
+            text-align: center;
         }
-
-
     }
 
 
@@ -119,28 +140,39 @@
         display: flex;
         flex-direction: column;
         width: 100%;
+
         header {
-            font-weight: bold;   
+            font-weight: bold;
         }
 
         .skill-row {
             text-align: center;
             display: flex;
 
-            .indent,
             .skill-name,
             .skill-characteristic {
                 display: flex;
                 flex: 2;
-                > * {
+
+                >* {
                     flex: 1
                 }
             }
 
-            > div {
-                flex: 1
+            >* {
+                display: flex;
+                flex: 1;
+                justify-content: center;
+            }
+
+            >*:first-of-type {
+                justify-content: left;
+            }
+        }
+        .skill-row.spec {
+            .skill-name{
+                justify-content: right;
             }
         }
     }
-
 }

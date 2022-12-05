@@ -1,1 +1,73 @@
-@import "./actor/actor-sheet"
+@import "./actor/actor-sheet";
+@import "./actor/character-sheet";
+@import "./item/item-sheet";
+
+
+// Shared properties
+
+
+.impmal {
+    a {
+        cursor: pointer
+    }
+
+    img {
+        border: none;
+    }
+
+    section.list {
+        display: flex;
+        flex-direction: column;
+
+        .list-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .list-row {
+            display: flex;
+
+            >* {
+                flex: 1
+            }
+
+            .list-name,
+            .wide {
+                flex: 2
+            }
+
+            .centered {
+                text-align: center;
+            }
+
+            .list-name {
+                display: flex;
+                align-items: center;
+            }
+
+            .list-name img,
+            .list-image {
+                flex: 0 0 30px;
+                height: 30px;
+            }
+
+            .small {
+                flex: 0 0 50px;
+            }
+
+            .list-controls {
+                flex: 0 0 50px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+            }
+
+            .list-controls.single {
+                flex: 0 0 20px;
+            }
+
+        }
+        .summary {}
+    }
+}

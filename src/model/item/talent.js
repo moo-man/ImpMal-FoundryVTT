@@ -9,6 +9,7 @@ export class TalentModel extends StandardItemModel
         schema.requirement = new fields.SchemaField({
             value : new fields.StringField()
         });
+        return schema;
     }
 
 }

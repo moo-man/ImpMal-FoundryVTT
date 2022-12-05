@@ -58,9 +58,9 @@ export class StandardActorModel extends BaseActorModel
 
     computeInitiative() 
     {
-        this.iniative = 
+        this.initiative = 
             this.characteristics.per.bonus + 
-            this.characteristicsr.ag.bonus;
+            this.characteristics.ag.bonus;
     }
 
     computeEncumbrance() 

@@ -1,14 +1,16 @@
-<table>
-    <th>
-    <td></td>
-    {{#each system.characteristics}}
-        <td>
-            {{config "characteristcAbbrev" @key}}
-        </td>
-    {{/each}}
-    </th>
+<table class="characteristic-table">
     <tr>
-        <td>{{localize "IMPMAL.Starting"}}</td>
+        <th></th>
+        {{#each system.characteristics}}
+            <th>
+                {{@key}}
+                {{!-- {{configLookup "characteristicAbbrev" @key}} --}}
+            </th>
+        {{/each}}
+    </tr>
+    <tr>
+        <td>Starting</td>
+        {{!-- <td>{{localize "IMPMAL.Starting"}}</td> --}}
         {{#each system.characteristics}}
             <td>
                 <input type="number" name="system.characteristics.{{@key}}.starting" value="{{this.starting}}">
@@ -16,7 +18,8 @@
         {{/each}}
     </tr>
     <tr>
-        <td>{{localize "IMPMAL.Advances"}}</td>
+        <td>Advances</td>
+        {{!-- <td>{{localize "IMPMAL.Advances"}}</td> --}}
         {{#each system.characteristics}}
             <td>
                 <input type="number" name="system.characteristics.{{@key}}.advances" value="{{this.advances}}">
@@ -24,16 +27,17 @@
         {{/each}}
     </tr>
     <tr>
-        <td>{{localize "IMPMAL.Total"}}</td>
+        <td>Total</td>
+        {{!-- <td>{{localize "IMPMAL.Total"}}</td> --}}
         {{#each system.characteristics}}
             <td>
-                {{this.total}}
+                <a>{{this.total}}</a>
             </td>
         {{/each}}
     </tr>
 </table>
 
-<div class="flexrow">
+<div class="actor-properties">
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Initiative"}}</label>
         <div class="property-value">
@@ -43,7 +47,7 @@
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Wounds"}}</label>
         <div class="property-value">
-            <input type="number" name="system.wounds.max" value="{{system.wounds.value}}">
+            <input type="number" name="system.wounds.value" value="{{system.wounds.value}}">
             <input type="number" value="{{system.wounds.max}}" disabled>
         </div>
     </div>
@@ -53,15 +57,16 @@
             <input type="number" value="" disabled>
         </div>
     </div>
-    <div class="actor-property">
-        <label class="property-label">{{localize "IMPMAL.CriticalWounds"}}</label>
+        <div class="actor-property">
+        <label class="property-label">{{localize "IMPMAL.Fate"}}</label>
         <div class="property-value">
-            <input type="number" value="" disabled>
+            <input type="number" name="system.fate.value" value="{{system.fate.value}}">
+            <input type="number" value="{{system.fate.max}}" value="{{system.fate.max}}">
         </div>
     </div>
 </div>
 
-<div class="flexrow">
+<div class="actor-properties">
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Corruption"}}</label>
         <div class="property-value">
@@ -70,24 +75,60 @@
     </div>
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Handed"}}</label>
-        <select name="handed">
-
+        <select name="system.handed">
+            <option value="r">{{localize "IMPMAL.Right"}}</option>
+            <option value="l">{{localize "IMPMAL.Left"}}</option>
         </select>
     </div>
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.XP"}}</label>
+        <div class="xp property-value">
+            <div>
+                <input type="number" value="{{system.xp.available}}" name="system.xp.available">
+                <label>{{localize "IMPMAL.Available"}}</label>
+            </div>
+            <div>
+                <input type="number" value="{{system.xp.spent}}" name="system.xp.spent">
+                <label>{{localize "IMPMAL.Spent"}}</label>
+            </div>
+            <div>
+                <input type="number" value="{{system.xp.total}}" name="system.xp.total" disabled>
+                <label>{{localize "IMPMAL.Total"}}</label>
+            </div>
+        </div>
     </div>
 </div>
 
-<section class="influence-section">
-    <header class="section-header">
-
-    </header>
-    <div class="section-content">
-    {{#each system.influence}}
-        <div class="faction-influence">
-            <label>{{this.name}}</label>
+<section class="list influence">
+    <header class="list-row">
+        <div>{{localize "Faction"}}</div>
+        <div class="small centered">{{localize "Infl."}}</div>
+        <div class="wide">{{localize "Notes/Contacts"}}</div>
+        <div class="list-controls single">
+            <a class="list-create" data-type="influence"><i class="fa-solid fa-plus"></i></a>
         </div>
-    {{/each}}
+    </header>
+    <div class="list-content">
+        {{#each system.influence.factions}}
+        <div class="list-item">
+            <div class="list-row">
+                <div>
+                    <input type="text" name="system.influence.factions.{{@key}}.name" value="{{this.name}}">
+                </div>
+                <div class="small">
+                    <input type="number" name="system.influence.factions.{{@key}}.value" value="{{this.value}}">
+                </div>
+                <div class="wide">
+                    <input type="text" name="system.influence.factions.{{@key}}.notes" value="{{this.notes}}">
+                </div>
+                <div class="list-controls single">
+                    <a class="list-delete" data-type="talent"><i class="fa-solid fa-xmark"></i></a>
+                </div>
+            </div>
+            <div class="summary">
+
+            </div>
+        </div>
+        {{/each}}
     </div>
 </section>
