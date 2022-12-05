@@ -2,26 +2,38 @@
     <header class="sheet-header">
         <img class="profile" src="{{actor.img}}" data-edit="img">
         <div class="header-details">
-            <div class="details-row">
+            <div class="details-row name">
                 <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'Name'}}">
             </div>
             <div class="details-row">
                 <div class="detail-group">
-                    <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Origin'}}">
+                    <div class="input-group">
+                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Origin'}}">
+                        <a class="remove-singleton" data-type="origin"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
                     <label>{{localize "IMPMAL.Origin"}}</label>
                 </div>
                 <div class="detail-group">
-                    <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Faction'}}">
+                    <div class="input-group">
+                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Faction'}}">
+                        <a class="remove-singleton" data-type="faction"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
                     <label>{{localize "IMPMAL.Faction"}}</label>
                 </div>
             </div>
             <div class="details-row">
                 <div class="detail-group">
-                    <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Role'}}">
+                    <div class="input-group">
+                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Role'}}">
+                        <a class="remove-singleton" data-type="role"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
                     <label>{{localize "IMPMAL.Role"}}</label>
                 </div>
                 <div class="detail-group">
-                    <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Patron'}}">
+                    <div class="input-group">
+                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Patron'}}">
+                        <a class="remove-singleton" data-type="patron"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
                     <label>{{localize "IMPMAL.Patron"}}</label>
                 </div>
             </div>
@@ -29,13 +41,16 @@
     </header>
     <section class="tab-section">
         <nav class="sheet-tabs tabs">
-            <a  class="tab-select item active" data-tab="main">{{localize "IMPMAL.Main"}}</a>
-            <a  class="tab-select item" data-tab="skills">{{localize "IMPMAL.Skills"}}</a>
-            <a  class="tab-select item" data-tab="talents">{{localize "IMPMAL.Talents"}}</a>
-            <a  class="tab-select item" data-tab="combat">{{localize "IMPMAL.Combat"}}</a>
-            <a  class="tab-select item" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
-            <a  class="tab-select item" data-tab="powers">{{localize "IMPMAL.Powers"}}</a>
-            <a  class="tab-select item" data-tab="notes">{{localize "IMPMAL.Notes"}}</a>
+            <a class="tab-select item active" data-tab="main">{{localize "IMPMAL.Main"}}</a>
+            <a class="tab-select item" data-tab="skills">{{localize "IMPMAL.Skills"}}</a>
+            <a class="tab-select item" data-tab="talents">{{localize "IMPMAL.Talents"}}</a>
+            <a class="tab-select item" data-tab="combat">{{localize "IMPMAL.Combat"}}</a>
+            <a class="tab-select item" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
+            <a class="tab-select item" data-tab="equipment">{{localize "IMPMAL.Equipment"}}</a>
+            {{#if items.power.length}}
+                <a class="tab-select item" data-tab="powers">{{localize "IMPMAL.Powers"}}</a>
+            {{/if}}
+            <a class="tab-select item" data-tab="notes">{{localize "IMPMAL.Notes"}}</a>
         </nav>
         <div class="tab-content">
             <div class="tab main" data-tab="main">
@@ -50,13 +65,18 @@
             <div class="tab combat" data-tab="combat">
                 {{> systems/impmal/templates/actor/tabs/actor-combat.hbs}}
             </div>
-                     <div class="tab combat" data-tab="effects">
+            <div class="tab combat" data-tab="effects">
                 {{> systems/impmal/templates/actor/tabs/actor-effects.hbs}}
             </div>
-                <div class="tab powers" data-tab="powers">
-                {{> systems/impmal/templates/actor/tabs/actor-powers.hbs}}
+            <div class="tab equipment" data-tab="equipment">
+                {{> systems/impmal/templates/actor/tabs/actor-equipment.hbs}}
             </div>
-                <div class="tab notes" data-tab="notes">
+            {{#if items.power.length}}
+                <div class="tab powers" data-tab="powers">
+                    {{> systems/impmal/templates/actor/tabs/actor-powers.hbs}}
+                </div>
+            {{/if}}
+            <div class="tab notes" data-tab="notes">
                 {{> systems/impmal/templates/actor/tabs/character-notes.hbs}}
             </div>
         </div>
