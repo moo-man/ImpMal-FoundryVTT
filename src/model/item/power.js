@@ -6,13 +6,14 @@ export class PowerModel extends StandardItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.discipline = fields.StringField();
-        schema.rating = fields.NumberField();
-        schema.difficulty = fields.StringField();
-        schema.range = fields.StringField();
-        schema.target = fields.StringField();
-        schema.duration = fields.StringField();
-        schema.overt = fields.BooleanField();
+        schema.discipline = new fields.StringField();
+        schema.rating = new fields.NumberField();
+        schema.difficulty = new fields.StringField();
+        schema.range = new fields.StringField();
+        schema.target = new fields.StringField();
+        schema.duration = new fields.StringField();
+        schema.overt = new fields.BooleanField();
+        return schema;
     }
 
 }

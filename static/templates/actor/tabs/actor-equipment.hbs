@@ -11,12 +11,12 @@
 
     </div>
 </div>
-
-
-
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Weapon"}}</div>
+        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="weapon"><i class="fa-solid fa-plus"></i></a>
         </div>
@@ -29,6 +29,15 @@
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
+                    <div class="small">
+                        {{#if this.system.equipped}}
+                            <a><i class="fa-regular fa-circle-check"></i></a>
+                        {{else}}
+                            <a><i class="fa-regular fa-circle"></i></a>
+                        {{/if}}
+                    </div>
+                    <div class="small">{{this.system.quantity}}</div>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
                         <a class="list-create"><i class="fa-solid fa-edit"></i></a>
                         <a class="list-post"><i class="fa-solid fa-comment"></i></a>
@@ -46,6 +55,8 @@
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Ammo"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="ammo"><i class="fa-solid fa-plus"></i></a>
         </div>
@@ -58,6 +69,8 @@
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
+                    <div class="small">{{this.system.quantity}}</div>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
                         <a class="list-create"><i class="fa-solid fa-edit"></i></a>
                         <a class="list-post"><i class="fa-solid fa-comment"></i></a>
@@ -75,6 +88,8 @@
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Modification"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="modification"><i class="fa-solid fa-plus"></i></a>
         </div>
@@ -87,6 +102,8 @@
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
+                    <div class="small">{{this.system.quantity}}</div>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
                         <a class="list-create"><i class="fa-solid fa-edit"></i></a>
                         <a class="list-post"><i class="fa-solid fa-comment"></i></a>
@@ -104,6 +121,9 @@
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Protection"}}</div>
+        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="protection"><i class="fa-solid fa-plus"></i></a>
         </div>
@@ -116,6 +136,15 @@
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
+                    <div class="small">
+                        {{#if this.system.equipped}}
+                            <a><i class="fa-regular fa-circle-check"></i></a>
+                        {{else}}
+                            <a><i class="fa-regular fa-circle"></i></a>
+                        {{/if}}
+                    </div>
+                    <div class="small">{{this.system.quantity}}</div>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
                         <a class="list-create"><i class="fa-solid fa-edit"></i></a>
                         <a class="list-post"><i class="fa-solid fa-comment"></i></a>
@@ -133,6 +162,9 @@
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Forcefield"}}</div>
+        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="forceField"><i class="fa-solid fa-plus"></i></a>
         </div>
@@ -145,6 +177,15 @@
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
+                    <div class="small">
+                        {{#if this.system.equipped}}
+                            <a><i class="fa-regular fa-circle-check"></i></a>
+                        {{else}}
+                            <a><i class="fa-regular fa-circle"></i></a>
+                        {{/if}}
+                    </div>
+                    <div class="small">{{this.system.quantity}}</div>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
                         <a class="list-create"><i class="fa-solid fa-edit"></i></a>
                         <a class="list-post"><i class="fa-solid fa-comment"></i></a>
@@ -162,6 +203,9 @@
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Equipment"}}</div>
+        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="equipment"><i class="fa-solid fa-plus"></i></a>
         </div>
@@ -174,6 +218,15 @@
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
+                    <div class="small">
+                        {{#if this.system.equipped}}
+                            <a><i class="fa-regular fa-circle-check"></i></a>
+                        {{else}}
+                            <a><i class="fa-regular fa-circle"></i></a>
+                        {{/if}}
+                    </div>
+                    <div class="small">{{this.system.quantity}}</div>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
                         <a class="list-create"><i class="fa-solid fa-edit"></i></a>
                         <a class="list-post"><i class="fa-solid fa-comment"></i></a>
@@ -191,6 +244,9 @@
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Augmetic"}}</div>
+        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="augmetic"><i class="fa-solid fa-plus"></i></a>
         </div>
@@ -203,6 +259,15 @@
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
+                    <div class="small">
+                        {{#if this.system.equipped}}
+                            <a><i class="fa-regular fa-circle-check"></i></a>
+                        {{else}}
+                            <a><i class="fa-regular fa-circle"></i></a>
+                        {{/if}}
+                    </div>
+                    <div class="small">{{this.system.quantity}}</div>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
                         <a class="list-create"><i class="fa-solid fa-edit"></i></a>
                         <a class="list-post"><i class="fa-solid fa-comment"></i></a>

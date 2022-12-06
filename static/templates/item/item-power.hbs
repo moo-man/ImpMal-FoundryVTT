@@ -35,6 +35,37 @@
                         <input type="number" value="{{system.difficulty}}" name="system.difficulty">
                     </div>
                 </div>
+                                <div class="form-group">
+                    <label>{{localize "IMPMAL.Range"}}</label>
+                    <div class="form-fields">
+                        <select name="system.range">
+                            <option value=""></option>
+                            {{#each (config "ranges")}}
+                                <option value="{{@key}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Target"}}</label>
+                    <div class="form-fields">
+                        <input type="text" value="{{system.target}}" name="system.target">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Duration"}}</label>
+                    <div class="form-fields">
+                        <input type="text" value="{{system.duration}}" name="system.duration">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Overt"}}</label>
+                    <div class="form-fields">
+                        <input type="checkbox" name="system.overt" {{checked system.overt}}>
+                    </div>
+                </div>
+                
 
             </div>
             <div class="tab effects" data-tab="effects">

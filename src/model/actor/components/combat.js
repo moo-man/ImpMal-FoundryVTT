@@ -8,6 +8,7 @@ export class BaseCombatModel extends foundry.abstract.DataModel
         schema.size = new fields.StringField();
         schema.speed = new fields.StringField();
         schema.fly = new fields.StringField();
+        schema.hitLocations = new fields.ObjectField();
         return schema;
     }
 }

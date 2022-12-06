@@ -8,5 +8,6 @@ export class ModificationModel extends PhysicalItemModel
         let schema = super.defineSchema();
         schema.category = new fields.StringField();
         schema.usedWith = new fields.StringField();
+        return schema;
     }
 }

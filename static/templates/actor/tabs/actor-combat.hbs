@@ -105,5 +105,15 @@
 </section>
 
 <section class="hit-locations">
-    
+    {{#each hitLocations}}
+    <div class="location">
+        <label>{{localize this.label}}</label>
+        <div class="protection-list">
+
+        </div>
+        <div class="range">
+            {{this.displayRange}}
+        </div>
+    </div>
+    {{/each}}
 </section>

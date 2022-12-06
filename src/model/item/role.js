@@ -14,8 +14,20 @@ export class RoleModel extends StandardItemModel
         });
 
         schema.equipment = new fields.EmbeddedDataField(GroupedDocumentListModel);
-        schema.talents = new fields.EmbeddedDataField(DocumentListModel);
-        schema.talents.fields.number = new fields.NumberField({min : 0});
+        schema.talents = new fields.EmbeddedDataField(TalentListModel);
+        return schema;
     }
 
+}
+
+
+class TalentListModel extends DocumentListModel 
+{
+    
+    static defineSchema() 
+    {
+        let schema = super.defineSchema();
+        schema.number = new fields.NumberField({min : 0});
+        return schema;
+    }
 }

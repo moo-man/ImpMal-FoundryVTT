@@ -23,11 +23,11 @@ export class FactionModel extends DualItemModel
                 base : new fields.SchemaField({
                     id : new fields.StringField()
                 }),
-                choices : new fields.ArrayField()
+                choices : new fields.ArrayField(new fields.ObjectField())
             }),
             advances : new fields.SchemaField({
                 value : new fields.NumberField({min: 0}),
-                skills : new fields.ArrayField()
+                skills : new fields.ArrayField(new fields.ObjectField())
             }),
             talents : new fields.EmbeddedDataField(DocumentListModel),
             equipment : new fields.EmbeddedDataField(GroupedDocumentListModel),

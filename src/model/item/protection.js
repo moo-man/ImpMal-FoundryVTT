@@ -12,5 +12,6 @@ export class ProtectionModel extends PhysicalItemModel
         schema.armour = new fields.NumberField();
         schema.locations = new fields.ObjectField();
         schema.equipped = new fields.BooleanField();
+        return schema;
     }
 }

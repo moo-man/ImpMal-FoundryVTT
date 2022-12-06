@@ -1,8 +1,8 @@
 {
   "Actor": {
     "types": [
-      "patron",
       "character",
+      "patron",
       "npc"
     ],
     "templates": {
@@ -147,9 +147,7 @@
       },
       "influence": {
         "influence": {
-          "factions" : {
-            
-          }
+          "factions": {}
         }
       },
       "solars": {
@@ -159,7 +157,33 @@
         "combat": {
           "size": "medium",
           "speed": "normal",
-          "fly": "none"
+          "fly": "none",
+          "hitLocations": {
+            "leftArm": {
+              "range": [6,10],
+              "label": "IMPMAL.LeftArm"
+            },
+            "rightArm": {
+              "range": [5,5],
+              "label": "IMPMAL.RightArm"
+            },
+            "leftLeg": {
+              "range": [4,4],
+              "label": "IMPMAL.LeftLeg"
+            },
+            "rightLeg": {
+              "range": [3,3],
+              "label": "IMPMAL.RightLeg"
+            },
+            "body": {
+              "range": [2,2],
+              "label": "IMPMAL.Body"
+            },
+            "head": {
+              "range": [1,1],
+              "label": "IMPMAL.Head"
+            }
+          }
         }
       },
       "notes": {
@@ -203,7 +227,7 @@
         "height": "",
         "weight": "",
         "divination": ""
-    },
+      },
       "combat": {
         "superiority": 0
       },
@@ -219,7 +243,7 @@
         "max": 3,
         "current": 3
       },
-      "handed" : "r"
+      "handed": "r"
     },
     "npc": {
       "combat": {
@@ -252,11 +276,11 @@
         },
         "cost": 0,
         "availability": "",
-        "quantity" : 1
+        "quantity": 1
       },
       "traits": {
-        "traits" : {
-          "list" : []
+        "traits": {
+          "list": []
         }
       },
       "notes": {
@@ -265,7 +289,7 @@
       },
       "influence": {
         "influence": {
-          "factions" : {}
+          "factions": {}
         }
       },
       "damage": {
@@ -294,7 +318,7 @@
           "list": []
         },
         "influence": {
-          "factions" : {}
+          "factions": {}
         },
         "notes": {
           "player": "",
@@ -304,7 +328,7 @@
       "character": {
         "solars": 0,
         "influence": {
-          "factions" : {}
+          "factions": {}
         },
         "characteristics": {
           "base": {
@@ -419,7 +443,10 @@
       "damage": 0
     },
     "modification": {
-      "templates": ["notes", "physical"],
+      "templates": [
+        "notes",
+        "physical"
+      ],
       "category": "",
       "usedWith": ""
     },
@@ -429,7 +456,7 @@
         "physical",
         "traits"
       ],
-      "category" : "",
+      "category": "",
       "armour": 0,
       "locations": [],
       "equipped": false

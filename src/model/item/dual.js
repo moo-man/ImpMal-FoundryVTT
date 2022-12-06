@@ -1,8 +1,11 @@
+import { BaseItemModel } from "./base";
+
+let fields = foundry.data.fields;
 
 /**
  * Represents an Item used by both Patrons and Characters/NPCs
  */
-export class DualItemModel extends foundry.abstract.DataModel 
+export class DualItemModel extends  BaseItemModel
 {
 
     static defineSchema() 

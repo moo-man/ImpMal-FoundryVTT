@@ -12,5 +12,6 @@ export class ForceFieldModel extends PhysicalItemModel
         schema.overload = new fields.NumberField();
         schema.equipped = new fields.BooleanField();
         schema.force = new fields.BooleanField();
+        return schema;
     }
 }

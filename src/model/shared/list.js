@@ -56,7 +56,7 @@ export class GroupedDocumentListModel extends  DocumentListModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.groups = new fields.ArrayField();
+        schema.groups = new fields.ArrayField(new fields.ObjectField());
         return schema;
     }
 }

@@ -14,30 +14,6 @@
             </div>
             <div class="tab details" data-tab="details">
 
-                <div class="form-group">
-                    <label>{{localize "IMPMAL.Category"}}</label>
-                    <div class="form-fields">
-                        <select name="system.category.value">
-                            {{#each (config "protectionTypes")}}
-                                <option value="{{@key}}">{{this}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>{{localize "IMPMAL.Armour"}}</label>
-                    <div class="form-fields">
-                        <input type="number" value="{{system.armour}}" name="system.armour">
-                    </div>
-                </div>
-
-                <div class="traits">
-
-                </div>
-
-                <div class="locations">
-
-                </div>
             </div>
             <div class="tab effects" data-tab="effects">
                 {{> systems/impmal/templates/item/partials/item-effects.hbs}}

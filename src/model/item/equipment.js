@@ -7,5 +7,6 @@ export class EquipmentModel extends PhysicalItemModel
     {
         let schema = super.defineSchema();
         schema.equipped = new fields.BooleanField();
+        return schema;
     }
 }
