@@ -16,43 +16,49 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.AttackType"}}</label>
                     <div class="form-fields">
-                        <select name="system.attackType.value">
+                        <select name="system.attackType">
+                            {{#select system.attackType}}
                             <option value="melee">Melee</option>
-                            <option value="melee">Ranged</option>
+                            <option value="ranged">Ranged</option>
+                            {{/select}}
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Category"}}</label>
                     <div class="form-fields">
-                        <select name="system.categroy.value">
-                            <option value=""></option>
-                            {{#if (eq system.attackType "melee")}}
-                                {{#each (config "meleeTypes")}}
-                                    <option value="{{@key}}">{{this}}</option>
-                                {{/each}}
-                            {{else}}
-                                {{#each (config "rangedTypes")}}
-                                    <option value="{{@key}}">{{this}}</option>
-                                {{/each}}
-                            {{/if}}
+                        <select name="system.category">
+                            {{#select system.category}}
+                                <option value=""></option>
+                                {{#if (eq system.attackType "melee")}}
+                                    {{#each (config "meleeTypes")}}
+                                        <option value="{{@key}}">{{this}}</option>
+                                    {{/each}}
+                                {{else}}
+                                    {{#each (config "rangedTypes")}}
+                                        <option value="{{@key}}">{{this}}</option>
+                                    {{/each}}
+                                {{/if}}
+                            {{/select}}
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Specialisation"}}</label>
                     <div class="form-fields">
-                        <select name="system.spec.value">
-                            <option value=""></option>
-                            {{#if (eq system.attackType "melee")}}
-                                {{#each (config "meleeSpecs")}}
-                                    <option value="{{@key}}">{{this}}</option>
-                                {{/each}}
-                            {{else}}
-                                {{#each (config "rangedSpecs")}}
-                                    <option value="{{@key}}">{{this}}</option>
-                                {{/each}}
-                            {{/if}}
+                        <select name="system.spec">
+                            {{#select system.spec}}
+                                <option value=""></option>
+                                {{#if (eq system.attackType "melee")}}
+                                    {{#each (config "meleeSpecs")}}
+                                        <option value="{{@key}}">{{this}}</option>
+                                    {{/each}}
+                                {{else}}
+                                    {{#each (config "rangedSpecs")}}
+                                        <option value="{{@key}}">{{this}}</option>
+                                    {{/each}}
+                                {{/if}}
+                            {{/select}}
                         </select>
                     </div>
                 </div>
@@ -63,10 +69,12 @@
                     <label>{{localize "IMPMAL.Range"}}</label>
                     <div class="form-fields">
                         <select name="system.range">
-                            <option value=""></option>
-                            {{#each (config "ranges")}}
-                                <option value="{{@key}}">{{this}}</option>
-                            {{/each}}
+                            {{#select system.range}}
+                                <option value=""></option>
+                                {{#each (config "ranges")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
                         </select>
                     </div>
                 </div>

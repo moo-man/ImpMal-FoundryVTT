@@ -98,6 +98,7 @@
 
     .actor-property.inline {
         flex-direction: row;
+        align-items: center;
     }
 
     .tab-content .section {
@@ -174,5 +175,28 @@
                 justify-content: right;
             }
         }
+    }
+
+
+    .encumbrance-section
+    {
+        flex: 5;
+    }
+
+
+    .actor-notes {
+        height: calc(100% - 174px);
+        display: flex;
+        flex-direction: column;
+        > * {
+            flex: 1
+        }
+        .notes-content {
+            height: calc(100% - 16px);
+        }
+    }
+
+    .editor {
+        height: 100%;
     }
 }

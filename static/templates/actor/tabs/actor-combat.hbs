@@ -28,6 +28,11 @@
         <label class="property-label">{{localize "IMPMAL.Size"}}</label>
         <div class="property-value">
             <select name="system.combat.size">
+                {{#select system.combat.size}}
+                {{#each (config "sizes")}}
+                <option value="{{@key}}">{{this}}</option>
+                {{/each}}
+                {{/select}}
             </select>
         </div>
     </div>

@@ -3,10 +3,12 @@
     <div class="form-fields">
         <input type="text" value="{{system.damage.value}}" name="system.damage.value">
         <select name="system.damage.characteristic">
-            <option value=""></option>
-            {{#each (config "characteristics")}}
-                <option value="{{@key}}">{{this}}</option>
-            {{/each}}
+            {{#select system.damage.characteristic}}
+                <option value=""></option>
+                {{#each (config "characteristics")}}
+                    <option value="{{@key}}">{{this}}</option>
+                {{/each}}
+            {{/select}}
         </select>
         <label>{{localize "IMPMAL.ChBonus"}}</label>
     </div>

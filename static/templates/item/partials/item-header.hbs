@@ -29,11 +29,13 @@
                 <div class="detail-group">
                     <label>{{localize "IMPMAL.Avail."}}</label>
                     <select name="system.availability">
-                        <option value=""></option>
-                        {{#each (config "availability")}}
-                            <option value="{{@key}}">{{this}}</option>
-                        {{/each}}
-                        <option value="other">{{localize "IMPMAL.Other"}}</option>
+                        {{#select system.availability}}
+                            <option value=""></option>
+                            {{#each (config "availability")}}
+                                <option value="{{@key}}">{{this}}</option>
+                            {{/each}}
+                            <option value="other">{{localize "IMPMAL.Other"}}</option>
+                        {{/select}}
                     </select>
                 </div>
             </div>
