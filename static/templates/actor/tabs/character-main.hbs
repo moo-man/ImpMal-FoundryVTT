@@ -105,12 +105,12 @@
         <div class="small centered">{{localize "Infl."}}</div>
         <div class="wide">{{localize "Notes/Contacts"}}</div>
         <div class="list-controls single">
-            <a class="list-create" data-type="influence"><i class="fa-solid fa-plus"></i></a>
+            <a class="faction-create"><i class="fa-solid fa-plus"></i></a>
         </div>
     </header>
     <div class="list-content">
         {{#each system.influence.factions}}
-        <div class="list-item">
+        <div class="list-item" data-type="{{@key}}">
             <div class="list-row">
                 <div>
                     <input type="text" name="system.influence.factions.{{@key}}.name" value="{{this.name}}">
@@ -122,7 +122,7 @@
                     <input type="text" name="system.influence.factions.{{@key}}.notes" value="{{this.notes}}">
                 </div>
                 <div class="list-controls single">
-                    <a class="list-delete" data-type="talent"><i class="fa-solid fa-xmark"></i></a>
+                    <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
                 </div>
             </div>
             <div class="summary">
