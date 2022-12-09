@@ -1,8 +1,8 @@
-import { PhysicalItemModel } from "./components/physical";
+import { EquippableItemModel } from "./components/equippable";
 import { TraitListModel } from "./components/traits";
 let fields = foundry.data.fields;
 
-export class ProtectionModel extends PhysicalItemModel
+export class ProtectionModel extends EquippableItemModel
 {
     static defineSchema() 
     {
@@ -11,7 +11,6 @@ export class ProtectionModel extends PhysicalItemModel
         schema.category = new fields.StringField();
         schema.armour = new fields.NumberField();
         schema.locations = new fields.ObjectField();
-        schema.equipped = new fields.BooleanField();
         return schema;
     }
 }

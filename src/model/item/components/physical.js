@@ -19,6 +19,7 @@ export class PhysicalItemModel extends StandardItemModel
 
     computeBase() 
     {
+        super.computeBase();
         this.encumbrance.total = this.quantity * this.encumbrance.value;
     }
 }

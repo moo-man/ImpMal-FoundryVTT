@@ -1,12 +1,10 @@
-import { PhysicalItemModel } from "./components/physical";
-let fields = foundry.data.fields;
+import { EquippableItemModel } from "./components/equippable";
 
-export class EquipmentModel extends PhysicalItemModel
+export class EquipmentModel extends EquippableItemModel
 {
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.equipped = new fields.BooleanField();
         return schema;
     }
 }

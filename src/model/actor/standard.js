@@ -26,7 +26,17 @@ export class StandardActorModel extends BaseActorModel
         });
         return schema;
     }
+    
+    initialize() 
+    {
+        this.wounds.max = 0;
+        this.initiative = 0;
+        this.encumbrance = {};
+        this.encumbrance.overburdened = 0;
+        this.encumbrance.restrained = 0;
+        this.encumbrance.value = 0;
 
+    }
 
     computeBase() 
     {
@@ -45,12 +55,12 @@ export class StandardActorModel extends BaseActorModel
         this.skills.findSpecialisations(items.skill);
         this.computeWounds();
         this.computeInitiative();
-        this.computeEncumbrance();
+        this.computeEncumbrance(items);
     }
 
     computeWounds() 
     {
-        this.wounds.max = 
+        this.wounds.max += 
             this.characteristics.str.bonus + 
             (2 * this.characteristics.tgh.bonus) + 
             this.characteristics.wil.bonus;
@@ -58,17 +68,41 @@ export class StandardActorModel extends BaseActorModel
 
     computeInitiative() 
     {
-        this.initiative = 
+        this.initiative += 
             this.characteristics.per.bonus + 
             this.characteristics.ag.bonus;
     }
 
-    computeEncumbrance() 
+    computeEncumbrance(items) 
     {
+        let list = [];
+        let physicalTypes = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical"));
+        
+        for (let type in items)
+        {
+            if (physicalTypes.includes(type))
+            {
+                list = list.concat(items[type]);
+            }
+        }
+
         this.encumbrance = {};
-        this.encumbrance.overburdened = this.characteristics.str.bonus + this.characteristics.tgh.bonus; 
-        this.encumbrance.restrained = this.encumbrance.overburdened * 2;
-        this.encumbrance.value = 0; // To be calculated with items
+        this.encumbrance.overburdened += this.characteristics.str.bonus + this.characteristics.tgh.bonus; 
+        this.encumbrance.restrained += (this.characteristics.str.bonus + this.characteristics.tgh.bonus) * 2;
+        this.encumbrance.value += list.reduce((acc, item) => acc += item.system.encumbrance.total, 0);
+
+        if (this.encumbrance.value < this.encumbrance.overburdened)
+        {
+            this.encumbrance.state = 0;
+        }
+        else if (this.encumbrance.value < this.encumbrance.restrained)
+        {
+            this.encumbrance.state = 1;
+        }
+        else if (this.encumbrance >= this.encumbrance.restrained)
+        {
+            this.encumbrance.state = 2;
+        }
     }
 
 }

@@ -1,9 +1,9 @@
 import { DamageModel } from "./components/damage";
-import { PhysicalItemModel } from "./components/physical";
+import { EquippableItemModel } from "./components/equippable";
 import { TraitListModel } from "./components/traits";
 let fields = foundry.data.fields;
 
-export class WeaponModel extends PhysicalItemModel
+export class WeaponModel extends EquippableItemModel
 {
     static defineSchema() 
     {
@@ -15,8 +15,17 @@ export class WeaponModel extends PhysicalItemModel
         schema.spec = new fields.StringField();
         schema.range = new fields.StringField();
         schema.mag = new fields.NumberField();
-        schema.equipped = new fields.BooleanField();
         return schema;
     }
 
+
+    /**
+     *   Unlike other "equippable" items, weapons should not subtract encumbrance if it is equipped
+     *   So redo the calculation
+     */ 
+    computeBase() 
+    {
+        super.computeBase();
+        this.encumbrance.total = this.quantity * this.encumbrance.value;
+    }
 }

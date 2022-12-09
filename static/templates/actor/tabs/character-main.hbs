@@ -26,6 +26,15 @@
             </td>
         {{/each}}
     </tr>
+        <tr>
+        <td>Advances</td>
+        {{!-- <td>{{localize "IMPMAL.Advances"}}</td> --}}
+        {{#each system.characteristics}}
+            <td>
+                <input type="number" name="system.characteristics.{{@key}}.modifier" value="{{this.modifier}}">
+            </td>
+        {{/each}}
+    </tr>
     <tr>
         <td>Total</td>
         {{!-- <td>{{localize "IMPMAL.Total"}}</td> --}}

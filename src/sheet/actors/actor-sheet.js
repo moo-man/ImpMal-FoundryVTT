@@ -19,6 +19,7 @@ export default class ImpMalActorSheet extends ActorSheet
         let data = super.getData();
         data.system = data.actor.system;
         data.items = this.organizeItems(data);
+        data.effects = this.organizeEffects(data);
         data.hitLocations = this.formatHitLocations(data);
         return data;
     }
@@ -27,7 +28,25 @@ export default class ImpMalActorSheet extends ActorSheet
     organizeItems(data) 
     {
         let sheetItems = data.actor.itemCategories;
+
+        sheetItems.equipped = {
+            melee : sheetItems.weapon.filter(i => i.system.equipped && i.system.attackType == "melee"),
+            ranged : sheetItems.weapon.filter(i => i.system.equipped && i.system.attackType == "ranged"),
+            protection : sheetItems.protection.filter(i => i.system.equipped),
+            equipment : sheetItems.equipment.filter(i => i.system.equipped)
+        };
         return sheetItems;
+    }
+
+    organizeEffects(data)
+    {
+        let effects = {
+            passive : data.actor.effects.filter(e => !e.isTemporary && !e.disabled),
+            active: data.actor.effects.filter(e => e.isTemporary && !e.disabled),
+            disabled : data.actor.effects.filter(e => e.disabled)
+        };
+
+        return effects;
     }
 
     formatHitLocations(data) 
@@ -52,6 +71,24 @@ export default class ImpMalActorSheet extends ActorSheet
     }
 
 
+    /**
+     * By default, Foundry prevents editing of any property that is being affected by Active Effects
+     * I don't like this, so to prevent feedback loops of constant updating, diff the update object 
+     * with the *derived* actor data
+     * 
+     * @param {Object} updateData 
+     * @returns 
+     */
+    _getSubmitData(updateData = {}) 
+    {
+        this.actor.overrides = {};
+        const data = super._getSubmitData(updateData);
+
+        // Diff the update with the derived actor data to unwanted constant incremental updates
+        const diff = foundry.utils.diffObject(foundry.utils.flattenObject(this.object.toObject(false)), data);
+        return diff;
+    }
+
     activateListeners(html) 
     {
         super.activateListeners(html);
@@ -59,18 +96,21 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".list-edit").on("click", this._onListEdit.bind(this));
         html.find(".list-delete").on("click", this._onListDelete.bind(this));
         html.find(".list-create").on("click", this._onListCreate.bind(this));
+        html.find(".list-toggle").on("click", this._onListToggle.bind(this));
         html.find(".list-post").on("click", this._onPostItem.bind(this));
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
+        html.find(".property-edit").on("click", this._onPropertyEdit.bind(this));
     }
 
+    //#region Sheet Listeners
     _onListEdit(event) 
     {
         let el = $(event.currentTarget).parents(".list-item");
         let id = el.attr("data-id");
-        let collection = el.attr("data-collection");
+        let collection = el.attr("data-collection") || "items";
 
-        return this.actor[collection].get[id]?.sheet.render(true);
+        return this.actor[collection].get(id)?.sheet.render(true);
     }
     _onListDelete(event) 
     {
@@ -90,21 +130,14 @@ export default class ImpMalActorSheet extends ActorSheet
     }
     _onListCreate(event) 
     {
-        let el = $(event.currentTarget).parents(".list-item");
-        let collection = el.attr("data-collection");
-        let docName = collection == "item" ? "Item" : "ActiveEffect";
-        let createData = {};
+        let type = event.currentTarget.dataset.type;
+        if (type=="effect")
+        {
+            return this._onEffectCreate(event);
+        }
 
-        if (docName == "Item")
-        {
-            let type = event.currentTarget.dataset.type;
-            createData = { name: `New ${getGame().i18n.localize(CONFIG.Item.typeLabels[type])}`, type };
-        }
-        else 
-        {
-            createData = { name: `New Active Effect`};
-        }
-    
+        let createData = { name: `New ${game.i18n.localize(CONFIG.Item.typeLabels[type])}`, type };
+
         return this.actor.createEmbeddedDocuments(docName, [createData]);
     }
     
@@ -116,23 +149,26 @@ export default class ImpMalActorSheet extends ActorSheet
     
     async _onEffectCreate(ev) 
     {
-        let type = (ev.currentTarget).dataset["type"];
-        let effectData = { label: getGame().i18n.localize("IMPMAL.NewEffect"), icon: "icons/svg/aura.svg" };
+        let type = ev.currentTarget.dataset.category;
+        let effectData = { label: game.i18n.localize("IMPMAL.NewEffect"), icon: "icons/svg/aura.svg" };
         if (type == "temporary") 
         {
             effectData["duration.rounds"] = 1;
         }
+        else if(type == "disabled") 
+        {
+            effectData.disabled = true;
+        }
     
-        let html = await renderTemplate("systems/IMPMAL-of-eternity/templates/apps/quick-effect.html", effectData);
+        let html = await renderTemplate("systems/impmal/templates/apps/quick-effect.html", effectData);
         new Dialog({
-            title: getGame().i18n.localize("IMPMAL.QuickEffect"),
+            title: game.i18n.localize("IMPMAL.QuickEffect"),
             content: html,
             buttons: {
                 create: {
                     label: "Create",
                     callback: (html) => 
                     {
-                        html = $(html);
                         let mode = 2;
                         let label = html.find(".label").val();
                         let key = html.find(".key").val();
@@ -151,27 +187,15 @@ export default class ImpMalActorSheet extends ActorSheet
             {
                 $(dlg).find(".label").select();
             },
-        });
+        }).render(true);
     }
     
-    _onEffectEdit(ev) 
+    _onListToggle(ev) 
     {
-        let id = $(ev.currentTarget).parents(".item").attr("data-item-id");
-        this.object.effects.get(id)?.sheet?.render(true);
-    }
-    
-    _onEffectDelete(ev) 
-    {
-        let id = $(ev.currentTarget).parents(".item").attr("data-item-id");
-        if (id) {this.object.deleteEmbeddedDocuments("ActiveEffect", [id]);}
-    }
-    
-    _onEffectToggle(ev) 
-    {
-        let id = $(ev.currentTarget).parents(".item").attr("data-item-id");
+        let id = $(ev.currentTarget).parents(".list-item").attr("data-id");
         let effect = this.object.effects.get(id);
     
-        if (effect) {effect.update({ disabled: !effect.data.disabled });}
+        if (effect) {effect.update({ disabled: !effect.disabled });}
     }
 
     _onFactionDelete(ev) 
@@ -186,6 +210,37 @@ export default class ImpMalActorSheet extends ActorSheet
             no: () => {},
             defaultYes: true
         });
+    }
+
+    
+    /**
+     *  Generic property editing via the sheet, supports editing items with the `data-id` property, 
+     *  can specify ("data-collection" as "effects" to edit effects instead)
+     */
+    _onPropertyEdit(event) 
+    {
+        let id = event.currentTarget.dataset.id;
+        let target = event.currentTarget.dataset.target;
+        let collection = event.currentTarget.dataset.collection || "items";
+        let value = event.target.value;
+
+        let doc = this.actor;
+        if (id)
+        {
+            doc = this.actor[collection].get(id);
+        }
+
+        if (Number.isNumeric(value))
+        {
+            value = Number(value);
+        }
+        else if (event.currentTarget.classList.contains("boolean")) // toggling a boolean
+        {
+            value = !getProperty(doc, target);
+        }
+        
+
+        return doc.update({[target] : value});
     }
 
     _onFactionCreate() 
@@ -212,4 +267,5 @@ export default class ImpMalActorSheet extends ActorSheet
             default : "submit"
         }).render(true);
     }
+    //#endregion
 }

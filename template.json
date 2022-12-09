@@ -10,48 +10,48 @@
         "characteristics": {
           "ws": {
             "starting": 0,
-            "modifier": 0,
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "bs": {
             "starting": 0,
-            "modifier": 0,
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "str": {
             "starting": 0,
-            "modifier": 0,
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "tgh": {
             "starting": 0,
-            "modifier": 0,
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "ag": {
             "starting": 0,
-            "modifier": 0,
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "int": {
             "starting": 0,
-            "modifier": 0,
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "per": {
             "starting": 0,
-            "modifier": 0,
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "wil": {
             "starting": 0,
-            "modifier": 0,
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "fel": {
             "starting": 0,
-            "modifier": 0,
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           }
         }
       },
@@ -59,83 +59,103 @@
         "skills": {
           "athletics": {
             "characteristic": "str",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "awareness": {
             "characteristic": "per",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "dexterity": {
             "characteristic": "ag",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "discipline": {
             "characteristic": "wil",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "fortitude": {
             "characteristic": "tgh",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "intuition": {
             "characteristic": "per",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "linguistics": {
             "characteristic": "int",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "logic": {
             "characteristic": "int",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "lore": {
             "characteristic": "int",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "medicae": {
             "characteristic": "int",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "melee": {
             "characteristic": "ws",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "navigation": {
             "characteristic": "int",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "piloting": {
             "characteristic": "ag",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "presence": {
             "characteristic": "wil",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "psychic": {
             "characteristic": "wil",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "ranged": {
             "characteristic": "bs",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "rapport": {
             "characteristic": "fel",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "reflexes": {
             "characteristic": "ag",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "stealth": {
             "characteristic": "ag",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           },
           "tech": {
             "characteristic": "int",
-            "advances": 0
+            "advances": 0,
+            "modifier" : 0
           }
         }
       },
@@ -277,6 +297,10 @@
         "cost": 0,
         "availability": "",
         "quantity": 1
+      },
+      "equipped" : {
+        "value": false,
+        "hand" : ""
       },
       "traits": {
         "traits": {
@@ -423,6 +447,7 @@
       "templates": [
         "notes",
         "physical",
+        "equipped",
         "damage",
         "traits"
       ],
@@ -430,8 +455,7 @@
       "category": "",
       "spec": "",
       "range": "",
-      "mag": 0,
-      "equipped": false
+      "mag": 0
     },
     "ammo": {
       "templates": [
@@ -454,28 +478,28 @@
       "templates": [
         "notes",
         "physical",
+        "equipped",
         "traits"
       ],
       "category": "",
       "armour": 0,
-      "locations": [],
-      "equipped": false
+      "locations": []
     },
     "forceField": {
       "templates": [
         "notes",
+        "equipped",
         "physical"
       ],
       "protection": "",
-      "overload": 0,
-      "equipped": false
+      "overload": 0
     },
     "equipment": {
       "templates": [
         "notes",
+        "equipped",
         "physical"
-      ],
-      "equipped": false
+      ]
     },
     "augmetic": {
       "templates": [

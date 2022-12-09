@@ -1,0 +1,60 @@
+<form class="dialog-fields">
+    <div class="quick-effect">
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Label"}}</label>
+            <div class="form-fields">
+                <input type="text" class="label" name="label" value="{{label}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Change"}}</label>
+            <select class="key" name="key">
+                <optgroup label="{{localize 'IMPMAL.Characteristics'}}">
+                    <option value="system.characteristics.ws.modifier">{{localize "IMPMAL.WeaponSkill"}}</option>
+                    <option value="system.characteristics.bs.modifier">{{localize "IMPMAL.BallisticSkill"}}</option>
+                    <option value="system.characteristics.str.modifier">{{localize "IMPMAL.Strength"}}</option>
+                    <option value="system.characteristics.tgh.modifier">{{localize "IMPMAL.Toughness"}}</option>
+                    <option value="system.characteristics.ag.modifier">{{localize "IMPMAL.Agility"}}</option>
+                    <option value="system.characteristics.int.modifier">{{localize "IMPMAL.Intelligence"}}</option>
+                    <option value="system.characteristics.per.modifier">{{localize "IMPMAL.Perception"}}</option>
+                    <option value="system.characteristics.wil.modifier">{{localize "IMPMAL.Willpower"}}</option>
+                    <option value="system.characteristics.fel.modifier">{{localize "IMPMAL.Fellowship"}}</option>
+                </optgroup>
+                <optgroup label="{{localize 'IMPMAL.Skills'}}">
+                    <option value="system.skills.athletics.modifier">{{localize "IMPMAL.Athletics"}}</option>
+                    <option value="system.skills.awareness.modifier">{{localize "IMPMAL.Awareness"}}</option>
+                    <option value="system.skills.dexterity.modifier">{{localize "IMPMAL.Dexterity"}}</option>
+                    <option value="system.skills.discipline.modifier">{{localize "IMPMAL.Discipline"}}</option>
+                    <option value="system.skills.fortitude.modifier">{{localize "IMPMAL.Fortitude"}}</option>
+                    <option value="system.skills.intuition.modifier">{{localize "IMPMAL.Intuition"}}</option>
+                    <option value="system.skills.linguistics.modifier">{{localize "IMPMAL.Linguistics"}}</option>
+                    <option value="system.skills.logic.modifier">{{localize "IMPMAL.Logic"}}</option>
+                    <option value="system.skills.lore.modifier">{{localize "IMPMAL.Lore"}}</option>
+                    <option value="system.skills.medicae.modifier">{{localize "IMPMAL.Medicae"}}</option>
+                    <option value="system.skills.melee.modifier">{{localize "IMPMAL.Melee"}}</option>
+                    <option value="system.skills.navigation.modifier">{{localize "IMPMAL.Navigation"}}</option>
+                    <option value="system.skills.presence.modifier">{{localize "IMPMAL.Presence"}}</option>
+                    <option value="system.skills.piloting.modifier">{{localize "IMPMAL.Piloting"}}</option>
+                    <option value="system.skills.psychic.modifier">{{localize "IMPMAL.Psychic"}}</option>
+                    <option value="system.skills.ranged.modifier">{{localize "IMPMAL.Ranged"}}</option>
+                    <option value="system.skills.rapport.modifier">{{localize "IMPMAL.Rapport"}}</option>
+                    <option value="system.skills.reflexes.modifier">{{localize "IMPMAL.Reflexes"}}</option>
+                    <option value="system.skills.stealth.modifier">{{localize "IMPMAL.Stealth"}}</option>
+                    <option value="system.skills.tech.modifier">{{localize "IMPMAL.Tech"}}</option>
+                </optgroup>
+                <optgroup label="Other">
+                    <option value="system.wounds.max">{{localize "IMPMAL.MaxWounds"}}</option>
+                    <option value="system.initiative">{{localize "IMPMAL.Initiative"}}</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Modifier"}}</label>
+            <div class="form-fields">
+                <input type="number" class="modifier" name="modifier" value="0">
+            </div>
+        </div>
+    </div>
+</form>

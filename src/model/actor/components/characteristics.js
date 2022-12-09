@@ -17,6 +17,7 @@ export class CharacteristicsModel extends foundry.abstract.DataModel
         return schema;
     }
 
+
     computeTotals() 
     {
         for(let ch in this)

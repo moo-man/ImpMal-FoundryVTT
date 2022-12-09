@@ -1,8 +1,8 @@
-import { PhysicalItemModel } from "./components/physical";
+import { EquippableItemModel } from "./components/equippable";
 import { TraitListModel } from "./components/traits";
 let fields = foundry.data.fields;
 
-export class ForceFieldModel extends PhysicalItemModel
+export class ForceFieldModel extends EquippableItemModel
 {
     static defineSchema() 
     {
@@ -10,7 +10,6 @@ export class ForceFieldModel extends PhysicalItemModel
         schema.traits = new fields.EmbeddedDataField(TraitListModel),
         schema.protection = new fields.StringField();
         schema.overload = new fields.NumberField();
-        schema.equipped = new fields.BooleanField();
         schema.force = new fields.BooleanField();
         return schema;
     }

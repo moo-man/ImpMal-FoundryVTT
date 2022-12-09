@@ -64,12 +64,13 @@ export class SkillModel extends foundry.abstract.DataModel
         let schema = {};
         schema.characteristic = new fields.StringField();
         schema.advances = new fields.NumberField({min: 0, max: 4, initial: 0});
+        schema.modifier = new fields.NumberField({initial : 0});
         return schema;
     }
 
     computeTotal(characteristics) 
     {
         this.characteristicData = characteristics[this.characteristic];
-        this.total = this.characteristicData.total + (5 * this.advances);
+        this.total = this.characteristicData.total + (5 * this.advances) + this.modifier;
     }
 }

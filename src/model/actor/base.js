@@ -15,7 +15,6 @@ export class BaseActorModel extends foundry.abstract.DataModel
 
         return schema;
     }
-
     
     preCreateData(data) 
     {
@@ -29,6 +28,11 @@ export class BaseActorModel extends foundry.abstract.DataModel
         return preCreateData;
     }
 
+    initialize() 
+    {
+
+    }
+
     preUpdateChecks(data)
     {
         return data;
@@ -37,7 +41,7 @@ export class BaseActorModel extends foundry.abstract.DataModel
 
     computeBase() 
     {
-        // Abstract
+        this.initialize();
     }
 
     computeDerived() 
