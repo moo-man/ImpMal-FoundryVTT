@@ -13,6 +13,12 @@ export class ImpMalItem extends Item
         this.system.preUpdateChecks(data);
     }
 
+    async _onUpdate(data, options, user)
+    {
+        await super._onUpdate(data, options, user);
+        this.update(this.system.updateChecks(data));
+    }
+
 
     prepareBaseData() 
     {

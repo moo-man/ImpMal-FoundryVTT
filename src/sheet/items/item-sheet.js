@@ -28,6 +28,51 @@ export default class ImpMalItemSheet extends ItemSheet
     {
         super.activateListeners(html);
 
-        html.find("");
+        html.find(".array-create").click(this._onCreateArrayElement.bind(this));
+        html.find(".array-edit").change(this._onEditArrayElement.bind(this));
+        html.find(".array-delete").click(this._onDeleteArrayElement.bind(this));
+    }
+
+    _onCreateArrayElement(ev)
+    {
+        let target = ev.currentTarget.dataset.target; // Location of the list model
+        let arrayModel = getProperty(this.item, target);
+        return this.item.update({[target + ".list"] : arrayModel.add()});
+    }
+
+    _onEditArrayElement(ev)
+    {
+        let target = ev.currentTarget.parentElement.dataset.target;    // Location of the list model
+        let index = ev.currentTarget.parentElement.dataset.index;      // Index to be edited
+        let property = ev.currentTarget.dataset.property;       // Property to be edited (if element is an object)
+
+        let arrayModel = getProperty(this.item, target);
+
+        let value;
+
+        // If property is specified, means that array elements are objects
+        // Only edit that property specified
+        if (property)
+        {
+            value = {[`${property}`] : ev.target.value};
+        }
+        else // If no property specified, it must be a string or number
+        {
+            value = ev.target.value;
+            if (Number.isNumeric(value))
+            {
+                value = Number(value);
+            }
+        }
+
+        return this.item.update({[target + ".list"] : arrayModel.edit(index, ev.target.value)});
+    }
+
+    _onDeleteArrayElement(ev)
+    {
+        let target = ev.currentTarget.parentElement.dataset.target;    // Location of the list model
+        let index = ev.currentTarget.parentElement.dataset.index;      // Index to be deleted
+        let arrayModel = getProperty(this.item, target);
+        return this.item.update({[target + ".list"] : arrayModel.remove(index)});
     }
 }

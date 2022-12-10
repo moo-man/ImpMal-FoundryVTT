@@ -6,6 +6,8 @@ let fields = foundry.data.fields;
 // Generic list of objects
 export class ListModel extends foundry.abstract.DataModel
 {
+    defaultValue = undefined;
+
     static defineSchema() 
     {
         let schema = {};
@@ -15,12 +17,40 @@ export class ListModel extends foundry.abstract.DataModel
 
     add(value)
     {
-        return this.list.concat(value);
+        return this.list.concat(value || this.defaultValue);
+    }
+
+    edit(index, value)
+    {
+        let list = duplicate(this.list);
+        if (typeof value == "object")
+        {
+            mergeObject(list[index], value, {overwrite : true});
+        }
+        else if (typeof value == "string")
+        {
+            list[index] = value;
+        }
+        return list;
     }
 
     remove(index)
     {
+        index = Number(index);
         return this.list.slice(0, index).concat(this.list.slice(index+1));
+    }
+}
+
+// Generic list of objects
+export class StringListModel extends ListModel
+{
+    defaultValue = "";
+
+    static defineSchema() 
+    {
+        let schema = {};
+        schema.list = new fields.ArrayField(new fields.StringField());
+        return schema;
     }
 }
 

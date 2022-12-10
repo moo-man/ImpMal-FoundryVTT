@@ -30,11 +30,13 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.ModificationType"}}</label>
                     <div class="form-fields">
-                        <select name="system.category.value">
-                            <option value=""></option>
-                            {{#each (config modificationType)}}
-                                <option value="{{@key}}">{{this}}</option>
-                            {{/each}}
+                        <select name="system.category">
+                            {{#select system.category}}
+                                <option value=""></option>
+                                {{#each (config modificationType)}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
                         </select>
                     </div>
                 </div>

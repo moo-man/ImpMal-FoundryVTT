@@ -483,7 +483,10 @@
       ],
       "category": "",
       "armour": 0,
-      "locations": []
+      "locations": {
+        "list" : [],
+        "label" : ""
+      }
     },
     "forceField": {
       "templates": [

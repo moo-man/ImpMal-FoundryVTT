@@ -31,4 +31,17 @@
             }
         }
     }
+
+    .array {
+        display: flex;
+        flex-direction: column;
+        .array-group {
+            display: flex;
+            align-items: center;
+            > * 
+            {
+                margin: 3px;
+            }
+        }
+    }
 }

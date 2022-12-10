@@ -38,6 +38,11 @@ export class BaseActorModel extends foundry.abstract.DataModel
         return data;
     }
 
+    updateChecks()
+    {
+        return {};
+    }
+
 
     computeBase() 
     {

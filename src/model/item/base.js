@@ -18,6 +18,11 @@ export class BaseItemModel extends foundry.abstract.DataModel
         return data;
     }
 
+    updateChecks()
+    {
+        return {};
+    }
+
 
     computeBase() 
     {

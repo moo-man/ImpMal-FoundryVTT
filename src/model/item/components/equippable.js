@@ -15,14 +15,19 @@ export class EquippableItemModel extends PhysicalItemModel
         return schema;
     }
 
+    
     computeBase() 
     {
         super.computeBase();
-
+        
         // if equipped/worn, reduce encumbrance by 1
         if (this.equipped.value)
         {
-            this.encumbrance.total -= 1;
+            this.encumbrance.total = Math.max(0, this.encumbrance.total - 1);
         }
+    }
+    get isEquipped() 
+    {
+        return this.equipped.value;
     }
 }

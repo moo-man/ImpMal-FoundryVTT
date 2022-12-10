@@ -11,6 +11,30 @@ export class BaseCombatModel extends foundry.abstract.DataModel
         schema.hitLocations = new fields.ObjectField();
         return schema;
     }
+
+    initializeArmour()
+    {
+        for (let loc in this.hitLocations)
+        {
+            this.hitLocations[loc].armour = 0;
+        }
+    }
+
+
+    computeArmour(items)
+    {
+        let protectionItems = items.protection.filter(i => i.system.isEquipped);
+        for(let item of protectionItems)
+        {
+            for (let loc of item.system.locations.list)
+            {
+                if (this.hitLocations[loc])
+                {
+                    this.hitLocations[loc].armour += item.system.armour;
+                }
+            }
+        }
+    }
 }
 
 

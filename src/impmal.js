@@ -24,6 +24,7 @@ import registerSettings from "./system/settings";
 import ImpMalCharacterSheet from "./sheet/actors/character-sheet";
 import ImpMalItemSheet from "./sheet/items/item-sheet";
 import log  from "./system/logger";
+import ProtectionItemSheet from "./sheet/items/item-protection-sheet";
 
 Hooks.once("init", () => 
 {
@@ -38,6 +39,7 @@ Hooks.once("init", () =>
 
     Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
     Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
+    Items.registerSheet("impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
 
     // CONFIG.ActiveEffect.sheetClass = undefined;
     // DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });

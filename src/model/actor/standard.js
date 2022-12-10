@@ -35,7 +35,7 @@ export class StandardActorModel extends BaseActorModel
         this.encumbrance.overburdened = 0;
         this.encumbrance.restrained = 0;
         this.encumbrance.value = 0;
-
+        this.combat.initializeArmour();
     }
 
     computeBase() 
@@ -56,6 +56,7 @@ export class StandardActorModel extends BaseActorModel
         this.computeWounds();
         this.computeInitiative();
         this.computeEncumbrance(items);
+        this.combat.computeArmour(items);
     }
 
     computeWounds() 
