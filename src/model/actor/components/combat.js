@@ -17,6 +17,7 @@ export class BaseCombatModel extends foundry.abstract.DataModel
         for (let loc in this.hitLocations)
         {
             this.hitLocations[loc].armour = 0;
+            this.hitLocations[loc].items = [];
         }
     }
 
@@ -31,6 +32,7 @@ export class BaseCombatModel extends foundry.abstract.DataModel
                 if (this.hitLocations[loc])
                 {
                     this.hitLocations[loc].armour += item.system.armour;
+                    this.hitLocations[loc].items.push(item);
                 }
             }
         }
