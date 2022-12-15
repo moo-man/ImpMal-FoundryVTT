@@ -1,0 +1,31 @@
+<form>
+    <div class="flexcol">
+        <h3>IMPMAL.ItemTraits</h3>
+        {{#each itemTraits}}
+            <div class="form-group">
+                <label>{{this.name}}</label>
+                <div class="form-fields">
+                    {{#if (configLookup "traitHasValue" this.key)}}
+                        <input type="text" name="{{this.key}}-value" value="{{this.value}}">
+                    {{/if}}
+                    <input type="checkbox" name="{{this.key}}" {{checked this.existing}}>
+                </div>
+            </div>
+        {{/each}}
+        {{#if weaponArmourTraits.length}}
+            <h3>IMPMAL.WeaponArmourTraits</h3>
+            {{#each weaponArmourTraits}}
+                <div class="form-group">
+                    <label>{{this.name}}</label>
+                    <div class="form-fields">
+                        {{#if (configLookup "traitHasValue" this.key)}}
+                            <input type="text" name="{{this.key}}-value" value="{{this.value}}">
+                        {{/if}}
+                        <input type="checkbox" name="{{this.key}}" {{checked this.existing}}>
+                    </div>
+                </div>
+            {{/each}}
+        {{/if}}
+    </div>
+    <button type="submit">{{localize "Submit"}}</button>
+</form>

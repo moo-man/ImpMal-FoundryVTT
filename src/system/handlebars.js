@@ -30,6 +30,12 @@ export default function registerHandlebars()
         }
     });
 
+    
+    Handlebars.registerHelper("settings", function (key) 
+    {
+        return game.settings.get("wfrp4e", key);
+    });
+
     Handlebars.registerHelper("pct",
         function (part, whole) 
         {
@@ -80,6 +86,8 @@ export default function registerHandlebars()
         "systems/impmal/templates/item/partials/item-effects.hbs",
         "systems/impmal/templates/item/partials/item-header.hbs",
         "systems/impmal/templates/item/partials/item-notes.hbs",
-        "systems/impmal/templates/item/partials/item-patron-notes.hbs"
+        "systems/impmal/templates/item/partials/item-patron-notes.hbs",
+        "systems/impmal/templates/item/partials/item-traits.hbs"
+
     ]);
 }

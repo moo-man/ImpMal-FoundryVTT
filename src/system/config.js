@@ -151,7 +151,7 @@ const IMPMAL = {
         excellent : 600
     },
 
-    traits : {
+    weaponArmourTraits : {
         blast : "IMPMAL.Blast",
         close : "IMPMAL.Close",
         defensive : "IMPMAL.Defensive",
@@ -171,7 +171,10 @@ const IMPMAL = {
         supercharge : "IMPMAL.Supercharge",
         thrown : "IMPMAL.Thrown",
         twohanded : "IMPMAL.TwoHanded",
-        unstable : "IMPMAL.Unstable",
+        unstable : "IMPMAL.Unstable"
+    },
+
+    itemTraits : {
         bulky : "IMPMAL.Bulky",
         shoddy : "IMPMAL.Shoddy",
         ugly : "IMPMAL.Ugly",
@@ -179,7 +182,7 @@ const IMPMAL = {
         lightweight : "IMPMAL.Lightweight",
         mastercrafted : "IMPMAL.Mastercrafted",
         ornamental : "IMPMAL.Ornamental",
-        durable : "IMPMAL.Durable",
+        durable : "IMPMAL.Durable"
     },
 
     traitDescriptions : {

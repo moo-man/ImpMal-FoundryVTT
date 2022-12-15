@@ -90,4 +90,8 @@ function localizeConfig(object)
         }
         return object;
     }
+    else
+    {
+        return object;
+    }
 }

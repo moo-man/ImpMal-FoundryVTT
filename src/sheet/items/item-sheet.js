@@ -1,3 +1,5 @@
+import ItemTraitsForm from "../../apps/item-traits";
+
 export default class ImpMalItemSheet extends ItemSheet
 {
     static get defaultOptions() 
@@ -31,6 +33,7 @@ export default class ImpMalItemSheet extends ItemSheet
         html.find(".array-create").click(this._onCreateArrayElement.bind(this));
         html.find(".array-edit").change(this._onEditArrayElement.bind(this));
         html.find(".array-delete").click(this._onDeleteArrayElement.bind(this));
+        html.find(".edit-traits").click(this._onEditTraits.bind(this));
     }
 
     _onCreateArrayElement(ev)
@@ -74,5 +77,10 @@ export default class ImpMalItemSheet extends ItemSheet
         let index = ev.currentTarget.parentElement.dataset.index;      // Index to be deleted
         let arrayModel = getProperty(this.item, target);
         return this.item.update({[target + ".list"] : arrayModel.remove(index)});
+    }
+
+    _onEditTraits() 
+    {
+        new ItemTraitsForm(this.item).render(true);
     }
 }

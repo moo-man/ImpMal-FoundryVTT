@@ -26,7 +26,13 @@ export class BaseItemModel extends foundry.abstract.DataModel
 
     computeBase() 
     {
-        // Abstract
+        for(let field in this)
+        {
+            if (typeof this[field].compute == "function")
+            {
+                this[field].compute();
+            }
+        }
     }
 
     computeDerived() 
@@ -34,13 +40,13 @@ export class BaseItemModel extends foundry.abstract.DataModel
         // Abstract
     }
 
-    computeOwnerBase() 
-    {
-        // Abstract
-    }
+    // computeOwnerBase() 
+    // {
+    //     // Abstract
+    // }
 
-    computeOwnerDerived() 
-    {
-        // Abstract
-    }
+    // computeOwnerDerived() 
+    // {
+    //     // Abstract
+    // }
 }

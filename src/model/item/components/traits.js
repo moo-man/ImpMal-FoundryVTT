@@ -15,6 +15,11 @@ export class TraitListModel extends ListModel
         return schema;
     }
 
+    compute() 
+    {
+        this.getTraitDisplayStrings();
+    }
+
     has(key)
     {
         return this.list.find(i => i.key == key);
@@ -33,16 +38,42 @@ export class TraitListModel extends ListModel
         }
     }
 
-    add(traits)
+    add(traits, {replace=false}={})
     {
 
         if ((traits instanceof Array) == false)
         {
-            // Don't add multiples
-            traits = [traits].filter(i => i.key && !this.has(key));
+            traits = [traits];
         }
 
+        // Don't add multiples
+        traits = traits.filter(i => i.key && !this.has(key));
 
-        return super.add(trait);
+        if (replace)
+        {
+            return traits;
+        }
+        else 
+        {
+            return super.add(trait);
+        }
     }
+
+    getTraitDisplayStrings()
+    {
+        for (let trait of this.list)
+        {
+            trait.display = game.impmal.config.weaponArmourTraits[trait.key] || game.impmal.config.itemTraits[trait.key];
+            if (trait.value)
+            {
+                trait.display += ` (${trait.value})`;
+            }
+        }
+    }
+
+    get displayString() 
+    {
+        return this.list.map(i => i.display).join(", ");
+    }
+
 }
