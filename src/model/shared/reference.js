@@ -10,4 +10,9 @@ export class DocumentReferenceModel extends foundry.abstract.DataModel
         schema.id = new fields.StringField();
         return schema;
     }
+
+    getDocument(collection) 
+    {
+        this.document = collection.get(this.id);
+    }
 }

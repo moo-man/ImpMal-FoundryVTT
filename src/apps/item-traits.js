@@ -18,7 +18,7 @@ export default class ItemTraitsForm extends FormApplication
         let data = await super.getData();
 
         data.itemTraits = this.formatTraits(game.impmal.config.itemTraits);
-        if (["weapon", "protection"].includes(this.object.type))
+        if (["weapon", "protection", "ammo"].includes(this.object.type))
         {
             data.weaponArmourTraits = this.formatTraits(game.impmal.config.weaponArmourTraits);
         }
@@ -50,7 +50,7 @@ export default class ItemTraitsForm extends FormApplication
     {
         return Object.keys(foundry.utils.deepClone(traits)).map(key => 
         {
-            let trait = this.object.system.traits.has(key);
+            let trait = this.object._source.system.traits.list.find(t => t.key == key);
             if (trait) 
             {
                 trait.existing = true;

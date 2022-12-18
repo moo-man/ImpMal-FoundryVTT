@@ -52,19 +52,19 @@
     </header>
     <div class="list-content">
         {{#each items.equipped.melee}}
-            <div class="list-item">
+            <div class="list-item" data-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
-                    <div>{{localize "IMPMAL.Specialisation"}}</div>
-                    <div>{{localize "IMPMAL.Damage"}}</div>
+                    <div>{{this.system.specialisation}}</div>
+                    <div>{{this.system.damage.value}}</div>
                 </div>
                 <div class="weapon-traits">
                     <label>Traits</label>
                     <div class="trait-list">
-                        {{this.traits}}
+                        {{this.system.traits.displayString}}
                     </div>
                 </div>
             </div>
@@ -82,21 +82,30 @@
     </header>
     <div class="list-content">
         {{#each items.equipped.ranged}}
-            <div class="list-item">
+            <div class="list-item" data-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
-                    <div>{{localize "IMPMAL.Specialisation"}}</div>
-                    <div>{{localize "IMPMAL.Damage"}}</div>
-                    <div>{{localize "IMPMAL.Range"}}</div>
-                    <div>{{localize "IMPMAL.Ammo"}}</div>
+                    <div>{{this.system.specialisation}}</div>
+                    <div>{{this.system.damage.value}}</div>
+                    <div>{{configLookup "ranges" this.system.range}}</div>
+                    <div>
+                        <select class="ammo-selector">
+                            {{#select this.system.ammo.id}}
+                                <option value=""></option>
+                                {{#each ../this.items.ammo}}
+                                    <option value="{{this.id}}">{{this.name}} ({{this.system.quantity}})</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
                 </div>
                 <div class="weapon-traits">
                     <label>Traits: </label>
                     <div class="trait-list">
-                        {{this.traits}}
+                        {{this.system.traits.displayString}}
                     </div>
                 </div>
             </div>
@@ -111,10 +120,10 @@
             <label>{{localize "IMPMAL.Armour"}}: {{this.armour}}</label>
             <div class="protection-list">
                 {{#each this.items}}
-                <div class="protection-item">
-                    <label>{{this.name}} ({{this.system.armour}})</label>
-                    <div class="traits">{{this.system.traits.displayString}}</div>
-                </div>
+                    <div class="protection-item">
+                        <label>{{this.name}} ({{this.system.armour}})</label>
+                        <div class="traits">{{this.system.traits.displayString}}</div>
+                    </div>
                 {{/each}}
             </div>
             <div class="range">

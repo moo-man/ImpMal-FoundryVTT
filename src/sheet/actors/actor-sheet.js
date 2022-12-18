@@ -101,6 +101,7 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
         html.find(".property-edit").on("click", this._onPropertyEdit.bind(this));
+        html.find(".ammo-selector").on("change", this._onChangeAmmo.bind(this));
     }
 
     //#region Sheet Listeners
@@ -266,6 +267,15 @@ export default class ImpMalActorSheet extends ActorSheet
             },
             default : "submit"
         }).render(true);
+    }
+
+    _onChangeAmmo(ev)
+    {
+        let el = $(ev.currentTarget).parents(".list-item");
+        let id = el.attr("data-id");
+        let item = this.actor.items.get(id);
+
+        item.update({"system.ammo.id" : ev.target.value});
     }
     //#endregion
 }

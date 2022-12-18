@@ -11,4 +11,10 @@ export class EquipmentModel extends EquippableItemModel
         schema.traits = new fields.EmbeddedDataField(TraitListModel);
         return schema;
     }
+
+    computeBase() 
+    {
+        super.computeBase();
+        this.traits.compute();
+    }
 }

@@ -23,6 +23,12 @@ export class ProtectionModel extends EquippableItemModel
         "head" : ["head"]
     };
 
+    computeBase() 
+    {
+        super.computeBase();
+        this.traits.compute();
+    }
+
     preUpdateChecks(data)
     {
         // If location label is modified, try to parse which location keys to use

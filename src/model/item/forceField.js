@@ -13,4 +13,10 @@ export class ForceFieldModel extends EquippableItemModel
         schema.force = new fields.BooleanField();
         return schema;
     }
+
+    computeBase() 
+    {
+        super.computeBase();
+        this.traits.compute();
+    }
 }

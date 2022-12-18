@@ -21,7 +21,7 @@ export default class ImpMalItemSheet extends ItemSheet
     async getData() 
     {
         let data = super.getData();
-        data.system = data.item.system;
+        data.system = data.item.toObject(true).system; // Use source data to avoid ammo/mods from showing up in the sheet
         data.isPhysical = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical")).includes(data.item.type);
         return data;
     }

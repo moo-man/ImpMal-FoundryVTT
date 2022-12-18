@@ -41,9 +41,23 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Range"}}</label>
+                    <div class="form-fields">
+                        <select name="system.range">
+                            {{#select system.range}}
+                                <option value=""></option>
+                                {{#each (config "ranges")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+
                 {{> systems/impmal/templates/item/partials/item-traits.hbs}}
 
-                
+
             </div>
             <div class="tab effects" data-tab="effects">
                 {{> systems/impmal/templates/item/partials/item-effects.hbs}}

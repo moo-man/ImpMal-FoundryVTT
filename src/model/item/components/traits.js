@@ -15,11 +15,6 @@ export class TraitListModel extends ListModel
         return schema;
     }
 
-    compute() 
-    {
-        this.getTraitDisplayStrings();
-    }
-
     has(key)
     {
         return this.list.find(i => i.key == key);
@@ -59,6 +54,30 @@ export class TraitListModel extends ListModel
         }
     }
 
+    // Combine the given trait model with this one, used for ammo
+    combine(traits)
+    {
+        for(let trait of traits.list)
+        {
+            let existing = this.has(trait.key);
+            if (existing)
+            {
+                if (Number.isNumeric(existing.value) && Number.isNumeric(trait.value))
+                {
+                    existing.value = Number(existing.value) + Number(trait.value);
+                }
+                else 
+                {
+                    this.list.push(trait);
+                }
+            }
+            else 
+            {
+                this.list.push(trait);
+            }
+        }
+    }
+
     getTraitDisplayStrings()
     {
         for (let trait of this.list)
@@ -73,7 +92,16 @@ export class TraitListModel extends ListModel
 
     get displayString() 
     {
-        return this.list.map(i => i.display).join(", ");
+        return this.list
+            .map(i => 
+            {
+                let display = game.impmal.config.weaponArmourTraits[i.key] || game.impmal.config.itemTraits[i.key];
+                if (i.value)
+                {
+                    display += ` (${i.value})`;
+                }
+                return display;
+            }).join(", ");
     }
 
 }

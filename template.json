@@ -318,7 +318,7 @@
       },
       "damage": {
         "damage": {
-          "value": "",
+          "base": "",
           "characteristic": ""
         }
       }
@@ -455,7 +455,10 @@
       "category": "",
       "spec": "",
       "range": "",
-      "mag": 0
+      "mag": 0,
+      "ammo" : {
+        "id" : ""
+      }
     },
     "ammo": {
       "templates": [
@@ -464,7 +467,8 @@
         "physical"
       ],
       "usedWith": "",
-      "damage": 0
+      "damage": 0,
+      "range" : ""
     },
     "modification": {
       "templates": [
