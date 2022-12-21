@@ -15,6 +15,11 @@ export class TraitListModel extends ListModel
         return schema;
     }
 
+    compute() 
+    {
+        this.original = this.clone(); // Keep a copy of the original object before ammo/mod modifications
+    }
+
     has(key)
     {
         return this.list.find(i => i.key == key);
