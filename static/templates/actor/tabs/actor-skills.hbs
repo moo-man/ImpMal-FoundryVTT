@@ -7,7 +7,7 @@
     </header>
     {{#each system.skills}}
         <div class="skill-row">
-            <div class="skill-name">{{configLookup "skills" @key}}</div>
+            <a class="skill-name roll" data-type="skill" data-key="{{@key}}">{{configLookup "skills" @key}}</a>
             <div class="skill-characteristic">
                 <div>
                     {{configLookup "characteristicAbbrev" this.characteristic}}
@@ -17,14 +17,14 @@
                 </div>
             </div>
             <div>{{this.advances}}</div>
-            <div><a>{{this.total}}</a></div>
+            <div><a class="roll" data-type="skill" data-key="{{@key}}">{{this.total}}</a></div>
         </div>
         {{#each this.specialisations}}
-            <div class="skill-row spec">
-                <div class="skill-name">{{this.name}}</div>
+            <div class="skill-row spec" data-id="{{this.id}}">
+                <a class="skill-name list-edit">{{this.name}}</a>
                 <div class="skill-characteristic"></div>
                 <div>{{this.system.advances}}</div>
-                <div><a>{{this.system.total}}</a></div>
+                <div><a class="roll" data-type="skill" data-item-id="{{this.id}}">{{this.system.total}}</a></div>
             </div>
         {{/each}}
     {{/each}}

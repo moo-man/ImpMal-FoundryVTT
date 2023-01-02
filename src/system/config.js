@@ -151,6 +151,37 @@ const IMPMAL = {
         excellent : 600
     },
 
+    difficulties : {
+        veryEasy : {
+            modifier : 60,
+            name : "IMPMAL.VeryEasy"
+        },
+        easy : {
+            modifier : 40,
+            name : "IMPMAL.Easy"
+        },
+        routine : {
+            modifier : 20,
+            name : "IMPMAL.Routine"
+        },
+        challenging : {
+            modifier : 0,
+            name : "IMPMAL.Challenging"
+        },
+        difficult : {
+            modifier : -10,
+            name : "IMPMAL.Difficult"
+        },
+        hard: {
+            modifier : -20,
+            name : "IMPMAL.Hard"
+        },
+        veryHard : {
+            modifier : -30,
+            name : "IMPMAL.VeryHard"
+        }
+    },
+
     weaponArmourTraits : {
         blast : "IMPMAL.Blast",
         close : "IMPMAL.Close",

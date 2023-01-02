@@ -1,3 +1,12 @@
+import { CharacteristicTestDialog } from "../apps/test-dialog/characteristic-dialog";
+import { SkillTestDialog } from "../apps/test-dialog/skill-dialog";
+import { TestDialog } from "../apps/test-dialog/test-dialog";
+import { WeaponTestDialog } from "../apps/test-dialog/weapon-dialog";
+import { BaseTest } from "../system/tests/base/base-test";
+import { CharacteristicTest } from "../system/tests/characteristic/characteristic-test";
+import { SkillTest } from "../system/tests/skill/skill-test";
+import { WeaponTest } from "../system/tests/weapon/weapon-test";
+
 export class ImpMalActor extends Actor 
 {
     
@@ -30,5 +39,67 @@ export class ImpMalActor extends Actor
     {
         this.system.computeDerived(this.itemCategories);
         this.items.forEach(i => i.prepareOwnedData());
+    }
+
+    /**
+     * 
+     * @param {string} characteristic Characteristic key, such as "ws" or "str"
+     * @param {object} options Optional properties to customize the test
+     * @param {string} options.title.replace Replace dialog title
+     * @param {string} options.title.append Append to dialog title
+     * @param {object} options.fields Predefine dialog fields
+     */
+    setupCharacteristicTest(characteristic, options={}, roll=true) 
+    {
+        return this._setupTest(CharacteristicTestDialog, CharacteristicTest, characteristic, options, roll);
+    }
+
+    setupSkillTest({itemId, key}={}, options={}, roll=true) 
+    {
+        return this._setupTest(SkillTestDialog, SkillTest, {itemId, key}, options, roll);
+    }
+
+    setupWeaponTest(id, options={}, roll=true) 
+    {
+        return this._setupTest(WeaponTestDialog, WeaponTest, id, options, roll);
+    }
+
+    setupGenericTest(target, options={}, roll=true)
+    {
+        return this._setupTest(TestDialog, BaseTest, target, options, roll);
+    }
+
+    // setupPowerTest(type, item) 
+    // {
+
+    // }
+
+    /**
+     * 
+     * @param {class} dialogClass Class used for the test dialog
+     * @param {class} testClass Class used to compute the test result
+     * @param {any} data data relevant to the specific test (such as what characteristic/item to use)
+     * @param {object} options Optional properties to customize the test
+     * @param {boolean} roll Whether to evaluate the test or not
+     * @returns 
+     */
+    async _setupTest(dialogClass, testClass, data, options, roll)
+    {
+        let dialogData = dialogClass.setupData(data, this, options);
+        let setupData;
+        if (options.skipDialog)
+        {
+            setupData = mergeObject(dialogData.data, dialogData.fields);
+        }
+        else 
+        {
+            setupData = await dialogClass.awaitSubmit(dialogData);
+        }
+        let test = testClass.fromData(setupData);
+        if (roll)
+        {
+            await test.roll();
+        }
+        return test;
     }
 }

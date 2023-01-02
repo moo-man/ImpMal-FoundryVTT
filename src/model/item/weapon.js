@@ -38,8 +38,17 @@ export class WeaponModel extends EquippableItemModel
         this.ammo.getDocument(actor.items);
         this.damage.compute(actor);
         this._applyAmmoMods();
+        this.skill = this.getSkill(actor);
     }
 
+    getSkill(actor)
+    {
+        let skill = this.attackType;
+        let skillObject = actor.system.skills[skill];
+        let skillItem = skillObject.specialisations.find(i => i.name == this.specialisation);
+
+        return skillItem ?? skill;
+    }
 
     _applyAmmoMods() 
     {

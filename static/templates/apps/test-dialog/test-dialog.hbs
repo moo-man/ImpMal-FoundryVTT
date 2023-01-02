@@ -1,0 +1,43 @@
+<form>
+    <div class="dialog-fields">
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Modifier"}}</label>
+            <div class="form-fields">
+                <input type="number" value="{{fields.modifier}}" name="modifier">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localize "IMPMAL.SL"}}</label>
+            <div class="form-fields">
+                <input type="number" value="{{fields.SL}}" name="SL">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Difficulty"}}</label>
+            <div class="form-fields">
+                <select name="difficulty">
+                    {{#select fields.difficulty}}
+                        {{#each (config "difficulties")}}
+                            <option value="{{@key}}">{{this.name}} ({{numberFormat this.modifier sign=true}})</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+        <div class="adv-dis">
+            <div>
+                <input type="radio" name="state" value="adv" {{checked (eq fields.state "adv")}}>
+                <label>{{localize "IMPMAL.Advantage"}}</label>
+            </div>
+            <div>
+                <input type="radio" name="state" value="" {{checked (eq fields.state "")}}>
+                <label>{{localize "IMPMAL.Normal"}}</label>
+            </div>
+            <div>
+                <input type="radio" name="state" value="dis" {{checked (eq fields.state "dis")}}>
+                <label>{{localize "IMPMAL.Disadvantage"}}</label>
+            </div>
+        </div>
+    </div>
+    <button type="submit">{{localize "Roll"}}</button>
+</form>

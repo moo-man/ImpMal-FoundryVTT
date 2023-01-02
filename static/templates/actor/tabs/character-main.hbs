@@ -27,7 +27,7 @@
         {{/each}}
     </tr>
         <tr>
-        <td>Advances</td>
+        <td>Modifier</td>
         {{!-- <td>{{localize "IMPMAL.Advances"}}</td> --}}
         {{#each system.characteristics}}
             <td>
@@ -40,7 +40,7 @@
         {{!-- <td>{{localize "IMPMAL.Total"}}</td> --}}
         {{#each system.characteristics}}
             <td>
-                <a>{{this.total}}</a>
+                <a class="roll" data-type="characteristic" data-key="{{@key}}">{{this.total}}</a>
             </td>
         {{/each}}
     </tr>

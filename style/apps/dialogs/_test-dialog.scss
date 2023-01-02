@@ -1,0 +1,17 @@
+.impmal.test-dialog {
+
+    input[type="number"] {
+        text-align: center;
+    }
+    
+    .adv-dis {
+        display: flex;
+        align-items: center;
+        > * {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+}

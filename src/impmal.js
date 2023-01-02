@@ -25,6 +25,7 @@ import ImpMalCharacterSheet from "./sheet/actors/character-sheet";
 import ImpMalItemSheet from "./sheet/items/item-sheet";
 import log  from "./system/logger";
 import ProtectionItemSheet from "./sheet/items/item-protection-sheet";
+import registerHooks from "./system/hooks";
 
 Hooks.once("init", () => 
 {
@@ -66,13 +67,15 @@ Hooks.once("init", () =>
 
     game.impmal = {
         config : IMPMAL,
-        log : log
+        log : log,
     };
 
     registerSettings();
     registerHandlebars();
     localizeConfig(IMPMAL);
 });
+
+registerHooks();
 
 
 // Recursively localize config object

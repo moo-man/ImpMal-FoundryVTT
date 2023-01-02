@@ -1,0 +1,52 @@
+.message .impmal.test {
+    .comparison {
+
+        font-size: var(--font-size-16);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        >*
+        {
+            margin: 0px 5px;
+            flex: 1
+        }
+        .roll {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            > *{
+                margin: 0px 3px;
+            }
+            .reverse-icon {
+                background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.4738270308123249) 50%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }            
+        }
+
+        .vs {
+            flex: 0 0 20px;
+        }
+
+        .target {
+            display: flex;
+            justify-content: start;
+        }
+    }
+
+    .sl {
+        display:flex;
+        justify-content: center;
+        div {
+            font-size: var(--font-size-28);
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 3px;
+            text-align: center;
+            width: 15%;
+            height: 40px;
+            line-height: 40px;
+        }
+    }
+}

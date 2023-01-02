@@ -1,0 +1,26 @@
+<div class="impmal test">
+    <div class="comparison">
+        <div class="roll">
+            {{#if result.reversed}}
+                <span class="inactive">{{result.originalRoll}}</span>
+                <span class="reverse-icon"><i class="fa-solid fa-shuffle"></i></span>
+                <span>{{result.roll}}</span>
+            {{else}}
+                {{result.roll}}
+            {{/if}}
+        </div>
+        <div class="vs">
+            vs
+        </div>
+        <div class="target">
+            {{result.target}}
+        </div>
+    </div>
+
+    <div class="sl">
+        <div>
+            {{result.signedSL}}
+        </div>
+    </div>
+
+</div>
