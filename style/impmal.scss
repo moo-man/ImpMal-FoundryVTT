@@ -41,21 +41,19 @@
             align-items: center;
 
             >* {
-                flex: 1
+                flex: 1;
+                text-align: center;
             }
 
             .list-name,
             .wide {
-                flex: 2
-            }
-
-            .centered {
-                text-align: center;
+                flex: 2;
             }
 
             .list-name {
                 display: flex;
                 align-items: center;
+                text-align: unset;
             }
 
             .list-name img,

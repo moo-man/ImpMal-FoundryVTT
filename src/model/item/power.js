@@ -16,4 +16,21 @@ export class PowerModel extends StandardItemModel
         return schema;
     }
 
+
+    
+    getSkill(actor)
+    {
+        let skill = "psychic";
+        let skillObject = actor.system.skills[skill];
+        let skillItem = skillObject.specialisations.find(i => i.name == game.impmal.config.disciplines[this.discipline]);
+
+        return skillItem ?? skill;
+    }
+
+    computeOwnerDerived(actor) 
+    {
+        this.skill = this.getSkill(actor);
+    }
+
+
 }

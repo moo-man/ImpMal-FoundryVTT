@@ -263,7 +263,7 @@ const IMPMAL = {
         long : "IMPMAL.Long"
     },
 
-    powerDuration : {
+    powerDurations : {
         instant : "IMPMAL.Instant",
         sustained : "IMPMAL.Sustained",
         special : "IMPMAL.Special",

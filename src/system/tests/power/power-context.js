@@ -1,20 +1,20 @@
 import log from "../../logger";
 import { SkillTestContext } from "../skill/skill-context";
 
-export class WeaponTestContext extends SkillTestContext
+export class PowerTestContext extends SkillTestContext
 {
-    weaponId = this.weaponId;
+    powerId = this.powerId;
 
     static fromData(data) 
     {
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
-        let context = mergeObject(super.fromData(data), {weaponId : data.weaponId});
+        let context = mergeObject(super.fromData(data), {powerId : data.powerId});
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;
     }
 
-    get weapon() 
+    get power() 
     {
-        return this.actor.items.get(this.weaponId);
+        return this.actor.items.get(this.powerId);
     }
 }

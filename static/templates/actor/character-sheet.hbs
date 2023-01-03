@@ -45,11 +45,11 @@
             <a class="tab-select item" data-tab="skills">{{localize "IMPMAL.Skills"}}</a>
             <a class="tab-select item" data-tab="talents">{{localize "IMPMAL.Talents"}}</a>
             <a class="tab-select item" data-tab="combat">{{localize "IMPMAL.Combat"}}</a>
-            <a class="tab-select item" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
-            <a class="tab-select item" data-tab="equipment">{{localize "IMPMAL.Equipment"}}</a>
             {{#if items.power.length}}
                 <a class="tab-select item" data-tab="powers">{{localize "IMPMAL.Powers"}}</a>
             {{/if}}
+            <a class="tab-select item" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
+            <a class="tab-select item" data-tab="equipment">{{localize "IMPMAL.Equipment"}}</a>
             <a class="tab-select item" data-tab="notes">{{localize "IMPMAL.Notes"}}</a>
         </nav>
         <div class="tab-content">
@@ -65,17 +65,15 @@
             <div class="tab combat" data-tab="combat">
                 {{> systems/impmal/templates/actor/tabs/actor-combat.hbs}}
             </div>
-            <div class="tab combat" data-tab="effects">
+            <div class="tab powers" data-tab="powers">
+                {{> systems/impmal/templates/actor/tabs/actor-powers.hbs}}
+            </div>
+            <div class="tab effects" data-tab="effects">
                 {{> systems/impmal/templates/actor/tabs/actor-effects.hbs}}
             </div>
             <div class="tab equipment" data-tab="equipment">
                 {{> systems/impmal/templates/actor/tabs/actor-equipment.hbs}}
             </div>
-            {{#if items.power.length}}
-                <div class="tab powers" data-tab="powers">
-                    {{> systems/impmal/templates/actor/tabs/actor-powers.hbs}}
-                </div>
-            {{/if}}
             <div class="tab notes" data-tab="notes">
                 {{> systems/impmal/templates/actor/tabs/character-notes.hbs}}
             </div>

@@ -1,9 +1,11 @@
 import { CharacteristicTestDialog } from "../apps/test-dialog/characteristic-dialog";
+import { PowerTestDialog } from "../apps/test-dialog/power-dialog";
 import { SkillTestDialog } from "../apps/test-dialog/skill-dialog";
 import { TestDialog } from "../apps/test-dialog/test-dialog";
 import { WeaponTestDialog } from "../apps/test-dialog/weapon-dialog";
 import { BaseTest } from "../system/tests/base/base-test";
 import { CharacteristicTest } from "../system/tests/characteristic/characteristic-test";
+import { PowerTest } from "../system/tests/power/power-test";
 import { SkillTest } from "../system/tests/skill/skill-test";
 import { WeaponTest } from "../system/tests/weapon/weapon-test";
 
@@ -69,10 +71,10 @@ export class ImpMalActor extends Actor
         return this._setupTest(TestDialog, BaseTest, target, options, roll);
     }
 
-    // setupPowerTest(type, item) 
-    // {
-
-    // }
+    setupPowerTest(id, options={}, roll=true) 
+    {
+        return this._setupTest(PowerTestDialog, PowerTest, id, options, roll);
+    }
 
     /**
      * 
@@ -83,7 +85,7 @@ export class ImpMalActor extends Actor
      * @param {boolean} roll Whether to evaluate the test or not
      * @returns 
      */
-    async _setupTest(dialogClass, testClass, data, options, roll)
+    async _setupTest(dialogClass, testClass, data, options={}, roll=true)
     {
         let dialogData = dialogClass.setupData(data, this, options);
         let setupData;

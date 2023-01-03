@@ -12,7 +12,8 @@ export class TargetCalculator
     static typeMap = {
         "characteristic" : this.characteristicTarget.bind(this),
         "skill" : this.skillTarget.bind(this),
-        "weapon" : this.weaponTarget.bind(this)
+        "weapon" : this.weaponTarget.bind(this),
+        "power" : this.powerTarget.bind(this)
     };
 
 
@@ -44,6 +45,11 @@ export class TargetCalculator
     static weaponTarget(weapon, {actor, modifier=0, difficulty="challenging"}={}) 
     {
         return this.skillTarget(weapon.system.skill, {actor, modifier, difficulty});
+    }
+
+    static powerTarget(power, {actor, modifier=0, difficulty="challenging"}={}) 
+    {
+        return this.skillTarget(power.system.skill, {actor, modifier, difficulty});
     }
 
     static _baseTarget({modifier=0, difficulty="challenging"}={})

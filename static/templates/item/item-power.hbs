@@ -17,9 +17,11 @@
                     <label>{{localize "IMPMAL.Discipline"}}</label>
                     <div class="form-fields">
                         <select name="system.discipline">
-                            {{#each (config "disciplines")}}
-                                <option value="{{@key}}">{{this}}</option>
-                            {{/each}}
+                            {{#select system.discipline}}
+                                {{#each (config "disciplines")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
                         </select>
                     </div>
                 </div>
@@ -32,17 +34,26 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Difficulty"}}</label>
                     <div class="form-fields">
-                        <input type="number" value="{{system.difficulty}}" name="system.difficulty">
+                        <select name="system.difficulty">
+                            {{#select system.difficulty}}
+                                {{#each (config "difficulties")}}
+                                    <option value="{{@key}}">{{this.name}} ({{numberFormat this.modifier sign=true}})
+                                    </option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
                     </div>
                 </div>
-                                <div class="form-group">
+                <div class="form-group">
                     <label>{{localize "IMPMAL.Range"}}</label>
                     <div class="form-fields">
                         <select name="system.range">
-                            <option value=""></option>
-                            {{#each (config "ranges")}}
-                                <option value="{{@key}}">{{this}}</option>
-                            {{/each}}
+                            {{#select system.range}}
+                                <option value=""></option>
+                                {{#each (config "powerRanges")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
                         </select>
                     </div>
                 </div>
@@ -50,12 +61,19 @@
                     <label>{{localize "IMPMAL.Target"}}</label>
                     <div class="form-fields">
                         <input type="text" value="{{system.target}}" name="system.target">
-                    </div>
+                    </div>  
                 </div>
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Duration"}}</label>
                     <div class="form-fields">
-                        <input type="text" value="{{system.duration}}" name="system.duration">
+                        <select name="system.duration">
+                            {{#select system.duration}}
+                                <option value=""></option>
+                                {{#each (config "powerDurations")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
                     </div>
                 </div>
 
@@ -65,7 +83,7 @@
                         <input type="checkbox" name="system.overt" {{checked system.overt}}>
                     </div>
                 </div>
-                
+
 
             </div>
             <div class="tab effects" data-tab="effects">
