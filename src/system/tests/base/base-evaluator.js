@@ -31,24 +31,52 @@ export class BaseTestEvaluator
         // Do not process result without a roll
         if (!this.roll) {return;}
 
-        this.target = data.target;
+        // Prefer predefined target vs computed target
+        this.target = data.result.target || data.target;
+        this.state = this.state || data.state;
         this.outcome = "";
         
-        this.handleReversal({state : data.state, force : data.reverse});
+        this.handleReversal({state : this.state, force : data.reverse});
         
         this.signedSL = this.signedSL ? this.signedSL : this.calculateSL(this.roll, this.target, data.SL);
         this.SL = Number(this.signedSL);
 
-        if (this.SL > 0 || (this.SL == 0 && this.roll <= this.target))
+        if (this.SL > 0 || (this.SL == 0 && this.roll <= this.target) || this.roll <= 5)
         {
-            this.outcome == "success";
+            this.outcome = "success";
         }
-        else if (this.SL < 0 || (this.SL == 0 && this.roll > this.target))
+        else if (this.SL < 0 || (this.SL == 0 && this.roll > this.target) || this.roll >= 96)
         {
-            this.outcome == "failure";
+            this.outcome = "failure";
         }
 
+        this.outcomeDescription = this.formatOutcomeDescription();
+
         this.computeOther(data);
+    }
+
+    formatOutcomeDescription() 
+    {
+        let outcome = this.outcome[0].toUpperCase() + this.outcome.slice(1); // "Failure" or "Success"
+
+        let SLabs = Math.abs(this.SL);
+        
+        if (SLabs >= 5)
+        {
+            return game.i18n.localize(`IMPMAL.Astounding${outcome}`);
+        }
+        else if (SLabs >= 3 )
+        {
+            return game.i18n.localize(`IMPMAL.Impressive${outcome}`);
+        }
+        else if (SLabs >= 1)
+        {
+            return game.i18n.localize(`IMPMAL.${outcome}`);
+        }
+        else if (SLabs == 0)
+        {
+            return game.i18n.localize(`IMPMAL.Marginal${outcome}`);
+        }
     }
 
     /**
@@ -60,8 +88,21 @@ export class BaseTestEvaluator
 
     calculateSL(roll, target, modifier=0)
     {
-        let SL = Math.floor(target / 10) - Math.floor(roll / 10);
+        let op = target < 0 ? "ceil" : "floor";
+        let SL = Math[op](target / 10) - Math.floor(roll / 10);
         SL += modifier;
+
+        // Automatic Success/Failure
+        if (roll >= 96)
+        {
+            // If SL is less than 0, use SL, otherwise use -0
+            return `${SL < 0 ? SL : ("-" + 0)}` ;
+        }
+        else if (roll <= 5)
+        {
+            // If SL is greater than 0, use +SL, otherwise use +0
+            return `+${SL > 0 ? SL : 0}`;
+        }
 
         if (SL > 0)
         {
@@ -84,10 +125,9 @@ export class BaseTestEvaluator
                 return `+${SL}`;
             }
         }
-
     }
 
-    handleReversal({state="", force=false}={})
+    handleReversal({state="none", force=false}={})
     {
         let roll = this.roll;
         this.originalRoll = roll;

@@ -8,7 +8,7 @@ export class WeaponTest extends SkillTest
 
     static contextClass = WeaponTestContext;
     static evaluatorClass = WeaponTestEvaluator;
-
+    testDetailsTemplate = "systems/impmal/templates/chat/rolls/details/weapon-test.hbs";
 
     computeTarget() 
     {

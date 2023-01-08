@@ -43,13 +43,13 @@ export class TestDialog extends Application
         }
     }
 
-    getDefaultFields() 
+    _defaultFields() 
     {
         return {
             modifier : 0,
             SL : 0,
             difficulty : "challenging",
-            state : ""
+            state : "none"
         };
     }
 
@@ -74,7 +74,7 @@ export class TestDialog extends Application
      */
     computeState()
     {
-        if (typeof this.forceState == "string") // Needs to find "adv" "dis" and ""
+        if (this.forceState) //"adv" "dis" and "none"
         {
             return this.forceState;
         }
@@ -91,7 +91,7 @@ export class TestDialog extends Application
 
         else 
         {
-            return "";
+            return "none";
         }
     }
 

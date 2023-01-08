@@ -27,6 +27,10 @@
         pointer-events: none;
     }
 
+    .centered {
+        text-align: center;
+    }
+
     section.list {
         display: flex;
         flex-direction: column;

@@ -6,6 +6,9 @@ export class BaseTest
 
     static contextClass = TestContext;
     static evaluatorClass = BaseTestEvaluator;
+    rollTemplate = "systems/impmal/templates/chat/rolls/roll.hbs";
+    testDetailsTemplate = "";
+    itemDetailsTemplate = "";
 
     constructor({data, context})
     {
@@ -73,7 +76,15 @@ export class BaseTest
 
     async _chatData() 
     {
-        let content = await renderTemplate("systems/impmal/templates/chat/rolls/roll.hbs", this);
+        if (this.itemDetailsTemplate)
+        {
+            this.itemDetails = await renderTemplate(this.itemDetailsTemplate, this);
+        }
+        if (this.testDetailsTemplate)
+        {
+            this.testDetails = await renderTemplate(this.testDetailsTemplate, this);
+        }
+        let content = await renderTemplate(this.rollTemplate, this);
 
         return {
             content,
@@ -139,7 +150,7 @@ export class BaseTest
             modifier : 0,                 // Added to target
             difficulty : "challenging",   // Added to target
             SL : 0,                       // Added to SL result
-            state : "",                   // Advantage/disadvantage
+            state : "none",                   // Advantage/disadvantage
             reverse : false,              // Force reversal
             result : {}                   // Predefined result
         };
