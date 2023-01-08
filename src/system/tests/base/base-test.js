@@ -9,14 +9,7 @@ export class BaseTest
 
     constructor({data, context})
     {
-        this.data = mergeObject(data, {
-            modifier : 0,                 // Added to target
-            difficulty : "challenging",   // Added to target
-            SL : 0,                       // Added to SL result
-            state : "",                   // Advantage/disadvantage
-            reverse : false,              // Force reversal
-            result : {}                   // Predefined result
-        }, {overwrite : false, recursive : true});
+        this.data = mergeObject(data, this._defaultData(), {overwrite : false, recursive : true});
 
         this.context = new this.constructor.contextClass(context);
         this.data.target = this.computeTarget();
@@ -33,7 +26,7 @@ export class BaseTest
     {
         await this.result.evaluate(this.data);
         // Save roll
-        this.data.result.roll = this.result.originalRoll; // .roll might be reversed
+        mergeObject(this.data.result, this.result.getPersistentData());
         return this.sendToChat();
     }
 
@@ -71,7 +64,8 @@ export class BaseTest
             impmal : {
                 test : {
                     data : this.data,
-                    context : this.context
+                    context : this.context,
+                    class : this.constructor.name
                 }
             }
         };
@@ -115,16 +109,40 @@ export class BaseTest
     static fromData(data) 
     {
         return new this({
-            data : {
-                modifier : data.modifier,
-                difficulty : data.difficulty,
-                SL : data.SL,       
-                state : data.state,   
-                reverse : data.reverse,
-                target : data.target
-            },
+            data : this._getDialogTestData(data),
             context : this.contextClass.fromData(data)
         });
+    }
+
+
+    /**
+     * Extract test data from flat dialog data
+     * 
+     * @param {Object} data Data provided from the dialog
+     */
+    static _getDialogTestData(data)
+    {
+        return {
+            modifier : data.modifier,
+            difficulty : data.difficulty,
+            SL : data.SL,       
+            state : data.state,   
+            reverse : data.reverse,
+            target : data.target
+        };
+    }
+
+
+    _defaultData() 
+    {
+        return {
+            modifier : 0,                 // Added to target
+            difficulty : "challenging",   // Added to target
+            SL : 0,                       // Added to SL result
+            state : "",                   // Advantage/disadvantage
+            reverse : false,              // Force reversal
+            result : {}                   // Predefined result
+        };
     }
 
     // Creates a test object with `message.test`
@@ -136,7 +154,7 @@ export class BaseTest
                 let test = this.getFlag("impmal", "test");
                 if (test)
                 {
-                    return new BaseTest(test);
+                    return new game.impmal.testClasses[test.class](test);
                 }
                 else 
                 {

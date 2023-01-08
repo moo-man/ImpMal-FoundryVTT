@@ -12,7 +12,7 @@ export class SkillTest extends CharacteristicTest
         return TargetCalculator.compute({
             actor : this.actor, 
             type : "skill", 
-            data : this.item || this.skill, 
+            data : {skill : this.item || this.skill, characteristic : this.context.characteristic}, 
             modifier : this.data.modifier, 
             difficulty : this.data.difficulty
         });

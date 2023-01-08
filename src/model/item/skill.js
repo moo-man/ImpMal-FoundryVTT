@@ -21,4 +21,9 @@ export class SkillSpecModel extends StandardItemModel
         }
     }
 
+    getTotalFor(characteristic, actor)
+    {
+        return actor.system.skills[this.skill].getTotalFor(characteristic, actor) + (5 * this.advances);
+    }
+
 }

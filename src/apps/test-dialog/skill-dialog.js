@@ -3,18 +3,7 @@ import { CharacteristicTestDialog } from "./characteristic-dialog";
 
 export class SkillTestDialog extends CharacteristicTestDialog
 {
-    static get defaultOptions() 
-    {
-        const options = super.defaultOptions;
-        // options.classes = options.classes.concat(["impmal", "test-dialog", "form"]);
-        return options;
-    }
-
-    
-    get template() 
-    {
-        return `systems/impmal/templates/apps/test-dialog/test-dialog.hbs`;
-    }
+    fieldsTemplate = `systems/impmal/templates/apps/test-dialog/skill-fields.hbs`;
 
     /**
      * 
@@ -41,6 +30,8 @@ export class SkillTestDialog extends CharacteristicTestDialog
 
         dialogData.data.skillItemId = skillItem?.id;
         dialogData.data.skill = skillKey;
+
+        dialogData.fields.characteristic = characteristic;
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

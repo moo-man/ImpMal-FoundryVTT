@@ -27,29 +27,29 @@ export class TargetCalculator
         return actor.system.characteristics[characteristic].total + this._baseTarget({modifier, difficulty});
     }
 
-    static skillTarget(skill, {actor, modifier=0, difficulty="challenging"}={})
+    static skillTarget({skill, characteristic}, {actor, modifier=0, difficulty="challenging"}={})
     {
-        let skillTotal;
+        let skillObject; // either SkillModel or SkillSpecModel 
         if (typeof skill == "string")
         {
-            skillTotal = actor.system.skills[skill].total;
+            skillObject = actor.system.skills[skill];
         }
         else if (skill instanceof Item)
         {
-            skillTotal = skill.system.total;
+            skillObject = skill.system;
         }
 
-        return skillTotal + this._baseTarget({modifier, difficulty});
+        return skillObject.getTotalFor(characteristic, actor) + this._baseTarget({modifier, difficulty});
     }
 
     static weaponTarget(weapon, {actor, modifier=0, difficulty="challenging"}={}) 
     {
-        return this.skillTarget(weapon.system.skill, {actor, modifier, difficulty});
+        return this.skillTarget({skill : weapon.system.skill}, {actor, modifier, difficulty});
     }
 
     static powerTarget(power, {actor, modifier=0, difficulty="challenging"}={}) 
     {
-        return this.skillTarget(power.system.skill, {actor, modifier, difficulty});
+        return this.skillTarget({skill : power.system.skill}, {actor, modifier, difficulty});
     }
 
     static _baseTarget({modifier=0, difficulty="challenging"}={})

@@ -5,6 +5,18 @@ export class BaseTestEvaluator
         this.computeResult(data);
     }
 
+    /**
+     * Evalutor results are re-evaluated every time it is constructed
+     * However some values shouldn't be re-evaluated, such as the roll itself
+     * This value is saved in the Test objects
+     */
+    getPersistentData() 
+    {
+        return {
+            roll : this.originalRoll  // .roll might be reversed
+        };
+    }
+
     async evaluate(data)
     {
         this.roll = data.result.roll || (await new Roll("1d100").evaluate({async: true})).total;
@@ -35,6 +47,15 @@ export class BaseTestEvaluator
         {
             this.outcome == "failure";
         }
+
+        this.computeOther(data);
+    }
+
+    /**
+     * Used by subclasses to compute specific values related to their type
+     */
+    computeOther() 
+    {
     }
 
     calculateSL(roll, target, modifier=0)

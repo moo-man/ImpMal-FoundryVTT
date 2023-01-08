@@ -1,0 +1,12 @@
+    <div class="form-group">
+        <label>{{localize "IMPMAL.HitLocation"}}</label>
+        <div class="form-fields">
+            <select name="hitLocation">
+                {{#select fields.hitLocation}}
+                    {{#each hitLocations}}
+                        <option value="{{@key}}">{{this}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
+        </div>
+    </div>

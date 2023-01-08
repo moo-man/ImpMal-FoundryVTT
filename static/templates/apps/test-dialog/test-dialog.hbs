@@ -24,6 +24,7 @@
                 </select>
             </div>
         </div>
+        {{{subTemplate}}}
         <div class="adv-dis">
             <div>
                 <input type="radio" name="state" value="adv" {{checked (eq fields.state "adv")}}>
@@ -38,6 +39,7 @@
                 <label>{{localize "IMPMAL.Disadvantage"}}</label>
             </div>
         </div>
+
     </div>
     <button type="submit">{{localize "Roll"}}</button>
 </form>

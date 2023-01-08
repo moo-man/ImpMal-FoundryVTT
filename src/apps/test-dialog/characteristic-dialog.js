@@ -3,19 +3,6 @@ import { TestDialog } from "./test-dialog";
 
 export class CharacteristicTestDialog extends TestDialog
 {
-    static get defaultOptions() 
-    {
-        const options = super.defaultOptions;
-        // options.classes = options.classes.concat(["impmal", "test-dialog", "form"]);
-        return options;
-    }
-
-    
-    get template() 
-    {
-        return `systems/impmal/templates/apps/test-dialog/test-dialog.hbs`;
-    }
-
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"

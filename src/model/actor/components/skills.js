@@ -73,4 +73,13 @@ export class SkillModel extends foundry.abstract.DataModel
         this.characteristicData = characteristics[this.characteristic];
         this.total = this.characteristicData.total + (5 * this.advances) + this.modifier;
     }
+
+    getTotalFor(characteristic, actor)
+    {
+        if (!characteristic)
+        {
+            characteristic = this.characteristic;
+        }
+        return actor.system.characteristics[characteristic].total + (5 * this.advances) + this.modifier;
+    }
 }

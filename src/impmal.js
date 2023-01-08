@@ -26,6 +26,10 @@ import ImpMalItemSheet from "./sheet/items/item-sheet";
 import log  from "./system/logger";
 import ProtectionItemSheet from "./sheet/items/item-protection-sheet";
 import registerHooks from "./system/hooks";
+import { CharacteristicTest } from "./system/tests/characteristic/characteristic-test";
+import { SkillTest } from "./system/tests/skill/skill-test";
+import { WeaponTest } from "./system/tests/weapon/weapon-test";
+import { PowerTest } from "./system/tests/power/power-test";
 
 Hooks.once("init", () => 
 {
@@ -68,6 +72,12 @@ Hooks.once("init", () =>
     game.impmal = {
         config : IMPMAL,
         log : log,
+        testClasses : {
+            CharacteristicTest,
+            SkillTest,
+            WeaponTest,
+            PowerTest
+        }
     };
 
     registerSettings();

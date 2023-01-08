@@ -12,6 +12,8 @@ export class TestDialog extends Application
     }
 
     #onKeyPress;
+
+    fieldsTemplate = "";
     
     get template() 
     {
@@ -27,15 +29,13 @@ export class TestDialog extends Application
     {
         super();
         this.data = data;
-        this.fields = mergeObject(
-            {
-                modifier : 0,
-                SL : 0,
-                difficulty : "challenging",
-                state : ""
-            },
-            fields
-        );
+        this.fields = mergeObject(this._defaultFields(),fields);
+
+        // Keep count of sources of advantage and disadvantage
+        this.advCount = 0;
+        this.disCount = 0;
+        this.forceState = undefined;
+        // If the user specifies a state, use that
 
         if (resolve)
         {
@@ -43,11 +43,83 @@ export class TestDialog extends Application
         }
     }
 
-    getData() 
+    getDefaultFields() 
     {
         return {
-            fields : this.fields
+            modifier : 0,
+            SL : 0,
+            difficulty : "challenging",
+            state : ""
         };
+    }
+
+    async getData() 
+    {
+        this.advCount = 0;
+        this.disCount = 0;
+
+        this.computeFields();
+
+        let state = this.computeState();
+
+        return {
+            fields : mergeObject(this.fields, {state}),
+            subTemplate : await this.getFieldsTemplate()
+        };
+    }
+
+
+    /**
+     * Compute whether disadvantage or advantage should be selected
+     */
+    computeState()
+    {
+        if (typeof this.forceState == "string") // Needs to find "adv" "dis" and ""
+        {
+            return this.forceState;
+        }
+
+        else if (this.advCount > this.disCount)
+        {
+            return "adv";
+        }
+
+        else if (this.disCount > this.advCount)
+        {
+            return "dis";
+        }
+
+        else 
+        {
+            return "";
+        }
+    }
+
+    /**
+     * Handle relationships between fields, used by subclasses
+     */
+    computeFields() 
+    {
+
+    }
+
+    /**
+     * Allows subclasses to insert custom fields
+     */
+    async getFieldsTemplate()
+    {
+        if (this.fieldsTemplate)
+        {
+            return await renderTemplate(this.fieldsTemplate, await this.getTemplateFields());
+        }
+    }
+
+    /**
+     * Provide data to a dialog's custom field section
+     */
+    async getTemplateFields() 
+    {
+        return {fields : this.fields};
     }
 
     submit(ev) 
@@ -83,6 +155,13 @@ export class TestDialog extends Application
                 value = Number(value);
             }
             this.fields[ev.currentTarget.name] = value;
+
+            // If the user clicks advantage or disadvantage, force that state to be true despite calculations
+            if (ev.currentTarget.name == "state")
+            {
+                this.forceState = value;
+            }
+            this.render(true);
         });
 
 
