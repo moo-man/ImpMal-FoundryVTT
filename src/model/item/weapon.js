@@ -16,20 +16,21 @@ export class WeaponModel extends EquippableItemModel
         schema.category = new fields.StringField();
         schema.spec = new fields.StringField();
         schema.range = new fields.StringField();
-        schema.mag = new fields.NumberField();
+        schema.mag = new fields.SchemaField({
+            value : new fields.NumberField({min: 0, integer: true}),
+            current : new fields.NumberField({min: 0, integer : true})
+        });
         return schema;
     }
 
 
-    /**
-     *   Unlike other "equippable" items, weapons should not subtract encumbrance if it is equipped
-     *   So redo the calculation
-     */ 
     computeBase() 
     {
         super.computeBase();
         this.traits.compute();
         this.specialisation = game.impmal.config[`${this.attackType}Specs`][this.spec];
+
+        // Unlike other "equippable" items, weapons should not subtract encumbrance if it is equipped, So redo the calculation
         this.encumbrance.total = this.quantity * this.encumbrance.value;
     }
 
@@ -49,6 +50,40 @@ export class WeaponModel extends EquippableItemModel
 
         return skillItem ?? skill;
     }
+
+    reload() 
+    {
+        let ammo = this.ammo.document;
+        if (!ammo)
+        {
+            throw game.i18n.localize("IMPMAL.ErrorReloadNoAmmo");
+        }
+
+        return {"system.mag.current" : Math.min(this.mag.value, this.mag.current + ammo.system.quantity)};
+    }
+
+    useAmmo(amount = 1)
+    {
+        let ammo = this.ammo.document;
+
+        if (this.attackType == "melee")
+        {
+            throw game.i18n.localize("IMPMAL.ErrorMeleeWeapon");
+        }
+
+        if (!ammo)
+        {
+            throw game.i18n.localize("IMPMAL.ErrorNoAmmo");
+        }
+
+        if (ammo.system.quantity < amount)
+        {
+            throw game.i18n.localize("IMPMAL.InsufficentQuantity");
+        }
+
+        return {"system.mag.current" : this.mag.current - amount};
+    }
+
 
     _applyAmmoMods() 
     {

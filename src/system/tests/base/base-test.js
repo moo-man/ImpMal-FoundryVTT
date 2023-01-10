@@ -30,7 +30,17 @@ export class BaseTest
         await this.result.evaluate(this.data);
         // Save roll
         mergeObject(this.data.result, this.result.getPersistentData());
+        await this.postRoll();
         return this.sendToChat();
+    }
+
+    /**
+     * Actions performed after the roll, used by subclasses
+     * Example: Decreasing ammo
+     */
+    async postRoll()
+    {
+
     }
 
     async sendToChat({newMessage = false}={}) 

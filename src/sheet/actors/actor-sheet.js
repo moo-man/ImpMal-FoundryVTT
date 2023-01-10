@@ -102,6 +102,7 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
         html.find(".property-edit").on("click", this._onPropertyEdit.bind(this));
         html.find(".ammo-selector").on("change", this._onChangeAmmo.bind(this));
+        html.find(".reload").on("click", this._onReload.bind(this));
         html.find(".roll").on("click", this._onRollClick.bind(this));
     }
 
@@ -120,7 +121,7 @@ export default class ImpMalActorSheet extends ActorSheet
         let id = el.attr("data-id");
         let collection = el.attr("data-collection");
 
-        let docName = collection == "item" ? "Item" : "ActiveEffect";
+        let docName = collection == "effects" ? "ActiveEffect" : "Item";
 
         Dialog.confirm({
             title: game.i18n.localize(`IMPMAL.Delete${docName}`),
@@ -277,6 +278,22 @@ export default class ImpMalActorSheet extends ActorSheet
         let item = this.actor.items.get(id);
 
         item.update({"system.ammo.id" : ev.target.value});
+    }
+
+    _onReload(ev)
+    {
+        let el = $(ev.currentTarget).parents(".list-item");
+        let id = el.attr("data-id");
+        let item = this.actor.items.get(id);
+
+        try 
+        {
+            item.update(item.system.reload());
+        }
+        catch(e)
+        {
+            ui.notifications.error(e);
+        }
     }
 
     _onRollClick(ev)

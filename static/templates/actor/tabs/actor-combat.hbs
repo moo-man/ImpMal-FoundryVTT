@@ -62,7 +62,7 @@
                     <div>{{this.system.damage.value}}</div>
                 </div>
                 <div class="weapon-traits">
-                    <label>Traits</label>
+                    <label>{{localize 'IMPMAL.Traits'}}: </label>
                     <div class="trait-list">
                         {{this.system.traits.displayString}}
                     </div>
@@ -103,7 +103,18 @@
                     </div>
                 </div>
                 <div class="weapon-traits">
-                    <label>Traits: </label>
+                    <div class="mag">
+                        <label>{{localize "IMPMAL.Mag"}}:</label>
+                        <div class="values">
+                            <div class="current">{{this.system.mag.current}}</div>
+                            <div>/</div>
+                            <div class="value">{{this.system.mag.value}}</div>
+                        </div>
+                        {{#if (lt this.system.mag.current this.system.mag.value)}}
+                        <a class="reload">Reload</a>
+                        {{/if}}
+                    </div>
+                    <label>{{localize 'IMPMAL.Traits'}}: </label>
                     <div class="trait-list">
                         {{this.system.traits.displayString}}
                     </div>

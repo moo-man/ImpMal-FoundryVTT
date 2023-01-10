@@ -21,6 +21,26 @@ export class WeaponTest extends SkillTest
         });
     }
 
+    async postRoll()
+    {
+        await super.postRoll();
+        
+        try 
+        {
+            let ammo = this.item.system.ammo.document;
+            if (this.item.system.attackType == "ranged" && ammo && !this.context.ammoUsed)
+            {
+                this.item.update(this.item.system.useAmmo());
+                ammo.update(ammo.system.decrease());
+                this.context.ammoUsed = true;
+            }
+        }
+        catch(e)
+        {
+            ui.notifications.error(`${game.i18n.localize("IMPMAL.ErrorAmmoUse")}: ${e}`);
+        }
+    }
+
     get item() 
     {
         return this.context.weapon;

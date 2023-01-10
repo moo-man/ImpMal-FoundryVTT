@@ -61,7 +61,7 @@ export class WeaponTestDialog extends SkillTestDialog
 
     _defaultFields() 
     {
-        let fields = super.getDefaultFields();
+        let fields = super._defaultFields();
         fields.hitLocation = "roll";
         return fields;
     }

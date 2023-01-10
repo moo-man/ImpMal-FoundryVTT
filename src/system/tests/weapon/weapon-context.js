@@ -4,6 +4,7 @@ import { SkillTestContext } from "../skill/skill-context";
 export class WeaponTestContext extends SkillTestContext
 {
     weaponId = this.weaponId;
+    ammoUsed = this.ammoUsed || false;
 
     static fromData(data) 
     {

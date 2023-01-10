@@ -455,7 +455,10 @@
       "category": "",
       "spec": "",
       "range": "",
-      "mag": 0,
+      "mag": {
+        "value" : 0,
+        "current" : 0
+      },
       "ammo" : {
         "id" : ""
       }

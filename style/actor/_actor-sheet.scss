@@ -209,6 +209,18 @@
         display : flex;
     }
 
+    .mag {
+        display : flex;
+        align-items: center;
+        margin-right: 10px;
+        > * {
+            margin-right: 5px;
+        }
+        .values {
+            display: flex;
+        }
+    }
+
 
     .encumbrance-section
     {
