@@ -28,6 +28,11 @@ export class WeaponTestDialog extends SkillTestDialog
         {
             this.disCount++;
         }
+
+        if (this.data.weapon.system.equipped.offhand)
+        {
+            this.disCount++;
+        }
     
     }
 
@@ -54,6 +59,7 @@ export class WeaponTestDialog extends SkillTestDialog
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.WeaponTest")) + (title?.append || "");
 
         dialogData.data.weaponId = weapon.id;
+        dialogData.data.weapon = weapon;
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

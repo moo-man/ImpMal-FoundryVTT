@@ -39,7 +39,7 @@ export class ImpMalActor extends Actor
 
     prepareDerivedData() 
     {
-        this.system.computeDerived(this.itemCategories);
+        this.system.computeDerived(mergeObject(this.itemCategories, {all : this.items}, {inplace : false}));
         this.items.forEach(i => i.prepareOwnedData());
     }
 

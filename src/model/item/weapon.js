@@ -36,10 +36,31 @@ export class WeaponModel extends EquippableItemModel
 
     computeOwnerDerived(actor) 
     {
+        this.computeEquipped(actor);
         this.ammo.getDocument(actor.items);
         this.damage.compute(actor);
         this._applyAmmoMods();
         this.skill = this.getSkill(actor);
+    }
+
+    // For characters, equipped is determined if the item is held is left or right hand
+    // For anything else, not needed, just use the equipped value
+    computeEquipped(actor)
+    {
+        if (actor.type == "character")
+        {
+            let hands = actor.system.hands.isHolding(this.id);
+            this.equipped.value = isEmpty(hands) ? false : true;
+            this.equipped.hands = hands;
+            if (this.traits.has("twohanded"))
+            {
+                this.equipped.offhand = false;
+            }
+            else 
+            {
+                this.equipped.offhand = hands[actor.system.handed] == true;
+            }
+        }
     }
 
     getSkill(actor)

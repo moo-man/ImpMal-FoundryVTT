@@ -44,4 +44,18 @@
         }
     }
 
+    [data-hand="left"] i {
+        transform: scaleX(-1);
+    }
+
+    .grip {
+        opacity: 0.5;
+        margin: 0px 5px;
+    }
+
+    .equip.offhand,
+    .grip .offhand {
+        color: darkred
+    }
+
 }

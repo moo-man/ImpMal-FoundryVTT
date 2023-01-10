@@ -30,13 +30,28 @@
                         <a>{{this.name}}</a>
                     </div>
                     <div class="small">
-                        <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
-                        {{#if this.system.equipped.value}}
-                            <i class="fa-regular fa-circle-check"></i>
+                        {{#if (eq ../actor.type "character")}}
+                            {{#if this.system.equipped.hands.left}}
+                                <a class="equip {{#if this.system.equipped.offhand}}offhand{{/if}}" data-hand="left" data-target="system.equipped.value"><i class="fa-solid fa-hand"></i></a>
+                            {{else}}
+                                <a class="equip" data-hand="left" data-target="system.equipped.value"><i class="fa-regular fa-hand"></i></a>
+                            {{/if}}
+
+                            {{#if this.system.equipped.hands.right}}
+                                <a class="equip {{#if this.system.equipped.offhand}}offhand{{/if}}" data-hand="right" data-target="system.equipped.value"><i class="fa-solid fa-hand"></i></a>
+                            {{else}}
+                                <a class="equip" data-hand="right" data-target="system.equipped.value"><i class="fa-regular fa-hand"></i></a>
+                            {{/if}}
+
                         {{else}}
-                            <i class="fa-regular fa-circle"></i>
+                            <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
+                                {{#if this.system.equipped.value}}
+                                    <i class="fa-regular fa-circle-check"></i>
+                                {{else}}
+                                    <i class="fa-regular fa-circle"></i>
+                                {{/if}}
+                            </a>
                         {{/if}}
-                        </a>
                     </div>
                     <div class="small">{{this.system.quantity}}</div>
                     <div class="small">{{this.system.encumbrance.total}}</div>
@@ -140,11 +155,11 @@
                     </div>
                     <div class="small">
                         <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
-                        {{#if this.system.equipped.value}}
-                            <i class="fa-regular fa-circle-check"></i>
-                        {{else}}
-                            <i class="fa-regular fa-circle"></i>
-                        {{/if}}
+                            {{#if this.system.equipped.value}}
+                                <i class="fa-regular fa-circle-check"></i>
+                            {{else}}
+                                <i class="fa-regular fa-circle"></i>
+                            {{/if}}
                         </a>
                     </div>
                     <div class="small">{{this.system.quantity}}</div>
@@ -183,11 +198,11 @@
                     </div>
                     <div class="small">
                         <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
-                        {{#if this.system.equipped.value}}
-                            <i class="fa-regular fa-circle-check"></i>
-                        {{else}}
-                            <i class="fa-regular fa-circle"></i>
-                        {{/if}}
+                            {{#if this.system.equipped.value}}
+                                <i class="fa-regular fa-circle-check"></i>
+                            {{else}}
+                                <i class="fa-regular fa-circle"></i>
+                            {{/if}}
                         </a>
                     </div>
                     <div class="small">{{this.system.quantity}}</div>
@@ -226,11 +241,11 @@
                     </div>
                     <div class="small">
                         <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
-                        {{#if this.system.equipped.value}}
-                            <i class="fa-regular fa-circle-check"></i>
-                        {{else}}
-                            <i class="fa-regular fa-circle"></i>
-                        {{/if}}
+                            {{#if this.system.equipped.value}}
+                                <i class="fa-regular fa-circle-check"></i>
+                            {{else}}
+                                <i class="fa-regular fa-circle"></i>
+                            {{/if}}
                         </a>
                     </div>
                     <div class="small">{{this.system.quantity}}</div>
@@ -269,11 +284,11 @@
                     </div>
                     <div class="small">
                         <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
-                        {{#if this.system.equipped.value}}
-                            <i class="fa-regular fa-circle-check"></i>
-                        {{else}}
-                            <i class="fa-regular fa-circle"></i>
-                        {{/if}}
+                            {{#if this.system.equipped.value}}
+                                <i class="fa-regular fa-circle-check"></i>
+                            {{else}}
+                                <i class="fa-regular fa-circle"></i>
+                            {{/if}}
                         </a>
                     </div>
                     <div class="small">{{this.system.quantity}}</div>

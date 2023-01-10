@@ -3,6 +3,12 @@
  */
 export class BaseItemModel extends foundry.abstract.DataModel 
 {
+
+    get id () 
+    {
+        return this.parent.id;
+    }
+
     static defineSchema() 
     {
         return {};

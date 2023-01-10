@@ -57,6 +57,16 @@
                     <div class="list-name">
                         <img class="roll" data-type="weapon" data-item-id="{{this.id}}" src="{{this.img}}">
                         <a>{{this.name}}</a>
+                        {{#if (eq ../actor.type "character")}}
+                        <div class="grip">
+                            {{#if this.system.equipped.hands.left}}
+                                <span {{#if this.system.equipped.offhand}}class="offhand"{{/if}} data-hand="left"><i class="fa-solid fa-hand"></i></span>
+                            {{/if}}
+                            {{#if this.system.equipped.hands.right}}
+                                <span {{#if this.system.equipped.offhand}}class="offhand"{{/if}}  data-hand="right"><i class="fa-solid fa-hand"></i></span>
+                            {{/if}}
+                        </div>
+                        {{/if}}
                     </div>
                     <div>{{this.system.specialisation}}</div>
                     <div>{{this.system.damage.value}}</div>
@@ -87,6 +97,16 @@
                     <div class="list-name">
                         <img class="roll" data-type="weapon" data-item-id="{{this.id}}" src="{{this.img}}">
                         <a>{{this.name}}</a>
+                        {{#if (eq ../actor.type "character")}}
+                        <div class="grip">
+                            {{#if this.system.equipped.hands.left}}
+                                <span  {{#if this.system.equipped.offhand}}class="offhand"{{/if}} data-hand="left"><i class="fa-solid fa-hand"></i></span>
+                            {{/if}}
+                            {{#if this.system.equipped.hands.right}}
+                                <span  {{#if this.system.equipped.offhand}}class="offhand"{{/if}} data-hand="right"><i class="fa-solid fa-hand"></i></span>
+                            {{/if}}
+                        </div>
+                        {{/if}}
                     </div>
                     <div>{{this.system.specialisation}}</div>
                     <div>{{this.system.damage.value}}</div>
@@ -111,7 +131,7 @@
                             <div class="value">{{this.system.mag.value}}</div>
                         </div>
                         {{#if (lt this.system.mag.current this.system.mag.value)}}
-                        <a class="reload">Reload</a>
+                            <a class="reload">Reload</a>
                         {{/if}}
                     </div>
                     <label>{{localize 'IMPMAL.Traits'}}: </label>

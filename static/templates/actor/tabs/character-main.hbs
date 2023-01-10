@@ -85,8 +85,10 @@
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Handed"}}</label>
         <select name="system.handed">
-            <option value="r">{{localize "IMPMAL.Right"}}</option>
-            <option value="l">{{localize "IMPMAL.Left"}}</option>
+            {{#select system.handed}}
+            <option value="right">{{localize "IMPMAL.Right"}}</option>
+            <option value="left">{{localize "IMPMAL.Left"}}</option>
+            {{/select}}
         </select>
     </div>
     <div class="actor-property">

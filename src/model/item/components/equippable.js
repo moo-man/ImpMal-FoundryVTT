@@ -9,7 +9,6 @@ export class EquippableItemModel extends PhysicalItemModel
         let schema = super.defineSchema();
         schema.equipped = new fields.SchemaField({
             value : new fields.BooleanField(),
-            hand : new fields.StringField()
         });
 
         return schema;

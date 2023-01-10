@@ -2,6 +2,7 @@ import { CharacterCombatModel } from "./components/combat";
 import { InfluenceModel } from "../shared/influence";
 import { ListModel } from "../shared/list";
 import { StandardActorModel } from "./standard";
+import { HandsModel } from "./components/hands";
 let fields = foundry.data.fields;
 
 export class CharacterModel extends StandardActorModel 
@@ -36,6 +37,7 @@ export class CharacterModel extends StandardActorModel
         });
         schema.connections = new fields.EmbeddedDataField(ListModel);
         schema.influence = new fields.EmbeddedDataField(InfluenceModel);
+        schema.hands = new fields.EmbeddedDataField(HandsModel);
         return schema;
     }
 
@@ -57,6 +59,7 @@ export class CharacterModel extends StandardActorModel
     computeDerived(items)
     {
         super.computeDerived(items);
+        this.hands.getDocuments(items.all);
         this.xp.total = this.xp.available + this.xp.spent;
     }
 }

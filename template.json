@@ -263,7 +263,15 @@
         "max": 3,
         "current": 3
       },
-      "handed": "r"
+      "handed": "right",
+      "hands" : {
+        "left" : {
+          "id" : ""
+        },
+        "right" : {
+          "id" : ""
+        }
+      }
     },
     "npc": {
       "combat": {

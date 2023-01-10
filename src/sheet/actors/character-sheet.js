@@ -15,6 +15,14 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
     {
         super.activateListeners(html);
 
-        html.find("");
+        html.find(".equip").click(ev => 
+        {
+            let itemId = $(ev.currentTarget).parents(".list-item").attr("data-id");
+            let hand = ev.currentTarget.dataset.hand;
+            let item = this.actor.items.get(itemId);
+
+            this.actor.update(this.actor.system.hands.toggle(item, hand));
+            
+        });
     }
 }

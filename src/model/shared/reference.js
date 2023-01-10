@@ -13,6 +13,13 @@ export class DocumentReferenceModel extends foundry.abstract.DataModel
 
     getDocument(collection) 
     {
-        this.document = collection.get(this.id);
+        if (collection instanceof Collection)
+        {
+            this.document = collection.get(this.id);
+        }
+        else if (collection instanceof Array)
+        {
+            this.document = collection.find(i => i.id == this.id);
+        }
     }
 }
