@@ -25,9 +25,12 @@ export class HandsModel extends foundry.abstract.DataModel
     {
         let id = item.id;
 
-        if(item.system.isEquipped) // If equipped, clear from hand fields
+        // Other hand
+        let other = hand == "left" ? "right" : "left";        
+        let update = {};
+
+        if(item.system.isEquipped) // If currently equipped, clear from hand fields
         {
-            let update = {};
             for(let hand in this)
             {
                 if(this[hand].id == id)
@@ -35,20 +38,28 @@ export class HandsModel extends foundry.abstract.DataModel
                     update[`system.hands.${hand}.id`] = "";
                 }
             }
-            return update;
         }
         
-        else // If not equipped, add IDs to hand fields
+        else // If not currently equipped, add IDs to hand fields
         {
             if (item.system.traits.has("twohanded"))
             {
-                return {[`system.hands.left.id`] : id, [`system.hands.right.id`] : id} ;
+                update[`system.hands.left.id`] = id;
+                update[`system.hands.right.id`] = id;
             }
             else 
             {
-                return {[`system.hands.${hand}.id`] : id};
+                update[`system.hands.${hand}.id`] = id;
+                // If other hand is holding a two handed weapon, unequip it
+                if (this[hand].document?.system.traits.has("twohanded"))
+                {
+                    update[`system.hands.${other}.id`] = "";   
+                }
             }
         }
+
+        return update;
+
     }
 
     isHolding(id)
