@@ -33,7 +33,7 @@ export class CharacterModel extends StandardActorModel
         schema.corruption = new fields.NumberField();
         schema.fate = new fields.SchemaField({
             max : new fields.NumberField(),
-            current : new fields.NumberField()
+            value : new fields.NumberField()
         });
         schema.connections = new fields.EmbeddedDataField(ListModel);
         schema.influence = new fields.EmbeddedDataField(InfluenceModel);

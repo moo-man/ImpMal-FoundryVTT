@@ -8,6 +8,8 @@ export class TestContext
     hidden = false;
     blind = false;
     title = "";
+    fateReroll = false;
+    fateAddSL = false;
 
     constructor(context)
     {
@@ -34,7 +36,9 @@ export class TestContext
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
         let context = {
             speaker : data.speaker,
-            title : data.title
+            title : data.title,
+            fateReroll : data.fateReroll,
+            fateAddSL : data.fateAddSL
         };
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;

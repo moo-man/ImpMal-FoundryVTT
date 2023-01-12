@@ -19,17 +19,20 @@ export class BaseTestEvaluator
 
     async evaluate(data)
     {
-        this.roll = data.result.roll || (await new Roll("1d100").evaluate({async: true})).total;
+        data.result.roll = data.result.roll || (await new Roll("1d100").evaluate({async: true})).total;
         this.computeResult(data);
     }
 
     computeResult(data)
     {
+        this.clear();
         // Start with predefined results
         Object.assign(this, foundry.utils.deepClone(data.result));
 
         // Do not process result without a roll
-        if (!this.roll) {return;}
+        if (!data.result.roll) {return;}
+
+        this.roll = data.result.roll;
 
         // Prefer predefined target vs computed target
         this.target = data.result.target || data.target;
@@ -155,5 +158,13 @@ export class BaseTestEvaluator
         }
 
         return Number(number.toString().split("").reverse().join(""));
+    }
+
+    clear()
+    {
+        for (let property in this)
+        {
+            delete this[property];
+        }
     }
 }

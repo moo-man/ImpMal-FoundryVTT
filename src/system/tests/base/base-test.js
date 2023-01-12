@@ -43,6 +43,61 @@ export class BaseTest
 
     }
 
+    reroll(fate=false) 
+    {
+        if (fate)
+        {
+            if (this.context.fateReroll)
+            {
+                ui.notifications.error("IMPMAL.ErrorFateRerollUsed");
+                throw game.i18n.localize("IMPMAL.ErrorFateRerollUsed");
+            }
+
+            if(this.actor.system.fate.value <= 0)
+            {
+                ui.notifications.error("IMPMAL.ErrorNoFateLeft");
+                throw game.i18n.localize("IMPMAL.ErrorNoFateLeft");
+            }
+
+            this.actor.update({"system.fate.value" : this.actor.system.fate.value - 1});
+            this.context.fateReroll = true;
+        }
+
+        delete this.data.result.roll;
+        this.roll();
+    }
+
+    addSL(num=1, fate=false)
+    {
+        if (fate)
+        {
+            if (this.context.fateAddSL)
+            {
+                ui.notifications.error("IMPMAL.ErrorFateSLUsed");
+                throw game.i18n.localize("IMPMAL.ErrorFateSLUsed");
+            }
+
+            if(this.actor.system.fate.value <= 0)
+            {
+                ui.notifications.error("IMPMAL.ErrorNoFateLeft");
+                throw game.i18n.localize("IMPMAL.ErrorNoFateLeft");
+            }
+
+            this.actor.update({"system.fate.value" : this.actor.system.fate.value - 1});
+            this.context.fateAddSL = true;
+        }
+
+        this.data.SL += num;
+        delete this.data.result.signedSL; // Remove 
+        this.roll();
+    }
+
+    modify(data)
+    {
+        mergeObject(this, data);
+        this.roll();
+    }
+
     async sendToChat({newMessage = false}={}) 
     {
 
