@@ -24,4 +24,18 @@
     </div>
     <p class="centered"><strong>{{result.outcomeDescription}}</strong></p>
     {{{testDetails}}}
+
+    {{#if context.targets.length}}
+    <div class="targets">
+        <a><i class="fa-solid fa-crosshairs"></i></a>
+        <div class="target-list">
+            {{#each opposedResults}}
+            <div class="target">
+                <img data-tooltip="{{tokenName this.target}}" src="{{tokenImg this.target}}">
+                <span class="opposed-result {{#if (eq this.result.winner "attacker")}}winner{{/if}} {{#if (eq this.result.winner "defender")}}loser{{/if}}">{{numberFormat this.result.SL sign=true}}</span>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    {{/if}}
 </div>

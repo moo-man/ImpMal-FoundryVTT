@@ -49,7 +49,8 @@ export class TestDialog extends Application
             modifier : 0,
             SL : 0,
             difficulty : "challenging",
-            state : "none"
+            state : "none",
+            rollmode : game.settings.get("core", "rollMode") || "publicroll"
         };
     }
 
@@ -68,6 +69,10 @@ export class TestDialog extends Application
         };
     }
 
+    updateTargets()
+    {
+        this.data.targets = Array.from(game.user.targets);
+    }
 
     /**
      * Compute whether disadvantage or advantage should be selected
@@ -211,7 +216,21 @@ export class TestDialog extends Application
             dialogData.data.target = target;
         }
 
+        dialogData.data.targets = Array.from(game.user.targets);
+
+
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;
+    }
+
+    static updateActiveDialogTargets() 
+    {
+        Object.values(ui.windows).forEach(i => 
+        {
+            if (i instanceof TestDialog)
+            {
+                i.updateTargets();
+            }
+        });
     }
 }

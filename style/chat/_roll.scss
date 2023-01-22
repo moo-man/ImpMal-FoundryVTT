@@ -50,4 +50,29 @@
             line-height: 40px;
         }
     }
+
+    .targets {
+        display: flex;
+        align-items: center;
+
+        .target-list {
+            display: flex;
+            align-items: center;
+
+            .target {
+                display: flex;
+                align-items: center;
+                .opposed-result.winner {
+                    color: darkgreen;
+                }
+                .opposed-result.loser {
+                    color: darkred
+                }
+            }
+            img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
 }

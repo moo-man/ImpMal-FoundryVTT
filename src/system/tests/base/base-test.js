@@ -1,3 +1,4 @@
+import { OpposedTestResult } from "../opposed-result";
 import { BaseTestEvaluator } from "./base-evaluator";
 import { TestContext } from "./test-context";
 
@@ -17,6 +18,7 @@ export class BaseTest
         this.context = new this.constructor.contextClass(context);
         this.data.target = this.computeTarget();
         this.result = new this.constructor.evaluatorClass(data);
+        this.evaluateOpposedTests();
     }
 
     // Base test has no target computation, just use static value provided
@@ -31,7 +33,10 @@ export class BaseTest
         // Save roll
         mergeObject(this.data.result, this.result.getPersistentData());
         await this.postRoll();
-        return this.sendToChat();
+        await this.evaluateOpposedTests();
+        await this.sendToChat();
+        this.context.handleOpposed();
+        return this;
     }
 
     /**
@@ -119,6 +124,19 @@ export class BaseTest
         }
     }
 
+    evaluateOpposedTests()
+    {
+        this.opposedResults = [];
+        for (let messageId of this.context.responses)
+        {
+            let test = game.messages.get(messageId)?.test;
+            if (test)
+            {
+                this.opposedResults.push({target : test.actor, result : new OpposedTestResult(this.result, test.result)});
+            }
+        }
+    }
+
     save() 
     {
         return this.message?.update({
@@ -149,15 +167,15 @@ export class BaseTest
         {
             this.testDetails = await renderTemplate(this.testDetailsTemplate, this);
         }
+        let chatData = ChatMessage.applyRollMode({}, this.context.rollmode);
         let content = await renderTemplate(this.rollTemplate, this);
-
-        return {
+        return mergeObject( chatData, {
             content,
             title : this.context.title,
             speaker : this.context.speaker,
             flavor: this.context.title,
             flags : this._saveData()
-        };
+        });
     }
 
     get actor() 

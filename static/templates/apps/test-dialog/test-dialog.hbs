@@ -40,6 +40,20 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label>{{localize "IMPMAL.RollMode"}}</label>
+            <div class="form-fields">
+                <select name="rollmode">
+                    {{#select fields.rollmode}}
+                        <option value="publicroll">{{localize "CHAT.RollPublic"}}</option>
+                        <option value="gmroll">{{localize "CHAT.RollPrivate"}}</option>
+                        <option value="blindroll">{{localize "CHAT.RollBlind"}}</option>
+                        <option value="selfroll">{{localize "CHAT.RollSelf"}}</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+
     </div>
     <button type="submit">{{localize "Roll"}}</button>
 </form>

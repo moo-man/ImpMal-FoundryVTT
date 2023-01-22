@@ -101,6 +101,7 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
         html.find(".property-edit").on("click", this._onPropertyEdit.bind(this));
+        html.find(".inc-dec").on("mousedown", this._onIncDec.bind(this));
         html.find(".ammo-selector").on("change", this._onChangeAmmo.bind(this));
         html.find(".reload").on("click", this._onReload.bind(this));
         html.find(".roll").on("click", this._onRollClick.bind(this));
@@ -269,6 +270,23 @@ export default class ImpMalActorSheet extends ActorSheet
             },
             default : "submit"
         }).render(true);
+    }
+
+    _onIncDec(ev)
+    {
+        let el = $(ev.currentTarget).parents(".list-item");
+        let id = el.attr("data-id");
+        let item = this.actor.items.get(id);
+        let button = ev.button == 0 ? "left" : "right";
+
+        if (button =="left")
+        {
+            item.update(item.system.increase());
+        }
+        if (button =="right")
+        {
+            item.update(item.system.decrease());
+        }
     }
 
     _onChangeAmmo(ev)
