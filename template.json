@@ -9,47 +9,47 @@
       "characteristics": {
         "characteristics": {
           "ws": {
-            "starting": 0,
+            "starting": 20,
             "advances": 0,
             "modifier" : 0
           },
           "bs": {
-            "starting": 0,
+            "starting": 20,
             "advances": 0,
             "modifier" : 0
           },
           "str": {
-            "starting": 0,
+            "starting": 20,
             "advances": 0,
             "modifier" : 0
           },
           "tgh": {
-            "starting": 0,
+            "starting": 20,
             "advances": 0,
             "modifier" : 0
           },
           "ag": {
-            "starting": 0,
+            "starting": 20,
             "advances": 0,
             "modifier" : 0
           },
           "int": {
-            "starting": 0,
+            "starting": 20,
             "advances": 0,
             "modifier" : 0
           },
           "per": {
-            "starting": 0,
+            "starting": 20,
             "advances": 0,
             "modifier" : 0
           },
           "wil": {
-            "starting": 0,
+            "starting": 20,
             "advances": 0,
             "modifier" : 0
           },
           "fel": {
-            "starting": 0,
+            "starting": 20,
             "advances": 0,
             "modifier" : 0
           }
@@ -235,9 +235,7 @@
         "combat"
       ],
       "xp": {
-        "total": 0,
-        "spent": 0,
-        "available": 0
+        "total": 0
       },
       "details": {
         "age": 0,
@@ -287,7 +285,7 @@
       "role",
       "talent",
       "duty",
-      "skill",
+      "specialisation",
       "weapon",
       "ammo",
       "modification",
@@ -435,7 +433,7 @@
         "list": []
       }
     },
-    "skill": {
+    "specialisation": {
       "templates": [
         "notes"
       ],

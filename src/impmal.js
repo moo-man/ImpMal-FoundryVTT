@@ -15,7 +15,7 @@ import { PowerModel } from "./model/item/power";
 import { ProtectionModel } from "./model/item/protection";
 import { RoleModel } from "./model/item/role";
 import { ForceFieldModel } from "./model/item/forceField";
-import { SkillSpecModel } from "./model/item/skill";
+import { SpecialisationModel } from "./model/item/specialisation";
 import { TalentModel } from "./model/item/talent";
 import { WeaponModel } from "./model/item/weapon";
 import IMPMAL from "./system/config";
@@ -59,7 +59,7 @@ Hooks.once("init", () =>
     CONFIG.Item.systemDataModels["role"] = RoleModel;
     CONFIG.Item.systemDataModels["talent"] = TalentModel;
     CONFIG.Item.systemDataModels["duty"] = DutyModel;
-    CONFIG.Item.systemDataModels["skill"] = SkillSpecModel;
+    CONFIG.Item.systemDataModels["specialisation"] = SpecialisationModel;
     CONFIG.Item.systemDataModels["weapon"] = WeaponModel;
     CONFIG.Item.systemDataModels["ammo"] = AmmoModel;
     CONFIG.Item.systemDataModels["modification"] = ModificationModel;

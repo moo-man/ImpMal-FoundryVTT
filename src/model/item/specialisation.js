@@ -1,7 +1,7 @@
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
-export class SkillSpecModel extends StandardItemModel 
+export class SpecialisationModel extends StandardItemModel 
 {
     static defineSchema() 
     {

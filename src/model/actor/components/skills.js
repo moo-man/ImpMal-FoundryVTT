@@ -36,14 +36,14 @@ export class SkillsModel extends foundry.abstract.DataModel
         }
     }
 
-    findSpecialisations(skills)
+    findSpecialisations(specialisations)
     {
         for(let sk in this)
         {
             this[sk].specialisations = [];
         }
 
-        for(let item of skills)
+        for(let item of specialisations)
         {
             try 
             {

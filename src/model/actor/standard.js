@@ -52,7 +52,7 @@ export class StandardActorModel extends BaseActorModel
         this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
         this.skills.computeTotals(this.characteristics);
-        this.skills.findSpecialisations(items.skill);
+        this.skills.findSpecialisations(items.specialisation);
         this.computeWounds();
         this.computeInitiative();
         this.computeEncumbrance(items);

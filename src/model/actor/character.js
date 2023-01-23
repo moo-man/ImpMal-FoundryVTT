@@ -3,6 +3,7 @@ import { InfluenceModel } from "../shared/influence";
 import { ListModel } from "../shared/list";
 import { StandardActorModel } from "./standard";
 import { HandsModel } from "./components/hands";
+import { XPModel } from "./components/xp";
 let fields = foundry.data.fields;
 
 export class CharacterModel extends StandardActorModel 
@@ -13,10 +14,7 @@ export class CharacterModel extends StandardActorModel
         schema.handed = new fields.StringField();
         schema.solars = new fields.NumberField();
         schema.combat = new fields.EmbeddedDataField(CharacterCombatModel);
-        schema.xp = new fields.SchemaField({
-            available : new fields.NumberField(),
-            spent : new fields.NumberField()
-        });
+        schema.xp = new fields.EmbeddedDataField(XPModel);
         schema.details = new fields.SchemaField({
             age : new fields.NumberField(),
             feature : new fields.StringField(),
@@ -60,7 +58,8 @@ export class CharacterModel extends StandardActorModel
     {
         super.computeDerived(items);
         this.hands.getDocuments(items.all);
-        this.xp.total = this.xp.available + this.xp.spent;
+        this.xp.spent = XPModel.computeSpentFor(this.parent);
+        this.xp.available = this.xp.total - this.xp.spent;
     }
 }
 

@@ -1,0 +1,74 @@
+<form>
+    <div>
+        <nav class="sheet-tabs">
+            <a class="item" data-tab="characteristics">{{localize "IMPMAL.Characteristics"}}</a>
+            <a class="item" data-tab="skills">{{localize "IMPMAL.Skills"}}</a>
+            <a class="item" data-tab="other">{{localize "IMPMAL.Other"}}</a>
+        </nav>
+        <div class="tab-content">
+            <div class="tab advancement-list" data-tab="characteristics">
+                <div class="header">
+                    <div class="name">{{localize "IMPMAL.Characteristic"}}</div>
+                    <div class="advances">{{localize "IMPMAL.Advances"}}</div>
+                    <div class="total">{{localize "IMPMAL.Total"}}</div>
+                </div>
+                {{#each actor.system.characteristics}}
+                    <div class="characteristic">
+                        <div class="name">
+                            {{configLookup "characteristicAbbrev" @key}}
+                        </div>
+                        <div class="advances">
+                            <a class="decrease" data-characteristic="{{@key}}"><i class="fa-regular fa-square-minus"></i></a>
+                            <span class="value">{{this.advances}}</span>
+                            <a class="increase" data-characteristic="{{@key}}"><i class="fa-regular fa-square-plus"></i></a>
+                        </div>
+                        <div class="total">
+                            {{this.total}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="tab advancement-list" data-tab="skills">
+                <div class="header">
+                    <div class="name">{{localize "IMPMAL.Skill"}}</div>
+                    <div class="advances">{{localize "IMPMAL.Advances"}}</div>
+                    <div class="total">{{localize "IMPMAL.Total"}}</div>
+                </div>
+                {{#each actor.system.skills}}
+                    <div class="skill">
+                        <div class="name">{{configLookup "skills" @key}}</div>
+                        <div class="advances">
+                            <a class="decrease" data-skill="{{@key}}"><i class="fa-regular fa-square-minus"></i></a>
+                            <span class="value">{{this.advances}}</span>
+                            <a class="increase" data-skill="{{@key}}"><i class="fa-regular fa-square-plus"></i></a>
+                        </div>
+                        <div class="total">{{this.total}}</div>
+                    </div>
+                    {{#each this.specialisations}}
+                        <div class="skill">
+                            <div class="name">{{configLookup "skills" this.system.skill}} ({{this.name}})</div>
+                            <div class="advances">
+                                <a class="decrease" data-item="{{this.id}}"><i class="fa-regular fa-square-minus"></i></a>
+                                <span class="value">{{this.system.advances}}</span>
+                                <a class="increase" data-item="{{this.id}}"><i class="fa-regular fa-square-plus"></i></a>
+                            </div>
+                            <div>{{this.system.total}}</div>
+                        </div>
+                    {{/each}}
+                {{/each}}
+            </div>
+            <div class="tab" data-tab="other">
+            </div>
+        </div>
+        <div class="advancement-info">
+                <div class="value">
+                    {{object.system.xp.spent}}
+                </div>
+                 <i class="fa-solid fa-arrow-right"></i>
+                 <div class="value {{#if (gt 0 actor.system.xp.available)}}overspent{{/if}}">
+                    {{actor.system.xp.spent}}
+                 </div>
+        </div>
+    </div>
+    <button type="submit">{{localize "Submit"}}</button>
+</form>

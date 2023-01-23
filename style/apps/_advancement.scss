@@ -1,0 +1,59 @@
+.impmal.advancement
+{
+    .tab-content {
+        height: calc(100% - 80px);
+    }
+
+    .sheet-tabs {
+        display : flex;
+        justify-content: space-around;
+        border-top: 1px solid #555;
+        border-bottom: 1px solid #555;
+        padding: 5px 0px;
+    }
+
+    .advancement-list {
+
+        .header {
+            font-weight: bold;
+        }
+
+        > * {
+            display: flex;
+            text-align: center;
+            > * {
+                flex: 1
+            }
+        }
+
+        .name {
+            flex: 2;
+            text-align: left;
+        }
+
+        .advances { 
+            display: flex;
+            > * 
+            {
+                flex: 1
+            }
+            .value {
+                flex: 0 0 20px;
+            }
+        }
+    }
+
+
+    .advancement-info {
+        display: flex;
+        font-size: 24px;
+        align-items: center;
+        height: 50px;
+        justify-content: space-evenly;
+        text-align: center;
+
+        .overspent {
+            color: darkred;
+        }
+    }
+}

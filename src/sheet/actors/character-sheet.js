@@ -1,3 +1,4 @@
+import { AdvancementForm } from "../../apps/advancement";
 import ImpMalActorSheet from "./actor-sheet";
 
 export default class ImpMalCharacterSheet extends ImpMalActorSheet
@@ -8,6 +9,26 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         const options = super.defaultOptions;
         options.classes = options.classes.concat("character");
         return options;
+    }
+
+    _getHeaderButtons() 
+    {
+        let buttons = super._getHeaderButtons();
+        if (this.actor.isOwner) 
+        {
+            buttons = [
+                {
+                    label: "",
+                    class: "advancement",
+                    icon: "fa-solid fa-chevrons-up",
+                    onclick: () => 
+                    {
+                        new AdvancementForm(this.actor).render(true);
+                    }
+                }
+            ].concat(buttons);
+        }
+        return buttons;
     }
 
 
