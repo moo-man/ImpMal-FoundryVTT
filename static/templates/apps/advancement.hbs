@@ -57,7 +57,21 @@
                     {{/each}}
                 {{/each}}
             </div>
-            <div class="tab" data-tab="other">
+            <div class="tab advancement-list" data-tab="other">
+                <div class="header">
+                    <div class="name">{{localize "IMPMAL.Description"}}</div>
+                    <div class="xp">{{localize "IMPMAL.XP"}}</div>
+                </div>
+                {{#each actor.system.xp.other.list}}
+                <div data-index="{{@key}}">
+                    <input type="text" class="name other-edit" name="description" value="{{this.description}}">
+                    <input type="number" class="xp other-edit" name="xp" value="{{this.xp}}">
+                </div>
+                {{/each}}
+                <div>
+                    <input type="text" class="name other-new" name="description">
+                    <input type="number" class="xp other-new" name="xp" >
+                </div>
             </div>
         </div>
         <div class="advancement-info">

@@ -1,3 +1,5 @@
+import { ListModel } from "../../shared/list";
+
 let fields = foundry.data.fields;
 
 export class XPModel extends foundry.abstract.DataModel 
@@ -6,10 +8,7 @@ export class XPModel extends foundry.abstract.DataModel
     {
         let schema = {};
         schema.total = new fields.NumberField();
-        schema.other = new fields.ArrayField(new fields.SchemaField({
-            description : new fields.StringField(),
-            xp : new fields.NumberField()
-        }));
+        schema.other = new fields.EmbeddedDataField(ListModel);
         return schema;
     }
 
@@ -72,7 +71,7 @@ export class XPModel extends foundry.abstract.DataModel
     
     static _computeOtherXP(xp)
     {
-        return xp.other.reduce((total, current) => total + current.xp, 0);
+        return xp.other.list.reduce((total, current) => total + (current.xp || 0), 0);
     }
 
     static xpForValue(value, costs)

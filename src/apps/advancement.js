@@ -23,6 +23,7 @@ export class AdvancementForm extends FormApplication
     async getData()
     {
         let data = await super.getData();
+        this.actor.prepareData();
         data.actor = this.actor;
         return data;
     }
@@ -58,7 +59,36 @@ export class AdvancementForm extends FormApplication
                 this.actor.updateSource({[`system.characteristics.${characteristicKey}.advances`] : this.actor.system.characteristics[characteristicKey].advances + value});
             }
 
-            this.actor.prepareData();
+            this.render(true);
+        });
+
+        html.find(".other-new").on("change", (ev) => 
+        {
+            let newOther = {[`${ev.target.name}`] : (Number.isNumeric(ev.target.value) ? Number(ev.target.value) : (ev.target.value || 0))};
+
+            this.actor.updateSource({"system.xp.other.list" : this.actor.system.xp.other.add(newOther)});
+            this.render(true);
+        });
+
+        html.find(".other-edit").on("change", (ev) => 
+        {
+            let index = ev.currentTarget.parentElement.dataset.index;
+            let other = this.actor.system.xp.other.list[index];
+            other[ev.target.name] = Number.isNumeric(ev.target.value) ? Number(ev.target.value) : (ev.target.value || 0);
+
+            let newList;
+
+            // If both values deleted, remove the element
+            if (!other.description && !other.xp)
+            {
+                newList = this.actor.system.xp.other.remove(index);
+            }
+            else // Otherwise just edit the element
+            {
+                newList = this.actor.system.xp.other.edit(index, other);
+            }
+
+            this.actor.updateSource({"system.xp.other.list" : newList});
             this.render(true);
         });
     }
