@@ -60,6 +60,7 @@ export class CharacterModel extends StandardActorModel
         this.hands.getDocuments(items.all);
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
+        this.combat.superiority = game.impmal.superiority.value;
     }
 }
 

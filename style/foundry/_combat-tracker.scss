@@ -1,0 +1,17 @@
+.combat-sidebar {
+    .superiority {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex: 0 0 40px;
+
+        label {
+            font-size: var(--font-size-16);
+        }
+        input {
+            color: white;
+            flex: 0 0 20px;
+        }
+    }
+}

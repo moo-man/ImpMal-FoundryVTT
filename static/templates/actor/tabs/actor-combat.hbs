@@ -15,7 +15,7 @@
         {{#if (eq actor.type "character")}}
             <label class="property-label">{{localize "IMPMAL.Superiority"}}</label>
             <div class="property-value">
-                <input type="number" value="{{system.combat.superiority}}" name="system.combat.superiority">
+                <input class="superiority-update" type="number" value="{{system.combat.superiority}}" disabled>
             </div>
         {{else if (eq actor.type "npc")}}
             <label class="property-label">{{localize "IMPMAL.Resolve"}}</label>

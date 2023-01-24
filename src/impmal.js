@@ -30,6 +30,7 @@ import { CharacteristicTest } from "./system/tests/characteristic/characteristic
 import { SkillTest } from "./system/tests/skill/skill-test";
 import { WeaponTest } from "./system/tests/weapon/weapon-test";
 import { PowerTest } from "./system/tests/power/power-test";
+import SuperiorityManager from "./system/superiority";
 
 Hooks.once("init", () => 
 {
@@ -81,6 +82,7 @@ Hooks.once("init", () =>
     };
 
     registerSettings();
+    game.impmal.superiority = new SuperiorityManager();
     registerHandlebars();
     localizeConfig(IMPMAL);
 });
