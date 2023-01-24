@@ -36,6 +36,9 @@ export class CharacterModel extends StandardActorModel
         schema.connections = new fields.EmbeddedDataField(ListModel);
         schema.influence = new fields.EmbeddedDataField(InfluenceModel);
         schema.hands = new fields.EmbeddedDataField(HandsModel);
+        schema.warp = new fields.SchemaField({
+            charge : new fields.NumberField({min: 0}),
+        });
         return schema;
     }
 
@@ -61,6 +64,7 @@ export class CharacterModel extends StandardActorModel
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
         this.combat.superiority = game.impmal.superiority.value;
+        this.warp.threshold = this.characteristics.wil.bonus;
     }
 }
 

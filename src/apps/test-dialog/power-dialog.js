@@ -3,7 +3,21 @@ import { SkillTestDialog } from "./skill-dialog";
 
 export class PowerTestDialog extends SkillTestDialog
 {
+    fieldsTemplate = `systems/impmal/templates/apps/test-dialog/power-fields.hbs`;
     
+
+    computeFields() 
+    {
+        super.computeFields();
+
+        if (this.fields.push)
+        {
+            this.advCount++;
+        }
+    
+    }
+
+
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"
@@ -32,5 +46,12 @@ export class PowerTestDialog extends SkillTestDialog
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;
+    }
+
+    _defaultFields() 
+    {
+        let fields = super._defaultFields();
+        fields.push = false;
+        return fields;
     }
 }

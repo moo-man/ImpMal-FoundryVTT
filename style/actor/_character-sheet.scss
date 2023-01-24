@@ -58,4 +58,14 @@
         color: darkred
     }
 
+
+    .warp-charge {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        input {
+            width: 30px;
+        }
+    }
+
 }

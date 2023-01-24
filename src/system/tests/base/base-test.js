@@ -33,9 +33,9 @@ export class BaseTest
         // Save roll
         mergeObject(this.data.result, this.result.getPersistentData());
         await this.postRoll();
-        await this.evaluateOpposedTests();
+        // await this.evaluateOpposedTests();
         await this.sendToChat();
-        this.context.handleOpposed();
+        // this.context.handleOpposed();
         return this;
     }
 

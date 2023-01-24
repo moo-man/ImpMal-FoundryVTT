@@ -159,6 +159,12 @@ export class TestDialog extends Application
             {
                 value = Number(value);
             }
+
+            if (ev.currentTarget.type == "checkbox")
+            {
+                value = ev.currentTarget.checked;
+            }
+
             this.fields[ev.currentTarget.name] = value;
 
             // If the user clicks advantage or disadvantage, force that state to be true despite calculations
