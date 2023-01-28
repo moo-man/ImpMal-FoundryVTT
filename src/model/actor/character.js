@@ -4,6 +4,7 @@ import { ListModel } from "../shared/list";
 import { StandardActorModel } from "./standard";
 import { HandsModel } from "./components/hands";
 import { XPModel } from "./components/xp";
+import { ImpMalEffect } from "../../document/effect";
 let fields = foundry.data.fields;
 
 export class CharacterModel extends StandardActorModel 
@@ -65,6 +66,59 @@ export class CharacterModel extends StandardActorModel
         this.xp.available = this.xp.total - this.xp.spent;
         this.combat.superiority = game.impmal.superiority.value;
         this.warp.threshold = this.characteristics.wil.bonus;
+    }
+
+    updateChecks()
+    {
+        this._checkComputedEffects(this.parent);
+    }
+
+
+
+    _checkComputedEffects(actor)
+    {
+        let overburdened = actor.hasCondition("overburdened");
+        let restrained = actor.hasCondition("restrained");
+        let effect;
+
+        if (actor.system.encumbrance.state == 0)
+        {
+            if (overburdened?.isComputed)
+            {
+                overburdened.delete();
+            }
+            if (restrained?.isComputed)
+            {
+                restrained.delete();
+            }
+        }
+
+        else if (actor.system.encumbrance.state == 1)
+        {
+            if (!overburdened)
+            {   
+                effect = ImpMalEffect.findEffect("overburdened");
+            }
+
+            if (restrained?.isComputed)
+            {
+                restrained.delete();
+            }
+        }
+        else if (actor.system.encumbrance.state == 2)
+        {
+            if (!restrained)
+            {   
+                effect = ImpMalEffect.findEffect("restrained");
+            }
+        }
+
+        if (effect)
+        {
+            effect["flags.impmal.computed"] = true;
+            ImpMalEffect.create(ImpMalEffect.getCreateData(effect), {parent : actor});
+        }
+
     }
 }
 

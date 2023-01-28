@@ -87,20 +87,19 @@ export class StandardActorModel extends BaseActorModel
             }
         }
 
-        this.encumbrance = {};
         this.encumbrance.overburdened += this.characteristics.str.bonus + this.characteristics.tgh.bonus; 
         this.encumbrance.restrained += (this.characteristics.str.bonus + this.characteristics.tgh.bonus) * 2;
         this.encumbrance.value += list.reduce((acc, item) => acc += item.system.encumbrance.total, 0);
 
-        if (this.encumbrance.value < this.encumbrance.overburdened)
+        if (this.encumbrance.value <= this.encumbrance.overburdened)
         {
             this.encumbrance.state = 0;
         }
-        else if (this.encumbrance.value < this.encumbrance.restrained)
+        else if (this.encumbrance.value <= this.encumbrance.restrained)
         {
             this.encumbrance.state = 1;
         }
-        else if (this.encumbrance >= this.encumbrance.restrained)
+        else if (this.encumbrance.value > this.encumbrance.restrained)
         {
             this.encumbrance.state = 2;
         }

@@ -221,6 +221,30 @@
     .encumbrance-section
     {
         flex: 5;
+        display: flex;
+        align-items: center;
+
+        .encumbrance-bar-container {
+            width: 100%;
+            border: 1px solid #5E82AF;
+            height: 15px;
+            border-radius: 10px;
+            .bar {
+                height: 100%;
+                border-radius: 15px;
+                background-color: #5E82AF;
+            }
+
+            .threshold {
+                width: 0px;
+                height: 0px;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid darkblue;
+                position: relative;
+                margin-bottom: -5px;
+            }
+        }
     }
 
 

@@ -20,9 +20,16 @@ export class ImpMalEffect extends ActiveEffect
         return this.getFlag("impmal", "type") == "major"; 
     }
 
+
+    // Computed effects mean flagged to know that they came from a calculation, notably encumbrance causing overburdened or restrained
+    get isComputed()
+    {
+        return this.getFlag("impmal", "computed");
+    }
+
     static findEffect(key, type="minor")
     {
-        let effects = game.impmal.config.conditions;
+        let effects = foundry.utils.deepClone(game.impmal.config.conditions);
 
         let effect = effects.find(i => i.id == key && i.flags?.impmal?.type == type);
         if (!effect)

@@ -36,11 +36,15 @@ export default function registerHandlebars()
         return game.settings.get("wfrp4e", key);
     });
 
-    Handlebars.registerHelper("pct",
-        function (part, whole) 
+    Handlebars.registerHelper("pct", function (part, whole, max100=true) 
+    {
+        let pct =  (part / whole) * 100;
+        if (pct > 100 && max100)
         {
-            return (part / whole) * 100;
-        });
+            pct = 100;
+        }
+        return pct;
+    });
 
     Handlebars.registerHelper("enrich", function (string) 
     {
