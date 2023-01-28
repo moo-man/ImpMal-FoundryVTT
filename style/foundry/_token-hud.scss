@@ -1,0 +1,20 @@
+.impmal.status-effects {
+    .effect-control {
+        display: flex;
+
+        .pips {
+            display: flex;
+            flex-direction: column-reverse;
+            width: 10px;
+
+            .pip {
+                border: 1px solid black;
+                border-radius: 5px;
+                flex: 1;
+            }
+            .pip.filled {
+                border: 1px solid #5E82AF;
+            }
+        }
+    }
+}

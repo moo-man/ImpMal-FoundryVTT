@@ -105,6 +105,5 @@ export class StandardActorModel extends BaseActorModel
             this.encumbrance.state = 2;
         }
     }
-
 }
 

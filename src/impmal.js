@@ -18,7 +18,7 @@ import { ForceFieldModel } from "./model/item/forceField";
 import { SpecialisationModel } from "./model/item/specialisation";
 import { TalentModel } from "./model/item/talent";
 import { WeaponModel } from "./model/item/weapon";
-import IMPMAL from "./system/config";
+import {IMPMAL, IM_CONFIG} from "./system/config";
 import registerHandlebars from "./system/handlebars";
 import registerSettings from "./system/settings";
 import ImpMalCharacterSheet from "./sheet/actors/character-sheet";
@@ -31,6 +31,7 @@ import { SkillTest } from "./system/tests/skill/skill-test";
 import { WeaponTest } from "./system/tests/weapon/weapon-test";
 import { PowerTest } from "./system/tests/power/power-test";
 import SuperiorityManager from "./system/superiority";
+import { ImpMalEffect } from "./document/effect";
 
 Hooks.once("init", () => 
 {
@@ -41,6 +42,7 @@ Hooks.once("init", () =>
 
     CONFIG.Actor.documentClass = ImpMalActor;
     CONFIG.Item.documentClass = ImpMalItem;
+    CONFIG.ActiveEffect.documentClass = ImpMalEffect;
     // CONFIG.ActiveEffect.documentClass = undefined;
 
     Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
@@ -85,6 +87,9 @@ Hooks.once("init", () =>
     game.impmal.superiority = new SuperiorityManager();
     registerHandlebars();
     localizeConfig(IMPMAL);
+
+    mergeObject(CONFIG, IM_CONFIG);
+
 });
 
 registerHooks();

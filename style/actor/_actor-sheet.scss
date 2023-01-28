@@ -239,4 +239,33 @@
     .editor {
         height: 100%;
     }
+
+    .conditions {
+        .condition {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+
+            .pips {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                height: 10px;
+                .pip {
+                    border-radius: 10px;
+                    border:  1px solid #5E82AF;
+                    cursor: pointer;
+                    width: 20px;
+                    margin: 0px 3px;
+                }
+
+                .pip.filled {
+                    background: #5E82AF;
+                }
+            }
+        }
+    }
+
 }

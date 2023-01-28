@@ -21,6 +21,7 @@ export default class ImpMalActorSheet extends ActorSheet
         data.items = this.organizeItems(data);
         data.effects = this.organizeEffects(data);
         data.hitLocations = this.formatHitLocations(data);
+        data.conditions = this.formatConditions(data);
         return data;
     }
 
@@ -41,12 +42,43 @@ export default class ImpMalActorSheet extends ActorSheet
     organizeEffects(data)
     {
         let effects = {
-            passive : data.actor.effects.filter(e => !e.isTemporary && !e.disabled),
             active: data.actor.effects.filter(e => e.isTemporary && !e.disabled),
+            passive : data.actor.effects.filter(e => !e.isTemporary && !e.disabled),
             disabled : data.actor.effects.filter(e => e.disabled)
         };
 
         return effects;
+    }
+
+    formatConditions(data)
+    {
+        let conditions = foundry.utils.deepClone(CONFIG.statusEffects);
+        conditions.forEach(c =>
+        {
+            c.boolean = game.impmal.config.booleanCondition[c.id];
+            c.existing = data.actor.hasCondition(c.id);
+            c.opacity = 30;
+
+            // Conditions have 1 or 2 pips, two for minor/major
+            // If condition existis on actor, it must have at least one filled pip
+            c.pips = [{filled : c.existing, type : "minor"}]; 
+
+            // If not boolean (minor/major), add another pip, filled if major
+            if (!c.boolean) 
+            {
+                c.pips.push({filled : c.existing?.isMajor, type : "major"});
+            }
+
+            if ((c.boolean && c.existing) || c.existing?.isMajor)
+            {
+                c.opacity = 100;
+            }
+            else if (c.existing?.isMinor)
+            {
+                c.opacity = 60;
+            }
+        });
+        return conditions;
     }
 
     formatHitLocations(data)
@@ -105,6 +137,7 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".ammo-selector").on("change", this._onChangeAmmo.bind(this));
         html.find(".reload").on("click", this._onReload.bind(this));
         html.find(".roll").on("click", this._onRollClick.bind(this));
+        html.find(".pip").on("click", this._onConditionPipClick.bind(this));
     }
 
     //#region Sheet Listeners
@@ -332,5 +365,23 @@ export default class ImpMalActorSheet extends ActorSheet
             return this.actor.setupPowerTest(itemId);
         }
     }
+
+
+    _onConditionPipClick(ev)
+    {
+        let key = ev.currentTarget.dataset.key;
+        let type = ev.currentTarget.dataset.type;
+        let existing = this.actor.hasCondition(key);
+
+        if (!existing || (existing?.isMinor && type == "major"))
+        {
+            this.actor.addCondition(key, {type});
+        }
+        else 
+        {
+            this.actor.removeCondition(key);
+        }
+    }
+
     //#endregion
 }

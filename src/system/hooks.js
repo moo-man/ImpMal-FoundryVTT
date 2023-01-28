@@ -3,6 +3,7 @@ import combat from "./hooks/combat";
 import ready from "./hooks/ready";
 import settings from "./hooks/settings";
 import targets from "./hooks/targets";
+import token from "./hooks/token";
 
 export default function() 
 {
@@ -11,4 +12,5 @@ export default function()
     targets();
     settings();
     combat();
+    token();
 }

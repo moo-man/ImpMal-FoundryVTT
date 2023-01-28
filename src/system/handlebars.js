@@ -1,4 +1,4 @@
-import IMPMAL from "./config";
+import {IMPMAL} from "./config";
 
 export default function registerHandlebars() 
 {
