@@ -1,5 +1,28 @@
 .impmal.item {
 
+    // Makes just the tab content scroll instead of the whole sheet
+    .window-content {
+        overflow-y: hidden;
+        height: 100%;
+
+        form {
+            height: 100%;
+
+            .tab-section {
+                height: calc(100% - 120px);
+
+                .tab-content {
+                    height: calc(100% - 35px);
+                    overflow-y: auto;
+
+                    .tab.active {
+                        height: calc(100% - 10px);
+                    }
+                }
+            }
+        }
+    }
+    
     header {
         display: flex;
         width: 100%;
@@ -17,7 +40,6 @@
         flex-direction: column;
         flex: 1;
         width: calc(100% - 100px);
-
         text-align: center;
 
         .details-row {
@@ -27,7 +49,22 @@
             .detail-group {
                 display: flex;
                 flex-direction: column;
-                flex: 1
+                flex: 1;
+
+                select,
+                input {
+                    height: 22px;
+                }
+
+                input[type="number"] {
+                    width: 40px;
+                }
+            }
+
+            .detail-group.inline {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-evenly;
             }
         }
     }
@@ -35,13 +72,32 @@
     .array {
         display: flex;
         flex-direction: column;
+
         .array-group {
             display: flex;
             align-items: center;
-            > * 
-            {
+
+            >* {
                 margin: 3px;
             }
         }
     }
+
+    .item-notes {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        > * {
+            flex: 1;
+        }
+
+        .notes-content {
+            height: calc(100% - 15px);
+        }
+    }
+    .editor {
+        height: 100%;
+    }
+
 }

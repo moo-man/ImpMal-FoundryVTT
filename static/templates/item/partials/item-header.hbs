@@ -11,20 +11,22 @@
         </div>
         {{#if isPhysical}}
             <div class="details-row">
-                <div class="detail-group">
+                <div class="detail-group inline">
                     <label>{{localize "IMPMAL.Qty."}}</label>
-                    <input type="text" name="system.quantity" value="{{system.quantity}}">
+                    <input type="number" name="system.quantity" value="{{system.quantity}}">
                 </div>
+                <div class="detail-group inline">
+                    <label>{{localize "IMPMAL.Cost"}}</label>
+                    <input type="number" name="system.cost" value="{{system.cost}}">
+                </div>
+            </div>
+            <div class="details-row">
                 <div class="detail-group">
                     <label>{{localize "IMPMAL.Enc."}}</label>
                     <div class="flexrow">
-                        <input type="text" name="system.encumbrance.value" value="{{system.encumbrance.value}}">
-                        <input type="text" value="{{system.encumbrance.total}}" disabled>
+                        <input type="number" name="system.encumbrance.value" value="{{system.encumbrance.value}}">
+                        <input type="number" value="{{item.system.encumbrance.total}}" disabled>
                     </div>
-                </div>
-                <div class="detail-group">
-                    <label>{{localize "IMPMAL.Cost"}}</label>
-                    <input type="text" name="system.cost" value="{{system.cost}}">
                 </div>
                 <div class="detail-group">
                     <label>{{localize "IMPMAL.Avail."}}</label>

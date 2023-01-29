@@ -1,3 +1,5 @@
+import addListListeners from "../../apps/list-listeners";
+
 export default class ImpMalActorSheet extends ActorSheet
 {
     static get defaultOptions()
@@ -124,12 +126,8 @@ export default class ImpMalActorSheet extends ActorSheet
     activateListeners(html)
     {
         super.activateListeners(html);
+        addListListeners(html, this);
 
-        html.find(".list-edit").on("click", this._onListEdit.bind(this));
-        html.find(".list-delete").on("click", this._onListDelete.bind(this));
-        html.find(".list-create").on("click", this._onListCreate.bind(this));
-        html.find(".list-toggle").on("click", this._onListToggle.bind(this));
-        html.find(".list-post").on("click", this._onPostItem.bind(this));
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
         html.find(".property-edit").on("click", this._onPropertyEdit.bind(this));
@@ -140,100 +138,6 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".pip").on("click", this._onConditionPipClick.bind(this));
     }
 
-    //#region Sheet Listeners
-    _onListEdit(event)
-    {
-        let el = $(event.currentTarget).parents("[data-id]");
-        let id = el.attr("data-id");
-        let collection = el.attr("data-collection") || "items";
-
-        return this.actor[collection].get(id)?.sheet.render(true);
-    }
-    _onListDelete(event)
-    {
-        let el = $(event.currentTarget).parents(".list-item");
-        let id = el.attr("data-id");
-        let collection = el.attr("data-collection");
-
-        let docName = collection == "effects" ? "ActiveEffect" : "Item";
-
-        Dialog.confirm({
-            title: game.i18n.localize(`IMPMAL.Delete${docName}`),
-            content: `<p>${game.i18n.localize(`IMPMAL.Delete${docName}Confirmation`)}</p>`,
-            yes: () => {this.actor.deleteEmbeddedDocuments(docName, [id]);},
-            no: () => {},
-            defaultYes: true
-        });
-    }
-    _onListCreate(event)
-    {
-        let type = event.currentTarget.dataset.type;
-        if (type=="effect")
-        {
-            return this._onEffectCreate(event);
-        }
-
-        let createData = { name: `New ${game.i18n.localize(CONFIG.Item.typeLabels[type])}`, type };
-
-        return this.actor.createEmbeddedDocuments(docName, [createData]);
-    }
-
-    _onPostItem(event)
-    {
-        let itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
-        if (itemId) {return this.actor.items.get(itemId)?.postToChat();}
-    }
-
-    async _onEffectCreate(ev)
-    {
-        let type = ev.currentTarget.dataset.category;
-        let effectData = { label: game.i18n.localize("IMPMAL.NewEffect"), icon: "icons/svg/aura.svg" };
-        if (type == "temporary")
-        {
-            effectData["duration.rounds"] = 1;
-        }
-        else if(type == "disabled")
-        {
-            effectData.disabled = true;
-        }
-
-        let html = await renderTemplate("systems/impmal/templates/apps/quick-effect.html", effectData);
-        new Dialog({
-            title: game.i18n.localize("IMPMAL.QuickEffect"),
-            content: html,
-            buttons: {
-                create: {
-                    label: "Create",
-                    callback: (html) =>
-                    {
-                        let mode = 2;
-                        let label = html.find(".label").val();
-                        let key = html.find(".key").val();
-                        let value = parseInt(html.find(".modifier").val()?.toString() || "");
-                        effectData.label = label;
-                        effectData.changes = [{ key, mode, value }];
-                        this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]);
-                    },
-                },
-                skip: {
-                    label: "Skip",
-                    callback: () => this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]),
-                },
-            },
-            render: (dlg) =>
-            {
-                $(dlg).find(".label").select();
-            },
-        }).render(true);
-    }
-
-    _onListToggle(ev)
-    {
-        let id = $(ev.currentTarget).parents(".list-item").attr("data-id");
-        let effect = this.object.effects.get(id);
-
-        if (effect) {effect.update({ disabled: !effect.disabled });}
-    }
 
     _onFactionDelete(ev)
     {

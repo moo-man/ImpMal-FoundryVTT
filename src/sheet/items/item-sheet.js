@@ -1,4 +1,5 @@
 import ItemTraitsForm from "../../apps/item-traits";
+import addListListeners from "../../apps/list-listeners";
 
 export default class ImpMalItemSheet extends ItemSheet
 {
@@ -29,11 +30,7 @@ export default class ImpMalItemSheet extends ItemSheet
     activateListeners(html) 
     {
         super.activateListeners(html);
-
-        html.find(".array-create").click(this._onCreateArrayElement.bind(this));
-        html.find(".array-edit").change(this._onEditArrayElement.bind(this));
-        html.find(".array-delete").click(this._onDeleteArrayElement.bind(this));
-        html.find(".edit-traits").click(this._onEditTraits.bind(this));
+        addListListeners(html, this);
     }
 
     _onCreateArrayElement(ev)

@@ -1,1 +1,23 @@
-<div></div>
+<div class="item-notes">
+    {{#if (isGM)}}
+        <div class="note-section">
+
+            <div class="notes-header">
+                {{localize "IMPMAL.GMNotes"}}
+            </div>
+            <div class="notes-content">
+                {{editor system.notes.gm target="system.notes.gm" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
+            </div>
+        </div>
+{{/if}}
+
+        <div class="note-section">
+
+            <div class="notes-header">
+                {{localize "IMPMAL.Notes"}}
+            </div>
+            <div class="notes-content">
+                {{editor system.notes.player target="system.notes.player" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
+            </div>
+        </div>
+</div>
