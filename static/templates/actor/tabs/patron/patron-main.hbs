@@ -1,0 +1,104 @@
+<div class="list-columns">
+    <section class="list">
+        <header class="list-row">
+            <div class="list-name">{{localize "IMPMAL.Boons"}}</div>
+            <div class="list-controls">
+                <a class="list-create" data-type="boonLiability" data-category="boon"><i
+                        class="fa-solid fa-plus"></i></a>
+            </div>
+        </header>
+        <div class="list-content">
+            {{#each items.boonLiability}}
+                {{#if (eq this.system.category "boon")}}
+                    <div class="list-item" data-id="{{this.id}}" data-collection="items">
+                        <div class="list-row">
+                            <div class="list-name list-edit">
+                                <img src="{{this.img}}">
+                                <a>{{this.name}}</a>
+                            </div>
+                            {{#unless this.system.visible}}
+                                <a><i class="fa-solid fa-eye-slash"></i></a>
+                            {{/unless}}
+                            <div class="list-controls">
+                                <a class="list-post"><i class="fa-solid fa-comment"></i></a>
+                                <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <div class="summary">
+                            {{{this.system.notes.gm}}}
+                            {{{this.system.notes.player}}}
+                        </div>
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </section>
+    <section class="list">
+        <header class="list-row">
+            <div class="list-name">{{localize "IMPMAL.Liabilities"}}</div>
+            <div class="list-controls">
+                <a class="list-create" data-type="boonLiability" data-category="liability"><i
+                        class="fa-solid fa-plus"></i></a>
+            </div>
+        </header>
+        <div class="list-content">
+            {{#each items.boonLiability}}
+                {{#if (eq this.system.category "liability")}}
+                    <div class="list-item" data-id="{{this.id}}" data-collection="items">
+                        <div class="list-row">
+                            <div class="list-name list-edit">
+                                <img src="{{this.img}}">
+                                <a>{{this.name}}</a>
+                            </div>
+                            {{#unless this.system.visible}}
+                                <a><i class="fa-solid fa-eye-slash"></i></a>
+                            {{/unless}}
+                            <div class="list-controls">
+                                <a class="list-post"><i class="fa-solid fa-comment"></i></a>
+                                <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <div class="summary">
+                            {{{this.system.notes.gm}}}
+                            {{{this.system.notes.player}}}
+                        </div>
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </section>
+</div>
+
+<section class="list influence">
+    <header class="list-row">
+        <div>{{localize "Faction"}}</div>
+        <div class="small">{{localize "Infl."}}</div>
+        <div class="wide">{{localize "Notes/Contacts"}}</div>
+        <div class="list-controls single">
+            <a class="faction-create"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each system.influence.factions}}
+            <div class="list-item" data-type="{{@key}}">
+                <div class="list-row">
+                    <div>
+                        <input type="text" name="system.influence.factions.{{@key}}.name" value="{{this.name}}">
+                    </div>
+                    <div class="small">
+                        <input type="number" name="system.influence.factions.{{@key}}.value" value="{{this.value}}">
+                    </div>
+                    <div class="wide">
+                        <input type="text" name="system.influence.factions.{{@key}}.notes" value="{{this.notes}}">
+                    </div>
+                    <div class="list-controls single">
+                        <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                </div>
+                <div class="summary">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

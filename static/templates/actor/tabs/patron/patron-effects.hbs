@@ -1,0 +1,23 @@
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Effects"}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="effect" data-category="temporary"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each effects.active}}
+            <div class="list-item" data-id="{{this.id}}" data-collection="effects">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.icon}}">
+                        <a class="list-edit">{{this.label}}</a>
+                    </div>
+                    <div class="list-controls">
+                        <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

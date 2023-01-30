@@ -60,8 +60,8 @@
         </div>
     </div>
 </div>
-    <section class="actor-notes">
-{{#if (isGM)}}
+<section class="actor-notes">
+    {{#if (isGM)}}
         <div class="note-section">
 
             <div class="notes-header">
@@ -71,15 +71,15 @@
                 {{editor system.notes.gm target="system.notes.gm" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
             </div>
         </div>
-{{/if}}
+    {{/if}}
 
-        <div class="note-section">
+    <div class="note-section">
 
-            <div class="notes-header">
-                {{localize "IMPMAL.Notes"}}
-            </div>
-            <div class="notes-content">
-                {{editor system.notes.player target="system.notes.player" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
-            </div>
+        <div class="notes-header">
+            {{localize "IMPMAL.Notes"}}
         </div>
-    </section>
+        <div class="notes-content">
+            {{editor system.notes.player target="system.notes.player" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
+        </div>
+    </div>
+</section>

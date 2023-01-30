@@ -29,7 +29,9 @@
 
         img {
             flex: 0 0 100px;
+            width: 100px;
             height: 100px;
+            object-fit: contain;
         }
     }
 
@@ -52,6 +54,13 @@
                     display: flex;
                     align-items: center;
 
+                    .singleton-item {
+                        width: calc(100% - 2px);
+                        height: 26px;
+                        line-height: 24px;
+                        padding: 1px 3px;
+                    }
+
                     input {
                         border: none;
                         background: none;
@@ -59,6 +68,22 @@
 
                     input:focus {
                         box-shadow: none;
+                    }
+
+                    select {
+                        border : none;
+                        background: none;
+                        width: 100%;
+                        padding: 0px;
+                    }
+                    
+                    select:focus {
+                        box-shadow: none;
+                    }
+
+                    input.singleton-present
+                    {
+
                     }
                 }
             }
@@ -253,7 +278,7 @@
 
 
     .actor-notes {
-        height: calc(100% - 174px);
+        height: 100%;
         display: flex;
         flex-direction: column;
         > * {

@@ -14,9 +14,20 @@
             </div>
             <div class="tab details" data-tab="details">
                 <div class="form-group">
-                    <label></label>
+                    <label>{{localize "IMPMAL.Category"}}</label>
                     <div class="form-fields">
-
+                        <select name="system.category">
+                            {{#select system.category}}
+                                <option value="boon">{{localize "IMPMAL.Boon"}}</option>
+                                <option value="liability">{{localize "IMPMAL.Liability"}}</option>
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.PlayerVisible"}}</label>
+                    <div class="form-fields">
+                        <input type="checkbox" name="system.visible" {{checked system.visible}}>
                     </div>
                 </div>
             </div>

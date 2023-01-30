@@ -18,7 +18,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
     async getData()
     {
-        let data = super.getData();
+        let data = await super.getData();
         data.system = data.actor.system;
         data.items = this.organizeItems(data);
         data.effects = this.organizeEffects(data);
@@ -136,6 +136,7 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".reload").on("click", this._onReload.bind(this));
         html.find(".roll").on("click", this._onRollClick.bind(this));
         html.find(".pip").on("click", this._onConditionPipClick.bind(this));
+        html.find(".remove-singleton").on("click", this._onRemoveSingleton.bind(this));
     }
 
 
@@ -285,6 +286,13 @@ export default class ImpMalActorSheet extends ActorSheet
         {
             this.actor.removeCondition(key);
         }
+    }
+
+    _onRemoveSingleton(ev)
+    {
+        let type = ev.currentTarget.dataset.type;
+
+        this.actor.system[type]?.document?.delete();
     }
 
     //#endregion

@@ -5,7 +5,7 @@ import { NPCModel } from "./model/actor/npc";
 import { PatronModel } from "./model/actor/patron";
 import { AmmoModel } from "./model/item/ammo";
 import { AugmeticModel } from "./model/item/augmetic";
-import { BoonModel } from "./model/item/boon";
+import { BoonLiabilityModel } from "./model/item/boonLiability";
 import { DutyModel } from "./model/item/duty";
 import { EquipmentModel } from "./model/item/equipment";
 import { FactionModel } from "./model/item/faction";
@@ -32,6 +32,7 @@ import { WeaponTest } from "./system/tests/weapon/weapon-test";
 import { PowerTest } from "./system/tests/power/power-test";
 import SuperiorityManager from "./system/superiority";
 import { ImpMalEffect } from "./document/effect";
+import ImpMalPatronSheet from "./sheet/actors/patron-sheet";
 
 Hooks.once("init", () => 
 {
@@ -43,9 +44,9 @@ Hooks.once("init", () =>
     CONFIG.Actor.documentClass = ImpMalActor;
     CONFIG.Item.documentClass = ImpMalItem;
     CONFIG.ActiveEffect.documentClass = ImpMalEffect;
-    // CONFIG.ActiveEffect.documentClass = undefined;
 
     Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
+    Actors.registerSheet("impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true });
     Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
     Items.registerSheet("impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
 
@@ -56,7 +57,7 @@ Hooks.once("init", () =>
     CONFIG.Actor.systemDataModels["patron"] = PatronModel;
     CONFIG.Actor.systemDataModels["npc"] = NPCModel;
 
-    CONFIG.Item.systemDataModels["boon"] = BoonModel;
+    CONFIG.Item.systemDataModels["boonLiability"] = BoonLiabilityModel;
     CONFIG.Item.systemDataModels["origin"] = OriginModel;
     CONFIG.Item.systemDataModels["faction"] = FactionModel;
     CONFIG.Item.systemDataModels["role"] = RoleModel;

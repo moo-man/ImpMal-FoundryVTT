@@ -8,6 +8,7 @@
 @import "./apps/advancement";
 @import "./foundry/combat-tracker";
 @import "./foundry/token-hud";
+@import "./actor/patron-sheet";
 
 // Shared properties
 
@@ -90,5 +91,12 @@
 
         }
         .summary {}
+    }
+
+    .list-columns {
+        display: flex;
+        section.list {
+            flex: 1
+        }
     }
 }

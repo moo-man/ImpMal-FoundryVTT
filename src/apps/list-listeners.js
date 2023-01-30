@@ -38,12 +38,18 @@ function _onListDelete(event)
 function _onListCreate(event)
 {
     let type = event.currentTarget.dataset.type;
+    let category = event.currentTarget.dataset.category;
     if (type=="effect")
     {
         return _onEffectCreate.bind(this)(event);
     }
 
+    
     let createData = { name: `New ${game.i18n.localize(CONFIG.Item.typeLabels[type])}`, type };
+    if (category)
+    {
+        createData["system.category"]  = category;
+    }
 
     return this.object.createEmbeddedDocuments("Item", [createData]);
 }

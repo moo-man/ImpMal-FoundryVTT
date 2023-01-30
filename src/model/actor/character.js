@@ -5,13 +5,20 @@ import { StandardActorModel } from "./standard";
 import { HandsModel } from "./components/hands";
 import { XPModel } from "./components/xp";
 import { ImpMalEffect } from "../../document/effect";
+import { SingletonItemModel } from "../shared/singleton-item";
 let fields = foundry.data.fields;
 
 export class CharacterModel extends StandardActorModel 
 {
+    static preventItems = [];
+    static singletonItemTypes = ["role", "faction", "origin"];
+
     static defineSchema() 
     {
         let schema = super.defineSchema();
+        schema.origin = new fields.EmbeddedDataField(SingletonItemModel);
+        schema.faction = new fields.EmbeddedDataField(SingletonItemModel);
+        schema.role = new fields.EmbeddedDataField(SingletonItemModel);
         schema.handed = new fields.StringField();
         schema.solars = new fields.NumberField();
         schema.combat = new fields.EmbeddedDataField(CharacterCombatModel);
@@ -62,6 +69,9 @@ export class CharacterModel extends StandardActorModel
     {
         super.computeDerived(items);
         this.hands.getDocuments(items.all);
+        this.origin.getDocument(items.all);
+        this.faction.getDocument(items.all);
+        this.role.getDocument(items.all);
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
         this.combat.superiority = game.impmal.superiority.value;
@@ -72,7 +82,6 @@ export class CharacterModel extends StandardActorModel
     {
         this._checkComputedEffects(this.parent);
     }
-
 
 
     _checkComputedEffects(actor)

@@ -1,0 +1,97 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <div class="header-details">
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'Name'}}">
+                    </div>
+                    <label>{{localize "Name"}}</label>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        {{#if system.faction.document}}
+                        <div class="singleton-item" data-id="{{system.faction.document.id}}">
+                            <a class="list-edit">{{system.faction.name}}</a>
+                        </div>
+                        <a class="remove-singleton" data-type="faction"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="" value="{{system.faction.name}}" placeholder="{{localize 'IMPMAL.Faction'}}">
+                        {{/if}}
+                    </div>
+                    <label>{{localize "IMPMAL.Faction"}}</label>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        {{#if system.duty.document}}
+                        <div class="singleton-item" data-id="{{system.duty.document.id}}">
+                            <a class="list-edit">{{system.duty.name}}</a>
+                        </div>
+                        <a class="remove-singleton" data-type="duty"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="" value="{{system.duty.name}}" placeholder="{{localize 'IMPMAL.Duty'}}">
+                        {{/if}}
+                    </div>
+                    <label>{{localize "IMPMAL.Duty"}}</label>
+                </div>
+            </div>
+        </div>
+        <img class="profile" src="{{actor.img}}" data-edit="img">
+        <div class="header-details">
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        <select type="text" name="system.payment.grade">
+                            {{#select system.payment.grade}}
+                                <option value=""></option>
+                                {{#each (config "paymentGrade")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                    <label>{{localize "IMPMAL.PayGrade"}}</label>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Motivation'}}">
+                    </div>
+                    <label>{{localize "IMPMAL.Motivation"}}</label>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Demeanor'}}">
+                    </div>
+                    <label>{{localize "IMPMAL.Demeanor"}}</label>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="tab-section">
+        <nav class="sheet-tabs tabs">
+            <a class="tab-select item active" data-tab="main">{{localize "IMPMAL.Main"}}</a>
+            <a class="tab-select item active" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
+            <a class="tab-select item active" data-tab="notes">{{localize "IMPMAL.Notes"}}</a>
+        </nav>
+        <div class="tab-content">
+            <div class="tab main" data-tab="main">
+                {{> systems/impmal/templates/actor/tabs/patron/patron-main.hbs}}
+            </div>
+            <div class="tab effects" data-tab="effects">
+                {{> systems/impmal/templates/actor/tabs/patron/patron-effects.hbs}}
+            </div>
+            <div class="tab notes" data-tab="notes">
+                {{> systems/impmal/templates/actor/tabs/actor-notes.hbs}}
+            </div>
+
+        </div>
+    </section>
+</form>

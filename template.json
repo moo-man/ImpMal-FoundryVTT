@@ -246,6 +246,18 @@
         "weight": "",
         "divination": ""
       },
+      "origin" : {
+        "id" : "",
+        "name" : ""
+      },
+      "faction" : {
+        "id" : "",
+        "name" : ""
+      },
+      "role" : {
+        "id" : "",
+        "name" : ""
+      },
       "combat": {
         "superiority": 0
       },
@@ -282,7 +294,7 @@
   },
   "Item": {
     "types": [
-      "boon",
+      "boonLiability",
       "origin",
       "faction",
       "role",
@@ -332,10 +344,12 @@
         }
       }
     },
-    "boon": {
+    "boonLiability": {
       "templates": [
         "notes"
-      ]
+      ],
+      "category" : "boon",
+      "visiible" : false
     },
     "origin": {
       "templates": [

@@ -8,15 +8,27 @@
             <div class="details-row">
                 <div class="detail-group">
                     <div class="input-group">
-                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Origin'}}">
+                        {{#if system.origin.document}}
+                        <div class="singleton-item" data-id="{{system.origin.document.id}}">
+                            <a class="list-edit">{{system.origin.name}}</a>
+                        </div>
                         <a class="remove-singleton" data-type="origin"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="" value="{{system.origin.name}}" placeholder="{{localize 'IMPMAL.Origin'}}">
+                        {{/if}}
                     </div>
                     <label>{{localize "IMPMAL.Origin"}}</label>
                 </div>
                 <div class="detail-group">
                     <div class="input-group">
-                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Faction'}}">
+                        {{#if system.faction.document}}
+                        <div class="singleton-item" data-id="{{system.faction.document.id}}">
+                            <a class="list-edit">{{system.faction.name}}</a>
+                        </div>
                         <a class="remove-singleton" data-type="faction"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="" value="{{system.faction.name}}" placeholder="{{localize 'IMPMAL.Faction'}}">
+                        {{/if}}
                     </div>
                     <label>{{localize "IMPMAL.Faction"}}</label>
                 </div>
@@ -24,14 +36,20 @@
             <div class="details-row">
                 <div class="detail-group">
                     <div class="input-group">
-                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Role'}}">
+                        {{#if system.role.document}}
+                        <div class="singleton-item" data-id="{{system.role.document.id}}">
+                            <a class="list-edit">{{system.role.name}}</a>
+                        </div>
                         <a class="remove-singleton" data-type="role"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="" value="{{system.role.name}}" placeholder="{{localize 'IMPMAL.Role'}}">
+                        {{/if}}
                     </div>
                     <label>{{localize "IMPMAL.Role"}}</label>
                 </div>
                 <div class="detail-group">
                     <div class="input-group">
-                        <input type="text" name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Patron'}}">
+                        <input type="text"  name="" value="{{todo}}" placeholder="{{localize 'IMPMAL.Patron'}}">
                         <a class="remove-singleton" data-type="patron"><i class="fa-solid fa-xmark"></i></a>
                     </div>
                     <label>{{localize "IMPMAL.Patron"}}</label>
@@ -54,7 +72,7 @@
         </nav>
         <div class="tab-content">
             <div class="tab main" data-tab="main">
-                {{> systems/impmal/templates/actor/tabs/character-main.hbs}}
+                {{> systems/impmal/templates/actor/tabs/character/character-main.hbs}}
             </div>
             <div class="tab skills" data-tab="skills">
                 {{> systems/impmal/templates/actor/tabs/actor-skills.hbs}}
@@ -75,7 +93,7 @@
                 {{> systems/impmal/templates/actor/tabs/actor-equipment.hbs}}
             </div>
             <div class="tab notes" data-tab="notes">
-                {{> systems/impmal/templates/actor/tabs/character-notes.hbs}}
+                {{> systems/impmal/templates/actor/tabs/character/character-notes.hbs}}
             </div>
         </div>
     </section>
