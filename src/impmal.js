@@ -33,6 +33,11 @@ import { PowerTest } from "./system/tests/power/power-test";
 import SuperiorityManager from "./system/superiority";
 import { ImpMalEffect } from "./document/effect";
 import ImpMalPatronSheet from "./sheet/actors/patron-sheet";
+import ImpMalNPCSheet from "./sheet/actors/npc-sheet";
+import { CorruptionModel } from "./model/item/corruption";
+import { InjuryModel } from "./model/item/injury";
+import { CriticalModel } from "./model/item/critical";
+import { TraitModel } from "./model/item/trait";
 
 Hooks.once("init", () => 
 {
@@ -47,6 +52,7 @@ Hooks.once("init", () =>
 
     Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
     Actors.registerSheet("impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true });
+    Actors.registerSheet("impmal", ImpMalNPCSheet, { types: ["npc"], makeDefault: true });
     Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
     Items.registerSheet("impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
 
@@ -72,6 +78,10 @@ Hooks.once("init", () =>
     CONFIG.Item.systemDataModels["equipment"] = EquipmentModel;
     CONFIG.Item.systemDataModels["augmetic"] = AugmeticModel;
     CONFIG.Item.systemDataModels["power"] = PowerModel;
+    CONFIG.Item.systemDataModels["corruption"] = CorruptionModel;
+    CONFIG.Item.systemDataModels["injury"] = InjuryModel;
+    CONFIG.Item.systemDataModels["critical"] = CriticalModel;
+    CONFIG.Item.systemDataModels["trait"] = TraitModel;
 
     game.impmal = {
         config : IMPMAL,

@@ -83,19 +83,7 @@ export class TraitListModel extends ListModel
         }
     }
 
-    getTraitDisplayStrings()
-    {
-        for (let trait of this.list)
-        {
-            trait.display = game.impmal.config.weaponArmourTraits[trait.key] || game.impmal.config.itemTraits[trait.key];
-            if (trait.value)
-            {
-                trait.display += ` (${trait.value})`;
-            }
-        }
-    }
-
-    get displayString() 
+    get displayArray()
     {
         return this.list
             .map(i => 
@@ -106,7 +94,12 @@ export class TraitListModel extends ListModel
                     display += ` (${i.value})`;
                 }
                 return display;
-            }).join(", ");
+            });
+    }
+
+    get displayString() 
+    {
+        return this.displayArray.join(", ");
     }
 
 }

@@ -159,12 +159,6 @@
           }
         }
       },
-      "wounds": {
-        "wounds": {
-          "max": 0,
-          "value": 0
-        }
-      },
       "influence": {
         "influence": {
           "factions": {}
@@ -178,6 +172,14 @@
           "size": "medium",
           "speed": "normal",
           "fly": "none",
+          "wounds": {
+              "max": 0,
+              "value": 0
+            },
+          "criticals" : {
+            "max": 0,
+            "value": 0
+          },
           "hitLocations": {
             "leftArm": {
               "range": [6,10],
@@ -287,9 +289,26 @@
       }
     },
     "npc": {
+      "templates": [
+        "characteristics",
+        "skills",
+        "wounds",
+        "notes",
+        "combat"
+      ],
       "combat": {
-        "resolve": 0
-      }
+        "resolve": 0,
+        "armour" : {
+          "formula" : "",
+          "value" : 0
+        }
+      },
+      "faction" : {
+        "id" : "",
+        "name" : ""
+      },
+      "species" : "",
+      "role" : "troop"
     }
   },
   "Item": {
@@ -308,7 +327,11 @@
       "forceField",
       "equipment",
       "augmetic",
-      "power"
+      "power",
+      "corruption",
+      "critical",
+      "injury",
+      "trait"
     ],
     "templates": {
       "physical": {
@@ -551,6 +574,27 @@
       "target": "",
       "duration": "",
       "overt": false
+    },
+    "corruption": {
+      "templates": [
+        "notes"
+      ],
+      "category" : "mutation"
+    },
+    "critical": {
+      "templates": [
+        "notes"
+      ]
+    },
+    "injury": {
+      "templates": [
+        "notes"
+      ]
+    },
+    "trait": {
+      "templates": [
+        "notes"
+      ]
     }
   }
 }

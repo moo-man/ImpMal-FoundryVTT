@@ -31,6 +31,10 @@ export default class ImpMalItemSheet extends ItemSheet
     {
         super.activateListeners(html);
         addListListeners(html, this);
+        html.find(".array-create").click(this._onCreateArrayElement.bind(this));
+        html.find(".array-edit").change(this._onEditArrayElement.bind(this));
+        html.find(".array-delete").click(this._onDeleteArrayElement.bind(this));
+        html.find(".edit-traits").click(this._onEditTraits.bind(this));
     }
 
     _onCreateArrayElement(ev)

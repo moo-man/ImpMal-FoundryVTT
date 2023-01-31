@@ -26,4 +26,9 @@ export class SpecialisationModel extends StandardItemModel
         return actor.system.skills[this.skill].getTotalFor(characteristic, actor) + (5 * this.advances);
     }
 
+    get skillNameAndTotal() 
+    {
+        return `${game.impmal.config.skills[this.skill]} (${this.parent.name}) ${this.total}`;
+    }
+
 }

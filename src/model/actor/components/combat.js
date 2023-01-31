@@ -1,6 +1,6 @@
 let fields = foundry.data.fields;
 
-export class BaseCombatModel extends foundry.abstract.DataModel 
+export class StandardCombatModel extends foundry.abstract.DataModel 
 {
     static defineSchema() 
     {
@@ -9,16 +9,56 @@ export class BaseCombatModel extends foundry.abstract.DataModel
         schema.speed = new fields.StringField();
         schema.fly = new fields.StringField();
         schema.hitLocations = new fields.ObjectField();
+        schema.wounds = new fields.SchemaField({
+            value : new fields.NumberField(),
+            max : new fields.NumberField(),
+        });
+        schema.criticals = new fields.SchemaField({
+            value : new fields.NumberField(),
+            max : new fields.NumberField(),
+        });
         return schema;
     }
 
-    initializeArmour()
+
+    initialize() 
     {
+        this.wounds.max = 0;
+        this.initiative = 0;
+
         for (let loc in this.hitLocations)
         {
             this.hitLocations[loc].armour = 0;
             this.hitLocations[loc].items = [];
         }
+    }
+
+    computeCombat(characteristics, items) 
+    {
+        this.computeWounds(characteristics);
+        this.computeCriticals(characteristics);
+        this.computeInitiative(characteristics);
+        this.computeArmour(items);
+    }
+
+    computeWounds(characteristics) 
+    {
+        this.wounds.max += 
+            characteristics.str.bonus + 
+            (2 * characteristics.tgh.bonus) + 
+            characteristics.wil.bonus;
+    }
+
+    computeCriticals(characteristics) 
+    {
+        this.criticals.max += characteristics.tgh.bonus;
+    }
+
+    computeInitiative(characteristics) 
+    {
+        this.initiative += 
+            characteristics.per.bonus + 
+            characteristics.ag.bonus;
     }
 
 
@@ -40,7 +80,7 @@ export class BaseCombatModel extends foundry.abstract.DataModel
 }
 
 
-export class CharacterCombatModel extends BaseCombatModel
+export class CharacterCombatModel extends StandardCombatModel
 {
     static defineSchema() 
     {
@@ -50,12 +90,16 @@ export class CharacterCombatModel extends BaseCombatModel
     }
 }
 
-export class NPCCombatModel extends BaseCombatModel
+export class NPCCombatModel extends StandardCombatModel
 {
     static defineSchema() 
     {
         let schema = super.defineSchema();
         schema.resolve = new fields.NumberField();
+        schema.armour = new fields.SchemaField({
+            formula : new fields.StringField(),
+            value : new fields.NumberField({min : 0})
+        });
         return schema;
     }
 }

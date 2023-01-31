@@ -1,5 +1,6 @@
 import { BaseActorModel } from "./base";
 import { CharacteristicsModel } from "./components/characteristics";
+import { StandardCombatModel } from "./components/combat";
 import { SkillsModel } from "./components/skills";
 let fields = foundry.data.fields;
 
@@ -14,28 +15,17 @@ export class StandardActorModel extends BaseActorModel
         let schema = super.defineSchema();
         schema.characteristics = new fields.EmbeddedDataField(CharacteristicsModel);
         schema.skills = new fields.EmbeddedDataField(SkillsModel);
-        schema.combat = new fields.SchemaField({
-            size : new fields.StringField(),
-            speed : new fields.StringField(),
-            fly : new fields.StringField()
-            
-        }),
-        schema.wounds = new fields.SchemaField({
-            value : new fields.NumberField(),
-            max : new fields.NumberField(),
-        });
+        schema.combat = new fields.EmbeddedDataField(StandardCombatModel);
         return schema;
     }
     
     initialize() 
     {
-        this.wounds.max = 0;
-        this.initiative = 0;
         this.encumbrance = {};
         this.encumbrance.overburdened = 0;
         this.encumbrance.restrained = 0;
         this.encumbrance.value = 0;
-        this.combat.initializeArmour();
+        this.combat.initialize();
     }
 
     computeBase() 
@@ -53,25 +43,8 @@ export class StandardActorModel extends BaseActorModel
         this.characteristics.computeBonuses();
         this.skills.computeTotals(this.characteristics);
         this.skills.findSpecialisations(items.specialisation);
-        this.computeWounds();
-        this.computeInitiative();
         this.computeEncumbrance(items);
-        this.combat.computeArmour(items);
-    }
-
-    computeWounds() 
-    {
-        this.wounds.max += 
-            this.characteristics.str.bonus + 
-            (2 * this.characteristics.tgh.bonus) + 
-            this.characteristics.wil.bonus;
-    }
-
-    computeInitiative() 
-    {
-        this.initiative += 
-            this.characteristics.per.bonus + 
-            this.characteristics.ag.bonus;
+        this.combat.computeCombat(this.characteristics, items);
     }
 
     computeEncumbrance(items) 
@@ -104,5 +77,11 @@ export class StandardActorModel extends BaseActorModel
             this.encumbrance.state = 2;
         }
     }
+
+    updateChecks()
+    {
+        //TODO: Check for dead effect if above critical wound threshold
+    }
+
 }
 

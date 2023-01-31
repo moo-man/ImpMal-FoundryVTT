@@ -1,0 +1,34 @@
+<form class="{{cssClass}}" autocomplete="off">
+
+    {{> systems/impmal/templates/item/partials/item-header.hbs isPhysical=isPhysical}}
+
+    <section class="tab-section">
+        <nav class="sheet-tabs tabs">
+            <a class="tab-select item active" data-tab="notes">{{localize "IMPMAL.Description"}}</a>
+            <a class="tab-select item" data-tab="details">{{localize "IMPMAL.Details"}}</a>
+            <a class="tab-select item" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
+        </nav>
+        <div class="tab-content">
+            <div class="tab notes" data-tab="notes">
+                {{> systems/impmal/templates/item/partials/item-notes.hbs}}
+            </div>
+            <div class="tab details" data-tab="details">
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Category"}}</label>
+                    <div class="form-fields">
+                        <select name="system.category">
+                            {{#select system.category}}
+                                {{#each (config "corruptionType")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="tab effects" data-tab="effects">
+                {{> systems/impmal/templates/item/partials/item-effects.hbs}}
+            </div>
+        </div>
+    </section>
+</form>

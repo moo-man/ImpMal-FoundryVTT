@@ -5,7 +5,7 @@ let fields = foundry.data.fields;
 export class BaseActorModel extends foundry.abstract.DataModel 
 {
 
-    static preventItems = [];
+    static preventItemTypes = [];
     static singletonItemTypes = [];
     
     static defineSchema() 
@@ -48,7 +48,7 @@ export class BaseActorModel extends foundry.abstract.DataModel
 
     preCreateItem(item)
     {
-        if (this.constructor.preventItems.includes(item.type))
+        if (this.constructor.preventItemTypes.includes(item.type))
         {
             ui.notifications.error("IMPMAL.ItemsNotAllowed", {type : item.type});
             return false;

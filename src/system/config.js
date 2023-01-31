@@ -79,6 +79,13 @@ const IMPMAL = {
         fast : "IMPMAL.Fast",
     },
 
+    npcRoles : {
+        troop : "IMPMAL.Troop",
+        elite : "IMPMAL.Elite",
+        leader : "IMPMAL.Leader"
+    },
+
+
     hitLocations : {
         head : "IMPMAL.Head",
         leftArm : "IMPMAL.LeftArm",
@@ -103,6 +110,10 @@ const IMPMAL = {
         extreme : "IMPMAL.Extreme",
     },
 
+    weaponTypes : {
+        melee : "IMPMAL.Melee",
+        ranged : "IMPMAL.Ranged"
+    },
 
     meleeTypes : {
         mundane : "IMPMAL.Mundane",
@@ -268,6 +279,11 @@ const IMPMAL = {
         sustained : "IMPMAL.Sustained",
         special : "IMPMAL.Special",
         permanent : "IMPMAL.Permanent"
+    },
+
+    corruptionType : {
+        mutation : "IMPMAL.Mutation",
+        malignancy : "IMPMAL.Malignancy"
     },
 
     booleanCondition : {

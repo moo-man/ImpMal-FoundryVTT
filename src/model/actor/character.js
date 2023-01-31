@@ -10,7 +10,7 @@ let fields = foundry.data.fields;
 
 export class CharacterModel extends StandardActorModel 
 {
-    static preventItems = [];
+    static preventItemTypes = ["boonLiability", "duty"];
     static singletonItemTypes = ["role", "faction", "origin"];
 
     static defineSchema() 
@@ -80,11 +80,11 @@ export class CharacterModel extends StandardActorModel
 
     updateChecks()
     {
-        this._checkComputedEffects(this.parent);
+        super.updateChecks();
+        this._checkEncumbranceEffects(this.parent);
     }
 
-
-    _checkComputedEffects(actor)
+    _checkEncumbranceEffects(actor)
     {
         let overburdened = actor.hasCondition("overburdened");
         let restrained = actor.hasCondition("restrained");

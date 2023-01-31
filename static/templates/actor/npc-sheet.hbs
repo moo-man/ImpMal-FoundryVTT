@@ -1,0 +1,144 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile" src="{{actor.img}}" data-edit="img">
+        <div class="header-details">
+            <div class="details-row name">
+                <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'Name'}}">
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        <select type="text" name="system.combat.size">
+                            {{#select system.combat.size}}
+                                {{#each (config "sizes")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                    <label>{{localize "IMPMAL.Size"}}</label>
+                </div>
+                <div class="detail-group">
+                    <div class="input-group">
+                        <input type="text" name="system.species" value="{{system.species}}" placeholder="{{localize 'IMPMAL.Species'}}">
+                    </div>
+                    <label>{{localize "IMPMAL.Species"}}</label>
+                </div>
+                <div class="detail-group">
+                    <div class="input-group">
+                        {{#if system.faction.document}}
+                            <div class="singleton-item" data-id="{{system.faction.document.id}}">
+                                <a class="list-edit">{{system.faction.name}}</a>
+                            </div>
+                            <a class="remove-singleton" data-type="faction"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                            <input type="text" name="" value="{{system.faction.name}}"
+                                placeholder="{{localize 'IMPMAL.Faction'}}">
+                        {{/if}}
+                    </div>
+                    <label>{{localize "IMPMAL.Faction"}}</label>
+                </div>
+                <div class="detail-group">
+                    <div class="input-group">
+                        <select type="text" name="system.role">
+                            {{#select system.role}}
+                                {{#each (config "npcRoles")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                    <label>{{localize "IMPMAL.Role"}}</label>
+                </div>
+            </div>
+    </header>
+    <div class="npc-grid">
+        {{#each system.characteristics}}
+            <div class="characteristic">
+                {{configLookup "characteristicAbbrev" @key}}
+            </div>
+        {{/each}}
+        {{#each system.characteristics}}
+            <div class="characteristic-value">
+                <input type="number" name="system.characteristics.{{@key}}.starting" value="{{this.total}}">
+            </div>
+        {{/each}}
+        <div class="grid-property">
+            <label>{{localize "IMPMAL.Armour"}}</label>
+            <div>
+                <input type="number" name="system.combat.armour.value" value="{{system.combat.armour.value}}">
+            </div>
+        </div>
+        <div class="grid-property">
+            <label>{{localize "IMPMAL.Wounds"}}</label>
+            <div>
+                <input type="number" name="system.combat.wounds.value" value="{{system.combat.wounds.value}}">
+                <input type="number" name="system.combat.wounds.max" value="{{system.combat.wounds.max}}" disabled>
+            </div>
+        </div>
+        <div class="grid-property">
+            <label>{{localize "IMPMAL.CriticalWounds"}}</label>
+            <div>
+                {{#if (eq system.role "troop")}}
+                <span>-</span>
+                {{else}}
+                <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
+                <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}" disabled>
+                {{/if}}
+            </div>
+        </div>
+        <div class="grid-property">
+            <label>{{localize "IMPMAL.Initiative"}}</label>
+            <div>
+                <input type="number" name="system.combat.initiative" value="{{system.combat.initiative}}" disabled>
+            </div>
+        </div>
+        <div class="grid-property">
+            <label>{{localize "IMPMAL.Speed"}}</label>
+            <div>
+                <select name="system.combat.speed">
+                {{#select system.combat.speed}}
+                    {{#each (config "speeds")}}
+                        <option value="{{@key}}">{{this}}</option>
+                    {{/each}}
+                {{/select}}
+                </select>
+            </div>
+        </div>
+        <div class="grid-property">
+            <label>{{localize "IMPMAL.Resolve"}}</label>
+            <div>
+                <input type="number" name="system.combat.resolve" value="{{system.combat.resolve}}">
+            </div>
+        </div>
+    </div>
+    <section class="tab-section">
+        <nav class="sheet-tabs tabs">
+            <a class="tab-select item active" data-tab="main">{{localize "IMPMAL.Main"}}</a>
+            <a class="tab-select item active" data-tab="skills">{{localize "IMPMAL.Skills"}}</a>
+            {{#if items.power.length}}
+                <a class="tab-select item" data-tab="powers">{{localize "IMPMAL.Powers"}}</a>
+            {{/if}}
+            <a class="tab-select item active" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
+            <a class="tab-select item active" data-tab="notes">{{localize "IMPMAL.Notes"}}</a>
+        </nav>
+        <div class="tab-content">
+            <div class="tab main" data-tab="main">
+                {{> systems/impmal/templates/actor/tabs/npc/npc-main.hbs}}
+            </div>
+            <div class="tab skills" data-tab="skills">
+                {{> systems/impmal/templates/actor/tabs/actor-skills.hbs}}
+            </div>
+            <div class="tab powers" data-tab="powers">
+                {{> systems/impmal/templates/actor/tabs/actor-powers.hbs}}
+            </div>
+            <div class="tab effects" data-tab="effects">
+                {{> systems/impmal/templates/actor/tabs/actor-effects.hbs}}
+            </div>
+            <div class="tab notes" data-tab="notes">
+                {{> systems/impmal/templates/actor/tabs/actor-notes.hbs}}
+            </div>
+
+        </div>
+    </section>
+</form>

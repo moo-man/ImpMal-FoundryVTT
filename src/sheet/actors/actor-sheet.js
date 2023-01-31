@@ -7,6 +7,7 @@ export default class ImpMalActorSheet extends ActorSheet
         const options = super.defaultOptions;
         options.classes = options.classes.concat(["impmal", "actor"]);
         options.resizable = true;
+        options.scrollY = [".tab-content"];
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }];
         return options;
     }
@@ -130,7 +131,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
-        html.find(".property-edit").on("click", this._onPropertyEdit.bind(this));
+        html.find(".property-edit").on("change", this._onPropertyEdit.bind(this));
         html.find(".inc-dec").on("mousedown", this._onIncDec.bind(this));
         html.find(".ammo-selector").on("change", this._onChangeAmmo.bind(this));
         html.find(".reload").on("click", this._onReload.bind(this));

@@ -9,8 +9,7 @@
         {{/each}}
     </tr>
     <tr>
-        <td>Starting</td>
-        {{!-- <td>{{localize "IMPMAL.Starting"}}</td> --}}
+        <td>{{localize "IMPMAL.Starting"}}</td>
         {{#each system.characteristics}}
             <td>
                 <input type="number" name="system.characteristics.{{@key}}.starting" value="{{this.starting}}">
@@ -18,8 +17,7 @@
         {{/each}}
     </tr>
     <tr>
-        <td>Advances</td>
-        {{!-- <td>{{localize "IMPMAL.Advances"}}</td> --}}
+        <td>{{localize "IMPMAL.Advances"}}</td>
         {{#each system.characteristics}}
             <td>
                 <input type="number" name="system.characteristics.{{@key}}.advances" value="{{this.advances}}">
@@ -27,8 +25,7 @@
         {{/each}}
     </tr>
         <tr>
-        <td>Modifier</td>
-        {{!-- <td>{{localize "IMPMAL.Advances"}}</td> --}}
+        <td>{{localize "IMPMAL.Modifier"}}</td>
         {{#each system.characteristics}}
             <td>
                 <input type="number" name="system.characteristics.{{@key}}.modifier" value="{{this.modifier}}">
@@ -36,8 +33,7 @@
         {{/each}}
     </tr>
     <tr>
-        <td>Total</td>
-        {{!-- <td>{{localize "IMPMAL.Total"}}</td> --}}
+        <td>{{localize "IMPMAL.Total"}}</td>
         {{#each system.characteristics}}
             <td>
                 <a class="roll" data-type="characteristic" data-key="{{@key}}">{{this.total}}</a>
@@ -50,20 +46,21 @@
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Initiative"}}</label>
         <div class="property-value">
-            <input type="number" value="{{system.initiative}}" disabled>
+            <input type="number" value="{{system.combat.initiative}}" disabled>
         </div>
     </div>
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Wounds"}}</label>
         <div class="property-value">
-            <input type="number" name="system.wounds.value" value="{{system.wounds.value}}">
-            <input type="number" value="{{system.wounds.max}}" disabled>
+            <input type="number" name="system.combat.wounds.value" value="{{system.combat.wounds.value}}">
+            <input type="number" value="{{system.combat.wounds.max}}" disabled>
         </div>
     </div>
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.CriticalWounds"}}</label>
         <div class="property-value">
-            <input type="number" value="" disabled>
+            <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
+            <input type="number" value="{{system.combat.criticals.max}}" disabled>
         </div>
     </div>
         <div class="actor-property">

@@ -77,6 +77,7 @@ export default function registerHandlebars()
 
 
     loadTemplates([
+        "systems/impmal/templates/actor/tabs/npc/npc-main.hbs",
         "systems/impmal/templates/actor/tabs/patron/patron-effects.hbs",
         "systems/impmal/templates/actor/tabs/patron/patron-main.hbs",
         "systems/impmal/templates/actor/tabs/actor-notes.hbs",

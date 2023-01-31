@@ -3,27 +3,52 @@
 export default function addListListeners(html, sheet)
 {
     html.find(".list-edit").on("click", _onListEdit.bind(sheet));
+    html.find(".list-edit-rc").on("contextmenu", _onListEdit.bind(sheet));
     html.find(".list-delete").on("click", _onListDelete.bind(sheet));
+    html.find(".list-delete-rc").on("click", _onListDelete.bind(sheet));
     html.find(".list-create").on("click", _onListCreate.bind(sheet));
     html.find(".list-toggle").on("click", _onListToggle.bind(sheet));
     html.find(".list-post").on("click", _onPostItem.bind(sheet));
 }
 
+function _getId(ev)
+{
+    let el = $(ev.currentTarget).parents("[data-id]");
+    if (!el)
+    {
+        el = $(ev.currentTarget).parents("[data-item-id]");
+    }
+    let id = el.attr("data-id");
+    if (!id)
+    {
+        id = ev.currentTarget.dataset.id || ev.currentTarget.dataset.itemId;
+    }
+    return id;
+}
+
+function _getCollection(ev)
+{
+    let el = $(ev.currentTarget).parents("[data-collection]");
+    let collection = el.attr("data-collection");
+    if (!collection)
+    {
+        collection = ev.currentTarget.dataset.collection;
+    }
+    return collection || "items";
+}
 
 //#region Sheet Listeners
 function _onListEdit(event)
 {
-    let el = $(event.currentTarget).parents("[data-id]");
-    let id = el.attr("data-id");
-    let collection = el.attr("data-collection") || "items";
+    let id = _getId(event);
+    let collection = _getCollection(event);
 
     return this.object[collection].get(id)?.sheet.render(true);
 }
 function _onListDelete(event)
 {
-    let el = $(event.currentTarget).parents(".list-item");
-    let id = el.attr("data-id");
-    let collection = el.attr("data-collection");
+    let id = _getId(event);
+    let collection = _getCollection(event);
 
     let docName = collection == "effects" ? "ActiveEffect" : "Item";
 
@@ -56,7 +81,7 @@ function _onListCreate(event)
 
 function _onPostItem(event)
 {
-    let itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
+    let itemId = _getId(event);
     if (itemId) {return this.object.items.get(itemId)?.postToChat();}
 }
 
@@ -73,7 +98,7 @@ async function _onEffectCreate(ev)
         effectData.disabled = true;
     }
 
-    let html = await renderTemplate("systems/impmal/templates/apps/quick-effect.html", effectData);
+    let html = await renderTemplate("systems/impmal/templates/apps/quick-effect.hbs", effectData);
     new Dialog({
         title: game.i18n.localize("IMPMAL.QuickEffect"),
         content: html,
@@ -105,7 +130,7 @@ async function _onEffectCreate(ev)
 
 function _onListToggle(ev)
 {
-    let id = $(ev.currentTarget).parents(".list-item").attr("data-id");
+    let id = _getId(ev);
     let effect = this.object.effects.get(id);
 
     if (effect) {effect.update({ disabled: !effect.disabled });}

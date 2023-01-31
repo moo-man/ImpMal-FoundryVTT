@@ -16,14 +16,22 @@
                     {{this.characteristicData.total}}
                 </div>
             </div>
-            <div>{{this.advances}}</div>
+            {{#if (eq actor.type "character")}}
+                <div>{{this.advances}}</div>
+            {{else}}
+                <div><input name="system.skills.{{@key}}.advances" type="number" value="{{this.advances}}"></div>
+            {{/if}}
             <div><a class="roll" data-type="skill" data-key="{{@key}}">{{this.total}}</a></div>
         </div>
         {{#each this.specialisations}}
             <div class="skill-row spec" data-id="{{this.id}}">
                 <a class="skill-name list-edit">{{this.name}}</a>
                 <div class="skill-characteristic"></div>
-                <div>{{this.system.advances}}</div>
+                {{#if (eq actor.type "character")}}
+                    <div>{{this.system.advances}}</div>
+                {{else}}
+                    <div><input class="property-edit" data-id="{{this.id}}" data-target="system.advances" type="number" value="{{this.system.advances}}"></div>
+                {{/if}}
                 <div><a class="roll" data-type="skill" data-item-id="{{this.id}}">{{this.system.total}}</a></div>
             </div>
         {{/each}}

@@ -41,6 +41,7 @@ export class WeaponModel extends EquippableItemModel
         this.damage.compute(actor);
         this._applyAmmoMods();
         this.skill = this.getSkill(actor);
+        this.skillTotal = this.skill?.system?.total || actor.system.skills[this.skill].total;
     }
 
     // For characters, equipped is determined if the item is held is left or right hand

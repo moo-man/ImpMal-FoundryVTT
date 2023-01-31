@@ -4,8 +4,10 @@
 
     <section class="tab-section">
         <nav class="sheet-tabs tabs">
+            {{#if (isGM)}}
             <a class="tab-select item active" data-tab="notes-patron">{{localize "IMPMAL.DescriptionPatron"}}</a>
             <a class="tab-select item" data-tab="details-patron">{{localize "IMPMAL.DetailsPatron"}}</a>
+            {{/if}}
             <a class="tab-select item" data-tab="notes-character">{{localize "IMPMAL.DescriptionCharacter"}}</a>
             <a class="tab-select item" data-tab="details-character">{{localize "IMPMAL.DetailsCharacter"}}</a>
         </nav>
