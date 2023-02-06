@@ -59,7 +59,8 @@ export class WeaponModel extends EquippableItemModel
             }
             else 
             {
-                this.equipped.offhand = hands[actor.system.handed] == true;
+                // Flip handedness to check
+                this.equipped.offhand = hands[actor.system.handed == "right" ? "left" : "right"] == true;
             }
         }
     }

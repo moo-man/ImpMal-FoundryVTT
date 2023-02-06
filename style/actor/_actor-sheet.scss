@@ -175,6 +175,9 @@
         .skill-row {
             text-align: center;
             display: flex;
+            align-items: center;
+            border-bottom: 1px solid #BBB;
+            padding: 2px 0px;
 
             .skill-name,
             .skill-characteristic {
@@ -198,7 +201,7 @@
         }
         .skill-row.spec {
             .skill-name{
-                justify-content: right;
+                justify-content: center;
             }
         }
     }

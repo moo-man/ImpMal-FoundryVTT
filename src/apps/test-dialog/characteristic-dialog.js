@@ -19,7 +19,7 @@ export class CharacteristicTestDialog extends TestDialog
         let dialogData = super.setupData(actor, undefined, {title, fields});
 
         // TODO find a way to avoid duplicating this code from the parent class
-        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.CharacteristicTest", {characteristic})) + (title?.append || "");
+        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.CharacteristicTest", {characteristic : game.impmal.config.characteristics[characteristic]})) + (title?.append || "");
         dialogData.data.characteristic = characteristic;
 
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});

@@ -7,6 +7,7 @@ export class TestDialog extends Application
     {
         const options = super.defaultOptions;
         options.classes = options.classes.concat(["impmal", "test-dialog", "form"]);
+        options.width = 300;
         options.resizable = true;
         return options;
     }

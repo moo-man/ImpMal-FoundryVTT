@@ -372,7 +372,7 @@
         "notes"
       ],
       "category" : "boon",
-      "visiible" : false
+      "visible" : false
     },
     "origin": {
       "templates": [
@@ -390,10 +390,7 @@
         "influence": {
           "factions": {}
         },
-        "notes": {
-          "player": "",
-          "gm": ""
-        }
+        "notes": ""
       },
       "character": {
         "solars": 0,
@@ -420,10 +417,7 @@
         "duty": {
           "list": []
         },
-        "notes": {
-          "player": "",
-          "gm": ""
-        }
+        "notes": ""
       }
     },
     "duty": {
@@ -437,10 +431,7 @@
         "boon": {
           "id": ""
         },
-        "notes": {
-          "player": "",
-          "gm": ""
-        }
+        "notes": ""
       },
       "character": {
         "equipment": {
@@ -449,10 +440,7 @@
         "characteristics": {
           "id": ""
         },
-        "notes": {
-          "player": "",
-          "gm": ""
-        }
+        "notes": ""
       }
     },
     "role": {

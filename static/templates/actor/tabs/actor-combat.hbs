@@ -55,8 +55,8 @@
             <div class="list-item" data-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
-                        <img class="roll" data-type="weapon" data-item-id="{{this.id}}" src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <img data-type="weapon" data-item-id="{{this.id}}" src="{{this.img}}">
+                        <a class="roll">{{this.name}}</a>
                         {{#if (eq ../actor.type "character")}}
                         <div class="grip">
                             {{#if this.system.equipped.hands.left}}
@@ -71,12 +71,14 @@
                     <div>{{this.system.specialisation}}</div>
                     <div>{{this.system.damage.value}}</div>
                 </div>
-                <div class="weapon-traits">
-                    <label>{{localize 'IMPMAL.Traits'}}: </label>
-                    <div class="trait-list">
-                        {{this.system.traits.displayString}}
+                {{#if this.system.traits.list.length}}
+                    <div class="weapon-traits">
+                        <label>{{localize 'IMPMAL.Traits'}}: </label>
+                        <div class="trait-list">
+                            {{this.system.traits.displayString}}
+                        </div>
                     </div>
-                </div>
+                {{/if}}
             </div>
         {{/each}}
     </div>
@@ -95,8 +97,8 @@
             <div class="list-item" data-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
-                        <img class="roll" data-type="weapon" data-item-id="{{this.id}}" src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <img  data-type="weapon" data-item-id="{{this.id}}" src="{{this.img}}">
+                        <a class="roll">{{this.name}}</a>
                         {{#if (eq ../actor.type "character")}}
                         <div class="grip">
                             {{#if this.system.equipped.hands.left}}
@@ -134,10 +136,12 @@
                             <a class="reload">Reload</a>
                         {{/if}}
                     </div>
-                    <label>{{localize 'IMPMAL.Traits'}}: </label>
-                    <div class="trait-list">
-                        {{this.system.traits.displayString}}
-                    </div>
+                    {{#if this.system.traits.list.length}}
+                        <label>{{localize 'IMPMAL.Traits'}}: </label>
+                        <div class="trait-list">
+                            {{this.system.traits.displayString}}
+                        </div>
+                    {{/if}}
                 </div>
             </div>
         {{/each}}

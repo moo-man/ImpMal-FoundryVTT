@@ -98,7 +98,7 @@ Hooks.once("init", () =>
     game.impmal.superiority = new SuperiorityManager();
     registerHandlebars();
     localizeConfig(IMPMAL);
-
+    
     mergeObject(CONFIG, IM_CONFIG);
 
 });

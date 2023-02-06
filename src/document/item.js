@@ -39,4 +39,9 @@ export class ImpMalItem extends Item
         }
         this.system.computeOwnerDerived(this.actor);
     }
+
+    get typeLabel()
+    {
+        return game.i18n.localize(CONFIG.Item.typeLabels[this.type]);
+    }
 }

@@ -16,7 +16,7 @@
                     {{this.characteristicData.total}}
                 </div>
             </div>
-            {{#if (eq actor.type "character")}}
+            {{#if (eq ../actor.type "character")}}
                 <div>{{this.advances}}</div>
             {{else}}
                 <div><input name="system.skills.{{@key}}.advances" type="number" value="{{this.advances}}"></div>
@@ -27,7 +27,7 @@
             <div class="skill-row spec" data-id="{{this.id}}">
                 <a class="skill-name list-edit">{{this.name}}</a>
                 <div class="skill-characteristic"></div>
-                {{#if (eq actor.type "character")}}
+                {{#if (eq ../../actor.type "character")}}
                     <div>{{this.system.advances}}</div>
                 {{else}}
                     <div><input class="property-edit" data-id="{{this.id}}" data-target="system.advances" type="number" value="{{this.system.advances}}"></div>

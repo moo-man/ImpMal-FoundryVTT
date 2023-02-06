@@ -8,6 +8,8 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
     {
         const options = super.defaultOptions;
         options.classes = options.classes.concat("character");
+        options.height = 750;
+        options.width = 550;
         return options;
     }
 

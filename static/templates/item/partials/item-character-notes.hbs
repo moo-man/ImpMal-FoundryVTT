@@ -1,1 +1,11 @@
-<div></div>
+<div class="item-notes">
+        <div class="note-section">
+
+            <div class="notes-header">
+                {{localize "IMPMAL.Notes"}}
+            </div>
+            <div class="notes-content">
+                {{editor system.character.notes target="system.character.notes" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
+            </div>
+        </div>
+</div>
