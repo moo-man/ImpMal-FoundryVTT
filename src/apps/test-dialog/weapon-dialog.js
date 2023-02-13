@@ -56,7 +56,7 @@ export class WeaponTestDialog extends SkillTestDialog
         let dialogData = super.setupData({itemId : skill.id, key : weapon.system.attackType}, actor, {title, fields});
 
         // TODO find a way to avoid duplicating this code from the parent class
-        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.WeaponTest"), {name : weapon.name}) + (title?.append || "");
+        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.WeaponTest", {name : weapon.name})) + (title?.append || "");
 
         dialogData.data.weaponId = weapon.id;
         dialogData.data.weapon = weapon;

@@ -25,14 +25,14 @@
         </div>
         {{#each this.specialisations}}
             <div class="skill-row spec" data-id="{{this.id}}">
-                <a class="skill-name list-edit">{{this.name}}</a>
+                <a class="skill-name roll list-edit-rc" data-type="skill">{{this.name}}</a>
                 <div class="skill-characteristic"></div>
                 {{#if (eq ../../actor.type "character")}}
                     <div>{{this.system.advances}}</div>
                 {{else}}
-                    <div><input class="property-edit" data-id="{{this.id}}" data-target="system.advances" type="number" value="{{this.system.advances}}"></div>
+                    <div><input class="property-edit" data-target="system.advances" type="number" value="{{this.system.advances}}"></div>
                 {{/if}}
-                <div><a class="roll" data-type="skill" data-item-id="{{this.id}}">{{this.system.total}}</a></div>
+                <div><a class="roll" data-type="skill">{{this.system.total}}</a></div>
             </div>
         {{/each}}
     {{/each}}

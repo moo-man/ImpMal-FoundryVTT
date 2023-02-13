@@ -11,28 +11,32 @@ export default function addListListeners(html, sheet)
     html.find(".list-post").on("click", _onPostItem.bind(sheet));
 }
 
-function _getId(ev)
+export function _getId(ev)
 {
-    let el = $(ev.currentTarget).parents("[data-id]");
-    if (!el)
-    {
-        el = $(ev.currentTarget).parents("[data-item-id]");
-    }
-    let id = el.attr("data-id");
+    let id = ev.currentTarget.dataset.id;
+
     if (!id)
     {
-        id = ev.currentTarget.dataset.id || ev.currentTarget.dataset.itemId;
+        const parent = $(ev.currentTarget).parents("[data-id]");
+        if (parent)
+        {
+            id =parent[0]?.dataset.id;
+        }
     }
     return id;
 }
 
-function _getCollection(ev)
+export function _getCollection(ev)
 {
-    let el = $(ev.currentTarget).parents("[data-collection]");
-    let collection = el.attr("data-collection");
+    let collection = ev.currentTarget.dataset.collection;
+
     if (!collection)
     {
-        collection = ev.currentTarget.dataset.collection;
+        const parent = $(ev.currentTarget).parents("[data-collection]");
+        if (parent)
+        {
+            collection =parent[0]?.dataset.collection;
+        }
     }
     return collection || "items";
 }

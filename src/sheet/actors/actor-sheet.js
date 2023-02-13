@@ -1,4 +1,4 @@
-import addListListeners from "../../apps/list-listeners";
+import addListListeners, { _getId } from "../../apps/list-listeners";
 
 export default class ImpMalActorSheet extends ActorSheet
 {
@@ -213,8 +213,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
     _onIncDec(ev)
     {
-        let el = $(ev.currentTarget).parents(".list-item");
-        let id = el.attr("data-id");
+        let id = _getId(ev);
         let item = this.actor.items.get(id);
         let button = ev.button == 0 ? "left" : "right";
 
@@ -230,8 +229,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
     _onChangeAmmo(ev)
     {
-        let el = $(ev.currentTarget).parents(".list-item");
-        let id = el.attr("data-id");
+        let id = _getId(ev);
         let item = this.actor.items.get(id);
 
         item.update({"system.ammo.id" : ev.target.value});
@@ -239,8 +237,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
     _onReload(ev)
     {
-        let el = $(ev.currentTarget).parents(".list-item");
-        let id = el.attr("data-id");
+        let id = _getId(ev);
         let item = this.actor.items.get(id);
 
         try 
@@ -257,7 +254,7 @@ export default class ImpMalActorSheet extends ActorSheet
     {
         let type = ev.currentTarget.dataset.type;  // characteristic, skill, etc.
         let key = ev.currentTarget.dataset.key;    // Non items, such as characteristic keys, or skill keys
-        let itemId = ev.currentTarget.dataset.itemId;  // Item ids, if using skill items or weapons
+        let itemId = _getId(ev);                   // Item ids, if using skill items or weapons
 
         switch(type)
         {

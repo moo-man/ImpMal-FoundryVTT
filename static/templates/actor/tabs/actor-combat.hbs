@@ -55,8 +55,8 @@
             <div class="list-item" data-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
-                        <img data-type="weapon" data-item-id="{{this.id}}" src="{{this.img}}">
-                        <a class="roll">{{this.name}}</a>
+                        <img src="{{this.img}}">
+                        <a class="roll" data-type="weapon">{{this.name}}</a>
                         {{#if (eq ../actor.type "character")}}
                         <div class="grip">
                             {{#if this.system.equipped.hands.left}}
@@ -97,8 +97,8 @@
             <div class="list-item" data-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
-                        <img  data-type="weapon" data-item-id="{{this.id}}" src="{{this.img}}">
-                        <a class="roll">{{this.name}}</a>
+                        <img  data-item-id="{{this.id}}" src="{{this.img}}">
+                        <a class="roll" data-type="weapon">{{this.name}}</a>
                         {{#if (eq ../actor.type "character")}}
                         <div class="grip">
                             {{#if this.system.equipped.hands.left}}
