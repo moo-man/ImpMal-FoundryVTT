@@ -1,5 +1,5 @@
-# Warhammer 40,000: Imperium Maledictum
-The **official** system for playing Warhammer 40,000: Imperium Maledictum on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.
+# Warhammer 40,000 Roleplay: Imperium Maledictum
+The **official** system for playing *Warhammer 40,000 Roleplay: Imperium Maledictum* on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.
 
 <!-- ![](https://img.shields.io/github/v/release/moo-man/ImpMal-FoundryVTT?label=Latest%20Version)
 ![](https://img.shields.io/github/downloads/moo-man/ImpMal-FoundryVTT/latest/impmal.zip?label=Downloads%20%28Latest%20Version%29)
