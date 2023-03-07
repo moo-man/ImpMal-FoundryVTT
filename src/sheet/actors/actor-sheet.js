@@ -139,6 +139,7 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".trait-action").on("click", this._onTraitClick.bind(this));
         html.find(".pip").on("click", this._onConditionPipClick.bind(this));
         html.find(".remove-singleton").on("click", this._onRemoveSingleton.bind(this));
+        html.find(".remove-ref").on("click", this._onRemoveReference.bind(this));
     }
 
 
@@ -301,6 +302,13 @@ export default class ImpMalActorSheet extends ActorSheet
         let type = ev.currentTarget.dataset.type;
 
         this.actor.system[type]?.document?.delete();
+    }
+
+    
+    _onRemoveReference(ev)
+    {
+        ev.stopPropagation();
+        this.actor.update({[`${ev.currentTarget.dataset.path}.id`] : ""});
     }
 
     //#endregion

@@ -1,3 +1,4 @@
+import actor from "./hooks/actor";
 import chat from "./hooks/chat";
 import combat from "./hooks/combat";
 import item from "./hooks/item";
@@ -10,6 +11,7 @@ import token from "./hooks/token";
 export default function() 
 {
     ready();
+    actor();
     chat();
     targets();
     settings();

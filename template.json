@@ -246,7 +246,8 @@
         "hair": "",
         "height": "",
         "weight": "",
-        "divination": ""
+        "divination": "",
+        "species" : ""
       },
       "origin" : {
         "id" : "",
@@ -259,6 +260,9 @@
       "role" : {
         "id" : "",
         "name" : ""
+      },
+      "patron" : {
+        "id" : ""
       },
       "combat": {
         "superiority": 0

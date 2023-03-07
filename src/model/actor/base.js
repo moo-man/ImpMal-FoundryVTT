@@ -50,7 +50,7 @@ export class BaseActorModel extends foundry.abstract.DataModel
     {
         if (this.constructor.preventItemTypes.includes(item.type))
         {
-            ui.notifications.error("IMPMAL.ItemsNotAllowed", {type : item.type});
+            ui.notifications.error(game.i18n.localize("IMPMAL.ItemsNotAllowed"), {type : item.type});
             return false;
         }
     }

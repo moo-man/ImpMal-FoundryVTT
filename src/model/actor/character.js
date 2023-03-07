@@ -6,6 +6,7 @@ import { HandsModel } from "./components/hands";
 import { XPModel } from "./components/xp";
 import { ImpMalEffect } from "../../document/effect";
 import { SingletonItemModel } from "../shared/singleton-item";
+import { DocumentReferenceModel } from "../shared/reference";
 let fields = foundry.data.fields;
 
 export class CharacterModel extends StandardActorModel 
@@ -16,6 +17,7 @@ export class CharacterModel extends StandardActorModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
+        schema.patron = new fields.EmbeddedDataField(DocumentReferenceModel);
         schema.origin = new fields.EmbeddedDataField(SingletonItemModel);
         schema.faction = new fields.EmbeddedDataField(SingletonItemModel);
         schema.role = new fields.EmbeddedDataField(SingletonItemModel);
@@ -68,6 +70,7 @@ export class CharacterModel extends StandardActorModel
     computeDerived(items)
     {
         super.computeDerived(items);
+        this.patron.getDocument(game.actors);
         this.hands.getDocuments(items.all);
         this.origin.getDocument(items.all);
         this.faction.getDocument(items.all);

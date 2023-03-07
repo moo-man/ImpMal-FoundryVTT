@@ -10,6 +10,7 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         options.classes = options.classes.concat("character");
         options.height = 750;
         options.width = 550;
+        options.dragDrop.push([{ dragSelector: ".actor-list .actor", dropSelector: null }]);
         return options;
     }
 
@@ -33,6 +34,24 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         return buttons;
     }
 
+    async _onDrop(ev)
+    {
+        let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
+        if (dropData.type == "Actor")
+        {
+            let actor = await Actor.fromDropData(dropData);
+            if (actor.type == "patron")
+            {
+                this.object.update({"system.patron.id" : actor.id});
+            }
+        }
+        else 
+        {
+            super._onDrop(ev);
+        }
+
+    }
+
 
     activateListeners(html) 
     {
@@ -46,6 +65,32 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
 
             this.actor.update(this.actor.system.hands.toggle(item, hand));
             
+        });
+
+        html.find(".patron").on("dragenter", (ev => 
+        {
+            if (!this.object.system.patron.document)
+            {
+                ev.currentTarget.classList.add("hover");
+            }
+        }));
+
+        
+        html.find(".patron").on("dragleave", (ev => 
+        {
+            ev.currentTarget.classList.remove("hover");
+        }));
+
+        html.find(".patron").click(() => 
+        {
+            if (this.object.system.patron.document)
+            {
+                this.object.system.patron.document.sheet.render(true);
+            }
+            else 
+            {
+                ui.notifications.notify("IMPMAL.AddPatron");
+            }
         });
     }
 }

@@ -24,7 +24,7 @@
             </td>
         {{/each}}
     </tr>
-        <tr>
+    <tr>
         <td>{{localize "IMPMAL.Modifier"}}</td>
         {{#each system.characteristics}}
             <td>
@@ -63,11 +63,11 @@
             <input type="number" value="{{system.combat.criticals.max}}" disabled>
         </div>
     </div>
-        <div class="actor-property">
+    <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Fate"}}</label>
         <div class="property-value">
             <input type="number" name="system.fate.value" value="{{system.fate.value}}">
-            <input type="number"  value="{{system.fate.max}}">
+            <input type="number" value="{{system.fate.max}}">
         </div>
     </div>
 </div>
@@ -83,8 +83,8 @@
         <label class="property-label">{{localize "IMPMAL.Handed"}}</label>
         <select name="system.handed">
             {{#select system.handed}}
-            <option value="right">{{localize "IMPMAL.Right"}}</option>
-            <option value="left">{{localize "IMPMAL.Left"}}</option>
+                <option value="right">{{localize "IMPMAL.Right"}}</option>
+                <option value="left">{{localize "IMPMAL.Left"}}</option>
             {{/select}}
         </select>
     </div>
@@ -100,43 +100,76 @@
                 <label>{{localize "IMPMAL.Spent"}}</label>
             </div>
             <div>
-                <input type="number" value="{{system.xp.total}}" name="system.xp.total" >
+                <input type="number" value="{{system.xp.total}}" name="system.xp.total">
                 <label>{{localize "IMPMAL.Total"}}</label>
             </div>
         </div>
     </div>
 </div>
 
+
+<div class="patron">
+    {{#if system.patron.document}}
+    <a class="remove-ref" data-path="system.patron"><i class="fa-solid fa-xmark"></i></a>
+        <img src="{{tokenImg system.patron.document}}">
+        <div class="details">
+            {{#with system.patron.document as |patron|}}
+                <label class="name">{{patron.name}}</label>
+                <div>
+                    <div class="group">
+                        <div>{{patron.system.faction.name}}</div>
+                        <label>{{localize "IMPMAL.Faction"}}</label>
+                    </div>
+                    <div class="group">
+                        <div>{{patron.system.duty.name}}</div>
+                        <label>{{localize "IMPMAL.Duty"}}</label>
+                    </div>
+                    <div class="group">
+                        <div>{{patron.system.motivation.name}}</div>
+                        <label>{{localize "IMPMAL.Motivation"}}</label>
+                    </div>
+                    <div class="group">
+                        <div>{{patron.system.demeanor.name}}</div>
+                        <label>{{localize "IMPMAL.Demeanor"}}</label>
+                    </div>
+                </div>
+            {{/with}}
+        </div>
+    {{else}}
+        <label class="missing">{{localize "IMPMAL.NoPatron"}}</label>
+    {{/if}}
+</div>
+
 <section class="list influence">
     <header class="list-row">
         <div>{{localize "Faction"}}</div>
-        <div class="small">{{localize "Infl."}}</div>
-        <div class="wide">{{localize "Notes/Contacts"}}</div>
+        <div class="small">{{localize "IMPAL.Infl"}}</div>
+        <div class="wide">{{localize "IMPMAL.NotesContacts"}}</div>
         <div class="list-controls single">
             <a class="faction-create"><i class="fa-solid fa-plus"></i></a>
         </div>
     </header>
     <div class="list-content">
         {{#each system.influence.factions}}
-        <div class="list-item" data-type="{{@key}}">
-            <div class="list-row">
-                <div>
-                    <input type="text" name="system.influence.factions.{{@key}}.name" value="{{this.name}}">
+            <div class="list-item" data-type="{{@key}}">
+                <div class="list-row">
+                    <div>
+                        <input type="text" name="system.influence.factions.{{@key}}.name" value="{{this.name}}">
+                    </div>
+                    <div class="small">
+                        <input type="number" name="system.influence.factions.{{@key}}.value" value="{{this.value}}">
+                    </div>
+                    <div class="wide">
+                        <input type="text" name="system.influence.factions.{{@key}}.notes" value="{{this.notes}}">
+                    </div>
+                    <div class="list-controls single">
+                        <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
                 </div>
-                <div class="small">
-                    <input type="number" name="system.influence.factions.{{@key}}.value" value="{{this.value}}">
-                </div>
-                <div class="wide">
-                    <input type="text" name="system.influence.factions.{{@key}}.notes" value="{{this.notes}}">
-                </div>
-                <div class="list-controls single">
-                    <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
-                </div>
-            </div>
-            <div class="summary">
+                <div class="summary">
 
+                </div>
             </div>
-        </div>
         {{/each}}
     </div>
 </section>
