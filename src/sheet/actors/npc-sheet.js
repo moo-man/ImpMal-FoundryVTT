@@ -61,16 +61,20 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         let items = data.items.trait.concat(data.items.corruption, data.items.talent);
         for (let trait of items)
         {
+            if (trait.system.attack.enabled && !trait.system.roll.enabled && !trait.system.test.enabled)
+            {
+                continue; // If a trait only specifies attack, only show in attacks
+            }
             elements.push(`
                 <div>
-                    <a class="trait-name list-edit-rc" data-id="${trait.id}"><strong>${trait.name}: </strong></a>
-                    ${await TextEditor.enrichHTML(trait.system.notes.player, {async: true})}
-                    ${game.user.isGM ? await TextEditor.enrichHTML(trait.system.notes.gm, {async: true}) : ""}
+                <a class="trait-name list-edit-rc" data-id="${trait.id}"><strong>${trait.name}: </strong></a>
+                ${await TextEditor.enrichHTML(trait.system.notes.player, {async: true})}
+                ${game.user.isGM ? await TextEditor.enrichHTML(trait.system.notes.gm, {async: true}) : ""}
                 </div>
-            `);
+                `);
         }
 
-        return {html: elements.join(""), show : items.length > 0};
+        return {html: elements.join(""), show : elements.length > 0};
     }
         
     async _formatAttacks(data)
@@ -82,8 +86,8 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         {
             elements.push(`
                 <div>
-                    <a class="roll list-edit-rc" data-type="weapon" data-id="${weapon.id}" data-item-id="${weapon.id}"><strong>${weapon.name}: </strong></a>
-                    <span class="skill">${config.weaponTypes[weapon.system.attackType]} (${weapon.system.specialisation}) ${weapon.system.skillTotal}</span>
+                    <a class="roll list-edit-rc" data-type="weapon" data-id="${weapon.id}"><strong>${weapon.name}: </strong></a>
+                    <span class="roll" data-action="weapon">${config.weaponTypes[weapon.system.attackType]} (${weapon.system.specialisation}) ${weapon.system.skillTotal}</span>
                     </span>, </span>
                     <span class="damage">${weapon.system.damage.value} + SL ${weapon.system.attackType == "melee" ? "difference" : ""} Damage. </span>
                     
@@ -91,6 +95,38 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
                     <span class="attack-traits">${weapon.system.traits.displayArray.map(i => `<a class="item-trait">${i}</a>`).join(", ")}
                 </div>
             `);
+        });
+
+        
+        data.items.trait.forEach(trait => 
+        {
+            let skill = config.weaponTypes[trait.system.attack.type];
+            if (trait.system.attack.skill.key != "melee" && trait.system.attack.skill.key != "ranged")
+            {
+                skill = config.skills[trait.system.attack.skill.key];
+            }
+
+            if (trait.system.attack.skill.specialisation)
+            {
+                skill += ` (${trait.system.attack.skill.specialisation})`;
+            }
+            
+            let damage = `${trait.system.attack.damage.value}`;
+            if (trait.system.attack.damage.SL)
+            {
+                damage += ` + SL ${trait.system.attack.type == "melee" ? "difference" : ""} Damage.`;
+            }
+
+            elements.push(`
+                    <div>
+                        <a class="trait-action list-edit-rc" data-action="attack" data-id="${trait.id}"><strong>${trait.name}: </strong></a>
+                        <span>${skill} ${trait.system.attack.target}</span>
+                        </span>, </span>
+                        <span class="damage">${damage}</span>
+                        <span class="range">${trait.system.attack.type == "ranged" ? config.ranges[trait.system.attack.range] + " Range" : ""}</span>
+                        <span class="attack-traits">${trait.system.attack.traits.displayArray.map(i => `<a class="item-trait">${i}</a>`).join(", ")}
+                    </div>
+                `);
         });
 
         return {html: elements.join(""), show : data.items.weapon.length > 0};

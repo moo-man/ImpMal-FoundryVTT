@@ -11,6 +11,10 @@
         height: 200px;
     }
 
+    .characteristic {
+        text-align: center;
+    }
+
     .grid-property {
         grid-column  : span 3;
         grid-row : span 2;
@@ -42,6 +46,10 @@
         .trait-name {
             float: left;
             margin-right: 3px;
+        }
+
+        .attack-traits {
+            font-style: italic;
         }
     }
 }

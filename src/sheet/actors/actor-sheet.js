@@ -136,6 +136,7 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".ammo-selector").on("change", this._onChangeAmmo.bind(this));
         html.find(".reload").on("click", this._onReload.bind(this));
         html.find(".roll").on("click", this._onRollClick.bind(this));
+        html.find(".trait-action").on("click", this._onTraitClick.bind(this));
         html.find(".pip").on("click", this._onConditionPipClick.bind(this));
         html.find(".remove-singleton").on("click", this._onRemoveSingleton.bind(this));
     }
@@ -162,7 +163,7 @@ export default class ImpMalActorSheet extends ActorSheet
      */
     _onPropertyEdit(event)
     {
-        let id = event.currentTarget.dataset.id;
+        let id = _getId(event);
         let target = event.currentTarget.dataset.target;
         let collection = event.currentTarget.dataset.collection || "items";
         let value = event.target.value;
@@ -261,11 +262,20 @@ export default class ImpMalActorSheet extends ActorSheet
         case "characteristic":
             return this.actor.setupCharacteristicTest(key);
         case "skill":
-            return this.actor.setupSkillTest({itemId, key});
+            return this.actor.setupSkillTest({skillItemId : itemId, key});
         case "weapon":
             return this.actor.setupWeaponTest(itemId);
         case "power":
             return this.actor.setupPowerTest(itemId);
+        }
+    }
+
+    _onTraitClick(ev)
+    {
+        let itemId = _getId(ev);      
+        if(ev.currentTarget.dataset.action == "attack")
+        {
+            this.actor.setupTraitTest(itemId);
         }
     }
 

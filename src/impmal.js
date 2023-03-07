@@ -38,6 +38,7 @@ import { CorruptionModel } from "./model/item/corruption";
 import { InjuryModel } from "./model/item/injury";
 import { CriticalModel } from "./model/item/critical";
 import { TraitModel } from "./model/item/trait";
+import TraitItemSheet from "./sheet/items/item-trait-sheet";
 
 Hooks.once("init", () => 
 {
@@ -55,6 +56,7 @@ Hooks.once("init", () =>
     Actors.registerSheet("impmal", ImpMalNPCSheet, { types: ["npc"], makeDefault: true });
     Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
     Items.registerSheet("impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
+    Items.registerSheet("impmal", TraitItemSheet, { types: ["trait"], makeDefault: true });
 
     // CONFIG.ActiveEffect.sheetClass = undefined;
     // DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });

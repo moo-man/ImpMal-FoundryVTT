@@ -2,11 +2,13 @@ import { CharacteristicTestDialog } from "../apps/test-dialog/characteristic-dia
 import { PowerTestDialog } from "../apps/test-dialog/power-dialog";
 import { SkillTestDialog } from "../apps/test-dialog/skill-dialog";
 import { TestDialog } from "../apps/test-dialog/test-dialog";
+import { TraitTestDialog } from "../apps/test-dialog/trait-dialog";
 import { WeaponTestDialog } from "../apps/test-dialog/weapon-dialog";
 import { BaseTest } from "../system/tests/base/base-test";
 import { CharacteristicTest } from "../system/tests/characteristic/characteristic-test";
 import { PowerTest } from "../system/tests/power/power-test";
 import { SkillTest } from "../system/tests/skill/skill-test";
+import { TraitTest } from "../system/tests/trait/trait-test";
 import { WeaponTest } from "../system/tests/weapon/weapon-test";
 import { ImpMalEffect } from "./effect";
 
@@ -135,6 +137,11 @@ export class ImpMalActor extends Actor
     setupPowerTest(id, options={}, roll=true) 
     {
         return this._setupTest(PowerTestDialog, PowerTest, id, options, roll);
+    }
+
+    setupTraitTest(id, options={}, roll=true) 
+    {
+        return this._setupTest(TraitTestDialog, TraitTest, id, options, roll);
     }
 
     /**

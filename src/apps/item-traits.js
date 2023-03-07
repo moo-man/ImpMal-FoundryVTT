@@ -18,7 +18,7 @@ export default class ItemTraitsForm extends FormApplication
         let data = await super.getData();
 
         data.itemTraits = this.formatTraits(game.impmal.config.itemTraits);
-        if (["weapon", "protection", "ammo"].includes(this.object.type))
+        if (["weapon", "protection", "ammo", "trait"].includes(this.object.type))
         {
             data.weaponArmourTraits = this.formatTraits(game.impmal.config.weaponArmourTraits);
         }
@@ -43,7 +43,8 @@ export default class ItemTraitsForm extends FormApplication
             }
         }
 
-        this.object.update({"system.traits.list" : traits});
+        let path = this.object.type == "trait" ? "system.attack.traits.list" : "system.traits.list";
+        this.object.update({[`${path}`] : traits});
     }
 
     formatTraits(traits) 
@@ -51,7 +52,7 @@ export default class ItemTraitsForm extends FormApplication
         return Object.keys(foundry.utils.deepClone(traits)).map(key => 
         {
             // Use original to prevent ammo/mods from showing their modifications
-            let trait = this.object.system.traits.original.has(key);
+            let trait = this.object.type == "trait" ? this.object.system.attack.traits.original.has(key) : this.object.system.traits.original.has(key);
             if (trait) 
             {
                 trait.existing = true;

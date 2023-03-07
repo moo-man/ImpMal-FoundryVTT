@@ -363,7 +363,8 @@
       "damage": {
         "damage": {
           "base": "",
-          "characteristic": ""
+          "characteristic": "",
+          "SL": true
         }
       }
     },
@@ -582,7 +583,41 @@
     "trait": {
       "templates": [
         "notes"
-      ]
+      ],
+      "attack" : {
+        "enabled" : false,
+        "type" : "melee",
+        "difficulty" : "challenging",
+        "characteristic" : "",
+        "skill" : {
+          "key" : "",
+          "specialisation" : ""
+        },
+        "damage" : {
+          "SL" : true,
+          "base" : "",
+          "characteristic" : ""
+        },
+        "range" : "",
+        "traits": {
+          "list": []
+        }
+      },
+      "test" : {
+        "enabled" : false,
+        "target" : "self",
+        "difficulty" : "challenging",
+        "characteristic" : "",
+        "skill" : {
+          "key" : "",
+          "specialisation" : ""
+        }
+      },
+      "roll" : {
+        "enabled" : false,
+        "formula" : "",
+        "label" : ""
+      }
     }
   }
 }
