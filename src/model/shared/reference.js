@@ -1,7 +1,6 @@
 let fields = foundry.data.fields;
 
 
-// Generic list of objects
 export class DocumentReferenceModel extends foundry.abstract.DataModel
 {
     static defineSchema() 

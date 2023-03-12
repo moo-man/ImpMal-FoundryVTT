@@ -19,7 +19,10 @@ export class BaseTestEvaluator
 
     async evaluate(data)
     {
-        data.result.roll = data.result.roll || (await new Roll("1d100").evaluate({async: true})).total;
+
+        let roll = await new Roll("1d100").evaluate({async: true});
+        data.result.roll = data.result.roll || roll.total;
+        data.result.rollObject = roll;
         this.computeResult(data);
     }
 

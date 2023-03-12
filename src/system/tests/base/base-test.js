@@ -174,6 +174,8 @@ export class BaseTest
             title : this.context.title,
             speaker : this.context.speaker,
             flavor: this.context.title,
+            type : CONST.CHAT_MESSAGE_TYPES.ROLL,
+            rolls : [this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject], // Trigger DSN
             flags : this._saveData()
         });
     }
