@@ -10,7 +10,7 @@ export class TestContext
     fateReroll = false;
     fateAddSL = false;
     targetSpeakers = [];
-    responses = [];
+    responses = {};
 
     constructor(context)
     {
@@ -34,19 +34,28 @@ export class TestContext
 
     get targets() 
     {
-        return this.targetSpeakers.map(ChatMessage.getSpeakerActor);
+        return this.targetSpeakers.map(speaker => 
+        {
+            return {
+                test : game.messages.get(this.responses[speaker.token])?.test, 
+                actor : ChatMessage.getSpeakerActor(speaker)
+            };
+        });
     }
 
-    handleOpposed() 
+    async handleOpposed() 
     {
         let opposed = this.actor.getFlag("impmal", "opposed");
+        
         if (opposed) // If this test is defending
         {
+            this.actor.update({"flags.impmal.-=opposed" : null});
             // Call the attacking test and compute the result
             let attackTest = game.messages.get(opposed)?.test;
-            attackTest.context.addOpposedResponse(this.messageId);
+            await attackTest.context.addOpposedResponse(this.messageId);
+            // Wait till the animation is finished before rendering the result
+            await game.dice3d?.waitFor3DAnimationByMessageID(this.messageId);
             attackTest.roll();
-            this.actor.update({"flags.impmal.-=opposed" : null});
         }
 
         // If attacking
@@ -57,10 +66,11 @@ export class TestContext
     }
 
 
-    // Called by a defending test to add response ID to context
+    // Called by a defending test to add target ID to context
     addOpposedResponse(messageId, {save=false}={})
     {
-        this.responses = this.responses.concat(messageId);
+        let token = game.messages.get(messageId).speaker.token;
+        this.responses[token] = messageId;
         if(save)
         {
             return this.saveContext();
@@ -72,9 +82,9 @@ export class TestContext
     {
         if (game.user.isGM)
         {
-            for(let actor of this.targets)
+            for(let target of this.targets)
             {
-                await actor.setFlag("impmal", "opposed", this.messageId);
+                await target.actor.setFlag("impmal", "opposed", this.messageId);
             }
 
             this.targetFlagsAdded = true;

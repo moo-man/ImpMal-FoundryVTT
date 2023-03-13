@@ -25,17 +25,23 @@
     <p class="centered"><strong>{{result.outcomeDescription}}</strong></p>
     {{{testDetails}}}
 
-    {{#if context.targets.length}}
-    <div class="targets">
-        <a><i class="fa-solid fa-crosshairs"></i></a>
-        <div class="target-list">
-            {{#each opposedResults}}
-            <div class="target">
-                <img data-tooltip="{{tokenName this.target}}" src="{{tokenImg this.target}}">
-                <span class="opposed-result {{#if (eq this.result.winner "attacker")}}winner{{/if}} {{#if (eq this.result.winner "defender")}}loser{{/if}}">{{numberFormat this.result.SL sign=true}}</span>
+    {{#if opposedTests.length}}
+        <div class="targets">
+            <div class="target-list">
+                {{#each opposedTests}}
+                    <div class="target">
+                    <a><i class="fa-solid fa-crosshairs"></i></a>
+                        <img data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
+                        {{#if this.result}}
+                            <span class="opposed-result {{#if (eq this.result.winner " attacker")}}winner{{/if}} {{#if
+                                (eq this.result.winner "defender"
+                                )}}loser{{/if}}">{{numberFormat this.result.SL sign=true}}</span>
+                        {{else}}
+                            ?
+                        {{/if}}
+                    </div>
+                {{/each}}
             </div>
-            {{/each}}
         </div>
-    </div>
     {{/if}}
 </div>

@@ -33,9 +33,9 @@ export class BaseTest
         // Save roll
         mergeObject(this.data.result, this.result.getPersistentData());
         await this.postRoll();
-        // await this.evaluateOpposedTests();
+        await this.evaluateOpposedTests();
         await this.sendToChat();
-        // this.context.handleOpposed();
+        await this.context.handleOpposed();
         return this;
     }
 
@@ -126,13 +126,12 @@ export class BaseTest
 
     evaluateOpposedTests()
     {
-        this.opposedResults = [];
-        for (let messageId of this.context.responses)
+        this.opposedTests = foundry.utils.deepClone(this.context.targets);
+        for (let opposed of this.opposedTests)
         {
-            let test = game.messages.get(messageId)?.test;
-            if (test)
+            if (opposed.test)
             {
-                this.opposedResults.push({target : test.actor, result : new OpposedTestResult(this.result, test.result)});
+                opposed.result = new OpposedTestResult(this.result, opposed.test.result);
             }
         }
     }

@@ -58,6 +58,7 @@
         .target-list {
             display: flex;
             align-items: center;
+            flex-direction: column;
 
             .target {
                 display: flex;

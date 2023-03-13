@@ -205,6 +205,8 @@
     "IMPMAL.Mag" : "Mag",
     "IMPMAL.Main" : "Main",
     "IMPMAL.Malignancy" : "Malignancy",
+    "IMPMAL.MarginalFailure" : "Marginal Failure", 
+    "IMPMAL.MarginalSuccess" : "Marginal Success", 
     "IMPMAL.Mastercrafted" : "Master Crafted",
     "IMPMAL.MaxWounds" : "MaxWounds",
     "IMPMAL.Medicae" : "Medicae",
