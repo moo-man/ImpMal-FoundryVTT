@@ -59,10 +59,27 @@
             display: flex;
             align-items: center;
             flex-direction: column;
+            width: 100%;
 
             .target {
+                width: 100%;
                 display: flex;
                 align-items: center;
+                .opposed-result {
+                    flex: 1;
+                }
+
+                .controls {
+                    flex: 0 0 25px;
+                    text-align: center;
+                    button {
+                        height: 25px;
+                        width: 100%;
+                        padding: 0px;
+                        padding-left: 3px;
+                        line-height: unset;
+                    }
+                }
                 .attacker .opposedSL {
                     color: darkblue
                 }

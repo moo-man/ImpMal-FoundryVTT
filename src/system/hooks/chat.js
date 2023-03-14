@@ -10,4 +10,9 @@ export default function()
     {
         BaseTest._addTestContextOptions(options);
     });
+
+    Hooks.on("renderChatLog", (app, html,) => 
+    {
+        BaseTest._chatListeners(html);
+    });
 }

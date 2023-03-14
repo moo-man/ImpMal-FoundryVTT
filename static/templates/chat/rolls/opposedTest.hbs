@@ -1,19 +1,29 @@
-<div class="target">
+<div class="target" data-id="{{this.id}}">
     <a><i class="fa-solid fa-crosshairs"></i></a>
     <img data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
     {{#if this.result}}
         <div class="opposed-result {{this.result.winner}}">
             <span class="opposedSL">
-            {{numberFormat this.result.SL sign=true}}
+                {{numberFormat this.result.SL sign=true}}
             </span>
             {{#if this.result.damage}}
-            , {{localize "IMPMAL.DamageDisplay"
+                , {{localize "IMPMAL.DamageDisplay"
              damage=this.result.damage}}
             {{/if}}
+
         </div>
+        {{#if this.result.damage}}
+            <div class="controls">
+                {{#if this.damage.applied}}
+                    <a class="apply-damage" data-tooltip="{{this.damage.msg}} {{#if (gt this.damage.multiple 1)}} x{{this.damage.multiple}} {{/if}}"><i class="fa-solid fa-check"></i></a>
+                {{else}}
+                    <button class="apply-damage" data-tooltip="{{localize 'IMPMAL.ApplyDamage'}}"><i class="fa-solid fa-user-minus"></i></button>
+                {{/if}}
+            </div>
+        {{/if}}
     {{else}}
         ?
     {{/if}}
 
-    
+
 </div>

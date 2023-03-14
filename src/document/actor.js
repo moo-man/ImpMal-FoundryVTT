@@ -172,4 +172,19 @@ export class ImpMalActor extends Actor
         }
         return test;
     }
+
+    applyDamage(value, {ignoreAP=false, location="roll"}={})
+    {
+        let wounds = value;
+
+        let locationData = this.system.combat.hitLocations[location];
+
+        if (!ignoreAP)
+        {
+            wounds -= locationData.armour;
+        }
+
+        this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + wounds});
+        return game.i18n.format("IMPMAL.WoundsTaken", {wounds});
+    }
 }

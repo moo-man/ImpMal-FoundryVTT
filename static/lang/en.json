@@ -270,6 +270,8 @@
     "IMPMAL.Rapport" : "Rapport",
     "IMPMAL.Rare" : "Rare",
     "IMPMAL.Reach" : "Reach",
+    "IMPMAL.ReapplyDamageTitle" : "Re-Apply Damage",
+    "IMPMAL.ReapplyDamagePrompt" : "This damage has already been applied. Do so again?",
     "IMPMAL.Reflexes" : "Reflexes",
     "IMPMAL.Reliable" : "Reliable",
     "IMPMAL.Rend" : "Rend",
@@ -362,5 +364,6 @@
     "IMPMAL.Wil" : "Wil",
     "IMPMAL.Willpower" : "Willpower",
     "IMPMAL.Wounds" : "Wounds",
+    "IMPMAL.WoundsTaken" : "{wounds} Wounds",
     "IMPMAL.XP" : "XP"
 }

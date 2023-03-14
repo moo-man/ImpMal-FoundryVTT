@@ -122,13 +122,13 @@ export class BaseTestEvaluator
         // Two cases, natural roll, or SL modified. Both cases can be solved by looking at the original roll vs target
         else if (SL == 0)
         {
-            if (target > roll)
-            {
-                return `-${SL}`;
-            }
-            else if (target <= roll)
+            if (roll <= target)
             {
                 return `+${SL}`;
+            }
+            else if (roll > target)
+            {
+                return `-${SL}`;
             }
         }
     }

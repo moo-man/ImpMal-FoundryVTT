@@ -131,7 +131,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
-        html.find(".property-edit").on("change", this._onPropertyEdit.bind(this));
+        html.find(".property-edit").on("click", this._onPropertyEdit.bind(this));
         html.find(".inc-dec").on("mousedown", this._onIncDec.bind(this));
         html.find(".ammo-selector").on("change", this._onChangeAmmo.bind(this));
         html.find(".reload").on("click", this._onReload.bind(this));

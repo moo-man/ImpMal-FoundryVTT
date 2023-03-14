@@ -264,6 +264,35 @@ export class BaseTest
         });
     }
 
+    static _chatListeners(html)
+    {
+        html.on("click", ".apply-damage", async ev => 
+        {
+            let el = $(ev.currentTarget);
+            let message = game.messages.get(el.parents(".message").attr("data-message-id"));
+            let test = message.test;
+            let targetId = el.parents(".target").attr("data-id");
+            let apply = true;
+            if (test.context.appliedDamage[targetId])
+            {
+                apply = await Dialog.confirm({
+                    title : game.i18n.localize("IMPMAL.ReapplyDamageTitle"),
+                    content : game.i18n.localize("IMPMAL.ReapplyDamagePrompt"),
+                    yes : () => {return true;},
+                    no : () => {return false;},
+                    close : () => {return false;},
+                });
+            }
+            if (apply)
+            {
+                let opposed = test.opposedTests.find(t => t.id == targetId);
+                let damageMsg = opposed.actor.applyDamage(opposed.result.damage, {location: "body"});
+                test.context.setApplied(targetId, damageMsg);
+                test.roll();
+            }
+        });
+    }
+
     static _addTestContextOptions(options)
     {
         let hasTest = li =>

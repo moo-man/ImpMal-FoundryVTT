@@ -10,7 +10,8 @@ export class TestContext
     fateReroll = false;
     fateAddSL = false;
     targetSpeakers = [];
-    responses = {};
+    responses = {}; // map of tokenIds to response messages or "unopposed" string
+    appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}
 
     constructor(context)
     {
@@ -37,9 +38,11 @@ export class TestContext
         return this.targetSpeakers.map(speaker => 
         {
             return {
+                id : speaker.token,
                 test : game.messages.get(this.responses[speaker.token])?.test,
                 unopposed : this.responses[speaker.token] == "unopposed",
-                actor : ChatMessage.getSpeakerActor(speaker)
+                actor : ChatMessage.getSpeakerActor(speaker),
+                damage : this.appliedDamage[speaker.token]
             };
         });
     }
@@ -99,6 +102,23 @@ export class TestContext
                 this.addUnopposedResponse(speaker.token);
             }
         }
+        if (save)
+        {
+            this.saveContext();
+        }
+    }
+
+    // Set damage as applied for a given target ID
+    setApplied(id, msg, {save=false}={})
+    {   
+        let multiple = 1; // How many times damage has been applied for a given id
+
+        if (this.appliedDamage[id])
+        {
+            multiple = (this.appliedDamage[id].multiple || 0) + 1;
+        }
+
+        this.appliedDamage[id] = {applied : true, msg, multiple};
         if (save)
         {
             this.saveContext();
