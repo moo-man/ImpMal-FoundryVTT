@@ -4,7 +4,7 @@
             <select name="hitLocation">
                 {{#select fields.hitLocation}}
                     {{#each hitLocations}}
-                        <option value="{{@key}}">{{this}}</option>
+                        <option value="{{@key}}">{{localize this}}</option>
                     {{/each}}
                 {{/select}}
             </select>

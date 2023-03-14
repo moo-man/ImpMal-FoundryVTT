@@ -2,16 +2,16 @@
     <label>{{localize "IMPMAL.Damage"}}</label>
     <div class="form-fields">
         <input type="text" value="{{system.damage.base}}" name="system.damage.base">
+        +
         <select name="system.damage.characteristic">
             {{#select system.damage.characteristic}}
                 <option value=""></option>
-                {{#each (config "characteristics")}}
+                {{#each (config "characteristicAbbrev")}}
                     <option value="{{@key}}">{{this}}</option>
                 {{/each}}
             {{/select}}
         </select>
-        <label>{{localize "IMPMAL.ChBonus"}}</label>
-        <input type="checkbox" name="system.damage.SL" value="{{system.damage.SL}}" {{checked system.damage.SL}}>
-        <label>+SL</label>
+        <input type="checkbox" name="system.damage.SL" {{checked system.damage.SL}}>
+        <label class="{{#unless system.damage.SL}}inactive{{/unless}}">+SL</label>
     </div>
 </div>

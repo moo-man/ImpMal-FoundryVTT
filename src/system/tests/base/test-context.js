@@ -37,7 +37,8 @@ export class TestContext
         return this.targetSpeakers.map(speaker => 
         {
             return {
-                test : game.messages.get(this.responses[speaker.token])?.test, 
+                test : game.messages.get(this.responses[speaker.token])?.test,
+                unopposed : this.responses[speaker.token] == "unopposed",
                 actor : ChatMessage.getSpeakerActor(speaker)
             };
         });
@@ -46,7 +47,7 @@ export class TestContext
     async handleOpposed() 
     {
         let opposed = this.actor.getFlag("impmal", "opposed");
-        
+
         if (opposed) // If this test is defending
         {
             this.actor.update({"flags.impmal.-=opposed" : null});
@@ -77,6 +78,33 @@ export class TestContext
         }
     }
 
+    // Set a particular token to unopposed
+    addUnopposedResponse(tokenId, {save=false}={})
+    {
+        this.responses = foundry.utils.deepClone(this.responses);
+        this.responses[tokenId] = "unopposed";
+        if(save)
+        {
+            return this.saveContext();
+        }
+    }
+
+    //Set all tokens that haven't responded as unopposed 
+    fillUnopposed({save = false}={})
+    {
+        for(let speaker of this.targetSpeakers)
+        {
+            if (!this.responses[speaker.token])
+            {
+                this.addUnopposedResponse(speaker.token);
+            }
+        }
+        if (save)
+        {
+            this.saveContext();
+        }
+    }
+
 
     async addTargetFlags()
     {
@@ -94,6 +122,7 @@ export class TestContext
         {
             game.socket.on("system.impmal", {type: "addTargetFlags", payload : {id : this.messageId}});
         }
+        game.user.updateTokenTargets([]);
     }
 
 

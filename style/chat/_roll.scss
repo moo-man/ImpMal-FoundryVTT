@@ -63,11 +63,14 @@
             .target {
                 display: flex;
                 align-items: center;
-                .opposed-result.winner {
-                    color: darkgreen;
+                .attacker .opposedSL {
+                    color: darkblue
                 }
-                .opposed-result.loser {
+                .defender .opposedSL {
                     color: darkred
+                }
+                .opposedSL {
+                    font-weight: bold;
                 }
             }
             img {

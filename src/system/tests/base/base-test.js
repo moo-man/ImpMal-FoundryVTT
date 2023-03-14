@@ -1,3 +1,4 @@
+import { EditTestForm } from "../../../apps/edit-test";
 import { OpposedTestResult } from "../opposed-result";
 import { BaseTestEvaluator } from "./base-evaluator";
 import { TestContext } from "./test-context";
@@ -46,6 +47,22 @@ export class BaseTest
     async postRoll()
     {
 
+    }
+
+    evaluateOpposedTests()
+    {
+        this.opposedTests = foundry.utils.deepClone(this.context.targets);
+        for (let opposed of this.opposedTests)
+        {
+            if (opposed.test)
+            {
+                opposed.result = new OpposedTestResult(this, opposed.test);
+            }
+            else if (opposed.unopposed)
+            {
+                opposed.result = new OpposedTestResult(this);
+            }
+        }
     }
 
     reroll(fate=false) 
@@ -124,18 +141,6 @@ export class BaseTest
         }
     }
 
-    evaluateOpposedTests()
-    {
-        this.opposedTests = foundry.utils.deepClone(this.context.targets);
-        for (let opposed of this.opposedTests)
-        {
-            if (opposed.test)
-            {
-                opposed.result = new OpposedTestResult(this.result, opposed.test.result);
-            }
-        }
-    }
-
     save() 
     {
         return this.message?.update({
@@ -173,8 +178,8 @@ export class BaseTest
             title : this.context.title,
             speaker : this.context.speaker,
             flavor: this.context.title,
-            type : CONST.CHAT_MESSAGE_TYPES.ROLL,
-            rolls : [this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject], // Trigger DSN
+            // type : CONST.CHAT_MESSAGE_TYPES.ROLL,
+            // rolls : [this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject], // Trigger DSN
             flags : this._saveData()
         });
     }
@@ -257,5 +262,74 @@ export class BaseTest
                 }
             }
         });
+    }
+
+    static _addTestContextOptions(options)
+    {
+        let hasTest = li =>
+        {
+            let message = game.messages.get(li.attr("data-message-id"));
+            return message.test;
+        };
+
+        let canEdit = li =>
+        {
+            return hasTest(li) && game.user.isGM;
+        };
+
+        options.unshift(
+            {
+                name: game.i18n.localize("IMPMAL.Unopposed"),
+                icon: '<i class="fa-solid fa-arrow-right"></i>',
+                condition: hasTest,
+                callback: li =>
+                {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.test;
+                    test.context.fillUnopposed();
+                    test.roll();
+                }
+            },
+            {
+                name: game.i18n.localize("IMPMAL.EditTest"),
+                icon: '<i class="fa-solid fa-edit"></i>',
+                condition: canEdit,
+                callback: li =>
+                {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    new EditTestForm(message.test).render(true);
+                }
+            },
+            {
+                name: game.i18n.localize("IMPMAL.RerollTest"),
+                icon: '<i class="fa-solid fa-rotate-right"></i>',
+                condition: hasTest,
+                callback: li =>
+                {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    message.test.reroll();
+                }
+            },
+            {
+                name: game.i18n.localize("IMPMAL.RerollTestFate"),
+                icon: '<i class="fa-solid fa-rotate-right"></i>',
+                condition: hasTest,
+                callback: li =>
+                {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    message.test.reroll(true);
+                }
+            },
+            {
+                name: game.i18n.localize("IMPMAL.AddSLFate"),
+                icon: '<i class="fa-solid fa-plus"></i>',
+                condition: hasTest,
+                callback: li =>
+                {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    message.test.addSL(1, true);
+                }
+            },
+        );
     }
 }

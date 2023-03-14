@@ -1,0 +1,19 @@
+<div class="target">
+    <a><i class="fa-solid fa-crosshairs"></i></a>
+    <img data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
+    {{#if this.result}}
+        <div class="opposed-result {{this.result.winner}}">
+            <span class="opposedSL">
+            {{numberFormat this.result.SL sign=true}}
+            </span>
+            {{#if this.result.damage}}
+            , {{localize "IMPMAL.DamageDisplay"
+             damage=this.result.damage}}
+            {{/if}}
+        </div>
+    {{else}}
+        ?
+    {{/if}}
+
+    
+</div>
