@@ -46,6 +46,17 @@ export class WeaponTest extends SkillTest
         return this.context.weapon;
     }
 
+    get tags() 
+    {
+        let tags = super.tags;
+        if (this.result.calledShot)
+        {
+            tags.push(`${game.i18n.localize("IMPMAL.CalledShot")}: <strong>${game.impmal.config.hitLocations[this.result.hitLocation]}</strong>`);
+        }
+        return tags;
+    }
+
+
 
     static _getDialogTestData(data)
     {

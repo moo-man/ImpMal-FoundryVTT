@@ -77,6 +77,22 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             }
         }
     }
+
+    hitLocAt(number)
+    {
+        for (let loc in this.hitLocations)
+        {
+            if (number >= this.hitLocations[loc].range[0] && number <= this.hitLocations[loc].range[1])
+            {
+                return loc;
+            }
+        }
+    }
+
+    randomHitLoc()
+    {
+        return this.hitLocAt(Math.ceil(CONFIG.Dice.randomUniform() * 10));
+    }
 }
 
 

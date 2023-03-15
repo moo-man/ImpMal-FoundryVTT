@@ -1,5 +1,5 @@
 <div class="target" data-id="{{this.id}}">
-    <a><i class="fa-solid fa-crosshairs"></i></a>
+    <a class="{{this.result.winner}}"><i class="fa-solid fa-crosshairs"></i></a>
     <img data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
     {{#if this.result}}
         <div class="opposed-result {{this.result.winner}}">
@@ -24,6 +24,4 @@
     {{else}}
         ?
     {{/if}}
-
-
 </div>

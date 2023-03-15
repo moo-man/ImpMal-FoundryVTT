@@ -24,6 +24,7 @@ export class WeaponTestEvaluator extends BaseTestEvaluator
         else 
         {
             this.hitLocation = data.hitLocation;
+            this.calledShot = true;
         }
 
     }

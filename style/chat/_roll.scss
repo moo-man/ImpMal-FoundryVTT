@@ -7,24 +7,26 @@
         align-items: center;
         justify-content: center;
 
-        >*
-        {
+        >* {
             margin: 0px 5px;
             flex: 1
         }
+
         .roll {
             display: flex;
             justify-content: end;
             align-items: center;
-            > *{
+
+            >* {
                 margin: 0px 3px;
             }
+
             .reverse-icon {
-                background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.4738270308123249) 50%);
+                background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.4738270308123249) 50%);
                 -webkit-background-clip: text;
                 background-clip: text;
                 -webkit-text-fill-color: transparent;
-            }            
+            }
         }
 
         .vs {
@@ -38,8 +40,9 @@
     }
 
     .sl {
-        display:flex;
+        display: flex;
         justify-content: center;
+
         div {
             font-size: var(--font-size-28);
             background: rgba(0, 0, 0, 0.05);
@@ -51,20 +54,52 @@
         }
     }
 
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 5px;
+
+        >* {
+            border: 1px solid #555;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 1px 3px;
+            margin: 0px 3px;
+        }
+    }
+
     .targets {
         display: flex;
         align-items: center;
 
+        a.attacker {
+            color: darkblue
+        }
+
+        a.defender {
+            color: darkred
+        }
+
+        .defense,
         .target-list {
             display: flex;
             align-items: center;
             flex-direction: column;
             width: 100%;
 
+            img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .targeter,
             .target {
                 width: 100%;
                 display: flex;
                 align-items: center;
+
                 .opposed-result {
                     flex: 1;
                 }
@@ -72,6 +107,7 @@
                 .controls {
                     flex: 0 0 25px;
                     text-align: center;
+
                     button {
                         height: 25px;
                         width: 100%;
@@ -80,19 +116,18 @@
                         line-height: unset;
                     }
                 }
+
                 .attacker .opposedSL {
                     color: darkblue
                 }
+
                 .defender .opposedSL {
                     color: darkred
                 }
+
                 .opposedSL {
                     font-weight: bold;
                 }
-            }
-            img {
-                width: 30px;
-                height: 30px;
             }
         }
     }

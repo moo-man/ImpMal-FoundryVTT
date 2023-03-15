@@ -177,7 +177,24 @@ export class ImpMalActor extends Actor
     {
         let wounds = value;
 
-        let locationData = this.system.combat.hitLocations[location];
+        let locationKey;
+        if (typeof location == "string")
+        {
+            if (location == "roll")
+            {
+                locationKey  = this.system.combat.randomHitLoc();
+            }
+            else // if location is some other string, assume it is the location key
+            {
+                locationKey = location;
+            }
+        }
+        else if (typeof location == "number")
+        {
+            locationKey  = this.system.combat.hitLocAt(location);
+        }
+        let locationData = this.system.combat.hitLocations[locationKey];
+
 
         if (!ignoreAP)
         {
@@ -185,6 +202,6 @@ export class ImpMalActor extends Actor
         }
 
         this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + wounds});
-        return game.i18n.format("IMPMAL.WoundsTaken", {wounds});
+        return game.i18n.format("IMPMAL.WoundsTaken", {wounds, location : game.i18n.localize(locationData.label)});
     }
 }

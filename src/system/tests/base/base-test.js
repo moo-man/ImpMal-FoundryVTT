@@ -120,6 +120,15 @@ export class BaseTest
         this.roll();
     }
 
+    applyDamageTo(targetId)
+    {
+        let opposed = this.opposedTests.find(t => t.id == targetId);
+
+        let damageMsg = opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation});
+        this.context.setApplied(targetId, damageMsg);
+        this.roll();
+    }
+
     async sendToChat({newMessage = false}={}) 
     {
 
@@ -178,10 +187,24 @@ export class BaseTest
             title : this.context.title,
             speaker : this.context.speaker,
             flavor: this.context.title,
-            // type : CONST.CHAT_MESSAGE_TYPES.ROLL,
-            // rolls : [this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject], // Trigger DSN
+            type : CONST.CHAT_MESSAGE_TYPES.ROLL,
+            rolls : [this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject], // Trigger DSN
             flags : this._saveData()
         });
+    }
+
+    get tags() 
+    {
+        let tags = [];
+        if (this.result.state == "adv")
+        {
+            tags.push(game.i18n.localize("IMPMAL.Advantage"));
+        }
+        if (this.result.state == "dis")
+        {
+            tags.push(game.i18n.localize("IMPMAL.Disadvantage"));
+        }
+        return tags;
     }
 
     get actor() 
@@ -285,10 +308,7 @@ export class BaseTest
             }
             if (apply)
             {
-                let opposed = test.opposedTests.find(t => t.id == targetId);
-                let damageMsg = opposed.actor.applyDamage(opposed.result.damage, {location: "body"});
-                test.context.setApplied(targetId, damageMsg);
-                test.roll();
+                test.applyDamageTo(targetId);
             }
         });
     }
@@ -301,6 +321,12 @@ export class BaseTest
             return message.test;
         };
 
+        let hasPendingOpposedTests = li => 
+        {
+            let message = game.messages.get(li.attr("data-message-id"));
+            return hasTest(li) && message.test.context.targets.some(t => !t.test && !t.unopposed); // If no response test, and not unopposed = pending opposed test
+        };
+
         let canEdit = li =>
         {
             return hasTest(li) && game.user.isGM;
@@ -310,7 +336,7 @@ export class BaseTest
             {
                 name: game.i18n.localize("IMPMAL.Unopposed"),
                 icon: '<i class="fa-solid fa-arrow-right"></i>',
-                condition: hasTest,
+                condition: hasPendingOpposedTests,
                 callback: li =>
                 {
                     let message = game.messages.get(li.attr("data-message-id"));

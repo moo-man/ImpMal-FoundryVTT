@@ -148,10 +148,13 @@ export class TestContext
 
     saveContext()
     {
+        
         this.message?.update({
             flags: {
                 impmal : {
-                    context: this
+                    test : {
+                        context: {...this}
+                    }
                 }
             }
         });

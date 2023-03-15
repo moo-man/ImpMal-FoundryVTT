@@ -20,7 +20,7 @@ export class OpposedTestResult
             this.winner = "defender";
         }
 
-        if (this.winner == "attacker" && attackerTest.item.system?.damage)
+        if (this.winner == "attacker" && attackerTest.item?.system?.damage)
         {
             this.damage = this.computeDamage(attackerTest.item);
         }
@@ -29,14 +29,14 @@ export class OpposedTestResult
     computeDamage(item)
     {
         let damage = 0;
-        if (!item.system?.damage)
+        if (!item?.system?.damage)
         {
             return damage;
         }
 
-        damage += item.system.damage.value;
+        damage += item?.system.damage.value;
 
-        if (item.system.attackType == "melee")
+        if (item?.system.attackType == "melee")
         {
             damage += this.SL;
         }

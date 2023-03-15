@@ -37,6 +37,7 @@
     "IMPMAL.Age" : "Age",
     "IMPMAL.Agility" : "Agility",
     "IMPMAL.Ammo" : "Ammo",
+    "IMPMAL.ApplyDamage" : "Apply Damage",
     "IMPMAL.Armour" : "Armour",
     "IMPMAL.AstoundingFailure" : "Astounding Failure", 
     "IMPMAL.AstoundingSuccess" : "Astounding Success", 
@@ -58,6 +59,7 @@
     "IMPMAL.Boons" : "Boons",
     "IMPMAL.Brawling" : "Brawling",
     "IMPMAL.Bulky" : "Bulky",
+    "IMPMAL.CalledShot" : "Called Shot",
     "IMPMAL.Carapace" : "Carapace",
     "IMPMAL.Category" : "Category",
     "IMPMAL.Chain" : "Chain",
@@ -344,6 +346,7 @@
     "IMPMAL.Trusted" : "Trusted",
     "IMPMAL.TwoHanded" : "TwoHanded",
     "IMPMAL.Ugly" : "Ugly",
+    "IMPMAL.Unopposed" : "Unopposed",
     "IMPMAL.Unreliable" : "Unreliable",
     "IMPMAL.Unstable" : "Unstable",
     "IMPMAL.Unwelcome" : "Unwelcome",
@@ -364,6 +367,6 @@
     "IMPMAL.Wil" : "Wil",
     "IMPMAL.Willpower" : "Willpower",
     "IMPMAL.Wounds" : "Wounds",
-    "IMPMAL.WoundsTaken" : "{wounds} Wounds",
+    "IMPMAL.WoundsTaken" : "{wounds} Wounds on {location}",
     "IMPMAL.XP" : "XP"
 }

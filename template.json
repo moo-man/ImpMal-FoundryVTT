@@ -181,12 +181,16 @@
             "value": 0
           },
           "hitLocations": {
+            "head": {
+              "range": [1,1],
+              "label": "IMPMAL.Head"
+            },
             "leftArm": {
-              "range": [6,10],
+              "range": [2,2],
               "label": "IMPMAL.LeftArm"
             },
             "rightArm": {
-              "range": [5,5],
+              "range": [3,3],
               "label": "IMPMAL.RightArm"
             },
             "leftLeg": {
@@ -194,16 +198,12 @@
               "label": "IMPMAL.LeftLeg"
             },
             "rightLeg": {
-              "range": [3,3],
+              "range": [5,5],
               "label": "IMPMAL.RightLeg"
             },
             "body": {
-              "range": [2,2],
+              "range": [6,10],
               "label": "IMPMAL.Body"
-            },
-            "head": {
-              "range": [1,1],
-              "label": "IMPMAL.Head"
             }
           }
         }
