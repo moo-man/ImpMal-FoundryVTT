@@ -6,7 +6,7 @@ The **official** system for playing *Warhammer 40,000 Roleplay: Imperium Maledic
 ![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V10-orange) -->
 
 ## Current State
-This is currently in **ALPHA** and not yet suitable for actual play. Testing and feedback are always appreciated. 
+This is currently in **BETA** and not yet suitable for actual play. Testing and feedback are always appreciated. 
 
 Please feel free to message me on Discord - Moo Man#7518
 
