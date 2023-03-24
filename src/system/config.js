@@ -195,6 +195,7 @@ const IMPMAL = {
 
     weaponArmourTraits : {
         blast : "IMPMAL.Blast",
+        burst : "IMPMAL.Burst",
         close : "IMPMAL.Close",
         defensive : "IMPMAL.Defensive",
         flamer : "IMPMAL.Flamer",

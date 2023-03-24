@@ -4,6 +4,9 @@
         <div class="skill-characteristic">{{localize "IMPMAL.Characteristic"}}</div>
         <div>{{localize "IMPMAL.Adv"}}</div>
         <div>{{localize "IMPMAL.Total"}}</div>
+        <div class="skill-controls">
+
+        </div>
     </header>
     {{#each system.skills}}
         <div class="skill-row">
@@ -22,6 +25,7 @@
                 <div><input name="system.skills.{{@key}}.advances" type="number" value="{{this.advances}}"></div>
             {{/if}}
             <div><a class="roll" data-type="skill" data-key="{{@key}}">{{this.total}}</a></div>
+            <div class="skill-controls"></div>
         </div>
         {{#each this.specialisations}}
             <div class="skill-row spec" data-id="{{this.id}}">
@@ -30,9 +34,13 @@
                 {{#if (eq ../../actor.type "character")}}
                     <div>{{this.system.advances}}</div>
                 {{else}}
-                    <div><input class="property-edit" data-target="system.advances" type="number" value="{{this.system.advances}}"></div>
+                    <div><input class="property-edit" data-target="system.advances" type="number"
+                            value="{{this.system.advances}}"></div>
                 {{/if}}
                 <div><a class="roll" data-type="skill">{{this.system.total}}</a></div>
+                <div class="skill-controls">
+                    <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                </div>
             </div>
         {{/each}}
     {{/each}}

@@ -203,6 +203,12 @@
             >*:first-of-type {
                 justify-content: left;
             }
+
+            > .skill-controls {
+                display: flex;
+                align-items: center;
+                flex: 0 0 15px;
+            }
         }
         .skill-row.spec {
             .skill-name{
