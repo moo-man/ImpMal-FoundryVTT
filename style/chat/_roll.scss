@@ -70,6 +70,7 @@
         }
     }
 
+    .defense,
     .targets {
         display: flex;
         align-items: center;
@@ -81,53 +82,53 @@
         a.defender {
             color: darkred
         }
+    }
 
-        .defense,
-        .target-list {
+    .defense,
+    .target-list {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .targeter,
+        .target {
+            width: 100%;
             display: flex;
             align-items: center;
-            flex-direction: column;
-            width: 100%;
 
-            img {
-                width: 30px;
-                height: 30px;
+            .opposed-result {
+                flex: 1;
             }
 
-            .targeter,
-            .target {
-                width: 100%;
-                display: flex;
-                align-items: center;
+            .controls {
+                flex: 0 0 25px;
+                text-align: center;
 
-                .opposed-result {
-                    flex: 1;
+                button {
+                    height: 25px;
+                    width: 100%;
+                    padding: 0px;
+                    padding-left: 3px;
+                    line-height: unset;
                 }
+            }
 
-                .controls {
-                    flex: 0 0 25px;
-                    text-align: center;
+            .attacker .opposedSL {
+                color: darkblue
+            }
 
-                    button {
-                        height: 25px;
-                        width: 100%;
-                        padding: 0px;
-                        padding-left: 3px;
-                        line-height: unset;
-                    }
-                }
+            .defender .opposedSL {
+                color: darkred
+            }
 
-                .attacker .opposedSL {
-                    color: darkblue
-                }
-
-                .defender .opposedSL {
-                    color: darkred
-                }
-
-                .opposedSL {
-                    font-weight: bold;
-                }
+            .opposedSL {
+                font-weight: bold;
             }
         }
     }

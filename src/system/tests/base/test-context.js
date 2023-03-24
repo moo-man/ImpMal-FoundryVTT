@@ -12,6 +12,7 @@ export class TestContext
     targetSpeakers = [];
     responses = {}; // map of tokenIds to response messages or "unopposed" string
     appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}
+    defendingAgainst = undefined;
 
     constructor(context)
     {
@@ -49,23 +50,43 @@ export class TestContext
 
     async handleOpposed() 
     {
-        let opposed = this.actor.getFlag("impmal", "opposed");
+        let opposedId = this.actor.getFlag("impmal", "opposed");
 
-        if (opposed) // If this test is defending
+        if (opposedId) // If this test is defending (first render)
         {
             this.actor.update({"flags.impmal.-=opposed" : null});
             // Call the attacking test and compute the result
-            let attackTest = game.messages.get(opposed)?.test;
-            await attackTest.context.addOpposedResponse(this.messageId);
-            // Wait till the animation is finished before rendering the result
-            await game.dice3d?.waitFor3DAnimationByMessageID(this.messageId);
-            attackTest.roll();
+            let attackTest = game.messages.get(opposedId)?.test;
+            if (attackTest)
+            {
+                this.defendingAgainst = opposedId;
+                await this.saveContext();
+                await attackTest.context.addOpposedResponse(this.messageId);
+                // Wait till the animation is finished before rendering the result
+                await game.dice3d?.waitFor3DAnimationByMessageID(this.messageId);
+                attackTest.roll();
+            }
+        }
+
+        else if (this.defendingAgainst) // If this test is defending (2nd+ render, actor flag doesn't exist anymore)
+        {
+            this.rerenderTargets();
         }
 
         // If attacking
-        else if (!this.targetFlagsAdded)
+        else if (this.targetSpeakers.length)
         {
-            return this.addTargetFlags();
+            // First message - add flags to targets designating them as being attacked
+            if (!this.targetFlagsAdded)
+            {
+                return this.addTargetFlags();
+            }
+
+            // Subsequent calls - Tell target messages to rerender
+            else 
+            {
+                return this.rerenderTargets();
+            }
         }
     }
 
@@ -140,10 +161,34 @@ export class TestContext
         }
         else 
         {
-            game.socket.on("system.impmal", {type: "addTargetFlags", payload : {id : this.messageId}});
+            game.socket.emit("system.impmal", {type: "addTargetFlags", payload : {id : this.messageId}});
         }
         game.user.updateTokenTargets([]);
     }
+
+    async rerenderTargets()
+    {
+        if (game.user.isGM)
+        {
+            // Targets
+            for(let target of this.targets)
+            {
+                target.test.evaluate(true);
+            }
+
+            // Attacker
+            if (this.defendingAgainst)
+            {
+                game.messages.get(this.defendingAgainst)?.test.evaluate(true);
+            }
+        }
+        else 
+        {
+            game.socket.emit("system.impmal", {type: "rerenderMessages", payload : {ids : Object.values(this.responses).concat(this.defendingAgainst || [])}});
+        }
+        game.user.updateTokenTargets([]);
+    }
+
 
 
     saveContext()

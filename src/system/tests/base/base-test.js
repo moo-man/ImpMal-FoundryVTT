@@ -19,7 +19,7 @@ export class BaseTest
         this.context = new this.constructor.contextClass(context);
         this.data.target = this.computeTarget();
         this.result = new this.constructor.evaluatorClass(data);
-        this.evaluateOpposedTests();
+        // this.evaluateOpposedTests();
     }
 
     // Base test has no target computation, just use static value provided
@@ -30,14 +30,30 @@ export class BaseTest
 
     async roll() 
     {
+        await this.evaluate();
+        await this.postRoll();
+        await this.sendToChat();
+        await this.context.handleOpposed();
+
+        // If defending, rerender to show defense results
+        if (this.defending)
+        {
+            await this.sendToChat();
+        }
+        return this;
+    }
+
+    // Evaluate test result
+    // Optionally update message (useful for rerendering targets or attackers)
+    async evaluate(render=false)
+    {
         await this.result.evaluate(this.data);
         // Save roll
         mergeObject(this.data.result, this.result.getPersistentData());
-        await this.postRoll();
-        await this.evaluateOpposedTests();
-        await this.sendToChat();
-        await this.context.handleOpposed();
-        return this;
+        if (render)
+        {
+            this.sendToChat();
+        }
     }
 
     /**
@@ -47,22 +63,6 @@ export class BaseTest
     async postRoll()
     {
 
-    }
-
-    evaluateOpposedTests()
-    {
-        this.opposedTests = foundry.utils.deepClone(this.context.targets);
-        for (let opposed of this.opposedTests)
-        {
-            if (opposed.test)
-            {
-                opposed.result = new OpposedTestResult(this, opposed.test);
-            }
-            else if (opposed.unopposed)
-            {
-                opposed.result = new OpposedTestResult(this);
-            }
-        }
     }
 
     reroll(fate=false) 
@@ -141,7 +141,7 @@ export class BaseTest
 
             // Cannot assign message until after message is created, so save again
             this.context.message = msg;
-            this.save();
+            await this.save();
             return msg;
         }
         else // If existing message, update it
@@ -220,6 +220,51 @@ export class BaseTest
     get message() 
     {
         return this.context.message;
+    }
+
+
+    // Attacker test details
+    get defending() 
+    {
+        let attackMessage = game.messages.get(this.context.defendingAgainst);
+        let attackingTest = attackMessage?.test;
+        if (attackingTest)
+        {
+
+            let attackerId = attackingTest.context.speaker.token;
+            let attackingActor = attackingTest.actor;
+
+            // Flip attacker / defender to get results in the right perspective
+            // e.g. If the attacker won by +2, the defender lost by -2
+            let result = new OpposedTestResult(this, attackingTest); 
+            
+            return {
+                test : attackingTest,
+                id : attackerId,
+                actor : attackingActor,
+                result
+            };
+        }
+        return null;
+    }
+
+    
+    // Targets details
+    get opposedTests()
+    {
+        let opposedTests = foundry.utils.deepClone(this.context.targets);
+        for (let opposed of opposedTests)
+        {
+            if (opposed.test)
+            {
+                opposed.result = new OpposedTestResult(this, opposed.test);
+            }
+            else if (opposed.unopposed)
+            {
+                opposed.result = new OpposedTestResult(this);
+            }
+        }
+        return opposedTests;
     }
     
     /**
