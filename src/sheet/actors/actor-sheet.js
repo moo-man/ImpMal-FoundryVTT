@@ -263,7 +263,7 @@ export default class ImpMalActorSheet extends ActorSheet
         case "characteristic":
             return this.actor.setupCharacteristicTest(key);
         case "skill":
-            return this.actor.setupSkillTest({skillItemId : itemId, key});
+            return this.actor.setupSkillTest({itemId, key});
         case "weapon":
             return this.actor.setupWeaponTest(itemId);
         case "power":
