@@ -258,7 +258,7 @@ const IMPMAL = {
     },
 
     disciplines : {
-        minor : "IMPMAL.svg",
+        minor : "IMPMAL.Minor",
         biomancy : "IMPMAL.Biomancy",
         divination : "IMPMAL.Divination",
         pyromancy : "IMPMAL.Pyromancy",
