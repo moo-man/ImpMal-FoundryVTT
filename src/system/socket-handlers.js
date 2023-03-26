@@ -16,6 +16,15 @@ export class SocketHandlers
         }
     }
 
+    static updateActor({speaker, update}={})
+    {
+        if (game.user.isGM)
+        {
+            ChatMessage.getSpeakerActor(speaker)?.update(update);
+        }
+    }
+
+
     static rerenderMessages({ids}={})
     {
         if (game.user.isGM)

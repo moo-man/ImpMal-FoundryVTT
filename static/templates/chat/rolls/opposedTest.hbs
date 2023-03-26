@@ -11,11 +11,14 @@
              damage=this.result.damage}}
             {{/if}}
 
+            {{#if this.damage.crit}}
+            <span class="critical">{{this.damage.crit}}</span>
+            {{/if}}
         </div>
         {{#if this.result.damage}}
             <div class="controls">
                 {{#if this.damage.applied}}
-                    <a class="apply-damage" data-tooltip="{{this.damage.msg}} {{#if (gt this.damage.multiple 1)}} x{{this.damage.multiple}} {{/if}}"><i class="fa-solid fa-check"></i></a>
+                    <a class="apply-damage" data-tooltip="{{this.damage.text}} {{#if (gt this.damage.multiple 1)}} x{{this.damage.multiple}} {{/if}}"><i class="fa-solid fa-check"></i></a>
                 {{else}}
                     <button class="apply-damage" data-tooltip="{{localize 'IMPMAL.ApplyDamage'}}"><i class="fa-solid fa-user-minus"></i></button>
                 {{/if}}

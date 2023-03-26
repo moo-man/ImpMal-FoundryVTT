@@ -65,21 +65,21 @@ export class BaseTestEvaluator
     {
         let outcome = this.outcome[0].toUpperCase() + this.outcome.slice(1); // "Failure" or "Success"
 
-        let SLabs = Math.abs(this.SL);
+        let absSL = Math.abs(this.SL);
         
-        if (SLabs >= 5)
+        if (absSL >= 5)
         {
             return game.i18n.localize(`IMPMAL.Astounding${outcome}`);
         }
-        else if (SLabs >= 3 )
+        else if (absSL >= 3 )
         {
             return game.i18n.localize(`IMPMAL.Impressive${outcome}`);
         }
-        else if (SLabs >= 1)
+        else if (absSL >= 1)
         {
             return game.i18n.localize(`IMPMAL.${outcome}`);
         }
-        else if (SLabs == 0)
+        else if (absSL == 0)
         {
             return game.i18n.localize(`IMPMAL.Marginal${outcome}`);
         }

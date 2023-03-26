@@ -121,6 +121,7 @@ export class TestContext
             if (!this.responses[speaker.token])
             {
                 this.addUnopposedResponse(speaker.token);
+                this.removeOpposedFlag(speaker);
             }
         }
         if (save)
@@ -130,7 +131,7 @@ export class TestContext
     }
 
     // Set damage as applied for a given target ID
-    setApplied(id, msg, {save=false}={})
+    setApplied(id, data, {save=false}={})
     {   
         let multiple = 1; // How many times damage has been applied for a given id
 
@@ -139,10 +140,27 @@ export class TestContext
             multiple = (this.appliedDamage[id].multiple || 0) + 1;
         }
 
-        this.appliedDamage[id] = {applied : true, msg, multiple};
+        this.appliedDamage[id] = mergeObject({applied : true, multiple}, data);
         if (save)
         {
             this.saveContext();
+        }
+    }
+
+    removeOpposedFlag(speaker)
+    {
+        let update = {"flags.impmal.-=opposed" : null};
+        if (game.user.isGM)
+        {
+            let actor = ChatMessage.getSpeakerActor(speaker);
+            if (actor)
+            {
+                return actor.update(update);
+            }
+        }
+        else 
+        {
+            game.socket.emit("system.impmal", {type : "updateActor", payload : {speaker, update}});
         }
     }
 
@@ -173,7 +191,7 @@ export class TestContext
             // Targets
             for(let target of this.targets)
             {
-                target.test.evaluate(true);
+                target.test?.evaluate(true);
             }
 
             // Attacker

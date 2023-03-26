@@ -124,8 +124,8 @@ export class BaseTest
     {
         let opposed = this.opposedTests.find(t => t.id == targetId);
 
-        let damageMsg = opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation});
-        this.context.setApplied(targetId, damageMsg);
+        let damageData = opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation});
+        this.context.setApplied(targetId, damageData);
         this.roll();
     }
 

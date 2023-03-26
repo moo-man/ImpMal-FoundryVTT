@@ -173,9 +173,9 @@ export class ImpMalActor extends Actor
         return test;
     }
 
-    applyDamage(value, {ignoreAP=false, location="roll"}={})
+    applyDamage(value, {ignoreAP=false, location="roll", message=false}={})
     {
-        let wounds = value;
+        let woundsLost = value;
 
         let locationKey;
         if (typeof location == "string")
@@ -198,10 +198,26 @@ export class ImpMalActor extends Actor
 
         if (!ignoreAP)
         {
-            wounds -= locationData.armour;
+            woundsLost -= locationData.armour;
         }
 
-        this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + wounds});
-        return game.i18n.format("IMPMAL.WoundsTaken", {wounds, location : game.i18n.localize(locationData.label)});
+        let text = game.i18n.format("IMPMAL.WoundsTaken", {wounds : woundsLost, location : game.i18n.localize(locationData.label)});
+
+        let crit;
+        let excess = 0;
+        if ((woundsLost + this.system.combat.wounds.value) > this.system.combat.wounds.max)
+        {
+            excess = (woundsLost + this.system.combat.wounds.value) - this.system.combat.wounds.max;
+            crit = ` [[/r 1d10 + ${excess}]]{Critical (+${excess})}`;
+        }
+
+        this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + woundsLost});
+        return {
+            text,
+            message : message ? ChatMessage.create({content : text + crit ? crit : ""}) : null,
+            crit,
+            excess,
+            location : locationKey
+        };
     }
 }

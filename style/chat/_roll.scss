@@ -70,6 +70,34 @@
         }
     }
 
+        .fumble,
+        .critical {
+        font-weight: bold;
+
+        a.inline-roll {
+
+            background: none;
+            padding: 1px 3px;
+            border-radius: 10px;
+            white-space: unset;
+            word-break: unset;
+            border: 0px;
+        }
+    }
+
+    .critical {
+        color: darkblue;
+        i {
+            color: darkblue;
+        }
+    }
+    .fumble {
+        color: darkred;
+        i {
+            color: darkred;
+        }
+    }
+
     .defense,
     .targets {
         display: flex;

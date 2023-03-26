@@ -508,6 +508,7 @@
         "traits",
         "physical"
       ],
+      "pricePercent" : null,
       "usedWith": "",
       "damage": 0,
       "range" : ""

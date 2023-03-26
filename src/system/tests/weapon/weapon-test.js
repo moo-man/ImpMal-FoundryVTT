@@ -53,6 +53,14 @@ export class WeaponTest extends SkillTest
         {
             tags.push(`${game.i18n.localize("IMPMAL.CalledShot")}: <strong>${game.impmal.config.hitLocations[this.result.hitLocation]}</strong>`);
         }
+        if (this.result.critical)
+        {
+            tags.push(`<span class="critical">[[/r 1d10]]{${game.i18n.localize("IMPMAL.Critical")}}</span>`);
+        }
+        if (this.result.fumble)
+        {
+            tags.push(`<span class="fumble">[[/r 1d10]]{${game.i18n.localize("IMPMAL.Fumble")}}</span>`);
+        }
         return tags;
     }
 

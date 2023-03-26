@@ -21,7 +21,7 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         {
             buttons = [
                 {
-                    label: "",
+                    label: game.i18n.localize("IMPMAL.Advancement"),
                     class: "advancement",
                     icon: "fa-solid fa-chevrons-up",
                     onclick: () => 

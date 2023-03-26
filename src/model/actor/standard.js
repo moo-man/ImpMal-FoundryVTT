@@ -83,5 +83,19 @@ export class StandardActorModel extends BaseActorModel
         //TODO: Check for dead effect if above critical wound threshold
     }
 
+    
+    preUpdateChecks(data)
+    {
+        // Prevent wounds from exceeding max
+        if (data.system?.combat?.wounds?.value)
+        {
+            if (data.system.combat.wounds.value > this.combat.wounds.max)
+            {
+                data.system.combat.wounds.value = this.combat.wounds.max;
+            }
+        }
+        return data;
+    }
+
 }
 
