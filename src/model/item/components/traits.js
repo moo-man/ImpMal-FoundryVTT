@@ -59,11 +59,20 @@ export class TraitListModel extends ListModel
         }
     }
 
-    // Combine the given trait model with this one, used for ammo
-    combine(traits)
+    /**
+     * 
+     * @param {TraitListModel} traits Traits to combine with
+     * @param {Array} include If specified, only include these keys, otherwise include all
+     */
+    combine(traits, include)
     {
         for(let trait of traits.list)
         {
+            // If include is specified and the trait key doesn't exist, don't add it
+            if (include && !include.includes(trait.key))
+            {
+                continue;
+            }
             let existing = this.has(trait.key);
             if (existing)
             {

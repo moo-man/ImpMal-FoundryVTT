@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<section class="list">
+<section class="list {{#unless items.equipped.melee.length}}inactive{{/unless}}">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.MeleeWeapons"}}</div>
         <div>{{localize "IMPMAL.Specialisation"}}</div>
@@ -58,14 +58,16 @@
                         <img src="{{this.img}}">
                         <a class="roll" data-type="weapon">{{this.name}}</a>
                         {{#if (eq ../actor.type "character")}}
-                        <div class="grip">
-                            {{#if this.system.equipped.hands.left}}
-                                <span {{#if this.system.equipped.offhand}}class="offhand"{{/if}} data-hand="left"><i class="fa-solid fa-hand"></i></span>
-                            {{/if}}
-                            {{#if this.system.equipped.hands.right}}
-                                <span {{#if this.system.equipped.offhand}}class="offhand"{{/if}}  data-hand="right"><i class="fa-solid fa-hand"></i></span>
-                            {{/if}}
-                        </div>
+                            <div class="grip">
+                                {{#if this.system.equipped.hands.left}}
+                                    <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                        data-hand="left"><i class="fa-solid fa-hand"></i></span>
+                                {{/if}}
+                                {{#if this.system.equipped.hands.right}}
+                                    <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                        data-hand="right"><i class="fa-solid fa-hand"></i></span>
+                                {{/if}}
+                            </div>
                         {{/if}}
                     </div>
                     <div>{{this.system.specialisation}}</div>
@@ -84,7 +86,7 @@
     </div>
 </section>
 
-<section class="list">
+<section class="list {{#unless items.equipped.ranged.length}}inactive{{/unless}}">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.RangedWeapons"}}</div>
         <div>{{localize "IMPMAL.Specialisation"}}</div>
@@ -97,17 +99,19 @@
             <div class="list-item" data-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
-                        <img  data-item-id="{{this.id}}" src="{{this.img}}">
+                        <img data-item-id="{{this.id}}" src="{{this.img}}">
                         <a class="roll" data-type="weapon">{{this.name}}</a>
                         {{#if (eq ../actor.type "character")}}
-                        <div class="grip">
-                            {{#if this.system.equipped.hands.left}}
-                                <span  {{#if this.system.equipped.offhand}}class="offhand"{{/if}} data-hand="left"><i class="fa-solid fa-hand"></i></span>
-                            {{/if}}
-                            {{#if this.system.equipped.hands.right}}
-                                <span  {{#if this.system.equipped.offhand}}class="offhand"{{/if}} data-hand="right"><i class="fa-solid fa-hand"></i></span>
-                            {{/if}}
-                        </div>
+                            <div class="grip">
+                                {{#if this.system.equipped.hands.left}}
+                                    <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                        data-hand="left"><i class="fa-solid fa-hand"></i></span>
+                                {{/if}}
+                                {{#if this.system.equipped.hands.right}}
+                                    <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                        data-hand="right"><i class="fa-solid fa-hand"></i></span>
+                                {{/if}}
+                            </div>
                         {{/if}}
                     </div>
                     <div>{{this.system.specialisation}}</div>
@@ -148,6 +152,30 @@
     </div>
 </section>
 
+<section class="list {{#unless items.equipped.shield.length}}inactive{{/unless}}">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Shield"}}</div>
+        <div class="shield-traits">{{localize "IMPMAL.Traits"}}</div>
+    </header>
+    <div class="list-content">
+        {{#each items.equipped.shield}}
+            <div class="list-item" data-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img data-item-id="{{this.id}}" src="{{this.img}}">
+                        <a>{{this.name}}</a>
+                    </div>
+                    <div class="shield-traits">
+                        <div class="trait-list">
+                            {{this.system.traits.displayString}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
 <section class="hit-locations">
     {{#each hitLocations}}
         <div class="location">
@@ -169,62 +197,62 @@
 </section>
 
 {{#if items.critical.length}}
-<section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.CriticalWounds"}}</div>
-        <div class="list-controls">
-            <a class="list-create" data-type="critical"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
-    <div class="list-content">
-        {{#each items.critical}}
-        <div class="list-item" data-id="{{this.id}}" data-collection="items">
-            <div class="list-row">
-                <div class="list-name">
-                    <img src="{{this.img}}">
-                    <a>{{this.name}}</a>
-                </div>
-                <div class="list-controls">
-                    <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                    <a class="list-post"><i class="fa-solid fa-comment"></i></a>
-                    <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
-                </div>
+    <section class="list">
+        <header class="list-row">
+            <div class="list-name">{{localize "IMPMAL.CriticalWounds"}}</div>
+            <div class="list-controls">
+                <a class="list-create" data-type="critical"><i class="fa-solid fa-plus"></i></a>
             </div>
-            <div class="summary">
+        </header>
+        <div class="list-content">
+            {{#each items.critical}}
+                <div class="list-item" data-id="{{this.id}}" data-collection="items">
+                    <div class="list-row">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a>{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
+                            <a class="list-post"><i class="fa-solid fa-comment"></i></a>
+                            <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                        </div>
+                    </div>
+                    <div class="summary">
 
-            </div>
+                    </div>
+                </div>
+            {{/each}}
         </div>
-        {{/each}}
-    </div>
-</section>
+    </section>
 {{/if}}
 {{#if items.injury.length}}
-<section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.Injury"}}</div>
-        <div class="list-controls">
-            <a class="list-create" data-type="injury"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
-    <div class="list-content">
-        {{#each items.injury}}
-        <div class="list-item" data-id="{{this.id}}" data-collection="items">
-            <div class="list-row">
-                <div class="list-name">
-                    <img src="{{this.img}}">
-                    <a>{{this.name}}</a>
-                </div>
-                <div class="list-controls">
-                    <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                    <a class="list-post"><i class="fa-solid fa-comment"></i></a>
-                    <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
-                </div>
+    <section class="list">
+        <header class="list-row">
+            <div class="list-name">{{localize "IMPMAL.Injury"}}</div>
+            <div class="list-controls">
+                <a class="list-create" data-type="injury"><i class="fa-solid fa-plus"></i></a>
             </div>
-            <div class="summary">
+        </header>
+        <div class="list-content">
+            {{#each items.injury}}
+                <div class="list-item" data-id="{{this.id}}" data-collection="items">
+                    <div class="list-row">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a>{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
+                            <a class="list-post"><i class="fa-solid fa-comment"></i></a>
+                            <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                        </div>
+                    </div>
+                    <div class="summary">
 
-            </div>
+                    </div>
+                </div>
+            {{/each}}
         </div>
-        {{/each}}
-    </div>
-</section>
+    </section>
 {{/if}}

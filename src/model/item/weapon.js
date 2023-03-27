@@ -40,6 +40,7 @@ export class WeaponModel extends EquippableItemModel
         this.ammo.getDocument(actor.items);
         this.damage.compute(actor);
         this._applyAmmoMods();
+        this._applyShieldMods(actor.items);
         this.skill = this.getSkill(actor);
         this.skillTotal = this.skill?.system?.total || actor.system.skills[this.skill].total;
     }
@@ -122,6 +123,20 @@ export class WeaponModel extends EquippableItemModel
             }
             
             this.traits.combine(ammo.system.traits);
+        }
+    }
+
+    _applyShieldMods(items) 
+    {
+        let shield = items.find(i => 
+            i.type == "protection" && 
+            i.system.isEquipped && 
+            i.system.category == "shield" && 
+            i.system.traits.has("shield"));
+
+        if (this.isEquipped && this.attackType == "melee" && shield)
+        {
+            this.traits.list.push({key : "defensive"});
         }
     }
 
