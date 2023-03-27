@@ -173,10 +173,9 @@ export class ImpMalActor extends Actor
         return test;
     }
 
-    applyDamage(value, {ignoreAP=false, location="roll", message=false}={})
+    async applyDamage(value, {ignoreAP=false, location="roll", message=false}={})
     {
-        let woundsLost = value;
-
+        let reductions = [];
         let locationKey;
         if (typeof location == "string")
         {
@@ -195,26 +194,35 @@ export class ImpMalActor extends Actor
         }
         let locationData = this.system.combat.hitLocations[locationKey];
 
-
-        if (!ignoreAP)
+        let woundsGained = value;
+        if (locationData.field)
         {
-            woundsLost -= locationData.armour;
+            woundsGained = await locationData.field.system.applyField(value, reductions);
         }
 
-        let text = game.i18n.format("IMPMAL.WoundsTaken", {wounds : woundsLost, location : game.i18n.localize(locationData.label)});
+        if (!ignoreAP && locationData.armour)
+        {
+            woundsGained -= locationData.armour;
+            reductions.push({value : locationData.armour, label : game.i18n.localize("IMPMAL.Protection")});
+        }
+
+        woundsGained = Math.max(0, woundsGained);
+
+        let text = game.i18n.format("IMPMAL.WoundsTaken", {wounds : woundsGained, location : game.i18n.localize(locationData.label)});
 
         let crit;
         let excess = 0;
-        if ((woundsLost + this.system.combat.wounds.value) > this.system.combat.wounds.max)
+        if ((woundsGained + this.system.combat.wounds.value) > this.system.combat.wounds.max)
         {
-            excess = (woundsLost + this.system.combat.wounds.value) - this.system.combat.wounds.max;
+            excess = (woundsGained + this.system.combat.wounds.value) - this.system.combat.wounds.max;
             crit = ` [[/r 1d10 + ${excess}]]{Critical (+${excess})}`;
         }
 
-        this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + woundsLost});
+        this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained});
         return {
             text,
             message : message ? ChatMessage.create({content : text + crit ? crit : ""}) : null,
+            reductions,
             crit,
             excess,
             location : locationKey

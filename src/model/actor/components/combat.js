@@ -29,6 +29,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         for (let loc in this.hitLocations)
         {
             this.hitLocations[loc].armour = 0;
+            this.hitLocations[loc].field = null;
             this.hitLocations[loc].items = [];
         }
     }
@@ -39,6 +40,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         this.computeCriticals(characteristics);
         this.computeInitiative(characteristics);
         this.computeArmour(items);
+        this.computeForceField(items);
     }
 
     computeWounds(characteristics) 
@@ -76,6 +78,18 @@ export class StandardCombatModel extends foundry.abstract.DataModel
                 }
             }
         }
+    }
+
+    computeForceField(items)
+    {
+        let forceField = items.forceField.filter(i => i.system.isEquipped)[0];
+        if (forceField)
+        {
+            for (let loc in this.hitLocations)
+            {
+                this.hitLocations[loc].field = forceField;
+            }
+        }   
     }
 
     hitLocAt(number)

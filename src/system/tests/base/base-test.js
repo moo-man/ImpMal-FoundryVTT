@@ -120,11 +120,11 @@ export class BaseTest
         this.roll();
     }
 
-    applyDamageTo(targetId)
+    async applyDamageTo(targetId)
     {
         let opposed = this.opposedTests.find(t => t.id == targetId);
 
-        let damageData = opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation});
+        let damageData = await opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation});
         this.context.setApplied(targetId, damageData);
         this.roll();
     }

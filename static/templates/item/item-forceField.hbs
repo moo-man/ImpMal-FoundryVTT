@@ -22,7 +22,13 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Overload"}}</label>
                     <div class="form-fields">
-                        <input type="number" value="{{system.overload}}" name="system.overload">
+                        <input type="number" value="{{system.overload.value}}" name="system.overload.value">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Collapsed"}}</label>
+                    <div class="form-fields">
+                        <input type="checkbox" name="system.overload.collapsed" {{checked system.overload.collapsed}}>
                     </div>
                 </div>
             </div>

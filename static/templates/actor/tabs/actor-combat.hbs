@@ -188,6 +188,11 @@
                         <div class="traits">{{this.system.traits.displayString}}</div>
                     </div>
                 {{/each}}
+                {{#if this.field}}
+                    <div class="protection-item">
+                        <label>{{this.field.name}} ({{this.field.system.protection}})</label>
+                    </div>
+                {{/if}}
             </div>
             <div class="range">
                 {{this.displayRange}}

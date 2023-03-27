@@ -542,7 +542,10 @@
         "physical"
       ],
       "protection": "",
-      "overload": 0
+      "overload": {
+          "value" : 0,
+          "collapsed" : false
+      }
     },
     "equipment": {
       "templates": [

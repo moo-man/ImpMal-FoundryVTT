@@ -3,8 +3,7 @@
         <th></th>
         {{#each system.characteristics}}
             <th>
-                {{@key}}
-                {{!-- {{configLookup "characteristicAbbrev" @key}} --}}
+                {{configLookup "characteristicAbbrev" @key}}
             </th>
         {{/each}}
     </tr>

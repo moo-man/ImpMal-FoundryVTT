@@ -9,7 +9,11 @@ export class ForceFieldModel extends EquippableItemModel
         let schema = super.defineSchema();
         schema.traits = new fields.EmbeddedDataField(TraitListModel),
         schema.protection = new fields.StringField();
-        schema.overload = new fields.NumberField();
+   
+        schema.overload = new fields.SchemaField({
+            value : new fields.NumberField(),
+            collapsed : new fields.BooleanField()
+        });
         schema.force = new fields.BooleanField();
         return schema;
     }
@@ -18,5 +22,38 @@ export class ForceFieldModel extends EquippableItemModel
     {
         super.computeBase();
         this.traits.compute();
+    }
+
+    /**
+     * 
+     * @param {Number} damage Damage value to reduce
+     * @param {Array} reductions List of {value, label} objects for damage reduction sources
+     * @returns Reduced damage
+     */
+    async applyField(damage, reductions)
+    {
+        let roll = await new Roll(this.protection).roll({async: true});
+        if (damage >= this.overload.value)
+        {
+            this.parent.update({"system.equipped.value" : false, "system.overload.collapsed" : true});
+            ui.notifications.notify(game.i18n.localize("IMPMAL.ForceFieldCollapsed"));
+        }
+        roll.toMessage({flavor : game.i18n.localize("IMPMAL.ForceFieldProtection"), speaker : {alias: this.parent.name}});
+
+        if (reductions instanceof Array)
+        {
+            reductions.push({value : roll.total, label : game.i18n.localize("IMPMAL.Forcefield")});
+        }
+        
+        return damage - roll.total;
+    }
+
+    preUpdateChecks(data)
+    {
+        if (data?.system?.equipped?.value == true && this.overload.collapsed)
+        {
+            data.system.equipped.value = false;
+            ui.notifications.notify(game.i18n.localize("IMPMAL.CannotEquipForceField"));
+        }
     }
 }
