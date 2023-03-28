@@ -67,6 +67,13 @@ export class CharacterModel extends StandardActorModel
         return preCreateData;
     }
 
+    computeBase()
+    {
+        super.computeBase();
+
+        this.warp.threshold = this.characteristics.wil.bonus; // Put this in base so it's modifiable by effects
+    }
+
 
     computeDerived(items)
     {
@@ -79,7 +86,6 @@ export class CharacterModel extends StandardActorModel
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
         this.combat.superiority = game.impmal.superiority.value;
-        this.warp.threshold = this.characteristics.wil.bonus;
     }
 
     updateChecks()

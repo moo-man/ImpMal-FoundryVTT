@@ -6,8 +6,16 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     {
         let schema = {};
         schema.size = new fields.StringField();
-        schema.speed = new fields.StringField();
-        schema.fly = new fields.StringField();
+        schema.speed = new fields.SchemaField({
+            land : new fields.SchemaField({
+                value : new fields.StringField(),
+                modifier : new fields.NumberField({default : 0})
+            }),
+            fly : new fields.SchemaField({
+                value : new fields.StringField(),
+                modifier : new fields.NumberField({default: 0})
+            })
+        });
         schema.hitLocations = new fields.ObjectField();
         schema.wounds = new fields.SchemaField({
             value : new fields.NumberField(),
@@ -39,6 +47,8 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         this.computeWounds(characteristics);
         this.computeCriticals(characteristics);
         this.computeInitiative(characteristics);
+        this.computeSpeed(this.speed.land);
+        this.computeSpeed(this.speed.fly);
         this.computeArmour(items);
         this.computeForceField(items);
     }
@@ -61,6 +71,14 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         this.initiative += 
             characteristics.per.bonus + 
             characteristics.ag.bonus;
+    }
+
+    computeSpeed(speed)
+    {
+        const speeds = ["none", "slow", "normal", "fast", "swift"];
+        let speedIndex = speeds.indexOf(speed.value) + (speed.modifier || 0);
+        speedIndex = Math.clamped(speedIndex, 0, 3);
+        speed.value = speeds[speedIndex];
     }
 
 

@@ -96,8 +96,8 @@
         <div class="grid-property">
             <label>{{localize "IMPMAL.Speed"}}</label>
             <div>
-                <select name="system.combat.speed">
-                {{#select system.combat.speed}}
+                <select name="system.combat.speed.land.value">
+                {{#select system.combat.speed.land.value}}
                     {{#each (config "speeds")}}
                         <option value="{{@key}}">{{this}}</option>
                     {{/each}}
