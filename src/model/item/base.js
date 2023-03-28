@@ -4,6 +4,8 @@
 export class BaseItemModel extends foundry.abstract.DataModel 
 {
 
+    allowedConditions = [];
+
     get id () 
     {
         return this.parent.id;

@@ -1,6 +1,7 @@
 import actor from "./hooks/actor";
 import chat from "./hooks/chat";
 import combat from "./hooks/combat";
+import effects from "./hooks/effects";
 import item from "./hooks/item";
 import ready from "./hooks/ready";
 import settings from "./hooks/settings";
@@ -12,6 +13,7 @@ export default function()
 {
     ready();
     actor();
+    effects();
     chat();
     targets();
     settings();

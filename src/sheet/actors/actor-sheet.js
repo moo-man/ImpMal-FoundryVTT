@@ -1,6 +1,6 @@
-import addListListeners, { _getId } from "../../apps/list-listeners";
+import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
-export default class ImpMalActorSheet extends ActorSheet
+export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 {
     static get defaultOptions()
     {
@@ -54,36 +54,7 @@ export default class ImpMalActorSheet extends ActorSheet
         return effects;
     }
 
-    formatConditions(data)
-    {
-        let conditions = foundry.utils.deepClone(CONFIG.statusEffects);
-        conditions.forEach(c =>
-        {
-            c.boolean = game.impmal.config.booleanCondition[c.id];
-            c.existing = data.actor.hasCondition(c.id);
-            c.opacity = 30;
 
-            // Conditions have 1 or 2 pips, two for minor/major
-            // If condition existis on actor, it must have at least one filled pip
-            c.pips = [{filled : c.existing, type : "minor"}]; 
-
-            // If not boolean (minor/major), add another pip, filled if major
-            if (!c.boolean) 
-            {
-                c.pips.push({filled : c.existing?.isMajor, type : "major"});
-            }
-
-            if ((c.boolean && c.existing) || c.existing?.isMajor)
-            {
-                c.opacity = 100;
-            }
-            else if (c.existing?.isMinor)
-            {
-                c.opacity = 60;
-            }
-        });
-        return conditions;
-    }
 
     formatHitLocations(data)
     {
@@ -128,8 +99,7 @@ export default class ImpMalActorSheet extends ActorSheet
     activateListeners(html)
     {
         super.activateListeners(html);
-        addListListeners(html, this);
-
+        this.addGenericListeners(html);
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
         html.find(".property-edit").on("click", this._onPropertyEdit.bind(this));
@@ -138,7 +108,6 @@ export default class ImpMalActorSheet extends ActorSheet
         html.find(".reload").on("click", this._onReload.bind(this));
         html.find(".roll").on("click", this._onRollClick.bind(this));
         html.find(".trait-action").on("click", this._onTraitClick.bind(this));
-        html.find(".pip").on("click", this._onConditionPipClick.bind(this));
         html.find(".remove-singleton").on("click", this._onRemoveSingleton.bind(this));
         html.find(".remove-ref").on("click", this._onRemoveReference.bind(this));
     }
@@ -165,7 +134,7 @@ export default class ImpMalActorSheet extends ActorSheet
      */
     _onPropertyEdit(event)
     {
-        let id = _getId(event);
+        let id = this._getId(event);
         let target = event.currentTarget.dataset.target;
         let collection = event.currentTarget.dataset.collection || "items";
         let value = event.target.value;
@@ -216,7 +185,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
     _onIncDec(ev)
     {
-        let id = _getId(ev);
+        let id = this._getId(ev);
         let item = this.actor.items.get(id);
         let button = ev.button == 0 ? "left" : "right";
 
@@ -232,7 +201,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
     _onChangeAmmo(ev)
     {
-        let id = _getId(ev);
+        let id = this._getId(ev);
         let item = this.actor.items.get(id);
 
         item.update({"system.ammo.id" : ev.target.value});
@@ -240,7 +209,7 @@ export default class ImpMalActorSheet extends ActorSheet
 
     _onReload(ev)
     {
-        let id = _getId(ev);
+        let id = this._getId(ev);
         let item = this.actor.items.get(id);
 
         try 
@@ -257,7 +226,7 @@ export default class ImpMalActorSheet extends ActorSheet
     {
         let type = ev.currentTarget.dataset.type;  // characteristic, skill, etc.
         let key = ev.currentTarget.dataset.key;    // Non items, such as characteristic keys, or skill keys
-        let itemId = _getId(ev);                   // Item ids, if using skill items or weapons
+        let itemId = this._getId(ev);                   // Item ids, if using skill items or weapons
 
         switch(type)
         {
@@ -274,27 +243,10 @@ export default class ImpMalActorSheet extends ActorSheet
 
     _onTraitClick(ev)
     {
-        let itemId = _getId(ev);      
+        let itemId = this._getId(ev);      
         if(ev.currentTarget.dataset.action == "attack")
         {
             this.actor.setupTraitTest(itemId);
-        }
-    }
-
-
-    _onConditionPipClick(ev)
-    {
-        let key = ev.currentTarget.dataset.key;
-        let type = ev.currentTarget.dataset.type;
-        let existing = this.actor.hasCondition(key);
-
-        if (!existing || (existing?.isMinor && type == "major"))
-        {
-            this.actor.addCondition(key, {type});
-        }
-        else 
-        {
-            this.actor.removeCondition(key);
         }
     }
 

@@ -1,29 +1,10 @@
-export class ImpMalItem extends Item 
+import ImpMalDocumentMixin from "./mixin";
+
+export class ImpMalItem extends ImpMalDocumentMixin(Item)
 {
-    async _preCreate(data, options, user)
-    {
-        await super._preCreate(data, options, user);
-        this.updateSource(this.system.preCreateData(data));
-    }
-
-
-    async _preUpdate(data, options, user)
-    {
-        await super._preCreate(data, options, user);
-        this.system.preUpdateChecks(data);
-    }
-
-    async _onUpdate(data, options, user)
-    {
-        await super._onUpdate(data, options, user);
-        this.update(this.system.updateChecks(data));
-    }
-
-
     prepareBaseData() 
     {
         this.system.computeBase();
-
     }
 
     prepareDerivedData() 

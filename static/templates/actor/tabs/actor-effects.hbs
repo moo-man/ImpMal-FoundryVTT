@@ -69,7 +69,7 @@
     </div>
 </section>
 
-<section class="list disabled">
+<section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.DisabledEffects"}}</div>
         <div>{{localize "IMPMAL.Source"}}</div>
@@ -77,7 +77,7 @@
             <a class="list-create" data-type="effect" data-category="disabled"><i class="fa-solid fa-plus"></i></a>
         </div>
     </header>
-    <div class="list-content">
+    <div class="list-content inactive">
         {{#each effects.disabled}}
             <div class="list-item" data-id="{{this.id}}" data-collection="effects">
                 <div class="list-row">

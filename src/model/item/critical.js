@@ -3,6 +3,8 @@ let fields = foundry.data.fields;
 
 export class CriticalModel extends StandardItemModel 
 {
+    allowedConditions = ["bleeding", "stunned", "blinded", "deafened", "incapacitated", "prone", "stunned"];
+    
     static defineSchema() 
     {
         let schema = super.defineSchema();

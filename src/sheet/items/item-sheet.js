@@ -1,7 +1,8 @@
 import ItemTraitsForm from "../../apps/item-traits";
-import addListListeners from "../../apps/list-listeners";
+import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
-export default class ImpMalItemSheet extends ItemSheet
+
+export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
 {
     static get defaultOptions() 
     {
@@ -24,13 +25,14 @@ export default class ImpMalItemSheet extends ItemSheet
         let data = super.getData();
         data.system = data.item.toObject(true).system; // Use source data to avoid ammo/mods from showing up in the sheet
         data.isPhysical = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical")).includes(data.item.type);
+        data.conditions = this.formatConditions(data).filter(i => data.item.system.allowedConditions.includes(i.id));
         return data;
     }
 
     activateListeners(html) 
     {
         super.activateListeners(html);
-        addListListeners(html, this);
+        this.addGenericListeners(html);
         html.find(".array-create").click(this._onCreateArrayElement.bind(this));
         html.find(".array-edit").change(this._onEditArrayElement.bind(this));
         html.find(".array-delete").click(this._onDeleteArrayElement.bind(this));

@@ -1,5 +1,6 @@
 export class ImpMalEffect extends ActiveEffect
 {
+
     get conditionKey () 
     {
         return this.getFlag("core", "statusId");
@@ -19,7 +20,6 @@ export class ImpMalEffect extends ActiveEffect
     {
         return this.getFlag("impmal", "type") == "major"; 
     }
-
 
     // Computed effects mean flagged to know that they came from a calculation, notably encumbrance causing overburdened or restrained
     get isComputed()
@@ -49,5 +49,26 @@ export class ImpMalEffect extends ActiveEffect
         }
         delete createData.id;
         return createData;
+    }
+
+    /**
+     * This function handles creation of new conditions on an actor
+     * If an Item adds a Condition, prevent that condition from being added, and instead call `addCondition` 
+     * This prevents the Condition from being removed when the item is removed, but more importantly
+     * `addCondition` handles Minor conditions turning into Major if a second Minor is added.
+     * 
+     * @param {ImpMalEffect} effect Effect being created
+     * @returns 
+     */
+    static _handleConditionCreation(effect)
+    {
+        if (effect.parent?.documentName == "Actor")
+        {
+            if (effect.isCondition && effect.origin) // If the condition comes from a source such as item, prevent it and go through `addCondition`
+            {
+                effect.parent.addCondition(effect.flags.core.statusId, {type : effect.flags.core.type});
+                return false;
+            }
+        }
     }
 }
