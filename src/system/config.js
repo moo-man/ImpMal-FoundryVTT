@@ -38,7 +38,7 @@ const IMPMAL = {
         navigation : "IMPMAL.Navigation",
         presence : "IMPMAL.Presence",
         piloting : "IMPMAL.Piloting",
-        psychic : "IMPMAL.Psychic",
+        psychic : "IMPMAL.PsychicMastery",
         ranged : "IMPMAL.Ranged",
         rapport : "IMPMAL.Rapport",
         reflexes : "IMPMAL.Reflexes",
