@@ -32,7 +32,8 @@ export class CharacterModel extends StandardActorModel
             hair : new fields.StringField(),
             height : new fields.StringField(),
             weight : new fields.StringField(),
-            divination : new fields.StringField()
+            divination : new fields.StringField(),
+            species : new fields.StringField()
         });
         schema.goal = new fields.SchemaField({
             short : new fields.StringField(),
