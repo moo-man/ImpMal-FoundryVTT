@@ -22,7 +22,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     }
 
 
-    addCondition(key, {overlay=false, type}={})
+    addCondition(key, {overlay=false, type, origin, create=true}={})
     {
         let existing = this.hasCondition(key);
         let effectData;
@@ -43,6 +43,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         }
 
         let createData = ImpMalEffect.getCreateData(effectData, overlay);
+        createData.origin = origin;
 
 
         // Replace minor with major if existing
@@ -59,7 +60,14 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         else 
         {
             const cls = getDocumentClass("ActiveEffect");
-            return cls.create(createData, {parent: this});
+            if (create)
+            {
+                return cls.create(createData, {parent: this});
+            }
+            else 
+            {
+                return createData;
+            }
         }
     }
 
@@ -88,6 +96,6 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
 
     hasCondition(key)
     {
-        return this.effects.find(e => e.conditionKey == key);
+        return this.effects.find(e => e.key == key);
     }
 };

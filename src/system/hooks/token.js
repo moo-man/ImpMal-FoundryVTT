@@ -1,8 +1,15 @@
+import ZoneHelpers from "../zone-helpers";
+
 export default function() 
 {
     Hooks.on("renderTokenHUD", (app, html) => 
     {
         _addImpmalStatusEffects(html, app?.object?.document?.actor);
+    });
+
+    Hooks.on("preUpdateToken", async (token, data) => 
+    {
+        ZoneHelpers.checkTokenUpdate(token, data, canvas.drawings.placeables);
     });
 }
 

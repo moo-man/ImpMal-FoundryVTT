@@ -1,6 +1,7 @@
 import actor from "./hooks/actor";
 import chat from "./hooks/chat";
 import combat from "./hooks/combat";
+import drawing from "./hooks/drawing";
 import effects from "./hooks/effects";
 import item from "./hooks/item";
 import ready from "./hooks/ready";
@@ -21,4 +22,5 @@ export default function()
     token();
     item();
     setup();
+    drawing();
 }

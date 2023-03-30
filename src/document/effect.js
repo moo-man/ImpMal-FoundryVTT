@@ -1,14 +1,14 @@
 export class ImpMalEffect extends ActiveEffect
 {
 
-    get conditionKey () 
+    get key () 
     {
         return this.getFlag("core", "statusId");
     }
 
     get isCondition() 
     {
-        return !!game.impmal.config.conditions.find(i =>i.id == this.conditionKey);
+        return !!game.impmal.config.conditions.find(i =>i.id == this.key);
     }
 
     get isMinor()
@@ -29,7 +29,7 @@ export class ImpMalEffect extends ActiveEffect
 
     static findEffect(key, type="minor")
     {
-        let effects = foundry.utils.deepClone(game.impmal.config.conditions);
+        let effects = foundry.utils.deepClone(game.impmal.config.conditions).concat(foundry.utils.deepClone(Object.values(game.impmal.config.systemEffects)));
 
         let effect = effects.find(i => i.id == key && i.flags?.impmal?.type == type);
         if (!effect)

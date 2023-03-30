@@ -1,0 +1,79 @@
+<form>
+    <div>
+
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Barrier"}}</label>
+            <div class="form-fields">
+                <input type="checkbox" name="flags.impmal.barrier" {{checked object.flags.impmal.barrier}}>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Cover"}}</label>
+            <div class="form-fields">
+                <select name="flags.impmal.cover">
+                    {{#select object.flags.impmal.cover}}
+                    <option value=""></option>
+                    <option value="partialCover">{{localize "IMPMAL.PartialCover"}}</option>
+                    <option value="totalCover">{{localize "IMPMAL.TotalCover"}}</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "IMPMAL.DifficultTerrain"}}</label>
+            <div class="form-fields">
+                <input type="checkbox" name="flags.impmal.difficultTerrain" {{checked object.flags.impmal.difficultTerrain}}>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Obscured"}}</label>
+            <div class="form-fields">
+                <select name="flags.impmal.obscured">
+                    {{#select object.flags.impmal.obscured}}
+                    <option value=""></option>
+                    <option value="lightlyObscured">{{localize "IMPMAL.LightlyObscured"}}</option>
+                    <option value="heavilyObscured">{{localize "IMPMAL.HeavilyObscured"}}</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Hazard"}}</label>
+            <div class="form-fields">
+                <select name="flags.impmal.hazard">
+                    {{#select object.flags.impmal.hazard}}
+                    <option value=""></option>
+                    <option value="minorHazard">{{localize "IMPMAL.MinorHazard"}}</option>
+                    <option value="majorHazard">{{localize "IMPMAL.MajorHazard"}}</option>
+                    <option value="deadlyHazard">{{localize "IMPMAL.DeadlyHazard"}}</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Light"}}</label>
+            <div class="form-fields">
+                <select name="flags.impmal.light">
+                    {{#select object.flags.impmal.light}}
+                    <option value=""></option>
+                    <option value="poorlyLit">{{localize "IMPMAL.PoorlyLit"}}</option>
+                    <option value="dark">{{localize "IMPMAL.Dark"}}</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "IMPMAL.WarpTouched"}}</label>
+            <div class="form-fields">
+                <input type="checkbox" name="flags.impmal.warpTouched" {{checked object.flags.impmal.warpTouched}}>
+            </div>
+        </div>
+    </div>
+    <button type="submit">{{localize "Submit"}}</button>
+</form>

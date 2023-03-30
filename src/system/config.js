@@ -481,7 +481,70 @@ const IMPMAL = {
                 }
             }
         },
-    ]
+    ],
+
+    systemEffects : {
+        barrier : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.Barrier",
+            id : "barrier"
+        },
+        partialCover : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.PartialCover",
+            id : "partialCover"
+        },
+        totalCover : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.TotalCover",
+            id : "totalCover"
+        },
+        difficultTerrain : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.DifficultTerrain",
+            id : "difficultTerrain"
+        },
+        lightlyObscured : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.LightlyObscured",
+            id : "lightlyObscured"
+        },
+        heavilyObscured : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.HeavilyObscured",
+            id : "heavilyObscured"
+        },
+        minorHazard : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.MinorHazard",
+            id : "minorHazard"
+        },
+        majorHazard : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.MajorHazard",
+            id : "majorHazard"
+        },
+        deadlyHazard : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.DeadlyHazard",
+            id : "deadlyHazard"
+        },
+        poorlyLit : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.PoorlyLit",
+            id : "poorlyLit"
+        },
+        dark : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.Dark",
+            id : "dark"
+        },
+        warpTouched : {
+            icon: "icons/svg/aura.svg",
+            label : "IMPMAL.WarpTouched",
+            id : "warpTouched"
+        },
+    }
 };
 
 
