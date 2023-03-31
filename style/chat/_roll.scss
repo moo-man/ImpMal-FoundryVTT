@@ -54,6 +54,14 @@
         }
     }
 
+    a.inline-roll {
+        background: none;
+        padding: 1px 3px;
+        border-radius: 10px;
+        white-space: unset;
+        word-break: unset;
+        border: 0px;
+    }
 
     .tags {
         display: flex;
@@ -68,30 +76,24 @@
             padding: 1px 3px;
             margin: 0px 3px;
         }
-
-        a.inline-roll {
-            background: none;
-            padding: 1px 3px;
-            border-radius: 10px;
-            white-space: unset;
-            word-break: unset;
-            border: 0px;
-        }
     }
 
-        .fumble,
-        .critical {
+    .fumble,
+    .critical {
         font-weight: bold;
     }
 
     .critical {
         color: darkblue;
+
         i {
             color: darkblue;
         }
     }
+
     .fumble {
         color: darkred;
+
         i {
             color: darkred;
         }

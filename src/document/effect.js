@@ -30,6 +30,12 @@ export class ImpMalEffect extends ActiveEffect
         return this.getFlag("impmal", "type") == "major"; 
     }
 
+    get source()
+    {
+        let doc = fromUuidSync(this.origin);
+        return doc?.name || doc?.text || "???";
+    }
+
     // Computed effects mean flagged to know that they came from a calculation, notably encumbrance causing overburdened or restrained
     get isComputed()
     {

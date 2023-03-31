@@ -109,7 +109,7 @@ export default class ZoneHelpers
                     let effects = ZoneHelpers.drawingEffects(drawing);
                     for (let e of effects)
                     {
-                        toAdd.push(token.actor.addCondition(e, {origin : drawing.document.text, create : false}));
+                        toAdd.push(token.actor.addCondition(e, {origin : drawing.document.uuid, create : false}));
                     }
                 }
 
@@ -146,7 +146,7 @@ export default class ZoneHelpers
             {
                 if (!token.actor?.hasCondition(effect))
                 {
-                    toAdd.push(token.actor.addCondition(effect, {origin : drawing.document.text, create : false}));
+                    toAdd.push(token.actor.addCondition(effect, {origin : drawing.document.uuid, create : false}));
                 }
             }
             token.actor?.createEmbeddedDocuments("ActiveEffect", toAdd);
