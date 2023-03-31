@@ -527,7 +527,13 @@
         "physical"
       ],
       "category": "",
-      "usedWith": ""
+      "usedWith": "",
+      "addedTraits" : {
+        "list" : []
+      },
+      "removedTraits" : {
+        "list" : []
+      }
     },
     "protection": {
       "templates": [

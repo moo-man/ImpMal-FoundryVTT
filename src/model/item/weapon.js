@@ -2,6 +2,7 @@ import { DocumentReferenceModel } from "../shared/reference";
 import { DamageModel } from "./components/damage";
 import { EquippableItemModel } from "./components/equippable";
 import { TraitListModel } from "./components/traits";
+import { ModListModel } from "./modification";
 let fields = foundry.data.fields;
 
 export class WeaponModel extends EquippableItemModel
@@ -20,6 +21,7 @@ export class WeaponModel extends EquippableItemModel
             value : new fields.NumberField({min: 0, integer: true}),
             current : new fields.NumberField({min: 0, integer : true})
         });
+        schema.mods = new fields.EmbeddedDataField(ModListModel);
         return schema;
     }
 
@@ -27,6 +29,7 @@ export class WeaponModel extends EquippableItemModel
     computeBase() 
     {
         super.computeBase();
+        this.mods.prepareMods();
         this.traits.compute();
         this.specialisation = game.impmal.config[`${this.attackType}Specs`][this.spec];
 
@@ -39,6 +42,7 @@ export class WeaponModel extends EquippableItemModel
         this.computeEquipped(actor);
         this.ammo.getDocument(actor.items);
         this.damage.compute(actor);
+        this._applyModifications();
         this._applyAmmoMods();
         this._applyShieldMods(actor.items);
         this.skill = this.getSkill(actor);
@@ -106,6 +110,85 @@ export class WeaponModel extends EquippableItemModel
         }
 
         return {"system.mag.current" : this.mag.current - amount};
+    }
+
+    /**
+     * This should be temporary, as it's ripped from Foundry and not very clean
+     */
+    _applyModifications()
+    {
+
+
+        for(let mod of this.mods.documents)
+        {
+            // Add traits
+            this.traits.combine(mod.system.addedTraits);
+
+            // Remove Traits
+            this.traits.list = this.traits.list.filter(t => 
+            {
+                let removed = mod.system.removedTraits.has(t.key);
+                if (removed)
+                {
+                    if (Number.isNumeric(t.value))
+                    {
+                        t.value -= (removed.value || 0);
+                    }
+
+                    // If boolean trait, or trait has negative value (after subtracting above), remove it
+                    if (!Number.isNumeric(t.value) || t.value <= 0)
+                    {
+                        return false;
+                    }
+                    else 
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+                
+
+            });
+
+
+            // Add numeric effect values
+            for(let effect of mod.effects )
+            {
+                for(let change of effect.changes)
+                {
+                    const current = foundry.utils.getProperty(this.parent, change.key) ?? null;
+
+                    const modes = CONST.ACTIVE_EFFECT_MODES;
+                    const changes = {};
+                    switch ( change.mode ) 
+                    {
+
+                    case modes.ADD:
+                        effect._applyAdd(this.parent, change, current, Number(change.value), changes);
+                        break;
+                    case modes.MULTIPLY:
+                        effect._applyMultiply(this.parent, change, current, Number(change.value), changes);
+                        break;
+                    case modes.OVERRIDE:
+                        effect._applyOverride(actor, change, current, Number(change.value), changes);
+                        break;
+                    case modes.UPGRADE:
+                    case modes.DOWNGRADE:
+                        effect._applyUpgrade(this.parent, change, current, Number(change.value), changes);
+                        break;
+                    default:
+                        effect._applyCustom(this.parent, change, current, Number(change.value), changes);
+                        break;
+                    }
+
+                    // Apply all changes to the Actor data
+                    foundry.utils.mergeObject(this.parent, changes);
+                }
+            }
+        }
     }
 
 

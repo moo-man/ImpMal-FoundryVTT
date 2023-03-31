@@ -1,6 +1,15 @@
 export class ImpMalEffect extends ActiveEffect
 {
 
+    async _preCreate(data, options, user)
+    {
+        await super._preCreate(data, options, user);
+        if (this.parent.documentName == "Item")
+        {
+            this.updateSource({transfer : this.parent.system.transferEffects});
+        }
+    }
+
     get key () 
     {
         return this.getFlag("core", "statusId");

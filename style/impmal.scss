@@ -65,6 +65,9 @@
                 display: flex;
                 align-items: center;
                 text-align: unset;
+                > * {
+                    margin: 0px 5px;
+                }
             }
 
             .list-name img,

@@ -48,32 +48,41 @@ export default ImpMalSheetMixin = (cls) => class extends cls
 
     _getId(ev) 
     {
-        let id = ev.currentTarget.dataset.id;
-
-        if (!id) 
-        {
-            const parent = $(ev.currentTarget).parents("[data-id]");
-            if (parent) 
-            {
-                id = parent[0]?.dataset.id;
-            }
-        }
-        return id;
+        return this._getDataAttribute(ev, "id");
+    }
+    
+    _getIndex(ev) 
+    {
+        return this._getDataAttribute(ev, "index");
     }
 
     _getCollection(ev) 
     {
-        let collection = ev.currentTarget.dataset.collection;
+        return this._getDataAttribute(ev, "collection") || "items";
+    }
 
-        if (!collection) 
+
+    /**
+     * Search for an HTML data property, specified as data-<property>
+     * First search target of the event, then search in parent properties
+     * 
+     * @param {Event} ev Event triggered
+     * @param {String} property data-<property> being searched for
+     * @returns 
+     */
+    _getDataAttribute(ev, property)
+    {
+        let value = ev.currentTarget.dataset[property];
+
+        if (!value) 
         {
-            const parent = $(ev.currentTarget).parents("[data-collection]");
+            const parent = $(ev.currentTarget).parents(`[data-${property}]`);
             if (parent) 
             {
-                collection = parent[0]?.dataset.collection;
+                value = parent[0]?.dataset[property];
             }
         }
-        return collection || "items";
+        return value;
     }
 
     //#region Sheet Listeners
@@ -82,7 +91,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         let id = this._getId(event);
         let collection = this._getCollection(event);
 
-        return this.object[collection].get(id)?.sheet.render(true);
+        return this.object[collection].get(id)?.sheet.render(true, {editable : this.options.editable});
     }
     _onListDelete(event) 
     {
@@ -105,7 +114,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         let category = event.currentTarget.dataset.category;
         if (type == "effect") 
         {
-            return _onEffectCreate.bind(this)(event);
+            return this._onEffectCreate.bind(this)(event);
         }
 
 

@@ -12,7 +12,5 @@ export default class TraitItemSheet extends ImpMalItemSheet
     activateListeners(html) 
     {
         super.activateListeners(html);
-
-        html.find("");
     }
 }

@@ -4,7 +4,9 @@
 export class BaseItemModel extends foundry.abstract.DataModel 
 {
 
-    allowedConditions = [];
+    allowedConditions = [];  // What condition effects can exist on the item
+    transferEffects = false; // Whether an item should transfer its effects to an actor
+
 
     get id () 
     {

@@ -12,7 +12,5 @@ export default class ProtectionItemSheet extends ImpMalItemSheet
     activateListeners(html) 
     {
         super.activateListeners(html);
-
-        html.find("");
     }
 }

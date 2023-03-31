@@ -18,8 +18,8 @@
                     <div class="form-fields">
                         <select name="system.attackType">
                             {{#select system.attackType}}
-                            <option value="melee">{{localize "IMPMAL.Melee"}}</option>
-                            <option value="ranged">{{localize "IMPMAL.Ranged"}}</option>
+                                <option value="melee">{{localize "IMPMAL.Melee"}}</option>
+                                <option value="ranged">{{localize "IMPMAL.Ranged"}}</option>
                             {{/select}}
                         </select>
                     </div>
@@ -84,8 +84,29 @@
                         <input type="number" name="system.mag.value" value="{{system.mag.value}}">
                     </div>
                 </div>
-                
+
                 {{> systems/impmal/templates/item/partials/item-traits.hbs}}
+
+                <section class="list">
+                    <header class="list-row">
+                        <div class="list-name" data-tooltip="{{localize "IMPMAL.DragModifications"}}">{{localize "IMPMAL.Modifications"}} <i class="fa-regular fa-circle-question"></i></div>
+                    </header>
+                    <div class="list-content">
+                        {{#each item.system.mods.documents}}
+                            <div class="list-item" data-index="{{@key}}" data-target="system.mods">
+                                <div class="list-row">
+                                    <div class="list-name">
+                                        <img src="{{this.img}}">
+                                        <a class="mod-sheet">{{this.name}}</a>
+                                    </div>
+                                    <div class="list-controls">
+                                        <a class="mod-delete"><i class="fa-solid fa-xmark"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </section>
 
             </div>
             <div class="tab effects" data-tab="effects">

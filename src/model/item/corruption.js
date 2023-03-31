@@ -3,6 +3,8 @@ let fields = foundry.data.fields;
 
 export class CorruptionModel extends StandardItemModel 
 {
+    transferEffects = true;
+
     static defineSchema() 
     {
         let schema = super.defineSchema();

@@ -32,6 +32,11 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
     activateListeners(html) 
     {
         super.activateListeners(html);
+        if (!this.isEditable)
+        {
+            return false;
+        }
+        
         this.addGenericListeners(html);
         html.find(".array-create").click(this._onCreateArrayElement.bind(this));
         html.find(".array-edit").change(this._onEditArrayElement.bind(this));

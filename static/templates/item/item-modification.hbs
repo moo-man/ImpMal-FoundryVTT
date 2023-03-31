@@ -14,8 +14,43 @@
             </div>
             <div class="tab details" data-tab="details">
 
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Category"}}</label>
+                    <div class="form-fields">
+                        <select name="system.category">
+                            {{#select system.category}}
+                                {{#each (config "modificationTypes")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.UsedWith"}}</label>
+                    <div class="form-fields">
+                        <input type="text" name="system.usedWith" value="{{system.usedWith}}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.TraitsAdded"}} <a class="add-traits"><i class="fa-solid fa-gear"></i></a></label>
+                    <div class="form-fields">
+                        <input type="text" value="{{item.system.addedTraits.original.displayString}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.TraitsRemoved"}} <a class="remove-traits"><i class="fa-solid fa-gear"></i></a></label>
+                    <div class="form-fields">
+                        <input type="text" value="{{item.system.removedTraits.original.displayString}}" disabled>
+                    </div>
+                </div>
+
             </div>
             <div class="tab effects" data-tab="effects">
+                <p class="centered">{{localize "IMPMAL.ModEffectsNote"}}</p>
                 {{> systems/impmal/templates/item/partials/item-effects.hbs}}
             </div>
         </div>

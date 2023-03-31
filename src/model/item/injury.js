@@ -5,6 +5,7 @@ export class InjuryModel extends StandardItemModel
 {
 
     allowedConditions = ["bleeding", "stunned", "blinded", "deafened", "incapacitated", "prone", "stunned"];
+    transferEffects = true;
 
     static defineSchema() 
     {

@@ -5,7 +5,7 @@ export class DamageModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.base = new fields.StringField({});
+        schema.base = new fields.NumberField({});
         schema.characteristic = new fields.StringField({});
         schema.SL = new fields.BooleanField();
         

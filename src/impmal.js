@@ -39,6 +39,8 @@ import { InjuryModel } from "./model/item/injury";
 import { CriticalModel } from "./model/item/critical";
 import { TraitModel } from "./model/item/trait";
 import TraitItemSheet from "./sheet/items/item-trait-sheet";
+import WeaponItemSheet from "./sheet/items/item-weapon-sheet";
+import ModificationItemSheet from "./sheet/items/item-modification-sheet";
 
 Hooks.once("init", () => 
 {
@@ -57,6 +59,8 @@ Hooks.once("init", () =>
     Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
     Items.registerSheet("impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
     Items.registerSheet("impmal", TraitItemSheet, { types: ["trait"], makeDefault: true });
+    Items.registerSheet("impmal", WeaponItemSheet, { types: ["weapon"], makeDefault: true });
+    Items.registerSheet("impmal", ModificationItemSheet, { types: ["modification"], makeDefault: true });
 
     // CONFIG.ActiveEffect.sheetClass = undefined;
     // DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });
