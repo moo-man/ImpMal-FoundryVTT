@@ -19,7 +19,6 @@ export class BaseTest
         this.context = new this.constructor.contextClass(context);
         this.data.target = this.computeTarget();
         this.result = new this.constructor.evaluatorClass(data);
-        // this.evaluateOpposedTests();
     }
 
     // Base test has no target computation, just use static value provided
@@ -307,8 +306,9 @@ export class BaseTest
             modifier : 0,                 // Added to target
             difficulty : "challenging",   // Added to target
             SL : 0,                       // Added to SL result
-            state : "none",                   // Advantage/disadvantage
+            state : "none",               // Advantage/disadvantage
             reverse : false,              // Force reversal
+            computeDoubles : false,       // Note whether criticals/fumbles happened
             result : {}                   // Predefined result
         };
     }

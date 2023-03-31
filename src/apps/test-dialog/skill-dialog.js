@@ -14,11 +14,20 @@ export class SkillTestDialog extends CharacteristicTestDialog
      * @param {string} title.append Append to dialog title
      * @param {object} fields Predefine dialog fields
      */
-    static setupData({itemId, key}, actor, {title={}, fields={}}={})
+    static setupData({itemId, name, key}, actor, {title={}, fields={}, purge=false, warp=undefined}={})
     {   
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
         let skillItem = actor.items.get(itemId);
+        
+        // If name provided, find Skill by name (and make sure key is correct)
+        if (!skillItem)
+        {
+            skillItem = actor.items.find(i => 
+                i.type == "specialisation" && 
+                i.name == name && 
+                i.system.skill == key);
+        }
         let skillKey = key || skillItem.system.skill;
         let skillObject = actor.system.skills[skillKey];
         let characteristic = skillObject.characteristic;
@@ -30,6 +39,8 @@ export class SkillTestDialog extends CharacteristicTestDialog
 
         dialogData.data.skillItemId = skillItem?.id;
         dialogData.data.skill = skillKey;
+        dialogData.data.purge = purge;
+        dialogData.data.warp = warp;
 
         dialogData.fields.characteristic = characteristic;
         

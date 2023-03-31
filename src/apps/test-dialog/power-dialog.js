@@ -40,7 +40,7 @@ export class PowerTestDialog extends SkillTestDialog
         let dialogData = super.setupData({key : "psychic", itemId : skill?.id}, actor, {title, fields});
 
         // TODO find a way to avoid duplicating this code from the parent class
-        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.PowerTest"), {name : power.name}) + (title?.append || "");
+        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.PowerTest", {name : power.name})) + (title?.append || "");
 
         dialogData.data.powerId = power.id;
         

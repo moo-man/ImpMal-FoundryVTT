@@ -68,14 +68,8 @@
             padding: 1px 3px;
             margin: 0px 3px;
         }
-    }
-
-        .fumble,
-        .critical {
-        font-weight: bold;
 
         a.inline-roll {
-
             background: none;
             padding: 1px 3px;
             border-radius: 10px;
@@ -83,6 +77,11 @@
             word-break: unset;
             border: 0px;
         }
+    }
+
+        .fumble,
+        .critical {
+        font-weight: bold;
     }
 
     .critical {

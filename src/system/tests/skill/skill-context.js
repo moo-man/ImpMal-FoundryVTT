@@ -9,7 +9,12 @@ export class SkillTestContext extends CharacteristicTestContext
     static fromData(data) 
     {
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
-        let context = mergeObject(super.fromData(data), {skill : data.skill, skillItemId : data.skillItemId});
+        let context = mergeObject(super.fromData(data), {
+            skill : data.skill, 
+            skillItemId : data.skillItemId, 
+            purge : data.purge, 
+            warp : data.warp
+        });
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;
     }

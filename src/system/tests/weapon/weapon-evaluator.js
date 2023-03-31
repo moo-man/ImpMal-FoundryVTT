@@ -9,7 +9,7 @@ export class WeaponTestEvaluator extends BaseTestEvaluator
     computeOther(data) 
     {
         this.computeHitLocation(data);
-        this.computeCrit(data);
+        super.computeOther(data);
     }
 
     computeHitLocation(data)
@@ -33,15 +33,4 @@ export class WeaponTestEvaluator extends BaseTestEvaluator
             this.calledShot = true;
         }
     }
-
-    computeCrit(data)
-    {
-        if (this.roll % 11 == 0)
-        {
-            // Prefer pre-defined results
-            this.critical = this.critical || this.outcome == "success";
-            this.fumble = this.fumble || this.outcome == "failure";
-        }
-    }
-
 }

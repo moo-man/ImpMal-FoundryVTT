@@ -88,8 +88,14 @@ export class BaseTestEvaluator
     /**
      * Used by subclasses to compute specific values related to their type
      */
-    computeOther() 
+    computeOther(data) 
     {
+        if (data.computeDoubles && this.roll % 11 == 0)
+        {
+            // Prefer pre-defined results
+            this.critical = this.critical || this.outcome == "success";
+            this.fumble = this.fumble || this.outcome == "failure";
+        }
     }
 
     calculateSL(roll, target, modifier=0)

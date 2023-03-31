@@ -41,9 +41,21 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return this._setupTest(CharacteristicTestDialog, CharacteristicTest, characteristic, options, roll);
     }
 
-    setupSkillTest({itemId, key}={}, options={}, roll=true) 
+    setupSkillTest({itemId, name, key}={}, options={}, roll=true) 
     {
-        return this._setupTest(SkillTestDialog, SkillTest, {itemId, key}, options, roll);
+
+        // Not sure I like this here but it will do for now
+        // Warp State = 2 means you just roll on the Perils table
+        // Warp State = 1 is handled in postRoll() of a skill test
+        if (options.warp == 2)
+        {
+            return new Roll(`1d100 + ${10 * (this.system.warp.charge - this.system.warp.threshold)}`).roll({async: true}).then(roll => 
+            {
+                roll.toMessage({speaker : ChatMessage.getSpeaker(this), flavor : game.i18n.localize("IMPMAL.PerilsOfTheWarp")});
+                this.update({"system.warp.charge" : 0});
+            });
+        }
+        return this._setupTest(SkillTestDialog, SkillTest, {itemId, name, key}, options, roll);
     }
 
     setupWeaponTest(id, options={}, roll=true) 

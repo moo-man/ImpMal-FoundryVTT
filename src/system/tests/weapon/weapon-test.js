@@ -10,6 +10,13 @@ export class WeaponTest extends SkillTest
     static evaluatorClass = WeaponTestEvaluator;
     testDetailsTemplate = "systems/impmal/templates/chat/rolls/details/weapon-test.hbs";
 
+    constructor({data, context})
+    {
+        data.computeDoubles = true;
+        super({data, context});
+    }
+
+
     computeTarget() 
     {
         return TargetCalculator.compute({

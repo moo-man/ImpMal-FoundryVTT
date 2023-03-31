@@ -92,5 +92,15 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
                 ui.notifications.notify("IMPMAL.AddPatron");
             }
         });
+
+        html.find(".warp").click(() => 
+        {
+            this.actor.setupSkillTest({key : "psychic"}, {warp: this.actor.system.warp.state});
+        });
+
+        html.find(".purge").click(() => 
+        {
+            this.actor.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {purge: true,  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
+        });
     }
 }

@@ -4,6 +4,19 @@
         <input type="number" value="{{system.warp.charge}}" name="system.warp.charge">
         <input type="number" value="{{system.warp.threshold}}" disabled>
     </div>
+    <div class="bar-section">
+        <div class="bar-container">
+            <div class="bar" style="width : {{pct system.warp.charge system.warp.threshold}}%"></div>
+            <div class="perils">
+                {{#if (eq system.warp.state 1)}}
+                    <a class="warp"><i class="fa-solid fa-dice-d10"></i> {{localize "IMPMAL.PsychicMastery"}}</a>
+                {{else if (eq system.warp.state 2)}}
+                    <a class="warp"><i class="fa-solid fa-dice-d10"></i> {{localize "IMPMAL.Perils"}}</a>
+                {{/if}}
+            </div>
+        </div>
+        <a class="purge {{#if (eq system.warp.charge 0)}}inactive disabled{{/if}}"><i class="fa-solid fa-burst"></i>{{localize "IMPMAL.Purge"}}</a>
+    </div>
 </div>
 <section class="list">
     <header class="list-row">
@@ -36,7 +49,6 @@
                     <div>{{configLookup "powerDurations" this.system.duration}}</div>
                     <div class="list-controls">
                         <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                        <a class=""><i class="fa-solid fa-comment"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>

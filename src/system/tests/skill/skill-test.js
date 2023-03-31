@@ -18,6 +18,72 @@ export class SkillTest extends CharacteristicTest
         });
     }
 
+    async postRoll()
+    {
+        await super.postRoll();
+
+        this._computeWarp();
+        this._computePurge();
+    }
+
+    _computeWarp() 
+    {
+        if (this.context.warp) 
+        {
+            if (this.result.outcome == "success") 
+            {
+                this.actor.update({ "system.warp.state": 1 });
+            }
+            else 
+            {
+                this.actor.update({ "system.warp.state": 2 });
+            }
+        }
+
+    }
+
+    _computePurge() 
+    {
+        // Prevent rerolls from changing it
+        // TODO: Click to activate so rerolls don't cause confusion?
+        if (this.context.purge && !this.context.purged) 
+        {
+            if (this.result.outcome == "success") 
+            {
+                this.context.purged = Math.min(this.actor.system.warp.charge, this.actor.system.characteristics.wil.bonus + this.result.SL); // If reroll, remove previous purge
+                this.actor.update({ "system.warp.charge": this.actor.system.warp.charge - this.context.purged });
+            }
+        }
+    }
+
+    get tags() 
+    {
+        let tags = super.tags;
+
+        if (this.context.warp)
+        {
+            if (this.result.outcome == "success")
+            {
+                tags.push(game.i18n.localize("IMPMAL.WarpContained"));
+            }
+            else 
+            {
+                tags.push(game.i18n.localize("IMPMAL.WarpOutOfControl"));
+            }
+        }
+
+        if (this.context.purge)
+        {
+            if(this.result.outcome == "success")
+            {
+                tags.push(`<strong>${game.i18n.localize("IMPMAL.Purged")}</strong>: ${this.context.purged}`);
+                tags.push(`<strong>[[/r 1d100 + ${10 * this.context.purged}]]{${game.i18n.localize("IMPMAL.PsychicPhenomena")}}</strong>`);
+            }
+        }
+
+        return tags;
+    }
+
     get item() 
     {
         // Only return if SkillSpec item is used

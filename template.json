@@ -297,7 +297,8 @@
         }
       },
       "warp" : {
-        "charge" : 0
+        "charge" : 0,
+        "state" : 0
       }
     },
     "npc": {
