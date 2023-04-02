@@ -89,7 +89,7 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
             }
             else 
             {
-                ui.notifications.notify("IMPMAL.AddPatron");
+                ui.notifications.notify(game.i18n.localize("IMPMAL.AddPatron"));
             }
         });
 

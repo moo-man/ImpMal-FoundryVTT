@@ -32,7 +32,7 @@ export class ImpMalEffect extends ActiveEffect
 
     get source()
     {
-        let doc = fromUuidSync(this.origin);
+        let doc = fromUuidSync(this.origin || "");
         return doc?.name || doc?.text || "???";
     }
 
