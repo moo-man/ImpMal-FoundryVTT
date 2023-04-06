@@ -1,6 +1,6 @@
-import { PhysicalItemModel } from "./components/physical";
+import { EquippableItemModel } from "./components/equippable";
 
-export class AugmeticModel extends PhysicalItemModel
+export class AugmeticModel extends EquippableItemModel
 {
 
 }

@@ -57,6 +57,11 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
     {
         super.activateListeners(html);
 
+        if (!this.isEditable)
+        {
+            return;
+        }
+
         html.find(".equip").click(ev => 
         {
             let itemId = $(ev.currentTarget).parents(".list-item").attr("data-id");

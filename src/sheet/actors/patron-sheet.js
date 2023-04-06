@@ -24,5 +24,9 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
     activateListeners(html) 
     {
         super.activateListeners(html);
+        if (!this.isEditable)
+        {
+            return;
+        }
     }
 }

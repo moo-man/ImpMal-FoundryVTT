@@ -572,7 +572,8 @@
     "augmetic": {
       "templates": [
         "notes",
-        "physical"
+        "physical",
+        "equipped"
       ]
     },
     "power": {

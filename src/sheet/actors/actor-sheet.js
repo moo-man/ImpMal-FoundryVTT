@@ -99,6 +99,10 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     activateListeners(html)
     {
         super.activateListeners(html);
+        if (!this.isEditable)
+        {
+            return;
+        }
         this.addGenericListeners(html);
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
