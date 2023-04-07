@@ -107,9 +107,9 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return test;
     }
 
-    async setupTestFromItem(itemId)
+    async setupTestFromItem(uuid)
     {
-        let item = this.items.get(itemId);
+        let item = await fromUuid(uuid);
         if (item.type == "trait")
         {
             let test = item.system.test;

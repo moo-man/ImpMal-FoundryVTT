@@ -1,3 +1,4 @@
+import { SocketHandlers } from "../../system/socket-handlers";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
 export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
@@ -115,6 +116,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".remove-singleton").on("click", this._onRemoveSingleton.bind(this));
         html.find(".remove-ref").on("click", this._onRemoveReference.bind(this));
         html.find(".trait-roll").on("click", this._onTraitRoll.bind(this));
+        html.find(".target-test").on("click", this._onTargetTest.bind(this));
     }
 
 
@@ -244,7 +246,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         case "power":
             return this.actor.setupPowerTest(itemId);
         case "item":
-            return this.actor.setupTestFromItem(itemId);
+            return this.actor.setupTestFromItem(this.actor.items.get(itemId).uuid);
         }
     }
 
@@ -276,6 +278,21 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         let itemId = this._getId(ev);      
         let item = this.actor.items.get(itemId);
         new Roll(item.system.roll.formula).roll({async: true}).then(roll => roll.toMessage({speaker : ChatMessage.getSpeaker({actor : this.actor}), flavor : item.system.roll.label}));
+    }
+
+    _onTargetTest(ev)
+    {
+        if (game.user.targets.size == 0)
+        {
+            ui.notifications.warning("IMPMAL.TargetTokensPrompt");
+        }
+        let itemId = this._getId(ev);      
+        let item = this.actor.items.get(itemId);
+        Array.from(game.user.targets).forEach(target => 
+        {
+            SocketHandlers.executeOnOwner(target.actor, "rollItemTest",{documentUuid : target.actor.uuid, itemUuid : item.uuid});
+        });
+        game.user.updateTokenTargets([]);
     }
 
     //#endregion

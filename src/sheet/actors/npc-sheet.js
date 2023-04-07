@@ -92,20 +92,9 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
 
             if (trait.system.test.enabled)
             {
-                let config = game.impmal.config;
                 let testClass = trait.system.test.target == "self" ? "roll" : "target-test";
-                let testName = config.characteristics[trait.system.test.characteristic];
+                let testName = trait.system.testLabel("test");
 
-                // Replace name from characteristic to skill if test specifies
-                if (trait.system.test.skill.key)
-                {
-                    testName = config.skills[trait.system.test.skill.key];
-                }
-                // Add specialisation if available
-                if (trait.system.test.skill.specialisation)
-                {
-                    testName += ` (${trait.system.test.skill.specialisation})`;
-                }
                 // add crosshairs if not self target
                 if (trait.system.test.target == "targets")
                 {
