@@ -107,6 +107,42 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return test;
     }
 
+    async setupTestFromItem(itemId)
+    {
+        let item = this.items.get(itemId);
+        if (item.type == "trait")
+        {
+            let test = item.system.test;
+            let testData = {};
+            let testOptions = {};
+            let testFunction;
+            if (test.skill.specialisation)
+            {
+                testData = {name : test.skill.specialisation, key : test.skill.key};
+                testOptions = {fields: {characteristic: test.characteristic, difficulty : test.difficulty}};
+                testFunction = this.setupSkillTest.bind(this);
+            }
+            else if (test.skill.key)
+            {
+                testData = {key : test.skill.key};
+                testOptions = {fields: {characteristic: test.characteristic, difficulty : test.difficulty}};
+                testFunction = this.setupSkillTest.bind(this);
+            }
+            else if (test.characteristic)
+            {
+                testData = test.characteristic;
+                testOptions = {fields: {difficulty : test.difficulty}};
+                testFunction = this.setupCharacteristicTest.bind(this);
+            }
+            else 
+            {
+                return ui.notifications.error("Item does not provide sufficient data to perform a Test. It must specify at least a Skill or Characteristic");
+            }
+
+            return testFunction(testData, testOptions);
+        }
+    }
+
     async applyDamage(value, {ignoreAP=false, location="roll", message=false}={})
     {
         let reductions = [];

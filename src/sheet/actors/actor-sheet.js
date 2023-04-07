@@ -114,6 +114,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".trait-action").on("click", this._onTraitClick.bind(this));
         html.find(".remove-singleton").on("click", this._onRemoveSingleton.bind(this));
         html.find(".remove-ref").on("click", this._onRemoveReference.bind(this));
+        html.find(".trait-roll").on("click", this._onTraitRoll.bind(this));
     }
 
 
@@ -242,6 +243,8 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             return this.actor.setupWeaponTest(itemId);
         case "power":
             return this.actor.setupPowerTest(itemId);
+        case "item":
+            return this.actor.setupTestFromItem(itemId);
         }
     }
 
@@ -266,6 +269,13 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     {
         ev.stopPropagation();
         this.actor.update({[`${ev.currentTarget.dataset.path}.id`] : ""});
+    }
+
+    _onTraitRoll(ev)
+    {
+        let itemId = this._getId(ev);      
+        let item = this.actor.items.get(itemId);
+        new Roll(item.system.roll.formula).roll({async: true}).then(roll => roll.toMessage({speaker : ChatMessage.getSpeaker({actor : this.actor}), flavor : item.system.roll.label}));
     }
 
     //#endregion

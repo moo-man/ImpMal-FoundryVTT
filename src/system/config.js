@@ -46,6 +46,28 @@ const IMPMAL = {
         tech : "IMPMAL.Tech"
     },
 
+    defaultSkillCharacteristics : {
+        athletics : "str",
+        awareness : "per",
+        dexterity : "ag",
+        discipline : "wil",
+        fortitude : "tgh",
+        intuition : "per",
+        linguistics : "int",
+        logic : "int",
+        lore : "int",
+        medicae : "int",
+        melee : "ws",
+        navigation : "int",
+        piloting : "ag",
+        presence : "wil",
+        psychic : "wil",
+        ranged : "bs",
+        rapport : "fel",
+        reflexes : "ag",
+        stealth : "ag",
+        tech : "int"
+    },
 
     attitudes : {
         "5" : "IMPMAL.Honoured",

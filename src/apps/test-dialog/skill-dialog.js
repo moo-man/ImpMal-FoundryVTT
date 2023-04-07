@@ -42,7 +42,7 @@ export class SkillTestDialog extends CharacteristicTestDialog
         dialogData.data.purge = purge;
         dialogData.data.warp = warp;
 
-        dialogData.fields.characteristic = characteristic;
+        dialogData.fields.characteristic = fields.characteristic || skillObject.characteristic;
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

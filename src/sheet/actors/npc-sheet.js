@@ -36,6 +36,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         for (let skillKey in data.actor.system.skills)
         {
             let skill = data.actor.system.skills[skillKey];
+            // Only include skills in the main tab if they have advances
             if (skill.advances > 0)
             {
                 elements.push(`<a class="roll" data-type="skill" data-key=${skillKey}>${game.impmal.config.skills[skillKey]} ${skill.total}</a>`);
@@ -59,19 +60,61 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
     {
         let elements = [];
         let items = data.items.trait.concat(data.items.corruption, data.items.talent);
+        let template = 
+        `
+        <div data-id="@ID">
+        <a class="@CLASSES"><strong>@NAME: </strong></a>
+        @DESCRIPTION
+        </div>
+        `;
+
         for (let trait of items)
         {
             if (trait.system.attack.enabled && !trait.system.roll.enabled && !trait.system.test.enabled)
             {
                 continue; // If a trait only specifies attack, only show in attacks
             }
-            elements.push(`
-                <div>
-                <a class="trait-name list-edit-rc" data-id="${trait.id}"><strong>${trait.name}: </strong></a>
-                ${await TextEditor.enrichHTML(trait.system.notes.player, {async: true})}
-                ${game.user.isGM ? await TextEditor.enrichHTML(trait.system.notes.gm, {async: true}) : ""}
-                </div>
-                `);
+
+            let classes = ["trait-name", "list-edit-rc"];
+            let name = trait.name;
+            let description = await TextEditor.enrichHTML(trait.system.notes.player, {async: true});
+
+            if (trait.system.roll.enabled)
+            {
+                classes.push("trait-roll");
+                name = `<i class="fa-regular fa-dice-d10"></i>` + name;
+            }
+
+            if (game.user.isGM)
+            {
+                description += await TextEditor.enrichHTML(trait.system.notes.gm, {async: true});
+            }
+
+            if (trait.system.test.enabled)
+            {
+                let config = game.impmal.config;
+                let testClass = trait.system.test.target == "self" ? "roll" : "target-test";
+                let testName = config.characteristics[trait.system.test.characteristic];
+
+                // Replace name from characteristic to skill if test specifies
+                if (trait.system.test.skill.key)
+                {
+                    testName = config.skills[trait.system.test.skill.key];
+                }
+                // Add specialisation if available
+                if (trait.system.test.skill.specialisation)
+                {
+                    testName += ` (${trait.system.test.skill.specialisation})`;
+                }
+                // add crosshairs if not self target
+                if (trait.system.test.target == "targets")
+                {
+                    testName = `<i class="fa-solid fa-crosshairs"></i>` + testName ;
+                }
+                description += `<button type="button" data-type="item" class="${testClass}">${testName} Test</button>`;
+            }
+            
+            elements.push(template.replace("@ID", trait.id).replace("@CLASSES", classes.join(" ")).replace("@NAME", name).replace("@DESCRIPTION", description));
         }
 
         return {html: elements.join(""), show : elements.length > 0};
@@ -81,53 +124,101 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
     {
         let config = game.impmal.config;
         let elements = [];
+        let items = data.items.weapon.concat(data.items.trait);
 
-        data.items.weapon.forEach(weapon => 
+        let template = 
+        `
+        <div data-id="@ID">
+            <a class="roll list-edit-rc" data-type="@TYPE" data-action="@ACTION"><strong>@NAME: </strong></a>
+            <span>@TESTLABEL @SKILLTOTAL</span>
+            </span>, </span>
+            <span class="damage">@DAMAGE</span>
+            <span class="range">@RANGE</span>
+            <span class="attack-traits">@TRAITS</span>
+        </div>
+        `;
+
+
+        items.forEach(item => 
         {
-            elements.push(`
-                <div>
-                    <a class="roll list-edit-rc" data-type="weapon" data-id="${weapon.id}"><strong>${weapon.name}: </strong></a>
-                    <span class="roll" data-action="weapon">${config.weaponTypes[weapon.system.attackType]} (${weapon.system.specialisation}) ${weapon.system.skillTotal}</span>
-                    </span>, </span>
-                    <span class="damage">${weapon.system.damage.value} + SL ${weapon.system.attackType == "melee" ? "difference" : ""} Damage. </span>
-                    
-                    <span class="range">${weapon.system.attackType == "ranged" ? config.ranges[weapon.system.range] + " Range" : ""}</span>
-                    <span class="attack-traits">${weapon.system.traits.displayArray.map(i => `<a class="item-trait">${i}</a>`).join(", ")}
-                </div>
-            `);
+            let type = item.type;
+            let action = type == "trait" ? "attack" : "";
+            let id = item.id;
+            let name = item.name;
+            let testLabel, skillTotal, damage, range, traits;
+
+
+            // testLabel
+            if (type == "trait")
+            {
+                testLabel = item.system.testLabel("attack");
+            }
+            else if (type == "weapon")
+            {
+                testLabel = `${config.weaponTypes[item.system.attackType]} (${item.system.specialisation})`;
+            }
+
+
+            // skillTotal
+            if (type == "trait")
+            {
+                skillTotal = item.system.attack.target;
+            }
+            else if (type == "weapon")
+            {
+                skillTotal = item.system.skillTotal;
+            }
+
+
+            // damage
+            if (type == "trait")
+            {
+                damage = `${item.system.attack.damage.value}`;
+                if (item.system.attack.damage.SL)
+                {
+                    damage += ` + SL ${item.system.attack.type == "melee" ? "difference" : ""} Damage.`;
+                }
+            }
+            else if (type == "weapon")
+            {
+                damage = `${item.system.damage.value} + SL ${item.system.attackType == "melee" ? "difference" : ""} Damage.`;
+            }
+
+            // range
+            if (type == "trait")
+            {
+                range = `${item.system.attack.type == "ranged" ? config.ranges[item.system.attack.range] + " Range" : ""}`;
+            }
+            else if (type == "weapon")
+            {
+                range = `${item.system.attackType == "ranged" ? config.ranges[item.system.range] + " Range" : ""}`;
+            }
+
+            // traits 
+
+            if (type == "trait")
+            {
+                traits = item.system.attack.traits.displayArray.map(i => `<a class="item-trait">${i}</a>`).join(", ");
+            }
+            else if (type == "weapon")
+            {
+                traits = item.system.traits.displayArray.map(i => `<a class="item-trait">${i}</a>`).join(", ");
+            }
+
+            elements.push(
+                template
+                    .replace("@TYPE", type)
+                    .replace("@ACTION", action)
+                    .replace("@ID", id)
+                    .replace("@NAME", name)
+                    .replace("@TESTLABEL", testLabel)
+                    .replace("@SKILLTOTAL", skillTotal)
+                    .replace("@DAMAGE", damage)
+                    .replace("@RANGE", range)
+                    .replace("@TRAITS", traits)
+            );
         });
 
-        
-        data.items.trait.forEach(trait => 
-        {
-            let skill = config.weaponTypes[trait.system.attack.type];
-            if (trait.system.attack.skill.key != "melee" && trait.system.attack.skill.key != "ranged")
-            {
-                skill = config.skills[trait.system.attack.skill.key];
-            }
-
-            if (trait.system.attack.skill.specialisation)
-            {
-                skill += ` (${trait.system.attack.skill.specialisation})`;
-            }
-            
-            let damage = `${trait.system.attack.damage.value}`;
-            if (trait.system.attack.damage.SL)
-            {
-                damage += ` + SL ${trait.system.attack.type == "melee" ? "difference" : ""} Damage.`;
-            }
-
-            elements.push(`
-                    <div>
-                        <a class="trait-action list-edit-rc" data-action="attack" data-id="${trait.id}"><strong>${trait.name}: </strong></a>
-                        <span>${skill} ${trait.system.attack.target}</span>
-                        </span>, </span>
-                        <span class="damage">${damage}</span>
-                        <span class="range">${trait.system.attack.type == "ranged" ? config.ranges[trait.system.attack.range] + " Range" : ""}</span>
-                        <span class="attack-traits">${trait.system.attack.traits.displayArray.map(i => `<a class="item-trait">${i}</a>`).join(", ")}
-                    </div>
-                `);
-        });
 
         return {html: elements.join(""), show : data.items.weapon.length > 0};
     }
@@ -149,6 +240,14 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         return {html: `<strong>${game.i18n.localize("IMPMAL.Possessions")}: </strong> ${elements.join(", ")}`, show};
     }
 
+    activateListeners(html) 
+    {
+        super.activateListeners(html);
+        if (!this.isEditable)
+        {
+            return;
+        }
+    }
 
 
 }

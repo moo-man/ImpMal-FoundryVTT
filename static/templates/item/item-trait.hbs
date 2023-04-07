@@ -78,6 +78,7 @@
                         <div class="form-fields">
                             <select name="system.attack.skill.key">
                                 {{#select system.attack.skill.key}}
+                                    <option value=""></option>
                                     {{#each (config "skills")}}
                                         <option value="{{@key}}">{{this}}</option>
                                     {{/each}}
@@ -180,6 +181,7 @@
                         <div class="form-fields">
                             <select name="system.test.skill.key">
                                 {{#select system.test.skill.key}}
+                                    <option value=""></option>
                                     {{#each (config "skills")}}
                                         <option value="{{@key}}">{{this}}</option>
                                     {{/each}}
