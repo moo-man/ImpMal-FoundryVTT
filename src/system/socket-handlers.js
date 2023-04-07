@@ -8,6 +8,11 @@ export class SocketHandlers
         });
     }
 
+    static call(type, payload, userId)
+    {
+        game.socket.emit("system.impmal", {type, payload, userId});
+    }
+
     static addTargetFlags({id}={})
     {
         if (game.user.isGM)
@@ -21,6 +26,14 @@ export class SocketHandlers
         if (game.user.isGM)
         {
             ChatMessage.getSpeakerActor(speaker)?.update(update);
+        }
+    }
+
+    static updateMessage({id, data}={})
+    {
+        if (game.user.isGM)
+        {
+            game.messages.get(id)?.update(data);
         }
     }
 
@@ -76,7 +89,7 @@ export class SocketHandlers
         }
         else // If userID isn't self,  
         {
-            game.socket.emit("system.impmal", {type, payload, userId : ownerUserId});
+            SocketHandlers.call(type, payload, ownerUserId);
         }
     }
 

@@ -1,4 +1,5 @@
 import log from "../../logger";
+import { SocketHandlers } from "../../socket-handlers";
 
 export class TestContext
 {
@@ -160,7 +161,7 @@ export class TestContext
         }
         else 
         {
-            game.socket.emit("system.impmal", {type : "updateActor", payload : {speaker, update}});
+            SocketHandlers.call("updateActor", {speaker, update});
         }
     }
 
@@ -179,7 +180,7 @@ export class TestContext
         }
         else 
         {
-            game.socket.emit("system.impmal", {type: "addTargetFlags", payload : {id : this.messageId}});
+            SocketHandlers.call("addTargetFlags", {id : this.messageId});
         }
         game.user.updateTokenTargets([]);
     }
@@ -202,7 +203,7 @@ export class TestContext
         }
         else 
         {
-            game.socket.emit("system.impmal", {type: "rerenderMessages", payload : {ids : Object.values(this.responses).concat(this.defendingAgainst || [])}});
+            SocketHandlers.call("rerenderMessages", {ids : Object.values(this.responses).concat(this.defendingAgainst || [])});
         }
         game.user.updateTokenTargets([]);
     }
@@ -211,8 +212,7 @@ export class TestContext
 
     saveContext()
     {
-        
-        this.message?.update({
+        let data = {
             flags: {
                 impmal : {
                     test : {
@@ -220,7 +220,15 @@ export class TestContext
                     }
                 }
             }
-        });
+        };
+        if (game.user.isGM || this.message.isAuthor)
+        {
+            this.message?.update(data);
+        }
+        else 
+        {
+            SocketHandlers.call("updateMessage", {id : this.message.id, data});
+        }
     }
 
     static fromData(data) 
