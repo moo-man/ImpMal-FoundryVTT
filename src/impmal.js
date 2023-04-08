@@ -30,6 +30,7 @@ import { CharacteristicTest } from "./system/tests/characteristic/characteristic
 import { SkillTest } from "./system/tests/skill/skill-test";
 import { WeaponTest } from "./system/tests/weapon/weapon-test";
 import { PowerTest } from "./system/tests/power/power-test";
+import { TraitTest } from "./system/tests/trait/trait-test";
 import SuperiorityManager from "./system/superiority";
 import { ImpMalEffect } from "./document/effect";
 import ImpMalPatronSheet from "./sheet/actors/patron-sheet";
@@ -96,7 +97,8 @@ Hooks.once("init", () =>
             CharacteristicTest,
             SkillTest,
             WeaponTest,
-            PowerTest
+            PowerTest,
+            TraitTest
         }
     };
 

@@ -2,6 +2,7 @@ export class OpposedTestResult
 {
     SL = undefined;
     winner = "";
+    static damagingItems = ["weapon", "trait"];
     
     constructor(attackerTest, defenderTest)
     {
@@ -20,13 +21,44 @@ export class OpposedTestResult
             this.winner = "defender";
         }
 
-        if (this.winner == "attacker" && attackerTest.item?.system?.damage)
+        if (this.winner == "attacker" && this.constructor.damagingItems.includes(attackerTest.item.type))
         {
             this.damage = this.computeDamage(attackerTest.item);
         }
     }
 
     computeDamage(item)
+    {
+        switch(item.type)
+        {
+        case "weapon" : 
+            return this._computeWeaponDamage(item);
+        case "trait" : 
+            return this._computeTraitDamage(item);
+        }
+    }
+
+
+    _computeTraitDamage(item)
+    {
+        let damage = 0;
+        if (!item?.system?.attack?.damage)
+        {
+            return damage;
+        }
+
+        damage += item?.system.attack?.damage.value;
+
+        if (item.system.attack.damage.SL)
+        {
+            damage += this.SL;
+        }
+
+        return damage;
+    }
+
+    
+    _computeWeaponDamage(item)
     {
         let damage = 0;
         if (!item?.system?.damage)

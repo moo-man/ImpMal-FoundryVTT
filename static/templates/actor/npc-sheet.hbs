@@ -55,7 +55,11 @@
     <div class="npc-grid">
         {{#each system.characteristics}}
             <div class="characteristic">
-                {{configLookup "characteristicAbbrev" @key}}
+                <a class="roll" data-type="characteristic" data-key="{{@key}}"> 
+                    <span></span>
+                    {{configLookup "characteristicAbbrev" @key}}
+                    <span class="die-icon" style="visibility:hidden"><i class="fa-regular fa-dice-d10"></i></span>
+                </a>
             </div>
         {{/each}}
         {{#each system.characteristics}}
@@ -80,10 +84,11 @@
             <label>{{localize "IMPMAL.CriticalWounds"}}</label>
             <div>
                 {{#if (eq system.role "troop")}}
-                <span>-</span>
+                    <span>-</span>
                 {{else}}
-                <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
-                <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}" disabled>
+                    <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
+                    <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}"
+                        disabled>
                 {{/if}}
             </div>
         </div>
@@ -97,11 +102,11 @@
             <label>{{localize "IMPMAL.Speed"}}</label>
             <div>
                 <select name="system.combat.speed.land.value">
-                {{#select system.combat.speed.land.value}}
-                    {{#each (config "speeds")}}
-                        <option value="{{@key}}">{{this}}</option>
-                    {{/each}}
-                {{/select}}
+                    {{#select system.combat.speed.land.value}}
+                        {{#each (config "speeds")}}
+                            <option value="{{@key}}">{{this}}</option>
+                        {{/each}}
+                    {{/select}}
                 </select>
             </div>
         </div>

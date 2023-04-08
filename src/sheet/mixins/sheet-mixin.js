@@ -93,20 +93,27 @@ export default ImpMalSheetMixin = (cls) => class extends cls
 
         return this.object[collection].get(id)?.sheet.render(true, {editable : this.options.editable});
     }
-    _onListDelete(event) 
+    _onListDelete(event, skipDialog=false) 
     {
         let id = this._getId(event);
         let collection = this._getCollection(event);
 
         let docName = collection == "effects" ? "ActiveEffect" : "Item";
 
-        Dialog.confirm({
-            title: game.i18n.localize(`IMPMAL.Delete${docName}`),
-            content: `<p>${game.i18n.localize(`IMPMAL.Delete${docName}Confirmation`)}</p>`,
-            yes: () => { this.object.deleteEmbeddedDocuments(docName, [id]); },
-            no: () => { },
-            defaultYes: true
-        });
+        if (skipDialog)
+        {
+            return this.object.deleteEmbeddedDocuments(docName, [id]);
+        }
+        else 
+        {
+            return Dialog.confirm({
+                title: game.i18n.localize(`IMPMAL.Delete${docName}`),
+                content: `<p>${game.i18n.localize(`IMPMAL.Delete${docName}Confirmation`)}</p>`,
+                yes: () => { this.object.deleteEmbeddedDocuments(docName, [id]); },
+                no: () => { },
+                defaultYes: true
+            });
+        }
     }
     _onListCreate(event) 
     {

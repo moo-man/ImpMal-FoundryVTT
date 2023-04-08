@@ -245,6 +245,8 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             return this.actor.setupWeaponTest(itemId);
         case "power":
             return this.actor.setupPowerTest(itemId);
+        case "trait":
+            return this.actor.setupTraitTest(itemId);
         case "item":
             return this.actor.setupTestFromItem(this.actor.items.get(itemId).uuid);
         }
@@ -284,7 +286,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     {
         if (game.user.targets.size == 0)
         {
-            ui.notifications.warning("IMPMAL.TargetTokensPrompt");
+            ui.notifications.warn(game.i18n.localize("IMPMAL.TargetTokensPrompt"));
         }
         let itemId = this._getId(ev);      
         let item = this.actor.items.get(itemId);

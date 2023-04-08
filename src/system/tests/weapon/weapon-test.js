@@ -1,21 +1,11 @@
-import { SkillTest } from "../skill/skill-test";
+import { AttackTest } from "../attack/attack-test";
 import { TargetCalculator } from "../target-calculator";
 import { WeaponTestContext } from "./weapon-context";
-import { WeaponTestEvaluator } from "./weapon-evaluator";
 
-export class WeaponTest extends SkillTest
+export class WeaponTest extends AttackTest
 {
-
     static contextClass = WeaponTestContext;
-    static evaluatorClass = WeaponTestEvaluator;
     testDetailsTemplate = "systems/impmal/templates/chat/rolls/details/weapon-test.hbs";
-
-    constructor({data, context})
-    {
-        data.computeDoubles = true;
-        super({data, context});
-    }
-
 
     computeTarget() 
     {
@@ -53,38 +43,4 @@ export class WeaponTest extends SkillTest
         return this.context.weapon;
     }
 
-    get tags() 
-    {
-        let tags = super.tags;
-        if (this.result.calledShot)
-        {
-            tags.push(`${game.i18n.localize("IMPMAL.CalledShot")}: <strong>${game.impmal.config.hitLocations[this.result.hitLocation]}</strong>`);
-        }
-        if (this.result.critical)
-        {
-            tags.push(`<span class="critical">[[/r 1d10]]{${game.i18n.localize("IMPMAL.Critical")}}</span>`);
-        }
-        if (this.result.fumble)
-        {
-            tags.push(`<span class="fumble">[[/r 1d10]]{${game.i18n.localize("IMPMAL.Fumble")}}</span>`);
-        }
-        return tags;
-    }
-
-
-
-    static _getDialogTestData(data)
-    {
-        let testData = super._getDialogTestData(data);
-        testData.hitLocation = data.hitLocation;
-        return testData;
-    }
-
-
-    _defaultData() 
-    {
-        let data = super._defaultData();
-        data.hitLocation = "roll";
-        return data;
-    }
 }

@@ -1,12 +1,6 @@
 <section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.Talent"}}</div>
-        <div class="list-controls">
-            <a class="list-create" data-type="talent"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
     <div class="list-content">
-        {{#each items.talent}}
+        {{#each object.items}}
         <div class="list-item" data-id="{{this.id}}" data-collection="items">
             <div class="list-row">
                 <div class="list-name list-edit">
@@ -14,13 +8,8 @@
                     <a>{{this.name}}</a>
                 </div>
                 <div class="list-controls">
-                    <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                    <a class=""><i class="fa-solid fa-comment"></i></a>
                     <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                 </div>
-            </div>
-            <div class="summary">
-
             </div>
         </div>
         {{/each}}

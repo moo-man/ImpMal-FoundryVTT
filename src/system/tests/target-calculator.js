@@ -38,6 +38,10 @@ export class TargetCalculator
         {
             skillObject = skill.system;
         }
+        else if (typeof skill == "object")
+        {
+            skillObject = skill;
+        }
 
         return skillObject.getTotalFor(characteristic, actor) + this._baseTarget({modifier, difficulty});
     }

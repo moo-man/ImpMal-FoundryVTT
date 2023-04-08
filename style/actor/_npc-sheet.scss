@@ -1,18 +1,27 @@
 .impmal.actor.npc {
 
     .window-content form .tab-section .tab-content {
-        height: calc(100% - 220px);
+        height: calc(100% - 170px);
     }
 
     .npc-grid {
         display: grid;
         grid-template-columns: repeat(9, 11.1%);
         grid-template-rows: repeat(6, 16.6%);//16.6% 16.6% 33% 33%;
-        height: 200px;
+        height: 150px;
+        > * {
+            line-height: 25px;
+        }
     }
 
     .characteristic {
         text-align: center;
+        > a {
+            display: flex;
+            > * {
+                flex: 1
+            }
+        }
     }
 
     .grid-property {
@@ -26,10 +35,13 @@
         }
         > div {
             display: flex;
+            margin: 0px 5px;
+            > * {
+                width: 100%;
+            }
         } 
         > label {
             text-align: center;
-            border-bottom: 1px solid black
         }
     }
 

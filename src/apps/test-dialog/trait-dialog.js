@@ -1,8 +1,8 @@
 import log from "../../system/logger";
-import { SkillTestDialog } from "./skill-dialog";
+import { AttackDialog } from "./attack-dialog";
 
 
-export class TraitTestDialog extends SkillTestDialog
+export class TraitTestDialog extends AttackDialog
 {
     /**
      * 
@@ -18,10 +18,9 @@ export class TraitTestDialog extends SkillTestDialog
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
         let trait = actor.items.get(itemId);
-        let skillItem = actor.itemCategories.specialisation.find(s => s.name == trait.system.attack.skill.specialisation);
         let skillKey = trait.system.attack.skill.key || trait.system.attack.type;
 
-        let dialogData = super.setupData({skillItemId : skillItem?.id, key : skillKey}, actor, {title, fields});
+        let dialogData = super.setupData({name : trait.system.attack.skill.specialisation, key : skillKey}, actor, {title, fields});
 
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.TraitTest", {trait : trait?.name})) + (title?.append || "");

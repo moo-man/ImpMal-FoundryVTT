@@ -1,3 +1,4 @@
+import { ItemManagementForm } from "../../apps/item-management";
 import ImpMalActorSheet from "./actor-sheet";
 
 export default class ImpMalNPCSheet extends ImpMalActorSheet
@@ -10,6 +11,33 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         options.height = 600;
         options.width = 530;
         return options;
+    }
+
+    _getHeaderButtons() 
+    {
+        let buttons = super._getHeaderButtons();
+        if (this.actor.isOwner) 
+        {
+            buttons = [
+                {
+                    label: game.i18n.localize("IMPMAL.ManageItems"),
+                    class: "manage-items",
+                    icon: "fa-solid fa-suitcase",
+                    onclick: () => 
+                    {
+                        if (this.actor.items.size == 0)
+                        {
+                            ui.notifications.notify(game.i18n.localize("IMPMAL.NoItems"));
+                        }
+                        else 
+                        {
+                            new ItemManagementForm(this.actor).render(true);
+                        }
+                    }
+                }
+            ].concat(buttons);
+        }
+        return buttons;
     }
 
     async getData() 
@@ -29,6 +57,8 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         return sections;
     }
     
+
+    //#region Item Sections
     async _formatSkills(data)
     {
         let elements = [];
@@ -165,8 +195,9 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
                 damage = `${item.system.attack.damage.value}`;
                 if (item.system.attack.damage.SL)
                 {
-                    damage += ` + SL ${item.system.attack.type == "melee" ? "difference" : ""} Damage.`;
+                    damage += ` + SL ${item.system.attack.type == "melee" ? "difference" : ""}`;
                 }
+                damage += " Damage.";
             }
             else if (type == "weapon")
             {
@@ -229,6 +260,18 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         return {html: `<strong>${game.i18n.localize("IMPMAL.Possessions")}: </strong> ${elements.join(", ")}`, show};
     }
 
+    //#endregion
+
+
+    editMode() 
+    {
+        this.element.find(`[data-id]`).each((index, element) => 
+        {
+            $(element).prepend($(`<a class="list-delete"><i class="fa-solid fa-xmark"></i></a>`));
+        });
+    }
+
+
     activateListeners(html) 
     {
         super.activateListeners(html);
@@ -236,6 +279,16 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         {
             return;
         }
+
+        html.find(".characteristic").on("mouseover", (ev) => 
+        {
+            $(ev.currentTarget).find(".die-icon")[0].style.visibility = "visible";
+        });
+
+        html.find(".characteristic").on("mouseleave", (ev) => 
+        {
+            $(ev.currentTarget).find(".die-icon")[0].style.visibility = "hidden";
+        });
     }
 
 

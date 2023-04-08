@@ -1,8 +1,8 @@
-import { SkillTest } from "../skill/skill-test";
+import { AttackTest } from "../attack/attack-test";
 import { TargetCalculator } from "../target-calculator";
 import { TraitTestContext } from "./trait-context";
 
-export class TraitTest extends SkillTest
+export class TraitTest extends AttackTest
 {
     static contextClass = TraitTestContext;
 

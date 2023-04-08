@@ -1,33 +1,14 @@
 import log from "../../system/logger";
-import { SkillTestDialog } from "./skill-dialog";
+import { AttackDialog } from "./attack-dialog";
 
-export class WeaponTestDialog extends SkillTestDialog
+export class WeaponTestDialog extends AttackDialog
 {  
-    fieldsTemplate = `systems/impmal/templates/apps/test-dialog/weapon-fields.hbs`;
 
-    async getTemplateFields() 
-    {
-        let data = await super.getTemplateFields();
-        data.hitLocations = {
-            "roll" : "IMPMAL.Roll",
-            "head" : "IMPMAL.Head",
-            "body" : "IMPMAL.Body",
-            "leftArm" : "IMPMAL.LeftArm",
-            "rightArm" : "IMPMAL.RightArm",
-            "leftLeg" : "IMPMAL.LeftLeg",
-            "rightLeg" : "IMPMAL.RightLeg",
-        };
-        return data;
-    }
+
 
     computeFields() 
     {
         super.computeFields();
-
-        if (this.fields.hitLocation != "roll")
-        {
-            this.disCount++;
-        }
 
         if (this.data.weapon.system.equipped.offhand)
         {
@@ -63,12 +44,5 @@ export class WeaponTestDialog extends SkillTestDialog
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;
-    }
-
-    _defaultFields() 
-    {
-        let fields = super._defaultFields();
-        fields.hitLocation = "roll";
-        return fields;
     }
 }

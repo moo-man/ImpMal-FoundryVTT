@@ -1,6 +1,6 @@
 import { BaseTestEvaluator } from "../base/base-evaluator";
 
-export class WeaponTestEvaluator extends BaseTestEvaluator 
+export class AttackEvaluator extends BaseTestEvaluator 
 {
     /**
      * 
