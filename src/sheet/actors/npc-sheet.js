@@ -143,7 +143,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
     {
         let config = game.impmal.config;
         let elements = [];
-        let items = data.items.weapon.concat(data.items.trait);
+        let items = data.items.weapon.concat(data.items.trait.filter(t => t.system.attack.enabled));
 
         let template = 
         `
