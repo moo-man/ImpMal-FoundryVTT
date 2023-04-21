@@ -13,12 +13,9 @@ export class SpecialisationModel extends StandardItemModel
     }
 
 
-    computeOwnerDerived(actor) 
+    get total() 
     {
-        if (actor)
-        {
-            this.total = actor.system.skills[this.skill]?.total + (5 * this.advances);
-        }
+        return this.parent.actor?.system.skills[this.skill]?.total + (5 * this.advances);
     }
 
     getTotalFor(characteristic, actor)
