@@ -20,4 +20,20 @@ export class PowerTestContext extends SkillTestContext
     {
         return this.actor.items.get(this.powerId);
     }
+
+    get targets() 
+    {
+        let targets = super.targets;
+
+        // Default power targets to unopposed
+        targets.forEach(t => 
+        {
+            if (!this.responses[t.id])
+            {
+                t.unopposed = true;
+            }
+        });
+        return targets;
+    }
 }
+

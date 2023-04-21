@@ -77,12 +77,66 @@
                     </div>
                 </div>
 
+                {{> systems/impmal/templates/item/partials/item-damage.hbs}}
+
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Overt"}}</label>
                     <div class="form-fields">
                         <input type="checkbox" name="system.overt" {{checked system.overt}}>
                     </div>
                 </div>
+
+                
+                <fieldset>
+                    <legend>{{localize "Opposed"}}</legend>
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.Difficulty"}}</label>
+                        <div class="form-fields">
+                            <select name="system.opposed.difficulty">
+                                {{#select system.opposed.difficulty}}
+                                    <option value=""></option>
+                                    {{#each (config "difficulties")}}
+                                        <option value="{{@key}}">{{this.name}} ({{numberFormat this.modifier
+                                            sign=true}})
+                                        </option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.Characteristic"}}</label>
+                        <div class="form-fields">
+                            <select name="system.opposed.characteristic">
+                                {{#select system.opposed.characteristic}}
+                                    <option value=""></option>
+                                    {{#each (config "characteristics")}}
+                                        <option value="{{@key}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.Skill"}}</label>
+                        <div class="form-fields">
+                            <select name="system.opposed.skill.key">
+                                {{#select system.opposed.skill.key}}
+                                    <option value=""></option>
+                                    {{#each (config "skills")}}
+                                        <option value="{{@key}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                            <input type="text" name="system.opposed.skill.specialisation"
+                                value="{{system.opposed.skill.specialisation}}"
+                                placeholder="{{localize 'IMPMAL.Specialisation'}}">
+                        </div>
+                    </div>
+                </fieldset>
 
 
             </div>

@@ -127,7 +127,7 @@ export class TestContext
         }
         if (save)
         {
-            this.saveContext();
+            return this.saveContext();
         }
     }
 
@@ -144,7 +144,7 @@ export class TestContext
         this.appliedDamage[id] = mergeObject({applied : true, multiple}, data);
         if (save)
         {
-            this.saveContext();
+            return this.saveContext();
         }
     }
 
@@ -223,7 +223,7 @@ export class TestContext
         };
         if (game.user.isGM || this.message.isAuthor)
         {
-            this.message?.update(data);
+            return this.message?.update(data);
         }
         else 
         {

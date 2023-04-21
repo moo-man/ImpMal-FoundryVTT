@@ -103,10 +103,13 @@
                             </select>
                             <input type="text" name="system.attack.damage.base" value="{{system.attack.damage.base}}">
                             <input type="checkbox" name="system.attack.damage.SL" {{checked system.attack.damage.SL}}>
-                            <label>+SL</label>
+                            <label class="{{#unless system.attack.damage.SL}}inactive{{/unless}}">+SL</label>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.IgnoreAP"}}</label>
+                        <input type="checkbox" name="system.attack.damage.ignoreAP" {{checked system.attack.damage.ignoreAP}}>
+                    </div>
                     <div class="form-group">
                         <label>{{localize "IMPMAL.Range"}}</label>
                         <div class="form-fields">

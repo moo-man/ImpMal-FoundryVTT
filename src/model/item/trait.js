@@ -63,24 +63,4 @@ export class TraitModel extends StandardItemModel
             this.attack.target = actor.system.characteristics[characteristic].total;
         }
     }
-
-    testLabel(path)
-    {
-        let test = this[path];
-        let config = game.impmal.config;
-        
-        let label = config.characteristics[test.characteristic];
-        
-        // Replace name from characteristic to skill if test specifies
-        if (test.skill.key)
-        {
-            label = config.skills[test.skill.key];
-        }
-        // Add specialisation if available
-        if (test.skill.specialisation)
-        {
-            label += ` (${test.skill.specialisation})`;
-        }
-        return label;
-    }
 }

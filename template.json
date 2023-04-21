@@ -377,7 +377,8 @@
         "damage": {
           "base": "",
           "characteristic": "",
-          "SL": true
+          "SL": true,
+          "ignoreAP" : false
         }
       }
     },
@@ -578,7 +579,8 @@
     },
     "power": {
       "templates": [
-        "notes"
+        "notes",
+        "damage"
       ],
       "discipline": "",
       "rating": 0,
@@ -586,7 +588,15 @@
       "range": "",
       "target": "",
       "duration": "",
-      "overt": false
+      "overt": false,
+      "opposed" : {
+        "difficulty" : "",
+        "characteristic" : "",
+        "skill" : {
+          "key" : "",
+          "specialisation" : ""
+        }
+      }
     },
     "corruption": {
       "templates": [

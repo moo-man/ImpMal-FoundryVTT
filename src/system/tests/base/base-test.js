@@ -221,6 +221,16 @@ export class BaseTest
         return this.context.message;
     }
 
+    get succeeded() 
+    {
+        return this.result.outcome == "success";
+    }
+
+    get failed() 
+    {
+        return !this.succeeded;
+    }
+
 
     // Attacker test details
     get defending() 
@@ -355,6 +365,25 @@ export class BaseTest
             {
                 test.applyDamageTo(targetId);
             }
+        });
+
+        html.on("click", ".roll", ev => 
+        {
+            let uuid = ev.currentTarget.dataset.uuid;
+            let actors = [];
+            if (game.user.character)
+            {
+                actors.push(game.user.character);
+            }
+            else 
+            {
+                actors = canvas.tokens.controlled.map(t => t.actor);
+            }
+
+            actors.forEach(a => 
+            {
+                a.setupTestFromItem(uuid);
+            });
         });
     }
 

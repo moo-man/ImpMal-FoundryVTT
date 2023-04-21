@@ -2,7 +2,7 @@ export class OpposedTestResult
 {
     SL = undefined;
     winner = "";
-    static damagingItems = ["weapon", "trait"];
+    static damagingItems = ["weapon", "trait", "power"];
     
     constructor(attackerTest, defenderTest)
     {
@@ -35,6 +35,8 @@ export class OpposedTestResult
             return this._computeWeaponDamage(item);
         case "trait" : 
             return this._computeTraitDamage(item);
+        case "power" : 
+            return this._computePowerDamage(item);
         }
     }
 
@@ -50,6 +52,24 @@ export class OpposedTestResult
         damage += item?.system.attack?.damage.value;
 
         if (item.system.attack.damage.SL)
+        {
+            damage += this.SL;
+        }
+
+        return damage;
+    }
+
+    _computePowerDamage(item)
+    {
+        let damage = 0;
+        if (!item?.system?.damage)
+        {
+            return null;
+        }
+
+        damage += item?.system?.damage.value;
+
+        if (item.system.damage.SL)
         {
             damage += this.SL;
         }

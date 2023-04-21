@@ -1,3 +1,4 @@
+import { DamageModel } from "./components/damage";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
@@ -12,11 +13,18 @@ export class PowerModel extends StandardItemModel
         schema.range = new fields.StringField();
         schema.target = new fields.StringField();
         schema.duration = new fields.StringField();
+        schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.overt = new fields.BooleanField();
+        schema.opposed = new fields.SchemaField({
+            difficulty :  new fields.StringField(),
+            characteristic :  new fields.StringField(),
+            skill : new fields.SchemaField({
+                specialisation :  new fields.StringField(),
+                key :  new fields.StringField(),
+            }),
+        });
         return schema;
     }
-
-
     
     getSkill(actor)
     {
@@ -30,7 +38,18 @@ export class PowerModel extends StandardItemModel
     computeOwnerDerived(actor) 
     {
         this.skill = this.getSkill(actor);
+        this.damage.compute(actor);
     }
 
+    get validOpposed()
+    {
+        let opposed = this.opposed;
+        return opposed.difficulty && (opposed.characteristic || opposed.skill);
+    }
+
+    get opposedLabel()
+    {
+        return this.testLabel("opposed");
+    }
 
 }
