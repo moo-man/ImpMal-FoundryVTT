@@ -263,6 +263,7 @@
     "IMPMAL.Normal" : "Normal",
     "IMPMAL.Notes" : "Notes",
     "IMPMAL.NotesContacts" : "Notes / Contacts",
+    "IMPMAL.NotValidChoiceType" : "Not a valid choice",
     "IMPMAL.NoOWnerOrGMFound" : "No Owner or GM Found",
     "IMPMAL.Obscured" : "Obscured",
     "IMPMAL.OneHanded" : "One Handed",

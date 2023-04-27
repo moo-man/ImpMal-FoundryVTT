@@ -78,15 +78,3 @@ export class DocumentListModel extends ListModel
         this.list.forEach(i => i.document = collection.get(i.id));
     }
 }
-
-
-// List of objects that reference some embedded document on the parent
-export class GroupedDocumentListModel extends  DocumentListModel
-{
-    static defineSchema() 
-    {
-        let schema = super.defineSchema();
-        schema.groups = new fields.ArrayField(new fields.ObjectField());
-        return schema;
-    }
-}
