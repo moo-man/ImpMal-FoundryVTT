@@ -49,6 +49,8 @@
         border-top: 1px solid black;
         margin: 5px 0px;
         padding: 5px 0px; 
+        display: flex;
+        flex-direction: column;
         h3 {
             text-transform: uppercase;
             border-bottom: none;
@@ -56,7 +58,6 @@
         }
 
         .trait-name {
-            float: left;
             margin-right: 3px;
         }
 

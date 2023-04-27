@@ -60,7 +60,7 @@ export class TraitModel extends StandardItemModel
         }
         else 
         {
-            this.attack.target = actor.system.characteristics[characteristic].total;
+            this.attack.target = actor.system.characteristics[characteristic]?.total || 0;
         }
     }
 }

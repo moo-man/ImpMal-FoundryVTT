@@ -93,47 +93,65 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         let template = 
         `
         <div data-id="@ID">
-        <a class="@CLASSES"><strong>@NAME: </strong></a>
+        
         @DESCRIPTION
         </div>
         `;
+        let nameTemplate = `<a class="@CLASSES"><strong>@NAME: </strong></a>`;
+        let classes = [];
+        let name;
+        let description;
 
-        for (let trait of items)
+        for (let item of items)
         {
-            if (trait.system.attack.enabled && !trait.system.roll.enabled && !trait.system.test.enabled)
-            {
-                continue; // If a trait only specifies attack, only show in attacks
-            }
-
-            let classes = ["trait-name", "list-edit-rc"];
-            let name = trait.name;
-            let description = await TextEditor.enrichHTML(trait.system.notes.player, {async: true});
-
-            if (trait.system.roll.enabled)
-            {
-                classes.push("trait-roll");
-                name = `<i class="fa-regular fa-dice-d10"></i>` + name;
-            }
-
+            description = await TextEditor.enrichHTML(item.system.notes.player, {async: true});
             if (game.user.isGM)
             {
-                description += await TextEditor.enrichHTML(trait.system.notes.gm, {async: true});
+                description += await TextEditor.enrichHTML(item.system.notes.gm, {async: true});
             }
+            name = item.name;
 
-            if (trait.system.test.enabled)
+            if (item.type == "talent" || item.type == "corruption")
             {
-                let testClass = trait.system.test.target == "self" ? "roll" : "target-test";
-                let testName = trait.system.testLabel("test");
+                classes.push[item.type];
+            }
+            else // If trait
+            {
 
-                // add crosshairs if not self target
-                if (trait.system.test.target == "targets")
+                if (item.system.attack.enabled && !item.system.roll.enabled && !item.system.test.enabled)
                 {
-                    testName = `<i class="fa-solid fa-crosshairs"></i>` + testName ;
+                    continue; // If a trait only specifies attack, only show in attacks
                 }
-                description += `<button type="button" data-type="item" class="${testClass}">${testName} Test</button>`;
+                
+                classes = ["trait-name", "list-edit-rc"];
+                
+                if (item.system.roll.enabled)
+                {
+                    classes.push("trait-roll");
+                    name = `<i class="fa-regular fa-dice-d10"></i>` + name;
+                }
+                
+                if (item.system.test.enabled)
+                {
+                    let testClass = item.system.test.target == "self" ? "roll" : "target-test";
+                    let testName = item.system.testLabel("test");
+                    
+                    // add crosshairs if not self target
+                    if (item.system.test.target == "targets")
+                    {
+                        testName = `<i class="fa-solid fa-crosshairs"></i>` + testName ;
+                    }
+                    description += `<button type="button" data-type="item" class="${testClass}">${testName} Test</button>`;
+                }
             }
             
-            elements.push(template.replace("@ID", trait.id).replace("@CLASSES", classes.join(" ")).replace("@NAME", name).replace("@DESCRIPTION", description));
+            elements.push(
+                template
+                    .replace("@DESCRIPTION", description)
+                    .replace("<p>", `<p>${nameTemplate // Move the name inside of the p tag so it's inline with the description
+                        .replace("@CLASSES", classes.join(" "))
+                        .replace("@NAME", name)}`)
+                    .replace("@ID", item.id));
         }
 
         return {html: elements.join(""), show : elements.length > 0};

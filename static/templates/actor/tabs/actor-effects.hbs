@@ -42,6 +42,36 @@
     </div>
 </section>
 
+{{#if items.corruption.length}}
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Corruption"}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="corruption"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each items.corruption}}
+        <div class="list-item" data-id="{{this.id}}" data-collection="items">
+            <div class="list-row">
+                <div class="list-name list-edit">
+                    <img src="{{this.img}}">
+                    <a>{{this.name}}</a>
+                </div>
+                <div class="list-controls">
+                    <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
+                    <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                </div>
+            </div>
+            <div class="summary">
+
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</section>
+{{/if}}
+
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.PassiveEffects"}}</div>
