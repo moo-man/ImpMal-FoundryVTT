@@ -117,6 +117,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".remove-ref").on("click", this._onRemoveReference.bind(this));
         html.find(".trait-roll").on("click", this._onTraitRoll.bind(this));
         html.find(".target-test").on("click", this._onTargetTest.bind(this));
+        html.find(".create-spec").on("click", this._onCreateSpecialisation.bind(this));
     }
 
 
@@ -232,7 +233,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     _onRollClick(ev)
     {
         let type = ev.currentTarget.dataset.type;  // characteristic, skill, etc.
-        let key = ev.currentTarget.dataset.key;    // Non items, such as characteristic keys, or skill keys
+        let key = this._getKey(ev);                   // Non items, such as characteristic keys, or skill keys
         let itemId = this._getId(ev);                   // Item ids, if using skill items or weapons
 
         switch(type)
@@ -295,6 +296,17 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             SocketHandlers.executeOnOwner(target.actor, "rollItemTest",{documentUuid : target.actor.uuid, itemUuid : item.uuid});
         });
         game.user.updateTokenTargets([]);
+    }
+
+    _onCreateSpecialisation(ev)
+    {
+        let skill = this._getKey(ev);      
+
+        Item.create({
+            type : "specialisation",
+            name : game.i18n.format("IMPMAL.SkillSpecialisation", {skill : game.impmal.config.skills[skill]}), 
+            system : {skill}, 
+        }, {renderSheet:true, parent: this.actor});
     }
 
     //#endregion

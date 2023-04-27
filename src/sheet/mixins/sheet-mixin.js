@@ -56,6 +56,12 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         return this._getDataAttribute(ev, "index");
     }
 
+    _getKey(ev) 
+    {
+        return this._getDataAttribute(ev, "key");
+    }
+
+
     _getCollection(ev) 
     {
         return this._getDataAttribute(ev, "collection") || "items";

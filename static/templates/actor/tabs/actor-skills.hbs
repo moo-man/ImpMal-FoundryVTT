@@ -9,8 +9,8 @@
         </div>
     </header>
     {{#each system.skills}}
-        <div class="skill-row">
-            <a class="skill-name roll" data-type="skill" data-key="{{@key}}">{{configLookup "skills" @key}}</a>
+        <div class="skill-row" data-key="{{@key}}">
+            <a class="skill-name roll" data-type="skill" >{{configLookup "skills" @key}}</a>
             <div class="skill-characteristic">
                 <div>
                     {{configLookup "characteristicAbbrev" this.characteristic}}
@@ -24,8 +24,10 @@
             {{else}}
                 <div><input name="system.skills.{{@key}}.advances" type="number" value="{{this.advances}}"></div>
             {{/if}}
-            <div><a class="roll" data-type="skill" data-key="{{@key}}">{{this.total}}</a></div>
-            <div class="skill-controls"></div>
+            <div><a class="roll" data-type="skill">{{this.total}}</a></div>
+                <div class="skill-controls">
+                    <a class="create-spec" data-tooltip="{{localize 'IMPMAL.CreateSpecialisation'}}"><i class="fa-solid fa-plus"></i></a>
+                </div>
         </div>
         {{#each this.specialisations}}
             <div class="skill-row spec" data-id="{{this.id}}">
