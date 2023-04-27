@@ -217,6 +217,12 @@ export class TestDialog extends Application
 
         let dialogData = {data : {}, fields};
         dialogData.data.speaker = ChatMessage.getSpeaker({actor});
+        if (!actor.token)
+        {
+            // getSpeaker retrieves tokens even if this sheet isn't a token's sheet
+            delete dialogData.data.speaker.token;
+            delete dialogData.data.speaker.scene;
+        }
         dialogData.data.title = (title?.replace || game.i18n.localize("IMPMAL.Test")) + (title?.append || "");
         if (target)
         {

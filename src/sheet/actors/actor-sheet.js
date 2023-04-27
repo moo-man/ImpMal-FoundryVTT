@@ -118,8 +118,9 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".trait-roll").on("click", this._onTraitRoll.bind(this));
         html.find(".target-test").on("click", this._onTargetTest.bind(this));
         html.find(".create-spec").on("click", this._onCreateSpecialisation.bind(this));
+        html.find(".warp").on("click", this._onWarpClick.bind(this));
+        html.find(".purge").on("click", this._onPurgeClick.bind(this));
     }
-
 
     _onFactionDelete(ev)
     {
@@ -308,6 +309,17 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             system : {skill}, 
         }, {renderSheet:true, parent: this.actor});
     }
+
+    _onWarpClick()
+    {
+        this.actor.setupSkillTest({key : "psychic"}, {warp: this.actor.system.warp.state});
+    }
+
+    _onPurgeClick()
+    {
+        this.actor.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {purge: true,  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
+    }
+
 
     //#endregion
 }

@@ -16,6 +16,10 @@ export class StandardActorModel extends BaseActorModel
         schema.characteristics = new fields.EmbeddedDataField(CharacteristicsModel);
         schema.skills = new fields.EmbeddedDataField(SkillsModel);
         schema.combat = new fields.EmbeddedDataField(StandardCombatModel);
+        schema.warp = new fields.SchemaField({
+            charge : new fields.NumberField({min: 0}),
+            state : new fields.NumberField({default: 0, min: 0})
+        });
         return schema;
     }
     
@@ -33,6 +37,8 @@ export class StandardActorModel extends BaseActorModel
         super.computeBase();
         this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
+        this.warp.threshold = this.characteristics.wil.bonus; // Put this in base so it's modifiable by effects
+
     }
 
     computeDerived(items) 
@@ -45,6 +51,7 @@ export class StandardActorModel extends BaseActorModel
         this.skills.findSpecialisations(items.specialisation);
         this.computeEncumbrance(items);
         this.combat.computeCombat(this.characteristics, items);
+        this.computeWarpState();
     }
 
     computeEncumbrance(items) 
@@ -75,6 +82,25 @@ export class StandardActorModel extends BaseActorModel
         else if (this.encumbrance.value > this.encumbrance.restrained)
         {
             this.encumbrance.state = 2;
+        }
+    }
+
+    computeWarpState()
+    {
+        // State = 0: Charge <= Threshold
+        // State = 1: Charge > Threshold and has not failed Psychic Mastery Test
+        // State = 2: Charge > Threshold and has failed Psychic Mastery test, has not rolled Perils yet
+
+        // State 1 and 2 cannot be "computed", State 0 can be computed 
+        // So if state is 0 and charge > threshold, state should be 1 instead
+        // State 1 -> 2 is determined via test results
+        if (this.warp.charge > this.warp.threshold && this.warp.state == 0)
+        {
+            this.warp.state = 1;
+        }
+        if (this.warp.charge <= this.warp.threshold)
+        {
+            this.warp.state = 0;
         }
     }
 

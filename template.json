@@ -321,7 +321,11 @@
         "name" : ""
       },
       "species" : "",
-      "role" : "troop"
+      "role" : "troop",
+      "warp" : {
+        "charge" : 0,
+        "state" : 0
+      }
     }
   },
   "Item": {

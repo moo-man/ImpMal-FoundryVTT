@@ -121,35 +121,6 @@
         color: darkred
     }
 
-
-    .powers {
-        .warp-charge {
-            white-space: nowrap;
-            a {
-                color: darkblue;
-            }
-            .bar-container {
-                height: 20px;
-                position: relative;
-
-                .perils {
-                    position: absolute;
-                    top: 0px;
-                    width: 100%;
-                    text-align: center;
-                    a {
-                        color: white;
-                    }
-                }
-                }
-            display: flex;
-            justify-content: left;
-            align-items: center;
-            input {
-                width: 30px;
-            }
-        }
-    }
     
     .actor-notes {
         height: calc(100% - 174px);

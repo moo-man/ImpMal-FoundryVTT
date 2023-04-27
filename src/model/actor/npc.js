@@ -15,9 +15,6 @@ export class NPCModel extends StandardActorModel
         schema.species = new fields.StringField();
         schema.role = new fields.StringField();
         schema.faction = new fields.EmbeddedDataField(SingletonItemModel);
-        schema.warp = new fields.SchemaField({
-            charge : new fields.NumberField({min: 0}),
-        });
         return schema;
     }
 

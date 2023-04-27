@@ -47,10 +47,6 @@ export class CharacterModel extends StandardActorModel
         schema.connections = new fields.EmbeddedDataField(ListModel);
         schema.influence = new fields.EmbeddedDataField(InfluenceModel);
         schema.hands = new fields.EmbeddedDataField(HandsModel);
-        schema.warp = new fields.SchemaField({
-            charge : new fields.NumberField({min: 0}),
-            state : new fields.NumberField({default: 0, min: 0})
-        });
         return schema;
     }
 
@@ -85,7 +81,6 @@ export class CharacterModel extends StandardActorModel
     {
         super.computeBase();
 
-        this.warp.threshold = this.characteristics.wil.bonus; // Put this in base so it's modifiable by effects
     }
 
 
@@ -100,22 +95,6 @@ export class CharacterModel extends StandardActorModel
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
         this.combat.superiority = game.impmal.superiority.value;
-
-        // State = 0: Charge <= Threshold
-        // State = 1: Charge > Threshold and has not failed Psychic Mastery Test
-        // State = 2: Charge > Threshold and has failed Psychic Mastery test, has not rolled Perils yet
-
-        // State 1 and 2 cannot be "computed", State 0 can be computed 
-        // So if state is 0 and charge > threshold, state should be 1 instead
-        // State 1 -> 2 is determined via test results
-        if (this.warp.charge > this.warp.threshold && this.warp.state == 0)
-        {
-            this.warp.state = 1;
-        }
-        if (this.warp.charge <= this.warp.threshold)
-        {
-            this.warp.state = 0;
-        }
     }
 
     updateChecks()

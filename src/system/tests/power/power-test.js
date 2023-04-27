@@ -29,7 +29,7 @@ export class PowerTest extends SkillTest
     {
         await super.postRoll();
 
-        if (this.actor.type == "character")
+        if (this.actor.type == "character" || this.actor.type == "npc")
         {
             let charge = this.actor.system.warp.charge;
             let added = this.context.warpAdded;
