@@ -17,17 +17,18 @@ export class ChoiceModel extends foundry.abstract.DataModel
         schema.structure = new fields.ObjectField({initial : {
             type : "or",
             id : "root",
-            choices : []
+            options : []
         }
         });
-        schema.choices = new fields.ArrayField(new fields.SchemaField({
-            // Universal fields - All types have these
+        // Universal fields - All types have these
+        schema.options = new fields.ArrayField(new fields.SchemaField({
             type : new fields.StringField(), // Types are item, effect, filter, placeholder
             id : new fields.StringField(), // Used by structure
             name : new fields.StringField(), // Store name so async retrieval doesn't cause issues
              
             // Type specific fields
             documentId : new fields.StringField(), // filters ande placeholders don't need IDs
+            diff : new fields.ObjectField(), // Changes to choice document
             idType : new fields.StringField(), // uuid, id, or relative ID
             filters : new fields.ArrayField(new fields.SchemaField({
                 property : new fields.StringField(),
@@ -36,29 +37,35 @@ export class ChoiceModel extends foundry.abstract.DataModel
         }));
         return schema;
     }
- 
-    addChoice(data, location)
+
+    get compiled()
     {
-        let choice;
+        let compiled = foundry.utils.deepClone(this.structure);
+        return compiled;
+    }
+ 
+    addOption(data, location)
+    {
+        let option;
         if (data.documentName == "Item")        
         {
-            choice = this._createDocumentChoice(data);
+            option = this._createDocumentOption(data);
         }
         else if (data.documentName == "ActiveEffect")
         {
-            choice = this._createDocumentChoice(data);
+            option = this._createDocumentOption(data);
         }
         else if (data.type == "filter")
         {
-            choice = this._createFilterChoice(data);
+            option = this._createFilterOption(data);
         }
         else if (data.type == "placeholder")
         {
-            choice = this._createPlaceholderChoice(data);
+            option = this._createPlaceholderOption(data);
         }
         else if (data.type == "and" || data.type == "or")
         {
-            return {structure : this.insert(mergeObject(data, {id : randomID(), choices : []}), location)};
+            return {structure : this.insert(mergeObject(data, {id : randomID(), options : []}), location)};
         }
         else 
         {
@@ -66,7 +73,12 @@ export class ChoiceModel extends foundry.abstract.DataModel
             return ui.notifications.error(game.i18n.localize("IMPMAL.NotValidChoiceType"));
         }
  
-        return {choices: this.choices.concat(choice), structure : this.insert({id : choice.id, type: "choice"}, location)};
+        return {options: this.options.concat(option), structure : this.insert({id : option.id, type: "option"}, location)};
+    }
+
+    deleteOption(id)
+    {
+        return {options: this.options.filter(i => i.id != id), structure : this.remove(id)};
     }
  
     //#region Operations
@@ -81,11 +93,11 @@ export class ChoiceModel extends foundry.abstract.DataModel
             return structure;
         }
  
-        if (structure.choices)
+        if (structure.options)
         {
-            for (let choice of structure.choices)
+            for (let option of structure.options)
             {
-                let found = this.find(id, choice);
+                let found = this.find(id, option);
                 if (found)
                 {
                     return found;   
@@ -108,9 +120,38 @@ export class ChoiceModel extends foundry.abstract.DataModel
         {
             location = this.find("root", structure);
         }
- 
-        location.choices.push(data);
-        return structure;
+        if (location.type == "option")
+        {
+            // If inserting onto another option, form a choice between them instead
+            location.options = [foundry.utils.deepClone(location), data];
+            location.type = "and";
+            location.id = randomID();
+        }
+        else
+        {
+            // If inserting into a choice, just add it to the list
+            location.options.push(data);
+        }
+        return this.cleanStructure(structure);
+    }
+
+    move(id, dest="root")
+    {
+        if (id == dest)
+        {
+            return;
+        }
+        let data = this.find(id);
+        if (data.type == "option")
+        {
+            let newStructure = this.remove(id);
+            this.insert(data, dest, newStructure);
+            return newStructure;
+        }
+        else 
+        {
+            return this.structure;
+        }
     }
  
  
@@ -133,8 +174,7 @@ export class ChoiceModel extends foundry.abstract.DataModel
         return this.edit(id, {type});
     }
  
-    // Find a choice in the structure
-    delete(id, structure)
+    remove(id, structure)
     {   
         structure = structure || foundry.utils.deepClone(this.structure);
         if (id == "root")
@@ -142,30 +182,61 @@ export class ChoiceModel extends foundry.abstract.DataModel
             return structure;// cannot delete root
         }
  
-        if (structure.choices)
+        if (structure.options)
         {
             // Delete choice with ID
-            if (structure.choices.find(c => c.id == id))
+            if (structure.options.find(c => c.id == id))
             {
-                structure.choices = structure.choices.filter(c => c.id != id);
-                return structure;
+                structure.options = structure.options.filter(c => c.id != id);
             }
-            else 
+            for (let option of structure.options)
             {
-                for (let choice of structure.choices)
-                {
-                    return this.delete(id, choice);
-                }
+                this.remove(id, option);
             }
+            return this.cleanStructure(structure);
         }
+    }
+
+    cleanStructure(structure)
+    {
+        // Prevents accumulation of single-item choices by pushing them upward
+        if (structure.options.length == 1 && structure.options[0].type != "option")
+        {
+            structure.options = structure.options[0].options;
+        }
+        structure.options.forEach(option => 
+        { 
+            if (option.type != "option") 
+            { 
+                if (option.options.length == 1)
+                {
+                    structure.options.push(option.options[0]); // Move single options up
+                    option.options = [];
+                }
+                this.cleanStructure(option); // Recursively clean inner options
+            } 
+        }); 
+        // Filter out empty choices
+        structure.options = structure.options.filter(option => 
+        {
+            if (option.type == "option")
+            {
+                return true;
+            }
+            else if (option.options.length > 0)
+            {
+                return true;
+            }
+        });
+        return structure;
     }
 
     //#endregion
  
     //#region Choice creation
-    _createDocumentChoice(document)
+    _createDocumentOption(document)
     {
-        let choice = {
+        let option = {
             type : document.documentName == "Item" ? "item" : (documentName == "ActiveEffect" ? "effect" : ""),
             name : document.name || document.label,
             id : randomID(),
@@ -173,36 +244,36 @@ export class ChoiceModel extends foundry.abstract.DataModel
         };
         if (document.parent && document.parent == this.parent.parent) // Currently only used by effect choices
         {
-            choice.idType = "relative";
-            choice.documentId = `.${document.documentName}.${document.id}`;
+            option.idType = "relative";
+            option.documentId = `.${document.documentName}.${document.id}`;
         }
         else 
         {
-            choice.idType = "id";
-            choice.documentId = document.id;
+            option.idType = "id";
+            option.documentId = document.id;
         }
-        return choice;
+        return option;
     }
  
-    _createFilterChoice(data)
+    _createFilterOption(data)
     {
-        let choice = {
+        let option = {
             type : "filter",
             name : data.name,
             id : randomID(),
             filters : data.filters
         };
-        return choice;
+        return option;
     }
  
-    _createPlaceholderChoice(data)
+    _createPlaceholderOption(data)
     {
-        let choice = {
+        let option = {
             type : "placeholder",
             name : data.name,
             id : randomID()
         };
-        return choice;
+        return option;
     }
     //#endregion
 }

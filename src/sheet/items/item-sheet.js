@@ -1,3 +1,4 @@
+import { ChoiceConfig } from "../../apps/choice-config";
 import ItemTraitsForm from "../../apps/item-traits";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
@@ -42,6 +43,7 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         html.find(".array-edit").change(this._onEditArrayElement.bind(this));
         html.find(".array-delete").click(this._onDeleteArrayElement.bind(this));
         html.find(".edit-traits").click(this._onEditTraits.bind(this));
+        html.find(".choice-config").click(this._onChoiceConfig.bind(this));
     }
 
     _onCreateArrayElement(ev)
@@ -90,5 +92,10 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
     _onEditTraits() 
     {
         new ItemTraitsForm(this.item).render(true);
+    }
+
+    _onChoiceConfig(ev) 
+    {
+        new ChoiceConfig(this.item, {path : ev.currentTarget.dataset.path}).render(true);
     }
 }

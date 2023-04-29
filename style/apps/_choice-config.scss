@@ -1,0 +1,20 @@
+.impmal.choice-config 
+{
+    nav.sheet-tabs {
+        display: flex;
+        text-align: center;
+        justify-content: space-around;
+    }
+
+
+    .choice {
+        padding: 5px;
+        border: 1px solid black;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.05)
+    }
+
+    .connector {
+        margin: 0px 5px;
+    }
+}

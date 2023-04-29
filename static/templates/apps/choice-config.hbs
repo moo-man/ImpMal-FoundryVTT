@@ -1,0 +1,40 @@
+<form>
+    <div>
+        <nav class="sheet-tabs">
+            <a class="item" data-tab="choices">{{localize "IMPMAL.Choices"}}</a>
+            <a class="item" data-tab="structure">{{localize "IMPMAL.Structure"}}</a>
+        </nav>
+        <div class="tab-content">
+            <div class="tab choices" data-tab="choices">
+                <section class="list">
+                    <header class="list-row">
+                        <div class="list-name">{{localize "IMPMAL.Choices"}}</div>
+                        <div class="list-controls">
+                            <a class="list-create"><i class="fa-solid fa-plus"></i></a>
+                        </div>
+                    </header>
+                    <div class="list-content">
+                        {{#each options}}
+                            <div class="list-item" data-id="{{this.id}}" data-collection="items">
+                                <div class="list-row">
+                                    <div class="list-name list-edit">
+                                        <a>{{this.name}}</a>
+                                    </div>
+                                    <div class="list-controls">
+                                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </div>
+                                <div class="summary">
+
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </section>
+            </div>
+            <div class="tab structure" data-tab="structure">
+                {{{structureHTML}}}
+            </div>
+        </div>
+    </div>
+</form>

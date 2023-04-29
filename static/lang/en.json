@@ -71,6 +71,8 @@
     "IMPMAL.Characteristic" : "Characteristic",
     "IMPMAL.CharacteristicTest" : "{characteristic} Test",
     "IMPMAL.Characteristics" : "Characteristics",
+    "IMPMAL.ChoiceAND" : "AND",
+    "IMPMAL.ChoiceOR" : "OR",
     "IMPMAL.Close" : "Close",
     "IMPMAL.Collapsed" : "Collapsed",
     "IMPMAL.Combat" : "Combat",
