@@ -33,6 +33,34 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         return conditions;
     }
 
+    /**
+     * Override dragStart handler to handle universal list HTML
+     */
+    _onDragStart(event) 
+    {
+        const li = event.currentTarget;
+        if ( event.target.classList.contains("content-link") )
+        { 
+            return;
+        }
+     
+        // Create drag data
+        let dragData;
+     
+        // Owned Items
+        const document = this.actor[this._getCollection(event)].get(li.dataset.id);
+        dragData = document.toDragData();
+     
+        if ( !dragData ) 
+        {
+            return;
+        }
+     
+        // Set data transfer
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    }
+     
+
 
     addGenericListeners(html) 
     {

@@ -10,6 +10,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         options.resizable = true;
         options.scrollY = [".tab-content"];
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }];
+        options.dragDrop.push({dragSelector : ".list .list-item"});
         return options;
     }
 
@@ -34,6 +35,14 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     {
         let sheetItems = data.actor.itemCategories;
 
+        for(let key in sheetItems)
+        {
+            if (sheetItems[key] instanceof Array)
+            {
+                sheetItems[key] = sheetItems[key].sort((a, b) => a.sort - b.sort);
+            }
+        }
+
         sheetItems.equipped = {
             melee : sheetItems.weapon.filter(i => i.system.equipped.value && i.system.attackType == "melee"),
             ranged : sheetItems.weapon.filter(i => i.system.equipped.value && i.system.attackType == "ranged"),
@@ -41,15 +50,18 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             shield : sheetItems.protection.filter(i => i.system.equipped.value).filter(i => i.system.category == "shield"),
             equipment : sheetItems.equipment.filter(i => i.system.equipped.value)
         };
+
+
         return sheetItems;
     }
 
     organizeEffects(data)
     {
+        let sorted = data.actor.effects.contents.sort((a, b) => a.sort - b.sort);
         let effects = {
-            active: data.actor.effects.filter(e => e.isTemporary && !e.disabled),
-            passive : data.actor.effects.filter(e => !e.isTemporary && !e.disabled),
-            disabled : data.actor.effects.filter(e => e.disabled)
+            active: sorted.filter(e => e.isTemporary && !e.disabled),
+            passive : sorted.filter(e => !e.isTemporary && !e.disabled),
+            disabled : sorted.filter(e => e.disabled)
         };
 
         return effects;
@@ -77,7 +89,6 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
                 });
         }
     }
-
 
     /**
      * By default, Foundry prevents editing of any property that is being affected by Active Effects

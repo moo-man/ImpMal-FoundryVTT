@@ -26,7 +26,7 @@
     </header>
     <div class="list-content">
         {{#each items.weapon}}
-            <div class="list-item" data-id="{{this.id}}">
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
@@ -83,7 +83,7 @@
     </header>
     <div class="list-content">
         {{#each items.ammo}}
-            <div class="list-item" data-id="{{this.id}}">
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
@@ -116,7 +116,7 @@
     </header>
     <div class="list-content">
         {{#each items.modification}}
-            <div class="list-item" data-id="{{this.id}}">
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
@@ -150,7 +150,7 @@
     </header>
     <div class="list-content">
         {{#each items.protection}}
-            <div class="list-item" data-id="{{this.id}}">
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
@@ -193,7 +193,7 @@
     </header>
     <div class="list-content">
         {{#each items.forceField}}
-            <div class="list-item" data-id="{{this.id}}">
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name" {{#if this.system.overload.collapsed}}style="color: darkred"{{/if}}>
                         <img src="{{this.img}}">
@@ -236,7 +236,7 @@
     </header>
     <div class="list-content">
         {{#each items.equipment}}
-            <div class="list-item" data-id="{{this.id}}">
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
@@ -279,7 +279,7 @@
     </header>
     <div class="list-content">
         {{#each items.augmetic}}
-            <div class="list-item" data-id="{{this.id}}">
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">

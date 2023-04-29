@@ -10,7 +10,7 @@
         <div class="list-content">
             {{#each items.boonLiability}}
                 {{#if (eq this.system.category "boon")}}
-                    <div class="list-item" data-id="{{this.id}}" data-collection="items">
+                    <div class="list-item" data-id="{{this.id}}" data-collection="items" data-item-id="{{this.id}}">
                         <div class="list-row">
                             <div class="list-name list-edit">
                                 <img src="{{this.img}}">
@@ -44,7 +44,7 @@
         <div class="list-content">
             {{#each items.boonLiability}}
                 {{#if (eq this.system.category "liability")}}
-                    <div class="list-item" data-id="{{this.id}}" data-collection="items">
+                    <div class="list-item" data-id="{{this.id}}" data-collection="items" data-item-id="{{this.id}}">
                         <div class="list-row">
                             <div class="list-name list-edit">
                                 <img src="{{this.img}}">

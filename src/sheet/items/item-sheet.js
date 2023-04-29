@@ -13,6 +13,7 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         options.height = 600;
         options.resizable = true;
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }];
+        options.dragDrop.push({dragSelector : ".list .list-item" });
         return options;
     }
 
