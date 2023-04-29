@@ -48,7 +48,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         let dragData;
      
         // Owned Items
-        const document = this.actor[this._getCollection(event)].get(li.dataset.id);
+        const document = this.object[this._getCollection(event)].get(li.dataset.id);
         dragData = document.toDragData();
      
         if ( !dragData ) 

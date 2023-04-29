@@ -129,4 +129,25 @@
         }
     }
 
+    .choice-group 
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        label {
+            line-height: var(--form-field-height);
+        }
+        .choice-text {
+            color: var(--color-text-dark-secondary);
+            height: fit-content;
+            border-radius: 3px;
+            min-width: 20px;
+            min-height: 30px;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 5px 5px;
+            display: flex;
+            align-items: center;
+        }
+    }
+
 }

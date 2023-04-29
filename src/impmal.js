@@ -42,6 +42,7 @@ import { TraitModel } from "./model/item/trait";
 import TraitItemSheet from "./sheet/items/item-trait-sheet";
 import WeaponItemSheet from "./sheet/items/item-weapon-sheet";
 import ModificationItemSheet from "./sheet/items/item-modification-sheet";
+import ImpMalUtility from "./system/utility";
 
 Hooks.once("init", () => 
 {
@@ -93,6 +94,7 @@ Hooks.once("init", () =>
     game.impmal = {
         config : IMPMAL,
         log : log,
+        utility : ImpMalUtility,
         testClasses : {
             CharacteristicTest,
             SkillTest,
