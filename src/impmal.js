@@ -43,6 +43,7 @@ import TraitItemSheet from "./sheet/items/item-trait-sheet";
 import WeaponItemSheet from "./sheet/items/item-weapon-sheet";
 import ModificationItemSheet from "./sheet/items/item-modification-sheet";
 import ImpMalUtility from "./system/utility";
+import { ChoiceConfig } from "./apps/choice-config";
 
 Hooks.once("init", () => 
 {
@@ -101,6 +102,9 @@ Hooks.once("init", () =>
             WeaponTest,
             PowerTest,
             TraitTest
+        },
+        apps : {
+            ChoiceConfig
         }
     };
 

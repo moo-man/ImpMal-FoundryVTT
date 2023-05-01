@@ -1,3 +1,4 @@
+import ImpMalItemDiffSheet from "../sheet/items/item-sheet-diff";
 import ImpMalSheetMixin from "../sheet/mixins/sheet-mixin";
 
 export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
@@ -8,8 +9,8 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
         options.classes = options.classes.concat(["impmal", "choice-config"]);
         options.title = game.i18n.localize("IMPMAL.ChoiceConfig");
         options.resizable = true;
-        options.height = 500;
-        options.width = 400;
+        options.height = 300;
+        options.width = 600;
         options.template = "systems/impmal/templates/apps/choice-config.hbs";
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "choices" }];
         options.dragDrop.push([{ dragSelector: ".item-list .item", dropSelector: null }, { dragSelector: ".list .list-item", dropSelector: null }, { dragSelector: ".option", dropSelector: null }]);
@@ -34,13 +35,13 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
     {
         structure = structure || this.choices.structure;
         return `<div class="choice" data-id=${structure.id}>
-        ${this._choiceHTML(structure.options)}
+        ${this._choiceHTML(structure.options, structure.type)}
         </div>`;
     }
 
     _choiceHTML(options, type)
     {
-        let choiceLabel = game.i18n.localize(type == "AND" ? "IMPMAL.ChoiceAND" : "IMPMAL.ChoiceOR");
+        let choiceLabel = game.i18n.localize(type == "and" ? "IMPMAL.ChoiceAND" : "IMPMAL.ChoiceOR");
         return options.map(i => 
         {
             if (i.type != "option")
@@ -63,7 +64,7 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
         {
             document = await Item.implementation.fromDropData(dropData);
         }
-        else if (dropData.type == "ActivEffect")
+        else if (dropData.type == "ActiveEffect")
         {
             document = await ActiveEffect.implementation.fromDropData(dropData);
         }
@@ -82,6 +83,26 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
         this._updateObject({structure : this.choices.move(optionId, dropId)});
     }
 
+    getOptionDocument(id, idType)
+    {
+        if (idType == "id" || idType == "uuid")
+        {
+            return game.impmal.utility.findId(id);
+        }
+        else if (idType == "relative")
+        {
+            let split = id.split(".");
+            if (split[1] == "ActiveEffect")
+            {
+                return this.object.effects.get(split[2]);
+            }
+            else 
+            {
+                return this.object.items.get(split[2]);
+            }
+        }
+    }
+
 
 
     async _updateObject(choices)
@@ -96,6 +117,10 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
         super.activateListeners(html);
         new DragDrop({dragSelector: ".option", dropSelector : ".option", callbacks: {dragstart : this._onDragOption.bind(this)}}).bind(html[0]);
         this.addGenericListeners(html);
+        html.find(".connector").on("click", (ev) => 
+        {
+            this._updateObject({structure : this.choices.switch(this._getId(ev))});
+        });
     }
 
     _onDragOption(ev)
@@ -107,6 +132,36 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
     {
         let id = this._getId(event);
         this._updateObject(this.choices.deleteOption(id));
+    }
+
+    async _onListEdit(event) 
+    {
+        let optionId = this._getId(event);
+        let options = foundry.utils.deepClone(this.choices.options);
+        let index = options.findIndex(o => o.id == optionId);
+        let {documentId, idType} = options[index];
+        if (documentId)
+        {
+            let document = await this.getOptionDocument(documentId, idType);
+            if (document.documentName == "Item")
+            {
+                new ImpMalItemDiffSheet(document, {diffUpdater : (newDiff) => 
+                {
+                    game.impmal.log("Updating DIFF: ", this.object, index, newDiff);
+                    options[index].diff = newDiff;
+                    if (newDiff.name)
+                    {
+                        options[index].name = newDiff.name;
+                    }
+                    this._updateObject({options});
+                }, diff : options[index].diff}).render(true);
+                
+            }
+            else 
+            {
+                document.sheet.render(true);
+            }
+        }
     }
 
     

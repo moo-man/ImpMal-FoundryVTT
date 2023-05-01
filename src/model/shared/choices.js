@@ -5,7 +5,7 @@ let fields = foundry.data.fields;
  * A ChoiceModel allows for choices between any arbitrary amount of documents to any amount of depth
  * 
  * The structure property describes the structure of the possible decisions, e.g. A and B or C and D   vs.   A or (B and C) or D
- * The choices property contains the list of things being chosen, e.g. what A, B, C, D actually are
+ * The options property contains the list of things being chosen, e.g. what A, B, C, D actually are
  */
 export class ChoiceModel extends foundry.abstract.DataModel
 {
@@ -160,7 +160,7 @@ export class ChoiceModel extends foundry.abstract.DataModel
         let structureCopy = foundry.utils.deepClone(this.structure);
         let target = this.find(id, structureCopy);
         mergeObject(target, obj);
-        return target;
+        return structureCopy;
     }
  
     switch(id="root")
@@ -237,7 +237,7 @@ export class ChoiceModel extends foundry.abstract.DataModel
     _createDocumentOption(document)
     {
         let option = {
-            type : document.documentName == "Item" ? "item" : (documentName == "ActiveEffect" ? "effect" : ""),
+            type : document.documentName == "Item" ? "item" : (document.documentName == "ActiveEffect" ? "effect" : ""),
             name : document.name || document.label,
             id : randomID(),
             idType : ""
@@ -276,4 +276,27 @@ export class ChoiceModel extends foundry.abstract.DataModel
         return option;
     }
     //#endregion
+
+    get textDisplay() 
+    {
+        return this._displayOptions(this.structure);
+    }
+
+    _displayOptions(structure)
+    {
+        if (structure.type == "option")
+        {
+            return this.options.find(i => i.id == structure.id).name;
+        }
+        else if (structure.type == "and" || structure.type == "or")
+        {
+            let connector = structure.type == "and" ? ",  " : "  OR  ";
+            let text = structure.options.map(o => this._displayOptions(o)).join(connector);
+            if (structure.id != "root")
+            {
+                text = `(${text})`;
+            }
+            return text;
+        }
+    }
 }

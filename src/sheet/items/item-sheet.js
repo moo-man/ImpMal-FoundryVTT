@@ -1,4 +1,3 @@
-import { ChoiceConfig } from "../../apps/choice-config";
 import ItemTraitsForm from "../../apps/item-traits";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
@@ -97,6 +96,6 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
 
     _onChoiceConfig(ev) 
     {
-        new ChoiceConfig(this.item, {path : ev.currentTarget.dataset.path}).render(true);
+        new game.impmal.apps.ChoiceConfig(this.item, {path : ev.currentTarget.dataset.path}).render(true);
     }
 }

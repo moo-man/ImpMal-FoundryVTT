@@ -64,6 +64,7 @@
     "IMPMAL.Burst" : "Burst",
     "IMPMAL.CalledShot" : "Called Shot",
     "IMPMAL.CannotEquipForceField" : "Cannot equip Collapsed Force Field",
+    "IMPMAL.CannotEditWithDiffSheet" : "Cannot edit with a diff sheet",
     "IMPMAL.Carapace" : "Carapace",
     "IMPMAL.Category" : "Category",
     "IMPMAL.Chain" : "Chain",
