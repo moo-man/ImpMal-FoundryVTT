@@ -31,7 +31,8 @@ export class ChoiceModel extends foundry.abstract.DataModel
             diff : new fields.ObjectField(), // Changes to choice document
             idType : new fields.StringField(), // uuid, id, or relative ID
             filters : new fields.ArrayField(new fields.SchemaField({
-                property : new fields.StringField(),
+                path : new fields.StringField(),
+                operation : new fields.StringField(),
                 value : new fields.StringField(),
             })),
         }));
@@ -261,7 +262,7 @@ export class ChoiceModel extends foundry.abstract.DataModel
             type : "filter",
             name : data.name,
             id : randomID(),
-            filters : data.filters
+            filters : data.filters || []
         };
         return option;
     }

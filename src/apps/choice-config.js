@@ -1,5 +1,6 @@
 import ImpMalItemDiffSheet from "../sheet/items/item-sheet-diff";
 import ImpMalSheetMixin from "../sheet/mixins/sheet-mixin";
+import { ChoiceOptionForm } from "./choice-option";
 
 export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
 {
@@ -128,6 +129,37 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
         ev.dataTransfer.setData("text/plain", JSON.stringify({type : "option", id : ev.target.dataset.id}));
     }
 
+    async _onListCreate()
+    {
+        let structureData = await new Promise(resolve => 
+        {
+            new Dialog({
+                title : game.i18n.localize("IMPMAL.CreateOption"),
+                content : game.i18n.localize("IMPMAL.CreateOptionDetails"),
+                buttons : {
+                    placeholder : {
+                        label : game.i18n.localize("IMPMAL.Placeholder"),
+                        callback : () => 
+                        {
+                            resolve(this.choices.addOption({type : "placeholder", name : game.i18n.localize("IMPMAL.Placeholder")}));
+                        }
+                    },
+                    filter : {
+                        label : game.i18n.localize("IMPMAL.Filter"),
+                        callback: () => 
+                        {
+                            resolve(this.choices.addOption({type : "filter", name : game.i18n.localize("IMPMAL.Filter")}));
+                        }
+                    }
+                }
+            }).render(true);
+        });
+        await this._updateObject(structureData);
+        let index = this.choices.options.length - 1;
+        new ChoiceOptionForm({choices : this.choices, index, update : this._updateObject.bind(this)}).render(true);
+
+    }
+
     _onListDelete(event) 
     {
         let id = this._getId(event);
@@ -161,6 +193,10 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
             {
                 document.sheet.render(true);
             }
+        }
+        else if (["placeholder", "filter"].includes(options[index].type))
+        {
+            new ChoiceOptionForm({choices : this.choices, index, update : this._updateObject.bind(this)}).render(true);
         }
     }
 
