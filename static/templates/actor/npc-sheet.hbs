@@ -64,7 +64,7 @@
         {{/each}}
         {{#each system.characteristics}}
             <div class="characteristic-value">
-                <input type="number" name="system.characteristics.{{@key}}.starting" value="{{this.total}}">
+                <input type="number" name="system.characteristics.{{@key}}.starting" value="{{this.total}}" {{#if (lookup ../actor.overrides.system.characteristics @key)}}disabled data-tooltip="{{localize 'IMPMAL.CannotEditPropertyWithEffect'}}"{{/if}}>
             </div>
         {{/each}}
         <div class="grid-property">
