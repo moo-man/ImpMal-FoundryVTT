@@ -5,7 +5,6 @@ export default class ProtectionItemSheet extends ImpMalItemSheet
     static get defaultOptions() 
     {
         const options = super.defaultOptions;
-        options.classes = options.classes.concat(["protection"]);
         return options;
     }
 

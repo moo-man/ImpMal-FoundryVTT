@@ -116,8 +116,6 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             return;
         }
         this.addGenericListeners(html);
-        html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
-        html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
         html.find(".property-edit").on("click", this._onPropertyEdit.bind(this));
         html.find(".inc-dec").on("mousedown", this._onIncDec.bind(this));
         html.find(".ammo-selector").on("change", this._onChangeAmmo.bind(this));
@@ -133,19 +131,6 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".purge").on("click", this._onPurgeClick.bind(this));
     }
 
-    _onFactionDelete(ev)
-    {
-        let el = $(ev.currentTarget).parents(".list-item");
-        let faction = el.attr("data-type");
-
-        Dialog.confirm({
-            title: game.i18n.localize(`IMPMAL.DeleteFaction`),
-            content: `<p>${game.i18n.localize(`IMPMAL.DeleteFactionConfirmation`)}</p>`,
-            yes: () => {this.actor.update(this.actor.system.influence.deleteFaction(faction));},
-            no: () => {},
-            defaultYes: true
-        });
-    }
 
 
     /**
@@ -176,31 +161,6 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 
 
         return doc.update({[target] : value});
-    }
-
-    _onFactionCreate()
-    {
-        new Dialog({
-            title : "IMPMAL.AddInfluence",
-            content : `
-            <form>
-                <div class="form-group">
-                    <label>${game.i18n.localize("IMPMAL.Faction")}</label>
-                    <input type="text">
-                </div>
-            </form>`,
-            buttons : {
-                submit : {
-                    label : game.i18n.localize("Submit"),
-                    callback: (dlg) =>
-                    {
-                        let faction = dlg.find("input")[0].value;
-                        this.actor.update({"system.influence" : this.actor.system.influence.createFaction(faction)});
-                    }
-                }
-            },
-            default : "submit"
-        }).render(true);
     }
 
     _onIncDec(ev)

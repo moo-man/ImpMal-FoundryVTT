@@ -31,10 +31,59 @@
             </div>
             <div class="tab details" data-tab="details-character">
                 <div class="form-group">
-                    <label>{{"IMPMAL.Solars"}}</label>
+                    <label>{{localize "IMPMAL.Characteristic"}}</label>
                     <div class="form-fields">
-                        <input type="number" value="{{system.solars}}" name="system.solars">
+                        <select name="system.character.characteristics.base">
+                            {{#select system.character.characteristics.base}}
+                                <option value=""></option>
+                                {{#each (config "characteristics")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
                     </div>
+                </div>
+
+                <div class="form-groups-stacked checkbox-list">
+                    <label>{{localize "IMPMAL.Choices"}}</label>
+                    <div class="fields checkbox-array" data-path="system.character.characteristics.choices">
+                        {{#each (config "characteristics")}}
+                            <div class="checkbox-group">
+                                <input type="checkbox" data-value="{{@key}}" {{checked (includes
+                                    ../system.character.characteristics.choices @key)}}>
+                                {{this}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <hr>
+
+                <div class="form-groups-stacked checkbox-list">
+                    <label><input type="number" name="system.character.advances.value"
+                            value="{{system.character.advances.value}}">{{localize 'IMPMAL.SkillAdvances'}} </label>
+                    <div class="fields checkbox-array" data-path="system.character.advances.skills">
+                        {{#each (config "skills")}}
+                            <div class="checkbox-group">
+                                <input type="checkbox" data-value="{{@key}}" {{checked (includes
+                                    ../system.character.advances.skills @key)}}>
+                                {{this}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <hr>
+                {{> systems/impmal/templates/shared/influence.hbs factions=system.character.influence.factions path="system.character.influence" showNotes=false}}
+                <hr>
+                {{> systems/impmal/templates/item/partials/item-choices.hbs label='IMPMAL.Talents' display=item.system.character.talents.textDisplay path='character.talents'}}
+                <hr>
+                {{> systems/impmal/templates/item/partials/item-choices.hbs label='IMPMAL.Equipment' display=item.system.character.equipment.textDisplay path='character.equipment'}}
+
+                <div class="form-group">
+                    <label>
+                        <input type="number" value="{{system.character.solars}}" name="system.character.solars">
+                        {{localize "IMPMAL.Solars"}}
+                    </label>
                 </div>
             </div>
         </div>

@@ -13,12 +13,69 @@
                 {{> systems/impmal/templates/item/partials/item-notes.hbs}}
             </div>
             <div class="tab details" data-tab="details">
-                <div class="form-group">
-                    <label></label>
-                    <div class="form-fields">
 
+                <section class="list">
+                    <header class="list-row">
+                        <div class="list-name">{{localize "IMPMAL.Talents"}}</div>
+                        <div class="list-controls">
+                            <input type="number" name="system.talents.number" value="{{system.talents.number}}" placeholder="#">
+                        </div>
+                    </header>
+                    <div class="list-content">
+                        {{#each item.system.talents.documents}}
+                            <div class="list-item" data-id="{{this.id}}">
+                                <div class="list-row">
+                                    <div class="list-name list-edit">
+                                        <img src="{{this.img}}">
+                                        <a>{{this.name}}</a>
+                                    </div>
+                                    <div class="list-controls">
+                                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </div>
+                                <div class="summary">
+
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </section>
+
+                <hr>
+
+                <div class="form-groups-stacked checkbox-list">
+                    <label><input type="number" name="system.skills.value"
+                            value="{{system.skills.value}}">{{localize 'IMPMAL.SkillAdvances'}} </label>
+                    <div class="fields checkbox-array" data-path="system.skills.list">
+                        {{#each (config "skills")}}
+                            <div class="checkbox-group">
+                                <input type="checkbox" data-value="{{@key}}" {{checked (includes
+                                    ../system.skills.list @key)}}>
+                                {{this}}
+                            </div>
+                        {{/each}}
                     </div>
                 </div>
+                <div class="form-groups-stacked checkbox-list">
+                    <label><input type="number" name="system.specialisations.value"
+                            value="{{system.specialisations.value}}">{{localize 'IMPMAL.SpecialisationAdvances'}}
+                    </label>
+                    <div class="fields checkbox-array" data-path="system.specialisations.list">
+                        {{#each (config "skills")}}
+                            <div class="checkbox-group">
+                                <input type="checkbox" data-value="{{@key}}" {{checked (includes
+                                    ../system.specialisations.list @key)}}>
+                                {{this}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <hr>
+                
+                {{> systems/impmal/templates/item/partials/item-choices.hbs label='IMPMAL.Equipment' display=item.system.equipment.textDisplay path='equipment'}}
+
+
             </div>
             <div class="tab effects" data-tab="effects">
                 {{> systems/impmal/templates/item/partials/item-effects.hbs}}

@@ -400,7 +400,10 @@
       "equipment": {
         "list": []
       },
-      "bonuses" : {}
+      "characteristics": {
+        "base": "",
+        "choices": []
+      }
     },
     "faction": {
       "patron": {
@@ -418,22 +421,15 @@
           "factions": {}
         },
         "characteristics": {
-          "base": {
-            "id": ""
-          },
+          "base": "",
           "choices": []
         },
         "advances": {
           "value": 0,
           "skills": []
         },
-        "talents": {
-          "list": []
-        },
-        "equipment": {
-          "list": [],
-          "groups": []
-        },
+        "talents": {},
+        "equipment": {},
         "duty": {
           "list": []
         },
@@ -454,12 +450,14 @@
         "notes": ""
       },
       "character": {
-        "equipment": {
-          "list": []
+        "equipment": {},
+        "characteristics": {},
+        "skills" : {},
+        "influence" : {
+          "factions" : {}
         },
-        "characteristics": {
-          "id": ""
-        },
+        "items" : {},
+        "solars" : 0,
         "notes": ""
       }
     },
@@ -467,15 +465,15 @@
       "templates": [
         "notes"
       ],
-      "advances": {
+      "skills": {
         "value": 0,
-        "skills": [],
-        "spec": []
+        "list": []
       },
-      "equipment": {
-        "list": [],
-        "groups": []
+      "specialisations": {
+        "value": 0,
+        "list": []
       },
+      "equipment": {},
       "talents": {
         "number": 0,
         "list": []

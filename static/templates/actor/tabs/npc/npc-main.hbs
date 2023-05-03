@@ -1,16 +1,16 @@
+{{#if sections.skills.show}}
+    <div class="item-section skills">
+        {{{sections.skills.html}}}
+    </div>
+{{/if}}
+
+
 {{#if sections.attacks.show}}
     <div class="item-section">
         <h3>{{localize "IMPMAL.Attacks"}}</h3>
         {{{sections.attacks.html}}}
     </div>
 {{/if}}
-
-{{#if sections.skills.show}}
-    <div class="item-section">
-        {{{sections.skills.html}}}
-    </div>
-{{/if}}
-
 
 {{#if sections.traits.show}}
     <div class="item-section">
@@ -20,7 +20,7 @@
 {{/if}}
 
 {{#if sections.possessions.show}}
-    <div class="item-section">
+    <div class="item-section possessions">
         {{{sections.possessions.html}}}
     </div>
 {{/if}}

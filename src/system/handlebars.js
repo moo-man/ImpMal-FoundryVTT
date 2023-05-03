@@ -30,6 +30,11 @@ export default function registerHandlebars()
         }
     });
 
+    Handlebars.registerHelper("includes", function(array, value) 
+    {
+        return array.includes(value);
+    });
+
     
     Handlebars.registerHelper("settings", function (key) 
     {
@@ -97,6 +102,7 @@ export default function registerHandlebars()
         "systems/impmal/templates/item/partials/item-patron-notes.hbs",
         "systems/impmal/templates/item/partials/item-traits.hbs",
         "systems/impmal/templates/item/partials/item-choices.hbs",
-        "systems/impmal/templates/chat/rolls/opposedTest.hbs"
+        "systems/impmal/templates/chat/rolls/opposedTest.hbs",
+        "systems/impmal/templates/shared/influence.hbs"
     ]);
 }

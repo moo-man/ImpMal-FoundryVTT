@@ -139,36 +139,5 @@
     {{/if}}
 </div>
 
-<section class="list influence">
-    <header class="list-row">
-        <div>{{localize "Faction"}}</div>
-        <div class="small">{{localize "IMPMAL.Infl"}}</div>
-        <div class="wide">{{localize "IMPMAL.NotesContacts"}}</div>
-        <div class="list-controls single">
-            <a class="faction-create"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
-    <div class="list-content">
-        {{#each system.influence.factions}}
-            <div class="list-item" data-type="{{@key}}">
-                <div class="list-row">
-                    <div>
-                        <input type="text" name="system.influence.factions.{{@key}}.name" value="{{this.name}}">
-                    </div>
-                    <div class="small">
-                        <input type="number" name="system.influence.factions.{{@key}}.value" value="{{this.value}}">
-                    </div>
-                    <div class="wide">
-                        <input type="text" name="system.influence.factions.{{@key}}.notes" value="{{this.notes}}">
-                    </div>
-                    <div class="list-controls single">
-                        <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
-                    </div>
-                </div>
-                <div class="summary">
 
-                </div>
-            </div>
-        {{/each}}
-    </div>
-</section>
+{{> systems/impmal/templates/shared/influence.hbs factions=system.influence.factions path="system.influence" showNotes=true}}

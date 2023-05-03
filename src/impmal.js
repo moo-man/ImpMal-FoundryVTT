@@ -44,6 +44,9 @@ import WeaponItemSheet from "./sheet/items/item-weapon-sheet";
 import ModificationItemSheet from "./sheet/items/item-modification-sheet";
 import ImpMalUtility from "./system/utility";
 import { ChoiceConfig } from "./apps/choice-config";
+import BackgroundItemSheet from "./sheet/items/item-background-sheet";
+import OriginItemSheet from "./sheet/items/item-origin-sheet";
+import RoleItemSheet from "./sheet/items/item-role-sheet";
 
 Hooks.once("init", () => 
 {
@@ -64,6 +67,9 @@ Hooks.once("init", () =>
     Items.registerSheet("impmal", TraitItemSheet, { types: ["trait"], makeDefault: true });
     Items.registerSheet("impmal", WeaponItemSheet, { types: ["weapon"], makeDefault: true });
     Items.registerSheet("impmal", ModificationItemSheet, { types: ["modification"], makeDefault: true });
+    Items.registerSheet("impmal", BackgroundItemSheet, { types: ["faction", "duty"], makeDefault: true });
+    Items.registerSheet("impmal", OriginItemSheet, { types: ["origin"], makeDefault: true });
+    Items.registerSheet("impmal", RoleItemSheet, { types: ["role"], makeDefault: true });
 
     // CONFIG.ActiveEffect.sheetClass = undefined;
     // DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });

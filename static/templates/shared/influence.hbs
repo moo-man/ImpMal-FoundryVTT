@@ -1,0 +1,37 @@
+<section class="list influence" data-path="{{path}}">
+    <header class="list-row">
+        <div>{{localize "Faction"}}</div>
+        <div class="small">{{localize "Infl."}}</div>
+        {{#if showNotes}}
+            <div class="wide">{{localize "Notes/Contacts"}}</div>
+        {{/if}}
+        <div class="list-controls single">
+            <a class="faction-create"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each factions}}
+            <div class="list-item" data-type="{{@key}}">
+                <div class="list-row">
+                    <div>
+                        <input type="text" name="{{../path}}.factions.{{@key}}.name" value="{{this.name}}">
+                    </div>
+                    <div class="small">
+                        <input type="number" name="{{../path}}.factions.{{@key}}.value" value="{{this.value}}">
+                    </div>
+                    {{#if ../showNotes}}
+                        <div class="wide">
+                            <input type="text" name="{{../path}}.factions.{{@key}}.notes" value="{{this.notes}}">
+                        </div>
+                    {{/if}}
+                    <div class="list-controls single">
+                        <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                </div>
+                <div class="summary">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

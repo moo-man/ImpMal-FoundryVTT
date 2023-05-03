@@ -72,6 +72,8 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         html.find(".list-toggle").on("click", this._onListToggle.bind(this));
         html.find(".list-post").on("click", this._onPostItem.bind(this));
         html.find(".pip").on("click", this._onConditionPipClick.bind(this));
+        html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
+        html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
     }
 
     _getId(ev) 
@@ -87,6 +89,11 @@ export default ImpMalSheetMixin = (cls) => class extends cls
     _getKey(ev) 
     {
         return this._getDataAttribute(ev, "key");
+    }
+
+    _getPath(ev) 
+    {
+        return this._getDataAttribute(ev, "path");
     }
 
 
@@ -240,4 +247,48 @@ export default ImpMalSheetMixin = (cls) => class extends cls
             this.object.removeCondition(key);
         }
     }
+
+    _onFactionDelete(ev)
+    {
+        let path = this._getPath(ev);
+        let el = $(ev.currentTarget).parents(".list-item");
+        let faction = el.attr("data-type");
+
+        Dialog.confirm({
+            title: game.i18n.localize(`IMPMAL.DeleteFaction`),
+            content: `<p>${game.i18n.localize(`IMPMAL.DeleteFactionConfirmation`)}</p>`,
+            yes: () => {this.object.update(getProperty(this.object, path).deleteFaction(faction, path));},
+            no: () => {},
+            defaultYes: true
+        });
+    }
+
+    
+    _onFactionCreate(ev)
+    {
+        let path = this._getPath(ev);
+        new Dialog({
+            title : game.i18n.localize("IMPMAL.AddInfluence"),
+            content : `
+            <form>
+                <div class="form-group">
+                    <label>${game.i18n.localize("IMPMAL.Faction")}</label>
+                    <input type="text">
+                </div>
+            </form>`,
+            buttons : {
+                submit : {
+                    label : game.i18n.localize("Submit"),
+                    callback: (dlg) =>
+                    {
+                        let faction = dlg.find("input")[0].value;
+                        this.object.update(getProperty(this.object, path).createFaction(faction, path));
+                    }
+                }
+            },
+            default : "submit"
+        }).render(true);
+    }
+
+
 };

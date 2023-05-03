@@ -20,5 +20,9 @@ export class DocumentReferenceModel extends foundry.abstract.DataModel
         {
             this.document = collection.find(i => i.id == this.id);
         }
+        else 
+        {
+            this.document = game.impmal.utility.findId(this.id);
+        }
     }
 }

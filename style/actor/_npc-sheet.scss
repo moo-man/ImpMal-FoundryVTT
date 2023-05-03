@@ -70,4 +70,12 @@
             width: fit-content;
         }
     }
+
+    .item-section.possessions,
+    .item-section.skills {
+        flex-direction: row;
+        > a {
+            margin-left: 5px;
+        }
+    }
 }

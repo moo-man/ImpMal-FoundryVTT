@@ -1,4 +1,3 @@
-import { ChoiceModel } from "../shared/choices";
 import { DocumentListModel } from "../shared/list";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
@@ -9,8 +8,15 @@ export class OriginModel extends StandardItemModel
     {
         let schema = super.defineSchema();
         schema.equipment = new fields.EmbeddedDataField(DocumentListModel);
-        schema.bonuses = new fields.EmbeddedDataField(ChoiceModel);
+        schema.characteristics = new fields.SchemaField({
+            base : new fields.StringField(),
+            choices : new fields.ArrayField(new fields.StringField())
+        });
         return schema;
     }
 
+    computeDerived()
+    {
+        this.equipment.findDocuments();
+    }
 }

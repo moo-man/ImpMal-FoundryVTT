@@ -5,7 +5,6 @@ export default class WeaponItemSheet extends ImpMalItemSheet
     static get defaultOptions() 
     {
         const options = super.defaultOptions;
-        options.classes = options.classes.concat(["weapon"]);
         options.dragDrop.push([{ dragSelector: ".item-list .item", dropSelector: null }]);
         return options;
     }

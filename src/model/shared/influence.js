@@ -9,7 +9,7 @@ export class InfluenceModel extends foundry.abstract.DataModel
         return schema;
     }
 
-    createFaction(name) 
+    createFaction(name, path) 
     {
         let factions = duplicate(this.factions);
 
@@ -19,11 +19,11 @@ export class InfluenceModel extends foundry.abstract.DataModel
             factions[name.slugify()] = {name, value : 0, notes : ""};
         }
         
-        return {factions};
+        return {[`${path}.factions`] : factions};
     }  
 
-    deleteFaction(name) 
+    deleteFaction(name, path) 
     {
-        return {[`system.influence.factions.-=${name}`] : null};
+        return {[`${path}.factions.-=${name}`] : null};
     }  
 }

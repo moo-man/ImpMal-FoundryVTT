@@ -25,7 +25,44 @@
                 {{> systems/impmal/templates/item/partials/item-character-notes.hbs}}
             </div>
             <div class="tab details" data-tab="details-character">
+                <div class="form-groups-stacked property-list">
+                    <label>{{localize "IMPMAL.Characteristics"}}</label>
+                    <div class="fields">
+                        {{#each (config "characteristics")}}
+                            <div class="property-group">
+                                <input type="number" name="system.character.characteristics.{{@key}}"
+                                    value="{{lookup ../system.character.characteristics @key}}">
+                                {{this}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <hr>
 
+                <div class="form-groups-stacked property-list">
+                    <label>{{localize 'IMPMAL.SkillAdvances'}} </label>
+                    <div class="fields" data-path="system.character.skills">
+                        {{#each (config "skills")}}
+                            <div class="property-group">
+                                <input type="number" name="system.character.skills.{{@key}}"
+                                    value="{{lookup ../system.character.skills @key}}">
+                                {{this}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <hr>
+                {{> systems/impmal/templates/shared/influence.hbs factions=system.character.influence.factions path="system.character.influence" showNotes=false}}
+                <hr>
+                {{> systems/impmal/templates/item/partials/item-choices.hbs label='Items' display=item.system.character.items.textDisplay path='character.items'}}
+
+                <div class="form-group">
+                    <label>
+                        <input type="number" value="{{system.character.solars}}" name="system.character.solars">
+                        {{localize "IMPMAL.Solars"}}
+                    </label>
+                </div>
             </div>
         </div>
     </section>

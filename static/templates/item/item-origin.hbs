@@ -13,13 +13,59 @@
                 {{> systems/impmal/templates/item/partials/item-notes.hbs}}
             </div>
             <div class="tab details" data-tab="details">
-                {{> systems/impmal/templates/item/partials/item-choices.hbs label='IMPMAL.Bonuses' display=item.system.bonuses.textDisplay path='bonuses'}}
                 <div class="form-group">
-                    <label></label>
+                    <label>{{localize "IMPMAL.Characteristic"}}</label>
                     <div class="form-fields">
-
+                        <select name="system.characteristics.base">
+                            {{#select system.characteristics.base}}
+                                <option value=""></option>
+                                {{#each (config "characteristics")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
                     </div>
                 </div>
+                <div class="form-groups-stacked checkbox-list">
+                    <label>{{localize "IMPMAL.Choices"}}</label>
+                    <div class="fields checkbox-array" data-path="system.characteristics.choices">
+                        {{#each (config "characteristics")}}
+                            <div class="checkbox-group">
+                                <input type="checkbox" data-value="{{@key}}" {{checked (includes
+                                    ../system.characteristics.choices @key)}}>
+                                {{this}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <hr>
+
+
+                <section class="list">
+                    <header class="list-row">
+                        <div class="list-name">{{localize "IMPMAL.Equipment"}}</div>
+                        <div class="list-controls">
+                        </div>
+                    </header>
+                    <div class="list-content">
+                        {{#each item.system.equipment.documents}}
+                            <div class="list-item" data-id="{{this.id}}">
+                                <div class="list-row">
+                                    <div class="list-name list-edit">
+                                        <img src="{{this.img}}">
+                                        <a>{{this.name}}</a>
+                                    </div>
+                                    <div class="list-controls">
+                                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </div>
+                                <div class="summary">
+
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </section>
             </div>
             <div class="tab effects" data-tab="effects">
                 {{> systems/impmal/templates/item/partials/item-effects.hbs}}

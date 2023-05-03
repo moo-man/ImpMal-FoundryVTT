@@ -13,12 +13,22 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         options.resizable = true;
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }];
         options.dragDrop.push({dragSelector : ".list .list-item" });
+        options.scrollY.push(".tab-content");
         return options;
     }
 
     get template() 
     {
         return `systems/impmal/templates/item/item-${this.item.type}.hbs`;
+    }
+
+    async _render(...args)
+    {
+        await super._render(...args);
+        if (!this.element[0].classList.contains(this.item.type))
+        {
+            this.element[0].classList.add(this.item.type);
+        }
     }
 
     async getData() 
