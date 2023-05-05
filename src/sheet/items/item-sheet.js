@@ -31,6 +31,18 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         }
     }
 
+    _getHeaderButtons() 
+    {
+        let buttons = super._getHeaderButtons();
+        buttons.unshift(
+            {
+                class: "post",
+                icon: "fas fa-comment",
+                onclick: () => this.item.postItem()
+            });
+        return buttons;
+    }
+
     async getData() 
     {
         let data = super.getData();

@@ -1,0 +1,14 @@
+.item-post {
+    border: 2px dotted black;
+    cursor: move;
+    padding: 5px;
+    .post-header {
+        display: flex;
+        align-items: center;
+        img {
+            width: 80px;
+            height: 80px;
+            border: none
+        }
+    }
+}

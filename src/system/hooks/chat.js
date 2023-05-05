@@ -1,3 +1,4 @@
+import { ImpMalItem } from "../../document/item";
 import { BaseTest } from "../tests/base/base-test";
 
 export default function()
@@ -14,5 +15,10 @@ export default function()
     Hooks.on("renderChatLog", (app, html,) => 
     {
         BaseTest._chatListeners(html);
+    });
+
+    Hooks.on("renderChatMessage", (app, html,) => 
+    {
+        ImpMalItem.itemPostListeners(html);
     });
 }
