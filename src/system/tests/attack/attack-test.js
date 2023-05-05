@@ -20,9 +20,13 @@ export class AttackTest extends SkillTest
     get tags() 
     {
         let tags = super.tags;
+        if (this.result.hitLocation)
+        {
+            tags.push(`${game.impmal.config.hitLocations[this.result.hitLocationKey]}`);
+        }
         if (this.result.calledShot)
         {
-            tags.push(`${game.i18n.localize("IMPMAL.CalledShot")}: <strong>${game.impmal.config.hitLocations[this.result.hitLocation]}</strong>`);
+            tags.push(`${game.i18n.localize("IMPMAL.CalledShot")}`);
         }
         if (this.result.critical)
         {

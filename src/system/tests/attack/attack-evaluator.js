@@ -2,6 +2,20 @@ import { BaseTestEvaluator } from "../base/base-evaluator";
 
 export class AttackEvaluator extends BaseTestEvaluator 
 {
+
+    static standardHitLocationMap = {
+        1 : "head",
+        2 : "leftArm",
+        3 : "rightArm",
+        4 : "leftLeg",
+        5 : "rightLeg",
+        6 : "body",
+        7 : "body",
+        8 : "body",
+        9 : "body",
+        0 : "body",
+    };
+
     /**
      * 
      * @param {Object} data Test data
@@ -32,5 +46,7 @@ export class AttackEvaluator extends BaseTestEvaluator
             this.hitLocation = data.hitLocation;
             this.calledShot = true;
         }
+
+        this.hitLocationKey = this.constructor.standardHitLocationMap[this.hitLocation];
     }
 }
