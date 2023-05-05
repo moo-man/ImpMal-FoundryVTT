@@ -52,4 +52,18 @@ export class PowerModel extends StandardItemModel
         return this.testLabel("opposed");
     }
 
+    summaryData()
+    {
+        let data = super.summaryData();
+        let config = game.impmal.config;
+        data.tags = data.tags.concat([
+            config[this.discipline], 
+            `WR: ${this.rating}`, 
+            config[this.range], 
+            this.target, 
+            config[this.duration], 
+            game.i18n.format("IMPMAL.ItemDisplayXDamage", {damage : this.damage.value})]);
+        return data;
+    }
+
 }

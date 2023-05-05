@@ -34,7 +34,7 @@
         {{#each items.power}}
             <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row">
-                    <div class="list-name">
+                    <div class="list-name list-summary-context">
                         <img src="{{this.img}}">
                         <a class="roll" data-type="power">{{this.name}}</a>
                     </div>
@@ -51,6 +51,9 @@
                         <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
+                </div>
+                <div class="summary">
+
                 </div>
             </div>
         {{/each}}

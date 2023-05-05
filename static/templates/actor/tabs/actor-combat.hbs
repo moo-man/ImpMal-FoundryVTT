@@ -56,7 +56,7 @@
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
-                        <a class="roll" data-type="weapon">{{this.name}}</a>
+                        <a class="roll list-summary-context" data-type="weapon">{{this.name}}</a>
                         {{#if (eq ../actor.type "character")}}
                             <div class="grip">
                                 {{#if this.system.equipped.hands.left}}
@@ -81,6 +81,9 @@
                         </div>
                     </div>
                 {{/if}}
+                <div class="summary">
+
+                </div>
             </div>
         {{/each}}
     </div>
@@ -100,7 +103,7 @@
                 <div class="list-row">
                     <div class="list-name">
                         <img data-item-id="{{this.id}}" src="{{this.img}}">
-                        <a class="roll" data-type="weapon">{{this.name}}</a>
+                        <a class="roll list-summary-context" data-type="weapon">{{this.name}}</a>
                         {{#if (eq ../actor.type "character")}}
                             <div class="grip">
                                 {{#if this.system.equipped.hands.left}}
@@ -147,6 +150,9 @@
                         </div>
                     {{/if}}
                 </div>
+                <div class="summary">
+
+                </div>
             </div>
         {{/each}}
     </div>
@@ -163,13 +169,16 @@
                 <div class="list-row">
                     <div class="list-name">
                         <img data-item-id="{{this.id}}" src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
                     </div>
                     <div class="shield-traits">
                         <div class="trait-list">
                             {{this.system.traits.displayString}}
                         </div>
                     </div>
+                </div>
+                <div class="summary">
+
                 </div>
             </div>
         {{/each}}
@@ -215,10 +224,9 @@
                     <div class="list-row">
                         <div class="list-name">
                             <img src="{{this.img}}">
-                            <a>{{this.name}}</a>
+                            <a class="list-edit list-summary-context">{{this.name}}</a>
                         </div>
                         <div class="list-controls">
-                            <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
                             <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                         </div>
                     </div>
@@ -244,7 +252,7 @@
                     <div class="list-row">
                         <div class="list-name">
                             <img src="{{this.img}}">
-                            <a>{{this.name}}</a>
+                            <a class="list-edit list-summary-context">{{this.name}}</a>
                         </div>
                         <div class="list-controls">
                             <a class="list-edit"><i class="fa-solid fa-edit"></i></a>

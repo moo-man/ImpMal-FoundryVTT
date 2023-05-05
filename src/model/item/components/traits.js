@@ -106,6 +106,19 @@ export class TraitListModel extends ListModel
             });
     }
 
+    get htmlArray()
+    {
+        return this.list
+            .map(i => 
+            {
+                let display = game.impmal.config.weaponArmourTraits[i.key] || game.impmal.config.itemTraits[i.key];
+                if (i.value) {
+                    display += ` (${i.value})`;
+                }
+                return `<a data-key=${i.key} data-value=${i.value}>${display}</a>`;
+            });
+    }
+
     get displayString() 
     {
         return this.displayArray.join(", ");

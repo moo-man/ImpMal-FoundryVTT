@@ -10,7 +10,7 @@ export class BaseTest
     static evaluatorClass = BaseTestEvaluator;
     rollTemplate = "systems/impmal/templates/chat/rolls/roll.hbs";
     testDetailsTemplate = "";
-    itemDetailsTemplate = "";
+    itemSummaryTemplate = "systems/impmal/templates/item/partials/item-summary.hbs";
 
     constructor({data, context})
     {
@@ -171,9 +171,9 @@ export class BaseTest
 
     async _chatData() 
     {
-        if (this.itemDetailsTemplate)
+        if (this.item instanceof Item)
         {
-            this.itemDetails = await renderTemplate(this.itemDetailsTemplate, this);
+            this.itemSummary = await renderTemplate(this.itemSummaryTemplate, mergeObject(this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
         }
         if (this.testDetailsTemplate)
         {

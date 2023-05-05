@@ -39,13 +39,25 @@ export class ProtectionModel extends EquippableItemModel
             let locations = locationLabel.split(",").map(i => i.trim());
             for(let loc of locations)
             {
-                keys = keys.concat(ProtectionModel.labelMap[loc.toLowerCase()] || []);
+                keys = keys.concat(this.constructor.labelMap[loc.toLowerCase()] || []);
             }
             if (keys.length)
             {
                 data.system.locations.list = keys;
             }
         }
+    }
+
+    
+    summaryData()
+    {
+        let data = super.summaryData();
+        data.details.item.protection = `${game.i18n.localize("IMPMAL.Protection")}: ${this.protection}`,
+        data.tags = data.tags.concat(
+            game.impmal.config.protectionTypes[this.category], 
+            game.i18n.format("IMPMAL.ItemDisplayXArmour", {armour : this.armour}), 
+            this.traits.htmlArray);
+        return data;
     }
 
 

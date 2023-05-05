@@ -23,6 +23,18 @@ export class ModificationModel extends PhysicalItemModel
         this.addedTraits.compute();
         this.removedTraits.compute();
     }
+
+    summaryData()
+    {
+        let data = super.summaryData();
+
+        data.details.item.addedTraits = `<strong>${game.i18n.localize("IMPMAL.TraitsAdded")}</strong>: ${this.addedTraits.htmlArray}`,
+        data.details.item.removedTraits = `<strong>${game.i18n.localize("IMPMAL.TraitsRemoved")}</strong>: ${this.removedTraits.htmlArray}`,
+        data.details.item.addedTraits = game.i18n.format("IMPMAL.ItemDisplayXDamage", {damage : this.damage});
+        data.details.item.usedWith = game.i18n.format("IMPMAL.ItemDisplayUsedWith", {usedWith : this.usedWith});
+        data.tags.push(game.impmal.config.modificationTypes[this.category]);
+        return data;
+    }
 }
 
 export class ModListModel extends ListModel 

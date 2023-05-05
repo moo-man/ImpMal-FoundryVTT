@@ -70,6 +70,27 @@ export class BaseItemModel extends foundry.abstract.DataModel
     //     // Abstract
     // }
 
+
+
+    /**
+     * Used by sheet dropdowns, posting to chat, and test details
+     */
+    summaryData()
+    {
+        return {
+            notes : "",
+            gmnotes : "",
+            details : {
+                physical : "",
+                item : {
+
+                }
+            },
+            tags : [],
+            summaryLabel : game.i18n.localize("IMPMAL.Description")
+        };
+    }
+
     testLabel(path)
     {
         let test = getProperty(this, path);
@@ -101,4 +122,5 @@ export class BaseItemModel extends foundry.abstract.DataModel
 
         return label;
     }
+
 }

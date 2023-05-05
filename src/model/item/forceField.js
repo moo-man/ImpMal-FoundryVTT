@@ -14,7 +14,6 @@ export class ForceFieldModel extends EquippableItemModel
             value : new fields.NumberField(),
             collapsed : new fields.BooleanField()
         });
-        schema.force = new fields.BooleanField();
         return schema;
     }
 
@@ -55,5 +54,14 @@ export class ForceFieldModel extends EquippableItemModel
             data.system.equipped.value = false;
             ui.notifications.notify(game.i18n.localize("IMPMAL.CannotEquipForceField"));
         }
+    }
+
+    summaryData()
+    {
+        let data = super.summaryData();
+        data.details.item.protection = `${game.i18n.localize("IMPMAL.Protection")}: ${this.protection}`,
+        data.details.item.overload = `${game.i18n.localize("IMPMAL.Overload")}: ${this.overload.value}`,
+        data.tags = data.tags.concat(this.traits.htmlArray);
+        return data;
     }
 }

@@ -31,4 +31,11 @@ export class DutyModel extends DualItemModel
         return schema;
     }
 
+    summaryData()
+    {
+        let data = super.summaryData();
+        data.details.item.faction = `${game.i18n.localize("IMPMAL.Faction")}: ${this.faction}`;
+        return data;
+    }
+
 }

@@ -1,0 +1,26 @@
+<details {{#unless hideNotes}}open{{/unless}}>
+    <summary>{{summaryLabel}}</summary>
+    {{{notes}}}
+    <div class="hide-gm">
+        {{{gmnotes}}}
+    </div>
+</details>
+
+{{!-- {{#unless hideDetails}}
+    {{#with details}}
+        {{#if physical}}
+            <div style="display:flex; justify-content : space-around; text-align: center">
+                {{{physical}}}
+            </div>
+        {{/if}}
+        {{#each item}}
+            {{{this}}}
+        {{/each}}
+    {{/with}}
+{{/unless}}
+
+{{#unless hideTags}}
+    <div class="tags">
+        {{{array tags}}}
+    </div>
+{{/unless}} --}}

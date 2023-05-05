@@ -28,4 +28,11 @@ export class SpecialisationModel extends StandardItemModel
         return `${game.impmal.config.skills[this.skill]} (${this.parent.name}) ${this.total}`;
     }
 
+    summaryData()
+    {
+        let data = super.summaryData();
+        data.tags = data.tags.concat(game.impmal.config.skills[this.skill]);
+        return data;
+    }
+
 }

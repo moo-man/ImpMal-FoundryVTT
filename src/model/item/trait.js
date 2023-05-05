@@ -63,4 +63,16 @@ export class TraitModel extends StandardItemModel
             this.attack.target = actor.system.characteristics[characteristic]?.total || 0;
         }
     }
+
+    summaryData()
+    {
+        let data = super.summaryData();
+        let config = game.impmal.config;
+        data.tags = data.tags.concat([
+            game.i18n.format("IMPMAL.ItemDisplayXDamage", {damage : this.attack.damage.value}),
+            config.weaponTypes[this.attack.type],
+            config.ranges[this.attack.range],
+            this.attack.traits.htmlArray]).filter(i => i);
+        return data;
+    }
 }

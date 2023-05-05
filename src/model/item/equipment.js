@@ -17,4 +17,11 @@ export class EquipmentModel extends EquippableItemModel
         super.computeBase();
         this.traits.compute();
     }
+
+    summaryData()
+    {
+        let data = super.summaryData();
+        data.tags = data.tags.concat(this.traits.htmlArray);
+        return data;
+    }
 }

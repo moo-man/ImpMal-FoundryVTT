@@ -20,4 +20,13 @@ export class AmmoModel extends PhysicalItemModel
         this.traits.compute();
     }
 
+    summaryData()
+    {
+        let data = super.summaryData();
+        data.details.item.damage = game.i18n.format("IMPMAL.ItemDisplayXDamage", {damage : this.damage});
+        data.details.item.range = game.i18n.format("IMPMAL.ItemDisplayXRange", {range : this.range});
+        data.details.item.usedWith = game.i18n.format("IMPMAL.ItemDisplayUsedWith", {usedWith : this.usedWith});
+        return data;
+    }
+
 }

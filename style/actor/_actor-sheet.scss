@@ -228,7 +228,7 @@
             border: 1px solid black;
             text-align: center;
             min-height: 80px;
-            width: 165px;
+            width: 164px;
             margin: 5px;
             display: flex;
             flex-direction: column;
@@ -366,6 +366,22 @@
                     background: #5E82AF;
                 }
             }
+        }
+    }
+
+    // Same as roll tags, combine?
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 5px;
+
+        >* {
+            border: 1px solid #555;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 1px 3px;
+            margin: 0px 3px 3px 3px;
         }
     }
 

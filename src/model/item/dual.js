@@ -22,5 +22,10 @@ export class DualItemModel extends  BaseItemModel
         return schema;
     }
 
-
+    summaryData()
+    {
+        let data = super.summaryData();
+        data.notes = this.character.notes;
+        return data;
+    }
 }

@@ -30,7 +30,7 @@
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
                     </div>
                     <div class="small">
                         {{#if (eq ../actor.type "character")}}
@@ -59,8 +59,6 @@
                     <a class="small inc-dec">{{this.system.quantity}}</a>
                     <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
-                        <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                        <a class="list-post"><i class="fa-solid fa-comment"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
@@ -87,13 +85,11 @@
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
                     </div>
                     <a class="small inc-dec">{{this.system.quantity}}</a>
                     <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
-                        <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                        <a class="list-post"><i class="fa-solid fa-comment"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
@@ -120,13 +116,11 @@
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
                     </div>
                     <a class="small inc-dec">{{this.system.quantity}}</a>
                     <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
-                        <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                        <a class="list-post"><i class="fa-solid fa-comment"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
@@ -154,7 +148,7 @@
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
                     </div>
                     <div class="small">
                         <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
@@ -168,8 +162,6 @@
                     <a class="small inc-dec">{{this.system.quantity}}</a>
                     <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
-                        <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                        <a class="list-post"><i class="fa-solid fa-comment"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
@@ -197,7 +189,7 @@
                 <div class="list-row">
                     <div class="list-name" {{#if this.system.overload.collapsed}}style="color: darkred"{{/if}}>
                         <img src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
                     </div>
                     <div class="small">
                         <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
@@ -211,8 +203,6 @@
                     <a class="small inc-dec">{{this.system.quantity}}</a>
                     <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
-                        <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                        <a class="list-post"><i class="fa-solid fa-comment"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
@@ -240,7 +230,7 @@
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
                     </div>
                     <div class="small">
                         <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
@@ -254,8 +244,6 @@
                     <a class="small inc-dec">{{this.system.quantity}}</a>
                     <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
-                        <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                        <a class="list-post"><i class="fa-solid fa-comment"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
@@ -283,7 +271,7 @@
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
                     </div>
                     <div class="small">
                         <a class="property-edit boolean" data-id="{{this.id}}" data-target="system.equipped.value">
@@ -297,8 +285,6 @@
                     <a class="small inc-dec">{{this.system.quantity}}</a>
                     <div class="small">{{this.system.encumbrance.total}}</div>
                     <div class="list-controls">
-                        <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                        <a class="list-post"><i class="fa-solid fa-comment"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>

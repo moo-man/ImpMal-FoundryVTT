@@ -33,4 +33,12 @@ export class PhysicalItemModel extends StandardItemModel
     {
         return {"system.quantity" : this.quantity - value};
     }
+
+
+    summaryData()
+    {
+        let data = super.summaryData();
+        data.details.physical = `<div>${game.i18n.format("IMPMAL.ItemDisplayXSolars", {solars : this.cost})}</div> <div>${game.impmal.config.availability[this.availability]}</div> <div>${game.i18n.format("IMPMAL.ItemDisplayXEnc", {enc : this.encumbrance.value})}</div>`;
+        return data;
+    }
 }

@@ -129,6 +129,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".create-spec").on("click", this._onCreateSpecialisation.bind(this));
         html.find(".warp").on("click", this._onWarpClick.bind(this));
         html.find(".purge").on("click", this._onPurgeClick.bind(this));
+        html.find(".list-summary-context").on("contextmenu", this._onItemSummary.bind(this));
     }
 
 
@@ -291,6 +292,35 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         this.actor.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {purge: true,  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
     }
 
+    async _onItemSummary(ev) 
+    {
+        ev.preventDefault();
+        let parent = $(ev.currentTarget).parents(".list-item");
+        let summary = parent.find(".summary");
+        let id = this._getId(ev);
+    
+        if (summary.hasClass("active")) // If summary active, remove
+        {
+            summary.slideUp(200, () => summary.empty());
+            summary.toggleClass("active");
+        }
+        else 
+        {
+            // Add a div with the item summary below the item
+            let item = this.actor.items.get(id);
+            if (!item)
+            {
+                return;
+            }
+            let summaryData = item.system.summaryData();
+            let summaryHTML = await renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", summaryData);
+
+            summary.hide();
+            summary.html(summaryHTML);
+            summary.slideDown(200);
+            summary.toggleClass("active");
+        }
+    }
 
     //#endregion
 }

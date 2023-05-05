@@ -14,4 +14,12 @@ export class StandardItemModel extends BaseItemModel
 
         return schema;
     }
+
+    summaryData()
+    {
+        let data = super.summaryData();
+        data.notes = this.notes.player;
+        data.gmnotes = this.notes.gm;
+        return data;
+    }
 }

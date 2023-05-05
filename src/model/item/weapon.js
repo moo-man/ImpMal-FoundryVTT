@@ -223,4 +223,18 @@ export class WeaponModel extends EquippableItemModel
         }
     }
 
+
+    summaryData()
+    {
+        let data = super.summaryData();
+        let config = game.impmal.config;
+        data.tags = data.tags.concat([
+            game.i18n.format("IMPMAL.ItemDisplayXDamage", {damage : this.damage.value}),
+            config.weaponTypes[this.attackType],
+            this.specialisation,
+            config.ranges[this.range],
+            this.traits.htmlArray]).filter(i => i);
+        return data;
+    }
+
 }
