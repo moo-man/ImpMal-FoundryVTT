@@ -28,7 +28,7 @@
         <div class="adv-dis">
             <div>
                 <input type="radio" name="state" value="adv" {{checked (eq fields.state "adv")}}>
-                <label>{{localize "IMPMAL.Advantage"}}</label>
+                <label>{{localize "IMPMAL.Advantage"}} {{#if advCount}} ({{advCount}}) {{/if}}</label>
             </div>
             <div>
                 <input type="radio" name="state" value="none" {{checked (eq fields.state "none")}}>
@@ -36,7 +36,7 @@
             </div>
             <div>
                 <input type="radio" name="state" value="dis" {{checked (eq fields.state "dis")}}>
-                <label>{{localize "IMPMAL.Disadvantage"}}</label>
+                <label>{{localize "IMPMAL.Disadvantage"}} {{#if disCount}} ({{disCount}}) {{/if}} </label>
             </div>
         </div>
 

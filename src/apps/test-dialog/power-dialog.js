@@ -43,6 +43,7 @@ export class PowerTestDialog extends SkillTestDialog
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.PowerTest", {name : power.name})) + (title?.append || "");
 
         dialogData.data.powerId = power.id;
+        dialogData.data.power = power;
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

@@ -16,8 +16,10 @@ export class AttackDialog extends SkillTestDialog
             "leftLeg" : "IMPMAL.LeftLeg",
             "rightLeg" : "IMPMAL.RightLeg",
         };
+        data.showTraits = this.showTraits;
         return data;
     }
+
 
     computeFields() 
     {
@@ -26,7 +28,36 @@ export class AttackDialog extends SkillTestDialog
         if (this.fields.hitLocation != "roll")
         {
             this.disCount++;
-        }    
+        }
+
+        if (this.fields.rapidFire)
+        {
+            this.advCount++;
+        }
+
+        if (this.fields.burst)
+        {
+            this.fields.SL++;
+        }
+
+        if (this.traits.has("defensive") && this.actor.getFlag("impmal", "opposed"))
+        {
+            this.advCount++;
+        }
+    }
+
+    get showTraits() 
+    {
+        return {
+            burst : this.traits.has("burst") || this.traits.has("rapidFire"),
+            rapidFire : this.traits.has("rapidFire"),
+            supercharge : this.traits.has("supercharge")
+        };
+    }
+
+    get traits() 
+    {
+        return this.data.item.system.traits || this.item.system.attack.traits;
     }
 
     _defaultFields() 
@@ -34,5 +65,19 @@ export class AttackDialog extends SkillTestDialog
         let fields = super._defaultFields();
         fields.hitLocation = "roll";
         return fields;
+    }
+
+    _onInputChanged(ev)
+    {
+        // Can't have both burst and rapidFire active
+        if (ev.currentTarget.name == "burst")
+        {
+            delete this.fields.rapidFire;
+        }
+        else if (ev.currentTarget.name == "rapidFire")
+        {
+            delete this.fields.burst;
+        }
+        super._onInputChanged(ev);
     }
 }

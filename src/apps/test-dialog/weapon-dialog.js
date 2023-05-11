@@ -41,6 +41,7 @@ export class WeaponTestDialog extends AttackDialog
 
         dialogData.data.weaponId = weapon.id;
         dialogData.data.weapon = weapon;
+        dialogData.data.item = weapon;
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

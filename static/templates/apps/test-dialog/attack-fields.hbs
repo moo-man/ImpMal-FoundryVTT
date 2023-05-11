@@ -1,12 +1,39 @@
+<div class="form-group">
+    <label>{{localize "IMPMAL.HitLocation"}}</label>
+    <div class="form-fields">
+        <select name="hitLocation">
+            {{#select fields.hitLocation}}
+                {{#each hitLocations}}
+                    <option value="{{@key}}">{{localize this}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    </div>
+</div>
+
+{{#if showTraits.burst}}
     <div class="form-group">
-        <label>{{localize "IMPMAL.HitLocation"}}</label>
+        <label>{{localize "IMPMAL.Burst"}}</label>
         <div class="form-fields">
-            <select name="hitLocation">
-                {{#select fields.hitLocation}}
-                    {{#each hitLocations}}
-                        <option value="{{@key}}">{{localize this}}</option>
-                    {{/each}}
-                {{/select}}
-            </select>
+            <input type="checkbox" name="burst" {{checked fields.burst}}>
         </div>
     </div>
+{{/if}}
+
+{{#if showTraits.rapidFire}}
+    <div class="form-group">
+        <label>{{localize "IMPMAL.RapidFire"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="rapidFire" {{checked fields.rapidFire}}>
+        </div>
+    </div>
+{{/if}}
+
+{{#if showTraits.supercharge}}
+    <div class="form-group">
+        <label>{{localize "IMPMAL.Supercharge"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="supercharge" {{checked fields.supercharge}}>
+        </div>
+    </div>
+{{/if}}

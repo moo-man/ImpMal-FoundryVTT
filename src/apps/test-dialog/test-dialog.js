@@ -7,7 +7,7 @@ export class TestDialog extends Application
     {
         const options = super.defaultOptions;
         options.classes = options.classes.concat(["impmal", "test-dialog", "form"]);
-        options.width = 300;
+        options.width = 320;
         options.resizable = true;
         return options;
     }
@@ -24,6 +24,11 @@ export class TestDialog extends Application
     get title() 
     {
         return this.data.title;
+    }
+
+    get actor() 
+    {
+        return ChatMessage.getSpeakerActor(this.data.speaker);
     }
 
     constructor(data={}, fields={}, resolve)
@@ -57,8 +62,11 @@ export class TestDialog extends Application
 
     async getData() 
     {
+        // Reset values to 0 so values don't accumulate
         this.advCount = 0;
         this.disCount = 0;
+        this.fields.SL = 0;
+        this.fields.modifier = 0;
 
         this.computeFields();
 
@@ -66,6 +74,8 @@ export class TestDialog extends Application
 
         return {
             fields : mergeObject(this.fields, {state}),
+            advCount : this.advCount,
+            disCount : this.disCount,
             subTemplate : await this.getFieldsTemplate()
         };
     }
@@ -153,33 +163,34 @@ export class TestDialog extends Application
         this.form.onsubmit = this.submit.bind(this);
 
         // Listen on all elements with 'name' property
-        html.find(Object.keys(new FormDataExtended(this.form).object).map(i => `[name='${i}']`).join(",")).change(ev => 
-        {
-            let value = ev.currentTarget.value;
-            if (Number.isNumeric(value))
-            {
-                value = Number(value);
-            }
-
-            if (ev.currentTarget.type == "checkbox")
-            {
-                value = ev.currentTarget.checked;
-            }
-
-            this.fields[ev.currentTarget.name] = value;
-
-            // If the user clicks advantage or disadvantage, force that state to be true despite calculations
-            if (ev.currentTarget.name == "state")
-            {
-                this.forceState = value;
-            }
-            this.render(true);
-        });
-
+        html.find(Object.keys(new FormDataExtended(this.form).object).map(i => `[name='${i}']`).join(",")).change(this._onInputChanged.bind(this));
 
         // Need to remember binded function to later remove
         this.#onKeyPress = this._onKeyPress.bind(this);
         document.addEventListener("keypress", this.#onKeyPress);
+    }
+
+    _onInputChanged(ev) 
+    {
+        let value = ev.currentTarget.value;
+        if (Number.isNumeric(value))
+        {
+            value = Number(value);
+        }
+
+        if (ev.currentTarget.type == "checkbox")
+        {
+            value = ev.currentTarget.checked;
+        }
+
+        this.fields[ev.currentTarget.name] = value;
+
+        // If the user clicks advantage or disadvantage, force that state to be true despite calculations
+        if (ev.currentTarget.name == "state")
+        {
+            this.forceState = value;
+        }
+        this.render(true);
     }
 
     _onKeyPress(ev)
@@ -220,7 +231,6 @@ export class TestDialog extends Application
         if (!actor.token)
         {
             // getSpeaker retrieves tokens even if this sheet isn't a token's sheet
-            delete dialogData.data.speaker.token;
             delete dialogData.data.speaker.scene;
         }
         dialogData.data.title = (title?.replace || game.i18n.localize("IMPMAL.Test")) + (title?.append || "");

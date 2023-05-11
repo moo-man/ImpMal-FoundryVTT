@@ -26,6 +26,7 @@ export class TraitTestDialog extends AttackDialog
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.TraitTest", {trait : trait?.name})) + (title?.append || "");
 
         dialogData.data.itemId = trait?.id;
+        dialogData.data.item = trait;
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

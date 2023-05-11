@@ -74,6 +74,7 @@
     .item-section.possessions,
     .item-section.skills {
         flex-direction: row;
+        flex-wrap: wrap;
         > a {
             margin-left: 5px;
         }
