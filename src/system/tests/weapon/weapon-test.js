@@ -27,26 +27,53 @@ export class WeaponTest extends AttackTest
             let ammo = this.item.system.ammo.document;
             if (this.item.system.attackType == "ranged" && ammo && !this.context.ammoUsed)
             {
-                let baseAmmoUsed; // RapidFire and Burst weapons don't consume ammo unless those traits are used
-                if (this.itemTraits.has("rapidFire") || this.itemTraits.has("burst"))
-                {
-                    baseAmmoUsed = 0;
-                }
-                else 
-                {
-                    baseAmmoUsed = 1;
-                }
+                let ammoUsed = this.computeAmmoUsed();
 
-                let totalAmmoUsed = baseAmmoUsed + (this.result.burst ? 1 : 0) + (this.result.rapidFire ? Number(this.itemTraits.has("rapidFire").value) : 0);
-
-                this.item.update(this.item.system.useAmmo(totalAmmoUsed));
-                ammo.update(ammo.system.decrease(totalAmmoUsed));
+                this.item.update(this.item.system.useAmmo(ammoUsed));
+                ammo.update(ammo.system.decrease(ammoUsed));
                 this.context.ammoUsed = true;
             }
         }
         catch(e)
         {
             ui.notifications.error(`${game.i18n.localize("IMPMAL.ErrorAmmoUse")}: ${e}`);
+        }
+    }
+
+
+    computeAmmoUsed()
+    {
+
+        if (game.settings.get("impmal", "countEveryBullet"))
+        {
+            let multiplier = game.settings.get("impmal", "countEveryBullet") ? 5 : 1;
+
+            if (this.result.burst)
+            {
+                return multiplier;
+            }
+            else if (this.result.rapidFire)
+            {
+                return this.itemTraits.has("rapidFire").value * multiplier;
+            }
+            else 
+            {
+                return 1;
+            }
+        }
+        else // RAW
+        {
+            let baseAmmoUsed; // RapidFire and Burst weapons don't consume ammo unless those traits are used
+            if (this.itemTraits.has("rapidFire") || this.itemTraits.has("burst"))
+            {
+                baseAmmoUsed =  0;
+            }
+            else 
+            {
+                baseAmmoUsed = 1;
+            }
+
+            return baseAmmoUsed + (this.result.burst ? 1 : 0) + (this.result.rapidFire ? Number(this.itemTraits.has("rapidFire").value) : 0);
         }
     }
 

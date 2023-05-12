@@ -75,13 +75,19 @@ export class AttackDialog extends SkillTestDialog
     _onInputChanged(ev)
     {
         // Can't have both burst and rapidFire active
+        let multiplier = game.settings.get("impmal", "countEveryBullet") ? 5 : 1;
         if (ev.currentTarget.name == "burst")
         {
+            if (this.data.item.type == "weapon" &&  multiplier > this.data.item.system.mag.current)
+            {
+                ev.currentTarget.checked = false;
+                ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+            }
             delete this.fields.rapidFire;
         }
         else if (ev.currentTarget.name == "rapidFire")
         {
-            if (this.data.item.type == "weapon" && Number(this.traits.has("rapidFire").value) > this.data.item.system.mag.current)
+            if (this.data.item.type == "weapon" && (Number(this.traits.has("rapidFire").value) * multiplier) > this.data.item.system.mag.current)
             {
                 ev.currentTarget.checked = false;
                 ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));

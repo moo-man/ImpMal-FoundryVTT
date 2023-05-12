@@ -111,6 +111,8 @@
     "IMPMAL.ConditionStunnedMajor" : "Stunned (Major)",
     "IMPMAL.ConditionStunnedMinor" : "Stunned (Minor)",
     "IMPMAL.ConditionUnconsciousMajor" : "Unconscious (Major)",
+    "IMPMAL.CountEveryBullet" : "Count Every Bullet",
+    "IMPMAL.CountEveryBulletHint" : "Use 'Counting Every Bullet' optional rule defined on page 314.",
     "IMPMAL.Corruption" : "Corruption",
     "IMPMAL.Cost" : "Cost",
     "IMPMAL.CreateSpecialisation" : "Create Specialisation",

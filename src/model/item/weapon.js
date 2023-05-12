@@ -29,6 +29,11 @@ export class WeaponModel extends EquippableItemModel
     computeBase() 
     {
         super.computeBase();
+        if (game.settings.get("impmal", "countEveryBullet") && !this.mag.multiplied)
+        {
+            this.mag.value *= 5;
+            this.mag.multiplied = true;
+        }
         this.mods.prepareMods();
         this.traits.compute();
         this.specialisation = game.impmal.config[`${this.attackType}Specs`][this.spec];
@@ -87,7 +92,7 @@ export class WeaponModel extends EquippableItemModel
             throw game.i18n.localize("IMPMAL.ErrorReloadNoAmmo");
         }
 
-        return {"system.mag.current" : Math.min(this.mag.value, this.mag.current + ammo.system.quantity)};
+        return {"system.mag.current" : Math.min(this.mag.value, this.mag.current + ammo.system.quantity, ammo.system.quantity)};
     }
 
     useAmmo(amount = 1)

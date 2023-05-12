@@ -15,4 +15,13 @@ export default function registerSettings()
         type: Number,
         default: 0
     });
+
+    game.settings.register("impmal", "countEveryBullet", {
+        name: "IMPMAL.CountEveryBullet",
+        hint : "IMPMAL.CountEveryBulletHint",
+        scope: "world",
+        config: true,
+        type: Boolean,
+        default: false
+    });
 }
