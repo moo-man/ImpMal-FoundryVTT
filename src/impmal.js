@@ -47,6 +47,7 @@ import { ChoiceConfig } from "./apps/choice-config";
 import BackgroundItemSheet from "./sheet/items/item-background-sheet";
 import OriginItemSheet from "./sheet/items/item-origin-sheet";
 import RoleItemSheet from "./sheet/items/item-role-sheet";
+import FoundryOverrides from "./system/overrides";
 
 Hooks.once("init", () => 
 {
@@ -123,6 +124,7 @@ Hooks.once("init", () =>
 
 });
 
+FoundryOverrides();
 registerHooks();
 
 
