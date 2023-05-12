@@ -35,8 +35,21 @@ export class AttackTest extends SkillTest
         if (this.result.fumble)
         {
             tags.push(`<span class="fumble">[[/r 1d10]]{${game.i18n.localize("IMPMAL.Fumble")}}</span>`);
+            if (this.itemTraits.has("reliable"))
+            {
+                tags.push(`<span>[[/r 1d10]]{${game.i18n.localize("IMPMAL.Reliable")}}</span>`);
+            }
+        }
+        if (this.result.supercharge)
+        {
+            tags.push(`${game.i18n.localize("IMPMAL.Supercharge")} (+${this.itemTraits.has("supercharge").value})`);
         }
         return tags;
+    }
+
+    get itemTraits() 
+    {
+        return this.item.system.traits || this.item.system.attack?.traits;
     }
 
 
@@ -45,6 +58,9 @@ export class AttackTest extends SkillTest
     {
         let testData = super._getDialogTestData(data);
         testData.hitLocation = data.hitLocation;
+        testData.supercharge = data.supercharge;
+        testData.burst = data.burst;
+        testData.rapidFire = data.rapidFire;
         return testData;
     }
 

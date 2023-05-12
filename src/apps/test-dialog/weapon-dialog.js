@@ -32,6 +32,12 @@ export class WeaponTestDialog extends AttackDialog
 
         let weapon = actor.items.get(id);
         let skill = weapon.system.skill;
+
+        if (weapon.system.mag.current == 0 && weapon.system.attackType == "ranged")
+        {
+            ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+            throw Error(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+        }
         
         // If skill is a SkillSpec Item, provide the id, if not, provide the skill key
         let dialogData = super.setupData({itemId : skill.id, key : weapon.system.attackType}, actor, {title, fields});

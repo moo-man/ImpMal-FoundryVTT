@@ -123,7 +123,7 @@ export class BaseTest
     {
         let opposed = this.opposedTests.find(t => t.id == targetId);
 
-        let damageData = await opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation});
+        let damageData = await opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation, test : this});
         this.context.setApplied(targetId, damageData);
         this.roll();
     }

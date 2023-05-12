@@ -150,4 +150,17 @@ export class NPCCombatModel extends StandardCombatModel
         });
         return schema;
     }
+
+    // Add NPC static armour value to all locations
+    computeArmour(items)
+    {
+        super.computeArmour(items);
+        for (let loc in this.hitLocations)
+        {
+            if (this.hitLocations[loc])
+            {
+                this.hitLocations[loc].armour += (this.armour.value || 0);
+            }
+        }
+    }
 }

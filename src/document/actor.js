@@ -157,9 +157,10 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return testFunction(testData, testOptions);
     }
 
-    async applyDamage(value, {ignoreAP=false, location="roll", message=false}={})
+    async applyDamage(value, {ignoreAP=false, location="roll", message=false, test}={})
     {
         let reductions = [];
+        let traits = test?.itemTraits;
         let locationKey;
         if (typeof location == "string")
         {
@@ -186,8 +187,21 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
 
         if (!ignoreAP && locationData.armour)
         {
-            woundsGained -= locationData.armour;
-            reductions.push({value : locationData.armour, label : game.i18n.localize("IMPMAL.Protection")});
+            let armourValue = locationData.armour;
+            let penetrating = traits?.has("penetrating");
+            if (penetrating)
+            {
+                armourValue = Math.max(0, locationData.armour - Number(penetrating.value || 0));
+                // reductions.push({value : penetrating.value, label : game.i18n.localize("IMPMAL.Penetrating")});
+            }
+            woundsGained -= armourValue;
+            reductions.push({value : armourValue, label : game.i18n.localize("IMPMAL.Protection")});
+            if (traits?.has("ineffective"))
+            {
+                woundsGained -= armourValue;
+                reductions.push({value : armourValue, label : game.i18n.localize("IMPMAL.Ineffective")});
+
+            }
         }
 
         woundsGained = Math.max(0, woundsGained);

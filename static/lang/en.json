@@ -283,6 +283,7 @@
     "IMPMAL.Normal" : "Normal",
     "IMPMAL.Notes" : "Notes",
     "IMPMAL.NotesContacts" : "Notes / Contacts",
+    "IMPMAL.NotEnoughAmmo" : "Not Enough Ammo",
     "IMPMAL.NotValidChoiceType" : "Not a valid choice",
     "IMPMAL.NoOWnerOrGMFound" : "No Owner or GM Found",
     "IMPMAL.Obscured" : "Obscured",

@@ -58,7 +58,7 @@ export default class ItemTraitsForm extends FormApplication
         return Object.keys(foundry.utils.deepClone(traits)).map(key => 
         {
             // Use original to prevent ammo/mods from showing their modifications
-            let trait = getProperty(this.object, this.options.path)?.has(key);
+            let trait = getProperty(this.object, this.options.path)?.original.has(key);
             if (trait) 
             {
                 trait.existing = true;

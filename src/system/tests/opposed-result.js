@@ -23,20 +23,20 @@ export class OpposedTestResult
 
         if (this.winner == "attacker" && this.constructor.damagingItems.includes(attackerTest.item.type))
         {
-            this.damage = this.computeDamage(attackerTest.item);
+            this.damage = this.computeDamage(attackerTest.item, {add : (attackerTest.result?.supercharge ? Number(attackerTest.itemTraits.has("supercharge")?.value) : 0)});
         }
     }
 
-    computeDamage(item)
+    computeDamage(item, {add})
     {
         switch(item.type)
         {
         case "weapon" : 
-            return this._computeWeaponDamage(item);
+            return this._computeWeaponDamage(item) + (add || 0);
         case "trait" : 
-            return this._computeTraitDamage(item);
+            return this._computeTraitDamage(item) + (add || 0);
         case "power" : 
-            return this._computePowerDamage(item);
+            return this._computePowerDamage(item) + (add || 0);
         }
     }
 

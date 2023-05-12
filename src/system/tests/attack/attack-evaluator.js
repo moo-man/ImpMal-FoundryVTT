@@ -22,6 +22,9 @@ export class AttackEvaluator extends BaseTestEvaluator
      */
     computeOther(data) 
     {
+        this.supercharge = data.supercharge;
+        this.burst = data.burst;
+        this.rapidFire = data.rapidFire;
         this.computeHitLocation(data);
         super.computeOther(data);
     }

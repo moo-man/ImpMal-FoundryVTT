@@ -40,6 +40,11 @@ export class AttackDialog extends SkillTestDialog
             this.fields.SL++;
         }
 
+        if (this.traits.has("shoddy"))
+        {
+            this.fields.SL--;
+        }
+
         if (this.traits.has("defensive") && this.actor.getFlag("impmal", "opposed"))
         {
             this.advCount++;
@@ -76,6 +81,11 @@ export class AttackDialog extends SkillTestDialog
         }
         else if (ev.currentTarget.name == "rapidFire")
         {
+            if (this.data.item.type == "weapon" && Number(this.traits.has("rapidFire").value) > this.data.item.system.mag.current)
+            {
+                ev.currentTarget.checked = false;
+                ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+            }
             delete this.fields.burst;
         }
         super._onInputChanged(ev);
