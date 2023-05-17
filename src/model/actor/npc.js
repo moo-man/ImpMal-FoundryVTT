@@ -22,7 +22,6 @@ export class NPCModel extends StandardActorModel
     {
         super.computeDerived(items);
         this.faction.getDocument(items.all);
-        this.warp.threshold = this.characteristics.wil.bonus;
         this.computeRole();
     }
 
