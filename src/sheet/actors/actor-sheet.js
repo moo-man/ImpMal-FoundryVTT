@@ -27,6 +27,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         data.effects = this.organizeEffects(data);
         data.hitLocations = this.formatHitLocations(data);
         data.conditions = this.formatConditions(data);
+        data.conditions = data.conditions.filter(i => i.id != "dead");
         return data;
     }
 

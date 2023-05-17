@@ -124,6 +124,7 @@
     "IMPMAL.Damage" : "Damage",
     "IMPMAL.DamageDisplay" : "{damage} Damage",
     "IMPMAL.Dark" : "Dark",
+    "IMPMAL.Dead" : "Dead",
     "IMPMAL.DeadlyHazard" : "Deadly Hazard",
     "IMPMAL.Defensive" : "Defensive",
     "IMPMAL.DeleteItem" : "Delete Item",

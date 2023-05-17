@@ -7,7 +7,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         let conditions = foundry.utils.deepClone(CONFIG.statusEffects);
         conditions.forEach(c =>
         {
-            c.boolean = game.impmal.config.booleanCondition[c.id];
+            c.boolean = !game.impmal.config.tieredCondition[c.id];
             c.existing = this.object.hasCondition(c.id);
             c.opacity = 30;
 

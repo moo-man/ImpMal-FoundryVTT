@@ -309,20 +309,21 @@ const IMPMAL = {
         malignancy : "IMPMAL.Malignancy"
     },
 
-    booleanCondition : {
-        ablaze : false,
-        bleeding : false,
-        blinded : true,
-        deafened : true,
-        fatigued : false,
-        frightened : false,
-        incapacitated : true,
-        overburdened : true,
-        poisoned : false,
-        prone : true,
-        restrained : false,
-        stunned : false,
-        unconscious : true
+    tieredCondition: {
+        ablaze: true,
+        bleeding: true,
+        blinded: false,
+        deafened: false,
+        fatigued: true,
+        frightened: true,
+        incapacitated: false,
+        overburdened: false,
+        poisoned: true,
+        prone: false,
+        restrained: true,
+        stunned: true,
+        unconscious: false,
+        dead: false
     },
 
     conditions : [
@@ -503,6 +504,11 @@ const IMPMAL = {
                 }
             }
         },
+        {
+            icon: "systems/impmal/assets/icons/conditions/dead.svg",
+            id: "dead",
+            label: "IMPMAL.Dead"
+        },
     ],
 
     systemEffects : {
@@ -632,6 +638,11 @@ const IM_CONFIG = {
             icon: "systems/impmal/assets/icons/conditions/stunned.svg",
             id: "stunned",
             label: "IMPMAL.ConditionStunned",
+        },
+        {
+            icon: "systems/impmal/assets/icons/conditions/dead.svg",
+            id: "dead",
+            label: "IMPMAL.Dead",
         },
     ]
 };
