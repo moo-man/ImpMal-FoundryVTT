@@ -36,6 +36,7 @@ export class TestDialog extends Application
         super();
         this.data = data;
         this.fields = mergeObject(this._defaultFields(),fields);
+        this.userEntry = foundry.utils.deepClone(this.fields);
 
         // Keep count of sources of advantage and disadvantage
         this.advCount = 0;
@@ -62,11 +63,10 @@ export class TestDialog extends Application
 
     async getData() 
     {
-        // Reset values to 0 so values don't accumulate
         this.advCount = 0;
         this.disCount = 0;
-        this.fields.SL = 0;
-        this.fields.modifier = 0;
+        // Reset values so they don't accumulate 
+        mergeObject(this.fields, this.userEntry);
 
         this.computeFields();
 
@@ -183,7 +183,7 @@ export class TestDialog extends Application
             value = ev.currentTarget.checked;
         }
 
-        this.fields[ev.currentTarget.name] = value;
+        this.userEntry[ev.currentTarget.name] = value;
 
         // If the user clicks advantage or disadvantage, force that state to be true despite calculations
         if (ev.currentTarget.name == "state")

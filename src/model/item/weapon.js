@@ -29,7 +29,7 @@ export class WeaponModel extends EquippableItemModel
     computeBase() 
     {
         super.computeBase();
-        if (game.settings.get("impmal", "countEveryBullet") && !this.mag.multiplied)
+        if (game.settings.get("impmal", "countEveryBullet") && !this.mag.multiplied && (this.traits.has("burst") || this.traits.has("rapidFire")))
         {
             this.mag.value *= 5;
             this.mag.multiplied = true;
