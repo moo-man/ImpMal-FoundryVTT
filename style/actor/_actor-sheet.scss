@@ -182,9 +182,11 @@
             text-align: center;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #BBB;
+            border-top: 1px solid #BBB;
             padding: 2px 0px;
-
+            &:first-of-type {
+                border-top: none;
+            }
             .skill-name,
             .skill-characteristic {
                 display: flex;
@@ -212,10 +214,51 @@
             }
         }
         .skill-row.spec {
+            border-top: none;
+            position: relative;
             .skill-name{
-                justify-content: center;
+                position: relative;
+                margin-left: 24px;
+                margin-right: -24px;
+
+                &:before {
+                    content: "";
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid #AAA;
+                    border-right: 0px;
+                    border-top: 0px;
+                    border-bottom: 0px;
+                    position: absolute;
+                    top: -20px;
+                    left: -24px;
+                }
+            }
+
+            &.first {
+                .skill-name {
+                    &:before {
+                        border: none;
+                    }
+                }
             }
         }
+
+
+
+        .spec:before {
+            content: "";
+            width: 20px;
+            height: 10px;
+            border: 2px solid #AAA;
+            border-bottom-left-radius: 5px;
+            border-right: 0px;
+            border-top: 0px;
+            position: absolute;
+            top: 0px;
+        }
+
+
     }
 
 

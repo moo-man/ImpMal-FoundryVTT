@@ -30,7 +30,7 @@
                 </div>
         </div>
         {{#each this.specialisations}}
-            <div class="skill-row spec" data-id="{{this.id}}">
+            <div class="skill-row spec {{#if (eq @key 0)}}first{{/if}}" data-id="{{this.id}}">
                 <a class="skill-name roll list-edit-rc" data-type="skill">{{this.name}}</a>
                 <div class="skill-characteristic"></div>
                 {{#if (eq ../../actor.type "character")}}
