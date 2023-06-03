@@ -166,7 +166,7 @@ export class BaseTestEvaluator
             return 100;
         }
 
-        return Number(number.toString().split("").reverse().join(""));
+        return Number((number < 10 ? "0" + number : number).toString().split("").reverse().join(""));
     }
 
     clear()
