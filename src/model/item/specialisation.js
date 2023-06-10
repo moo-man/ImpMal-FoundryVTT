@@ -7,7 +7,7 @@ export class SpecialisationModel extends StandardItemModel
     {
         let schema = super.defineSchema();
         schema.skill = new fields.StringField();
-        schema.advances = new fields.NumberField({min: 0, max: 4});
+        schema.advances = new fields.NumberField({min: 0, max: 4, initial: 0});
         schema.restricted = new fields.BooleanField();
         return schema;
     }

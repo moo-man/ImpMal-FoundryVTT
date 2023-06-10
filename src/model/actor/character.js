@@ -22,7 +22,7 @@ export class CharacterModel extends StandardActorModel
         schema.faction = new fields.EmbeddedDataField(SingletonItemModel);
         schema.role = new fields.EmbeddedDataField(SingletonItemModel);
         schema.handed = new fields.StringField();
-        schema.solars = new fields.NumberField();
+        schema.solars = new fields.NumberField({initial: 0});
         schema.combat = new fields.EmbeddedDataField(CharacterCombatModel);
         schema.xp = new fields.EmbeddedDataField(XPModel);
         schema.details = new fields.SchemaField({
@@ -41,8 +41,8 @@ export class CharacterModel extends StandardActorModel
         });
         schema.corruption = new fields.NumberField();
         schema.fate = new fields.SchemaField({
-            max : new fields.NumberField(),
-            value : new fields.NumberField()
+            max : new fields.NumberField({initial: 3}),
+            value : new fields.NumberField({initial: 3})
         });
         schema.connections = new fields.EmbeddedDataField(ListModel);
         schema.influence = new fields.EmbeddedDataField(InfluenceModel);

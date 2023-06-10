@@ -41,7 +41,7 @@ class CharacteristicModel extends foundry.abstract.DataModel
     {
         let schema = {};
         schema.starting = new fields.NumberField({min: 0, initial: 20});
-        schema.modifier = new fields.NumberField();
+        schema.modifier = new fields.NumberField({initial: 0});
         schema.advances = new fields.NumberField({min: 0, initial: 0});
         return schema;
     }

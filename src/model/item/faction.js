@@ -23,7 +23,7 @@ export class FactionModel extends DualItemModel
                 choices : new fields.ArrayField(new fields.StringField())
             }),
             advances : new fields.SchemaField({
-                value : new fields.NumberField({min: 0, default: 5}),
+                value : new fields.NumberField({min: 0, initial: 5}),
                 skills : new fields.ArrayField(new fields.StringField())
             }),
             influence : new fields.EmbeddedDataField(InfluenceModel),

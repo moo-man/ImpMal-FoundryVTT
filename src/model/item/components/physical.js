@@ -8,10 +8,10 @@ export class PhysicalItemModel extends StandardItemModel
     {
         let schema = super.defineSchema();
         schema.encumbrance = new fields.SchemaField({
-            value : new fields.NumberField({min: 0})
+            value : new fields.NumberField({min: 0, initial: 0})
         });
-        schema.cost = new fields.NumberField({min: 0});
-        schema.quantity = new fields.NumberField({min: 0});
+        schema.cost = new fields.NumberField({min: 0, initial: 0});
+        schema.quantity = new fields.NumberField({min: 0, initial: 1});
         schema.availability = new fields.StringField({});
 
         return schema;

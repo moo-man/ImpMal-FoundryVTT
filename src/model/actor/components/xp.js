@@ -7,7 +7,7 @@ export class XPModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.total = new fields.NumberField();
+        schema.total = new fields.NumberField({initial : 0});
         schema.other = new fields.EmbeddedDataField(ListModel);
         return schema;
     }

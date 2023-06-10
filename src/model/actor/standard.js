@@ -18,7 +18,7 @@ export class StandardActorModel extends BaseActorModel
         schema.combat = new fields.EmbeddedDataField(StandardCombatModel);
         schema.warp = new fields.SchemaField({
             charge : new fields.NumberField({min: 0}),
-            state : new fields.NumberField({default: 0, min: 0})
+            state : new fields.NumberField({initial: 0, min: 0})
         });
         return schema;
     }
