@@ -23,20 +23,20 @@ export class OpposedTestResult
 
         if (this.winner == "attacker" && this.constructor.damagingItems.includes(attackerTest.item.type))
         {
-            this.damage = this.computeDamage(attackerTest.item, {add : (attackerTest.result?.supercharge ? Number(attackerTest.itemTraits.has("supercharge")?.value) : 0)});
+            this.damage = this.computeDamage(attackerTest.item, {add : (attackerTest.result?.supercharge ? Number(attackerTest.itemTraits.has("supercharge")?.value) : 0), attackerTest, defenderTest});
         }
     }
 
-    computeDamage(item, {add})
+    computeDamage(item, {add, attackerTest, defenderTest})
     {
         switch(item.type)
         {
         case "weapon" : 
-            return this._computeWeaponDamage(item) + (add || 0);
+            return this._computeWeaponDamage(item, {attackerTest, defenderTest}) + (add || 0);
         case "trait" : 
-            return this._computeTraitDamage(item) + (add || 0);
+            return this._computeTraitDamage(item, {attackerTest, defenderTest}) + (add || 0);
         case "power" : 
-            return this._computePowerDamage(item) + (add || 0);
+            return this._computePowerDamage(item, {attackerTest, defenderTest}) + (add || 0);
         }
     }
 
@@ -78,7 +78,7 @@ export class OpposedTestResult
     }
 
     
-    _computeWeaponDamage(item)
+    _computeWeaponDamage(item, {attackerTest, defenderTest}={})
     {
         let damage = 0;
         if (!item?.system?.damage)
@@ -88,9 +88,14 @@ export class OpposedTestResult
 
         damage += item?.system.damage.value;
 
+        if (item.system.damage.SL)
+        {
+            damage += attackerTest.result.SL;
+        }
+
         if (item?.system.attackType == "melee")
         {
-            damage += this.SL;
+            damage -= (defenderTest?.result?.SL);
         }
 
         return damage;
