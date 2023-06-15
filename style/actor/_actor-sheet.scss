@@ -203,6 +203,10 @@
                 justify-content: center;
             }
 
+            input {
+                height: unset;
+            }
+
             >*:first-of-type {
                 justify-content: left;
             }
