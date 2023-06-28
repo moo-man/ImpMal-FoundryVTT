@@ -25,6 +25,21 @@
                         </select>
                     </div>
                 </div>
+                {{#if (eq system.discipline "minor")}}
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Specialisation"}}</label>
+                    <div class="form-fields">
+                        <select name="system.minorSpecialisation">
+                            {{#select system.minorSpecialisation}}
+                                    <option value=""></option>
+                                {{#each (config "disciplines")}}
+                                    <option value="{{@key}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+                {{/if}}
                 <div class="form-group">
                     <label>{{localize "IMPMAL.WarpRating"}}</label>
                     <div class="form-fields">

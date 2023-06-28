@@ -8,6 +8,7 @@ export class PowerModel extends StandardItemModel
     {
         let schema = super.defineSchema();
         schema.discipline = new fields.StringField();
+        schema.minorSpecialisation = new fields.StringField(); // If minor, optionally apply specialisation
         schema.rating = new fields.NumberField();
         schema.difficulty = new fields.StringField();
         schema.range = new fields.StringField();
@@ -30,7 +31,8 @@ export class PowerModel extends StandardItemModel
     {
         let skill = "psychic";
         let skillObject = actor.system.skills[skill];
-        let skillItem = skillObject.specialisations.find(i => i.name == game.impmal.config.disciplines[this.discipline]);
+        let discipline = this.discipline == "minor" ? this.minorSpecialisation : this.discipline;  
+        let skillItem = skillObject.specialisations.find(i => i.name == game.impmal.config.disciplines[discipline]);
 
         return skillItem ?? skill;
     }

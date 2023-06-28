@@ -585,7 +585,8 @@
         "notes",
         "damage"
       ],
-      "discipline": "",
+      "discipline": "minor",
+      "minorSpecialisation" : "",
       "rating": 0,
       "difficulty": "challenging",
       "range": "",

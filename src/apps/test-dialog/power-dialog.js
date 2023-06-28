@@ -32,7 +32,8 @@ export class PowerTestDialog extends SkillTestDialog
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
         let power = actor.items.get(id);
-        let skill = actor.system.skills.psychic.specialisations.find(i => i.name == game.impmal.config.disciplines[power.system.discipline]);
+        let discipline = power.system.discipline == "minor" ? power.system.minorSpecialisation : power.system.discipline; // Minor powers can use specialisations
+        let skill = actor.system.skills.psychic.specialisations.find(i => i.name == game.impmal.config.disciplines[discipline]);
 
         // Prioritize specified difficulty, fallback on power's difficulty
         fields.difficulty = fields.difficulty || power.system.difficulty;
