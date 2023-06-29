@@ -85,6 +85,14 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.AmmoCost"}}</label>
+                    <div class="form-fields">
+                        <input type="number" name="system.ammoCost" value="{{system.ammoCost}}">
+                        <a class="buy-ammo" data-tooltip="{{localize 'IMPMAL.BuyAmmo'}}"><img src="systems/impmal/assets/icons/ammo.svg"></a>
+                    </div>
+                </div>
+
                 {{> systems/impmal/templates/item/partials/item-traits.hbs}}
 
                 <section class="list">

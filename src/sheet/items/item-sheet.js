@@ -31,6 +31,32 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         }
     }
 
+    async _onDrop(ev)
+    {
+        let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
+        if (dropData.type == "Item")
+        {
+            let item = await Item.implementation.fromDropData(dropData);
+            if (item)
+            {
+                return this._onDropItem(item);
+            }
+            else 
+            {
+                super._onDrop(ev);
+            }
+        }
+        else 
+        {
+            super._onDrop(ev);
+        }
+    }
+
+    _onDropItem(item)
+    {
+        return this[`_onDropItem${item.type[0].toUpperCase() + item.type.substring(1)}`]?.(item);
+    }
+
     _getHeaderButtons() 
     {
         let buttons = super._getHeaderButtons();

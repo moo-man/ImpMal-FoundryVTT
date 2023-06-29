@@ -1,3 +1,4 @@
+import { BuyAmmoForm } from "../../apps/buy-ammo";
 import ImpMalItemSheet from "./item-sheet";
 
 export default class WeaponItemSheet extends ImpMalItemSheet
@@ -47,6 +48,21 @@ export default class WeaponItemSheet extends ImpMalItemSheet
             if (document)
             {
                 document.sheet.render(true, {editable : false});
+            }
+        });
+
+        html.find(".buy-ammo").click(() => 
+        {
+            if (this.item.isOwned)
+            {
+                new BuyAmmoForm(this.item).render(true);
+            }
+            else 
+            {
+                Item.create({name : this.item.name  + " Ammo", type : "ammo", "system.quantity" : this.item.system.mag.value, "system.cost" : this.item.system.ammoCost}).then(item => 
+                {
+                    ui.notifications.notify(`Created ${item.name}`);
+                });
             }
         });
     }

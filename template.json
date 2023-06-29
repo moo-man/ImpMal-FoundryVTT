@@ -503,6 +503,7 @@
         "damage",
         "traits"
       ],
+      "ammoCost" : 0,
       "attackType": "melee",
       "category": "",
       "spec": "",
@@ -521,7 +522,8 @@
         "traits",
         "physical"
       ],
-      "pricePercent" : null,
+      "custom" : false,
+      "priceMultiplier" : 1,
       "usedWith": "",
       "damage": 0,
       "range" : ""

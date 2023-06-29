@@ -48,6 +48,7 @@ import BackgroundItemSheet from "./sheet/items/item-background-sheet";
 import OriginItemSheet from "./sheet/items/item-origin-sheet";
 import RoleItemSheet from "./sheet/items/item-role-sheet";
 import FoundryOverrides from "./system/overrides";
+import AmmoItemSheet from "./sheet/items/item-ammo-sheet";
 
 Hooks.once("init", () => 
 {
@@ -71,6 +72,7 @@ Hooks.once("init", () =>
     Items.registerSheet("impmal", BackgroundItemSheet, { types: ["faction", "duty"], makeDefault: true });
     Items.registerSheet("impmal", OriginItemSheet, { types: ["origin"], makeDefault: true });
     Items.registerSheet("impmal", RoleItemSheet, { types: ["role"], makeDefault: true });
+    Items.registerSheet("impmal", AmmoItemSheet, { types: ["ammo"], makeDefault: true });
 
     // CONFIG.ActiveEffect.sheetClass = undefined;
     // DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });

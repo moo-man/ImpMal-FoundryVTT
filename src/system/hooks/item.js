@@ -4,6 +4,13 @@ export default function()
     {
         if (item.actor)
         {
+
+            if (item.type == "ammo" && item.system.custom)
+            {
+                ui.notifications.error("Custom ammo must be applied to another non-custom ammo type");
+                return false; // TODO: Find a better place for this, perhaps move item checks to item models instead of actor models?
+            }
+
             return item.actor.system.preCreateItem(item, data, options, user);
             // actor.system._checkComputedEffects(actor);
         }

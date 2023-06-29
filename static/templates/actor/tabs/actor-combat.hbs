@@ -70,7 +70,7 @@
                             </div>
                         {{/if}}
                     </div>
-                    <div>{{this.system.specialisation}}</div>
+                    <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
                     <div>{{this.system.damage.value}}</div>
                 </div>
                 {{#if this.system.traits.list.length}}
@@ -117,11 +117,11 @@
                             </div>
                         {{/if}}
                     </div>
-                    <div>{{this.system.specialisation}}</div>
+                    <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
                     <div>{{this.system.damage.value}}</div>
                     <div>{{configLookup "ranges" this.system.range}}</div>
                     <div>
-                        <select class="ammo-selector">
+                        <select class="ammo-selector" data-tooltip="{{this.system.ammo.document.name}}">
                             {{#select this.system.ammo.id}}
                                 <option value=""></option>
                                 {{#each ../this.items.ammo}}
