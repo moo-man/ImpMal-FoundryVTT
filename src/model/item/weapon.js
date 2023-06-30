@@ -27,6 +27,35 @@ export class WeaponModel extends EquippableItemModel
     }
 
 
+    preUpdateChecks(data)
+    {
+        super.preUpdateChecks(data);
+        if (hasProperty(data, "system.mag.value") && this.ammo.document)
+        {
+            setProperty(data, "system.mag.current", data.system.mag.value);
+        }
+    }
+
+    updateChecks(updateData)
+    {
+        let data = super.updateChecks();
+
+        // If ammo changed, also update current mag value
+        // Can't be in preUpdateChecks because need to check ammo quantity, ammo.document would not ready 
+        if (hasProperty(updateData, "system.ammo.id"))
+        {
+            if (this.ammo.document)
+            {
+                setProperty(data, "system.mag.current", Math.min(this.mag.value, this.ammo.document.system.quantity));
+            }
+            else if (!this.ammo.document)
+            {
+                setProperty(data, "system.mag.current", 0);
+            }
+        }
+        return data;
+    }
+
     computeBase() 
     {
         super.computeBase();
@@ -85,8 +114,19 @@ export class WeaponModel extends EquippableItemModel
         return skillItem ?? skill;
     }
 
-    reload() 
+    /**
+     * 
+     * @param {Boolean} trackAmmo Whether or not to check the quantity of the ammo item linked to the weapon
+     * @returns 
+     */
+    reload(trackAmmo=true) 
     {
+        if (!trackAmmo)
+        {
+            // If not tracking ammo, just return a full magazine
+            return {"system.mag.current" : this.mag.value}; 
+        }
+
         let ammo = this.ammo.document;
         if (!ammo)
         {
@@ -98,21 +138,10 @@ export class WeaponModel extends EquippableItemModel
 
     useAmmo(amount = 1)
     {
-        let ammo = this.ammo.document;
 
         if (this.attackType == "melee")
         {
             throw game.i18n.localize("IMPMAL.ErrorMeleeWeapon");
-        }
-
-        if (!ammo)
-        {
-            throw game.i18n.localize("IMPMAL.ErrorNoAmmo");
-        }
-
-        if (ammo.system.quantity < amount)
-        {
-            throw game.i18n.localize("IMPMAL.InsufficentQuantity");
         }
 
         return {"system.mag.current" : this.mag.current - amount};

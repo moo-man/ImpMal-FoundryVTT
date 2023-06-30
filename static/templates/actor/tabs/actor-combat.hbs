@@ -121,7 +121,7 @@
                     <div>{{this.system.damage.value}}</div>
                     <div>{{configLookup "ranges" this.system.range}}</div>
                     <div>
-                        <select class="ammo-selector" data-tooltip="{{this.system.ammo.document.name}}">
+                        <select class="ammo-selector" data-tooltip="{{this.system.ammo.document.name}} ({{this.system.ammo.document.system.quantity}})">
                             {{#select this.system.ammo.id}}
                                 <option value=""></option>
                                 {{#each ../this.items.ammo}}

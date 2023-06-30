@@ -24,13 +24,15 @@ export class WeaponTest extends AttackTest
         
         try 
         {
+            // Decrease ammo and mag count. 
+            // NPCs might not actually have ammo items, so just decrease mag count for them
             let ammo = this.item.system.ammo.document;
-            if (this.item.system.attackType == "ranged" && ammo && !this.context.ammoUsed)
+            if (this.item.system.attackType == "ranged" && !this.context.ammoUsed)
             {
                 let ammoUsed = this.computeAmmoUsed();
 
                 this.item.update(this.item.system.useAmmo(ammoUsed));
-                ammo.update(ammo.system.decrease(ammoUsed));
+                ammo?.update(ammo.system.decrease(ammoUsed));
                 this.context.ammoUsed = true;
             }
         }

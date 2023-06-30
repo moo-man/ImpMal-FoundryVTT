@@ -69,6 +69,21 @@
             margin: 0px;
             width: fit-content;
         }
+
+        .ammo {
+            display : flex;
+            align-items: center;
+            > * {
+                border : 1px solid #5E82AF;
+                border-radius: 10px;
+                padding: 1px 3px;
+                display :flex;
+                align-items: center;
+            }
+            img {
+                width: 20px
+            }
+        }
     }
 
     .item-section.possessions,

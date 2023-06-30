@@ -82,6 +82,8 @@
     "IMPMAL.ChoiceConfig" : "Choice Config",
     "IMPMAL.ChoiceOption" : "Choice Option",
     "IMPMAL.Choices" : "Choices",
+    "IMPMAL.ChooseNum" : "Choose {num}",
+    "IMPMAL.Choose" : "Choose",
     "IMPMAL.Close" : "Close",
     "IMPMAL.Collapsed" : "Collapsed",
     "IMPMAL.Combat" : "Combat",

@@ -1,3 +1,4 @@
+import DocumentChoice from "../../apps/item-dialog";
 import { ItemManagementForm } from "../../apps/item-management";
 import ImpMalActorSheet from "./actor-sheet";
 
@@ -172,6 +173,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
             <span class="damage">@DAMAGE</span>
             <span class="range">@RANGE</span>
             <span class="attack-traits">@TRAITS</span>
+            <span class="ammo">@AMMO</span
         </div>
         `;
 
@@ -182,7 +184,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
             let action = type == "trait" ? "attack" : "";
             let id = item.id;
             let name = item.name;
-            let testLabel, skillTotal, damage, range, traits;
+            let testLabel, skillTotal, damage, range, traits, ammo;
 
 
             // testLabel
@@ -192,7 +194,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
             }
             else if (type == "weapon")
             {
-                testLabel = `${config.weaponTypes[item.system.attackType]} (${item.system.specialisation})`;
+                testLabel = `${config.weaponTypes[item.system.attackType]} (${game.i18n.localize(item.system.specialisation)})`;
             }
 
 
@@ -243,6 +245,21 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
                 traits = item.system.traits.displayArray.map(i => `<a class="item-trait">${i}</a>`).join(", ");
             }
 
+
+            if (type == "weapon" && item.system.attackType == "ranged")
+            {
+                ammo = `
+                <a class="mag">${item.system.mag.current}<img src="systems/impmal/assets/icons/magazine.svg"></a>
+                <a class="ammo-used ${item.system.ammo.document ? "" : "inactive"}">
+                    ${item.system.ammo.document ? (`${item.system.ammo.document?.name} (${item.system.ammo.document?.system.quantity}) `) : "No Ammo Loaded"}
+                    <img src="systems/impmal/assets/icons/ammo-box.svg">
+                </a>`;
+            }
+            else
+            {
+                ammo = "";
+            }
+
             elements.push(
                 template
                     .replace("@TYPE", type)
@@ -254,6 +271,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
                     .replace("@DAMAGE", damage)
                     .replace("@RANGE", range)
                     .replace("@TRAITS", traits)
+                    .replace("@AMMO", ammo)
             );
         });
 
@@ -306,6 +324,43 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         html.find(".characteristic").on("mouseleave", (ev) => 
         {
             $(ev.currentTarget).find(".die-icon")[0].style.visibility = "hidden";
+        });
+
+        html.find(".mag").on("click", ev => 
+        {
+            let id = this._getId(ev);
+            let item = this.actor.items.get(id);
+
+            item.update(item.system.reload(!!item.system.ammo.document));
+
+        });
+
+        html.find(".mag").on("contextmenu", ev => 
+        {
+            let id = this._getId(ev);
+            let item = this.actor.items.get(id);
+
+            item.update(item.system.useAmmo());
+
+        });
+
+        
+        html.find(".ammo-used").on("click", ev => 
+        {
+            let id = this._getId(ev);
+            let item = this.actor.items.get(id);
+            DocumentChoice.create(this.actor.itemCategories.ammo).then(documents => 
+            {
+                let ammo = documents[0];
+                item.update({"system.ammo.id" : ammo?.id});
+            });
+        });
+
+        html.find(".ammo-used").on("contextmenu", ev => 
+        {
+            let id = this._getId(ev);
+            let item = this.actor.items.get(id);
+            item.update({"system.ammo.id" : ""});
         });
     }
 
