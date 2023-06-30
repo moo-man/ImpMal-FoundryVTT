@@ -3,14 +3,6 @@ import ImpMalItemSheet from "./item-sheet";
 // Background is what i'm calling the group of items used in character creation, such as origin, faction, and role
 export default class BackgroundItemSheet extends ImpMalItemSheet
 {
-    static get defaultOptions() 
-    {
-        const options = super.defaultOptions;
-        options.classes = options.classes.concat(["background"]);
-        return options;
-    }
-
-
     activateListeners(html) 
     {
         super.activateListeners(html);

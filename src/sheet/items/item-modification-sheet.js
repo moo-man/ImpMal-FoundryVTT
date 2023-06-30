@@ -3,13 +3,6 @@ import ImpMalItemSheet from "./item-sheet";
 
 export default class ModificationItemSheet extends ImpMalItemSheet
 {
-    static get defaultOptions() 
-    {
-        const options = super.defaultOptions;
-        options.classes = options.classes.concat(["modification"]);
-        return options;
-    }
-
     activateListeners(html) 
     {
         super.activateListeners(html);

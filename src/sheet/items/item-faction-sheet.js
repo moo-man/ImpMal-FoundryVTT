@@ -1,12 +1,13 @@
 import BackgroundItemSheet from "./item-background-sheet";
 
 
-export default class RoleItemSheet extends BackgroundItemSheet
+export default class FactionItemSheet extends BackgroundItemSheet
 {
-    _onDropItemTalent(item)
+    _onDropItemDuty(item)
     {
-        return this.item.update({"system.talents.list" : this.item.system.talents.add({id : item.id})});
+        console.log(item);
     }
+
 
     _onListEdit(ev)
     {

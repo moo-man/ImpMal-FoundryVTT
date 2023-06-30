@@ -447,6 +447,9 @@
         "boon": {
           "id": ""
         },
+        "influence" : {
+          "factions" : {}
+        },
         "notes": ""
       },
       "character": {

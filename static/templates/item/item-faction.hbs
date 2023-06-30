@@ -19,6 +19,9 @@
                 {{> systems/impmal/templates/item/partials/item-patron-notes.hbs}}
             </div>
             <div class="tab details" data-tab="details-patron">
+
+                {{> systems/impmal/templates/shared/influence.hbs factions=system.patron.influence.factions path="system.patron.influence" showNotes=false}}
+
                 <div class="form-group">
                     <label></label>
                     <div class="form-fields">

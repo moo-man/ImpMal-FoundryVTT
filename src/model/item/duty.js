@@ -15,7 +15,8 @@ export class DutyModel extends DualItemModel
         schema.faction = new fields.EmbeddedDataField(DocumentReferenceModel);
         mergeObject(schema.patron.fields, {
             table : new fields.EmbeddedDataField(DocumentReferenceModel),
-            boon : new fields.EmbeddedDataField(DocumentReferenceModel)
+            boon : new fields.EmbeddedDataField(DocumentReferenceModel),
+            influence : new fields.EmbeddedDataField(InfluenceModel),
         });
 
 

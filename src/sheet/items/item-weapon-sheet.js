@@ -3,29 +3,9 @@ import ImpMalItemSheet from "./item-sheet";
 
 export default class WeaponItemSheet extends ImpMalItemSheet
 {
-    static get defaultOptions() 
+    _onDropItemModification(item)
     {
-        const options = super.defaultOptions;
-        options.dragDrop.push([{ dragSelector: ".item-list .item", dropSelector: null }]);
-        return options;
-    }
-
-    async _onDrop(ev)
-    {
-        let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-        if (dropData.type == "Item")
-        {
-            let item = await Item.implementation.fromDropData(dropData);
-            if (item.type == "modification")
-            {
-                this.item.update({"system.mods.list" : this.item.system.mods.add(item.toObject())});
-            }
-        }
-        else 
-        {
-            super._onDrop(ev);
-        }
-
+        this.item.update({"system.mods.list" : this.item.system.mods.add(item.toObject())});
     }
 
     activateListeners(html) 
