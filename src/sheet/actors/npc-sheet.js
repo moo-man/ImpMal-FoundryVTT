@@ -173,7 +173,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
             <span class="damage">@DAMAGE</span>
             <span class="range">@RANGE</span>
             <span class="attack-traits">@TRAITS</span>
-            <span class="ammo">@AMMO</span
+            <span class="ammo">@AMMO</span>
         </div>
         `;
 
