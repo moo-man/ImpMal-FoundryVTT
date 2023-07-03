@@ -13,7 +13,6 @@ export class TestContext
     targetSpeakers = [];
     responses = {}; // map of tokenIds to response messages or "unopposed" string
     appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}
-    defendingAgainst = undefined;
 
     constructor(context)
     {
@@ -49,44 +48,55 @@ export class TestContext
         });
     }
 
-    async handleOpposed() 
+
+    
+    /**
+     * First handling of opposed values
+     * 
+     * @param {Object} message Message for this context
+     * @param {Object} options.updateOpposed Prevent infinite update loop between attacking and defending tests
+     */
+    async handleOpposed(message, {updateOpposed=true}={})
     {
-        let opposedId = this.actor.getFlag("impmal", "opposed");
-
-        if (opposedId) // If this test is defending (first render)
+        if (game.user.isGM && updateOpposed)
         {
-            this.actor.update({"flags.impmal.-=opposed" : null});
-            // Call the attacking test and compute the result
-            let attackTest = game.messages.get(opposedId)?.test;
-            if (attackTest)
+            let attackingMessage = this.findAttackingMessage();
+            if (attackingMessage) // If defending
             {
-                this.defendingAgainst = opposedId;
-                await this.saveContext();
-                await attackTest.context.addOpposedResponse(this.messageId);
-                // Wait till the animation is finished before rendering the result
-                await game.dice3d?.waitFor3DAnimationByMessageID(this.messageId);
-                attackTest.roll();
+                let attackingTest = attackingMessage.test;
+                attackingTest.context.addOpposedResponse(message.id);
+                attackingTest.sendToChat();
+            }
+            else if (this.targetSpeakers.length) // If attacking
+            {
+                // Update each defending test
+                this.targets.forEach(t => 
+                {
+                    t.test?.sendToChat({updateOpposed: false});
+                });
             }
         }
+    }
 
-        else if (this.defendingAgainst) // If this test is defending (2nd+ render, actor flag doesn't exist anymore)
+    findAttackingMessage()
+    {
+        let startingIndex = this.messageId ? 
+            game.messages.contents.findIndex(m => m.id == this.messageId) : // Not first call, start at this message's index
+            (game.messages.contents.length - 1);                            // First check - start at latest message 
+
+        //  Search preivous 25 messages to check if there's an attacking message
+        for(let i = startingIndex - 1; (i >= 0 && i > startingIndex - 25); i--)        
         {
-            this.rerenderTargets();
-        }
-
-        // If attacking
-        else if (this.targetSpeakers.length)
-        {
-            // First message - add flags to targets designating them as being attacked
-            if (!this.targetFlagsAdded)
+            let message = game.messages.contents[i];
+            let test = message.test;
+            if (test)
             {
-                return this.addTargetFlags();
-            }
-
-            // Subsequent calls - Tell target messages to rerender
-            else 
-            {
-                return this.rerenderTargets();
+                let target = test.context.targetSpeakers.find(t => t.token == this.speaker.token);
+                // let hasResponded = test.context.responses[this.speaker.token];
+                if (target) //&& !hasResponded)
+                {
+                    return message;
+                }
             }
         }
     }
@@ -122,7 +132,6 @@ export class TestContext
             if (!this.responses[speaker.token])
             {
                 this.addUnopposedResponse(speaker.token);
-                this.removeOpposedFlag(speaker);
             }
         }
         if (save)
@@ -147,68 +156,6 @@ export class TestContext
             return this.saveContext();
         }
     }
-
-    removeOpposedFlag(speaker)
-    {
-        let update = {"flags.impmal.-=opposed" : null};
-        if (game.user.isGM)
-        {
-            let actor = ChatMessage.getSpeakerActor(speaker);
-            if (actor)
-            {
-                return actor.update(update);
-            }
-        }
-        else 
-        {
-            SocketHandlers.call("updateActor", {speaker, update});
-        }
-    }
-
-
-    async addTargetFlags()
-    {
-        if (game.user.isGM)
-        {
-            for(let target of this.targets)
-            {
-                await target.actor.setFlag("impmal", "opposed", this.messageId);
-            }
-
-            this.targetFlagsAdded = true;
-            this.saveContext();
-        }
-        else 
-        {
-            SocketHandlers.call("addTargetFlags", {id : this.messageId});
-        }
-        game.user.updateTokenTargets([]);
-    }
-
-    async rerenderTargets()
-    {
-        if (game.user.isGM)
-        {
-            // Targets
-            for(let target of this.targets)
-            {
-                target.test?.evaluate(true);
-            }
-
-            // Attacker
-            if (this.defendingAgainst)
-            {
-                game.messages.get(this.defendingAgainst)?.test.evaluate(true);
-            }
-        }
-        else 
-        {
-            SocketHandlers.call("rerenderMessages", {ids : Object.values(this.responses).concat(this.defendingAgainst || [])});
-        }
-        game.user.updateTokenTargets([]);
-    }
-
-
 
     saveContext()
     {

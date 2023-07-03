@@ -32,13 +32,7 @@ export class BaseTest
         await this.evaluate();
         await this.postRoll();
         await this.sendToChat();
-        await this.context.handleOpposed();
 
-        // If defending, rerender to show defense results
-        if (this.defending)
-        {
-            await this.sendToChat();
-        }
         return this;
     }
 
@@ -128,7 +122,14 @@ export class BaseTest
         this.roll();
     }
 
-    async sendToChat({newMessage = false}={}) 
+    /**
+     * Create a chat card represeting this test
+     * 
+     * @param {Boolean} newMessage Forcibly create a new message 
+     * @param {Boolean} updateOpposed Prevent updating opposing messages (needed to prevent infinite loops back and forth)
+     * @returns 
+     */
+    async sendToChat({newMessage = false, updateOpposed=true}={}) 
     {
 
         let chatData = await this._chatData();
@@ -145,7 +146,7 @@ export class BaseTest
         }
         else // If existing message, update it
         {
-            return this.message.update(chatData);
+            return this.message.update(chatData, {updateOpposed});
         }
     }
 
@@ -235,7 +236,7 @@ export class BaseTest
     // Attacker test details
     get defending() 
     {
-        let attackMessage = game.messages.get(this.context.defendingAgainst);
+        let attackMessage = this.context.findAttackingMessage();
         let attackingTest = attackMessage?.test;
         if (attackingTest)
         {

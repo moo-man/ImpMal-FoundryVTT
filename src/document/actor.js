@@ -26,8 +26,6 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         this.items.forEach(i => i.prepareOwnedData());
     }
 
-
-
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"
@@ -225,5 +223,38 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             excess,
             location : locationKey
         };
+    }
+
+    get defendingAgainst()
+    {
+        if (this.type == "vehicle" || this.type == "patron")
+        {
+            return false;
+        }
+        else 
+        {
+            return this._findAttackingMessage();
+        }
+    }
+
+
+    _findAttackingMessage()
+    {
+        let tokenId = this.getActiveTokens()[0]?.id;
+        //  Search preivous 25 messages to check if there's an attacking message
+        for(let i = game.messages.contents.length - 1; (i >= 0 && i > game.messages.contents.length - 25); i--)        
+        {
+            let message = game.messages.contents[i];
+            let test = message.test;
+            if (test)
+            {
+                let target = test.context.targetSpeakers.find(t => t.token == tokenId);
+                let hasResponded = test.context.responses[tokenId];
+                if (target && !hasResponded)
+                {
+                    return message;
+                }
+            }
+        }
     }
 }

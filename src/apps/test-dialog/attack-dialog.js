@@ -45,7 +45,7 @@ export class AttackDialog extends SkillTestDialog
             this.fields.SL--;
         }
 
-        if (this.traits.has("defensive") && this.actor.getFlag("impmal", "opposed"))
+        if (this.traits.has("defensive") && this.actor.defendingAgainst)
         {
             this.advCount++;
         }

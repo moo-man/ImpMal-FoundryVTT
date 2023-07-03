@@ -21,4 +21,14 @@ export default function()
     {
         ImpMalItem.itemPostListeners(html);
     });
+
+    Hooks.on("createChatMessage", (message) => 
+    {
+        message.test?.context?.handleOpposed(message);
+    });
+
+    Hooks.on("updateChatMessage", (message, data, options) => 
+    {
+        message.test?.context?.handleOpposed(message, options);
+    });
 }

@@ -21,7 +21,7 @@ export class OpposedTestResult
             this.winner = "defender";
         }
 
-        if (this.winner == "attacker" && this.constructor.damagingItems.includes(attackerTest.item.type))
+        if (this.winner == "attacker" && attackerTest.item && this.constructor.damagingItems.includes(attackerTest.item?.type))
         {
             this.damage = this.computeDamage(attackerTest.item, {add : (attackerTest.result?.supercharge ? Number(attackerTest.itemTraits.has("supercharge")?.value) : 0), attackerTest, defenderTest});
         }
