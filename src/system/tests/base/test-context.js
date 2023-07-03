@@ -1,5 +1,4 @@
 import log from "../../logger";
-import { SocketHandlers } from "../../socket-handlers";
 
 export class TestContext
 {
@@ -13,6 +12,7 @@ export class TestContext
     targetSpeakers = [];
     responses = {}; // map of tokenIds to response messages or "unopposed" string
     appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}
+    defendingAgainst = undefined; // message ID of attacking test
 
     constructor(context)
     {
@@ -63,6 +63,13 @@ export class TestContext
             let attackingMessage = this.findAttackingMessage();
             if (attackingMessage) // If defending
             {
+                // Save attacking message for easy retrieval
+                if (!this.defendingAgainst)
+                {
+                    this.defendingAgainst = attackingMessage.id;
+                    this.saveContext();
+                }
+
                 let attackingTest = attackingMessage.test;
                 attackingTest.context.addOpposedResponse(message.id);
                 attackingTest.sendToChat();
@@ -78,8 +85,18 @@ export class TestContext
         }
     }
 
+    /**
+     * Scan the previous messages and search for any message that is targeting the token of this test
+     */
     findAttackingMessage()
     {
+        // If attacking message was previously found, use that message
+        if (this.defendingAgainst)
+        {
+            return game.messages.get(this.defendingAgainst);
+        }
+
+        // Otherwise, scan previous messages
         let startingIndex = this.messageId ? 
             game.messages.contents.findIndex(m => m.id == this.messageId) : // Not first call, start at this message's index
             (game.messages.contents.length - 1);                            // First check - start at latest message 
@@ -92,8 +109,8 @@ export class TestContext
             if (test)
             {
                 let target = test.context.targetSpeakers.find(t => t.token == this.speaker.token);
-                // let hasResponded = test.context.responses[this.speaker.token];
-                if (target) //&& !hasResponded)
+                let hasResponded = test.context.responses[this.speaker.token];
+                if (target && !hasResponded) // Do not include messages that already have a response from this token
                 {
                     return message;
                 }
@@ -174,7 +191,7 @@ export class TestContext
         }
         else 
         {
-            SocketHandlers.call("updateMessage", {id : this.message.id, data});
+            throw new Error("Player cannot save non-owned test context.");
         }
     }
 
