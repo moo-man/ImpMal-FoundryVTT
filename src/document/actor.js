@@ -233,28 +233,13 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         }
         else 
         {
-            return this._findAttackingMessage();
+            return this._findAttackingMessage()?.test;
         }
     }
 
 
     _findAttackingMessage()
     {
-        let tokenId = this.getActiveTokens()[0]?.id;
-        //  Search preivous 25 messages to check if there's an attacking message
-        for(let i = game.messages.contents.length - 1; (i >= 0 && i > game.messages.contents.length - 25); i--)        
-        {
-            let message = game.messages.contents[i];
-            let test = message.test;
-            if (test)
-            {
-                let target = test.context.targetSpeakers.find(t => t.token == tokenId);
-                let hasResponded = test.context.responses[tokenId];
-                if (target && !hasResponded)
-                {
-                    return message;
-                }
-            }
-        }
+        return game.messages.get(this.getFlag("impmal", "opposed"));
     }
 }

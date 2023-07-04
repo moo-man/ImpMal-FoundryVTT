@@ -1,4 +1,6 @@
+import ChatHelpers from "../../system/chat-helpers";
 import { SocketHandlers } from "../../system/socket-handlers";
+import TokenHelpers from "../../system/token-helpers";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
 export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
@@ -28,6 +30,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         data.hitLocations = this.formatHitLocations(data);
         data.conditions = this.formatConditions(data);
         data.conditions = data.conditions.filter(i => i.id != "dead");
+        data.defendingAgainst = this.actor.defendingAgainst;
         return data;
     }
 
@@ -131,6 +134,9 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".warp").on("click", this._onWarpClick.bind(this));
         html.find(".purge").on("click", this._onPurgeClick.bind(this));
         html.find(".list-summary-context").on("contextmenu", this._onItemSummary.bind(this));
+        html.find(".defending-against").on("mouseover", this._onHoverInAttacker.bind(this));
+        html.find(".defending-against").on("mouseout", this._onHoverOutAttacker.bind(this));
+        html.find(".defending-against").on("click", this._onClickAttacker.bind(this));
     }
 
 
@@ -291,6 +297,26 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     _onPurgeClick()
     {
         this.actor.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {purge: true,  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
+    }
+
+    _onHoverInAttacker() 
+    {
+        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.test;
+        ChatHelpers.highlightMessage(test.context.messageId);
+        TokenHelpers.highlightToken(test.context.speaker.token);
+    }
+
+    _onHoverOutAttacker() 
+    {
+        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.test;
+        ChatHelpers.unhighlightMessage(test.context.messageId);
+        TokenHelpers.unhighlightToken(test.context.speaker.token);
+    }
+
+    _onClickAttacker() 
+    {
+        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.test;
+        ChatHelpers.scrollToMessage(test.context.messageId);
     }
 
     async _onItemSummary(ev) 

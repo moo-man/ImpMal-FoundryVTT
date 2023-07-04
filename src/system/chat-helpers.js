@@ -1,5 +1,33 @@
+import TokenHelpers from "./token-helpers";
+
 export default class ChatHelpers 
 {
+
+
+    static scrollToMessage(messageId)
+    {
+        let message = ui.chat.element.find(`[data-message-id='${messageId}']`)[0];
+        ui.chat.element.find("ol").animate({scrollTop: message.offsetTop}, 800);
+        
+        // Scrolling into view will remove the highlight, so add it for 1 second then remove
+        message.classList.add("highlight-delayed");
+        setTimeout((message) => 
+        {
+            message.classList.remove("highlight-delayed");
+        }, 1000, message);
+    }
+
+    static highlightMessage(messageId)
+    {
+        let message = ui.chat.element.find(`[data-message-id='${messageId}']`)[0];
+        message.classList.add("highlight");
+    }
+
+    static unhighlightMessage(messageId)
+    {
+        let message = ui.chat.element.find(`[data-message-id='${messageId}']`)[0];
+        message.classList.remove("highlight");
+    }
 
     static removeGMOnlyElements(html)
     {
@@ -11,68 +39,14 @@ export default class ChatHelpers
 
     static addOpposedHighlightListeners(html)
     {
-        
-        html.on("mouseover", ".targets img", this._onHoverInOpposedImg.bind(this));
-        html.on("click", ".targets img", this._onClickOpposedImg.bind(this));
-        html.on("dblclick", ".targets img", this._onDoubleClickOpposedImg.bind(this));
-        html.on("mouseout", ".targets img", this._onHoverOutOpposedImg.bind(this));
+        html.on("mouseover", ".targets img", TokenHelpers._onHoverInOpposedImg.bind(TokenHelpers));
+        html.on("click", ".targets img", TokenHelpers._onClickOpposedImg.bind(TokenHelpers));
+        html.on("dblclick", ".targets img", TokenHelpers._onDoubleClickOpposedImg.bind(TokenHelpers));
+        html.on("mouseout", ".targets img", TokenHelpers._onHoverOutOpposedImg.bind(TokenHelpers));
 
         html.on("mouseover", ".opposed-icon", this._onHoverOpposedIcon.bind(this));
         html.on("mouseout", ".opposed-icon", this._onHoverOpposedIcon.bind(this));
         html.on("click", ".opposed-icon", this._onClickOpposedIcon.bind(this));
-    }
-
-    /**
-     *  Hovering on an Opposed token image in chat should highlight the token on the canvas
-     */
-    static _onHoverInOpposedImg(ev)
-    {
-        let tokenId = ev.target.parentElement.dataset.id;
-        let token = canvas.scene.tokens.get(tokenId);
-        token?.object?._onHoverIn(ev);
-    }
-
-    static _onHoverOutOpposedImg(ev)
-    {
-        let tokenId = ev.target.parentElement.dataset.id;
-        let token = canvas.scene.tokens.get(tokenId);
-        token?.object?._onHoverOut(ev);
-    }
-
-    /**
-     * Clcicking on the Opposed token image in chat should pan the canvas to the token
-     */
-    static _onClickOpposedImg(ev)
-    {
-        // Prevents execution when double clicking
-        if(this._onClickOpposedImg.clicked)
-        {
-            clearTimeout(this._onClickOpposedImg.clicked);
-            delete this._onClickOpposedImg.clicked;
-            return;
-        }
-        else 
-        {
-            this._onClickOpposedImg.clicked = setTimeout((ev) => 
-            {
-                let tokenId = ev.target.parentElement.dataset.id;
-                let token = canvas.scene.tokens.get(tokenId);
-                canvas.animatePan(token);
-                delete this._onClickOpposedImg.clicked;
-            }, 200, ev);
-        }
-    }
-
-    /**
-     *  Double clicking on the Opposed token image in chat should open the token's sheet
-     */
-    static _onDoubleClickOpposedImg(ev)
-    {
-        ev.stopPropagation();
-        ev.preventDefault();
-        let tokenId = ev.target.parentElement.dataset.id;
-        let token = canvas.scene.tokens.get(tokenId);
-        token.actor.sheet.render(true);
     }
 
     /**
@@ -81,20 +55,21 @@ export default class ChatHelpers
     static _onHoverOpposedIcon(ev)
     {
 
-        let opposedMessage = _findOpposedMessage(ev);
+        let opposedMessageId = _findOpposedMessageId(ev);
 
-        if (!opposedMessage)
+        if (!opposedMessageId)
         {
             return;
         }
 
         if (ev.type == "mouseover")
         {
-            opposedMessage.classList.add("highlight");
+            this.highlightMessage(opposedMessageId);
         }
+        
         else if (ev.type == "mouseout")
         {
-            opposedMessage.classList.remove("highlight");
+            this.unhighlightMessage(opposedMessageId);
         }
     }
 
@@ -103,29 +78,15 @@ export default class ChatHelpers
      */
     static _onClickOpposedIcon(ev)
     {
-        let opposedMessage = _findOpposedMessage(ev);
-
-        if (!opposedMessage)
-        {
-            return;
-        }
-
-        ui.chat.element.find("ol").animate({scrollTop: opposedMessage.offsetTop}, 800);
-        
-        // Scrolling into view will remove the highlight, so add it for 1 second then remove
-        opposedMessage.classList.add("highlight-delayed");
-        setTimeout((message) => 
-        {
-            message.classList.remove("highlight-delayed");
-        }, 1000, opposedMessage);
+        let opposedMessageId = _findOpposedMessageId(ev);
+        this.scrollToMessage(opposedMessageId);
     }
 }
-
 
 /**
  * Helper that finds attacking/defending message when interacting with opposed sections;
  */
-function _findOpposedMessage(ev)
+function _findOpposedMessageId(ev)
 {
     let el = $(ev.target);
     let messageId = el.parents(".message").attr("data-message-id");
@@ -134,11 +95,8 @@ function _findOpposedMessage(ev)
     let side = opposed.hasClass("target") ? "defending" : "attacking";
     let tokenId = opposed.attr("data-id");
     let test = game.messages.get(messageId)?.test;
-    let opposedMessage;
     if (test)
     {
-        let opposedMessageId = side == "defending" ? test.context.responses[tokenId] : test.context.defendingAgainst;
-        opposedMessage = ui.chat.element.find(`[data-message-id='${opposedMessageId}']`)[0];
+        return side == "defending" ? test.context.responses[tokenId] : test.context.defendingAgainst;
     }
-    return opposedMessage;
 }

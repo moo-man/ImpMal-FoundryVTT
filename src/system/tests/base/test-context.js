@@ -13,6 +13,7 @@ export class TestContext
     responses = {}; // map of tokenIds to response messages or "unopposed" string
     appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}
     defendingAgainst = undefined; // message ID of attacking test
+    opposedFlagsAdded = false;
 
     constructor(context)
     {
@@ -51,7 +52,8 @@ export class TestContext
 
     
     /**
-     * First handling of opposed values
+     * Handle rerendering of opposed tests to ensure values are in sync (updating an attacker test should update the opposed result of the 
+     * defender and vice versa, but should also prevent that update from causing an infinite loop of updating between attacker/defender
      * 
      * @param {Object} message Message for this context
      * @param {Object} options.updateOpposed Prevent infinite update loop between attacking and defending tests
@@ -67,7 +69,8 @@ export class TestContext
                 if (!this.defendingAgainst)
                 {
                     this.defendingAgainst = attackingMessage.id;
-                    this.saveContext();
+                    this.actor.setFlag("impmal", "opposed", null);
+                    this.saveContext(message);
                 }
 
                 let attackingTest = attackingMessage.test;
@@ -76,11 +79,24 @@ export class TestContext
             }
             else if (this.targetSpeakers.length) // If attacking
             {
-                // Update each defending test
-                this.targets.forEach(t => 
+                if (!this.opposedFlagsAdded)
                 {
-                    t.test?.sendToChat({updateOpposed: false});
-                });
+                    // Add Opposing flags to each actor
+                    this.targets.forEach(t => 
+                    {
+                        t.actor?.setFlag("impmal", "opposed", message.id);
+                    });
+                    this.opposedFlagsAdded = true;
+                    this.saveContext();
+                }
+                else 
+                {
+                    // Update each defending test
+                    this.targets.forEach(t => 
+                    {
+                        t.test?.sendToChat({updateOpposed: false});
+                    });
+                }
             }
         }
     }
@@ -95,26 +111,10 @@ export class TestContext
         {
             return game.messages.get(this.defendingAgainst);
         }
-
-        // Otherwise, scan previous messages
-        let startingIndex = this.messageId ? 
-            game.messages.contents.findIndex(m => m.id == this.messageId) : // Not first call, start at this message's index
-            (game.messages.contents.length - 1);                            // First check - start at latest message 
-
-        //  Search preivous 25 messages to check if there's an attacking message
-        for(let i = startingIndex - 1; (i >= 0 && i > startingIndex - 25); i--)        
+        else // Take the opposed flag from the actor to find the message
         {
-            let message = game.messages.contents[i];
-            let test = message.test;
-            if (test)
-            {
-                let target = test.context.targetSpeakers.find(t => t.token == this.speaker.token);
-                let hasResponded = test.context.responses[this.speaker.token];
-                if (target && !hasResponded) // Do not include messages that already have a response from this token
-                {
-                    return message;
-                }
-            }
+            let message = game.messages.get(this.actor.getFlag("impmal", "opposed"));
+            return message;
         }
     }
 
@@ -179,7 +179,7 @@ export class TestContext
         }
     }
 
-    saveContext()
+    saveContext(message)
     {
         let data = {
             flags: {
@@ -192,7 +192,7 @@ export class TestContext
         };
         if (game.user.isGM || this.message.isAuthor)
         {
-            return this.message?.update(data);
+            return (message || this.message)?.update(data);
         }
         else 
         {

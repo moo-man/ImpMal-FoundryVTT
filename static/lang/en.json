@@ -133,6 +133,7 @@
     "IMPMAL.Dark" : "Dark",
     "IMPMAL.Dead" : "Dead",
     "IMPMAL.DeadlyHazard" : "Deadly Hazard",
+    "IMPMAL.DefendingAgainst" : "Defending Against",
     "IMPMAL.Defensive" : "Defensive",
     "IMPMAL.DeleteItem" : "Delete Item",
     "IMPMAL.DeleteItemConfirmation" : "Are you sure you wish to delete this Item?",
