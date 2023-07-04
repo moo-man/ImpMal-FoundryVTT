@@ -1,5 +1,5 @@
 <div class="target" data-id="{{this.id}}">
-    <a class="{{this.result.winner}}"><i class="fa-solid fa-crosshairs"></i></a>
+    <a class="{{this.result.winner}} opposed-icon"><i class="fa-solid fa-crosshairs"></i></a>
     <img data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
     {{#if this.result}}
         <div class="opposed-result {{this.result.winner}}">
@@ -23,7 +23,7 @@
                     <ul>{{#each this.damage.reductions}}<p>{{this.label}} (-{{this.value}})</p>{{/each}}</ul>">
                     <i class="fa-solid fa-check"></i></a>
                 {{else}}
-                    <button class="apply-damage" data-tooltip="{{localize 'IMPMAL.ApplyDamage'}}"><i class="fa-solid fa-user-minus"></i></button>
+                    <button class="apply-damage gm-only" data-tooltip="{{localize 'IMPMAL.ApplyDamage'}}"><i class="fa-solid fa-user-minus"></i></button>
                 {{/if}}
             </div>
         {{/if}}

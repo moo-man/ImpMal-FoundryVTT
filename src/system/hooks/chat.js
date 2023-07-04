@@ -1,4 +1,5 @@
 import { ImpMalItem } from "../../document/item";
+import ChatHelpers from "../chat-helpers";
 import { BaseTest } from "../tests/base/base-test";
 
 export default function()
@@ -9,17 +10,19 @@ export default function()
  */
     Hooks.on("getChatLogEntryContext", (html, options) =>
     {
-        BaseTest._addTestContextOptions(options);
+        BaseTest.addTestContextOptions(options);
     });
 
-    Hooks.on("renderChatLog", (app, html,) => 
+    Hooks.on("renderChatLog", (app, html) => 
     {
-        BaseTest._chatListeners(html);
+        BaseTest.chatListeners(html);
+        ChatHelpers.addOpposedHighlightListeners(html);
     });
 
-    Hooks.on("renderChatMessage", (app, html,) => 
+    Hooks.on("renderChatMessage", (app, html) => 
     {
         ImpMalItem.itemPostListeners(html);
+        ChatHelpers.removeGMOnlyElements(html);
     });
 
     Hooks.on("createChatMessage", (message) => 

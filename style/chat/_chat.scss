@@ -1,0 +1,9 @@
+#chat-log {
+    .chat-message {
+        transition: box-shadow 200ms;
+    }
+    .chat-message.highlight-delayed,
+        .chat-message.highlight {
+        box-shadow: 0px 0px 10px darkblue inset;
+    }
+}

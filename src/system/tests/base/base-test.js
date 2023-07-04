@@ -117,9 +117,11 @@ export class BaseTest
     {
         let opposed = this.opposedTests.find(t => t.id == targetId);
 
-        let damageData = await opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation, test : this});
-        this.context.setApplied(targetId, damageData);
-        this.roll();
+        opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation, test : this}).then(data => 
+        {
+            this.context.setApplied(targetId, data);
+            this.roll();
+        });
     }
 
     /**
@@ -343,7 +345,7 @@ export class BaseTest
         });
     }
 
-    static _chatListeners(html)
+    static chatListeners(html)
     {
         html.on("click", ".apply-damage", async ev => 
         {
@@ -388,7 +390,7 @@ export class BaseTest
         });
     }
 
-    static _addTestContextOptions(options)
+    static addTestContextOptions(options)
     {
         let hasTest = li =>
         {

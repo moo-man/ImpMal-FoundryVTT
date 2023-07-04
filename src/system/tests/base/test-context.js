@@ -118,6 +118,11 @@ export class TestContext
         }
     }
 
+    findDefendingMessage(tokenId)
+    {
+        return game.messages.get(test.context.responses[tokenId]);
+    }
+
 
     // Called by a defending test to add target ID to context
     addOpposedResponse(messageId, {save=false}={})

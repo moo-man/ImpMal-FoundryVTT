@@ -36,6 +36,11 @@
       "url": ""
     }
   ],
+  "flags" : {
+      "hotReload": { 
+        "extensions": ["css", "hbs", "json"]
+      }
+  },
   "initiative": "@combat.initiative + @skills.reflexes.total/100",
   "gridDistance": 1,
   "gridUnits": "m",

@@ -112,6 +112,10 @@ export class StandardCombatModel extends foundry.abstract.DataModel
 
     hitLocAt(number)
     {
+        if (number == 0)
+        {
+            number = 10;
+        }
         for (let loc in this.hitLocations)
         {
             if (number >= this.hitLocations[loc].range[0] && number <= this.hitLocations[loc].range[1])
