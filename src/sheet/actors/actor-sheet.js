@@ -142,6 +142,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".defending-against").on("mouseover", this._onHoverInAttacker.bind(this));
         html.find(".defending-against").on("mouseout", this._onHoverOutAttacker.bind(this));
         html.find(".defending-against").on("click", this._onClickAttacker.bind(this));
+        html.find(".defending-against .remove-opposed").on("click", this._onRemoveOpposed.bind(this));
         html.find(".influence .list-content .list-item").on("click", this._onToggleInfluence.bind(this));
         html.find(".influence-source button").on("click", this._onInfluenceSourceCreate.bind(this));
         html.find(".influence-source input").on("change", this._onInfluenceSourceEdit.bind(this));
@@ -347,6 +348,11 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     {
         let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.test;
         ChatHelpers.scrollToMessage(test.context.messageId);
+    }
+
+    _onRemoveOpposed()
+    {
+        this.actor.clearOpposed();
     }
 
     async _onItemSummary(ev) 

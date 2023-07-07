@@ -95,7 +95,7 @@ export class OpposedTestResult
 
         if (item?.system.attackType == "melee")
         {
-            damage -= (defenderTest?.result?.SL);
+            damage -= (defenderTest?.result?.SL || 0);
         }
 
         return damage;

@@ -32,7 +32,7 @@ export class BaseItemModel extends foundry.abstract.DataModel
     {
         if (this.parent.actor)
         {
-            this.parent.actor.update(this.parent.actor.system.updateChecks());
+            this.parent.actor.update(this.parent.actor.system.updateChecks({}, {}));
         }
 
         return {};

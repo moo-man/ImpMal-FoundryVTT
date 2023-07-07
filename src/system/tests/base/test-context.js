@@ -72,6 +72,7 @@ export class TestContext
                     this.actor.setFlag("impmal", "opposed", null);
                     this.saveContext(message);
                 }
+                // await game.dice3d?.waitFor3DAnimationByMessageID(message.id);
 
                 let attackingTest = attackingMessage.test;
                 attackingTest.context.addOpposedResponse(message.id);
