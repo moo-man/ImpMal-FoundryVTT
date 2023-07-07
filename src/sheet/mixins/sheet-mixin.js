@@ -64,16 +64,25 @@ export default ImpMalSheetMixin = (cls) => class extends cls
 
     addGenericListeners(html) 
     {
+        html.find("input[type='number']").on("focusin", (ev) => ev.target.select());
         html.find(".list-edit").on("click", this._onListEdit.bind(this));
         html.find(".list-edit-rc").on("contextmenu", this._onListEdit.bind(this));
         html.find(".list-delete").on("click", this._onListDelete.bind(this));
         html.find(".list-delete-rc").on("click", this._onListDelete.bind(this));
         html.find(".list-create").on("click", this._onListCreate.bind(this));
         html.find(".list-toggle").on("click", this._onListToggle.bind(this));
+        html.find(".array-create").click(this._onCreateArrayElement.bind(this));
+        html.find(".array-edit").change(this._onEditArrayElement.bind(this));
+        html.find(".array-delete").click(this._onDeleteArrayElement.bind(this));
         html.find(".list-post").on("click", this._onPostItem.bind(this));
         html.find(".pip").on("click", this._onConditionPipClick.bind(this));
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
+        html.find(".influence .list-content .list-item").on("click", this._onToggleInfluence.bind(this));
+        html.find(".influence-source button").on("click", this._onInfluenceSourceCreate.bind(this));
+        html.find(".influence-source input").on("change", this._onInfluenceSourceEdit.bind(this));
+        html.find(".influence-source .source-delete").on("click", this._onInfluenceSourceDelete.bind(this));
+        html.find(".influence-source button,input,.source-delete").click(ev => ev.stopPropagation());
     }
 
     _getId(ev) 
@@ -83,7 +92,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
     
     _getIndex(ev) 
     {
-        return this._getDataAttribute(ev, "index");
+        return Number(this._getDataAttribute(ev, "index"));
     }
 
     _getKey(ev) 
@@ -91,11 +100,15 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         return this._getDataAttribute(ev, "key");
     }
 
+    _getType(ev) 
+    {
+        return this._getDataAttribute(ev, "type");
+    }
+
     _getPath(ev) 
     {
         return this._getDataAttribute(ev, "path");
     }
-
 
     _getCollection(ev) 
     {
@@ -175,6 +188,49 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         return this.object.createEmbeddedDocuments("Item", [createData]);
     }
 
+    _onCreateArrayElement(ev)
+    {
+        let target = ev.currentTarget.dataset.target; // Location of the list model
+        let arrayModel = getProperty(this.item, target);
+        return this.item.update({[target + ".list"] : arrayModel.add()});
+    }
+
+    _onEditArrayElement(ev)
+    {
+        let target = ev.currentTarget.parentElement.dataset.target;    // Location of the list model
+        let index = ev.currentTarget.parentElement.dataset.index;      // Index to be edited
+        let property = ev.currentTarget.dataset.property;       // Property to be edited (if element is an object)
+
+        let arrayModel = getProperty(this.item, target);
+
+        let value;
+
+        // If property is specified, means that array elements are objects
+        // Only edit that property specified
+        if (property)
+        {
+            value = {[`${property}`] : ev.target.value};
+        }
+        else // If no property specified, it must be a string or number
+        {
+            value = ev.target.value;
+            if (Number.isNumeric(value))
+            {
+                value = Number(value);
+            }
+        }
+
+        return this.item.update({[target + ".list"] : arrayModel.edit(index, ev.target.value)});
+    }
+
+    _onDeleteArrayElement(ev)
+    {
+        let target = ev.currentTarget.parentElement.dataset.target;    // Location of the list model
+        let index = ev.currentTarget.parentElement.dataset.index;      // Index to be deleted
+        let arrayModel = getProperty(this.item, target);
+        return this.item.update({[target + ".list"] : arrayModel.remove(index)});
+    }
+
     _onPostItem(event) 
     {
         let itemId = this._getId(event);
@@ -251,8 +307,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
     _onFactionDelete(ev)
     {
         let path = this._getPath(ev);
-        let el = $(ev.currentTarget).parents(".list-item");
-        let faction = el.attr("data-type");
+        let faction = this._getType(ev);
 
         Dialog.confirm({
             title: game.i18n.localize(`IMPMAL.DeleteFaction`),
@@ -273,7 +328,10 @@ export default ImpMalSheetMixin = (cls) => class extends cls
             <form>
                 <div class="form-group">
                     <label>${game.i18n.localize("IMPMAL.Faction")}</label>
-                    <input type="text">
+                    <input type="text" list="factions">
+                    <datalist id="factions">
+                    ${Object.keys(game.impmal.config.factions).map(f => `<option>${game.impmal.config.factions[f]}</option>`)}
+                    </datalist>
                 </div>
             </form>`,
             buttons : {
@@ -288,6 +346,62 @@ export default ImpMalSheetMixin = (cls) => class extends cls
             },
             default : "submit"
         }).render(true);
+    }
+
+    _onToggleInfluence(ev)
+    {
+        let handle = ev.currentTarget;
+        let sources = $(handle.parentElement.querySelector(".influence-source"));
+        let faction = this._getType(ev);
+
+        if (sources.hasClass("collapsed"))
+        {
+            sources.slideDown({
+                duration: 200, 
+                start: () => sources.css("display", "flex")
+            });
+
+            sources.toggleClass("collapsed");
+            handle.classList.add("active");
+            this.factionsExpanded[faction] = true;
+        }
+        else 
+        {
+            sources.slideUp(200);
+            sources.toggleClass("collapsed");
+            handle.classList.remove("active");
+            delete this.factionsExpanded[faction];
+        }
+    }
+
+    
+    _onInfluenceSourceEdit(ev)
+    {
+        ev.stopPropagation();
+        let index = this._getIndex(ev);
+        let faction = this._getType(ev);
+        let property = ev.currentTarget.dataset.property;
+        let value = ev.target.value;
+        if (Number.isNumeric(value))
+        {
+            value = Number(value);
+        }
+        this.actor.update({"system.influence" : this.actor.system.influence.editSource(faction, index, {[property] : value})});
+    }
+
+    _onInfluenceSourceDelete(ev)
+    {
+        ev.stopPropagation();
+        let index = this._getIndex(ev);
+        let faction = this._getType(ev);
+        this.actor.update({"system.influence" : this.actor.system.influence.deleteSource(faction, index)});
+    }
+
+    _onInfluenceSourceCreate(ev)
+    {
+        ev.stopPropagation();
+        let faction = this._getType(ev);
+        this.actor.update({"system.influence" : this.actor.system.influence.addSource(faction)});
     }
 
 

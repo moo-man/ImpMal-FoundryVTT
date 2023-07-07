@@ -19,7 +19,7 @@
                 {{> systems/impmal/templates/item/partials/item-patron-notes.hbs}}
             </div>
             <div class="tab details" data-tab="details-patron">
-                {{> systems/impmal/templates/shared/influence.hbs factions=system.patron.influence.factions path="system.patron.influence" showNotes=false}}
+                {{!-- {{> systems/impmal/templates/shared/influence.hbs factions=system.patron.influence.factions path="system.patron.influence" showNotes=false}} --}}
             </div>
             <div class="tab notes" data-tab="notes-character">
                 {{> systems/impmal/templates/item/partials/item-character-notes.hbs}}
@@ -53,7 +53,7 @@
                 </div>
 
                 <hr>
-                {{> systems/impmal/templates/shared/influence.hbs factions=system.character.influence.factions path="system.character.influence" showNotes=false}}
+                {{!-- {{> systems/impmal/templates/shared/influence.hbs factions=system.character.influence.factions path="system.character.influence" showNotes=false}} --}}
                 <hr>
                 {{> systems/impmal/templates/item/partials/item-choices.hbs label='Items' display=item.system.character.items.textDisplay path='character.items'}}
 

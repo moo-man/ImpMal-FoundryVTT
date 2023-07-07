@@ -5,6 +5,9 @@ import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
 export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 {
+
+    factionsExpanded={}; // Retain expanded influence sections on rerender;
+
     static get defaultOptions()
     {
         const options = super.defaultOptions;
@@ -12,7 +15,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         options.resizable = true;
         options.scrollY = [".tab-content"];
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }];
-        options.dragDrop.push({dragSelector : ".list .list-item"});
+        options.dragDrop.push({dragSelector : ".list .list-item:not(.no-drag)"});
         return options;
     }
 
@@ -31,6 +34,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         data.conditions = this.formatConditions(data);
         data.conditions = data.conditions.filter(i => i.id != "dead");
         data.defendingAgainst = this.actor.defendingAgainst;
+        data.factionsExpanded = this.factionsExpanded;
         return data;
     }
 

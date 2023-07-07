@@ -309,6 +309,8 @@ const IMPMAL = {
         malignancy : "IMPMAL.Malignancy"
     },
 
+    factions: {},
+
     tieredCondition: {
         ablaze: true,
         bleeding: true,

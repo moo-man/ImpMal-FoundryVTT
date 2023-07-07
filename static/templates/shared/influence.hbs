@@ -11,13 +11,13 @@
     </header>
     <div class="list-content">
         {{#each factions}}
-            <div class="list-item" data-type="{{@key}}">
+            <div class="list-item no-drag" data-type="{{@key}}">
                 <div class="list-row">
                     <div>
-                        <input type="text" name="{{../path}}.factions.{{@key}}.name" value="{{this.name}}">
+                        <input type="text" value="{{this.name}}" disabled>
                     </div>
                     <div class="small">
-                        <input type="number" name="{{../path}}.factions.{{@key}}.value" value="{{this.value}}">
+                        <input type="number" value="{{this.total}}" disabled>
                     </div>
                     {{#if ../showNotes}}
                         <div class="wide">
@@ -28,7 +28,37 @@
                         <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
                     </div>
                 </div>
-                <div class="summary">
+                <div class="{{#unless (lookup ../factionsExpanded @key)}}collapsed{{/unless}} influence-source">
+                    {{#each this.effects}}
+                        <div class="list-row">
+                            <div></div>
+                            <div class="small">
+                                <input type="number" disabled data-property="value" value="{{this.value}}">
+                            </div>
+                            <div class="wide">
+                                <input type="text" disabled data-property="reason" value="{{this.reason}}">
+                            </div>
+                            <div class="list-controls single">
+                            </div>
+                        </div>
+                    {{/each}}
+                    {{#each this.sources}}
+                        <div class="list-row" data-index="{{@key}}">
+                            <div></div>
+                            <div class="small">
+                                <input type="number" data-property="value" value="{{this.value}}">
+                            </div>
+                            <div class="wide">
+                                <input type="text" data-property="reason" value="{{this.reason}}">
+                            </div>
+                            <div class="list-controls single">
+                                <a class="source-delete"><i class="fa-solid fa-xmark"></i></a>
+                            </div>
+                        </div>
+                    {{/each}}
+                    <button type="button"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="handle">
 
                 </div>
             </div>
