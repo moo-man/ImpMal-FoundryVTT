@@ -29,6 +29,19 @@
                     </div>
                 </div>
                 <div class="{{#unless (lookup ../factionsExpanded @key)}}collapsed{{/unless}} influence-source">
+                    {{#each this.items}}
+                        <div class="list-row">
+                            <div></div>
+                            <div class="small">
+                                <input type="number" disabled data-property="value" value="{{this.value}}">
+                            </div>
+                            <div class="wide">
+                                <input type="text" disabled data-property="reason" value="{{this.reason}}">
+                            </div>
+                            <div class="list-controls single">
+                            </div>
+                        </div>
+                    {{/each}}
                     {{#each this.effects}}
                         <div class="list-row">
                             <div></div>

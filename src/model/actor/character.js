@@ -1,5 +1,4 @@
 import { CharacterCombatModel } from "./components/combat";
-import { InfluenceModel } from "../shared/influence";
 import { ListModel } from "../shared/list";
 import { StandardActorModel } from "./standard";
 import { HandsModel } from "./components/hands";
@@ -7,6 +6,7 @@ import { XPModel } from "./components/xp";
 import { ImpMalEffect } from "../../document/effect";
 import { SingletonItemModel } from "../shared/singleton-item";
 import { DocumentReferenceModel } from "../shared/reference";
+import { ActorInfluenceModel } from "./components/influence";
 let fields = foundry.data.fields;
 
 export class CharacterModel extends StandardActorModel 
@@ -45,7 +45,7 @@ export class CharacterModel extends StandardActorModel
             value : new fields.NumberField({initial: 3})
         });
         schema.connections = new fields.EmbeddedDataField(ListModel);
-        schema.influence = new fields.EmbeddedDataField(InfluenceModel);
+        schema.influence = new fields.EmbeddedDataField(ActorInfluenceModel);
         schema.hands = new fields.EmbeddedDataField(HandsModel);
         return schema;
     }
@@ -100,7 +100,7 @@ export class CharacterModel extends StandardActorModel
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
         this.combat.superiority = game.impmal.superiority.value;
-        this.influence.compute(this.parent.effects.contents, "system.influence");
+        this.influence.compute(this.parent.effects.contents, items, this.parent.type);
     }
 
     _checkEncumbranceEffects(actor)

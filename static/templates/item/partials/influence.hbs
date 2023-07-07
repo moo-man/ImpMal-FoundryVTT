@@ -1,0 +1,26 @@
+<section class="list influence" data-path="{{path}}">
+    <header class="list-row">
+        <div>{{localize "Faction"}}</div>
+        <div class="small">{{localize "Infl."}}</div>
+        <div class="list-controls single">
+            <a class="faction-create"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each factions}}
+            <div class="list-item no-drag" data-type="{{@key}}">
+                <div class="list-row">
+                    <div>
+                        <input type="text" disabled value="{{this.name}}">
+                    </div>
+                    <div class="small">
+                        <input type="number" name="{{../path}}.factions.{{@key}}.value" value="{{this.value}}">
+                    </div>
+                    <div class="list-controls single">
+                        <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

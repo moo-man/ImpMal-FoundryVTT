@@ -120,7 +120,6 @@ Hooks.once("init", () =>
     registerSettings();
     game.impmal.superiority = new SuperiorityManager();
     registerHandlebars();
-    localizeConfig(IMPMAL);
     
     mergeObject(CONFIG, IM_CONFIG);
 
@@ -128,25 +127,3 @@ Hooks.once("init", () =>
 
 FoundryOverrides();
 registerHooks();
-
-
-// Recursively localize config object
-function localizeConfig(object)
-{
-    if (typeof object == "string")
-    {
-        return game.i18n.localize(object);
-    }
-    else if (typeof object == "object")
-    {
-        for (let key in object)
-        {
-            object[key] = localizeConfig(object[key]);
-        }
-        return object;
-    }
-    else
-    {
-        return object;
-    }
-}

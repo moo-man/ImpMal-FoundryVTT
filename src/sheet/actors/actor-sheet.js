@@ -142,6 +142,11 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".defending-against").on("mouseover", this._onHoverInAttacker.bind(this));
         html.find(".defending-against").on("mouseout", this._onHoverOutAttacker.bind(this));
         html.find(".defending-against").on("click", this._onClickAttacker.bind(this));
+        html.find(".influence .list-content .list-item").on("click", this._onToggleInfluence.bind(this));
+        html.find(".influence-source button").on("click", this._onInfluenceSourceCreate.bind(this));
+        html.find(".influence-source input").on("change", this._onInfluenceSourceEdit.bind(this));
+        html.find(".influence-source .source-delete").on("click", this._onInfluenceSourceDelete.bind(this));
+        html.find(".influence-source button,input,.source-delete").click(ev => ev.stopPropagation());
     }
 
 
@@ -372,6 +377,64 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             summary.slideDown(200);
             summary.toggleClass("active");
         }
+    }
+
+    
+    _onToggleInfluence(ev)
+    {
+        let handle = ev.currentTarget;
+        let sources = $(handle).parents(".influence-source");
+        if (sources.length == 0) {sources = $(handle).children(".influence-source");}
+        let faction = this._getType(ev);
+
+        if (sources.hasClass("collapsed"))
+        {
+            sources.slideDown({
+                duration: 200, 
+                start: () => sources.css("display", "flex")
+            });
+
+            sources.toggleClass("collapsed");
+            handle.classList.add("active");
+            this.factionsExpanded[faction] = true;
+        }
+        else 
+        {
+            sources.slideUp(200);
+            sources.toggleClass("collapsed");
+            handle.classList.remove("active");
+            delete this.factionsExpanded[faction];
+        }
+    }
+
+    
+    _onInfluenceSourceEdit(ev)
+    {
+        ev.stopPropagation();
+        let index = this._getIndex(ev);
+        let faction = this._getType(ev);
+        let property = ev.currentTarget.dataset.property;
+        let value = ev.target.value;
+        if (Number.isNumeric(value))
+        {
+            value = Number(value);
+        }
+        this.actor.update({"system.influence" : this.actor.system.influence.editSource(faction, index, {[property] : value})});
+    }
+
+    _onInfluenceSourceDelete(ev)
+    {
+        ev.stopPropagation();
+        let index = this._getIndex(ev);
+        let faction = this._getType(ev);
+        this.actor.update({"system.influence" : this.actor.system.influence.deleteSource(faction, index)});
+    }
+
+    _onInfluenceSourceCreate(ev)
+    {
+        ev.stopPropagation();
+        let faction = this._getType(ev);
+        this.actor.update({"system.influence" : this.actor.system.influence.addSource(faction)});
     }
 
     //#endregion

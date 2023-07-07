@@ -1,6 +1,6 @@
-import { InfluenceModel } from "../shared/influence";
 import { SingletonItemModel } from "../shared/singleton-item";
 import { BaseActorModel } from "./base";
+import { ActorInfluenceModel } from "./components/influence";
 let fields = foundry.data.fields;
 
 export class PatronModel extends BaseActorModel 
@@ -12,7 +12,7 @@ export class PatronModel extends BaseActorModel
         let schema = super.defineSchema();
         schema.duty = new fields.EmbeddedDataField(SingletonItemModel);
         schema.faction = new fields.EmbeddedDataField(SingletonItemModel);
-        schema.influence =  new fields.EmbeddedDataField(InfluenceModel);
+        schema.influence =  new fields.EmbeddedDataField(ActorInfluenceModel);
         schema.motivation = new fields.StringField();
         schema.demeanor = new fields.StringField();
         schema.payment = new fields.SchemaField({
@@ -27,7 +27,7 @@ export class PatronModel extends BaseActorModel
         super.computeDerived(items);
         this.duty.getDocument(items.all);
         this.faction.getDocument(items.all);
-        this.influence.compute(this.parent.effects.contents, "system.influence");
+        this.influence.compute(this.parent.effects.contents, items, this.parent.type);
     }
 
 }

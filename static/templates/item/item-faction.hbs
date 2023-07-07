@@ -20,7 +20,7 @@
             </div>
             <div class="tab details" data-tab="details-patron">
 
-                {{!-- {{> systems/impmal/templates/shared/influence.hbs factions=system.patron.influence.factions path="system.patron.influence" showNotes=false}} --}}
+                {{> systems/impmal/templates/item/partials/influence.hbs factions=system.patron.influence.factions path="system.patron.influence" showNotes=false}}
 
                 <div class="form-group">
                     <label></label>
@@ -76,7 +76,7 @@
                 </div>
 
                 <hr>
-                {{!-- {{> systems/impmal/templates/shared/influence.hbs factions=system.character.influence.factions path="system.character.influence" showNotes=false}} --}}
+                {{> systems/impmal/templates/item/partials/influence.hbs factions=system.character.influence.factions path="system.character.influence" showNotes=false}}
                 <hr>
                 {{> systems/impmal/templates/item/partials/item-choices.hbs label='IMPMAL.Talents' display=item.system.character.talents.textDisplay path='character.talents'}}
                 <hr>

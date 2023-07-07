@@ -1,5 +1,6 @@
 import { ChoiceModel } from "../shared/choices";
 import { DocumentListModel } from "../shared/list";
+import { ItemInfluenceModel } from "./components/influence";
 import { DualItemModel } from "./dual";
 let fields = foundry.data.fields;
 
@@ -11,7 +12,7 @@ export class FactionModel extends DualItemModel
         let schema = super.defineSchema();
         mergeObject(schema.patron.fields, {
             duty : new fields.EmbeddedDataField(DocumentListModel),
-            // influence : new fields.EmbeddedDataField(InfluenceModel)
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel),
         });
 
 
@@ -25,7 +26,7 @@ export class FactionModel extends DualItemModel
                 value : new fields.NumberField({min: 0, initial: 5}),
                 skills : new fields.ArrayField(new fields.StringField())
             }),
-            // influence : new fields.EmbeddedDataField(InfluenceModel),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel),
             talents : new fields.EmbeddedDataField(ChoiceModel),
             equipment : new fields.EmbeddedDataField(ChoiceModel),
             solars : new fields.NumberField(),
