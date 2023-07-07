@@ -413,7 +413,7 @@ export class BaseTest
             {
                 name: game.i18n.localize("IMPMAL.Unopposed"),
                 icon: '<i class="fa-solid fa-arrow-right"></i>',
-                condition: hasPendingOpposedTests,
+                condition: hasPendingOpposedTests && game.user.isGM,
                 callback: li =>
                 {
                     let message = game.messages.get(li.attr("data-message-id"));

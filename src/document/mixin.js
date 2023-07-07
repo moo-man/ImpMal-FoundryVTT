@@ -6,19 +6,19 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     async _preCreate(data, options, user) 
     {
         await super._preCreate(data, options, user);
-        this.updateSource(this.system.preCreateData(data));
+        this.updateSource(this.system.preCreateData(data, options));
     }
 
     async _preUpdate(data, options, user) 
     {
         await super._preUpdate(data, options, user);
-        this.system.preUpdateChecks(data);
+        this.system.preUpdateChecks(data, options);
     }
 
     async _onUpdate(data, options, user)
     {
         await super._onUpdate(data, options, user);
-        this.update(this.system.updateChecks(data));
+        this.update(this.system.updateChecks(data, options));
     }
 
 

@@ -50,9 +50,9 @@ export class CharacterModel extends StandardActorModel
         return schema;
     }
 
-    preCreateData(data) 
+    preCreateData(data, options) 
     {
-        let preCreateData = super.preCreateData(data);
+        let preCreateData = super.preCreateData(data, options);
         if (!data.prototypeToken)
         {
             mergeObject(preCreateData, {
@@ -65,8 +65,9 @@ export class CharacterModel extends StandardActorModel
     }
 
     
-    preUpdateChecks(data)
+    preUpdateChecks(data, options)
     {
+        super.preUpdateChecks(data, options);
         // Warp state is both computed and saved
         // If charge is below threshold, it is computed => state = 0
         if (data?.system?.warp?.charge < this.warp.threshold)
@@ -76,11 +77,15 @@ export class CharacterModel extends StandardActorModel
         }
     }
 
+    updateChecks(data, options)
+    {
+        super.updateChecks(data, options);
+        this._checkEncumbranceEffects(this.parent);
+    }
 
     computeBase()
     {
         super.computeBase();
-
     }
 
 
@@ -96,12 +101,6 @@ export class CharacterModel extends StandardActorModel
         this.xp.available = this.xp.total - this.xp.spent;
         this.combat.superiority = game.impmal.superiority.value;
         this.influence.compute(this.parent.effects.contents, "system.influence");
-    }
-
-    updateChecks()
-    {
-        super.updateChecks();
-        this._checkEncumbranceEffects(this.parent);
     }
 
     _checkEncumbranceEffects(actor)

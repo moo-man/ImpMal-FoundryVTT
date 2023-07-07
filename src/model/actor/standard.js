@@ -1,3 +1,4 @@
+import TokenHelpers from "../../system/token-helpers";
 import { BaseActorModel } from "./base";
 import { CharacteristicsModel } from "./components/characteristics";
 import { StandardCombatModel } from "./components/combat";
@@ -21,6 +22,33 @@ export class StandardActorModel extends BaseActorModel
             state : new fields.NumberField({initial: 0, min: 0})
         });
         return schema;
+    }
+
+    preUpdateChecks(data, options)
+    {
+        super.preUpdateChecks(data, options);
+
+        // Prevent wounds from exceeding max
+        if (hasProperty(data, "system.combat.wounds.value"))
+        {
+            if (data.system.combat.wounds.value > this.combat.wounds.max)
+            {
+                data.system.combat.wounds.value = this.combat.wounds.max;
+            }
+
+            options.deltaWounds = data.system.combat.wounds.value - this.combat.wounds.value;
+        }
+    }
+
+    updateChecks(data, options)
+    {
+        super.updateChecks(data, options);
+        //TODO: Check for dead effect if above critical wound threshold
+
+        if (options.deltaWounds)
+        {
+            TokenHelpers.displayScrollingNumber(options.deltaWounds > 0 ? "+" + options.deltaWounds : options.deltaWounds, this.parent, {color: "0xB31B1B"});
+        }
     }
     
     initialize() 
@@ -103,25 +131,5 @@ export class StandardActorModel extends BaseActorModel
             this.warp.state = 0;
         }
     }
-
-    updateChecks()
-    {
-        //TODO: Check for dead effect if above critical wound threshold
-    }
-
-    
-    preUpdateChecks(data)
-    {
-        // Prevent wounds from exceeding max
-        if (data.system?.combat?.wounds?.value)
-        {
-            if (data.system.combat.wounds.value > this.combat.wounds.max)
-            {
-                data.system.combat.wounds.value = this.combat.wounds.max;
-            }
-        }
-        return data;
-    }
-
 }
 

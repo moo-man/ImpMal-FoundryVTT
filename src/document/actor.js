@@ -237,6 +237,10 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         }
     }
 
+    clearOpposed()
+    {
+        return this.update({"flags.impmal.-=opposed" : null});
+    }
 
     _findAttackingMessage()
     {

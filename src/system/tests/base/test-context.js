@@ -140,6 +140,7 @@ export class TestContext
     {
         this.responses = foundry.utils.deepClone(this.responses);
         this.responses[tokenId] = "unopposed";
+        canvas.scene.tokens.get(tokenId)?.actor.clearOpposed();
         if(save)
         {
             return this.saveContext();

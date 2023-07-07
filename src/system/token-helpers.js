@@ -62,5 +62,26 @@ export default class TokenHelpers
         let token = canvas.scene.tokens.get(tokenId);
         token.actor.sheet.render(true);
     }
+
+
+    static displayScrollingNumber(number, actor, {color="", stroke="0x000000"}={}) 
+    {
+        const tokens = actor.getActiveTokens();
+
+        for ( let t of tokens ) 
+        {
+            if ( !t.visible || !t.renderable ) { continue; }
+            canvas.interface.createScrollingText(t.center, number, {
+                anchor: CONST.TEXT_ANCHOR_POINTS.CENTER,
+                direction: CONST.TEXT_ANCHOR_POINTS.TOP,
+                distance: (2 * t.h),
+                fontSize: 36,
+                fill: color,
+                stroke,
+                strokeThickness: 4,
+                jitter: 0.25
+            });
+        }
+    }
 }
 
