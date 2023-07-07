@@ -382,9 +382,10 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     
     _onToggleInfluence(ev)
     {
-        let handle = ev.currentTarget;
-        let sources = $(handle).parents(".influence-source");
-        if (sources.length == 0) {sources = $(handle).children(".influence-source");}
+        let target = ev.currentTarget;
+        let sources = $(target).parents(".influence-source");
+        if (sources.length == 0) {sources = $(target).children(".influence-source");}
+        let handle = sources.siblings(".handle")[0];
         let faction = this._getType(ev);
 
         if (sources.hasClass("collapsed"))
