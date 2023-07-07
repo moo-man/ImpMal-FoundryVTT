@@ -24,6 +24,7 @@ export class PowerModel extends StandardItemModel
                 key :  new fields.StringField(),
             }),
         });
+        schema.xp = new fields.NumberField({initial : 0, min: 0});
         return schema;
     }
     
@@ -35,6 +36,19 @@ export class PowerModel extends StandardItemModel
         let skillItem = skillObject.specialisations.find(i => i.name == game.impmal.config.disciplines[discipline]);
 
         return skillItem ?? skill;
+    }
+
+    computeDerived()
+    {
+        super.computeDerived();
+        if (this.discipline == "minor")
+        {
+            this.xp = 60;
+        }
+        else 
+        {
+            this.xp = 100;
+        }
     }
 
     computeOwnerDerived(actor) 

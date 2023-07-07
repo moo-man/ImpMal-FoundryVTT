@@ -3,6 +3,7 @@
         <nav class="sheet-tabs">
             <a class="item" data-tab="characteristics">{{localize "IMPMAL.Characteristics"}}</a>
             <a class="item" data-tab="skills">{{localize "IMPMAL.Skills"}}</a>
+            <a class="item" data-tab="items">{{localize "Items"}}</a>
             <a class="item" data-tab="other">{{localize "IMPMAL.Other"}}</a>
         </nav>
         <div class="tab-content">
@@ -55,6 +56,18 @@
                             <div>{{this.system.total}}</div>
                         </div>
                     {{/each}}
+                {{/each}}
+            </div>
+            <div class="tab advancement-list" data-tab="items">
+                <div class="header">
+                    <div class="name">{{localize "Name"}}</div>
+                    <div class="xp">{{localize "IMPMAL.XP"}}</div>
+                </div>
+                {{#each talentsAndPowers}}
+                <div data-id="{{this.id}}">
+                    <input type="text" class="name" disabled value="{{this.name}}">
+                    <input type="number" disabled class="xp" value="{{this.system.xp}}">
+                </div>
                 {{/each}}
             </div>
             <div class="tab advancement-list" data-tab="other">

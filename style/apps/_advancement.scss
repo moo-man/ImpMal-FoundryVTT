@@ -16,6 +16,7 @@
     .advancement-list {
 
         .header {
+            margin-top: 5px;
             font-weight: bold;
         }
 
@@ -44,6 +45,10 @@
                     flex: 0 0 20px;
                 }
             }
+        }
+
+        input {
+            margin: 5px;
         }
     }
 

@@ -496,7 +496,8 @@
       ],
       "requirement": {
         "value": ""
-      }
+      },
+      "xp" : 100
     },
     "weapon": {
       "templates": [
@@ -605,7 +606,8 @@
           "key" : "",
           "specialisation" : ""
         }
-      }
+      },
+      "xp" : 0
     },
     "corruption": {
       "templates": [

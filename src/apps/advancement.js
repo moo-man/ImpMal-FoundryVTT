@@ -25,6 +25,7 @@ export class AdvancementForm extends FormApplication
         let data = await super.getData();
         this.actor.prepareData();
         data.actor = this.actor;
+        data.talentsAndPowers = this.actor.itemCategories.power.concat(this.actor.itemCategories.talent);
         return data;
     }
 
