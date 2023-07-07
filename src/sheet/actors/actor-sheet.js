@@ -125,6 +125,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         }
         this.addGenericListeners(html);
         html.find(".property-edit").on("change", this._onPropertyEdit.bind(this));
+        html.find(".property-toggle").on("click", this._onPropertyToggle.bind(this));
         html.find(".inc-dec").on("mousedown", this._onIncDec.bind(this));
         html.find(".ammo-selector").on("change", this._onChangeAmmo.bind(this));
         html.find(".reload").on("click", this._onReload.bind(this));
@@ -174,6 +175,26 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 
         return doc.update({[target] : value});
     }
+
+    _onPropertyToggle(event)
+    {
+        let id = this._getId(event);
+        let target = event.currentTarget.dataset.target;
+        let collection = event.currentTarget.dataset.collection || "items";
+        let value = event.target.value;
+     
+        let doc = this.actor;
+        if (id)
+        {
+            doc = this.actor[collection].get(id);
+        }
+     
+        value = !getProperty(doc, target);
+     
+     
+        return doc.update({[target] : value});
+    }
+     
 
     _onIncDec(ev)
     {
