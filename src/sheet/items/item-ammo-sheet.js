@@ -4,7 +4,7 @@ import ImpMalItemSheet from "./item-sheet";
 export default class AmmoItemSheet extends ImpMalItemSheet 
 {
     // Handle applying Custom ammunition to basic Ammunition. 
-    _onDropItemAmmo(appliedAmmo) 
+    _onDropItemAmmo(ev, appliedAmmo) 
     {
         // Abort if this ammo is also custom, or if the applied ammo is not custom
         if (this.item.system.custom || !appliedAmmo.system.custom) 

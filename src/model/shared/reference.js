@@ -26,3 +26,38 @@ export class DocumentReferenceModel extends foundry.abstract.DataModel
         }
     }
 }
+
+export class DeferredDocumentModel extends DocumentReferenceModel
+{
+    static defineSchema() 
+    {
+        let schema = {};
+        schema.id = new fields.StringField();
+        schema.name = new fields.StringField();
+        schema.type = new fields.StringField();
+        return schema;
+    }
+
+    getDocument()
+    {
+        return game.impmal.utility.findId(this.id);
+    }
+
+    set(document)
+    {
+        return {
+            id : document.id,
+            name : document.name,
+            type : document.documentName
+        };
+    }
+
+    unset()
+    {
+        return {
+            id : "",
+            name : "",
+            type : ""
+        };
+    }
+}

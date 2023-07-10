@@ -22,10 +22,13 @@
 
                 {{> systems/impmal/templates/item/partials/influence.hbs factions=system.patron.influence.factions path="system.patron.influence" showNotes=false}}
 
+                <hr> 
                 <div class="form-group">
-                    <label></label>
+                    <label>{{localize "IMPMAL.Duty"}}</label>
                     <div class="form-fields">
-
+                        <div class="compact-list" data-path="system.patron.duty">
+                            {{{item.system.patron.duty.html}}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,6 +75,15 @@
                                 {{this}}
                             </div>
                         {{/each}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Duty"}}</label>
+                    <div class="form-fields">
+                        <div class="compact-list" data-path="system.character.duty">
+                            {{{item.system.character.duty.html}}}
+                        </div>
                     </div>
                 </div>
 

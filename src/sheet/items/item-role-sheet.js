@@ -3,7 +3,7 @@ import BackgroundItemSheet from "./item-background-sheet";
 
 export default class RoleItemSheet extends BackgroundItemSheet
 {
-    _onDropItemTalent(item)
+    _onDropItemTalent(ev, item)
     {
         return this.item.update({"system.talents.list" : this.item.system.talents.add({id : item.id})});
     }

@@ -44,11 +44,12 @@ import WeaponItemSheet from "./sheet/items/item-weapon-sheet";
 import ModificationItemSheet from "./sheet/items/item-modification-sheet";
 import ImpMalUtility from "./system/utility";
 import { ChoiceConfig } from "./apps/choice-config";
-import BackgroundItemSheet from "./sheet/items/item-background-sheet";
 import OriginItemSheet from "./sheet/items/item-origin-sheet";
 import RoleItemSheet from "./sheet/items/item-role-sheet";
 import FoundryOverrides from "./system/overrides";
 import AmmoItemSheet from "./sheet/items/item-ammo-sheet";
+import FactionItemSheet from "./sheet/items/item-faction-sheet";
+import DutyItemSheet from "./sheet/items/item-duty-sheet";
 
 Hooks.once("init", () => 
 {
@@ -69,7 +70,8 @@ Hooks.once("init", () =>
     Items.registerSheet("impmal", TraitItemSheet, { types: ["trait"], makeDefault: true });
     Items.registerSheet("impmal", WeaponItemSheet, { types: ["weapon"], makeDefault: true });
     Items.registerSheet("impmal", ModificationItemSheet, { types: ["modification"], makeDefault: true });
-    Items.registerSheet("impmal", BackgroundItemSheet, { types: ["faction", "duty"], makeDefault: true });
+    Items.registerSheet("impmal", DutyItemSheet, { types: ["duty"], makeDefault: true });
+    Items.registerSheet("impmal", FactionItemSheet, { types: ["faction",], makeDefault: true });
     Items.registerSheet("impmal", OriginItemSheet, { types: ["origin"], makeDefault: true });
     Items.registerSheet("impmal", RoleItemSheet, { types: ["role"], makeDefault: true });
     Items.registerSheet("impmal", AmmoItemSheet, { types: ["ammo"], makeDefault: true });
@@ -77,29 +79,29 @@ Hooks.once("init", () =>
     // CONFIG.ActiveEffect.sheetClass = undefined;
     // DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });
 
-    CONFIG.Actor.systemDataModels["character"] = CharacterModel;
-    CONFIG.Actor.systemDataModels["patron"] = PatronModel;
-    CONFIG.Actor.systemDataModels["npc"] = NPCModel;
+    CONFIG.Actor.dataModels["character"] = CharacterModel;
+    CONFIG.Actor.dataModels["patron"] = PatronModel;
+    CONFIG.Actor.dataModels["npc"] = NPCModel;
 
-    CONFIG.Item.systemDataModels["boonLiability"] = BoonLiabilityModel;
-    CONFIG.Item.systemDataModels["origin"] = OriginModel;
-    CONFIG.Item.systemDataModels["faction"] = FactionModel;
-    CONFIG.Item.systemDataModels["role"] = RoleModel;
-    CONFIG.Item.systemDataModels["talent"] = TalentModel;
-    CONFIG.Item.systemDataModels["duty"] = DutyModel;
-    CONFIG.Item.systemDataModels["specialisation"] = SpecialisationModel;
-    CONFIG.Item.systemDataModels["weapon"] = WeaponModel;
-    CONFIG.Item.systemDataModels["ammo"] = AmmoModel;
-    CONFIG.Item.systemDataModels["modification"] = ModificationModel;
-    CONFIG.Item.systemDataModels["protection"] = ProtectionModel;
-    CONFIG.Item.systemDataModels["forceField"] = ForceFieldModel;
-    CONFIG.Item.systemDataModels["equipment"] = EquipmentModel;
-    CONFIG.Item.systemDataModels["augmetic"] = AugmeticModel;
-    CONFIG.Item.systemDataModels["power"] = PowerModel;
-    CONFIG.Item.systemDataModels["corruption"] = CorruptionModel;
-    CONFIG.Item.systemDataModels["injury"] = InjuryModel;
-    CONFIG.Item.systemDataModels["critical"] = CriticalModel;
-    CONFIG.Item.systemDataModels["trait"] = TraitModel;
+    CONFIG.Item.dataModels["boonLiability"] = BoonLiabilityModel;
+    CONFIG.Item.dataModels["origin"] = OriginModel;
+    CONFIG.Item.dataModels["faction"] = FactionModel;
+    CONFIG.Item.dataModels["role"] = RoleModel;
+    CONFIG.Item.dataModels["talent"] = TalentModel;
+    CONFIG.Item.dataModels["duty"] = DutyModel;
+    CONFIG.Item.dataModels["specialisation"] = SpecialisationModel;
+    CONFIG.Item.dataModels["weapon"] = WeaponModel;
+    CONFIG.Item.dataModels["ammo"] = AmmoModel;
+    CONFIG.Item.dataModels["modification"] = ModificationModel;
+    CONFIG.Item.dataModels["protection"] = ProtectionModel;
+    CONFIG.Item.dataModels["forceField"] = ForceFieldModel;
+    CONFIG.Item.dataModels["equipment"] = EquipmentModel;
+    CONFIG.Item.dataModels["augmetic"] = AugmeticModel;
+    CONFIG.Item.dataModels["power"] = PowerModel;
+    CONFIG.Item.dataModels["corruption"] = CorruptionModel;
+    CONFIG.Item.dataModels["injury"] = InjuryModel;
+    CONFIG.Item.dataModels["critical"] = CriticalModel;
+    CONFIG.Item.dataModels["trait"] = TraitModel;
 
     game.impmal = {
         config : IMPMAL,

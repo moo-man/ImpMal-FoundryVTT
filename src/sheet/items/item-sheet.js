@@ -39,7 +39,7 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
             let item = await Item.implementation.fromDropData(dropData);
             if (item)
             {
-                return this._onDropItem(item);
+                return this._onDropItem(ev, item);
             }
             else 
             {
@@ -52,9 +52,9 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         }
     }
 
-    _onDropItem(item)
+    _onDropItem(ev, item)
     {
-        return this[`_onDropItem${item.type[0].toUpperCase() + item.type.substring(1)}`]?.(item);
+        return this[`_onDropItem${item.type[0].toUpperCase() + item.type.substring(1)}`]?.(ev, item);
     }
 
     _getHeaderButtons() 
@@ -95,6 +95,8 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         this.addGenericListeners(html);
         html.find(".edit-traits").click(this._onEditTraits.bind(this));
         html.find(".choice-config").click(this._onChoiceConfig.bind(this));
+        html.find(".compact-list a").click(this._onCompactItemClick.bind(this));
+        html.find(".compact-list a").contextmenu(this._onCompactItemRightClick.bind(this));
     }
 
     _onEditTraits() 
@@ -105,5 +107,34 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
     _onChoiceConfig(ev) 
     {
         new game.impmal.apps.ChoiceConfig(this.item, {path : ev.currentTarget.dataset.path}).render(true);
+    }
+
+    async _onCompactItemClick(ev)
+    {
+        let path = this._getPath(ev);
+        let property = getProperty(this.item, path);
+        let document;
+        if (property.list)
+        {
+            document = await property.get(ev.currentTarget.dataset.id);
+        }
+        else 
+        {
+            document = await property.getDocument();
+        }
+        document.sheet.render(true);
+    }
+    _onCompactItemRightClick(ev)
+    {
+        let path = this._getPath(ev);
+        let model = getProperty(this.item, path);
+        if (model.list)
+        {
+            this.item.update({[path + ".list"] : model.removeId(ev.currentTarget.dataset.id)});
+        }
+        else 
+        {
+            this.item.update({[path] : model.unset()});
+        }
     }
 }

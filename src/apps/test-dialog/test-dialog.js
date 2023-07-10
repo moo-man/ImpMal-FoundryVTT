@@ -239,8 +239,7 @@ export class TestDialog extends Application
             dialogData.data.target = target;
         }
 
-        dialogData.data.targets = Array.from(game.user.targets);
-
+        dialogData.data.targets = actor.defendingAgainst ? [] : Array.from(game.user.targets);
 
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

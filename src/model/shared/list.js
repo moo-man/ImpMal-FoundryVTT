@@ -1,4 +1,4 @@
-import { DocumentReferenceModel } from "./reference";
+import { DeferredDocumentModel, DocumentReferenceModel } from "./reference";
 
 let fields = foundry.data.fields;
 
@@ -77,5 +77,41 @@ export class DocumentListModel extends ListModel
     {
         this.list.forEach(i => i.getDocument(collection));
         this.documents = this.list.map(i => i.document);
+    }
+}
+
+// List of document references that could point to world items, or compendium items
+// If ID is found in the world, use that, otherwise, search the compendium
+export class DeferredDocumentListModel extends DocumentListModel 
+{
+    static defineSchema() 
+    {
+        let schema = super.defineSchema();
+        schema.list = new fields.ArrayField(new fields.EmbeddedDataField(DeferredDocumentModel));
+        return schema;
+    }
+
+    get(id)
+    {
+        return this.list.find(i => i.id == id).getDocument();
+    }
+    
+    getDocuments()
+    {
+        return Promise.all(this.list.map(i => i.getDocument()));
+    }
+
+    addDocument(document)
+    {
+        return this.add({
+            id : document.id,
+            name : document.name,
+            type : document.documentName
+        });
+    }
+
+    get html() 
+    {
+        return this.list.map(i => `<a data-id=${i.id}>${i.name}</a>`).join(", ");
     }
 }

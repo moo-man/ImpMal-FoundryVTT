@@ -1,11 +1,11 @@
 import BackgroundItemSheet from "./item-background-sheet";
 
 
-export default class FactionItemSheet extends BackgroundItemSheet
+export default class DutyItemSheet extends BackgroundItemSheet
 {
-    _onDropItemDuty(ev, item)
+    _onDropItemBoonLiability(ev, item)
     {
-        this.item.update({[`system.${item.system.category}.duty.list`] : this.item.system[item.system.category].duty.addDocument(item)});
+        this.item.update({[`system.patron.boon`] : this.item.system.patron.boon.set(item)});
     }
 
     async getData() 

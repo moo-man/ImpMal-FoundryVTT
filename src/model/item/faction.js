@@ -1,5 +1,5 @@
 import { ChoiceModel } from "../shared/choices";
-import { DocumentListModel } from "../shared/list";
+import { DeferredDocumentListModel } from "../shared/list";
 import { ItemInfluenceModel } from "./components/influence";
 import { DualItemModel } from "./dual";
 let fields = foundry.data.fields;
@@ -11,7 +11,7 @@ export class FactionModel extends DualItemModel
         // Patron Fields
         let schema = super.defineSchema();
         mergeObject(schema.patron.fields, {
-            duty : new fields.EmbeddedDataField(DocumentListModel),
+            duty : new fields.EmbeddedDataField(DeferredDocumentListModel),
             influence : new fields.EmbeddedDataField(ItemInfluenceModel),
         });
 
@@ -30,7 +30,7 @@ export class FactionModel extends DualItemModel
             talents : new fields.EmbeddedDataField(ChoiceModel),
             equipment : new fields.EmbeddedDataField(ChoiceModel),
             solars : new fields.NumberField(),
-            duty : new fields.EmbeddedDataField(DocumentListModel),
+            duty : new fields.EmbeddedDataField(DeferredDocumentListModel),
         });
         return schema;
     }

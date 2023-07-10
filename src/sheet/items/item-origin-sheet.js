@@ -3,7 +3,7 @@ import BackgroundItemSheet from "./item-background-sheet";
 
 export default class OriginItemSheet extends BackgroundItemSheet
 {
-    _onDropItem(item)
+    _onDropItem(ev, item)
     {
         return this.item.update({"system.equipment.list" : this.item.system.equipment.add({id : item.id})});
     }

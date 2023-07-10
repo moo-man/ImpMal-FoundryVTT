@@ -201,5 +201,26 @@
         }
     }
 
+    .influence {
+        input {
+            margin: 5px;
+        }
+    }
+
+
+    .compact-list {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        width: calc(100% - 2px);
+        min-width: 20px;
+        min-height: var(--form-field-height);
+        flex-wrap: wrap;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 1px 3px;
+        margin: 0;
+        color: var(--color-text-dark-secondary);
+        border-radius: 3px;
+    }
 
 }
