@@ -114,6 +114,23 @@ export class WeaponModel extends EquippableItemModel
         return skillItem ?? skill;
     }
 
+    get ammoList()
+    {
+        let items = this.parent.actor?.items || [];
+        if (this.isMelee)
+        {
+            return [];
+        }
+        if (this.category == "launcher")
+        {
+            return items.filter(i => i.type == "weapon" && i.system.spec == "ordnance" && i.system.category == "grenadesExplosives");
+        }
+        else 
+        {
+            return items.filter(i => i.type == "ammo");
+        }
+    }
+
     /**
      * 
      * @param {Boolean} trackAmmo Whether or not to check the quantity of the ammo item linked to the weapon
@@ -230,14 +247,27 @@ export class WeaponModel extends EquippableItemModel
     _applyAmmoMods() 
     {
         let ammo = this.ammo.document;
-
+        let ammoDamage;
+        let ammoRange;
         if (ammo)
         {
-            this.damage.value += (Number(ammo.system.damage) || 0);
-            
-            if (ammo.system.range)
+            if (ammo.type == "weapon") // Launchers use grenades/explosive weapons
             {
-                this.range = ammo.system.range;
+                ammoDamage = Number(ammo.system.damage.base) || 0;
+            }
+            else if (ammo.type == "ammo") // Everything else
+            {
+                ammoDamage = (Number(ammo.system.damage) || 0);
+                if (ammo.system.range)
+                {
+                    ammoRange = this.range = ammo.system.range;
+                }
+            }
+
+            this.damage.value += ammoDamage;
+            if (ammoRange)
+            {
+                this.range = ammoRange;
             }
             
             this.traits.combine(ammo.system.traits);

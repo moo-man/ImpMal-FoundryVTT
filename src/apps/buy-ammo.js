@@ -13,6 +13,12 @@ export class BuyAmmoForm extends FormApplication
     constructor(object, options)
     {
         super(object, options);
+
+        if (this.object.system.category == "launcher" || this.object.system.category == "grenadesExplosives")
+        {
+            ui.notifications.error(game.i18n.localize("IMPMAL.ErrorTypeAmmo"));
+            throw new Error(game.i18n.localize("IMPMAL.ErrorTypeAmmo"));
+        }
         this.count = 1;
         this.total = 0;
     }

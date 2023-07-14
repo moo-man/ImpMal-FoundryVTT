@@ -160,6 +160,7 @@ const IMPMAL = {
         plasma : "IMPMAL.Plasma",
         solid : "IMPMAL.Solid",
         specialised : "IMPMAL.Specialised",
+        grenadesExplosives : "IMPMAL.GrenadesExplosives",
     },
 
     rangedSpecs : {

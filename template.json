@@ -360,8 +360,10 @@
         "quantity": 1
       },
       "equipped" : {
-        "value": false,
-        "hand" : ""
+        "equipped": {
+          "value": false,
+          "hand" : ""
+        }
       },
       "traits": {
         "traits": {

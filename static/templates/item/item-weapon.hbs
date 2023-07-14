@@ -65,33 +65,36 @@
 
                 {{> systems/impmal/templates/item/partials/item-damage.hbs}}
 
-                <div class="form-group">
-                    <label>{{localize "IMPMAL.Range"}}</label>
-                    <div class="form-fields">
-                        <select name="system.range">
-                            {{#select system.range}}
-                                <option value=""></option>
-                                {{#each (config "ranges")}}
-                                    <option value="{{@key}}">{{this}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
+                {{#if (eq system.attackType "ranged")}}
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.Range"}}</label>
+                        <div class="form-fields">
+                            <select name="system.range">
+                                {{#select system.range}}
+                                    <option value=""></option>
+                                    {{#each (config "ranges")}}
+                                        <option value="{{@key}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>{{localize "IMPMAL.Mag"}}</label>
-                    <div class="form-fields">
-                        <input type="number" name="system.mag.value" value="{{system.mag.value}}">
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label>{{localize "IMPMAL.AmmoCost"}}</label>
-                    <div class="form-fields">
-                        <input type="number" name="system.ammoCost" value="{{system.ammoCost}}">
-                        <a class="buy-ammo" data-tooltip="{{localize 'IMPMAL.BuyAmmo'}}"><img src="systems/impmal/assets/icons/ammo-box.svg"></a>
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.Mag"}}</label>
+                        <div class="form-fields">
+                            <input type="number" name="system.mag.value" value="{{system.mag.value}}">
+                        </div>
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.AmmoCost"}}</label>
+                        <div class="form-fields">
+                            <input type="number" name="system.ammoCost" value="{{system.ammoCost}}">
+                            <a class="buy-ammo" data-tooltip="{{localize 'IMPMAL.BuyAmmo'}}"><img src="systems/impmal/assets/icons/ammo-box.svg"></a>
+                        </div>
+                    </div>
+                {{/if}}
 
                 {{> systems/impmal/templates/item/partials/item-traits.hbs}}
 
