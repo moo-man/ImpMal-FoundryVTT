@@ -215,23 +215,23 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
                 damage = `${item.system.attack.damage.value}`;
                 if (item.system.attack.damage.SL)
                 {
-                    damage += ` + SL ${item.system.attack.type == "melee" ? "difference" : ""}`;
+                    damage += ` + SL ${item.system.isMelee ? "difference" : ""}`;
                 }
                 damage += " Damage.";
             }
             else if (type == "weapon")
             {
-                damage = `${item.system.damage.value} + SL ${item.system.attackType == "melee" ? "difference" : ""} Damage.`;
+                damage = `${item.system.damage.value} + SL ${item.system.isMelee ? "difference" : ""} Damage.`;
             }
 
             // range
             if (type == "trait")
             {
-                range = `${item.system.attack.type == "ranged" ? config.ranges[item.system.attack.range] + " Range" : ""}`;
+                range = `${item.system.isRanged ? config.ranges[item.system.attack.range] + " Range" : ""}`;
             }
             else if (type == "weapon")
             {
-                range = `${item.system.attackType == "ranged" ? config.ranges[item.system.range] + " Range" : ""}`;
+                range = `${item.system.isRanged ? config.ranges[item.system.range] + " Range" : ""}`;
             }
 
             // traits 
@@ -246,7 +246,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
             }
 
 
-            if (type == "weapon" && item.system.attackType == "ranged")
+            if (type == "weapon" && item.system.isRanged)
             {
                 ammo = `
                 <a class="mag">${item.system.mag.current}<img src="systems/impmal/assets/icons/magazine.svg"></a>

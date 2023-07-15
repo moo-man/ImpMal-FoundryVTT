@@ -8,6 +8,11 @@ export default class RoleItemSheet extends BackgroundItemSheet
         return this.item.update({"system.talents.list" : this.item.system.talents.add({id : item.id})});
     }
 
+    _onDropItemSpecialisation(ev, item)
+    {
+        return this.item.update({"system.specialisations.list" : this.item.system.specialisations.add({id : item.id})});
+    }
+
     _onListEdit(ev)
     {
         ev.stopPropagation();
@@ -20,9 +25,10 @@ export default class RoleItemSheet extends BackgroundItemSheet
     {
         ev.stopPropagation();
         let id = this._getId(ev);
+        let path = this._getPath(ev);
         if (id)
         {
-            this.item.update({"system.talents.list" : this.item.system.talents.removeId(id)});
+            this.item.update({[`${path}.list`] : getProperty(this.item, path).removeId(id)});
         }
     }
 }

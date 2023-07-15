@@ -18,12 +18,13 @@
                     <header class="list-row">
                         <div class="list-name">{{localize "IMPMAL.Talents"}}</div>
                         <div class="list-controls">
-                            <input type="number" name="system.talents.number" value="{{system.talents.number}}" placeholder="#">
+                            <input type="number" name="system.talents.number" value="{{system.talents.number}}"
+                                placeholder="#">
                         </div>
                     </header>
                     <div class="list-content">
                         {{#each item.system.talents.documents}}
-                            <div class="list-item" data-id="{{this.id}}">
+                            <div class="list-item" data-id="{{this.id}}" data-path="system.talents">
                                 <div class="list-row">
                                     <div class="list-name list-edit">
                                         <img src="{{this.img}}">
@@ -49,30 +50,52 @@
                     <div class="fields checkbox-array" data-path="system.skills.list">
                         {{#each (config "skills")}}
                             <div class="checkbox-group">
-                                <input type="checkbox" data-value="{{@key}}" {{checked (includes
-                                    ../system.skills.list @key)}}>
+                                <input type="checkbox" data-value="{{@key}}" {{checked (includes ../system.skills.list
+                                    @key)}}>
                                 {{this}}
                             </div>
                         {{/each}}
                     </div>
                 </div>
+                <hr>
                 <div class="form-groups-stacked checkbox-list">
                     <label><input type="number" name="system.specialisations.value"
                             value="{{system.specialisations.value}}">{{localize 'IMPMAL.SpecialisationAdvances'}}
                     </label>
-                    <div class="fields checkbox-array" data-path="system.specialisations.list">
+                    <div class="fields checkbox-array" data-path="system.specialisations.keys">
                         {{#each (config "skills")}}
                             <div class="checkbox-group">
                                 <input type="checkbox" data-value="{{@key}}" {{checked (includes
-                                    ../system.specialisations.list @key)}}>
+                                    ../system.specialisations.keys @key)}}>
                                 {{this}}
                             </div>
                         {{/each}}
                     </div>
                 </div>
 
+                <section class="list">
+
+                    <div class="list-content">
+                        {{#each item.system.specialisations.documents}}
+                            <div class="list-item" data-id="{{this.id}}" data-path="system.specialisations">
+                                <div class="list-row">
+                                    <div class="list-name list-edit">
+                                        <img src="{{this.img}}">
+                                        <a>{{this.system.skillName}}</a>
+                                    </div>
+                                    <div class="list-controls">
+                                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </div>
+                                <div class="summary">
+
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </section>
                 <hr>
-                
+
                 {{> systems/impmal/templates/item/partials/item-choices.hbs label='IMPMAL.Equipment' display=item.system.equipment.textDisplay path='equipment'}}
 
 

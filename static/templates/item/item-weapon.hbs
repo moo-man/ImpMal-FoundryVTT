@@ -30,7 +30,8 @@
                         <select name="system.category">
                             {{#select system.category}}
                                 <option value=""></option>
-                                {{#if (eq system.attackType "melee")}}
+                                {{log system}}
+                                {{#if item.system.isMelee}}
                                     {{#each (config "meleeTypes")}}
                                         <option value="{{@key}}">{{this}}</option>
                                     {{/each}}
@@ -49,7 +50,7 @@
                         <select name="system.spec">
                             {{#select system.spec}}
                                 <option value=""></option>
-                                {{#if (eq system.attackType "melee")}}
+                                {{#if item.system.isMelee}}
                                     {{#each (config "meleeSpecs")}}
                                         <option value="{{@key}}">{{this}}</option>
                                     {{/each}}
@@ -65,7 +66,7 @@
 
                 {{> systems/impmal/templates/item/partials/item-damage.hbs}}
 
-                {{#if (eq system.attackType "ranged")}}
+                {{#if item.system.isRanged}}
                     <div class="form-group">
                         <label>{{localize "IMPMAL.Range"}}</label>
                         <div class="form-fields">

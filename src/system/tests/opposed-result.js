@@ -93,7 +93,7 @@ export class OpposedTestResult
             damage += attackerTest.result.SL;
         }
 
-        if (item?.system.attackType == "melee")
+        if (item?.system.isMelee)
         {
             damage -= (defenderTest?.result?.SL || 0);
         }

@@ -8,7 +8,7 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
     {
         const options = super.defaultOptions;
         options.classes = options.classes.concat(["impmal", "item"]);
-        options.width = 400;
+        options.width = 420;
         options.height = 600;
         options.resizable = true;
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }];

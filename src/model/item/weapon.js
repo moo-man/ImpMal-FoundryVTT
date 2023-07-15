@@ -156,7 +156,7 @@ export class WeaponModel extends EquippableItemModel
     useAmmo(amount = 1)
     {
 
-        if (this.attackType == "melee")
+        if (this.isMelee)
         {
             throw game.i18n.localize("IMPMAL.ErrorMeleeWeapon");
         }
@@ -282,12 +282,21 @@ export class WeaponModel extends EquippableItemModel
             i.system.category == "shield" && 
             i.system.traits.has("shield"));
 
-        if (this.isEquipped && this.attackType == "melee" && shield)
+        if (this.isEquipped && this.isMelee && shield)
         {
             this.traits.list.push({key : "defensive"});
         }
     }
 
+    get isMelee()
+    {
+        return this.attackType == "melee";
+    }
+
+    get isRanged()
+    {
+        return this.attackType == "ranged";
+    }
 
     summaryData()
     {

@@ -64,6 +64,16 @@ export class TraitModel extends StandardItemModel
         }
     }
 
+    get isMelee()
+    {
+        return this.attack.type == "melee";
+    }
+
+    get isRanged()
+    {
+        return this.attack.type == "ranged";
+    }
+
     summaryData()
     {
         let data = super.summaryData();

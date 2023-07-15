@@ -52,8 +52,8 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         }
 
         sheetItems.equipped = {
-            melee : sheetItems.weapon.filter(i => i.system.equipped.value && i.system.attackType == "melee"),
-            ranged : sheetItems.weapon.filter(i => i.system.equipped.value && i.system.attackType == "ranged"),
+            melee : sheetItems.weapon.filter(i => i.system.equipped.value && i.system.isMelee),
+            ranged : sheetItems.weapon.filter(i => i.system.equipped.value && i.system.isRanged),
             protection : sheetItems.protection.filter(i => i.system.equipped.value).filter(i => i.system.category != "shield"),
             shield : sheetItems.protection.filter(i => i.system.equipped.value).filter(i => i.system.category == "shield"),
             equipment : sheetItems.equipment.filter(i => i.system.equipped.value)

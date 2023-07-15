@@ -25,7 +25,12 @@ export class SpecialisationModel extends StandardItemModel
 
     get skillNameAndTotal() 
     {
-        return `${game.impmal.config.skills[this.skill]} (${this.parent.name}) ${this.total}`;
+        return `${this.skillName} ${this.total}`;
+    }
+
+    get skillName() 
+    {
+        return `${game.impmal.config.skills[this.skill]} (${this.parent.name})`;
     }
 
     summaryData()
