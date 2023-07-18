@@ -1,0 +1,13 @@
+.impmal.script-config {
+    min-width: 300px;
+    min-height: 200px;
+    .ace-editor,
+    textarea {
+        resize: none;
+        height: calc(100% - 10px);
+    }
+
+    .no-ace {
+        font-family: "Courier"
+    }
+}

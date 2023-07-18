@@ -8,7 +8,8 @@ export class TalentModel extends StandardItemModel
     {
         let schema = super.defineSchema();
         schema.requirement = new fields.SchemaField({
-            value : new fields.StringField()
+            value : new fields.StringField(),
+            script : new fields.StringField()
         });
         schema.xp = new fields.NumberField({initial : 100, min: 0});
         return schema;

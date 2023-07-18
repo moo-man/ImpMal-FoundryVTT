@@ -498,7 +498,8 @@
         "notes"
       ],
       "requirement": {
-        "value": ""
+        "value": "",
+        "script" : ""
       },
       "xp" : 100
     },

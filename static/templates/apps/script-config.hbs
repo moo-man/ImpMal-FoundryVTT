@@ -1,0 +1,12 @@
+<form>
+    <div>
+        {{#if aceActive}}
+            <div class="ace-editor"></div>
+        {{else}}
+            <textarea class="no-ace" {{#unless (isGM)}}disabled{{/unless}} name="script">{{script}}</textarea>
+        {{/if}}
+    </div>
+    {{#if (isGM)}}
+    <button type="submit">{{localize "Submit"}}</button>
+    {{/if}}
+</form>

@@ -377,6 +377,7 @@
     "IMPMAL.Routine" : "Routine",
     "IMPMAL.SL" : "SL",
     "IMPMAL.Scarce" : "Scarce",
+    "IMPMAL.ScriptConfig" : "Script Config",
     "IMPMAL.Self" : "Self",
     "IMPMAL.SetPatron" : "Set as Patron",
     "IMPMAL.Shield" : "Shield",

@@ -1,3 +1,5 @@
+import { ScriptConfig } from "../../apps/script-config";
+
 export default ImpMalSheetMixin = (cls) => class extends cls 
 {
     // Shared listeners between different document sheets
@@ -78,6 +80,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         html.find(".pip").on("click", this._onConditionPipClick.bind(this));
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
+        html.find(".script-config").on("click", this._onScriptConfig.bind(this));
     }
 
     _getId(ev) 
@@ -341,5 +344,10 @@ export default ImpMalSheetMixin = (cls) => class extends cls
             },
             default : "submit"
         }).render(true);
+    }
+
+    _onScriptConfig(ev)
+    {
+        new ScriptConfig(this.object, {path : this._getPath(ev)}).render(true);
     }
 };

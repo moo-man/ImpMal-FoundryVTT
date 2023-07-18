@@ -50,12 +50,14 @@ import FoundryOverrides from "./system/overrides";
 import AmmoItemSheet from "./sheet/items/item-ammo-sheet";
 import FactionItemSheet from "./sheet/items/item-faction-sheet";
 import DutyItemSheet from "./sheet/items/item-duty-sheet";
+import debug from "./system/debug";
 
 Hooks.once("init", () => 
 {
 
     // #if _ENV == "development"
     CONFIG.debug.impmal = true;
+    debug();
     // #endif
 
     CONFIG.Actor.documentClass = ImpMalActor;
