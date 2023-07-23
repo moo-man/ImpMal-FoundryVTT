@@ -18,11 +18,11 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         });
         schema.hitLocations = new fields.ObjectField();
         schema.wounds = new fields.SchemaField({
-            value : new fields.NumberField({initial : 3}),
-            max : new fields.NumberField({initial: 3}),
+            value : new fields.NumberField({initial : 0}),
+            max : new fields.NumberField(),
         });
         schema.criticals = new fields.SchemaField({
-            value : new fields.NumberField(),
+            value : new fields.NumberField({initial : 0}),
             max : new fields.NumberField(),
         });
         return schema;

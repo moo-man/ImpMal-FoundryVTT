@@ -8,7 +8,7 @@ The **official** system for playing *Warhammer 40,000 Roleplay: Imperium Maledic
 ## Current State
 This is currently in **BETA** and not yet suitable for actual play. Testing and feedback are always appreciated. 
 
-Please feel free to message me on Discord - Moo Man#7518
+Please feel free to message me on Discord - `moo.man`
 
 ## Install
 <!-- 1. Go to the setup page and choose **Game Systems**.

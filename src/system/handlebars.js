@@ -38,7 +38,7 @@ export default function registerHandlebars()
     
     Handlebars.registerHelper("settings", function (key) 
     {
-        return game.settings.get("wfrp4e", key);
+        return game.settings.get("impmal", key);
     });
 
     Handlebars.registerHelper("pct", function (part, whole, max100=true) 

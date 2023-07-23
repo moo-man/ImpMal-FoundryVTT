@@ -39,7 +39,7 @@ export class CharacterModel extends StandardActorModel
             short : new fields.StringField(),
             long : new fields.StringField()
         });
-        schema.corruption = new fields.NumberField();
+        schema.corruption = new fields.NumberField({initial : 0});
         schema.fate = new fields.SchemaField({
             max : new fields.NumberField({initial: 3}),
             value : new fields.NumberField({initial: 3})
