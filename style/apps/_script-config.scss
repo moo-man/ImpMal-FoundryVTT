@@ -10,4 +10,12 @@
     .no-ace {
         font-family: "Courier"
     }
+
+    &.effect-script {
+        .ace-editor,
+        textarea {
+            resize: none;
+            height: calc(100% - 70px);
+        }
+    }
 }

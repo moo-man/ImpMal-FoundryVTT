@@ -3,9 +3,9 @@ let fields = foundry.data.fields;
 
 export class InjuryModel extends StandardItemModel 
 {
-
     allowedConditions = ["bleeding", "stunned", "blinded", "deafened", "incapacitated", "prone", "stunned"];
-    transferEffects = true;
+    allowedEffectApplications = ["document"];
+    effectApplicationOptions = {documentType : "Actor"};
 
     static defineSchema() 
     {

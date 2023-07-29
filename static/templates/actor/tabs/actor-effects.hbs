@@ -17,7 +17,7 @@
 
 <section class="list">
     <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.ActiveEffects"}}</div>
+        <div class="list-name">{{localize "IMPMAL.TemporaryEffects"}}</div>
         <div>{{localize "IMPMAL.Source"}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="effect" data-category="temporary"><i class="fa-solid fa-plus"></i></a>
@@ -25,13 +25,13 @@
     </header>
     <div class="list-content">
         {{#each effects.active}}
-            <div class="list-item" data-id="{{this.id}}" data-collection="effects">
+            <div class="list-item" data-id="{{this.id}}" data-collection="effects" {{#if this.fromItem}}data-item={{this.parent.id}}{{/if}}>
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.icon}}">
-                        <a class="list-edit">{{this.label}}</a>
+                        <a class="list-edit {{#if this.fromItem}}grandchild{{/if}}">{{this.name}}</a>
                     </div>
-                    <div>{{this.source}}</div>
+                    <div>{{#if this.fromItem}}<a class="list-edit" data-id="{{this.parent.id}}" data-collection="items"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
@@ -82,13 +82,13 @@
     </header>
     <div class="list-content">
         {{#each effects.passive}}
-            <div class="list-item" data-id="{{this.id}}" data-collection="effects">
+            <div class="list-item" data-id="{{this.id}}" data-collection="effects" {{#if this.fromItem}}data-item={{this.parent.id}}{{/if}}>
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.icon}}">
-                        <a class="list-edit">{{this.label}}</a>
+                        <a class="list-edit {{#if this.fromItem}}grandchild{{/if}}">{{this.name}}</a>
                     </div>
-                    <div>{{this.source}}</div>
+                    <div>{{#if this.fromItem}}<a class="list-edit" data-id="{{this.parent.id}}" data-collection="items"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
@@ -109,13 +109,13 @@
     </header>
     <div class="list-content inactive">
         {{#each effects.disabled}}
-            <div class="list-item" data-id="{{this.id}}" data-collection="effects">
+            <div class="list-item" data-id="{{this.id}}" data-collection="effects" {{#if this.fromItem}}data-item={{this.parent.id}}{{/if}}>
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.icon}}">
-                        <a class="list-edit">{{this.label}}</a>
+                        <a class="list-edit {{#if this.fromItem}}grandchild{{/if}}" >{{this.name}}</a>
                     </div>
-                    <div>{{this.source}}</div>
+                    <div>{{#if this.fromItem}}<a class="list-edit" data-id="{{this.parent.id}}" data-collection="items"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>

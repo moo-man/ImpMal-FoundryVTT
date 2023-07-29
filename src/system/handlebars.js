@@ -51,9 +51,9 @@ export default function registerHandlebars()
         return pct;
     });
 
-    Handlebars.registerHelper("enrich", function (string) 
+    Handlebars.registerHelper("hasProperty", function (obj, key) 
     {
-        return TextEditor.enrichHTML(string);
+        return hasProperty(obj, key);
     });
 
     Handlebars.registerHelper("tokenImg", function (actor) 

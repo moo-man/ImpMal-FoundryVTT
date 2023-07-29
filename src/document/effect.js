@@ -1,18 +1,89 @@
+import ImpMalScript from "../system/script";
+
 export class ImpMalEffect extends ActiveEffect
 {
 
     async _preCreate(data, options, user)
     {
         await super._preCreate(data, options, user);
+    }
+
+    prepareData() 
+    {
+        super.prepareData();
+
+        this.scripts = this.scriptData.map(i => new ImpMalScript(i, ImpMalScript.createContext(this)));
+
         if (this.parent.documentName == "Item")
         {
-            this.updateSource({transfer : this.parent.system.transferEffects});
+            this.transfer = this.determineTransfer();
+            if (this.transfer)
+            {
+                this.fromItem = true;
+            }
         }
+    }
+
+    determineTransfer()
+    {
+        let application = this.applicationData;
+        return application.type == "document" && application.options.documentType == "Actor";
+    }
+
+    get item()
+    {
+        if (this.parent.documentName == "Item")
+        {
+            return this.parent;
+        }
+        else
+        {
+            return undefined;
+        }
+    }
+
+    get actor()
+    {
+        if (this.parent.documentName == "Item")
+        {
+            return this.parent.parent;
+        }
+        else if (this.parent.documentName == "Actor")
+        {
+            return this.parent;
+        }
+        else 
+        {
+            return undefined;
+        }
+    }
+
+    get source()
+    {
+        if (this.parent.documentName == "Item")
+        {
+            return this.parent.name; // TODO: a lot to change here, account for origin
+        }
+        else
+        {
+            return super.sourceName;
+        }
+    }
+
+    get scriptData() 
+    {
+        return this.flags?.impmal?.scriptData || [];
+
+        /**
+         * label
+         * string
+         * trigger
+         */
     }
 
     get key () 
     {
-        return this.getFlag("core", "statusId");
+        return Array.from(this.statuses)[0];
     }
 
     get isCondition() 
@@ -30,16 +101,39 @@ export class ImpMalEffect extends ActiveEffect
         return this.getFlag("impmal", "type") == "major"; 
     }
 
-    get source()
-    {
-        let doc = fromUuidSync(this.origin || "");
-        return doc?.name || doc?.text || "???";
-    }
-
     // Computed effects mean flagged to know that they came from a calculation, notably encumbrance causing overburdened or restrained
     get isComputed()
     {
         return this.getFlag("impmal", "computed");
+    }
+
+    get applicationData() 
+    {
+        let applicationData = mergeObject(this.constructor._defaultApplicationData(), this.getFlag("impmal", "applicationData"));
+
+        // // Delete non-relevant properties based on application type
+        // if (applicationData.type == "document")
+        // {
+        //     delete applicationData.options.test;
+        //     delete applicationData.options.filters;
+        //     delete applicationData.options.prompt;
+        //     delete applicationData.options.consume;
+        // }
+
+        // if (applicationData.type == "damage")
+        // {
+        //     delete applicationData.options.test;
+
+        //     if (applicationData.options.documentType == "Actor")
+        //     {
+        //         delete applicationData.options.filters;
+        //         delete applicationData.options.prompt;
+        //     }
+
+        //     delete applicationData.options.consume;
+        // }
+
+        return applicationData;
     }
 
     static findEffect(key, type="minor")
@@ -57,7 +151,6 @@ export class ImpMalEffect extends ActiveEffect
     static getCreateData(effectData, overlay=false)
     {
         const createData = foundry.utils.deepClone(effectData);
-        createData["flags.core.statusId"] = effectData.id;
         if ( overlay ) 
         {
             createData["flags.core.overlay"] = true;
@@ -81,9 +174,33 @@ export class ImpMalEffect extends ActiveEffect
         {
             if (effect.isCondition && effect.origin) // If the condition comes from a source such as item, prevent it and go through `addCondition`
             {
-                effect.parent.addCondition(effect.flags.core.statusId, {type : effect.flags.core.type});
+                effect.parent.addCondition(effect.key, {type : effect.flags.impmal?.type});
                 return false;
             }
         }
+    }
+
+    static _defaultApplicationData() 
+    {
+        return {
+            type : "document",
+            options : {
+                documentType : "Actor",
+                test : { 
+                    value : "none",
+                    script : "",
+                    difficulty : "",
+                    characteristic : "",
+                    skill : {
+                        key : "",
+                        specialisation : ""
+                    }
+                },
+                enableConditionScript : "",
+                filters : "",
+                prompt : false,
+                consume : false
+            }
+        };
     }
 }

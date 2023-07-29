@@ -3,7 +3,6 @@ let fields = foundry.data.fields;
 
 export class TalentModel extends StandardItemModel 
 {
-    transferEffects = true;
     static defineSchema() 
     {
         let schema = super.defineSchema();

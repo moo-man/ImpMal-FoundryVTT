@@ -329,10 +329,45 @@ const IMPMAL = {
         dead: false
     },
 
+    effectApplications : {
+        document : "IMPMAL.EffectApplicationDocument",
+        damage : "IMPMAL.EffectApplicationDamage",
+        target : "IMPMAL.EffectApplicationTarget",
+        zone : "IMPMAL.EffectApplicationZone",
+        activate : "IMPMAL.EffectApplicationActivate"
+    },
+
+    effectApplicationOptions : {
+        documentType : "Actor or Item",
+        test : "define test or link to item's test",
+        filters : "regex or script",
+        enableCondition : "",
+        prompt : false,
+        consume : false
+    },
+
+    
+    scriptTriggers : {
+        immediate : "IMPMAL.TriggerImmediate",
+        prepareBaseData : "IMPMAL.TriggerPrepareBase",
+        prePrepareDerivedData : "IMPMAL.TriggerPrePrepareDerived",
+        postPrepareDerivedData : "IMPMAL.TriggerPostPrepareDerived",
+        dialog : "IMPMAL.TriggerDialog",
+        applyDamage : "IMPMAL.TriggerApplyDamage",
+        takeDamage : "IMPMAL.TriggerTakeDamage"
+    },
+
+    scriptTriggerOptions : {
+        addItems : "IMPMAL.TriggerOptionAddItems",
+        targeter : "IMPMAL.TriggerOptionTargeter"
+    },
+
+
     conditions : [
         {
             icon: "systems/impmal/assets/icons/conditions/ablaze-minor.svg",
             id: "ablaze",
+            statuses : ["ablaze"],
             label: "IMPMAL.ConditionAblazeMinor",
             flags : {
                 impmal : {
@@ -343,6 +378,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/ablaze-major.svg",
             id: "ablaze",
+            statuses : ["ablaze"],
             label: "IMPMAL.ConditionAblazeMajor",
             flags : {
                 impmal : {
@@ -353,6 +389,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/bleeding-minor.svg",
             id: "bleeding",
+            statuses : ["bleeding"],
             label: "IMPMAL.ConditionBleedingMinor",
             flags : {
                 impmal : {
@@ -363,6 +400,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/bleeding-major.svg",
             id: "bleeding",
+            statuses : ["bleeding"],
             label: "IMPMAL.ConditionBleedingMajor",
             flags : {
                 impmal : {
@@ -373,16 +411,19 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/blinded.svg",
             id: "blinded",
+            statuses : ["blinded"],
             label: "IMPMAL.ConditionBlinded"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/deafened.svg",
             id: "deafened",
+            statuses : ["deafened"],
             label: "IMPMAL.ConditionDeafened"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/fatigued-minor.svg",
             id: "fatigued",
+            statuses : ["fatigued"],
             label: "IMPMAL.ConditionFatiguedMinor",
             flags : {
                 impmal : {
@@ -393,6 +434,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/fatigued-major.svg",
             id: "fatigued",
+            statuses : ["fatigued"],
             label: "IMPMAL.ConditionFatiguedMajor",
             flags : {
                 impmal : {
@@ -403,6 +445,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/frightened-minor.svg",
             id: "frightened",
+            statuses : ["frightened"],
             label: "IMPMAL.ConditionFrightenedMinor",
             flags : {
                 impmal : {
@@ -413,6 +456,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/frightened-major.svg",
             id: "frightened",
+            statuses : ["frightened"],
             label: "IMPMAL.ConditionFrightenedMajor",
             flags : {
                 impmal : {
@@ -423,16 +467,19 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/incapacitated.svg",
             id: "incapacitated",
+            statuses : ["incapacitated"],
             label: "IMPMAL.ConditionIncapacitated"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/overburdened.svg",
             id: "overburdened",
+            statuses : ["overburdened"],
             label: "IMPMAL.ConditionOverburdened"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/poisoned-minor.svg",
             id: "poisoned",
+            statuses : ["poisoned"],
             label: "IMPMAL.ConditionPoisonedMinor",
             flags : {
                 impmal : {
@@ -443,6 +490,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/poisoned-major.svg",
             id: "poisoned",
+            statuses : ["poisoned"],
             label: "IMPMAL.ConditionPoisonedMajor",
             flags : {
                 impmal : {
@@ -453,12 +501,14 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/prone.svg",
             id: "prone",
+            statuses : ["prone"],
             label: "IMPMAL.ConditionProne"
         },
 
         {
             icon: "systems/impmal/assets/icons/conditions/restrained-minor.svg",
             id: "restrained",
+            statuses : ["restrained"],
             label: "IMPMAL.ConditionRestrainedMinor",
             flags : {
                 impmal : {
@@ -469,6 +519,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/restrained-major.svg",
             id: "restrained",
+            statuses : ["restrained"],
             label: "IMPMAL.ConditionRestrainedMajor",
             flags : {
                 impmal : {
@@ -479,6 +530,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/stunned-minor.svg",
             id: "stunned",
+            statuses : ["stunned"],
             label: "IMPMAL.ConditionStunnedMinor",
             flags : {
                 impmal : {
@@ -489,6 +541,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/stunned-major.svg",
             id: "stunned",
+            statuses : ["stunned"],
             label: "IMPMAL.ConditionStunnedMajor",
             flags : {
                 impmal : {
@@ -500,6 +553,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/unconscious-major.svg",
             id: "unconscious",
+            statuses : ["unconscious"],
             label: "IMPMAL.ConditionUnconsciousMajor",
             flags : {
                 impmal : {
@@ -510,6 +564,7 @@ const IMPMAL = {
         {
             icon: "systems/impmal/assets/icons/conditions/dead.svg",
             id: "dead",
+            statuses : ["dead"],
             label: "IMPMAL.Dead"
         },
     ],
@@ -585,66 +640,79 @@ const IM_CONFIG = {
         {
             icon: "systems/impmal/assets/icons/conditions/ablaze.svg",
             id: "ablaze",
+            statuses : ["ablaze"],
             label: "IMPMAL.ConditionAblaze"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/bleeding.svg",
             id: "bleeding",
+            statuses : ["bleeding"],
             label: "IMPMAL.ConditionBleeding"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/blinded.svg",
             id: "blinded",
+            statuses : ["blinded"],
             label: "IMPMAL.ConditionBlinded"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/deafened.svg",
             id: "deafened",
+            statuses : ["deafened"],
             label: "IMPMAL.ConditionDeafened"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/fatigued.svg",
             id: "fatigued",
+            statuses : ["fatigued"],
             label: "IMPMAL.ConditionFatigued"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/frightened.svg",
             id: "frightened",
+            statuses : ["frightened"],
             label: "IMPMAL.ConditionFrightened"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/incapacitated.svg",
             id: "incapacitated",
+            statuses : ["incapacitated"],
             label: "IMPMAL.ConditionIncapacitated"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/overburdened.svg",
             id: "overburdened",
+            statuses : ["overburdened"],
             label: "IMPMAL.ConditionOverburdened"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/poisoned.svg",
             id: "poisoned",
+            statuses : ["poisoned"],
             label: "IMPMAL.ConditionPoisoned"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/prone.svg",
             id: "prone",
+            statuses : ["prone"],
             label: "IMPMAL.ConditionProne"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/restrained.svg",
             id: "restrained",
+            statuses : ["restrained"],
             label: "IMPMAL.ConditionRestrained"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/stunned.svg",
             id: "stunned",
+            statuses : ["stunned"],
             label: "IMPMAL.ConditionStunned",
         },
         {
             icon: "systems/impmal/assets/icons/conditions/dead.svg",
             id: "dead",
+            statuses : ["dead"],
             label: "IMPMAL.Dead",
         },
     ]

@@ -1,4 +1,4 @@
-export class ScriptConfig extends FormApplication
+export default class ScriptConfig extends FormApplication
 {
     static get defaultOptions() 
     {
@@ -6,8 +6,8 @@ export class ScriptConfig extends FormApplication
         options.classes = options.classes.concat(["impmal", "script-config"]);
         options.title = game.i18n.localize("IMPMAL.ScriptConfig");
         options.resizable = true;
-        options.height = 400;
         options.width = 600;
+        options.height = 400;
         options.template = "systems/impmal/templates/apps/script-config.hbs";
         return options;
     }
@@ -22,15 +22,20 @@ export class ScriptConfig extends FormApplication
         let data = await super.getData();
         this.aceActive = game.modules.get("acelib")?.active;
         data.aceActive = this.aceActive;
-        data.script = getProperty(this.object, this.options.path);
+        data.script = this._getScript();
         return data;
     }
 
 
+    _getScript()
+    {
+        return getProperty(this.object, this.options.path);
+    }
+
     _updateObject(ev, formData)
     {
         let script = this.aceActive ? this.editor.getValue() : formData.script; 
-        this.object.update({[this.options.path] : script});
+        return this.object.update({[this.options.path] : script});
     }
 
     activateListeners(html)
@@ -40,7 +45,7 @@ export class ScriptConfig extends FormApplication
         if (this.aceActive)
         {
             this.editor = ace.edit(html.find(".ace-editor")[0]);
-            this.editor.setValue(getProperty(this.object, this.options.path) || "");
+            this.editor.setValue(this._getScript() || "");
             this.editor.setOptions(mergeObject(ace.userSettings, {mode : "ace/mode/js", printMargin : 0, theme : "ace/theme/solarized_dark", readOnly : !game.user.isGM}));
             this.editor.clearSelection();
         }

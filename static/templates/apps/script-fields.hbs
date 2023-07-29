@@ -1,0 +1,18 @@
+<div class="form-group">
+    <label>{{localize "Label"}}</label>
+    <input name="label" type="text" value="{{script.label}}"></input>
+</div>
+
+{{log this}}
+
+<div class="form-group">
+    <label>{{localize "IMPMAL.ScriptTrigger"}}</label>
+    <select name="trigger">
+        {{#select script.trigger}}
+            <option></option>
+            {{#each (config "scriptTriggers")}}
+                <option value="{{@key}}">{{this}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+</div>

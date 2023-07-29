@@ -18,12 +18,15 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     {
         this.system.computeBase();
         this.itemCategories = this.itemTypes;
+        this.runScripts("prepareBaseData");
     }
 
     prepareDerivedData() 
     {
+        this.runScripts("prePrepareDerivedData");
         this.system.computeDerived(mergeObject(this.itemCategories, {all : this.items}, {inplace : false}));
         this.items.forEach(i => i.prepareOwnedData());
+        this.runScripts("postPrepareDerivedData");
     }
 
     /**
@@ -223,6 +226,28 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             excess,
             location : locationKey
         };
+    }
+
+    runScripts(trigger, args)
+    {
+        let effects = Array.from(this.allApplicableEffects());
+        let scripts = effects.reduce((prev, current) => prev.concat(current.scripts.filter(i => i.trigger == trigger)), []);
+
+        let promises = [];
+
+        for(let script of scripts)
+        {
+            if (script.async)
+            {
+                promises.push(script.execute(args));
+            }
+            else 
+            {
+                script.execute(args);
+            }
+        }
+
+        return promises;
     }
 
     get defendingAgainst()

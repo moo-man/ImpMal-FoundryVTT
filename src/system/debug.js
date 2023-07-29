@@ -14,4 +14,10 @@ export default function()
     {
         log(`Rendering ${app.constructor.name}`, {args : data});
     });
+
+    Hooks.on("ready", () => 
+    {
+        // Add startup debug code here
+
+    });
 }

@@ -6,6 +6,7 @@
 @import "./apps/document-choice";
 @import "./apps/form";
 @import "./apps/choice-config";
+@import "./apps/effect-config";
 @import "./apps/dialogs/test-dialog";
 @import "./chat/roll";
 @import "./chat/item-post";
@@ -49,6 +50,12 @@
         .list-item {
             display: flex;
             flex-direction: column;
+        }
+
+        .list-edit {
+            i {
+                margin-right: 5px;
+            }
         }
 
         .list-row {

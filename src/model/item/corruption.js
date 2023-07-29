@@ -3,7 +3,8 @@ let fields = foundry.data.fields;
 
 export class CorruptionModel extends StandardItemModel 
 {
-    transferEffects = true;
+    allowedEffectApplications = ["document"];
+    effectApplicationOptions = {documentType : "Actor"};
 
     static defineSchema() 
     {

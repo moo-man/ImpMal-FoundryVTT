@@ -51,6 +51,7 @@ import AmmoItemSheet from "./sheet/items/item-ammo-sheet";
 import FactionItemSheet from "./sheet/items/item-faction-sheet";
 import DutyItemSheet from "./sheet/items/item-duty-sheet";
 import debug from "./system/debug";
+import ImpmalActiveEffectConfig from "./apps/effect-config";
 
 Hooks.once("init", () => 
 {
@@ -59,10 +60,11 @@ Hooks.once("init", () =>
     CONFIG.debug.impmal = true;
     debug();
     // #endif
-
+    
     CONFIG.Actor.documentClass = ImpMalActor;
     CONFIG.Item.documentClass = ImpMalItem;
     CONFIG.ActiveEffect.documentClass = ImpMalEffect;
+    CONFIG.ActiveEffect.legacyTransferral = false;
 
     Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
     Actors.registerSheet("impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true });
@@ -77,6 +79,7 @@ Hooks.once("init", () =>
     Items.registerSheet("impmal", OriginItemSheet, { types: ["origin"], makeDefault: true });
     Items.registerSheet("impmal", RoleItemSheet, { types: ["role"], makeDefault: true });
     Items.registerSheet("impmal", AmmoItemSheet, { types: ["ammo"], makeDefault: true });
+    DocumentSheetConfig.registerSheet(ActiveEffect, "impmal", ImpmalActiveEffectConfig, {makeDefault : true});
 
     // CONFIG.ActiveEffect.sheetClass = undefined;
     // DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });

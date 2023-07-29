@@ -1,6 +1,6 @@
 export default function() 
 {
-    Hooks.on("setup", () => 
+    Hooks.on("i18nInit", () => 
     {
         localizeConfig(game.impmal.config);
         localizeConfig(CONFIG.statusEffects);

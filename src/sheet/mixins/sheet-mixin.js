@@ -1,4 +1,4 @@
-import { ScriptConfig } from "../../apps/script-config";
+import ScriptConfig from "../../apps/script-config";
 
 export default ImpMalSheetMixin = (cls) => class extends cls 
 {
@@ -142,8 +142,12 @@ export default ImpMalSheetMixin = (cls) => class extends cls
     {
         let id = this._getId(event);
         let collection = this._getCollection(event);
+        let itemId = this._getDataAttribute(event, "item");
 
-        return this.object[collection].get(id)?.sheet.render(true, {editable : this.options.editable});
+        // If item id is defined, find the item and search in its collection instead
+        let document = (itemId && collection == "effects") ? this.object.items.get(itemId)[collection].get(id) : this.object[collection].get(id);
+
+        return document?.sheet.render(true, {editable : this.options.editable});
     }
     _onListDelete(event, skipDialog=false) 
     {
@@ -258,10 +262,10 @@ export default ImpMalSheetMixin = (cls) => class extends cls
                     callback: (html) => 
                     {
                         let mode = 2;
-                        let label = html.find(".label").val();
+                        let name = html.find(".name").val();
                         let key = html.find(".key").val();
                         let value = parseInt(html.find(".modifier").val()?.toString() || "");
-                        effectData.label = label;
+                        effectData.name = name;
                         effectData.changes = [{ key, mode, value }];
                         this.object.createEmbeddedDocuments("ActiveEffect", [effectData]);
                     },
@@ -281,7 +285,9 @@ export default ImpMalSheetMixin = (cls) => class extends cls
     _onListToggle(ev) 
     {
         let id = this._getId(ev);
-        let effect = this.object.effects.get(id);
+        let itemId = this._getDataAttribute(ev, "item");
+
+        let effect = itemId ? this.object.items.get(itemId).effects.get(id) : this.object.effects.get(id);
 
         if (effect) { effect.update({ disabled: !effect.disabled }); }
     }
