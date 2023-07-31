@@ -12,6 +12,8 @@ export default class AmmoItemSheet extends ImpMalItemSheet
             return ui.notifications.error(game.i18n.localize("IMPMAL.ErrorApplyCustomAmmo"));
         }
 
+        
+
         return this.item.update({
             name: this.item.name += ` (${appliedAmmo.name})`,
             system : {
@@ -21,7 +23,6 @@ export default class AmmoItemSheet extends ImpMalItemSheet
                 usedWith : appliedAmmo.system.usedWith,
                 damage : appliedAmmo.system.damage
             }
-        },
-        );
+        }).then(item => item.createEmbeddedDocuments("ActiveEffect", appliedAmmo.effects.contents));
     }
 }

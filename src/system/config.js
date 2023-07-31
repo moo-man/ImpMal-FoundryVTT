@@ -349,9 +349,9 @@ const IMPMAL = {
     
     scriptTriggers : {
         immediate : "IMPMAL.TriggerImmediate",
-        prepareBaseData : "IMPMAL.TriggerPrepareBase",
-        prePrepareDerivedData : "IMPMAL.TriggerPrePrepareDerived",
-        postPrepareDerivedData : "IMPMAL.TriggerPostPrepareDerived",
+        prepareBaseData : "IMPMAL.TriggerPrepareBaseData",
+        prePrepareDerivedData : "IMPMAL.TriggerPrePrepareDerivedData",
+        postPrepareDerivedData : "IMPMAL.TriggerPostPrepareDerivedData",
         dialog : "IMPMAL.TriggerDialog",
         applyDamage : "IMPMAL.TriggerApplyDamage",
         takeDamage : "IMPMAL.TriggerTakeDamage"

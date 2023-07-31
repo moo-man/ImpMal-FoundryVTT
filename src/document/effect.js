@@ -6,6 +6,13 @@ export class ImpMalEffect extends ActiveEffect
     async _preCreate(data, options, user)
     {
         await super._preCreate(data, options, user);
+
+        return await this.handleImmediateScripts();
+    }
+
+    async _onDelete()
+    {
+        await this.deleteCreatedItems();
     }
 
     prepareData() 
@@ -20,7 +27,7 @@ export class ImpMalEffect extends ActiveEffect
             this.transfer = this.determineTransfer();
             if (this.transfer)
             {
-                this.fromItem = true;
+                this.fromItem = true; // Probably delete this?
             }
         }
     }
@@ -29,6 +36,50 @@ export class ImpMalEffect extends ActiveEffect
     {
         let application = this.applicationData;
         return application.type == "document" && application.options.documentType == "Actor";
+    }
+
+    async handleImmediateScripts()
+    {
+        let run = false;
+        // Effect is direct parent, it's always applied to an actor, so run scripts
+        if (this.parent?.documentName == "Actor")
+        {
+            run = true;
+        }
+        // If effect is grandchild, only run scripts if the effect should apply to the actor
+        else if (this.parent?.documentName == "Item" && this.parent.parent?.documentName == "Actor" && this.transfer)
+        {
+            run = true;
+        }
+        // If effect is child of Item, and Item is what it's applying to
+        else if (this.parent?.documentName == "Item" && this.applicationData.options.documentType == "Item")
+        {
+            run = true;
+        }
+
+        if (run)
+        {
+            let scripts = this.scripts.filter(i => i.trigger == "immediate");
+            await Promise.all(scripts.map(s => s.execute()));
+            return !scripts.every(s => s.options.immediate?.deleteEffect);
+            // If all scripts agree to delete the effect, return false (to prevent creation);
+        }
+    }
+
+    /**
+     * Delete all items created by scripts in this effect
+     */
+    deleteCreatedItems()
+    {
+        if (this.actor)
+        {
+            let createdItems = this.actor.items.filter(i => i.getFlag("impmal", "fromEffect"), this.id);
+            if (createdItems.length)
+            {
+                ui.notifications.notify(game.i18n.format("IMPMAL.DeletingEffectItems", {items : createdItems.map(i => i.name).join(", ")}));
+                return this.actor.deleteEmbeddedDocuments("Item", createdItems.map(i => i.id));
+            }
+        }
     }
 
     get scripts()

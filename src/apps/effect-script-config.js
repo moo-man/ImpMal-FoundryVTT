@@ -43,6 +43,7 @@ export default class EffectScriptConfig extends ScriptConfig
         setProperty(scriptObject, "options.dialog.hideScript", formData.hideScript);
         setProperty(scriptObject, "options.dialog.activateScript", formData.activateScript);
         setProperty(scriptObject, "options.dialog.targeter", formData.targeter);
+        setProperty(scriptObject, "options.immediate.deleteEffect", formData.deleteEffect);
         scriptObject.string = script;
 
         return this.object.update({"flags.impmal.scriptData" : array});
