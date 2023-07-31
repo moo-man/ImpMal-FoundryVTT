@@ -32,7 +32,7 @@ export default class EffectScriptConfig extends ScriptConfig
         return getProperty(this.object, "flags.impmal.scriptData")?.[this.options.index];
     }
 
-    _updateObject(ev, formData)
+    async _updateObject(ev, formData)
     {
         let script = this.aceActive ? this.editor.getValue() : formData.script; 
 
@@ -40,8 +40,43 @@ export default class EffectScriptConfig extends ScriptConfig
         let scriptObject = array[this.options.index];
         scriptObject.label = formData.label;
         scriptObject.trigger = formData.trigger;
+        setProperty(scriptObject, "options.dialog.hideScript", formData.hideScript);
+        setProperty(scriptObject, "options.dialog.activateScript", formData.activateScript);
+        setProperty(scriptObject, "options.dialog.targeter", formData.targeter);
         scriptObject.string = script;
 
         return this.object.update({"flags.impmal.scriptData" : array});
+    }
+
+    activateListeners(html)
+    {
+        super.activateListeners(html);
+
+        this.hideTriggerOptions(html);
+
+        html.find("[name='trigger']").change(ev => 
+        {
+            this.showTriggerOptions(ev.currentTarget.value);
+        });
+
+        this.showTriggerOptions(this._getScriptObject().trigger);    
+    }
+
+    showTriggerOptions(trigger)
+    {
+        if (trigger)
+        {
+            this.element.find(`[data-option=${trigger}]`).show();
+        }
+        else 
+        {
+            this.hideTriggerOptions(this.element);
+        }
+        this.element.css("height", "auto");
+    }
+
+    hideTriggerOptions(html)
+    {
+        html.find("[data-option]").hide();
     }
 }

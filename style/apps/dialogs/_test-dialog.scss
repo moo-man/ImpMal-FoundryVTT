@@ -1,7 +1,29 @@
 .impmal.test-dialog {
 
+    .dialog-sections {
+        display :flex;
+    }
 
-    
+    .dialog-fields {
+        flex: 2;
+    }
+
+    .dialog-modifiers {
+        flex: 1;
+        padding: 10px;
+        > label {
+            display: block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .modifier {
+            &.active {
+                text-shadow: 0px 0px 5px skyblue;
+            }
+        }
+    }
+
     .adv-dis {
         display: flex;
         align-items: center;

@@ -27,6 +27,9 @@ export class TraitTestDialog extends AttackDialog
 
         dialogData.data.itemId = trait?.id;
         dialogData.data.item = trait;
+
+        dialogData.data.scripts = dialogData.data.scripts.concat(trait.getScripts("dialog"));
+
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

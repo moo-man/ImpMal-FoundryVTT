@@ -98,4 +98,25 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     {
         return this.effects.find(e => e.key == key);
     }
+
+    runScripts(trigger, args)
+    {
+        let scripts = this.getScripts(trigger);
+
+        let promises = [];
+
+        for(let script of scripts)
+        {
+            if (script.async)
+            {
+                promises.push(script.execute(args));
+            }
+            else
+            {
+                script.execute(args);
+            }
+        }
+
+        return promises;
+    }
 };

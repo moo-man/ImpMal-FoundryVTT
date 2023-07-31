@@ -5,11 +5,14 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
     prepareBaseData() 
     {
         this.system.computeBase();
+        this.runScripts("prepareBaseData");
     }
 
     prepareDerivedData() 
     {
+        this.runScripts("prePrepareDerivedData");
         this.system.computeDerived();
+        this.runScripts("postPrepareDerivedData");
     }
 
     prepareOwnedData()
@@ -19,6 +22,16 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
             throw new Error("Cannot compute owned derived data without parent actor", this);
         }
         this.system.computeOwnerDerived(this.actor);
+    }
+
+    getScripts(trigger)
+    {
+        let effects = this.effects.contents.filter(effect => 
+            effect.applicationData.type == "document" && 
+            effect.applicationData.options.documentType == "Item" && 
+            !effect.disabled);
+
+        return effects.reduce((prev, current) => prev.concat(current.scripts.filter(i => i.trigger == trigger)), []);
     }
 
     get typeLabel()

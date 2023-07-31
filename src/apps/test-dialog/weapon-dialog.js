@@ -48,6 +48,10 @@ export class WeaponTestDialog extends AttackDialog
         dialogData.data.weaponId = weapon.id;
         dialogData.data.weapon = weapon;
         dialogData.data.item = weapon;
+
+        dialogData.data.scripts = dialogData.data.scripts.concat(weapon.getScripts("dialog") || []);
+        dialogData.data.scripts = dialogData.data.scripts.concat(weapon.system.ammo.document?.getScripts("dialog") || []);
+
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

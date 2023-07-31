@@ -21,7 +21,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         this.runScripts("prepareBaseData");
     }
 
-    prepareDerivedData() 
+    prepareDerivedData()
     {
         this.runScripts("prePrepareDerivedData");
         this.system.computeDerived(mergeObject(this.itemCategories, {all : this.items}, {inplace : false}));
@@ -30,19 +30,19 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     }
 
     /**
-     * 
+     *
      * @param {string} characteristic Characteristic key, such as "ws" or "str"
      * @param {object} options Optional properties to customize the test
      * @param {string} options.title.replace Replace dialog title
      * @param {string} options.title.append Append to dialog title
      * @param {object} options.fields Predefine dialog fields
      */
-    setupCharacteristicTest(characteristic, options={}, roll=true) 
+    setupCharacteristicTest(characteristic, options={}, roll=true)
     {
         return this._setupTest(CharacteristicTestDialog, CharacteristicTest, characteristic, options, roll);
     }
 
-    setupSkillTest({itemId, name, key}={}, options={}, roll=true) 
+    setupSkillTest({itemId, name, key}={}, options={}, roll=true)
     {
 
         // Not sure I like this here but it will do for now
@@ -50,7 +50,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         // Warp State = 1 is handled in postRoll() of a skill test
         if (options.warp == 2)
         {
-            return new Roll(`1d100 + ${10 * (this.system.warp.charge - this.system.warp.threshold)}`).roll({async: true}).then(roll => 
+            return new Roll(`1d100 + ${10 * (this.system.warp.charge - this.system.warp.threshold)}`).roll({async: true}).then(roll =>
             {
                 roll.toMessage({speaker : ChatMessage.getSpeaker(this), flavor : game.i18n.localize("IMPMAL.PerilsOfTheWarp")});
                 this.update({"system.warp.charge" : 0});
@@ -59,7 +59,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return this._setupTest(SkillTestDialog, SkillTest, {itemId, name, key}, options, roll);
     }
 
-    setupWeaponTest(id, options={}, roll=true) 
+    setupWeaponTest(id, options={}, roll=true)
     {
         return this._setupTest(WeaponTestDialog, WeaponTest, id, options, roll);
     }
@@ -69,24 +69,24 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return this._setupTest(TestDialog, BaseTest, target, options, roll);
     }
 
-    setupPowerTest(id, options={}, roll=true) 
+    setupPowerTest(id, options={}, roll=true)
     {
         return this._setupTest(PowerTestDialog, PowerTest, id, options, roll);
     }
 
-    setupTraitTest(id, options={}, roll=true) 
+    setupTraitTest(id, options={}, roll=true)
     {
         return this._setupTest(TraitTestDialog, TraitTest, id, options, roll);
     }
 
     /**
-     * 
+     *
      * @param {class} dialogClass Class used for the test dialog
      * @param {class} testClass Class used to compute the test result
      * @param {any} data data relevant to the specific test (such as what characteristic/item to use)
      * @param {object} options Optional properties to customize the test
      * @param {boolean} roll Whether to evaluate the test or not
-     * @returns 
+     * @returns
      */
     async _setupTest(dialogClass, testClass, data, options={}, roll=true)
     {
@@ -96,7 +96,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         {
             setupData = mergeObject(dialogData.data, dialogData.fields);
         }
-        else 
+        else
         {
             setupData = await dialogClass.awaitSubmit(dialogData);
         }
@@ -150,7 +150,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             testOptions = {fields: {difficulty : test.difficulty}};
             testFunction = this.setupCharacteristicTest.bind(this);
         }
-        else 
+        else
         {
             return ui.notifications.error("Item does not provide sufficient data to perform a Test. It must specify at least a Skill or Characteristic");
         }
@@ -228,26 +228,22 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         };
     }
 
-    runScripts(trigger, args)
+    /**
+     * Collect effect scripts being applied to the actor
+     * 
+     * @param {String} trigger Specify stript triggers to retrieve
+     * @param {Function} scriptFilter Optional function to filter out more scripts
+     * @returns 
+     */
+    getScripts(trigger, scriptFilter)
     {
-        let effects = Array.from(this.allApplicableEffects());
+        let effects = Array.from(this.allApplicableEffects()).filter(i => !i.disabled);
         let scripts = effects.reduce((prev, current) => prev.concat(current.scripts.filter(i => i.trigger == trigger)), []);
-
-        let promises = [];
-
-        for(let script of scripts)
+        if (scriptFilter)
         {
-            if (script.async)
-            {
-                promises.push(script.execute(args));
-            }
-            else 
-            {
-                script.execute(args);
-            }
+            scripts = scripts.filter(scriptFilter);
         }
-
-        return promises;
+        return scripts;
     }
 
     get defendingAgainst()
@@ -256,7 +252,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         {
             return false;
         }
-        else 
+        else
         {
             return this._findAttackingMessage()?.test;
         }

@@ -7,13 +7,14 @@ export class TestDialog extends Application
     {
         const options = super.defaultOptions;
         options.classes = options.classes.concat(["impmal", "test-dialog", "form"]);
-        options.width = 320;
+        options.width = 450;
         options.resizable = true;
         return options;
     }
 
     #onKeyPress;
-
+    selectedScripts = [];
+    unselectedScripts = [];
     fieldsTemplate = "";
     
     get template() 
@@ -63,16 +64,20 @@ export class TestDialog extends Application
 
     async getData() 
     {
+        let scripts = this._filterScripts();
+        this._activateScripts(scripts);
+
         this.advCount = 0;
         this.disCount = 0;
         // Reset values so they don't accumulate 
         mergeObject(this.fields, this.userEntry);
-
-        this.computeFields();
+        await this.computeScripts(scripts);
+        await this.computeFields();
 
         let state = this.computeState();
 
         return {
+            scripts,
             fields : mergeObject(this.fields, {state}),
             advCount : this.advCount,
             disCount : this.disCount,
@@ -83,6 +88,43 @@ export class TestDialog extends Application
     updateTargets()
     {
         this.data.targets = Array.from(game.user.targets);
+        this.render(true);
+    }
+
+    _filterScripts()
+    {
+        return this.data.scripts.filter((script, index) => 
+        {
+            // If user selected script, make sure it is not hidden, otherwise, run its script to determine
+            if (this.selectedScripts.includes(index))
+            {
+                return true;
+            }
+            else
+            {
+                return !script.hidden();
+            }
+        });
+    }
+
+    _activateScripts(scripts)
+    {
+        scripts.forEach((script, index) => 
+        {
+            // If user selected script, activate it, otherwise, run its script to determine
+            if (this.selectedScripts.includes(index))
+            {
+                script.active = true;
+            }
+            else if (this.unselectedScripts.includes(index))
+            {
+                script.active = false;
+            }
+            else
+            {
+                script.active = script.activated();
+            }
+        });
     }
 
     /**
@@ -114,9 +156,21 @@ export class TestDialog extends Application
     /**
      * Handle relationships between fields, used by subclasses
      */
-    computeFields() 
+    async computeFields() 
     {
 
+    }
+
+    
+    async computeScripts(scripts) 
+    {
+        for(let script of scripts)
+        {
+            if (script.active)
+            {
+                await script.execute(this);
+            }
+        }
     }
 
     /**
@@ -165,6 +219,8 @@ export class TestDialog extends Application
         // Listen on all elements with 'name' property
         html.find(Object.keys(new FormDataExtended(this.form).object).map(i => `[name='${i}']`).join(",")).change(this._onInputChanged.bind(this));
 
+        html.find(".dialog-modifiers .modifier").click(this._onModifierClicked.bind(this));
+
         // Need to remember binded function to later remove
         this.#onKeyPress = this._onKeyPress.bind(this);
         document.addEventListener("keypress", this.#onKeyPress);
@@ -189,6 +245,39 @@ export class TestDialog extends Application
         if (ev.currentTarget.name == "state")
         {
             this.forceState = value;
+        }
+        this.render(true);
+    }
+
+    _onModifierClicked(ev)
+    {
+        $(ev.currentTarget).toggleClass("active");
+        let index = Number(ev.currentTarget.dataset.index);
+        if (ev.currentTarget.classList.contains("active"))
+        {
+            // If modifier was unselected by the user (originally activated via its script)
+            // it can be assumed that the script will still be activated by its script
+            if (this.unselectedScripts.includes(index))
+            {
+                this.unselectedScripts = this.unselectedScripts.filter(i => i != index);
+            }
+            else 
+            {
+                this.selectedScripts.push(index);
+            }
+        }
+        else 
+        {
+            // If this modifier was NOT selected by the user, it was activated via its script
+            // must be added to unselectedScripts instead
+            if (!this.selectedScripts.includes(index))
+            {
+                this.unselectedScripts.push(index);
+            }
+            else // If unselecting manually selected modifier
+            {
+                this.selectedScripts = this.selectedScripts.filter(i => i != index);
+            }
         }
         this.render(true);
     }
@@ -240,6 +329,16 @@ export class TestDialog extends Application
         }
 
         dialogData.data.targets = actor.defendingAgainst ? [] : Array.from(game.user.targets);
+
+        // Collect Dialog effects 
+        //   - Don't use our own targeter dialog effects, DO use targets' targeter dialog effects
+        dialogData.data.scripts = foundry.utils.deepClone(
+            actor.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
+                .concat(dialogData.data.targets 
+                    .map(t => t.actor)
+                    .filter(actor => actor)
+                    .reduce((prev, current) => prev.concat(current.getScripts("dialog", (s) => s.options.dialog?.targeter)), []) // DO use targets' targeter dialog effects
+                ));
 
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

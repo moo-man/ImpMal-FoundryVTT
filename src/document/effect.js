@@ -12,7 +12,8 @@ export class ImpMalEffect extends ActiveEffect
     {
         super.prepareData();
 
-        this.scripts = this.scriptData.map(i => new ImpMalScript(i, ImpMalScript.createContext(this)));
+        // Refresh scripts
+        this._scripts = undefined;
 
         if (this.parent.documentName == "Item")
         {
@@ -28,6 +29,15 @@ export class ImpMalEffect extends ActiveEffect
     {
         let application = this.applicationData;
         return application.type == "document" && application.options.documentType == "Actor";
+    }
+
+    get scripts()
+    {  
+        if (!this._scripts)
+        {
+            this._scripts = this.scriptData.map(i => new ImpMalScript(i, ImpMalScript.createContext(this)));
+        }
+        return this._scripts;
     }
 
     get item()
@@ -199,7 +209,13 @@ export class ImpMalEffect extends ActiveEffect
                 enableConditionScript : "",
                 filters : "",
                 prompt : false,
-                consume : false
+                consume : false,
+
+                
+                dialog : {
+                    hideScript : "",
+                    activateScript : ""
+                }
             }
         };
     }
