@@ -65,19 +65,26 @@ export default class EffectScriptConfig extends ScriptConfig
 
     showTriggerOptions(trigger)
     {
+        this.hideTriggerOptions(this.element);
+
         if (trigger)
         {
             this.element.find(`[data-option=${trigger}]`).show();
         }
-        else 
-        {
-            this.hideTriggerOptions(this.element);
-        }
-        this.element.css("height", "auto");
+        this.setTextboxHeight();
     }
 
     hideTriggerOptions(html)
     {
         html.find("[data-option]").hide();
+    }
+
+    setTextboxHeight()
+    {
+        let scriptBox = this.element.find("[name='script']")[0] || this.element.find(".ace-editor")[0];
+        // I think this is the only way to get the textbox height correct with dynamic elements
+        let height = 0;                                                                                                                                 // 2 * parseInt(computedStyle(element).margin) => 
+        this.element.find(".form-group").each((index, element) => height += (element.clientHeight + 2 * parseInt(getComputedStyle(element).margin)));   // 2 * parseInt(3px 0px) => 
+        scriptBox.style.height = `calc(100% - ${height}px`;                                                                                             // 2 * 3px = 6px per element
     }
 }

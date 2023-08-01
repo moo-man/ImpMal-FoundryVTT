@@ -251,35 +251,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         {
             effectData.disabled = true;
         }
-
-        let html = await renderTemplate("systems/impmal/templates/apps/quick-effect.hbs", effectData);
-        new Dialog({
-            title: game.i18n.localize("IMPMAL.QuickEffect"),
-            content: html,
-            buttons: {
-                create: {
-                    label: "Create",
-                    callback: (html) => 
-                    {
-                        let mode = 2;
-                        let name = html.find(".name").val();
-                        let key = html.find(".key").val();
-                        let value = parseInt(html.find(".modifier").val()?.toString() || "");
-                        effectData.name = name;
-                        effectData.changes = [{ key, mode, value }];
-                        this.object.createEmbeddedDocuments("ActiveEffect", [effectData]);
-                    },
-                },
-                skip: {
-                    label: "Skip",
-                    callback: () => this.object.createEmbeddedDocuments("ActiveEffect", [effectData]),
-                },
-            },
-            render: (dlg) => 
-            {
-                $(dlg).find(".label").select();
-            },
-        }).render(true);
+        this.object.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effects => effects[0].sheet.render(true));
     }
 
     _onListToggle(ev) 

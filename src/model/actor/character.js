@@ -100,7 +100,7 @@ export class CharacterModel extends StandardActorModel
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
         this.combat.superiority = game.impmal.superiority.value;
-        this.influence.compute(this.parent.effects.contents, items, this.parent.type);
+        this.influence.compute(Array.from(this.parent.allApplicableEffects()), items, this.parent.type);
     }
 
     _checkEncumbranceEffects(actor)

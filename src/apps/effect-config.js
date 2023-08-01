@@ -19,10 +19,30 @@ export default class ImpmalActiveEffectConfig extends ActiveEffectConfig
         let scriptHTML = await renderTemplate("systems/impmal/templates/apps/effect-scripts.hbs", {scripts : this.object.scriptData});
         let effectApplicationHTML = await renderTemplate("systems/impmal/templates/apps/effect-application-config.hbs", this.object);
 
+        // Add Scripts Tab and tab section
         this.element.find("nav").append(`<a class='item' data-tab="scripts"><i class="fa-solid fa-code"></i>${game.i18n.localize("IMPMAL.EffectScripts")}</a>`);
         $(`<section class='tab' data-tab="scripts">${scriptHTML}</section>`).insertBefore(this.element.find("footer"));
 
+        // Replace transfer field with Effect Application data (used to derive transfer value)
         this.element.find("[name='transfer']").parents(".form-group").replaceWith(effectApplicationHTML);
+
+        // Replace attribute key field with a select field
+        let effectsTab = this.element.find("section[data-tab='effects']");
+
+        // Add a checkbox to toggle between <select> and <input> for effect keys
+        $(`<div class="form-group">
+        <label>${game.i18n.localize("IMPMAL.ManualEffectKeys")}</label>
+        <input type="checkbox" class="manual-keys" name="flags.impmal.manualEffectKeys" ${this.object.getFlag("impmal", "manualEffectKeys") ? "checked" : ""}>
+        </div>`).insertBefore(effectsTab.find(".effects-header"));
+
+        // Replace all key inputs with <select> fields (unless disabled)
+        if (!this.object.getFlag("impmal", "manualEffectKeys"))
+        {
+            for (let element of effectsTab.find(".key input"))
+            {
+                $(element).replaceWith(await renderTemplate("systems/impmal/templates/apps/effect-key-options.hbs", {name : element.name, value : element.value}));
+            }
+        }
 
         // Activate Script tab if that is the cause of the rerender. It is added after rendering so won't be automatically handled by the Tabs object
         if (options.data?.flags?.impmal?.scriptData)
@@ -65,6 +85,11 @@ export default class ImpmalActiveEffectConfig extends ActiveEffectConfig
         });
 
         html.on("change", ".impmal-effect-config input,.impmal-effect-config select", () => 
+        {
+            this.submit({preventClose: true});
+        });
+
+        html.on("change", ".manual-keys", () => 
         {
             this.submit({preventClose: true});
         });
