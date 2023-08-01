@@ -26,6 +26,30 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         }
     }
 
+    async _onUpdate(data, options, user)
+    {
+        await super._onUpdate(data, options, user);
+
+        // If an owned item is updated, run actor update scripts
+        if (this.actor)
+        {
+            await this.actor.runScripts("updateDocument");
+        }
+    }
+
+    async _onCreate(data, options, user)
+    {
+        await super._onCreate(data, options, user);
+
+        // If an owned item is created, run actor update scripts
+        if (this.actor)
+        {
+            await this.actor.runScripts("updateDocument");
+        }
+    }
+
+
+
     prepareBaseData() 
     {
         this.system.computeBase();

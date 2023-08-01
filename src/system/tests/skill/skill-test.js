@@ -18,6 +18,18 @@ export class SkillTest extends CharacteristicTest
         });
     }
 
+    async runPreScripts()
+    {
+        await super.runPreScripts();
+        await this.actor.runScripts("preRollSkillTest", this);
+    }
+
+    async runPostScripts()
+    {
+        await super.runPostScripts();
+        await this.actor.runScripts("rollSkillTest", this);
+    }
+
     async postRoll()
     {
         await super.postRoll();

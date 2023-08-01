@@ -17,6 +17,18 @@ export class TraitTest extends AttackTest
         });
     }
 
+    async runPreScripts()
+    {
+        await super.runPreScripts();
+        await this.actor.runScripts("preRollTraitTest", this);
+    }
+
+    async runPostScripts()
+    {
+        await super.runPostScripts();
+        await this.actor.runScripts("rollTraitTest", this);
+    }
+
     get item() 
     {
         return this.context.trait;

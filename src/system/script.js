@@ -16,7 +16,7 @@ export default class ImpMalScript
         try 
         {
             let scriptFunction =this.async ? Object.getPrototypeOf(async function () { }).constructor : Function;
-            
+            game.impmal.log("Running Script > " + this.label);
             return (new scriptFunction("args", this.script)).bind(this.context)(args);
         }
         catch(e)

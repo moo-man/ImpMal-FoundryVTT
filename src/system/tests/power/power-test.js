@@ -25,6 +25,19 @@ export class PowerTest extends SkillTest
         });
     }
 
+    async runPreScripts()
+    {
+        await super.runPreScripts();
+        await this.actor.runScripts("preRollPowerTest", this);
+    }
+
+    async runPostScripts()
+    {
+        await super.runPostScripts();
+        await this.actor.runScripts("rollPowerTest", this);
+    }
+
+
     async postRoll() 
     {
         await super.postRoll();

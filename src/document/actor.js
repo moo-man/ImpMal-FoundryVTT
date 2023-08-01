@@ -220,7 +220,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained});
         return {
             text,
-            message : message ? ChatMessage.create({content : text + crit ? crit : ""}) : null,
+            message : message ? ChatMessage.create({content : (text + crit ? crit : "")}) : null,
             reductions,
             crit,
             excess,

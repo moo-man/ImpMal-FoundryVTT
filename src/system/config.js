@@ -353,8 +353,39 @@ const IMPMAL = {
         prePrepareDerivedData : "IMPMAL.TriggerPrePrepareDerivedData",
         postPrepareDerivedData : "IMPMAL.TriggerPostPrepareDerivedData",
         dialog : "IMPMAL.TriggerDialog",
+
+        preRollTest : "IMPMAL.TriggerPreRollTest",
+        preRollSkillTest : "IMPMAL.TriggerPreRollSkillTest",
+        preRollWeaponTest : "IMPMAL.TriggerPreRollWeaponTest",
+        preRollTraitTest : "IMPMAL.TriggerPreRollTraitTest",
+        preRollPowerTest : "IMPMAL.TriggerPreRollPowerTest",
+
+        rollTest : "IMPMAL.TriggeRollTest",
+        rollSkillTest : "IMPMAL.TriggeRollSkillTest",
+        rollWeaponTest : "IMPMAL.TriggeRollWeaponTest",
+        rollTraitTest : "IMPMAL.TriggeRollTraitTest",
+        rollPowerTest : "IMPMAL.TriggeRollPowerTest",
+
+        // preAttackerEvaluateOpposed : "IMPMAL.TriggerPreAttackerEvaluateOpposed",
+        // preAttackerComputeOpposedDamage : "IMPMAL.TriggerPreAttackerComputeOpposedDamage",
+        // postAttackerEvaluateOpposed : "IMPMAL.TriggerAttackerEvaluateOpposed",
+
+        // preDefenderEvaluateOpposed : "IMPMAL.TriggerPreDefenderEvaluateOpposed",
+        // preDefenderComputeOpposedDamage : "IMPMAL.TriggerPreDefenderComputeOpposedDamage",
+        // postDefenderEvaluateOpposed : "IMPMAL.TriggerDefenderEvaluateOpposed",
+
+        preApplyDamage : "IMPMAL.TriggerPreApplyDamage",
         applyDamage : "IMPMAL.TriggerApplyDamage",
-        takeDamage : "IMPMAL.TriggerTakeDamage"
+        preTakeDamage : "IMPMAL.TriggerPreTakeDamage",
+        takeDamage : "IMPMAL.TriggerTakeDamage",
+
+        updateDocument : "IMPMAL.TriggerUpdateDocument",
+        deleteEffect : "IMPMAL.TriggerDeleteEffect",
+
+        startRound : "IMPMAL.TriggerStartRound",
+        endRound : "IMPMAL.TriggerEndRound",
+        startTurn : "IMPMAL.TriggerStartTurn",
+        endTurn : "IMPMAL.TriggerEndTurn"
     },
 
     scriptTriggerOptions : {

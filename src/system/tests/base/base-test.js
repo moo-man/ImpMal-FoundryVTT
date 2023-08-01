@@ -29,11 +29,23 @@ export class BaseTest
 
     async roll() 
     {
+        await this.runPreScripts();
         await this.evaluate();
+        await this.runPostScripts();
         await this.postRoll();
         await this.sendToChat();
 
         return this;
+    }
+
+    async runPreScripts()
+    {
+        await this.actor.runScripts("preRollTest", this);
+    }
+
+    async runPostScripts()
+    {
+        await this.actor.runScripts("rollTest", this);
     }
 
     // Evaluate test result
@@ -116,9 +128,12 @@ export class BaseTest
     async applyDamageTo(targetId)
     {
         let opposed = this.opposedTests.find(t => t.id == targetId);
-
+        await this.actor.runScripts("preApplyDamage", opposed); 
+        await opposed.actor.runScripts("preTakeDamage", opposed);
         opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation, test : this}).then(data => 
         {
+            this.actor.runScripts("applyDamage", data); // Don't think this is very useful
+            opposed.actor.runScripts("takeDamage", data);
             this.context.setApplied(targetId, data);
             this.roll();
         });

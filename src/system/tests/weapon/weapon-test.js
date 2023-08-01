@@ -18,6 +18,18 @@ export class WeaponTest extends AttackTest
         });
     }
 
+    async runPreScripts()
+    {
+        await super.runPreScripts();
+        await this.actor.runScripts("preRollWeaponTest", this);
+    }
+
+    async runPostScripts()
+    {
+        await super.runPostScripts();
+        await this.actor.runScripts("rollWeaponTest", this);
+    }
+
     async postRoll()
     {
         await super.postRoll();

@@ -10,10 +10,37 @@ export class ImpMalEffect extends ActiveEffect
         return await this.handleImmediateScripts();
     }
 
-    async _onDelete()
+    async _onDelete(options, user)
     {
         await this.deleteCreatedItems();
+        for(let script of this.scripts.filter(i => i.trigger == "deleteEffect"))
+        {
+            await script.execute({options, user});
+        }
     }
+
+    async _onUpdate(data, options, user)
+    {
+        await super._onUpdate(data, options, user);
+
+        // If an owned effect is updated, run parent update scripts
+        if (this.parent)
+        {
+            await this.parent.runScripts("updateDocument");
+        }
+    }
+
+    async _onCreate(data, options, user)
+    {
+        await super._onCreate(data, options, user);
+
+        // If an owned effect is created, run parent update scripts
+        if (this.parent)
+        {
+            await this.parent.runScripts("updateDocument");
+        }
+    }
+
 
     prepareData() 
     {
@@ -60,8 +87,11 @@ export class ImpMalEffect extends ActiveEffect
         if (run)
         {
             let scripts = this.scripts.filter(i => i.trigger == "immediate");
-            await Promise.all(scripts.map(s => s.execute()));
-            return !scripts.every(s => s.options.immediate?.deleteEffect);
+            if (scripts.length)
+            {
+                await Promise.all(scripts.map(s => s.execute()));
+                return !scripts.every(s => s.options.immediate?.deleteEffect);
+            }
             // If all scripts agree to delete the effect, return false (to prevent creation);
         }
     }

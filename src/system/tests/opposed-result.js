@@ -27,6 +27,44 @@ export class OpposedTestResult
         }
     }
 
+
+    /**
+     * 
+     * 
+     * 
+     *         this.evaluated = this.evaluateResult(attackerTest, defenderTest);
+    }
+
+    async evaluateResult()
+    {
+
+        await attackerTest.actor.runScripts("preAttackerEvaluateOpposed");
+        await defenderTest?.actor?.runScripts("preDefenderEvaluateOpposed");
+        let attackerTest = this.attackerTest;
+        let defenderTest = this.defenderTest;
+        this.SL = attackerTest.result.SL - (defenderTest?.result?.SL || 0); // If no defender test, unopposed 
+        if (this.SL > 0)
+        {
+            this.winner = "attacker";
+        }
+        else if (this.SL < 0)
+        {
+            this.winner = "defender";
+        }
+
+        if (this.winner == "attacker" && attackerTest.item && this.constructor.damagingItems.includes(attackerTest.item?.type))
+        {
+            await attackerTest.actor.runScripts("preAttackerComputeOpposedDamage");
+            await defenderTest?.actor?.runScripts("preDefenderComputeOpposedDamage");
+            this.damage = this.computeDamage(attackerTest.item, {add : (attackerTest.result?.supercharge ? Number(attackerTest.itemTraits.has("supercharge")?.value) : 0), attackerTest, defenderTest});
+            await attackerTest.actor.runScripts("postAttackerEvaluateOpposed");
+            await defenderTest?.actor?.runScripts("postDefenderEvaluateOpposed");
+        }
+        return true;
+    }
+
+     */
+
     computeDamage(item, {add, attackerTest, defenderTest})
     {
         switch(item.type)
