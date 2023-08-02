@@ -129,10 +129,12 @@ export class BaseTest
     {
         let opposed = this.opposedTests.find(t => t.id == targetId);
         await this.actor.runScripts("preApplyDamage", opposed); 
+        await this.item?.runScripts?.("preApplyDamage", opposed);
         await opposed.actor.runScripts("preTakeDamage", opposed);
         opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation, test : this}).then(data => 
         {
             this.actor.runScripts("applyDamage", data); // Don't think this is very useful
+            this.item?.runScripts?.("applyDamage", data);
             opposed.actor.runScripts("takeDamage", data);
             this.context.setApplied(targetId, data);
             this.roll();

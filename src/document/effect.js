@@ -52,10 +52,6 @@ export class ImpMalEffect extends ActiveEffect
         if (this.parent.documentName == "Item")
         {
             this.transfer = this.determineTransfer();
-            if (this.transfer)
-            {
-                this.fromItem = true; // Probably delete this?
-            }
         }
     }
 

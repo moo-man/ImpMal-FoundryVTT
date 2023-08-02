@@ -25,13 +25,17 @@
     </header>
     <div class="list-content">
         {{#each effects.active}}
-            <div class="list-item" data-id="{{this.id}}" data-collection="effects" {{#if this.fromItem}}data-item={{this.parent.id}}{{/if}}>
+            <div class="list-item" data-uuid="{{this.uuid}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.icon}}">
-                        <a class="list-edit {{#if this.fromItem}}grandchild{{/if}}">{{this.name}}</a>
+                        <a class="list-edit">{{this.name}}</a>
                     </div>
-                    <div>{{#if this.fromItem}}<a class="list-edit" data-id="{{this.parent.id}}" data-collection="items"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
+                  {{#if (eq this.actor.type "patron")}}
+                        <div><a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a></div>
+                    {{else}}
+                        <div>{{#if this.item}}<a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
+                    {{/if}}
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
@@ -82,13 +86,17 @@
     </header>
     <div class="list-content">
         {{#each effects.passive}}
-            <div class="list-item" data-id="{{this.id}}" data-collection="effects" {{#if this.fromItem}}data-item={{this.parent.id}}{{/if}}>
+            <div class="list-item" data-uuid="{{this.uuid}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.icon}}">
-                        <a class="list-edit {{#if this.fromItem}}grandchild{{/if}}">{{this.name}}</a>
+                        <a class="list-edit">{{this.name}}</a>
                     </div>
-                    <div>{{#if this.fromItem}}<a class="list-edit" data-id="{{this.parent.id}}" data-collection="items"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
+                  {{#if (eq this.actor.type "patron")}}
+                        <div><a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a></div>
+                    {{else}}
+                        <div>{{#if this.item}}<a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
+                    {{/if}}
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
@@ -109,13 +117,17 @@
     </header>
     <div class="list-content inactive">
         {{#each effects.disabled}}
-            <div class="list-item" data-id="{{this.id}}" data-collection="effects" {{#if this.fromItem}}data-item={{this.parent.id}}{{/if}}>
+            <div class="list-item" data-uuid="{{this.uuid}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.icon}}">
-                        <a class="list-edit {{#if this.fromItem}}grandchild{{/if}}" >{{this.name}}</a>
+                        <a class="list-edit">{{this.name}}</a>
                     </div>
-                    <div>{{#if this.fromItem}}<a class="list-edit" data-id="{{this.parent.id}}" data-collection="items"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
+                    {{#if (eq this.actor.type "patron")}}
+                        <div><a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a></div>
+                    {{else}}
+                        <div>{{#if this.item}}<a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
+                    {{/if}}
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>

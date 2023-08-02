@@ -22,12 +22,14 @@ export class SkillTest extends CharacteristicTest
     {
         await super.runPreScripts();
         await this.actor.runScripts("preRollSkillTest", this);
+        await this.item?.runScripts?.("preRollSkillTest", this);
     }
 
     async runPostScripts()
     {
         await super.runPostScripts();
         await this.actor.runScripts("rollSkillTest", this);
+        await this.item?.runScripts?.("rollSkillTest", this);
     }
 
     async postRoll()

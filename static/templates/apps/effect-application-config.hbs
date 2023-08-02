@@ -19,8 +19,13 @@
                 <label>{{localize "IMPMAL.EffectApplicationOptionDocumentType"}}</label>
                 <select name="flags.impmal.applicationData.options.documentType">
                     {{#select applicationData.options.documentType}}
+
                         <option value="Actor">{{localize "Actor"}}</option>
-                        <option value="Item">{{localize "Item"}}</option>
+                        {{#if (eq this.parent.type "boonLiability")}}
+                            <option value="character">{{localize "TYPES.Actor.character"}}</option>
+                        {{else}}
+                            <option value="Item">{{localize "Item"}}</option>
+                        {{/if}}
                     {{/select}}
                 </select>
                 <p class="notes">{{localize "IMPMAL.EffectApplicationOptionDocumentTypeHint"}}</p>

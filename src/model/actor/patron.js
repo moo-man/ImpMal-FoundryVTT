@@ -27,7 +27,7 @@ export class PatronModel extends BaseActorModel
         super.computeDerived(items);
         this.duty.getDocument(items.all);
         this.faction.getDocument(items.all);
-        this.influence.compute(this.parent.effects.contents, items, this.parent.type);
+        this.influence.compute(Array.from(this.parent.allApplicableEffects()), items, this.parent.type);
     }
 
 }

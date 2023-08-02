@@ -64,20 +64,20 @@ export class TestDialog extends Application
 
     async getData() 
     {
-        let scripts = this._filterScripts();
-        this._activateScripts(scripts);
+        this._hideScripts();
+        this._activateScripts();
 
         this.advCount = 0;
         this.disCount = 0;
         // Reset values so they don't accumulate 
         mergeObject(this.fields, this.userEntry);
-        await this.computeScripts(scripts);
+        await this.computeScripts();
         await this.computeFields();
 
         let state = this.computeState();
 
         return {
-            scripts,
+            scripts : this.data.scripts,
             fields : mergeObject(this.fields, {state}),
             advCount : this.advCount,
             disCount : this.disCount,
@@ -91,38 +91,38 @@ export class TestDialog extends Application
         this.render(true);
     }
 
-    _filterScripts()
+    _hideScripts()
     {
-        return this.data.scripts.filter((script, index) => 
+        this.data.scripts.forEach((script, index) => 
         {
             // If user selected script, make sure it is not hidden, otherwise, run its script to determine
             if (this.selectedScripts.includes(index))
             {
-                return true;
+                script.isHidden = false;
             }
             else
             {
-                return !script.hidden();
+                script.isHidden = script.hidden(this);
             }
         });
     }
 
-    _activateScripts(scripts)
+    _activateScripts()
     {
-        scripts.forEach((script, index) => 
+        this.data.scripts.forEach((script, index) => 
         {
             // If user selected script, activate it, otherwise, run its script to determine
             if (this.selectedScripts.includes(index))
             {
-                script.active = true;
+                script.isActive = true;
             }
             else if (this.unselectedScripts.includes(index))
             {
-                script.active = false;
+                script.isActive = false;
             }
-            else
+            else if (!script.isHidden) // Don't run hidden script's activation test
             {
-                script.active = script.activated();
+                script.isActive = script.activated(this);
             }
         });
     }
@@ -162,11 +162,11 @@ export class TestDialog extends Application
     }
 
     
-    async computeScripts(scripts) 
+    async computeScripts() 
     {
-        for(let script of scripts)
+        for(let script of this.data.scripts)
         {
-            if (script.active)
+            if (script.isActive)
             {
                 await script.execute(this);
             }
@@ -251,7 +251,6 @@ export class TestDialog extends Application
 
     _onModifierClicked(ev)
     {
-        $(ev.currentTarget).toggleClass("active");
         let index = Number(ev.currentTarget.dataset.index);
         if (ev.currentTarget.classList.contains("active"))
         {

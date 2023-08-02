@@ -393,7 +393,9 @@
         "notes"
       ],
       "category" : "boon",
-      "visible" : false
+      "visible" : false,
+      "oneUse" : false,
+      "used" : false
     },
     "origin": {
       "templates": [

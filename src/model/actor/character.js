@@ -86,13 +86,13 @@ export class CharacterModel extends StandardActorModel
     computeBase()
     {
         super.computeBase();
+        this.patron.getDocument(game.actors);
     }
 
 
     computeDerived(items)
     {
         super.computeDerived(items);
-        this.patron.getDocument(game.actors);
         this.hands.getDocuments(items.all);
         this.origin.getDocument(items.all);
         this.faction.getDocument(items.all);

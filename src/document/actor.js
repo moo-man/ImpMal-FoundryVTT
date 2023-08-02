@@ -18,15 +18,15 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     {
         this.system.computeBase();
         this.itemCategories = this.itemTypes;
-        this.runScripts("prepareBaseData");
+        this.runScripts("prepareBaseData", this);
     }
 
     prepareDerivedData()
     {
-        this.runScripts("prePrepareDerivedData");
+        this.runScripts("prePrepareDerivedData", this);
         this.system.computeDerived(mergeObject(this.itemCategories, {all : this.items}, {inplace : false}));
         this.items.forEach(i => i.prepareOwnedData());
-        this.runScripts("postPrepareDerivedData");
+        this.runScripts("postPrepareDerivedData", this);
     }
 
     /**
@@ -244,6 +244,26 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             scripts = scripts.filter(scriptFilter);
         }
         return scripts;
+    }
+
+    *allApplicableEffects()
+    {
+        for(let effect of super.allApplicableEffects())
+        {
+            yield effect;
+        }
+
+        // Add specified patron effects to character effects
+        if (this.system.patron?.document)
+        {
+            for(let effect of this.system.patron.document.items.reduce((prev, current) => prev.concat(current.effects.contents), []))
+            {
+                if (effect.applicationData.type == "document" && effect.applicationData.options.documentType == "character")
+                {
+                    yield effect;
+                }
+            }
+        }
     }
 
     get defendingAgainst()

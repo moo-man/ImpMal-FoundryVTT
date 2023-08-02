@@ -113,6 +113,11 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         return this._getDataAttribute(ev, "collection") || "items";
     }
 
+    _getUUID(ev)
+    {
+        return this._getDataAttribute(ev, "uuid");
+    }
+
 
     /**
      * Search for an HTML data property, specified as data-<property>
@@ -137,35 +142,41 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         return value;
     }
 
-    //#region Sheet Listeners
-    _onListEdit(event) 
+    _getDocument(event)
     {
         let id = this._getId(event);
         let collection = this._getCollection(event);
-        let itemId = this._getDataAttribute(event, "item");
+        let uuid = this._getUUID(event);
 
-        // If item id is defined, find the item and search in its collection instead
-        let document = (itemId && collection == "effects") ? this.object.items.get(itemId)[collection].get(id) : this.object[collection].get(id);
+        return (uuid ? fromUuidSync(uuid) : this.object[collection].get(id));
+
+    }
+
+    //#region Sheet Listeners
+    _onListEdit(event) 
+    {
+        let document = this._getDocument(event);
 
         return document?.sheet.render(true, {editable : this.options.editable});
     }
     _onListDelete(event, skipDialog=false) 
     {
-        let id = this._getId(event);
         let collection = this._getCollection(event);
 
         let docName = collection == "effects" ? "ActiveEffect" : "Item";
 
+        let document = this._getDocument(event);
+
         if (skipDialog)
         {
-            return this.object.deleteEmbeddedDocuments(docName, [id]);
+            return document?.delete();
         }
         else 
         {
             return Dialog.confirm({
                 title: game.i18n.localize(`IMPMAL.Delete${docName}`),
                 content: `<p>${game.i18n.localize(`IMPMAL.Delete${docName}Confirmation`)}</p>`,
-                yes: () => { this.object.deleteEmbeddedDocuments(docName, [id]); },
+                yes: () => { document.delete(); },
                 no: () => { },
                 defaultYes: true
             });
@@ -254,14 +265,19 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         this.object.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effects => effects[0].sheet.render(true));
     }
 
-    _onListToggle(ev) 
+    _onListToggle(event) 
     {
-        let id = this._getId(ev);
-        let itemId = this._getDataAttribute(ev, "item");
-
-        let effect = itemId ? this.object.items.get(itemId).effects.get(id) : this.object.effects.get(id);
-
-        if (effect) { effect.update({ disabled: !effect.disabled }); }
+        let document = this._getDocument(event);
+        document?.update({ disabled: !document.disabled }).then(updated => 
+        {
+            // If you disable a patron effect, the update won't cause a rerender because it's an effect from another document, so rerender and reprepare manually
+            if (this._isPatronDocument(updated))
+            {
+                game.impmal.log("Rerendering Sheet and Repreparing from Patron Update");
+                this.object.reset();
+                this.render(true);
+            }
+        });
     }
 
     _onConditionPipClick(ev)
@@ -327,5 +343,15 @@ export default ImpMalSheetMixin = (cls) => class extends cls
     _onScriptConfig(ev)
     {
         new ScriptConfig(this.object, {path : this._getPath(ev)}).render(true);
+    }
+
+    
+    // Normal actors can update patron actors from their sheet
+    // This helper checks whether the document was a patron (or its embedded documents)
+    _isPatronDocument(document)
+    {
+        return this.object.id != document.id &&
+            ((document.documentName == "Actor" && document.type == "patron") || 
+            (document.actor?.type == "patron"));
     }
 };

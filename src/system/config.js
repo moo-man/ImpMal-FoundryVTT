@@ -338,7 +338,7 @@ const IMPMAL = {
     },
 
     effectApplicationOptions : {
-        documentType : "Actor or Item",
+        documentType : "Actor or Item or Character (patron only)",
         test : "define test or link to item's test",
         filters : "regex or script",
         enableCondition : "",

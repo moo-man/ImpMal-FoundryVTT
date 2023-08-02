@@ -7,51 +7,91 @@
     </header>
     <div class="list-content">
         {{#each items.talent}}
-        <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
-            <div class="list-row">
-                <div class="list-name list-edit list-summary-context">
-                    <img src="{{this.img}}">
-                    <a>{{this.name}}</a>
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name list-edit list-summary-context">
+                        <img src="{{this.img}}">
+                        <a>{{this.name}}</a>
+                    </div>
+                    <div class="list-controls">
+                        <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
+                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                    </div>
                 </div>
-                <div class="list-controls">
-                    <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                    <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
-                </div>
-            </div>
-            <div class="summary">
+                <div class="summary">
 
+                </div>
             </div>
-        </div>
         {{/each}}
     </div>
 </section>
 
 {{#if items.trait.length}}
-<section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.Traits"}}</div>
-        <div class="list-controls">
-            <a class="list-create" data-type="trait"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
-    <div class="list-content">
-        {{#each items.trait}}
-        <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
-            <div class="list-row">
-                <div class="list-name list-edit">
-                    <img src="{{this.img}}">
-                    <a>{{this.name}}</a>
-                </div>
-                <div class="list-controls">
-                    <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                    <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
-                </div>
+    <section class="list">
+        <header class="list-row">
+            <div class="list-name">{{localize "IMPMAL.Traits"}}</div>
+            <div class="list-controls">
+                <a class="list-create" data-type="trait"><i class="fa-solid fa-plus"></i></a>
             </div>
-            <div class="summary">
+        </header>
+        <div class="list-content">
+            {{#each items.trait}}
+                <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                    <div class="list-row">
+                        <div class="list-name list-edit list-summary-context">
+                            <img src="{{this.img}}">
+                            <a>{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
+                            <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                        </div>
+                    </div>
+                    <div class="summary">
 
-            </div>
+                    </div>
+                </div>
+            {{/each}}
         </div>
-        {{/each}}
-    </div>
-</section>
+    </section>
+{{/if}}
+
+{{#if actor.system.patron.document}}
+    <section class="list">
+        <header class="list-row">
+            <div class="list-name"><i class="fas fa-handshake-angle"></i> {{localize "IMPMAL.Boons"}} / {{localize "IMPMAL.Liabilities"}} - {{actor.system.patron.document.name}}
+            </div>
+            <div class="list-controls">
+                {{localize "IMPMAL.Used"}}
+            </div>
+        </header>
+        <div class="list-content">
+            {{#each actor.system.patron.document.itemCategories.boonLiability}}
+                {{#if this.system.visible}}
+                    <div class="list-item {{#if this.system.used}}inactive{{/if}}" data-uuid="{{this.uuid}}">
+                        <div class="list-row">
+                            <div class="list-name list-edit list-summary-context">
+                                <img src="{{this.img}}">
+                                <a>{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                                {{#if this.system.oneUse}}
+                                    <a class="property-toggle" data-uuid="{{this.uuid}}" data-target="system.used">
+                                        {{#if this.system.used}}
+                                            <i class="fa-regular fa-circle-check"></i>
+                                        {{else}}
+                                            <i class="fa-regular fa-circle"></i>
+                                        {{/if}}
+                                    </a>
+                                {{/if}}
+                            </div>
+                        </div>
+                        <div class="summary">
+
+                        </div>
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </section>
 {{/if}}

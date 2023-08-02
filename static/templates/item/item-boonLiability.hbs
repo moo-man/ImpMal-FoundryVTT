@@ -30,6 +30,15 @@
                         <input type="checkbox" name="system.visible" {{checked system.visible}}>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.OneUse"}}</label>
+                    <div class="form-fields">
+                        <input type="checkbox" name="system.oneUse" {{checked system.oneUse}}>
+                    </div>
+                    <p class="notes">{{localize "IMPMAL.OneUseHint"}}</p>
+                </div>
+
             </div>
             <div class="tab effects" data-tab="effects">
                 {{> systems/impmal/templates/item/partials/item-effects.hbs}}

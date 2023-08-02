@@ -61,7 +61,8 @@
             <label>{{localize "IMPMAL.DialogModifiers"}}</label>
             <ul class="modifiers">
                 {{#each scripts}}
-                    <li class="modifier {{#if this.active}}active{{/if}}" data-index="{{@key}}" ><a>{{this.label}}</a></li>
+                
+                    <li class="modifier {{#if this.isActive}}active {{else if this.isHidden}}hidden{{/if}}" data-index="{{@key}}" ><a>{{this.label}}</a></li>
                 {{/each}}
             </ul>
         </div>

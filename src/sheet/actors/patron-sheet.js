@@ -17,6 +17,8 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
         {
             data.items.boonLiability = data.items.boonLiability.filter(i => i.system.visible);
         }
+
+        data.effects = this.actor.effects.contents.concat(this.actor.items.reduce((prev, current) => prev.concat(current.effects.contents), []));
         return data;
     }
 

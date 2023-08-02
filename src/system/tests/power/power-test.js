@@ -29,12 +29,14 @@ export class PowerTest extends SkillTest
     {
         await super.runPreScripts();
         await this.actor.runScripts("preRollPowerTest", this);
+        await this.item.runScripts("preRollPowerTest", this);
     }
 
     async runPostScripts()
     {
         await super.runPostScripts();
         await this.actor.runScripts("rollPowerTest", this);
+        await this.item.runScripts("rollPowerTest", this);
     }
 
 

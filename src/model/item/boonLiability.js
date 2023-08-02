@@ -8,6 +8,8 @@ export class BoonLiabilityModel extends StandardItemModel
         let schema = super.defineSchema();
         schema.category = new fields.StringField();
         schema.visible = new fields.BooleanField();
+        schema.oneUse = new fields.BooleanField();
+        schema.used = new fields.BooleanField();
         return schema;
     }
 

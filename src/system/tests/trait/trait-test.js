@@ -21,12 +21,14 @@ export class TraitTest extends AttackTest
     {
         await super.runPreScripts();
         await this.actor.runScripts("preRollTraitTest", this);
+        await this.item.runScripts("preRollTraitTest", this);
     }
 
     async runPostScripts()
     {
         await super.runPostScripts();
         await this.actor.runScripts("rollTraitTest", this);
+        await this.item.runScripts("rollTraitTest", this);
     }
 
     get item() 

@@ -158,49 +158,44 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
      */
     _onPropertyEdit(event)
     {
-        let id = this._getId(event);
         let target = event.currentTarget.dataset.target;
-        let collection = event.currentTarget.dataset.collection || "items";
         let value = event.target.value;
 
-        let doc = this.actor;
-        if (id)
-        {
-            doc = this.actor[collection].get(id);
-        }
+        let document = this._getDocument(event) || this.actor;
 
         if (Number.isNumeric(value))
         {
             value = Number(value);
         }
-        else if (event.currentTarget.classList.contains("boolean")) // toggling a boolean
+
+
+        return document.update({[target] : value}).then(updated => 
         {
-            value = !getProperty(doc, target);
-        }
-
-
-        return doc.update({[target] : value});
+            if (this._isPatronDocument(updated))
+            {
+                game.impmal.log("Rerendering Sheet from Patron Update");
+                this.render(true);
+            }
+        });
     }
 
     _onPropertyToggle(event)
     {
-        let id = this._getId(event);
         let target = event.currentTarget.dataset.target;
-        let collection = event.currentTarget.dataset.collection || "items";
+        let document = this._getDocument(event) || this.actor;
         let value = event.target.value;
      
-        let doc = this.actor;
-        if (id)
+        value = !getProperty(document, target);
+     
+        return document.update({[target] : value}).then(updated => 
         {
-            doc = this.actor[collection].get(id);
-        }
-     
-        value = !getProperty(doc, target);
-     
-     
-        return doc.update({[target] : value});
+            if (this._isPatronDocument(updated))
+            {
+                game.impmal.log("Rerendering Sheet from Patron Update");
+                this.render(true);
+            }
+        });
     }
-     
 
     _onIncDec(ev)
     {
@@ -360,7 +355,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         ev.preventDefault();
         let parent = $(ev.currentTarget).parents(".list-item");
         let summary = parent.find(".summary");
-        let id = this._getId(ev);
+        let document = this._getDocument(ev);
     
         if (summary.hasClass("active")) // If summary active, remove
         {
@@ -370,12 +365,13 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         else 
         {
             // Add a div with the item summary below the item
-            let item = this.actor.items.get(id);
-            if (!item)
+            let summaryData = document?.system?.summaryData();
+            if (!summaryData)
             {
+                game.impmal.log(`No Summary Data found for Document ${document?.name}`, {force : true});
                 return;
             }
-            let summaryData = item.system.summaryData();
+
             let summaryHTML = await renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", summaryData);
 
             summary.hide();
