@@ -1,0 +1,14 @@
+.effect-buttons {
+    > button {
+        display: flex;
+        align-items: center;
+        margin: 3px 0px;
+        > * {
+            padding:1px;
+            margin: 0px 5px;
+        }
+        img {
+            height: 30px
+        }
+    }
+}

@@ -4,6 +4,7 @@ import { SkillTestDialog } from "../apps/test-dialog/skill-dialog";
 import { TestDialog } from "../apps/test-dialog/test-dialog";
 import { TraitTestDialog } from "../apps/test-dialog/trait-dialog";
 import { WeaponTestDialog } from "../apps/test-dialog/weapon-dialog";
+import { SocketHandlers } from "../system/socket-handlers";
 import { BaseTest } from "../system/tests/base/base-test";
 import { CharacteristicTest } from "../system/tests/characteristic/characteristic-test";
 import { PowerTest } from "../system/tests/power/power-test";
@@ -108,7 +109,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return test;
     }
 
-    async setupTestFromItem(uuid)
+    async setupTestFromItem(uuid, options)
     {
         let item = await fromUuid(uuid);
         if (!item)
@@ -119,44 +120,62 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         {
             return ui.notifications.error("ID " + uuid + " not found");
         }
-        let test; // Item data for the test
+        let itemTestData; // Item data for the test
         if (item.type == "trait")
         {
-            test = item.system.test;
+            itemTestData = item.system.test;
         }
         else if (item.type == "power")
         {
-            test = item.system.opposed;
+            itemTestData = item.system.opposed;
         }
+        return this.setupTestFromData(itemTestData, options);
+    }
 
+    /**
+     * Setup a test from common data structure
+     * 
+     * @param {object} [data={}] Test data
+     * @param {string} [data.characteristic] Characteristic key to test
+     * @param {string} [data.skill.key] Skill key to test
+     * @param {string} [data.skill.specialisation] Name of skill specialisation to test, if this is provided, skill.key must be provided as well
+     * @param {string} [data.difficulty] difficulty key to set the initial difficulty, default is "challenging"
+     * @returns 
+     */
+    async setupTestFromData(data, options)
+    {
         let testData = {};
-        let testOptions = {};
+        let testOptions;
         let testFunction;
-        if (test.skill.specialisation)
+
+        // Most specific - provide a specialisation name
+        if (data.skill.specialisation)
         {
-            testData = {name : test.skill.specialisation, key : test.skill.key};
-            testOptions = {fields: {characteristic: test.characteristic, difficulty : test.difficulty}};
+            testData = {name : data.skill.specialisation, key : data.skill.key};
+            testOptions = {fields: {characteristic: data.characteristic, difficulty : data.difficulty}};
             testFunction = this.setupSkillTest.bind(this);
         }
-        else if (test.skill.key)
+        // If no specialisation, roll a test simply using the general skill
+        else if (data.skill.key)
         {
-            testData = {key : test.skill.key};
-            testOptions = {fields: {characteristic: test.characteristic, difficulty : test.difficulty}};
+            testData = {key : data.skill.key};
+            testOptions = {fields: {characteristic: data.characteristic, difficulty : data.difficulty}};
             testFunction = this.setupSkillTest.bind(this);
         }
-        else if (test.characteristic)
+        // If no skill key, test with the provided characteristic
+        else if (data.characteristic)
         {
-            testData = test.characteristic;
-            testOptions = {fields: {difficulty : test.difficulty}};
+            testData = data.characteristic;
+            testOptions = {fields: {difficulty : data.difficulty}};
             testFunction = this.setupCharacteristicTest.bind(this);
         }
-        else
+        else // Not enough information to do a test if no skill or characteristic provided
         {
             return ui.notifications.error("Item does not provide sufficient data to perform a Test. It must specify at least a Skill or Characteristic");
         }
-
-        return testFunction(testData, testOptions);
+        return testFunction(testData, mergeObject(testOptions, options));
     }
+
 
     async applyDamage(value, {ignoreAP=false, location="roll", message=false, test}={})
     {
@@ -220,12 +239,40 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained});
         return {
             text,
+            woundsGained,
             message : message ? ChatMessage.create({content : (text + crit ? crit : "")}) : null,
             reductions,
             crit,
             excess,
             location : locationKey
         };
+    }
+
+    // Handles applying effects to this actor, ensuring that the owner is the one to do so
+    // This allows the owner of the document to roll tests and execute scripts, instead of the applying user
+    // e.g. the players can actually test to avoid an effect, instead of the GM doing it
+    async applyEffect(effectUuids, messageId)
+    {
+        let owningUser = game.impmal.utility.getActiveDocumentOwner(this);
+
+        if (typeof effectUuids == "string")
+        {
+            effectUuids = [effectUuids];
+        }
+
+        if (owningUser?.id == game.user.id)
+        {
+            for (let uuid of effectUuids)
+            {
+                let effect = fromUuidSync(uuid);
+                let message = game.messages.get(messageId);
+                await ActiveEffect.create(effect.convertToApplied(), {parent: this, test : message?.test});
+            }
+        }   
+        else 
+        {
+            SocketHandlers.executeOnOwner(this, "applyEffect", {effectUuids, actorUuid : this.uuid, messageId});
+        }
     }
 
     /**

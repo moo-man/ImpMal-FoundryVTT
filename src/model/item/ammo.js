@@ -29,4 +29,15 @@ export class AmmoModel extends PhysicalItemModel
         return data;
     }
 
+    allowCreation()
+    {
+        let allowed = super.allowCreation(this.parent);
+        
+        if (allowed && this.parent.actor && this.custom)
+        {
+            ui.notifications.error("Custom ammo must be applied to another non-custom ammo type");
+            allowed = false; 
+        }
+        return allowed;
+    }
 }

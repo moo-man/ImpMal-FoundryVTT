@@ -17,7 +17,7 @@ export default class ImpMalScript
         {
             let scriptFunction =this.async ? Object.getPrototypeOf(async function () { }).constructor : Function;
             game.impmal.log("Running Script > " + this.label);
-            return (new scriptFunction("args", this.script)).bind(this.context)(args);
+            return (new scriptFunction("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + this.script)).bind(this.context)(args);
         }
         catch(e)
         {
@@ -37,7 +37,8 @@ export default class ImpMalScript
         {
             try 
             {
-                return new Function("args", this.options.dialog?.hideScript).bind(this.context)(args);
+                game.impmal.log("Running Script > " + this.label);
+                return new Function("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + this.options.dialog?.hideScript).bind(this.context)(args);
             }
             catch(e)
             {
@@ -58,7 +59,8 @@ export default class ImpMalScript
         {
             try 
             {
-                return new Function("args", this.options.dialog?.activateScript).bind(this.context)(args);
+                game.impmal.log("Running Script > " + this.label);
+                return new Function("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + this.options.dialog?.activateScript).bind(this.context)(args);
             }
             catch(e)
             {
@@ -66,6 +68,15 @@ export default class ImpMalScript
                 return false; // Default to not activated if error
             }
         }
+    }
+
+    scriptMessage(content)
+    {
+        ChatMessage.create({
+            content,
+            speaker : {alias : this.context.actor?.name || this.context?.item.name},
+            flavor : this.context.effect.name || this.context.item.name || ""
+        });
     }
 
     get actor() 

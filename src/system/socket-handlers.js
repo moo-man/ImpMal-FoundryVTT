@@ -58,6 +58,15 @@ export class SocketHandlers
             });
         }
     }
+    
+    static applyEffect({effectUuids, actorUuid, messageId}, userId)
+    {
+        if (game.user.id == userId)
+        {
+            fromUuidSync(actorUuid)?.applyEffect(effectUuids, messageId);
+        }  
+    }
+
 
     /**
      * Not used by sockets directly, but is called when a socket handler should be executed by
@@ -71,26 +80,9 @@ export class SocketHandlers
      */
     static executeOnOwner(document, type, payload)
     {
-        let ownerUserId = game.users.find(u => u.active && u.character?.id == document.id)?.id;
-
-        if (!ownerUserId) // If no owner found, assign to GM (important if this user isn't a GM)
-        {
-            ownerUserId = game.users.find(u => u.active && u.isGM)?.id;
-        }
-
-        if (!ownerUserId)
-        {
-            return ui.notifications.error(game.i18n.localize("IMPMAL.NoOWnerOrGMFound"));
-        }
-                                            
-        if (ownerUserId == game.user.id)
-        {
-            this[type](payload, ownerUserId);
-        }
-        else // If userID isn't self,  
-        {
-            SocketHandlers.call(type, payload, ownerUserId);
-        }
+        let ownerUser = game.impmal.utility.getActiveDocumentOwner(document);
+        ui.notifications.notify(game.i18n.format("IMPMAL.SendingSocketRequest", {name : ownerUser.name}));
+        SocketHandlers.call(type, payload, ownerUser.id);
     }
 
 }

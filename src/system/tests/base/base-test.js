@@ -136,6 +136,10 @@ export class BaseTest
             this.actor.runScripts("applyDamage", data); // Don't think this is very useful
             this.item?.runScripts?.("applyDamage", data);
             opposed.actor.runScripts("takeDamage", data);
+            if (data.woundsGained > 0 && this.item?.damageEffects.length)
+            {
+                opposed.actor.applyEffect(this.item?.damageEffects.map(i => i.uuid), this.message.id);
+            }
             this.context.setApplied(targetId, data);
             this.roll();
         });
@@ -194,6 +198,7 @@ export class BaseTest
         if (this.item instanceof Item)
         {
             this.itemSummary = await renderTemplate(this.itemSummaryTemplate, mergeObject(this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
+            this.effectButtons = await renderTemplate("systems/impmal/templates/chat/effect-buttons.hbs", {effects : this.item.targetEffects});
         }
         if (this.testDetailsTemplate)
         {
@@ -385,6 +390,29 @@ export class BaseTest
             {
                 test.applyDamageTo(targetId);
             }
+        });
+
+        html.on("click", ".apply-effect", async ev => 
+        {
+            let el = $(ev.currentTarget);
+            let message = game.messages.get(el.parents(".message").attr("data-message-id"));
+            let test = message.test;
+
+            // If user has active targets, use those, otherwise, use test's targets, if there aren't any, use test's own actor
+            let targetActors = game.user.targets.size > 0 
+                ? Array.from(game.user.targets).map(i => i.actor) 
+                : test.context.targets.map(i => i.actor);
+
+            if (targetActors.length == 0)
+            {
+                targetActors = [test.actor];
+            }
+
+            for(let actor of targetActors)
+            {
+                actor.applyEffect(ev.currentTarget.dataset.uuid, message.id);                
+            }
+            
         });
 
         html.on("click", ".roll", ev => 

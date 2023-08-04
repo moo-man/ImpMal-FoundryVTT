@@ -38,24 +38,55 @@ export class TraitListModel extends ListModel
         }
     }
 
-    add(traits, {replace=false}={})
+    /**
+     * 
+     * 
+     * @param {String} trait Trait Key
+     * @param {Object} modify Whether to modify the data directly or return the modification to update   
+     * @returns 
+     */
+    add(trait, {modify=false}={})
     {
 
-        if ((traits instanceof Array) == false)
+        if (modify)
         {
-            traits = [traits];
-        }
 
-        // Don't add multiples
-        traits = traits.filter(i => i.key && !this.has(key));
-
-        if (replace)
-        {
-            return traits;
+            let existing = this.has(trait);
+            if (existing)
+            {
+                if (existing.value)
+                {
+                    existing.value++;
+                }
+            }
+            else 
+            {
+                let newTrait = {key: trait};
+                if (game.impmal.config.traitHasValue[trait])
+                {
+                    newTrait.value = 1;
+                }
+                this.list.push(newTrait);
+            }
         }
         else 
         {
-            return super.add(trait);
+            let list = foundry.utils.deepClone(this.list);
+            let existing = list.find(i => i.key == trait);
+            if (existing && existing.value)
+            {
+                existing.value++;
+            }
+            else if (!existing)
+            {
+                let newTrait = {key: trait};
+                if (game.impmal.config.traitHasValue[trait])
+                {
+                    newTrait.value = 1;
+                }
+                list.push(newTrait);
+            }
+            return list;
         }
     }
 
@@ -112,7 +143,8 @@ export class TraitListModel extends ListModel
             .map(i => 
             {
                 let display = game.impmal.config.weaponArmourTraits[i.key] || game.impmal.config.itemTraits[i.key];
-                if (i.value) {
+                if (i.value) 
+                {
                     display += ` (${i.value})`;
                 }
                 return `<a data-key=${i.key} data-value=${i.value}>${display}</a>`;

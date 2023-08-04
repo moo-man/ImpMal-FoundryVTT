@@ -5,7 +5,12 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     async _preCreate(data, options, user)
     {
-        await super._preCreate(data, options, user);
+        let allowed = await super._preCreate(data, options, user);
+
+        if (!allowed)
+        {
+            return allowed;
+        }
 
         // If this item was added from an effect, mark it so it can be deleted along with the effect
         if (options.fromEffect)
@@ -41,9 +46,12 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
     {
         await super._onCreate(data, options, user);
 
-        // If an owned item is created, run actor update scripts
         if (this.actor)
         {
+            // Some items can only exist once in an actor (like faction)
+            await this.actor.system.checkSingletonItems(this);
+            
+            // If an owned item is created, run actor update scripts
             await this.actor.runScripts("updateDocument");
         }
     }
@@ -80,6 +88,26 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
             !effect.disabled);
 
         return effects.reduce((prev, current) => prev.concat(current.scripts.filter(i => i.trigger == trigger)), []);
+    }
+
+    get damageEffects() 
+    {
+        
+        let effects = this.effects.contents.filter(effect => 
+            effect.applicationData.type == "damage" && 
+            !effect.disabled);
+
+        return effects;
+    }
+
+    get targetEffects() 
+    {
+        
+        let effects = this.effects.contents.filter(effect => 
+            effect.applicationData.type == "target" && 
+            !effect.disabled);
+
+        return effects;
     }
 
     async handleImmediateScripts()

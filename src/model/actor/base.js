@@ -31,6 +31,11 @@ export class BaseActorModel extends foundry.abstract.DataModel
         return preCreateData;
     }
 
+    allowCreation()
+    {
+        return true;
+    }
+
     initialize() 
     {
 
@@ -46,20 +51,24 @@ export class BaseActorModel extends foundry.abstract.DataModel
         return {};
     }
 
-    preCreateItem(item)
+    itemIsAllowed(item)
     {
         if (this.constructor.preventItemTypes.includes(item.type))
         {
             ui.notifications.error(game.i18n.localize("IMPMAL.ItemsNotAllowed"), {type : item.type});
             return false;
         }
+        else 
+        {
+            return true;
+        }
     }
     
-    onCreateItem(item)
+    checkSingletonItems(item)
     {
         if (this.constructor.singletonItemTypes.includes(item.type))
         {
-            item.actor.update({[`system.${item.type}`] : this[item.type].updateSingleton(item)});
+            return item.actor.update({[`system.${item.type}`] : this[item.type].updateSingleton(item)});
         }
     }
 

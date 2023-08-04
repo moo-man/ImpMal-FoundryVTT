@@ -1,0 +1,13 @@
+<div class="effect-buttons">
+    {{#each effects}}
+        <button type="button" class="apply-effect" data-uuid="{{this.uuid}}">
+            {{#if (eq this.applicationData.type "target")}}
+                <i class="fa-solid fa-crosshairs"></i>
+            {{else if (eq this.applicationData.type "zone")}}
+                <i class="fa-solid fa-border-outer"></i>
+            {{/if}}
+            <img src="{{this.img}}">
+            {{this.name}}
+        </button>
+    {{/each}}
+</div>

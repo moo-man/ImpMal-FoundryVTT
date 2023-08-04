@@ -64,13 +64,23 @@ export class TestDialog extends Application
 
     async getData() 
     {
-        this._hideScripts();
-        this._activateScripts();
-
         this.advCount = 0;
         this.disCount = 0;
+
+        
         // Reset values so they don't accumulate 
         mergeObject(this.fields, this.userEntry);
+
+        // For some reason cloning the scripts doesn't prevent isActive and isHidden from persisisting
+        // So for now, just reset them manually
+        this.data.scripts.forEach(script => 
+        {
+            script.isHidden = false;
+            script.isActive = false;
+        });
+        
+        this._hideScripts();
+        this._activateScripts();
         await this.computeScripts();
         await this.computeFields();
 
@@ -252,7 +262,7 @@ export class TestDialog extends Application
     _onModifierClicked(ev)
     {
         let index = Number(ev.currentTarget.dataset.index);
-        if (ev.currentTarget.classList.contains("active"))
+        if (!ev.currentTarget.classList.contains("active"))
         {
             // If modifier was unselected by the user (originally activated via its script)
             // it can be assumed that the script will still be activated by its script

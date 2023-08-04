@@ -31,29 +31,29 @@
                 <p class="notes">{{localize "IMPMAL.EffectApplicationOptionDocumentTypeHint"}}</p>
             </div>
         {{/if}}
-        {{#if (hasProperty this "applicationData.options.test")}}
+        {{#if (hasProperty this "applicationData.options.avoidTest")}}
             <div class="form-group">
-                <label>{{localize "IMPMAL.EffectApplicationOptionTest"}}
-                    {{#if (eq applicationData.options.test.value "script")}}<a class="script-config"
-                            data-path="flags.impmal.applicationData.options.test.script"><i
+                <label>{{localize "IMPMAL.EffectApplicationOptionAvoidTest"}}
+                    {{#if (eq applicationData.options.avoidTest.value "script")}}<a class="script-config"
+                            data-path="flags.impmal.applicationData.options.avoidTest.script"><i
                                 class="fa-solid fa-gear-complex-code"></i></a>{{/if}}</label>
-                <select name="flags.impmal.applicationData.options.test.value">
-                    {{#select applicationData.options.test.value}}
-                        <option value="none">{{localize "IMPMAL.EffectApplicationOptionTestNone"}}</option>
-                        <option value="item">{{localize "IMPMAL.EffectApplicationOptionTestItem"}}</option>
-                        <option value="script">{{localize "IMPMAL.EffectApplicationOptionTestScript"}}</option>
-                        <option value="custom">{{localize "IMPMAL.EffectApplicationOptionTestCustom"}}</option>
+                <select name="flags.impmal.applicationData.options.avoidTest.value">
+                    {{#select applicationData.options.avoidTest.value}}
+                        <option value="none">{{localize "IMPMAL.EffectApplicationOptionAvoidTestNone"}}</option>
+                        <option value="item">{{localize "IMPMAL.EffectApplicationOptionAvoidTestItem"}}</option>
+                        <option value="script">{{localize "IMPMAL.EffectApplicationOptionAvoidTestScript"}}</option>
+                        <option value="custom">{{localize "IMPMAL.EffectApplicationOptionAvoidTestCustom"}}</option>
                     {{/select}}
                 </select>
-                <p class="notes">{{localize "IMPMAL.EffectApplicationOptionTestHint"}}</p>
+                <p class="notes">{{localize "IMPMAL.EffectApplicationOptionAvoidTestHint"}}</p>
             </div>
 
-            {{#if (eq applicationData.options.test.value "custom")}}
+            {{#if (eq applicationData.options.avoidTest.value "custom")}}
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Difficulty"}}</label>
                     <div class="form-fields">
-                        <select name="flags.impmal.applicationData.options.test.difficulty">
-                            {{#select flags.impmal.applicationData.options.test.difficulty}}
+                        <select name="flags.impmal.applicationData.options.avoidTest.difficulty">
+                            {{#select flags.impmal.applicationData.options.avoidTest.difficulty}}
                                 {{#each (config "difficulties")}}
                                     <option value="{{@key}}">{{this.name}} ({{numberFormat this.modifier
                                         sign=true}})
@@ -68,8 +68,8 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Characteristic"}}</label>
                     <div class="form-fields">
-                        <select name="flags.impmal.applicationData.options.test.characteristic">
-                            {{#select flags.impmal.applicationData.options.test.characteristic}}
+                        <select name="flags.impmal.applicationData.options.avoidTest.characteristic">
+                            {{#select flags.impmal.applicationData.options.avoidTest.characteristic}}
                                 <option value=""></option>
                                 {{#each (config "characteristics")}}
                                     <option value="{{@key}}">{{this}}</option>
@@ -82,16 +82,16 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Skill"}}</label>
                     <div class="form-fields">
-                        <select name="flags.impmal.applicationData.options.test.skill.key">
-                            {{#select flags.impmal.applicationData.options.test.skill.key}}
+                        <select name="flags.impmal.applicationData.options.avoidTest.skill.key">
+                            {{#select flags.impmal.applicationData.options.avoidTest.skill.key}}
                                 <option value=""></option>
                                 {{#each (config "skills")}}
                                     <option value="{{@key}}">{{this}}</option>
                                 {{/each}}
                             {{/select}}
                         </select>
-                        <input type="text" name="flags.impmal.applicationData.options.test.skill.specialisation"
-                            value="{{flags.impmal.applicationData.options.test.skill.specialisation}}"
+                        <input type="text" name="flags.impmal.applicationData.options.avoidTest.skill.specialisation"
+                            value="{{flags.impmal.applicationData.options.avoidTest.skill.specialisation}}"
                             placeholder="{{localize 'IMPMAL.Specialisation'}}">
                     </div>
                 </div>
@@ -100,7 +100,7 @@
         {{#if (hasProperty this "applicationData.options.enableConditionScript")}}
             <div class="form-group">
                 <label>{{localize "IMPMAL.EffectApplicationOptionEnableScript"}}<a class="script-config"
-                        data-path="flags.impmal.applicationData.enableConditionScript"><i
+                        data-path="flags.impmal.applicationData.options.enableConditionScript"><i
                             class="fa-solid fa-gear-complex-code"></i></a></label>
                 <p class="notes">{{localize "IMPMAL.EffectApplicationEnableScriptHint"}}</p>
             </div>

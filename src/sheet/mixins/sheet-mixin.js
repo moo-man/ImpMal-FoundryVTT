@@ -253,7 +253,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
     async _onEffectCreate(ev) 
     {
         let type = ev.currentTarget.dataset.category;
-        let effectData = { label: game.i18n.localize("IMPMAL.NewEffect"), icon: "icons/svg/aura.svg" };
+        let effectData = { name: game.i18n.localize("IMPMAL.NewEffect"), icon: "icons/svg/aura.svg" };
         if (type == "temporary") 
         {
             effectData["duration.rounds"] = 1;
@@ -262,12 +262,23 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         {
             effectData.disabled = true;
         }
+
+        // If Item effect, use item name for effect name
+        if (this.object.documentName == "Item")
+        {
+            effectData.name = this.object.name;
+        }
         this.object.createEmbeddedDocuments("ActiveEffect", [effectData]).then(effects => effects[0].sheet.render(true));
     }
 
     _onListToggle(event) 
     {
         let document = this._getDocument(event);
+        // Alert the user when trying to change disabled/enabled when it's managed by a script
+        if (document.conditionScript)
+        {
+            return ui.notifications.notify(game.i18n.localize("IMPMAL.EffectConditionScriptCannotChange"));
+        }
         document?.update({ disabled: !document.disabled }).then(updated => 
         {
             // If you disable a patron effect, the update won't cause a rerender because it's an effect from another document, so rerender and reprepare manually

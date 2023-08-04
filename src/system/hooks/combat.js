@@ -18,7 +18,7 @@ export default function()
 
         // Call end turn scripts from old turn
         let oldTurn = combat.turns[combat.turn];
-        oldTurn.actor?.runScripts("endTurn", combat);
+        oldTurn?.actor?.runScripts("endTurn", combat);
 
         // Call start turn scripts for new turn
         let newTurn = combat.turns[data.turn];

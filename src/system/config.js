@@ -393,6 +393,18 @@ const IMPMAL = {
         targeter : "IMPMAL.TriggerOptionTargeter"
     },
 
+    asyncTriggers: { 
+        "immediate": true, 
+        "preRollTest": true, 
+        "preRollSkillTest": true, 
+        "preRollWeaponTest": true, 
+        "preRollTraitTest": true, 
+        "preRollPowerTest": true, 
+        "updateDocument": true, 
+        "deleteEffect": true, 
+        "dialog": true 
+    },
+
 
     conditions : [
         {

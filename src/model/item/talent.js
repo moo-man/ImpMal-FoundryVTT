@@ -1,3 +1,4 @@
+import ImpMalScript from "../../system/script";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
@@ -25,5 +26,21 @@ export class TalentModel extends StandardItemModel
         let data = super.summaryData();
         data.details.item.requirement = `<strong>${game.i18n.localize("IMPMAL.Requirement")}</strong>: ${this.requirement.value}`;
         return data;
+    }
+
+    allowCreation()
+    {
+        let allowed = super.allowCreation(this.parent);
+        
+        if (allowed && this.parent.actor && this.requirement.script)
+        {
+            let script = new ImpMalScript({string : this.requirement.script, label : "Talent Requirement"}, ImpMalScript.createContext(this.parent));
+            allowed = script.execute() ? true : false; // Make sure it's boolified
+            if (!allowed)
+            {
+                ui.notifications.error("Talent Requirement not met");
+            }
+        }
+        return allowed;
     }
 }

@@ -19,6 +19,18 @@ export class BaseItemModel extends foundry.abstract.DataModel
         return {};
     }
 
+    allowCreation()
+    {
+        if (this.parent.actor)
+        {
+            return this.parent.actor.system.itemIsAllowed(this.parent);
+        }
+        else 
+        {
+            return true;
+        }
+    }
+
     preCreateData()//data) 
     {
         return {};

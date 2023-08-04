@@ -74,7 +74,7 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         let data = super.getData();
         data.system = data.item.toObject(true).system; // Use source data to avoid ammo/mods from showing up in the sheet
         data.isPhysical = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical")).includes(data.item.type);
-        data.conditions = this.formatConditions(data).filter(i => data.item.system.allowedConditions.includes(i.id));
+        data.conditions = this.formatConditions(data);
         data.enriched = foundry.utils.expandObject({
             "notes.player" : await TextEditor.enrichHTML(data.item.system.notes?.player, {async: true}),
             "notes.gm" : await TextEditor.enrichHTML(data.item.system.notes?.gm, {async: true}),

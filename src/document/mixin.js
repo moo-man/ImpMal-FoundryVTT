@@ -6,7 +6,13 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     async _preCreate(data, options, user) 
     {
         await super._preCreate(data, options, user);
+        let allow = this.system.allowCreation();
+        if (!allow)
+        {
+            return false;
+        }
         await this.updateSource(this.system.preCreateData(data, options));
+        return allow;
     }
 
     async _preUpdate(data, options, user) 
@@ -63,7 +69,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
             const cls = getDocumentClass("ActiveEffect");
             if (create)
             {
-                return cls.create(createData, {parent: this});
+                return cls.create(createData, {parent: this, condition: true}); // condition flag tells the creation flow that this has gone through addCondition
             }
             else 
             {
