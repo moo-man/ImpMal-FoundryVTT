@@ -507,6 +507,24 @@ export class BaseTest
                     message.test.addSL(1, true);
                 }
             },
+            {
+                name: game.i18n.localize("IMPMAL.AddTargets"),
+                icon: '<i class="fa-solid fa-crosshairs"></i>',
+                condition: () => game.user.targets.size > 0,
+                callback: li =>
+                {
+                    let message = game.messages.get(li.attr("data-message-id"));
+                    let test = message.test;
+
+                    let targetedSpeakers = Array.from(game.user.targets).map(i => ChatMessage.getSpeaker({token : i.document}));
+
+                    // Filter out tokens already targeted
+                    let newSpeakers = targetedSpeakers.filter(speaker => !test.context.targetSpeakers.find(existing => existing.token == speaker.token));
+
+                    test.context.targetSpeakers = test.context.targetSpeakers.concat(newSpeakers);
+                    test.roll();
+                }
+            },
         );
     }
 }
