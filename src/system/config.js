@@ -352,6 +352,14 @@ const IMPMAL = {
         prepareBaseData : "IMPMAL.TriggerPrepareBaseData",
         prePrepareDerivedData : "IMPMAL.TriggerPrePrepareDerivedData",
         postPrepareDerivedData : "IMPMAL.TriggerPostPrepareDerivedData",
+
+        computeCharacteristics : "Compute Characteristics",
+        computeEncumbrance : "Compute Encumbrance",
+        computeCombat : "Compute Combat",
+        computeWarpState : "Compute Warp State",
+        prepareOwnedItems : "Prepare Owned Items",
+        prepareOwnedData : "Prepare Owned Data",
+
         dialog : "IMPMAL.TriggerDialog",
 
         preRollTest : "IMPMAL.TriggerPreRollTest",
@@ -360,11 +368,11 @@ const IMPMAL = {
         preRollTraitTest : "IMPMAL.TriggerPreRollTraitTest",
         preRollPowerTest : "IMPMAL.TriggerPreRollPowerTest",
 
-        rollTest : "IMPMAL.TriggeRollTest",
-        rollSkillTest : "IMPMAL.TriggeRollSkillTest",
-        rollWeaponTest : "IMPMAL.TriggeRollWeaponTest",
-        rollTraitTest : "IMPMAL.TriggeRollTraitTest",
-        rollPowerTest : "IMPMAL.TriggeRollPowerTest",
+        rollTest : "IMPMAL.TriggerRollTest",
+        rollSkillTest : "IMPMAL.TriggerRollSkillTest",
+        rollWeaponTest : "IMPMAL.TriggerRollWeaponTest",
+        rollTraitTest : "IMPMAL.TriggerRollTraitTest",
+        rollPowerTest : "IMPMAL.TriggerRollPowerTest",
 
         // preAttackerEvaluateOpposed : "IMPMAL.TriggerPreAttackerEvaluateOpposed",
         // preAttackerComputeOpposedDamage : "IMPMAL.TriggerPreAttackerComputeOpposedDamage",
@@ -400,6 +408,11 @@ const IMPMAL = {
         "preRollWeaponTest": true, 
         "preRollTraitTest": true, 
         "preRollPowerTest": true, 
+        "rollTest": true, 
+        "rollSkillTest": true, 
+        "rollWeaponTest": true, 
+        "rollTraitTest": true, 
+        "rollPowerTest": true, 
         "updateDocument": true, 
         "deleteEffect": true, 
         "dialog": true 
@@ -616,63 +629,76 @@ const IMPMAL = {
         barrier : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.Barrier",
-            id : "barrier"
+            id : "barrier",
+            statuses : ["barrier"]
         },
         partialCover : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.PartialCover",
-            id : "partialCover"
+            id : "partialCover",
+            statuses : ["partialCover"]
         },
         totalCover : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.TotalCover",
-            id : "totalCover"
+            id : "totalCover",
+            statuses : ["totalCover"]
         },
         difficultTerrain : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.DifficultTerrain",
-            id : "difficultTerrain"
+            id : "difficultTerrain",
+            statuses : ["difficultTerrain"]
         },
         lightlyObscured : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.LightlyObscured",
-            id : "lightlyObscured"
+            id : "lightlyObscured",
+            statuses : ["lightlyObscured"]
         },
         heavilyObscured : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.HeavilyObscured",
-            id : "heavilyObscured"
+            id : "heavilyObscured",
+            statuses : ["heavilyObscured"]
         },
         minorHazard : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.MinorHazard",
-            id : "minorHazard"
+            id : "minorHazard",
+            statuses : ["minorHazard"]
         },
         majorHazard : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.MajorHazard",
-            id : "majorHazard"
+            id : "majorHazard",
+            statuses : ["majorHazard"]
         },
         deadlyHazard : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.DeadlyHazard",
-            id : "deadlyHazard"
+            id : "deadlyHazard",
+            statuses : ["deadlyHazard"]
         },
         poorlyLit : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.PoorlyLit",
-            id : "poorlyLit"
+            id : "poorlyLit",
+            statuses : ["poorlyLit"]
         },
         dark : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.Dark",
-            id : "dark"
+            id : "dark",
+            statuses : ["dark"]
         },
         warpTouched : {
             icon: "icons/svg/aura.svg",
             label : "IMPMAL.WarpTouched",
-            id : "warpTouched"
+            id : "warpTouched",
+            statuses : ["warpTouched"]
         },
+    },
     }
 };
 

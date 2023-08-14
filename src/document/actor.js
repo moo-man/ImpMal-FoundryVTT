@@ -11,12 +11,15 @@ import { PowerTest } from "../system/tests/power/power-test";
 import { SkillTest } from "../system/tests/skill/skill-test";
 import { TraitTest } from "../system/tests/trait/trait-test";
 import { WeaponTest } from "../system/tests/weapon/weapon-test";
+import ZoneHelpers from "../system/zone-helpers";
+import { ImpMalEffect } from "./effect";
 import ImpMalDocumentMixin from "./mixin";
 
 export class ImpMalActor extends ImpMalDocumentMixin(Actor)
 {
     prepareBaseData()
     {
+        this.propagateDataModels(this.system, "runScripts", this.runScripts.bind(this));
         this.system.computeBase();
         this.itemCategories = this.itemTypes;
         this.runScripts("prepareBaseData", this);
@@ -27,6 +30,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         this.runScripts("prePrepareDerivedData", this);
         this.system.computeDerived(mergeObject(this.itemCategories, {all : this.items}, {inplace : false}));
         this.items.forEach(i => i.prepareOwnedData());
+        this.runScripts("prepareOwnedItems", this);
         this.runScripts("postPrepareDerivedData", this);
     }
 
@@ -266,7 +270,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             {
                 let effect = fromUuidSync(uuid);
                 let message = game.messages.get(messageId);
-                await ActiveEffect.create(effect.convertToApplied(), {parent: this, test : message?.test});
+                await ActiveEffect.create(effect.convertToApplied(), {parent: this, message : message?.id});
             }
         }   
         else 
@@ -293,11 +297,55 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return scripts;
     }
 
-    *allApplicableEffects()
+    /**
+     * Some effects applied to an actor are actually intended for items, but to make other things convenient
+     * (like duration handling modules, or showing the effect icon on the token), they are given to an actor
+     * 
+     * These should supply their scripts to an Item as if they were 
+     * 
+     * @param {*} item 
+     */
+    getScriptsApplyingToItem(item)
+    {
+        // Get effects that should be applied to item argument
+        let effects = this.effects.contents.filter(e => 
+        {
+            let targeted = e.getFlag("impmal", "itemTargets");
+            if (targeted)
+            {
+                // If no items specified, apply to all items
+                if (targeted.length == 0)
+                {
+                    return true;
+                }
+                else 
+                {
+                    return targeted.includes(item.id);
+                }
+            }
+            // Create temporary effects that have the item as the parent, so the script context is correct
+        }).map(i => new ImpMalEffect(i.toObject(), {parent : item}));
+
+        return effects.reduce((prev, current) => prev.concat(current.scripts), []);
+    }
+
+    /**
+     * 
+     * @param {Boolean} includeItemEffects Include Effects that are intended to be applied to Items, see getSCriptsApplyingToItem, this does NOT mean effects that come from items
+     */
+    *allApplicableEffects(includeItemEffects=false)
     {
         for(let effect of super.allApplicableEffects())
         {
-            yield effect;
+            if (includeItemEffects)
+            {
+                yield effect;
+            }
+            else if (effect.applicationData.options.documentType != "Item")
+            {
+                
+                yield effect;
+            }
         }
 
         // Add specified patron effects to character effects
@@ -311,6 +359,44 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
                 }
             }
         }
+
+        for(let effect of this.currentZoneEffects)
+        {
+            yield effect;
+        }
+    }
+
+    /**
+     * Overriden from foundry to pass true to allApplicableEffects
+     */
+    get temporaryEffects() 
+    {
+        const effects = [];
+        for ( const effect of this.allApplicableEffects(true) ) 
+        {
+            if ( effect.active && effect.isTemporary ) {effects.push(effect);}
+        }
+        return effects;
+    }
+
+
+    get currentZoneEffects()
+    {
+        let token = this.getActiveTokens()[0];
+        let effects = [];
+        if (!token)
+        {
+            return effects;
+        }
+        
+        for (let drawing of token.scene.drawings.contents)
+        {
+            if (ZoneHelpers.isInDrawing(token.center, drawing.object))
+            {
+                effects = effects.concat(ZoneHelpers.zoneEffects(drawing.object));
+            }
+        }
+        return effects.map(i => new ImpMalEffect(i, {parent: this}));
     }
 
     get defendingAgainst()

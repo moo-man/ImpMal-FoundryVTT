@@ -50,7 +50,7 @@ export default class DocumentChoice extends FormApplication
         super.activateListeners(html);
         html.find(".directory-item").on("click", ev => 
         {
-            if (!ev.currentTarget.classList.contains("selected") && this.selectedCount() >= this.number)
+            if (!ev.currentTarget.classList.contains("selected") && (this.selectedCount() >= this.number))
             {
                 return;
             }

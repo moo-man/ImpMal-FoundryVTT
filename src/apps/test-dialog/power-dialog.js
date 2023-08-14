@@ -17,6 +17,10 @@ export class PowerTestDialog extends SkillTestDialog
     
     }
 
+    get power() 
+    {
+        return this.actor.items.get(this.data.powerId);
+    } 
 
     /**
      * 

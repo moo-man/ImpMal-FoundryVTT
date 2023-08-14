@@ -126,4 +126,25 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
 
         return promises;
     }
+
+
+    // Assigns a property to all datamodels are their embedded models
+    propagateDataModels(model, name, value)
+    {
+        if (model instanceof foundry.abstract.DataModel)
+        {
+            Object.defineProperty(model, name, {
+                value, 
+                enumerable : false
+            });
+        }
+
+        for(let property in model)
+        {
+            if (model[property] instanceof foundry.abstract.DataModel)
+            {
+                this.propagateDataModels(model[property], name, value);
+            }
+        }
+    }
 };

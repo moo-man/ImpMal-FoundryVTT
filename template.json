@@ -170,6 +170,7 @@
       "combat": {
         "combat": {
           "size": "medium",
+          "armourModifier" : 0,
           "speed": {
             "land" : {
               "value" : "normal",

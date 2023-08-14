@@ -75,11 +75,15 @@ export class StandardActorModel extends BaseActorModel
         // Recompute bonuses as active effects may have changed it
         this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
+        this.runScripts("computeCharacteristics", this);
         this.skills.computeTotals(this.characteristics);
         this.skills.findSpecialisations(items.specialisation);
         this.computeEncumbrance(items);
+        this.runScripts("computeEncumbrance", this);
         this.combat.computeCombat(this.characteristics, items);
+        this.runScripts("computeCombat", this);
         this.computeWarpState();
+        this.runScripts("computeWarpState", this);
     }
 
     computeEncumbrance(items) 

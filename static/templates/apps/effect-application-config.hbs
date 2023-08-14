@@ -105,15 +105,20 @@
                 <p class="notes">{{localize "IMPMAL.EffectApplicationEnableScriptHint"}}</p>
             </div>
         {{/if}}
-        {{#if (hasProperty this "applicationData.options.filters")}}
+        {{#if (hasProperty this "applicationData.options.filter")}}
             <div class="form-group">
-                <label>{{localize "IMPMAL.EffectApplicationOptionFilters"}}</label>
-                <p class="notes">{{localize "IMPMAL.EffectApplicationOptionFiltersHint"}}</p>
+                <label>{{localize "IMPMAL.EffectApplicationOptionFilter"}}
+                    <a class="script-config" data-path="flags.impmal.applicationData.options.filter">
+                        <i class="fa-solid fa-gear-complex-code"></i>
+                    </a>
+                </label>
+                <p class="notes">{{localize "IMPMAL.EffectApplicationOptionFilterHint"}}</p>
             </div>
         {{/if}}
         {{#if (hasProperty this "applicationData.options.prompt")}}
             <div class="form-group">
                 <label>{{localize "IMPMAL.EffectApplicationOptionPrompt"}}</label>
+                <input type="checkbox" name="flags.impmal.applicationData.options.prompt" {{checked flags.impmal.applicationData.options.prompt}}>
                 <p class="notes">{{{localize "IMPMAL.EffectApplicationOptionPromptHint"}}}</p>
             </div>
         {{/if}}

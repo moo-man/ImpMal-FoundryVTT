@@ -56,8 +56,6 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         }
     }
 
-
-
     prepareBaseData() 
     {
         this.system.computeBase();
@@ -78,6 +76,8 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
             throw new Error("Cannot compute owned derived data without parent actor", this);
         }
         this.system.computeOwnerDerived(this.actor);
+        this.runScripts("prepareOwnedData");
+
     }
 
     getScripts(trigger)
@@ -87,7 +87,11 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
             effect.applicationData.options.documentType == "Item" && 
             !effect.disabled);
 
-        return effects.reduce((prev, current) => prev.concat(current.scripts.filter(i => i.trigger == trigger)), []);
+        let fromActor = this.actor?.getScriptsApplyingToItem(this) || [];
+
+        return effects.reduce((prev, current) => prev.concat(current.scripts), []).concat(fromActor).filter(i => i.trigger == trigger);
+    }
+
     }
 
     get damageEffects() 
@@ -110,6 +114,8 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         return effects;
     }
 
+    // This function runs the immediate scripts an Item contains in its effects
+    // when the Item is added to an Actor. 
     async handleImmediateScripts()
     {
         let effects = this.effects.contents.filter(effect => 

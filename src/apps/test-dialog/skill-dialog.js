@@ -5,6 +5,12 @@ export class SkillTestDialog extends CharacteristicTestDialog
 {
     fieldsTemplate = `systems/impmal/templates/apps/test-dialog/skill-fields.hbs`;
 
+
+    get skillItem() 
+    {
+        return this.actor.items.get(this.data.skillItemId);
+    }
+
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"

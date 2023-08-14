@@ -17,6 +17,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             })
         });
         schema.hitLocations = new fields.ObjectField();
+        schema.armourModifier = new fields.NumberField({initial : 0});
         schema.wounds = new fields.SchemaField({
             value : new fields.NumberField({initial : 0}),
             max : new fields.NumberField(),
@@ -84,6 +85,11 @@ export class StandardCombatModel extends foundry.abstract.DataModel
 
     computeArmour(items)
     {
+        for (let loc in this.hitLocations)
+        {
+            this.hitLocations[loc].armour += this.armourModifier; // TODO: Add aCtive effect to source list (so it's displayed in the hit loc section)
+        }
+        
         let protectionItems = items.protection.filter(i => i.system.isEquipped);
         for(let item of protectionItems)
         {

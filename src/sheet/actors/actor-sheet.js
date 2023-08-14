@@ -65,7 +65,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 
     organizeEffects(data)
     {
-        let sorted = Array.from(data.actor.allApplicableEffects()).sort((a, b) => a.sort - b.sort);
+        let sorted = Array.from(data.actor.allApplicableEffects(true)).sort((a, b) => a.sort - b.sort);
         let effects = {
             active: sorted.filter(e => e.isTemporary && !e.disabled),
             passive : sorted.filter(e => !e.isTemporary && !e.disabled),

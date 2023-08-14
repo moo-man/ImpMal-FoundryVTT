@@ -1,4 +1,4 @@
-import DocumentChoice from "../../apps/item-dialog";
+import DocumentChoice from "../../apps/document-choice";
 import { ItemManagementForm } from "../../apps/item-management";
 import ImpMalActorSheet from "./actor-sheet";
 

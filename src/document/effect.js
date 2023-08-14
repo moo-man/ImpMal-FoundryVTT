@@ -1,3 +1,4 @@
+import DocumentChoice from "../apps/document-choice";
 import ImpMalScript from "../system/script";
 
 export class ImpMalEffect extends ActiveEffect
@@ -6,6 +7,11 @@ export class ImpMalEffect extends ActiveEffect
     async _preCreate(data, options, user)
     {
         await super._preCreate(data, options, user);
+
+        // Take a copy of the test result that this effect comes from, if any
+        // We can't use simply take a reference to the message id and retrieve the test as
+        // creating a Test object before actors are ready (scripts can execute before that) throws errors
+        this.updateSource({"flags.impmal.sourceTestResult" : game.messages.get(options.message)?.test?.result});
 
         let preventCreation = false;
         preventCreation = await this._handleEffectAvoidance(data, options, user);
@@ -20,11 +26,14 @@ export class ImpMalEffect extends ActiveEffect
             return false;
         }
 
+        await this._handleItemApplication(data, options, user);
+
         return await this._handleImmediateScripts(data, options, user);
     }
 
     async _onDelete(options, user)
     {
+        await super._onDelete(options, user);
         await this.deleteCreatedItems();
         for(let script of this.scripts.filter(i => i.trigger == "deleteEffect"))
         {
@@ -144,6 +153,39 @@ export class ImpMalEffect extends ActiveEffect
             return true;
         }
     }
+
+    /**
+     * There is a need to support applying effects TO items, but I don't like the idea of actually
+     * adding the document to the item, as it would not work with duration handling modules and 
+     * would need a workaround to show the icon on a Token. Instead, when an Item type Active Effect
+     * is applied, keep it on the actor, but keep a reference to the item(s) being modified (if none, modify all)
+     * 
+     */
+    async _handleItemApplication()
+    {
+        let applicationData = this.applicationData;
+        if (applicationData.options.documentType == "Item" && this.parent.documentName == "Actor")
+        {
+            let items = [];
+            let filter = this.filterScript;
+
+            // If this effect specifies a filter, narrow down the items according to it
+            if (filter)
+            {
+                items = this.parent.items.contents.filter(i => filter.execute(i)); // Ids of items being affected. If empty, affect all
+            }
+
+            // If this effect specifies a prompt, create an item dialog prompt to select the items
+            if (applicationData.options.prompt)
+            {
+                items = await DocumentChoice.create(items, "unlimited");
+            }
+
+
+            this.updateSource({"flags.impmal.itemTargets" : items.map(i => i.id)});
+        }
+    }
+
     /**
      * Delete all items created by scripts in this effect
      */
@@ -194,7 +236,7 @@ export class ImpMalEffect extends ActiveEffect
     convertToApplied()
     {
         let effect = this.toObject();
-        effect.flags.impmal.applicationData.type == "document";
+        effect.flags.impmal.applicationData.type = "document";
         effect.origin = this.actor?.uuid;
         effect.statuses = [this.key || effect.name.slugify()]; // this.key is prioritized if it's a condition, we don't want ablaze-(minor) as the key, just ablaze
         return effect;
@@ -209,6 +251,23 @@ export class ImpMalEffect extends ActiveEffect
         return this._scripts;
     }
 
+    get filterScript()
+    {
+        if (this.applicationData.options.filter)
+        {
+            try 
+            {
+                return new ImpMalScript({string : this.applicationData.options.filter, label : `${this.name} Filter`}, ImpMalScript.createContext(this));
+            }
+            catch(e)
+            {
+                console.error("Error creating filter script: " + e);
+                return null;
+            }
+        }
+        else { return null; }
+    }
+
     get item()
     {
         if (this.parent.documentName == "Item")
@@ -219,6 +278,11 @@ export class ImpMalEffect extends ActiveEffect
         {
             return undefined;
         }
+    }
+
+    get originDocument() 
+    {
+        return fromUuidSync(this.origin);
     }
 
     get actor()
@@ -285,6 +349,12 @@ export class ImpMalEffect extends ActiveEffect
     {
         return this.getFlag("impmal", "computed");
     }
+
+    get sourceTestResult() 
+    {
+        return this.getFlag("impmal", "sourceTestResult");
+    }
+
 
     get applicationData() 
     {
@@ -357,7 +427,7 @@ export class ImpMalEffect extends ActiveEffect
                     }
                 },
                 enableConditionScript : "",
-                filters : "",
+                filter : "",
                 prompt : false,
                 consume : false,
 

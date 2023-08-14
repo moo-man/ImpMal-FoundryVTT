@@ -357,7 +357,15 @@ export class BaseTest
                 let test = this.getFlag("impmal", "test");
                 if (test)
                 {
-                    return new game.impmal.testClasses[test.class](test);
+                    try 
+                    {
+                        return new game.impmal.testClasses[test.class](test);
+                    }
+                    catch(e)
+                    {
+                        console.error("Could not construct Test object: " + e);
+                        return undefined;
+                    }
                 }
                 else 
                 {
