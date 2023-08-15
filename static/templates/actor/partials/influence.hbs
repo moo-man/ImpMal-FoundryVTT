@@ -5,7 +5,14 @@
         {{#if showNotes}}
             <div class="wide">{{localize "Notes/Contacts"}}</div>
         {{/if}}
-        <div class="list-controls single">
+        <div class="list-controls {{#unless isCharacter}}single{{/unless}}">
+            {{#if isCharacter}}
+                {{#if system.influence.usePatron}}
+                    <a class="property-toggle" data-tooltip="{{localize 'IMPMAL.UsePatronInfluence'}}" data-target="system.influence.usePatron"><i class="fas fa-handshake-angle"></i></a>
+                {{else}}
+                    <a class="property-toggle inactive" data-tooltip="{{localize 'IMPMAL.UsePatronInfluence'}}" data-target="system.influence.usePatron"><i class="fas fa-handshake-angle"></i></a>
+                {{/if}}
+            {{/if}}
             <a class="faction-create"><i class="fa-solid fa-plus"></i></a>
         </div>
     </header>
@@ -21,7 +28,7 @@
                     </div>
                     {{#if ../showNotes}}
                         <div class="wide">
-                            <input type="text" name="{{../path}}.factions.{{@key}}.notes" value="{{this.notes}}">
+                            <input type="text" name="{{../path}}.factions.{{@key}}.notes" {{#if this.patron}}disabled{{/if}} value="{{this.notes}}">
                         </div>
                     {{/if}}
                     <div class="list-controls single">
@@ -56,7 +63,7 @@
                         </div>
                     {{/each}}
                     {{#each this.sources}}
-                        <div class="list-row" data-index="{{@key}}">
+                        <div class="list-row {{#if ../this.patron}}disabled inactive{{/if}}" data-index="{{@key}}">
                             <div></div>
                             <div class="small">
                                 <input type="number" data-property="value" value="{{this.value}}">
@@ -69,7 +76,9 @@
                             </div>
                         </div>
                     {{/each}}
+                    {{#unless this.patron}}
                     <button type="button"><i class="fa-solid fa-plus"></i></button>
+                    {{/unless}}
                 </div>
                 <div class="handle">
 

@@ -6,6 +6,7 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
     {
         let schema = {};
         schema.factions = new fields.ObjectField(); // {"adeptus-mechanicus : {name : "Adeptus Mechanices", sources : [{value: 1, reason : ""}] modifier : 0, effects : [], items : [], notes : ""}}
+        schema.usePatron = new fields.BooleanField({initial: false});
         return schema;
     }
 
@@ -19,7 +20,7 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
         }
     }
 
-    compute(effects, items, type)
+    compute(effects, items, type, patronInfluence)
     {
         this._initializeFactions();
         this._findInfluenceItems(items, type);
@@ -30,6 +31,8 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
             let faction = this.factions[f];
             faction.total = faction.sources.reduce((prev, current) => prev += current.value, 0) + faction.items.reduce((prev, current) => prev += current.value, 0) + (faction.modifier || 0);
         }
+
+        this._computePatron(patronInfluence);
     }
 
     _findInfluenceEffects(effects, path)
@@ -86,6 +89,32 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
                 notes : this.factions[key]?.notes || ""
             };
         }
+    }
+
+    _computePatron(patronInfluence)
+    {
+        if (!patronInfluence || !this.usePatron)
+        {
+            return;
+        }
+
+        for(let faction in patronInfluence.factions)
+        {
+            if (!this.factions[faction] || this.factions[faction].total < patronInfluence.factions[faction].total)
+            {
+                let replacementFaction = foundry.utils.deepClone(patronInfluence.factions[faction]);
+                this.factions[faction] = {
+                    name : replacementFaction.name,
+                    patron : true,
+                    total : replacementFaction.total,
+                    sources : [{value : replacementFaction.total, reason : "Patron"}],
+                    items : [],
+                    effects: [],
+                    notes : replacementFaction.notes
+                };
+            }
+        }
+
     }
 
 
