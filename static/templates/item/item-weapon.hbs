@@ -105,15 +105,20 @@
                     </header>
                     <div class="list-content">
                         {{#each item.system.mods.documents}}
-                            <div class="list-item" data-index="{{@key}}" data-target="system.mods">
+                            <div class="list-item {{#if this.system.disabled}}inactive{{/if}}" data-index="{{@key}}" data-target="system.mods">
                                 <div class="list-row">
                                     <div class="list-name">
                                         <img src="{{this.img}}">
                                         <a class="mod-sheet">{{this.name}}</a>
-                                    </div>
-                                    <div class="list-controls">
-                                        <a class="mod-delete"><i class="fa-solid fa-xmark"></i></a>
-                                    </div>
+                                        </div>
+                                        <div class="list-controls">
+                                            {{#if this.system.disabled}}
+                                                <a class="mod-toggle"><i class="fa-regular fa-circle"></i></a>
+                                            {{else}}
+                                                <a class="mod-toggle"><i class="fa-regular fa-circle-check"></i></a>
+                                            {{/if}}
+                                            <a class="mod-delete"><i class="fa-solid fa-xmark"></i></a>
+                                        </div>
                                 </div>
                             </div>
                         {{/each}}

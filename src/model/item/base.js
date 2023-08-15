@@ -83,6 +83,15 @@ export class BaseItemModel extends foundry.abstract.DataModel
     //     // Abstract
     // }
 
+    /**
+     * Get effects from other sources, like weapon modifications
+     * 
+     */
+    getOtherEffects()
+    {
+        return [];
+    }
+
 
 
     /**

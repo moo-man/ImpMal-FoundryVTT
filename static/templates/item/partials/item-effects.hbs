@@ -26,13 +26,18 @@
     </header>
     <div class="list-content">
         {{#each item.effects}}
-            <div class="list-item" data-id="{{this.id}}" data-collection="effects">
+            <div class="list-item {{#if this.disabled}}inactive{{/if}}" data-id="{{this.id}}" data-collection="effects">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.icon}}">
                         <a class="list-edit">{{this.name}}</a>
                     </div>
                     <div class="list-controls">
+                        {{#if this.disabled}}
+                            <a class="list-toggle"><i class="fa-regular fa-circle"></i></a>
+                        {{else}}
+                            <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
+                        {{/if}}
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
                     </div>
                 </div>
@@ -40,3 +45,63 @@
         {{/each}}
     </div>
 </section>
+
+{{#if item.system.ammo.document.effects.contents.length}}
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.AmmoEffects"}}</div>
+    </header>
+    <div class="list-content">
+        {{#each item.system.ammo.document.effects.contents}}
+            <div class="list-item" data-id="{{this.id}}" data-collection="effects">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.icon}}">
+                        <div>{{this.name}}</div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+{{/if}}
+
+{{#if modificationEffects.length}}
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.ModificationEffects"}}</div>
+    </header>
+    <div class="list-content">
+        {{#each modificationEffects}}
+            <div class="list-item" data-id="{{this.id}}" data-collection="effects">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.icon}}">
+                        <div>{{this.name}}</div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+{{/if}}
+
+{{#if effectsFromActor.length}}
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.EffectsFromActor"}}</div>
+    </header>
+    <div class="list-content">
+        {{#each effectsFromActor}}
+            <div class="list-item" data-id="{{this.id}}" data-collection="effects">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.icon}}">
+                        <div>{{this.name}}</div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+{{/if}}

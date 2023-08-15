@@ -3,7 +3,17 @@ import ImpMalItemSheet from "./item-sheet";
 
 export default class WeaponItemSheet extends ImpMalItemSheet
 {
-    _onDropItemModification(item)
+
+    async getData() 
+    {
+        let data = await super.getData();
+        data.modificationEffects = this.item.system.mods.documents.reduce((prev, current) => prev.concat(current.effects.contents), []);
+        data.effectsFromActor = this.item.actor?.getEffectsApplyingToItem(this.item);
+        return data;
+    }
+
+
+    _onDropItemModification(ev, item)
     {
         this.item.update({"system.mods.list" : this.item.system.mods.add(item.toObject())});
     }
@@ -29,6 +39,14 @@ export default class WeaponItemSheet extends ImpMalItemSheet
             {
                 document.sheet.render(true, {editable : false});
             }
+        });
+
+        html.find(".mod-toggle").click(ev => 
+        {
+            let index = Number(this._getIndex(ev));
+            let modList = foundry.utils.deepClone(this.item.system.mods.list);
+            modList[index].system.disabled = !modList[index].system.disabled;
+            this.item.update({"system.mods.list" : modList});
         });
 
         html.find(".buy-ammo").click(() => 

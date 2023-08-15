@@ -13,6 +13,7 @@ export class ModificationModel extends PhysicalItemModel
         schema.usedWith = new fields.StringField();
         schema.addedTraits = new fields.EmbeddedDataField(TraitListModel);
         schema.removedTraits = new fields.EmbeddedDataField(TraitListModel);
+        schema.disabled = new fields.BooleanField({initial : false});
         return schema;
     }
 
@@ -44,5 +45,13 @@ export class ModListModel extends ListModel
     prepareMods()
     {
         this.documents = this.list.map(e => new ImpMalItem(e));
+        for(let mod of this.documents)
+        {
+            // If a mod is disabled, make sure all its effects are disabled
+            mod.effects.contents.forEach(e => 
+            {
+                e.disabled = mod.system.disabled;
+            });
+        }
     }
 }

@@ -552,7 +552,8 @@
       },
       "removedTraits" : {
         "list" : []
-      }
+      },
+      "enabled" : true
     },
     "protection": {
       "templates": [

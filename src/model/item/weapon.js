@@ -305,6 +305,12 @@ export class WeaponModel extends EquippableItemModel
         }
     }
 
+    getOtherEffects()
+    {
+        return super.getOtherEffects().concat(this.mods.documents.reduce((prev, current) => prev.concat(current.effects.contents), []).filter(e => !e.disabled && e.applicationData.options.documentType == "modItem"));
+    }
+
+
     _applyShieldMods(items) 
     {
         let shield = items.find(i => 

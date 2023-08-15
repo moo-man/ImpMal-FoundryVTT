@@ -19,10 +19,11 @@
                 <label>{{localize "IMPMAL.EffectApplicationOptionDocumentType"}}</label>
                 <select name="flags.impmal.applicationData.options.documentType">
                     {{#select applicationData.options.documentType}}
-
                         <option value="Actor">{{localize "Actor"}}</option>
                         {{#if (eq this.parent.type "boonLiability")}}
                             <option value="character">{{localize "TYPES.Actor.character"}}</option>
+                        {{else if (eq this.parent.type "modification")}}
+                            <option value="modItem">{{localize "IMPMAL.ModifiedItem"}}</option>
                         {{else}}
                             <option value="Item">{{localize "Item"}}</option>
                         {{/if}}
@@ -31,6 +32,20 @@
                 <p class="notes">{{localize "IMPMAL.EffectApplicationOptionDocumentTypeHint"}}</p>
             </div>
         {{/if}}
+
+        {{#if (eq applicationData.type "zone")}}
+            <div class="form-group">
+                <label>{{localize "IMPMAL.EffectApplicationOptionDocumentType"}}</label>
+                <select name="flags.impmal.applicationData.options.zoneType">
+                    {{#select applicationData.options.zoneType}}
+                    <option value="target">{{localize "IMPMAL.Target"}}</option>
+                    <option value="self">{{localize "IMPMAL.Self"}}</option>
+                    {{/select}}
+                </select>
+                <p class="notes">{{localize "IMPMAL.EffectApplicationOptionDocumentTypeHint"}}</p>
+            </div>
+        {{/if}}
+
         {{#if (hasProperty this "applicationData.options.avoidTest")}}
             <div class="form-group">
                 <label>{{localize "IMPMAL.EffectApplicationOptionAvoidTest"}}

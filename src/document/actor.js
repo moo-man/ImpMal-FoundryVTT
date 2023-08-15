@@ -304,11 +304,15 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
      * 
      * @param {*} item 
      */
-    getScriptsApplyingToItem(item)
+    getEffectsApplyingToItem(item)
     {
         // Get effects that should be applied to item argument
-        let effects = this.effects.contents.filter(e => 
+        return this.effects.contents.filter(e => 
         {
+            if (e.disabled)
+            {
+                return false;
+            }
             let targeted = e.getFlag("impmal", "itemTargets");
             if (targeted)
             {
@@ -325,8 +329,18 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             // Create temporary effects that have the item as the parent, so the script context is correct
         }).map(i => new ImpMalEffect(i.toObject(), {parent : item}));
 
-        return effects.reduce((prev, current) => prev.concat(current.scripts), []);
     }
+
+    /**
+     * Same logic as getEffectsApplyingToItem, but reduce the effects to their scripts
+     * 
+     * @param {*} item 
+     */
+    getScriptsApplyingToItem(item)
+    {
+        return this.getEffectsApplyingToItem(item).reduce((prev, current) => prev.concat(current.scripts), []);
+    }
+     
 
     /**
      * 
