@@ -248,12 +248,19 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
 
             if (type == "weapon" && item.system.isRanged)
             {
-                ammo = `
-                <a class="mag">${item.system.mag.current}<img src="systems/impmal/assets/icons/magazine.svg"></a>
-                <a class="ammo-used ${item.system.ammo.document ? "" : "inactive"}">
+                if (item.system.selfAmmo)
+                {
+                    ammo = `<a class="inc-dec">${game.i18n.localize("IMPMAL.Qty.")} ${item.system.quantity}</a>`;
+                }
+                else 
+                {
+                    ammo = `
+                    <a class="mag">${item.system.mag.current}<img src="systems/impmal/assets/icons/magazine.svg"></a>
+                    <a class="ammo-used ${item.system.ammo.document ? "" : "inactive"}">
                     ${item.system.ammo.document ? (`${item.system.ammo.document?.name} (${item.system.ammo.document?.system.quantity}) `) : "No Ammo Loaded"}
                     <img src="systems/impmal/assets/icons/ammo-box.svg">
-                </a>`;
+                    </a>`;
+                }
             }
             else
             {
@@ -331,7 +338,10 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
             let id = this._getId(ev);
             let item = this.actor.items.get(id);
 
-            item.update(item.system.reload(!!item.system.ammo.document));
+            item.update(item.system.reload(!!item.system.ammo.document)).then(() => 
+            {
+                ui.notifications.notify(game.i18n.localize("IMPMAL.Reloaded"));
+            });
 
         });
 
@@ -349,6 +359,11 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         {
             let id = this._getId(ev);
             let item = this.actor.items.get(id);
+            if (this.actor.itemCategories.ammo.length == 0)
+            {
+                ui.notifications.error(game.i18n.localize("IMPMAL.ErrorNoAmmoItems"));
+                return;
+            }
             DocumentChoice.create(this.actor.itemCategories.ammo).then(documents => 
             {
                 let ammo = documents[0];

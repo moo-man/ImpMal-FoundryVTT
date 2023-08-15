@@ -137,12 +137,17 @@
                 </div>
                 <div class="weapon-traits">
                     <div class="mag">
+                        {{#unless this.system.selfAmmo}}
                         <label>{{localize "IMPMAL.Mag"}}:</label>
                         <div class="values">
                             <div class="current">{{this.system.mag.current}}</div>
                             <div>/</div>
                             <div class="value">{{this.system.mag.value}}</div>
                         </div>
+                        {{else}}
+                        <label>{{localize "IMPMAL.Qty."}}</label>
+                        <div>{{this.system.quantity}}</div>
+                        {{/unless}}
                         {{#if (lt this.system.mag.current this.system.mag.value)}}
                             <a class="reload">Reload</a>
                         {{/if}}

@@ -131,6 +131,12 @@ export class WeaponModel extends EquippableItemModel
         }
     }
 
+    // Might be renamed, means "uses own quantity for ammo"
+    get selfAmmo()
+    {
+        return this.category == "grenadesExplosives";
+    }
+
     /**
      * 
      * @param {Boolean} trackAmmo Whether or not to check the quantity of the ammo item linked to the weapon
@@ -160,8 +166,33 @@ export class WeaponModel extends EquippableItemModel
         {
             throw game.i18n.localize("IMPMAL.ErrorMeleeWeapon");
         }
+        
+        if (this.selfAmmo)
+        {
+            return {"system.quantity" : this.quantity - amount};
+        }
+        else 
+        {
+            return {"system.mag.current" : this.mag.current - amount};
+        }
+    }
 
-        return {"system.mag.current" : this.mag.current - amount};
+    hasAmmo()
+    {
+        if (this.isMelee)
+        {
+            return true;
+        }
+
+        else if (this.selfAmmo)
+        {
+            return this.quantity != 0;
+        }
+
+        else 
+        { 
+            return this.mag.current != 0;
+        }
     }
 
     /**
