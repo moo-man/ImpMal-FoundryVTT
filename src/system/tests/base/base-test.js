@@ -1,4 +1,5 @@
 import { EditTestForm } from "../../../apps/edit-test";
+import ZoneHelpers from "../../zone-helpers";
 import { OpposedTestResult } from "../opposed-result";
 import { BaseTestEvaluator } from "./base-evaluator";
 import { TestContext } from "./test-context";
@@ -198,7 +199,7 @@ export class BaseTest
         if (this.item instanceof Item)
         {
             this.itemSummary = await renderTemplate(this.itemSummaryTemplate, mergeObject(this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
-            this.effectButtons = await renderTemplate("systems/impmal/templates/chat/effect-buttons.hbs", {effects : this.item.targetEffects});
+            this.effectButtons = await renderTemplate("systems/impmal/templates/chat/effect-buttons.hbs", {targetEffects : this.item.targetEffects, zoneEffects : this.item.zoneEffects});
         }
         if (this.testDetailsTemplate)
         {
@@ -406,19 +407,27 @@ export class BaseTest
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
             let test = message.test;
 
-            // If user has active targets, use those, otherwise, use test's targets, if there aren't any, use test's own actor
-            let targetActors = game.user.targets.size > 0 
-                ? Array.from(game.user.targets).map(i => i.actor) 
-                : test.context.targets.map(i => i.actor);
-
-            if (targetActors.length == 0)
+            if (ev.currentTarget.dataset.type == "zone")
             {
-                targetActors = [test.actor];
+                ZoneHelpers.applyZoneEffect(ev.currentTarget.dataset.uuid, message.id);
             }
 
-            for(let actor of targetActors)
+            else if (ev.currentTarget.dataset.type == "target")
             {
-                actor.applyEffect(ev.currentTarget.dataset.uuid, message.id);                
+                // If user has active targets, use those, otherwise, use test's targets, if there aren't any, use test's own actor
+                let targetActors = game.user.targets.size > 0 
+                    ? Array.from(game.user.targets).map(i => i.actor) 
+                    : test.context.targets.map(i => i.actor);
+                
+                if (targetActors.length == 0)
+                {
+                    targetActors = [test.actor];
+                }
+
+                for(let actor of targetActors)
+                {
+                    actor.applyEffect(ev.currentTarget.dataset.uuid, message.id);                
+                }
             }
             
         });

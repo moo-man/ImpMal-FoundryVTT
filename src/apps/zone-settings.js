@@ -6,9 +6,10 @@ export default class ZoneSettings extends FormApplication
         options.classes = options.classes.concat(["impmal", "zone-settings"]);
         options.title = game.i18n.localize("IMPMAL.ZoneSettings");
         options.width = 300;
-        options.height = 300;
+        options.height = "auto";
         options.resizable = true;
         options.template = "systems/impmal/templates/apps/zone-settings.hbs";
+        options.tabs = [{navSelector: ".tabs", contentSelector: ".content", initial: "traits"}];
         return options;
     }
 
@@ -16,6 +17,20 @@ export default class ZoneSettings extends FormApplication
     _updateObject(event, formData)
     {
         return this.object.update(formData);
+    }
+
+
+    activateListeners(html)
+    {
+        super.activateListeners(html);
+
+        html.find(".list-delete").click(ev => 
+        {
+            let index = $(ev.currentTarget).parents("[data-index]").attr("data-index");
+            let effects = foundry.utils.deepClone(this.object.flags.impmal.effects);
+            effects.splice(index, 1);
+            this.object.setFlag("impmal", "effects", effects).then(() => this.render(true));
+        });
     }
 
     static _addZoneConfig(html, drawing)

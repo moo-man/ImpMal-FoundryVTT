@@ -11,7 +11,6 @@ import { PowerTest } from "../system/tests/power/power-test";
 import { SkillTest } from "../system/tests/skill/skill-test";
 import { TraitTest } from "../system/tests/trait/trait-test";
 import { WeaponTest } from "../system/tests/weapon/weapon-test";
-import ZoneHelpers from "../system/zone-helpers";
 import { ImpMalEffect } from "./effect";
 import ImpMalDocumentMixin from "./mixin";
 
@@ -337,13 +336,21 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     {
         for(let effect of super.allApplicableEffects())
         {
+            // So I was relying on effect.transfer, which is computed in the effect's prepareData
+            // However, apparently when you first load the world, that is computed after the actor
+            // On subsequent data updates, it's computed before. I don't know if this is intentional
+            // Regardless, we need to doublecheck whether this effect should transfer to the actor
+            if (effect.parent.documentName == "Item" && !effect.determineTransfer())
+            {
+                continue;
+            }
+
             if (includeItemEffects)
             {
                 yield effect;
             }
             else if (effect.applicationData.options.documentType != "Item")
             {
-                
                 yield effect;
             }
         }
@@ -359,11 +366,11 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
                 }
             }
         }
+    }
 
-        for(let effect of this.currentZoneEffects)
-        {
-            yield effect;
-        }
+    get currentZoneEffects() 
+    {
+        return this.effects.contents.filter(e => e.getFlag("impmal", "fromZone"));
     }
 
     /**
@@ -379,25 +386,6 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return effects;
     }
 
-
-    get currentZoneEffects()
-    {
-        let token = this.getActiveTokens()[0];
-        let effects = [];
-        if (!token)
-        {
-            return effects;
-        }
-        
-        for (let drawing of token.scene.drawings.contents)
-        {
-            if (ZoneHelpers.isInDrawing(token.center, drawing.object))
-            {
-                effects = effects.concat(ZoneHelpers.zoneEffects(drawing.object));
-            }
-        }
-        return effects.map(i => new ImpMalEffect(i, {parent: this}));
-    }
 
     get defendingAgainst()
     {

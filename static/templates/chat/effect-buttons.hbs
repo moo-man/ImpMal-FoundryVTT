@@ -1,11 +1,14 @@
 <div class="effect-buttons">
-    {{#each effects}}
-        <button type="button" class="apply-effect" data-uuid="{{this.uuid}}">
-            {{#if (eq this.applicationData.type "target")}}
+    {{#each targetEffects}}
+        <button type="button" class="apply-effect" data-uuid="{{this.uuid}}" data-type="target">
                 <i class="fa-solid fa-crosshairs"></i>
-            {{else if (eq this.applicationData.type "zone")}}
-                <i class="fa-solid fa-border-outer"></i>
-            {{/if}}
+            <img src="{{this.img}}">
+            {{this.name}}
+        </button>
+    {{/each}}
+    {{#each zoneEffects}}
+        <button type="button" class="apply-effect" data-uuid="{{this.uuid}}" data-type="zone">
+                <i class="fa-solid fa-game-board-simple"></i>
             <img src="{{this.img}}">
             {{this.name}}
         </button>

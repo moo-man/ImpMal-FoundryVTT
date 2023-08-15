@@ -74,7 +74,7 @@ export class ImpMalEffect extends ActiveEffect
             run = true;
         }
         // If effect is grandchild, only run scripts if the effect should apply to the actor
-        else if (this.parent?.documentName == "Item" && this.parent.parent?.documentName == "Actor" && this.transfer)
+        else if (this.parent?.documentName == "Item" && this.parent?.parent?.documentName == "Actor" && this.transfer)
         {
             run = true;
         }
@@ -149,7 +149,7 @@ export class ImpMalEffect extends ActiveEffect
         if (this.isCondition && !options.condition) 
         {
             // If adding a condition, prevent it and go through `addCondition`
-            this.parent.addCondition(this.key, {type : this.flags.impmal?.type, origin: this.origin});
+            this.parent?.addCondition(this.key, {type : this.flags.impmal?.type, origin: this.origin});
             return true;
         }
     }
@@ -164,7 +164,7 @@ export class ImpMalEffect extends ActiveEffect
     async _handleItemApplication()
     {
         let applicationData = this.applicationData;
-        if (applicationData.options.documentType == "Item" && this.parent.documentName == "Actor")
+        if (applicationData.options.documentType == "Item" && this.parent?.documentName == "Actor")
         {
             let items = [];
             let filter = this.filterScript;
@@ -217,7 +217,7 @@ export class ImpMalEffect extends ActiveEffect
         // Refresh scripts
         this._scripts = undefined;
 
-        if (this.parent.documentName == "Item")
+        if (this.parent?.documentName == "Item")
         {
             this.transfer = this.determineTransfer();
         }
@@ -270,7 +270,7 @@ export class ImpMalEffect extends ActiveEffect
 
     get item()
     {
-        if (this.parent.documentName == "Item")
+        if (this.parent?.documentName == "Item")
         {
             return this.parent;
         }
@@ -287,11 +287,11 @@ export class ImpMalEffect extends ActiveEffect
 
     get actor()
     {
-        if (this.parent.documentName == "Item")
+        if (this.parent?.documentName == "Item")
         {
             return this.parent.parent;
         }
-        else if (this.parent.documentName == "Actor")
+        else if (this.parent?.documentName == "Actor")
         {
             return this.parent;
         }
@@ -303,9 +303,13 @@ export class ImpMalEffect extends ActiveEffect
 
     get source()
     {
-        if (this.parent.documentName == "Item")
+        if (this.parent?.documentName == "Item")
         {
             return this.parent.name; // TODO: a lot to change here, account for origin
+        }
+        else if (this.getFlag("impmal", "fromZone"))
+        {
+            return fromUuidSync(this.getFlag("impmal", "fromZone")).text;
         }
         else
         {
@@ -387,7 +391,7 @@ export class ImpMalEffect extends ActiveEffect
 
     static findEffect(key, type="minor")
     {
-        let effects = foundry.utils.deepClone(game.impmal.config.conditions).concat(foundry.utils.deepClone(Object.values(game.impmal.config.systemEffects)));
+        let effects = foundry.utils.deepClone(game.impmal.config.conditions).concat(foundry.utils.deepClone(Object.values(game.impmal.config.zoneEffects)));
 
         let effect = effects.find(i => i.id == key && i.flags?.impmal?.type == type);
         if (!effect)

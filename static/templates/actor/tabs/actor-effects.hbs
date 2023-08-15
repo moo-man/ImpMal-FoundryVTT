@@ -31,11 +31,17 @@
                         <img src="{{this.icon}}">
                         <a class="list-edit">{{this.name}}</a>
                     </div>
-                  {{#if (eq this.actor.type "patron")}}
-                        <div><a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a></div>
+                    <div>
+                    {{#if (eq this.actor.type "patron")}}
+                        <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                    {{else if this.item}}
+                        <a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
+                    {{else if this.flags.impmal.fromZone}}
+                        <i class="fa-solid fa-game-board-simple"></i>{{this.source}}
                     {{else}}
-                        <div>{{#if this.item}}<a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
+                        {{this.source}}
                     {{/if}}
+                    </div>
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
@@ -92,11 +98,17 @@
                         <img src="{{this.icon}}">
                         <a class="list-edit">{{this.name}}</a>
                     </div>
-                  {{#if (eq this.actor.type "patron")}}
-                        <div><a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a></div>
+                    <div>
+                    {{#if (eq this.actor.type "patron")}}
+                        <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                    {{else if this.item}}
+                        <a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
+                    {{else if this.flags.impmal.fromZone}}
+                        {{this.source}}
                     {{else}}
-                        <div>{{#if this.item}}<a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
+                        {{this.source}}
                     {{/if}}
+                    </div>
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
@@ -123,11 +135,17 @@
                         <img src="{{this.icon}}">
                         <a class="list-edit">{{this.name}}</a>
                     </div>
+                    <div>
                     {{#if (eq this.actor.type "patron")}}
-                        <div><a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a></div>
+                        <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                    {{else if this.item}}
+                        <a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
+                    {{else if this.flags.impmal.fromZone}}
+                        {{this.source}}
                     {{else}}
-                        <div>{{#if this.item}}<a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>{{else}}{{this.source}}{{/if}}</div>
+                        {{this.source}}
                     {{/if}}
+                    </div>
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>

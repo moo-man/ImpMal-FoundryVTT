@@ -96,19 +96,23 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     get damageEffects() 
     {
-        
-        let effects = this.effects.contents.filter(effect => 
-            effect.applicationData.type == "damage" && 
-            !effect.disabled);
-
-        return effects;
+        return this._getTypedEffects("damage");
     }
 
     get targetEffects() 
     {
-        
+        return this._getTypedEffects("target");
+    }
+
+    get zoneEffects() 
+    {
+        return this._getTypedEffects("zone");
+    }
+
+    _getTypedEffects(type)
+    {
         let effects = this.effects.contents.filter(effect => 
-            effect.applicationData.type == "target" && 
+            effect.applicationData.type == type && 
             !effect.disabled);
 
         return effects;

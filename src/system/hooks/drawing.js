@@ -1,5 +1,5 @@
+import ZoneSettings from "../../apps/zone-settings";
 import ZoneHelpers from "../zone-helpers";
-import ZoneSettings from "../zone-settings";
 
 export default function() 
 {

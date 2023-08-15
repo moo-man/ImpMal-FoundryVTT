@@ -1,10 +1,12 @@
+import { ImpMalEffect } from "../document/effect";
+
 export default class ZoneHelpers 
 {
     /**
      * Determines if a coordinate is within a Drawing's strokes
      * 
      * @param {Object} {x, y} object being tested
-     * @param {Drawing} drawing Drawing object being tested
+     * @param {Drawing|DrawingDocument} drawing Drawing object being tested
      * @returns 
      */
     static isInDrawing(point, drawing)
@@ -48,38 +50,43 @@ export default class ZoneHelpers
     }
 
     /**
-     * Return an array of System effect keys based on Zone Settings
+     * Return an array of effect data based on Zone Settings
      * 
      * @param {Drawing} drawing Drawing instance
      * @returns 
      */
-    static drawingEffects(drawing)
+    static zoneEffects(drawing)
     {
-        let effects = [];
-        for (let key in (drawing.document.flags.impmal || {}))
+        let traits = [];
+        let zoneFlags = drawing.document.flags.impmal || {};
+        for (let key in zoneFlags.traits)
         {
-            let zoneFlags = drawing.document.flags.impmal;
-            if (zoneFlags[key])
+            if (zoneFlags.traits[key])
             {
-                if (zoneFlags[key] == true)
+                if (zoneFlags.traits[key] == true)
                 {
-                    effects.push(key); // For boolean properties, the effect key is the property name
+                    traits.push(key); // For boolean properties, the effect key is the property name
                 }
-                else if (zoneFlags[key] && typeof zoneFlags[key] == "string")
+                else if (zoneFlags.traits[key] && typeof zoneFlags.traits[key] == "string")
                 {
-                    effects.push(zoneFlags[key]); // For selection properties, the effect key is the value 
+                    traits.push(zoneFlags.traits[key]); // For selection properties, the effect key is the value 
                 }
             }
         }
-        return effects;
+
+        // Return trait effects and any other added effects
+        return traits.map(i => game.impmal.config.zoneEffects[i]).concat(zoneFlags.effects || []).map(effect => 
+        {
+            // Designate all zone effects with a flag to easily be distinguished
+            effect["flags.impmal.fromZone"] = drawing.document.uuid;
+            effect.origin = drawing.document.uuid;
+            return effect;
+        });
     }
 
     /**
      * When a token is updated, check new position vs old and collect which zone effects
      * to add or remove based on zones left and entered. 
-     * 
-     * Current small bug: Moving to Zone A to Zone B where both A and B have the same effect 
-     * removes that effect
      * 
      * @param {Token} token Token being updated
      * @param {Object} update Token update data (new x and y)
@@ -102,54 +109,114 @@ export default class ZoneHelpers
 
             let toAdd = [];
             let toRemove = [];
+
+            let currentZoneEffects = token.actor?.currentZoneEffects || [];
+
+            let entered = [];
+            let left = [];
             for (let drawing of drawings)
             {
                 if (ZoneHelpers.isInDrawing(postX, drawing) && !ZoneHelpers.isInDrawing(preX, drawing)) // If entering Zone
                 {
-                    let effects = ZoneHelpers.drawingEffects(drawing);
-                    for (let e of effects)
-                    {
-                        toAdd.push(token.actor.addCondition(e, {origin : drawing.document.uuid, create : false}));
-                    }
+                    entered.push(drawing);
                 }
 
                 if (!ZoneHelpers.isInDrawing(postX, drawing) && ZoneHelpers.isInDrawing(preX, drawing)) // If leaving Zone
                 {
-                    let effects = ZoneHelpers.drawingEffects(drawing);
-                    for (let e of effects)
-                    {
-                        toRemove.push(token.actor.hasCondition(e)?.id);
-                    }
+                    left.push(drawing);
                 }
             }
-            await token.actor.deleteEmbeddedDocuments("ActiveEffect", toRemove.filter(e => e));
+
+            // Take the drawings the token left, filter through the actor's zone effects to find the ones from those drawings, mark those for removal
+            for(let drawing of left)
+            {
+                toRemove = toRemove.concat(currentZoneEffects.filter(effect => effect.flags.impmal.fromZone == drawing.document.uuid));
+            }
+
+            for(let drawing of entered)
+            {
+                toAdd = toAdd.concat(ZoneHelpers.zoneEffects(drawing));
+            }
+
+
+            await token.actor.deleteEmbeddedDocuments("ActiveEffect", toRemove.filter(e => e).map(e => e.id));
             token.actor.createEmbeddedDocuments("ActiveEffect", toAdd.filter(e => e));
         }
     }
 
     /**
-     * When a Drawing is updated, apply all zone effects that tokens within don't have
-     * Note that this doesn't remove effects that the zone doesn't have, which is more complicated
+     * When a Drawing is updated (either moved, or an effect is added to it), remove all existing 
+     * effects from that zone, and add them back again to all tokens in that zone
      * 
      * @param {Drawing} drawing Drawing being updated
      * @param {Array} tokens Array of Token objects
      */
     static async checkDrawingUpdate(drawing, tokens)
     {
-        let effects = this.drawingEffects(drawing);
-        tokens = tokens.filter(token => ZoneHelpers.isInDrawing(token.center, drawing));
+        let effects = this.zoneEffects(drawing);
 
         for(let token of tokens)
         {
-            let toAdd = [];
-            for(let effect of effects)
+            let currentZoneEffects = token.actor.currentZoneEffects.filter(e => e.getFlag("impmal", "fromZone") == drawing.document.uuid);
+
+            // Remove all effects originating from this zone
+            await token.actor.deleteEmbeddedDocuments("ActiveEffect", currentZoneEffects.map(i => i.id));
+
+            if (ZoneHelpers.isInDrawing(token.center, drawing))
             {
-                if (!token.actor?.hasCondition(effect))
-                {
-                    toAdd.push(token.actor.addCondition(effect, {origin : drawing.document.uuid, create : false}));
+                // Add them back to those still in the drawing
+                token.actor?.createEmbeddedDocuments("ActiveEffect", effects);
+            }
+        }
+    }
+
+
+    static applyZoneEffect(effectUuids, messageId)
+    {
+        if (typeof effectUuids == "string")
+        {
+            effectUuids = [effectUuids];
+        }
+
+        // Zone must have Text
+        let zones = canvas.scene.drawings.contents.filter(d => d.text);
+
+        new Dialog({
+            title : "Choose Zone",
+            content : `
+            <p>Pick the Zone you wish to apply to. A Drawing must have Text to be selected.</p>
+            <select>
+            <option value=""></option>
+            ${zones.map(zone => `<option value=${zone.id}>${zone.text}</option>`)}
+            </select>`,
+            buttons : {
+                apply : {
+                    label : "Apply",
+                    callback : (dlg) => 
+                    {
+                        let select = dlg.find("select")[0];
+                        let id = select.value;
+                        if (id)
+                        {
+                            this.applyEffectToZone(effectUuids, messageId, canvas.scene.drawings.get(id));
+                        }
+                    }
                 }
             }
-            token.actor?.createEmbeddedDocuments("ActiveEffect", toAdd);
+        }).render(true);
+    }
+
+    static async applyEffectToZone(effectUuids, messageId, drawing)
+    {
+        let zoneEffects = foundry.utils.deepClone(drawing.flags.impmal?.effects || []);
+
+        for (let uuid of effectUuids)
+        {
+            let originalEffect = fromUuidSync(uuid);
+            let message = game.messages.get(messageId);
+            let zoneEffect = await ImpMalEffect.create(originalEffect.convertToApplied(), {temporary : true, message : message?.id});
+            zoneEffects.push(zoneEffect.toObject());
         }
+        drawing.setFlag("impmal", "effects", zoneEffects);
     }
 }
