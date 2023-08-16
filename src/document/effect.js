@@ -11,7 +11,7 @@ export class ImpMalEffect extends ActiveEffect
         // Take a copy of the test result that this effect comes from, if any
         // We can't use simply take a reference to the message id and retrieve the test as
         // creating a Test object before actors are ready (scripts can execute before that) throws errors
-        this.updateSource({"flags.impmal.sourceTestResult" : game.messages.get(options.message)?.test?.result});
+        this.updateSource({"flags.impmal.sourceTest" : game.messages.get(options.message)?.test});
 
         let preventCreation = false;
         preventCreation = await this._handleEffectAvoidance(data, options, user);
@@ -25,7 +25,12 @@ export class ImpMalEffect extends ActiveEffect
         {
             return false;
         }
-
+        preventCreation = await this._handleFilter(data, options, user);
+        if (preventCreation)
+        {
+            ui.notifications.notify(game.i18n.format("IMPMAL.EffectFiltered", {name : this.name}));
+            return false;
+        }
         await this._handleItemApplication(data, options, user);
 
         return await this._handleImmediateScripts(data, options, user);
@@ -183,6 +188,27 @@ export class ImpMalEffect extends ActiveEffect
 
 
             this.updateSource({"flags.impmal.itemTargets" : items.map(i => i.id)});
+        }
+    }
+
+    async _handleFilter()
+    {
+        let applicationData = this.applicationData;
+        let filter = this.filterScript;
+        if (!filter)
+        {
+            return;
+        }
+
+        if (applicationData.options.documentType == "Item" && this.parent?.documentName == "Actor")
+        {
+            return; // See above, _handleItemApplication
+        }
+
+
+        if (this.parent)
+        {
+            return filter.execute(this.parent);
         }
     }
 
@@ -354,9 +380,9 @@ export class ImpMalEffect extends ActiveEffect
         return this.getFlag("impmal", "computed");
     }
 
-    get sourceTestResult() 
+    get sourceTest() 
     {
-        return this.getFlag("impmal", "sourceTestResult");
+        return this.getFlag("impmal", "sourceTest");
     }
 
 
@@ -420,6 +446,7 @@ export class ImpMalEffect extends ActiveEffect
             type : "document",
             options : {
                 documentType : "Actor",
+                zoneType : "target",
                 avoidTest : { 
                     value : "none",
                     script : "",

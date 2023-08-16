@@ -64,7 +64,7 @@ export default class ImpMalUtility
         // If still no owning user, simply find the first GM
         if (!owningUser)
         {
-            owningUser = game.users.contents.find(u => u.isGM);
+            owningUser = game.users.contents.filter(u => u.active).find(u => u.isGM);
         }
         return owningUser;
     }
