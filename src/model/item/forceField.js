@@ -26,10 +26,10 @@ export class ForceFieldModel extends EquippableItemModel
     /**
      * 
      * @param {Number} damage Damage value to reduce
-     * @param {Array} reductions List of {value, label} objects for damage reduction sources
+     * @param {Array} modifiers List of {value, label} objects for damage reduction sources
      * @returns Reduced damage
      */
-    async applyField(damage, reductions)
+    async applyField(damage, modifiers)
     {
         let roll = await new Roll(this.protection).roll({async: true});
         if (damage >= this.overload.value)
@@ -39,9 +39,9 @@ export class ForceFieldModel extends EquippableItemModel
         }
         roll.toMessage({flavor : game.i18n.localize("IMPMAL.ForceFieldProtection"), speaker : {alias: this.parent.name}});
 
-        if (reductions instanceof Array)
+        if (modifiers instanceof Array)
         {
-            reductions.push({value : roll.total, label : game.i18n.localize("IMPMAL.Forcefield")});
+            modifiers.push({value : -roll.total, label : game.i18n.localize("IMPMAL.Forcefield")});
         }
         
         return damage - roll.total;

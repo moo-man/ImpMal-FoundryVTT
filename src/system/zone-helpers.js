@@ -75,10 +75,10 @@ export default class ZoneHelpers
         }
 
         // Return trait effects and any other added effects
-        return traits.map(i => game.impmal.config.zoneEffects[i]).concat(zoneFlags.effects || []).map(effect => 
+        return traits.map(i => foundry.utils.deepClone(game.impmal.config.zoneEffects[i])).concat(zoneFlags.effects || []).map(effect => 
         {
             // Designate all zone effects with a flag to easily be distinguished
-            effect["flags.impmal.fromZone"] = drawing.document.uuid;
+            setProperty(effect, "flags.impmal.fromZone", drawing.document.uuid);
             effect.origin = drawing.document.uuid;
             return effect;
         });

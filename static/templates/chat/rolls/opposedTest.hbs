@@ -20,7 +20,7 @@
                 {{#if this.damage.applied}}
                     <a class="apply-damage" 
                     data-tooltip="{{this.damage.text}} {{#if (gt this.damage.multiple 1)}} x{{this.damage.multiple}} {{/if}}
-                    <ul>{{#each this.damage.reductions}}<p>{{this.label}} (-{{this.value}})</p>{{/each}}</ul>">
+                    <ul>{{#each this.damage.modifiers}}<p>{{this.label}} ({{#if (gt this.value 0)}}+{{/if}}{{this.value}})</p>{{/each}}</ul>">
                     <i class="fa-solid fa-check"></i></a>
                 {{else}}
                     <button class="apply-damage gm-only" data-tooltip="{{localize 'IMPMAL.ApplyDamage'}}"><i class="fa-solid fa-user-minus"></i></button>

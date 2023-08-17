@@ -129,14 +129,9 @@ export class BaseTest
     async applyDamageTo(targetId)
     {
         let opposed = this.opposedTests.find(t => t.id == targetId);
-        await this.actor.runScripts("preApplyDamage", opposed); 
-        await this.item?.runScripts?.("preApplyDamage", opposed);
-        await opposed.actor.runScripts("preTakeDamage", opposed);
-        opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation, test : this}).then(data => 
+
+        opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation, opposed}).then(data => 
         {
-            this.actor.runScripts("applyDamage", data); // Don't think this is very useful
-            this.item?.runScripts?.("applyDamage", data);
-            opposed.actor.runScripts("takeDamage", data);
             if (data.woundsGained > 0 && this.item?.damageEffects.length)
             {
                 opposed.actor.applyEffect(this.item?.damageEffects.map(i => i.uuid), this.message.id);
@@ -298,6 +293,8 @@ export class BaseTest
             {
                 opposed.result = new OpposedTestResult(this);
             }
+            opposed.attackerTest = this;
+            opposed.defenderTest = opposed.test;
         }
         return opposedTests;
     }

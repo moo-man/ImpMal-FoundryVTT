@@ -180,10 +180,10 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     }
 
 
-    async applyDamage(value, {ignoreAP=false, location="roll", message=false, test}={})
+    async applyDamage(value, {ignoreAP=false, location="roll", message=false, opposed}={})
     {
-        let reductions = [];
-        let traits = test?.itemTraits;
+        let modifiers = [];
+        let traits = opposed?.attackerTest?.itemTraits;
         let locationKey;
         if (typeof location == "string")
         {
@@ -202,10 +202,18 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         }
         let locationData = this.system.combat.hitLocations[locationKey];
 
+        let args = {value, ignoreAP, modifiers, locationData, opposed, traits};
+        await opposed?.attackerTest?.actor.runScripts("preApplyDamage", args);
+        await opposed?.attackerTest?.item?.runScripts?.("preApplyDamage", args);
+        await this.runScripts("preTakeDamage", args); 
+        // Reassign primitive values that might've changed in the scripts
+        value = args.value;
+        ignoreAP = args.ignoreAP;
+
         let woundsGained = value;
         if (locationData.field)
         {
-            woundsGained = await locationData.field.system.applyField(value, reductions);
+            woundsGained = await locationData.field.system.applyField(value, modifiers);
         }
 
         if (!ignoreAP && locationData.armour)
@@ -215,36 +223,51 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             if (penetrating)
             {
                 armourValue = Math.max(0, locationData.armour - Number(penetrating.value || 0));
-                // reductions.push({value : penetrating.value, label : game.i18n.localize("IMPMAL.Penetrating")});
+                // modifiers.push({value : penetrating.value, label : game.i18n.localize("IMPMAL.Penetrating")});
             }
-            woundsGained -= armourValue;
-            reductions.push({value : armourValue, label : game.i18n.localize("IMPMAL.Protection")});
+            modifiers.push({value : -armourValue, label : game.i18n.localize("IMPMAL.Protection"), armour : true});
             if (traits?.has("ineffective"))
             {
-                woundsGained -= armourValue;
-                reductions.push({value : armourValue, label : game.i18n.localize("IMPMAL.Ineffective")});
-
+                modifiers.push({value : -armourValue, label : game.i18n.localize("IMPMAL.Ineffective"), armour : true});
             }
         }
-
+        
+        for (let modifier of modifiers)
+        {
+            // Skip modifier if it's from armour when ignoreAP is true
+            if (!modifier.armour || !ignoreAP)
+            {
+                woundsGained += Number(modifier.value || 0);
+            }
+        }
         woundsGained = Math.max(0, woundsGained);
 
-        let text = game.i18n.format("IMPMAL.WoundsTaken", {wounds : woundsGained, location : game.i18n.localize(locationData.label)});
 
-        let crit;
         let excess = 0;
         if ((woundsGained + this.system.combat.wounds.value) > this.system.combat.wounds.max)
         {
             excess = (woundsGained + this.system.combat.wounds.value) - this.system.combat.wounds.max;
+        }
+
+        args = {excess, woundsGained, locationData, opposed};
+        await opposed?.attackerTest?.actor.runScripts("applyDamage", args);
+        await opposed?.attackerTest?.item?.runScripts?.("applyDamage", args);
+        await this.runScripts("takeDamage", args); 
+
+        let text = game.i18n.format("IMPMAL.WoundsTaken", {wounds : woundsGained, location : game.i18n.localize(locationData.label)});
+        let crit;
+        if (excess || args.crit) // scripts might add a critical hit
+        {
             crit = ` [[/r 1d10 + ${excess}]]{Critical (+${excess})}`;
         }
+
 
         this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained});
         return {
             text,
             woundsGained,
             message : message ? ChatMessage.create({content : (text + crit ? crit : "")}) : null,
-            reductions,
+            modifiers,
             crit,
             excess,
             location : locationKey

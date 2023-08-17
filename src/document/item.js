@@ -78,6 +78,9 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         this.system.computeOwnerDerived(this.actor);
         this.runScripts("prepareOwnedData", this);
 
+        // Add a prepared flag to determine if this item has already been prepared
+        // See https://github.com/foundryvtt/foundryvtt/issues/7987
+        this.prepared = true;
     }
 
     getScripts(trigger)
@@ -94,6 +97,12 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         return effects.reduce((prev, current) => prev.concat(current.scripts), []).concat(fromActor).filter(i => i.trigger == trigger);
     }
 
+    runScripts(...args)
+    {
+        if (!this.prepared)
+        {
+            return super.runScripts(...args);
+        }
     }
 
     get damageEffects() 
