@@ -406,7 +406,7 @@ export class BaseTest
 
             if (ev.currentTarget.dataset.type == "zone")
             {
-                ZoneHelpers.applyZoneEffect(ev.currentTarget.dataset.uuid, message.id);
+                ZoneHelpers.promptZoneEffect(ev.currentTarget.dataset.uuid, message.id);
             }
 
             else if (ev.currentTarget.dataset.type == "target")

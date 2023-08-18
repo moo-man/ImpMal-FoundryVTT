@@ -40,15 +40,10 @@ export default class ImpMalUtility
     static getActiveDocumentOwner(document)
     {
         // let document = fromUuidSync(uuid);
-        if (document.documentName != "Actor")
+        if (document.documentName == "Item" && document.isOwned)
         {
             document = document.actor;
         }
-        if (!document)
-        {
-            throw Error("Owning Actor document could not be found");
-        }
-
         let activePlayers = game.users.contents.filter(u => u.active && u.role <= 2); // Not assistant or GM 
         let owningUser;
 

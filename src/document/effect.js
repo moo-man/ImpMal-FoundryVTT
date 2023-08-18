@@ -1,5 +1,6 @@
 import DocumentChoice from "../apps/document-choice";
 import ImpMalScript from "../system/script";
+import { SocketHandlers } from "../system/socket-handlers";
 
 export class ImpMalEffect extends ActiveEffect
 {
@@ -33,6 +34,8 @@ export class ImpMalEffect extends ActiveEffect
         }
         await this._handleItemApplication(data, options, user);
 
+        await this._handleFollowedEffect(data, options);
+
         return await this._handleImmediateScripts(data, options, user);
     }
 
@@ -40,6 +43,7 @@ export class ImpMalEffect extends ActiveEffect
     {
         await super._onDelete(options, user);
         await this.deleteCreatedItems();
+        await this._handleFollowedEffectDeletion();
         for(let script of this.scripts.filter(i => i.trigger == "deleteEffect"))
         {
             await script.execute({options, user});
@@ -159,6 +163,39 @@ export class ImpMalEffect extends ActiveEffect
         }
     }
 
+    async _handleFollowedEffect(data, options)
+    {
+        if (this.parent?.documentName == "Actor" && this.applicationData.options.zoneType == "follow")
+        {
+            let drawing = this.parent.currentZone[0];
+            if (drawing)
+            {
+                let zoneEffects = foundry.utils.deepClone(drawing.document.flags.impmal?.effects || []);
+                this.updateSource({"flags.impmal.following" : this.parent.getActiveTokens()[0]?.document?.uuid});
+                zoneEffects.push(this.toObject());
+
+                // keep ID lets us remove it from the drawing when the source is removed, see _handleFollowedEffectDeletion
+                options.keepId = true;
+                await SocketHandlers.executeOnOwner(drawing.document, "updateDrawing", {uuid: drawing.document.uuid, data : {flags : {impmal: {effects : zoneEffects}}}});
+            }
+        }
+    }
+
+    async _handleFollowedEffectDeletion()
+    {
+        if (this.parent.documentName == "Actor" && this.applicationData.options.zoneType == "follow")
+        {
+            let drawing = this.parent.currentZone[0];
+            if (drawing)
+            {
+                let zoneEffects = foundry.utils.deepClone(drawing.document.flags.impmal?.effects || []);
+                zoneEffects = zoneEffects.filter(i => i._id != this.id);
+                await SocketHandlers.executeOnOwner(drawing.document, "updateDrawing", {uuid: drawing.document.uuid, data : {flags : {impmal: {effects : zoneEffects}}}});
+            }
+        }
+    }
+
+
     /**
      * There is a need to support applying effects TO items, but I don't like the idea of actually
      * adding the document to the item, as it would not work with duration handling modules and 
@@ -252,7 +289,7 @@ export class ImpMalEffect extends ActiveEffect
     determineTransfer()
     {
         let application = this.applicationData;
-        return application.type == "document" && application.options.documentType == "Actor";
+        return (application.type == "document" && application.options.documentType == "Actor") || (application.type == "zone" && application.options.selfZone);
     }
 
     // To be applied, some data needs to be changed
@@ -446,7 +483,9 @@ export class ImpMalEffect extends ActiveEffect
             type : "document",
             options : {
                 documentType : "Actor",
-                zoneType : "target",
+                zoneType : "zone",
+                selfZone : false,
+                keep : false,
                 avoidTest : { 
                     value : "none",
                     script : "",

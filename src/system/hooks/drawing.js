@@ -12,7 +12,7 @@ export default function()
     {
         if (game.user.id == user)
         {
-            ZoneHelpers.checkDrawingUpdate(drawing.object, canvas.tokens.placeables);
+            ZoneHelpers.checkDrawingUpdate(drawing.object);
         }
     });
 }

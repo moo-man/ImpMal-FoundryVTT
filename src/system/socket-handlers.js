@@ -1,3 +1,5 @@
+import ZoneHelpers from "./zone-helpers";
+
 export class SocketHandlers
 {
     static register()
@@ -17,7 +19,7 @@ export class SocketHandlers
     {
         if (game.user.isGM)
         {
-            game.messages.get(id)?.test?.context.addTargetFlags();
+            return game.messages.get(id)?.test?.context.addTargetFlags();
         }
     }
 
@@ -25,7 +27,7 @@ export class SocketHandlers
     {
         if (game.user.isGM)
         {
-            ChatMessage.getSpeakerActor(speaker)?.update(update);
+            return ChatMessage.getSpeakerActor(speaker)?.update(update);
         }
     }
 
@@ -33,7 +35,15 @@ export class SocketHandlers
     {
         if (game.user.isGM)
         {
-            game.messages.get(id)?.update(data);
+            return game.messages.get(id)?.update(data);
+        }
+    }
+
+    static updateDrawing({uuid, data}={})
+    {
+        if (game.user.isGM)
+        {
+            return fromUuidSync(uuid).update(data);
         }
     }
 
@@ -43,7 +53,7 @@ export class SocketHandlers
         {
             ids.forEach(id => 
             {
-                game.messages.get(id)?.test?.evaluate(true);
+                return game.messages.get(id)?.test?.evaluate(true);
             });
         }
     }
@@ -54,7 +64,7 @@ export class SocketHandlers
         {
             fromUuid(documentUuid).then(actor => 
             {
-                actor.setupTestFromItem(itemUuid);
+                return actor.setupTestFromItem(itemUuid);
             });
         }
     }
@@ -63,7 +73,15 @@ export class SocketHandlers
     {
         if (game.user.id == userId)
         {
-            fromUuidSync(actorUuid)?.applyEffect(effectUuids, messageId);
+            return fromUuidSync(actorUuid)?.applyEffect(effectUuids, messageId);
+        }  
+    }
+
+    static applyZoneEffect({effectUuids, drawingUuid, messageId}, userId)
+    {
+        if (game.user.id == userId)
+        {
+            return ZoneHelpers.applyEffectToZone(effectUuids, messageId, fromUuidSync(drawingUuid));
         }  
     }
 
@@ -81,6 +99,10 @@ export class SocketHandlers
     static executeOnOwner(document, type, payload)
     {
         let ownerUser = game.impmal.utility.getActiveDocumentOwner(document);
+        if (game.user.id == ownerUser.id)
+        {
+            return this[type](payload);
+        }
         ui.notifications.notify(game.i18n.format("IMPMAL.SendingSocketRequest", {name : ownerUser.name}));
         SocketHandlers.call(type, payload, ownerUser.id);
     }

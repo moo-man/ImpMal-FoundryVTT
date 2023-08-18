@@ -35,15 +35,33 @@
 
         {{#if (eq applicationData.type "zone")}}
             <div class="form-group">
-                <label>{{localize "IMPMAL.EffectApplicationOptionDocumentType"}}</label>
+                <label>{{localize "IMPMAL.EffectApplicationOptionZoneType"}}</label>
                 <select name="flags.impmal.applicationData.options.zoneType">
                     {{#select applicationData.options.zoneType}}
-                    <option value="target">{{localize "IMPMAL.Target"}}</option>
-                    <option value="self">{{localize "IMPMAL.Self"}}</option>
+                    <option value="zone">{{localize "IMPMAL.ZoneTypeZoneEffect"}}</option>
+                    <option value="tokens">{{localize "IMPMAL.ZoneTypeTokensInZone"}}</option>
+                    <option value="follow">{{localize "IMPMAL.ZoneTypeFollowToken"}}</option>
                     {{/select}}
                 </select>
-                <p class="notes">{{localize "IMPMAL.EffectApplicationOptionDocumentTypeHint"}}</p>
+                <p class="notes">{{{localize "IMPMAL.EffectApplicationOptionZoneTypeHint"}}}</p>
             </div>
+
+            
+            {{#if (eq applicationData.options.zoneType "zone")}}
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.EffectApplicationOptionZoneKeep"}}</label>
+                    <input type="checkbox" name="flags.impmal.applicationData.options.keep" {{checked applicationData.options.keep}}>
+                    <p class="notes">{{localize "IMPMAL.EffectApplicationOptionZoneKeepHint"}}</p>
+                </div>
+            {{/if}}
+
+            {{#if (eq applicationData.options.zoneType "follow")}}
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.EffectApplicationOptionZoneSelf"}}</label>
+                    <input type="checkbox" name="flags.impmal.applicationData.options.selfZone" {{checked flags.impmal.applicationData.options.selfZone}}>
+                    <p class="notes">{{localize "IMPMAL.EffectApplicationOptionZoneSelfHint"}}</p>
+                </div>
+            {{/if}}
         {{/if}}
 
         {{#if (hasProperty this "applicationData.options.avoidTest")}}

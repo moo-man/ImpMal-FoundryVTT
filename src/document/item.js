@@ -40,6 +40,11 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         {
             await this.actor.runScripts("updateDocument");
         }
+
+        // Add a prepared flag to determine if this item has already been prepared
+        // See https://github.com/foundryvtt/foundryvtt/issues/7987
+        this.prepared = false;
+        this.reset();
     }
 
     async _onCreate(data, options, user)
@@ -78,8 +83,6 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         this.system.computeOwnerDerived(this.actor);
         this.runScripts("prepareOwnedData", this);
 
-        // Add a prepared flag to determine if this item has already been prepared
-        // See https://github.com/foundryvtt/foundryvtt/issues/7987
         this.prepared = true;
     }
 
@@ -112,12 +115,14 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     get targetEffects() 
     {
-        return this._getTypedEffects("target");
+        // "follow" type zone effects should be applied to a token, not the zone
+        return this._getTypedEffects("target").concat(this._getTypedEffects("zone").filter(e => e.applicationData.options.zoneType == "follow" && !e.applicationData.options.selfZone));
     }
 
     get zoneEffects() 
     {
-        return this._getTypedEffects("zone");
+        // "follow" type zone effects should be applied to a token, not the zone
+        return this._getTypedEffects("zone").filter(e => e.applicationData.options.zoneType != "follow");
     }
 
     _getTypedEffects(type)

@@ -55,13 +55,7 @@
             <input type="number" value="{{system.combat.wounds.max}}" disabled>
         </div>
     </div>
-    <div class="actor-property">
-        <label class="property-label">{{localize "IMPMAL.CriticalWounds"}}</label>
-        <div class="property-value">
-            <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
-            <input type="number" value="{{system.combat.criticals.max}}" disabled>
-        </div>
-    </div>
+
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Fate"}}</label>
         <div class="property-value">
@@ -69,13 +63,27 @@
             <input type="number" name="system.fate.max" value="{{system.fate.max}}">
         </div>
     </div>
-</div>
-
-<div class="actor-properties">
+    <div class="actor-property">
+        <label class="property-label">{{localize "IMPMAL.Augmetics"}}</label>
+        <div class="property-value">
+            <input type="number" name="system.augmetics.value" value="{{system.augmetics.value}}" disabled>
+            <input type="number" name="system.augmetics.max" value="{{system.augmetics.max}}" disabled>
+        </div>
+    </div>
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Corruption"}}</label>
         <div class="property-value">
             <input type="number" name="system.corruption" value="{{system.corruption}}">
+        </div>
+    </div>
+</div>
+
+<div class="actor-properties">
+    <div class="actor-property">
+        <label class="property-label">{{localize "IMPMAL.CriticalWounds"}}</label>
+        <div class="property-value">
+            <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}" disabled>
+            <input type="number" value="{{system.combat.criticals.max}}" disabled>
         </div>
     </div>
     <div class="actor-property">
@@ -109,7 +117,7 @@
 
 <div class="patron">
     {{#if system.patron.document}}
-    <a class="remove-ref" data-path="system.patron"><i class="fa-solid fa-xmark"></i></a>
+        <a class="remove-ref" data-path="system.patron"><i class="fa-solid fa-xmark"></i></a>
         <img src="{{tokenImg system.patron.document}}">
         <div class="details">
             {{#with system.patron.document as |patron|}}
