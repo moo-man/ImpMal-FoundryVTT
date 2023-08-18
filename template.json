@@ -301,6 +301,10 @@
       "warp" : {
         "charge" : 0,
         "state" : 0
+      },
+      "augmetics" : {
+        "value" : 0,
+        "max" : 0
       }
     },
     "npc": {

@@ -30,6 +30,14 @@
     </div>
 </div>
 
+
+<div class="form-group" data-option="dialog">
+    <label>{{localize "IMPMAL.DIalogModifierSubmissionScript"}}</label>
+    <div>
+        <textarea class="no-ace" {{#unless (isGM)}}disabled{{/unless}} name="submissionScript">{{script.options.dialog.submissionScript}}</textarea>
+    </div>
+</div>
+
 <div class="form-group" data-option="dialog">
     <label>{{localize "IMPMAL.DialogModifierTargeter"}}</label>
     <input name="targeter" type="checkbox" {{checked script.options.dialog.targeter}}>

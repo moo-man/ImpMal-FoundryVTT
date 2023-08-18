@@ -328,7 +328,8 @@ export class BaseTest
             SL : data.SL,       
             state : data.state,   
             reverse : data.reverse,
-            target : data.target
+            target : data.target,
+            other : data.other
         };
     }
 

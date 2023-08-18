@@ -207,6 +207,15 @@ export class TestDialog extends Application
         ev.preventDefault();
         ev.stopPropagation();
         let dialogData = mergeObject(this.data, this.fields);
+
+        for(let script of this.data.scripts)
+        {
+            if (script.isActive)
+            {
+                script.submission(this);
+            }
+        }
+
         if (this.resolve)
         {
             this.resolve(dialogData);
@@ -326,6 +335,7 @@ export class TestDialog extends Application
 
         let dialogData = {data : {}, fields};
         dialogData.data.speaker = ChatMessage.getSpeaker({actor});
+        dialogData.data.other = {}; // Object that scripts can fill in with arbitrary values
         if (!actor.token)
         {
             // getSpeaker retrieves tokens even if this sheet isn't a token's sheet

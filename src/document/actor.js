@@ -11,6 +11,7 @@ import { PowerTest } from "../system/tests/power/power-test";
 import { SkillTest } from "../system/tests/skill/skill-test";
 import { TraitTest } from "../system/tests/trait/trait-test";
 import { WeaponTest } from "../system/tests/weapon/weapon-test";
+import ZoneHelpers from "../system/zone-helpers";
 import { ImpMalEffect } from "./effect";
 import ImpMalDocumentMixin from "./mixin";
 
@@ -408,6 +409,12 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     get currentZoneEffects() 
     {
         return this.effects.contents.filter(e => e.getFlag("impmal", "fromZone"));
+    }
+
+    get currentZone()
+    {
+        let token = this.getActiveTokens()[0];
+        return canvas.drawings.placeables.filter(d => ZoneHelpers.isInDrawing(token.center, d));
     }
 
     /**

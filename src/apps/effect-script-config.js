@@ -42,6 +42,7 @@ export default class EffectScriptConfig extends ScriptConfig
         scriptObject.trigger = formData.trigger;
         setProperty(scriptObject, "options.dialog.hideScript", formData.hideScript);
         setProperty(scriptObject, "options.dialog.activateScript", formData.activateScript);
+        setProperty(scriptObject, "options.dialog.submissionScript", formData.submissionScript);
         setProperty(scriptObject, "options.dialog.targeter", formData.targeter);
         setProperty(scriptObject, "options.immediate.deleteEffect", formData.deleteEffect);
         scriptObject.string = script;

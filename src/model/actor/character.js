@@ -44,6 +44,10 @@ export class CharacterModel extends StandardActorModel
             max : new fields.NumberField({initial: 3}),
             value : new fields.NumberField({initial: 3})
         });
+        schema.augmetics = new fields.SchemaField({
+            max : new fields.NumberField({initial: 0}),
+            value : new fields.NumberField({initial: 0})
+        });
         schema.connections = new fields.EmbeddedDataField(ListModel);
         schema.influence = new fields.EmbeddedDataField(ActorInfluenceModel);
         schema.hands = new fields.EmbeddedDataField(HandsModel);
@@ -93,6 +97,8 @@ export class CharacterModel extends StandardActorModel
     computeDerived(items)
     {
         super.computeDerived(items);
+        this.augmetics.max += this.characteristics.tgh.bonus;
+        this.augmetics.value = items.augmetic.length;
         this.hands.getDocuments(items.all);
         this.origin.getDocument(items.all);
         this.faction.getDocument(items.all);

@@ -37,12 +37,10 @@ export default class ImpMalScript
         {
             try 
             {
-                game.impmal.log("Running Script > " + this.label);
-                return new Function("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + this.options.dialog?.hideScript).bind(this.context)(args);
+                this._runSubscript(args, this.options.dialog?.hideScript, "Hide");
             }
             catch(e)
             {
-                console.error(`Hide Script ${this.label} threw error: ${e}.\n Context and Arguments:`, this.context, args);
                 return false; // Default to not hidden if error
             }
         }
@@ -59,14 +57,35 @@ export default class ImpMalScript
         {
             try 
             {
-                game.impmal.log("Running Script > " + this.label);
-                return new Function("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + this.options.dialog?.activateScript).bind(this.context)(args);
+                this._runSubscript(args, this.options.dialog?.activateScript, "Activate");
             }
             catch(e)
             {
-                console.error(`Activate Script ${this.label} threw error: ${e}.\n Context and Arguments:`, this.context, args);
                 return false; // Default to not activated if error
             }
+        }
+    }
+
+    // Dialog modifiers only
+    submission(args)
+    {
+        if (this.options.dialog?.submissionScript)
+        {
+            this._runSubscript(args, this.options.dialog?.submissionScript, "Submission");
+        }
+    }
+
+    _runSubscript(args, script, name)
+    {
+        try 
+        {
+            game.impmal.log("Running Script > " + this.label);
+            return new Function("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + this.options.dialog?.submissionScript).bind(this.context)(args);
+        }
+        catch(e)
+        {
+            console.error(`${name} Subscript ${this.label} threw error: ${e}.\n Context and Arguments:`, this.context, args);
+            throw e;
         }
     }
 
