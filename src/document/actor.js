@@ -124,15 +124,8 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         {
             return ui.notifications.error("ID " + uuid + " not found");
         }
-        let itemTestData; // Item data for the test
-        if (item.type == "trait")
-        {
-            itemTestData = item.system.test;
-        }
-        else if (item.type == "power")
-        {
-            itemTestData = item.system.opposed;
-        }
+        let itemTestData = item.getTestData();
+
         return this.setupTestFromData(itemTestData, options);
     }
 

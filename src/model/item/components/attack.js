@@ -13,6 +13,7 @@ export class AttackDataModel extends TestDataModel
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.range = new fields.StringField();
         schema.traits = new fields.EmbeddedDataField(TraitListModel);
+        return schema;
     }
 
     computeBase() 

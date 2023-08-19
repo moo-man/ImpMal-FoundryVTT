@@ -29,7 +29,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     }
 
 
-    addCondition(key, {overlay=false, type, origin, create=true}={})
+    addCondition(key, {overlay=false, type, origin, create=true, applicationData={}}={})
     {
         let existing = this.hasCondition(key);
         let effectData;
@@ -50,6 +50,11 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         }
 
         let createData = ImpMalEffect.getCreateData(effectData, overlay);
+        if (!createData.flags.impmal.applicationData)
+        {
+            createData.flags.impmal.applicationData = {};
+        }
+        mergeObject(createData.flags.impmal.applicationData, applicationData);
         createData.origin = origin;
 
 

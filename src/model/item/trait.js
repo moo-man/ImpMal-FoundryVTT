@@ -1,5 +1,6 @@
-import { DamageModel } from "./components/damage";
-import { TraitListModel } from "./components/traits";
+import EnabledMixin from "./components/enabled";
+import { AttackDataModel } from "./components/attack";
+import { TestDataModel } from "./components/test";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
@@ -8,29 +9,8 @@ export class TraitModel extends StandardItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.attack = new fields.SchemaField({
-            enabled : new fields.BooleanField(),
-            type :  new fields.StringField(),
-            difficulty :  new fields.StringField(),
-            characteristic :  new fields.StringField(),
-            skill : new fields.SchemaField({
-                specialisation :  new fields.StringField(),
-                key :  new fields.StringField(),
-            }),
-            damage : new fields.EmbeddedDataField(DamageModel),
-            range : new fields.StringField(),
-            traits : new fields.EmbeddedDataField(TraitListModel)
-        });
-        schema.test = new fields.SchemaField({
-            enabled : new fields.BooleanField(),
-            target :  new fields.StringField(),
-            difficulty :  new fields.StringField(),
-            characteristic :  new fields.StringField(),
-            skill : new fields.SchemaField({
-                specialisation :  new fields.StringField(),
-                key :  new fields.StringField(),
-            }),
-        });
+        schema.attack = new fields.EmbeddedDataField(EnabledMixin(AttackDataModel));
+        schema.test = new fields.EmbeddedDataField(EnabledMixin(TestDataModel));
         schema.roll = new fields.SchemaField({
             enabled : new fields.BooleanField(),
             formula :  new fields.StringField(),

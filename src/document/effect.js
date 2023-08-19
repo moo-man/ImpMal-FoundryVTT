@@ -15,16 +15,16 @@ export class ImpMalEffect extends ActiveEffect
         this.updateSource({"flags.impmal.sourceTest" : game.messages.get(options.message)?.test});
 
         let preventCreation = false;
-        preventCreation = await this._handleEffectAvoidance(data, options, user);
+        preventCreation = await this._handleConditionCreation(data, options, user);
+        if (preventCreation) // Conditions need to be handled before prevention because if it's a condition, it cancels and goes through creation again
+        {
+            return false;
+        }
+        preventCreation = await this._handleEffectPrevention(data, options, user);
         if (preventCreation)
         {
             ui.notifications.notify(game.i18n.format("IMPMAL.EffectAvoided", {name : this.name}));
             return false; // If avoided is true, return false to stop creation
-        }
-        preventCreation = await this._handleConditionCreation(data, options, user);
-        if (preventCreation)
-        {
-            return false;
         }
         preventCreation = await this._handleFilter(data, options, user);
         if (preventCreation)
@@ -105,42 +105,12 @@ export class ImpMalEffect extends ActiveEffect
         }
     }
 
-    async _handleEffectAvoidance()
+    async _handleEffectPrevention()
     {
-        let actor = this.actor;
-
-        // If no owning actor, no test can be done
-        if (!actor)
+        if (this.applicationData.options.avoidTest.prevention)
         {
-            return false;
+            return this.resistEffect();
         }
-
-        let applicationData = this.applicationData;
-
-        // If no test, cannot be avoided
-        if (applicationData.options.avoidTest.value == "none")
-        {
-            return false;
-        }
-
-        let test;
-        let options = {title : {append : " - Avoid " + this.name}};
-        if (applicationData.options.avoidTest.value == "script")
-        {
-            let script = new ImpMalScript({label : this.effect + " Avoidance", string : applicationData.options.avoidTest.script}, ImpMalScript.createContext(this));
-            return await script.execute();
-        }
-        else if (applicationData.options.avoidTest.value == "item")
-        {
-            test = await this.actor.setupTestFromItem(this.item.uuid, options);
-        }
-        else if (applicationData.options.avoidTest.value == "custom")
-        {
-            test = await this.actor.setupTestFromData(this.applicationData.options.avoidTest, options);
-        }
-
-        await test.roll();
-        return test.succeeded;
     }
     
     /** 
@@ -158,7 +128,7 @@ export class ImpMalEffect extends ActiveEffect
         if (this.isCondition && !options.condition) 
         {
             // If adding a condition, prevent it and go through `addCondition`
-            this.parent?.addCondition(this.key, {type : this.flags.impmal?.type, origin: this.origin});
+            this.parent?.addCondition(this.key, {type : this.flags.impmal?.type, origin: this.origin, applicationData : getProperty(data, "flags.impmal.applicationData") || {}});
             return true;
         }
     }
@@ -249,6 +219,54 @@ export class ImpMalEffect extends ActiveEffect
         }
     }
 
+
+    async resistEffect()
+    {
+        let actor = this.actor;
+
+        // If no owning actor, no test can be done
+        if (!actor)
+        {
+            return false;
+        }
+
+        let applicationData = this.applicationData;
+
+        // If no test, cannot be avoided
+        if (applicationData.options.avoidTest.value == "none")
+        {
+            return false;
+        }
+
+        let test;
+        let options = {title : {append : " - Avoid " + this.name}};
+        if (applicationData.options.avoidTest.value == "script")
+        {
+            let script = new ImpMalScript({label : this.effect + " Avoidance", string : applicationData.options.avoidTest.script}, ImpMalScript.createContext(this));
+            return await script.execute();
+        }
+        else if (applicationData.options.avoidTest.value == "item")
+        {
+            test = await this.actor.setupTestFromItem(this.item.uuid, options);
+        }
+        else if (applicationData.options.avoidTest.value == "custom")
+        {
+            test = await this.actor.setupTestFromData(this.applicationData.options.avoidTest, options);
+        }
+
+        await test.roll();
+
+        // If the avoid test is marked as opposed, it has to win, not just succeed
+        if (applicationData.options.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
+        {
+            return test.result.SL > this.getFlag("impmal", "sourceTest").result?.SL;
+        }
+        else 
+        {
+            return test.succeeded;
+        }
+    }
+
     /**
      * Delete all items created by scripts in this effect
      */
@@ -302,6 +320,15 @@ export class ImpMalEffect extends ActiveEffect
         effect.flags.impmal.applicationData.type = "document";
         effect.origin = this.actor?.uuid;
         effect.statuses = [this.key || effect.name.slugify()]; // this.key is prioritized if it's a condition, we don't want ablaze-(minor) as the key, just ablaze
+
+        // When transferred to another actor, effects lose their reference to the item it was in
+        // So if a effect pulls its avoid test from the item data, it can't, so place it manually
+        if (this.applicationData.options.avoidTest.value == "item")
+        {
+            effect.flags.impmal.applicationData.options.avoidTest.value = "custom";
+            mergeObject(effect.flags.impmal.applicationData.options.avoidTest, this.item?.getTestData() || {});
+        }
+
         return effect;
     }
 
@@ -469,7 +496,7 @@ export class ImpMalEffect extends ActiveEffect
         const createData = foundry.utils.deepClone(effectData);
         if ( overlay ) 
         {
-            createData["flags.core.overlay"] = true;
+            createData.flags = {core : {overlay : true}};
         }
         delete createData.id;
         return createData;
@@ -483,11 +510,18 @@ export class ImpMalEffect extends ActiveEffect
             type : "document",
             options : {
                 documentType : "Actor",
+
+                // Zone Properties
                 zoneType : "zone",
                 selfZone : false,
                 keep : false,
+
+                // Test Properties
                 avoidTest : { 
                     value : "none",
+                    opposed : false,
+                    prevention : true,
+                    manual : false,
                     script : "",
                     difficulty : "",
                     characteristic : "",
@@ -496,16 +530,11 @@ export class ImpMalEffect extends ActiveEffect
                         specialisation : ""
                     }
                 },
+
+                // Other
                 enableConditionScript : "",
                 filter : "",
                 prompt : false,
-                consume : false,
-
-                
-                dialog : {
-                    hideScript : "",
-                    activateScript : ""
-                }
             }
         };
     }

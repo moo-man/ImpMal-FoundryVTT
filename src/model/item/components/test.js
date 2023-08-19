@@ -14,4 +14,37 @@ export class TestDataModel extends foundry.abstract.DataModel
         return schema;
     }
 
+    get label()
+    {
+        let config = game.impmal.config;
+        
+        let label = config.characteristics[this.characteristic];
+        
+        // Replace name from characteristic to skill if test specifies
+        if (this.skill.key)
+        {
+            label = config.skills[this.skill.key];
+        }
+        // Add specialisation if available
+        if (this.skill.specialisation)
+        {
+            label += ` (${this.skill.specialisation})`;
+        }
+
+        if (this.difficulty)
+        {
+            let difficulty = game.impmal.config.difficulties[this.difficulty];
+            label = `${difficulty.name} (${difficulty.modifier >= 0 ? "+" : ""}${difficulty.modifier}) ${label}`;
+        }
+
+        return label;
+    }
+
+    
+    get isValid()
+    {
+        return this.difficulty && (this.characteristic || this.skill);
+    }
+
+
 }

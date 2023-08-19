@@ -1,7 +1,7 @@
 <p><strong>{{localize "IMPMAL.WarpChargeGained"}}</strong>: {{context.warpAdded}} {{#if context.pushRoll}} + {{context.pushRoll}} {{/if}}
 
 {{#if succeeded}}
-    {{#if item.system.validOpposed}}
-        <button class="roll" data-type="item" data-uuid="{{item.uuid}}">{{item.system.opposedLabel}}</button>
+    {{#if item.system.opposed.isValid}}
+        <button class="roll" data-type="item" data-uuid="{{item.uuid}}">{{item.system.opposed.label}}</button>
     {{/if}}
 {{/if}}

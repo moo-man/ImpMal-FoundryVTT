@@ -135,7 +135,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
                 if (item.system.test.enabled)
                 {
                     let testClass = item.system.test.target == "self" ? "roll" : "target-test";
-                    let testName = item.system.testLabel("test");
+                    let testName = item.system.test.label;
                     
                     // add crosshairs if not self target
                     if (item.system.test.target == "targets")
@@ -190,7 +190,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
             // testLabel
             if (type == "trait")
             {
-                testLabel = item.system.testLabel("attack");
+                testLabel = item.system.attack.label;
             }
             else if (type == "weapon")
             {

@@ -138,6 +138,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".create-spec").on("click", this._onCreateSpecialisation.bind(this));
         html.find(".warp").on("click", this._onWarpClick.bind(this));
         html.find(".purge").on("click", this._onPurgeClick.bind(this));
+        html.find(".resist-effect").on("click", this._onResistEffect.bind(this));
         html.find(".list-summary-context").on("contextmenu", this._onItemSummary.bind(this));
         html.find(".defending-against").on("mouseover", this._onHoverInAttacker.bind(this));
         html.find(".defending-against").on("mouseout", this._onHoverOutAttacker.bind(this));
@@ -348,6 +349,18 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     _onRemoveOpposed()
     {
         this.actor.clearOpposed();
+    }
+
+    _onResistEffect(ev)
+    {
+        let document = this._getDocument(ev);
+        document?.resistEffect().then(success => 
+        {
+            if (success)
+            {
+                document.delete();
+            }
+        });
     }
 
     async _onItemSummary(ev) 

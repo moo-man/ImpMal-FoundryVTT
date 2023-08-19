@@ -13,6 +13,26 @@
                 {{> systems/impmal/templates/item/partials/item-notes.hbs}}
             </div>
             <div class="tab details" data-tab="details">
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Useable"}}</label>
+                    <div class="form-fields">
+                        <input type="checkbox" name="system.uses.enabled" {{checked system.uses.enabled}}>
+                    </div>
+                </div>
+
+                {{#if system.uses.enabled}}
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Uses"}}</label>
+                    <div class="form-fields">
+                        <label>{{localize "IMPMAL.Value"}}</label>
+                        <input type="number" name="system.uses.value" value={{system.uses.value}}>
+                        <label>{{localize "IMPMAL.Max"}}</label>
+                        <input type="number" name="system.uses.max" value={{system.uses.max}}>
+                    </div>
+                </div>
+                {{/if}}
+
+
                 {{> systems/impmal/templates/item/partials/item-traits.hbs}}
             </div>
             <div class="tab effects" data-tab="effects">

@@ -347,7 +347,7 @@ export class TestDialog extends Application
             dialogData.data.target = target;
         }
 
-        dialogData.data.targets = actor.defendingAgainst ? [] : Array.from(game.user.targets);
+        dialogData.data.targets = actor.defendingAgainst ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
 
         // Collect Dialog effects 
         //   - Don't use our own targeter dialog effects, DO use targets' targeter dialog effects

@@ -1,4 +1,6 @@
+import EnabledMixin from "./components/enabled";
 import { EquippableItemModel } from "./components/equippable";
+import { TestDataModel } from "./components/test";
 import { TraitListModel } from "./components/traits";
 let fields = foundry.data.fields;
 
@@ -9,6 +11,12 @@ export class EquipmentModel extends EquippableItemModel
     {
         let schema = super.defineSchema();
         schema.traits = new fields.EmbeddedDataField(TraitListModel);
+        schema.uses = new fields.SchemaField({
+            value : new fields.NumberField({initial : 0}),
+            max : new fields.NumberField({initial : 0}),
+            enabled : new fields.BooleanField({initial : false}),
+        });
+        schema.test = new fields.EmbeddedDataField(EnabledMixin(TestDataModel));
         return schema;
     }
 

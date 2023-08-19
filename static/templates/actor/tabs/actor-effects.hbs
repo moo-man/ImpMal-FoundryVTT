@@ -18,6 +18,7 @@
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.TemporaryEffects"}}</div>
+        <div></div>
         <div>{{localize "IMPMAL.Source"}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="effect" data-category="temporary"><i class="fa-solid fa-plus"></i></a>
@@ -31,16 +32,19 @@
                         <img src="{{this.icon}}">
                         <a class="list-edit">{{this.name}}</a>
                     </div>
-                    <div>
-                    {{#if (eq this.actor.type "patron")}}
-                        <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
-                    {{else if this.item}}
-                        <a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
-                    {{else if this.flags.impmal.fromZone}}
-                        <i class="fa-solid fa-game-board-simple"></i>{{this.source}}
-                    {{else}}
-                        {{this.source}}
+                    {{#if this.applicationData.options.avoidTest.manual}}
+                    <button class="resist-effect">Resist</button>
                     {{/if}}
+                    <div>
+                        {{#if (eq this.actor.type "patron")}}
+                            <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                        {{else if this.item}}
+                            <a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
+                        {{else if this.flags.impmal.fromZone}}
+                            <i class="fa-solid fa-game-board-simple"></i>{{this.source}}
+                        {{else}}
+                            {{this.source}}
+                        {{/if}}
                     </div>
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>

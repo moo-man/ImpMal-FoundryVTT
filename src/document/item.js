@@ -108,6 +108,21 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         }
     }
 
+
+    getTestData() 
+    {
+        let itemTestData = {};
+        if (["trait", "talent", "equipment"].includes(this.type))
+        {
+            itemTestData = this.system.test.toObject();
+        }
+        else if (this.type == "power")
+        {
+            itemTestData = this.system.opposed.toObject();
+        }
+        return itemTestData; 
+    }
+
     get damageEffects() 
     {
         return this._getTypedEffects("damage");

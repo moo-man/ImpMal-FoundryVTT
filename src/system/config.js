@@ -858,7 +858,6 @@ const IMPMAL = {
             name: "IMPMAL.ConditionUnconscious",
             flags : {
                 impmal : {
-                    type : "major",
                     scriptData : [
                         {
                             label: "Prone and Incapacitated",

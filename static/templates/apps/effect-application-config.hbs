@@ -81,6 +81,29 @@
                 <p class="notes">{{localize "IMPMAL.EffectApplicationOptionAvoidTestHint"}}</p>
             </div>
 
+            {{#unless (eq applicationData.options.avoidTest.value "script")}}
+                {{#unless (eq applicationData.options.avoidTest.value "none")}}
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.Opposed"}}</label>
+                        <input type="checkbox" name="flags.impmal.applicationData.options.avoidTest.opposed" {{checked
+                            flags.impmal.applicationData.options.avoidTest.opposed}}>
+                    </div>
+                {{/unless}}
+            {{/unless}}
+
+            {{#unless (eq applicationData.options.avoidTest.value "none")}}
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Prevention"}}</label>
+                    <input type="checkbox" name="flags.impmal.applicationData.options.avoidTest.prevention" {{checked applicationData.options.avoidTest.prevention}}>
+                    <p class="notes">{{{localize "IMPMAL.EffectApplicationOptionAvoidTestPrevention"}}}</p>
+                </div>
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Manual"}}</label>
+                    <input type="checkbox" name="flags.impmal.applicationData.options.avoidTest.manual" {{checked applicationData.options.avoidTest.manual}}>
+                    <p class="notes">{{{localize "IMPMAL.EffectApplicationOptionAvoidTestManual"}}}</p>
+                </div>
+            {{/unless}}
+
             {{#if (eq applicationData.options.avoidTest.value "custom")}}
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Difficulty"}}</label>

@@ -432,6 +432,9 @@ export class BaseTest
 
         html.on("click", ".roll", ev => 
         {
+            let el = $(ev.currentTarget);
+            let message = game.messages.get(el.parents(".message").attr("data-message-id"));
+            let test = message.test;
             let uuid = ev.currentTarget.dataset.uuid;
             let actors = [];
             if (game.user.character)
@@ -443,9 +446,18 @@ export class BaseTest
                 actors = canvas.tokens.controlled.map(t => t.actor);
             }
 
-            actors.forEach(a => 
+            let effects = (test.item?.targetEffects || []).filter(e => e.applicationData.options.avoidTest?.opposed);
+
+            actors.forEach(async a => 
             {
-                a.setupTestFromItem(uuid);
+                if (effects.length)
+                {
+                    await a.applyEffect(effects.map(e => e.uuid), test.message.id);
+                }
+                else 
+                {
+                    a.setupTestFromItem(uuid);
+                }
             });
         });
     }

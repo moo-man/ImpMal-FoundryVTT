@@ -3,9 +3,9 @@ import { TestDataModel } from "./components/test";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
-export class PowerModel extends StandardItemModel 
+export class PowerModel extends StandardItemModel
 {
-    static defineSchema() 
+    static defineSchema()
     {
         let schema = super.defineSchema();
         schema.discipline = new fields.StringField();
@@ -21,12 +21,12 @@ export class PowerModel extends StandardItemModel
         schema.xp = new fields.NumberField({initial : 0, min: 0});
         return schema;
     }
-    
+
     getSkill(actor)
     {
         let skill = "psychic";
         let skillObject = actor.system.skills[skill];
-        let discipline = this.discipline == "minor" ? this.minorSpecialisation : this.discipline;  
+        let discipline = this.discipline == "minor" ? this.minorSpecialisation : this.discipline;
         let skillItem = skillObject.specialisations.find(i => i.name == game.impmal.config.disciplines[discipline]);
 
         return skillItem ?? skill;
@@ -39,27 +39,16 @@ export class PowerModel extends StandardItemModel
         {
             this.xp = 60;
         }
-        else 
+        else
         {
             this.xp = 100;
         }
     }
 
-    computeOwnerDerived(actor) 
+    computeOwnerDerived(actor)
     {
         this.skill = this.getSkill(actor);
         this.damage.compute(actor);
-    }
-
-    get validOpposed()
-    {
-        let opposed = this.opposed;
-        return opposed.difficulty && (opposed.characteristic || opposed.skill);
-    }
-
-    get opposedLabel()
-    {
-        return this.testLabel("opposed");
     }
 
     summaryData()
@@ -67,11 +56,11 @@ export class PowerModel extends StandardItemModel
         let data = super.summaryData();
         let config = game.impmal.config;
         data.tags = data.tags.concat([
-            config[this.discipline], 
-            `WR: ${this.rating}`, 
-            config[this.range], 
-            this.target, 
-            config[this.duration], 
+            config[this.discipline],
+            `WR: ${this.rating}`,
+            config[this.range],
+            this.target,
+            config[this.duration],
             game.i18n.format("IMPMAL.ItemDisplayXDamage", {damage : this.damage.value})]);
         return data;
     }
