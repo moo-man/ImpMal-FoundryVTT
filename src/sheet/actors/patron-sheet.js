@@ -16,6 +16,10 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
         if (!game.user.isGM)
         {
             data.items.boonLiability = data.items.boonLiability.filter(i => i.system.visible);
+            for(let faction in data.system.influence.factions)
+            {
+                data.system.influence.factions[faction].hide = data.system.influence.factions[faction].hidden;
+            }
         }
 
         data.effects = this.actor.effects.contents.concat(this.actor.items.reduce((prev, current) => prev.concat(current.effects.contents), []));
@@ -26,9 +30,20 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
     activateListeners(html) 
     {
         super.activateListeners(html);
+        html.find(".faction-visibility").on("click", this._onFactionToggle.bind(this));
         if (!this.isEditable)
         {
             return;
         }
+    }
+
+    _onFactionToggle(ev)
+    {
+        ev.stopPropagation();
+        let path = this._getPath(ev);
+        let faction = this._getType(ev);
+
+        this.object.update(getProperty(this.object, path).toggleFactionVisibility(faction, path));
+
     }
 }

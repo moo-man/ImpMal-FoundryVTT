@@ -590,7 +590,19 @@
         "notes",
         "equipped",
         "physical"
-      ]
+      ],
+      "uses" : {
+        "value" : 0,
+        "max" : 0
+      },
+      "test" : {
+        "difficulty" : "challenging",
+        "characteristic" : "",
+        "skill" : {
+          "key" : "",
+          "specialisation" : ""
+        }
+      }
     },
     "augmetic": {
       "templates": [

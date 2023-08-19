@@ -309,6 +309,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
 
     _onFactionDelete(ev)
     {
+        ev.stopPropagation();
         let path = this._getPath(ev);
         let faction = this._getType(ev);
 

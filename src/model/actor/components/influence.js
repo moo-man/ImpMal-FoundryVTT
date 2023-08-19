@@ -5,7 +5,7 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.factions = new fields.ObjectField(); // {"adeptus-mechanicus : {name : "Adeptus Mechanices", sources : [{value: 1, reason : ""}] modifier : 0, effects : [], items : [], notes : ""}}
+        schema.factions = new fields.ObjectField(); // {"adeptus-mechanicus : {name : "Adeptus Mechanices", sources : [{value: 1, reason : ""}] modifier : 0, effects : [], items : [], notes : "", hidden : false (patron only)}}
         schema.usePatron = new fields.BooleanField({initial: false});
         return schema;
     }
@@ -98,21 +98,23 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
             return;
         }
 
+        // If using patron influence, override any character influence IF the faction is visible
         for(let faction in patronInfluence.factions)
         {
-            if (!this.factions[faction] || this.factions[faction].total < patronInfluence.factions[faction].total)
+            let replacementFaction = foundry.utils.deepClone(patronInfluence.factions[faction]);
+            if (replacementFaction.hidden)
             {
-                let replacementFaction = foundry.utils.deepClone(patronInfluence.factions[faction]);
-                this.factions[faction] = {
-                    name : replacementFaction.name,
-                    patron : true,
-                    total : replacementFaction.total,
-                    sources : [{value : replacementFaction.total, reason : "Patron"}],
-                    items : [],
-                    effects: [],
-                    notes : replacementFaction.notes
-                };
+                continue;
             }
+            this.factions[faction] = {
+                name : replacementFaction.name,
+                patron : true,
+                total : replacementFaction.total,
+                sources : [{value : replacementFaction.total, reason : "Patron"}],
+                items : [],
+                effects: [],
+                notes : replacementFaction.notes
+            };
         }
 
     }
@@ -120,7 +122,7 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
 
     createFaction(name, path) 
     {
-        let factions = duplicate(this.factions);
+        let factions = foundry.utils.deepClone(this.factions);
 
         // Only add if doesn't exist
         if (!factions[name])
@@ -130,6 +132,23 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
         
         return {[`${path}.factions`] : factions};
     }  
+
+    toggleFactionVisibility(name, path) 
+    {
+        let factions = foundry.utils.deepClone(this.factions);
+
+        if (!factions[name])
+        {
+            return {};
+        }
+        else 
+        {
+            factions[name].hidden = !factions[name].hidden;
+        }
+        
+        return {[`${path}.factions`] : factions};
+    }  
+
 
     deleteFaction(name, path) 
     {

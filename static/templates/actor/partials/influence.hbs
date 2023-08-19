@@ -18,6 +18,7 @@
     </header>
     <div class="list-content">
         {{#each factions}}
+        {{#unless this.hide}}
             <div class="list-item no-drag" data-type="{{@key}}">
                 <div class="list-row">
                     <div>
@@ -32,6 +33,15 @@
                         </div>
                     {{/if}}
                     <div class="list-controls single">
+                        <a class="faction-visibility">
+                            {{#unless ../isCharacter}}
+                                {{#if this.hidden}}
+                                    <i class="fa-solid fa-eye-slash"></i>
+                                {{else}}
+                                    <i class="fa-solid fa-eye"></i>
+                                {{/if}}
+                            {{/unless}}
+                        </a>
                         <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
                     </div>
                 </div>
@@ -84,6 +94,7 @@
 
                 </div>
             </div>
+            {{/unless}}
         {{/each}}
     </div>
 </section>
