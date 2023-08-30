@@ -283,7 +283,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         });
 
 
-        return {html: elements.join(""), show : data.items.weapon.length > 0};
+        return {html: elements.join(""), show : elements.length > 0};
     }
 
     async _formatPossessions(data)

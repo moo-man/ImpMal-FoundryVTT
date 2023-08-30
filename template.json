@@ -377,8 +377,10 @@
         }
       },
       "notes": {
-        "player": "",
-        "gm": ""
+        "notes" : {
+          "player": "",
+          "gm": ""
+        }
       },
       "influence": {
         "influence": {
@@ -657,7 +659,6 @@
       "attack" : {
         "enabled" : false,
         "type" : "melee",
-        "difficulty" : "challenging",
         "characteristic" : "",
         "skill" : {
           "key" : "",

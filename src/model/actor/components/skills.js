@@ -63,7 +63,7 @@ export class SkillModel extends foundry.abstract.DataModel
     {
         let schema = {};
         schema.characteristic = new fields.StringField();
-        schema.advances = new fields.NumberField({min: 0, max: 4, initial: 0});
+        schema.advances = new fields.NumberField({min: 0, initial: 0});
         schema.modifier = new fields.NumberField({initial : 0});
         return schema;
     }

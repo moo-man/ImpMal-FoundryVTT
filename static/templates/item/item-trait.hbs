@@ -43,20 +43,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>{{localize "IMPMAL.Difficulty"}}</label>
-                        <div class="form-fields">
-                            <select name="system.attack.difficulty">
-                                {{#select system.attack.difficulty}}
-                                    {{#each (config "difficulties")}}
-                                        <option value="{{@key}}">{{this.name}} ({{numberFormat this.modifier
-                                            sign=true}})
-                                        </option>
-                                    {{/each}}
-                                {{/select}}
-                            </select>
-                        </div>
-                    </div>
 
 
                     <div class="form-group">

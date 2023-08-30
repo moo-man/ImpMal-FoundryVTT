@@ -9,6 +9,7 @@ export class AttackDataModel extends TestDataModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
+        delete schema.difficulty; // Attacks don't need to define difficulty
         schema.type = new fields.StringField();
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.range = new fields.StringField();
