@@ -65,6 +65,7 @@
                         height: 26px;
                         line-height: 24px;
                         padding: 1px 3px;
+                        white-space: nowrap;
                     }
 
                     input {
@@ -178,10 +179,13 @@
 
             button {
                 line-height: 10px;
-                width: 80px;
-                height: 20px;
+                width: 60px;
+                height: 25px;
                 margin: 10px;
                 font-size: var(--font-size-12);
+                i {
+                    margin: 0px;
+                }
             }
         }
 

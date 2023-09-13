@@ -25,7 +25,9 @@
                             </div>
                         </div>
                         <div class="summary">
-                            {{{this.system.notes.gm}}}
+                            {{#if (isGM)}}
+                                {{{this.system.notes.gm}}}
+                            {{/if}}
                             {{{this.system.notes.player}}}
                         </div>
                     </div>
@@ -59,7 +61,9 @@
                             </div>
                         </div>
                         <div class="summary">
-                            {{{this.system.notes.gm}}}
+                            {{#if (isGM)}}
+                                {{{this.system.notes.gm}}}
+                            {{/if}}
                             {{{this.system.notes.player}}}
                         </div>
                     </div>

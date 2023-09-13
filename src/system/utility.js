@@ -63,4 +63,28 @@ export default class ImpMalUtility
         }
         return owningUser;
     }
+
+    static async tableToHTML(table, label, options=[]) 
+    {
+        let noCenter = options.includes("no-center");
+        return await TextEditor.enrichHTML(`<table class="impmal">
+        <thead>
+        <tr class="title"><td colspan="2">${table.name}</td></tr>
+        <tr class="subheader">
+            <td class="formula">${table.formula}</td>
+            <td class="label">${label}</td>
+        </tr>
+        </thead>
+        <tbody class="${noCenter ? "no-center" : ""}">
+    ${table.results.map(r => 
+    {
+        return `<tr>
+            <td>${r.range[0] == r.range[1] ? r.range[0] : `${r.range[0]}–${r.range[1]}`}</td>
+            <td>${r.type == 1 ? `@UUID[${r.documentCollection}.${r.documentId}]` : r.text}</td>
+            </tr>`;
+    }).join("")}
+
+        </tbody>
+    </table>`, {relativeTo : table, async: true});
+    }
 }

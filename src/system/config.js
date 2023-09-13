@@ -1,3 +1,5 @@
+import ImpMalUtility from "./utility";
+
 const IMPMAL = {
     characteristics : {
         ws : "IMPMAL.WeaponSkill",
@@ -1334,5 +1336,26 @@ const IM_CONFIG = {
         },
     ]
 };
+
+
+CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
+    {
+        pattern : /@TableHTML\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : async (match) => 
+        {
+            let table = await fromUuid(match[1]);
+            let options = match[2].split(",").map(i => i.trim());
+            let label = options[0];
+            if (table)
+            {
+                return $(await ImpMalUtility.tableToHTML(table, label, options))[0];
+            }
+            else 
+            {
+                return `Error - Table ${match[0]} not Found`;
+            }
+        }
+    }
+]);
 
 export {IMPMAL, IM_CONFIG};

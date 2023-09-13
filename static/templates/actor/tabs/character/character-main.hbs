@@ -42,32 +42,25 @@
 </table>
 
 <div class="actor-properties">
+    <div class="actor-property bounded">
+        <label class="property-label">{{localize "IMPMAL.Augmetics"}}</label>
+        <div class="property-value">
+            <input type="number" name="system.augmetics.value" value="{{system.augmetics.value}}" disabled>
+            <input type="number" name="system.augmetics.max" value="{{system.augmetics.max}}" disabled>
+        </div>
+    </div>
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Initiative"}}</label>
         <div class="property-value">
             <input type="number" value="{{system.combat.initiative}}" disabled>
         </div>
     </div>
-    <div class="actor-property">
-        <label class="property-label">{{localize "IMPMAL.Wounds"}}</label>
-        <div class="property-value">
-            <input type="number" name="system.combat.wounds.value" value="{{system.combat.wounds.value}}">
-            <input type="number" value="{{system.combat.wounds.max}}" disabled>
-        </div>
-    </div>
 
-    <div class="actor-property">
+    <div class="actor-property bounded">
         <label class="property-label">{{localize "IMPMAL.Fate"}}</label>
         <div class="property-value">
             <input type="number" name="system.fate.value" value="{{system.fate.value}}">
             <input type="number" name="system.fate.max" value="{{system.fate.max}}">
-        </div>
-    </div>
-    <div class="actor-property">
-        <label class="property-label">{{localize "IMPMAL.Augmetics"}}</label>
-        <div class="property-value">
-            <input type="number" name="system.augmetics.value" value="{{system.augmetics.value}}" disabled>
-            <input type="number" name="system.augmetics.max" value="{{system.augmetics.max}}" disabled>
         </div>
     </div>
     <div class="actor-property">
@@ -76,17 +69,7 @@
             <input type="number" name="system.corruption" value="{{system.corruption}}">
         </div>
     </div>
-</div>
-
-<div class="actor-properties">
-    <div class="actor-property">
-        <label class="property-label">{{localize "IMPMAL.CriticalWounds"}}</label>
-        <div class="property-value">
-            <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}" disabled>
-            <input type="number" value="{{system.combat.criticals.max}}" disabled>
-        </div>
-    </div>
-    <div class="actor-property">
+        <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Handed"}}</label>
         <select name="system.handed">
             {{#select system.handed}}
@@ -95,20 +78,44 @@
             {{/select}}
         </select>
     </div>
-    <div class="actor-property">
-        <label class="property-label">{{localize "IMPMAL.XP"}}</label>
+
+</div>
+
+<div class="actor-properties">
+
+    <div class="actor-property bounded">
+        <label class="property-label">{{localize "IMPMAL.Wounds"}}</label>
+        <div class="property-value">
+            <input type="number" name="system.combat.wounds.value" value="{{system.combat.wounds.value}}">
+            <input type="number" value="{{system.combat.wounds.max}}" disabled>
+        </div>
+    </div>
+
+    <div class="actor-property bounded">
+        <label class="property-label">{{localize "IMPMAL.CriticalWounds"}}</label>
+        <div class="property-value">
+            <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}"
+                disabled>
+            <input type="number" value="{{system.combat.criticals.max}}" disabled>
+        </div>
+    </div>
+
+    <div class="actor-property flex2">
         <div class="xp property-value">
             <div>
-                <input type="number" value="{{system.xp.available}}" disabled>
+                <label>{{localize "IMPMAL.XP"}}</label>
+            </div>
+            <div>
                 <label>{{localize "IMPMAL.Available"}}</label>
+                <input type="number" value="{{system.xp.available}}" disabled>
             </div>
             <div>
-                <input type="number" value="{{system.xp.spent}}" disabled>
                 <label>{{localize "IMPMAL.Spent"}}</label>
+                <input type="number" value="{{system.xp.spent}}" disabled>
             </div>
             <div>
-                <input type="number" value="{{system.xp.total}}" name="system.xp.total">
                 <label>{{localize "IMPMAL.Total"}}</label>
+                <input type="number" value="{{system.xp.total}}" name="system.xp.total">
             </div>
         </div>
     </div>
@@ -124,20 +131,20 @@
                 <label class="name">{{patron.name}}</label>
                 <div>
                     <div class="group">
-                        <div>{{patron.system.faction.name}}</div>
                         <label>{{localize "IMPMAL.Faction"}}</label>
+                        <div>{{patron.system.faction.name}}</div>
                     </div>
                     <div class="group">
-                        <div>{{patron.system.duty.name}}</div>
                         <label>{{localize "IMPMAL.Duty"}}</label>
+                        <div>{{patron.system.duty.name}}</div>
                     </div>
                     <div class="group">
-                        <div>{{patron.system.motivation}}</div>
                         <label>{{localize "IMPMAL.Motivation"}}</label>
+                        <div>{{patron.system.motivation}}</div>
                     </div>
                     <div class="group">
-                        <div>{{patron.system.demeanor}}</div>
                         <label>{{localize "IMPMAL.Demeanor"}}</label>
+                        <div>{{patron.system.demeanor}}</div>
                     </div>
                 </div>
             {{/with}}
