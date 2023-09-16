@@ -44,6 +44,10 @@
         text-align: center;
     }
 
+    nav.sheet-tabs .item {
+        padding: 8px 12px; // Foundry defines this but only in .sheet class applications
+    }
+
     section.list {
         display: flex;
         flex-direction: column;
@@ -75,7 +79,7 @@
                 display: flex;
                 align-items: center;
                 text-align: unset;
-                > * {
+                > *:not(img) {
                     margin: 0px 5px;
                 }
             }

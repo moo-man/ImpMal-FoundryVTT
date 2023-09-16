@@ -81,7 +81,13 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     {
         if (data.actor.system.combat?.hitLocations)
         {
-            return Object.values(data.actor.system.combat.hitLocations)
+            let locations = foundry.utils.deepClone(data.actor.system.combat.hitLocations);
+            return Object.keys(locations)
+                .map(i => 
+                {
+                    data.actor.system.combat.hitLocations[i].key = i;
+                    return data.actor.system.combat.hitLocations[i];
+                })
                 .sort((a, b) => a.range[0] - b.range[0])
                 .map(i =>
                 {
@@ -144,11 +150,12 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".defending-against").on("mouseout", this._onHoverOutAttacker.bind(this));
         html.find(".defending-against").on("click", this._onClickAttacker.bind(this));
         html.find(".defending-against .remove-opposed").on("click", this._onRemoveOpposed.bind(this));
-        html.find(".influence .list-content .list-item").on("click", this._onToggleInfluence.bind(this));
+        html.find(".influence .faction-expand").on("click", this._onToggleInfluence.bind(this));
         html.find(".influence-source button").on("click", this._onInfluenceSourceCreate.bind(this));
         html.find(".influence-source input").on("change", this._onInfluenceSourceEdit.bind(this));
         html.find(".influence-source .source-delete").on("click", this._onInfluenceSourceDelete.bind(this));
         html.find(".influence-source button,input,.source-delete").click(ev => ev.stopPropagation());
+        html.find(".location").on("click", this._toggleLocationDropdown.bind(this));
     }
 
 
@@ -398,9 +405,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     _onToggleInfluence(ev)
     {
         let target = ev.currentTarget;
-        let sources = $(target).parents(".influence-source");
-        if (sources.length == 0) {sources = $(target).children(".influence-source");}
-        let handle = sources.siblings(".handle")[0];
+        let sources = $(target).parents(".list-item").find(".influence-source");
         let faction = this._getType(ev);
 
         if (sources.hasClass("collapsed"))
@@ -410,15 +415,15 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
                 start: () => sources.css("display", "flex")
             });
 
+            sources.toggleClass("expanded");
             sources.toggleClass("collapsed");
-            handle.classList.add("active");
             this.factionsExpanded[faction] = true;
         }
         else 
         {
             sources.slideUp(200);
             sources.toggleClass("collapsed");
-            handle.classList.remove("active");
+            sources.toggleClass("expanded");
             delete this.factionsExpanded[faction];
         }
     }
@@ -451,6 +456,37 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         ev.stopPropagation();
         let faction = this._getType(ev);
         this.actor.update({"system.influence" : this.actor.system.influence.addSource(faction)});
+    }
+
+    // _onHoverInLocation (ev) 
+    // {
+    //     console.log("HOVERIN");
+    //     let details = $(ev.currentTarget).find(".location-details");
+    //     details.slideDown(200);
+    //     details.removeClass("collapsed");
+        
+    // }
+    // async _onHoverOutLocation (ev) 
+    // {
+    //     console.log("HOVEROUT");
+    //     await game.impmal.utility.sleep(1000);
+    //     let details = $(ev.currentTarget).find(".location-details");
+    //     details.slideUp(200);
+    //     details.addClass("collapsed");
+    // }
+
+    _toggleLocationDropdown(ev)
+    {
+        let details = $(ev.currentTarget).find(".location-details");
+        if (details.hasClass("collapsed"))
+        {
+            details.slideDown(200);
+        }
+        else 
+        {
+            details.slideUp(200);
+        }
+        details.toggleClass("collapsed");
     }
 
     //#endregion

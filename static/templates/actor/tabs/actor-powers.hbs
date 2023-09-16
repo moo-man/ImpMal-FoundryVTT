@@ -1,11 +1,13 @@
 <div class="warp-charge">
-    <label>{{localize "IMPMAL.WarpCharge"}}</label>
-    <div>
-        <input type="number" value="{{system.warp.charge}}" name="system.warp.charge">
-        <input type="number" value="{{system.warp.threshold}}" disabled>
+    <div class="actor-property">
+        <label class="property-label">{{localize "IMPMAL.WarpCharge"}}</label>
+        <div class="property-value">
+            <input type="number" value="{{system.warp.charge}}" name="system.warp.charge">
+            <input type="number" value="{{system.warp.threshold}}" disabled>
+        </div>
     </div>
     <div class="bar-section">
-        <div class="bar-container">
+        <div class="bar-container state{{system.warp.state}}">
             <div class="bar" style="width : {{pct system.warp.charge system.warp.threshold}}%"></div>
             <div class="perils">
                 {{#if (eq system.warp.state 1)}}
@@ -41,7 +43,7 @@
                     <div class="small">{{this.system.rating}}</div>
                     <div>
                         {{#with (configLookup "difficulties" this.system.difficulty)}}
-                            {{this.name}} ({{numberFormat this.modifier sign=true}})
+                            {{numberFormat this.modifier sign=true}}
                         {{/with}}
                     </div>
                     <div>{{configLookup "powerRanges" this.system.range}}</div>

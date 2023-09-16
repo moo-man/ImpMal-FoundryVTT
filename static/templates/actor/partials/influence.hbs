@@ -21,9 +21,9 @@
         {{#unless this.hide}}
             <div class="list-item no-drag" data-type="{{@key}}">
                 <div class="list-row">
-                    <div>
-                        <input type="text" value="{{this.name}}" disabled>
-                    </div>
+                    <a class="faction-name faction-expand">
+                        {{this.name}}
+                    </a>
                     <div class="small">
                         <input type="number" value="{{this.total}}" disabled>
                     </div>
@@ -45,7 +45,7 @@
                         <a class="faction-delete"><i class="fa-solid fa-xmark"></i></a>
                     </div>
                 </div>
-                <div class="{{#unless (lookup ../factionsExpanded @key)}}collapsed{{/unless}} influence-source">
+                <div class="{{#if (lookup ../factionsExpanded @key)}}expanded{{else}}collapsed{{/if}} influence-source">
                     {{#each this.items}}
                         <div class="list-row">
                             <div></div>
@@ -90,9 +90,9 @@
                     <button type="button"><i class="fa-solid fa-plus"></i></button>
                     {{/unless}}
                 </div>
-                <div class="handle">
+                {{!-- <div class="handle">
 
-                </div>
+                </div> --}}
             </div>
             {{/unless}}
         {{/each}}

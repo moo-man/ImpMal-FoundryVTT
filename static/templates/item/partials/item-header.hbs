@@ -1,31 +1,29 @@
 <header>
     <div class="item-image">
-        <img src="{{item.img}}" data-edit="img">
         {{item.typeLabel}}
+        <img src="{{item.img}}" data-edit="img">
     </div>
     <div class="header-details">
-        <div class="details-row">
+        <div class="details-row name">
             <div class="detail-group">
-                <h3><input type="text" name="name" value="{{item.name}}"></h3>
+                <input type="text" name="name" value="{{item.name}}">
             </div>
         </div>
         {{#if isPhysical}}
             <div class="details-row">
-                <div class="detail-group inline">
+                <div class="detail-group">
                     <label>{{localize "IMPMAL.Qty."}}</label>
                     <input type="number" name="system.quantity" value="{{system.quantity}}">
                 </div>
-                <div class="detail-group inline">
+                <div class="detail-group">
                     <label>{{localize "IMPMAL.Cost"}}</label>
                     <input type="number" name="system.cost" value="{{system.cost}}">
                 </div>
-            </div>
-            <div class="details-row">
                 <div class="detail-group">
                     <label>{{localize "IMPMAL.Enc."}}</label>
                     <div class="flexrow">
                         <input type="number" name="system.encumbrance.value" value="{{system.encumbrance.value}}">
-                        <input type="number" value="{{item.system.encumbrance.total}}" disabled>
+                        {{!-- <input type="number" value="{{item.system.encumbrance.total}}" disabled> --}}
                     </div>
                 </div>
                 <div class="detail-group">

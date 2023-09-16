@@ -517,6 +517,7 @@
     "IMPMAL.TotalCover" : "Total Cover",
     "IMPMAL.Toughness" : "Toughness",
     "IMPMAL.Traits" : "Traits",
+    "IMPMAL.TraitsT" : "T",
     "IMPMAL.TraitTest" : "{trait} Test",
     "IMPMAL.TraitsAdded" : "Traits Added",
     "IMPMAL.TraitsRemoved" : "Traits Removed",

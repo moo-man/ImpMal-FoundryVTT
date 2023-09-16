@@ -8,9 +8,6 @@
     .sheet-tabs {
         display : flex;
         justify-content: space-around;
-        border-top: 1px solid #555;
-        border-bottom: 1px solid #555;
-        padding: 5px 0px;
     }
 
     .advancement-list {
@@ -55,9 +52,9 @@
 
     .advancement-info {
         display: flex;
-        font-size: 24px;
+        font-size: var(--font-size-24);
         align-items: center;
-        height: 50px;
+        height: 40px;
         justify-content: space-evenly;
         text-align: center;
 
