@@ -1,0 +1,45 @@
+.journal-entry-page,
+.editor-content {
+    .journal-image {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        img {
+            border: none;
+            object-fit: contain;
+        }
+        &.centered {
+            align-items: center;
+        }
+        &.fit img {
+            width: 100%;
+        }
+
+        &.float-right,
+        &.float-left {
+          display: unset;
+          width: unset;
+        }
+
+        &.float-right > *{
+            float: right;
+        }
+
+        &.float-left > * {
+            float: left;
+        }
+
+
+        &.flip img {
+            transform: scaleX(-1);
+        }
+      }   
+      
+      .gallery {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+
+      }
+}
