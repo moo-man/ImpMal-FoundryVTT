@@ -903,7 +903,7 @@ const IMPMAL = {
                             "string": `
                             if (args.opposed && args.opposed.attackerTest.item?.system.isRanged)
                             {
-                                args.modifiers.push({value : -2, label : this.effect.label, armour : true})
+                                args.modifiers.push({value : -2, label : this.effect.name, armour : true})
                             }`,
                             "trigger": "preTakeDamage"
                         }
@@ -924,7 +924,7 @@ const IMPMAL = {
                             "string": `
                             if (args.opposed && args.opposed.attackerTest.item?.system.isRanged)
                             {
-                                args.modifiers.push({value : -4, label : this.effect.label, armour : true})
+                                args.modifiers.push({value : -4, label : this.effect.name, armour : true})
                             }`,
                             "trigger": "preTakeDamage"
                         }
@@ -945,7 +945,7 @@ const IMPMAL = {
                             "string": `
                             if (args.opposed && args.opposed.attackerTest.item?.system.isRanged)
                             {
-                                args.modifiers.push({value : -6, label : this.effect.label, armour : true})
+                                args.modifiers.push({value : -6, label : this.effect.name, armour : true})
                             }`,
                             "trigger": "preTakeDamage"
                         }

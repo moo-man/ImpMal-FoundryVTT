@@ -6,7 +6,7 @@ export default function()
     {
         if (ev.key == "F12")
         {
-            console.log(`%c+++|Welcome, Tech Priest|+++`, "color: #1c3132;background: #CCC;font-weight:bold");
+            console.log(`%c+++|Welcome, Tech Priest|+++`, "color: #DDD;background: #065c63;font-weight:bold");
         }
     });
 

@@ -50,6 +50,10 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         }
 
         let createData = ImpMalEffect.getCreateData(effectData, overlay);
+        if (!createData.flags)
+        {
+            createData.flags = {impmal : {} };
+        }
         if (!createData.flags.impmal.applicationData)
         {
             createData.flags.impmal.applicationData = {};

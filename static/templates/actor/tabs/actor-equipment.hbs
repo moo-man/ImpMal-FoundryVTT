@@ -10,7 +10,7 @@
     <div class="bar-section">
         <div class="bar-container">
             <div class="threshold" style="margin-left: {{pct system.encumbrance.overburdened system.encumbrance.restrained}}%"></div>
-            <div class="bar" style="width : {{pct system.encumbrance.value system.encumbrance.restrained}}%"></div>
+            <div class="bar state{{system.encumbrance.state}}" style="width : {{pct system.encumbrance.value system.encumbrance.restrained}}%"></div>
         </div>
     </div>
 </div>

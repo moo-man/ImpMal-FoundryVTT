@@ -31,15 +31,23 @@
             <div class="adv-dis">
                 <div>
                     <input type="radio" name="state" value="adv" {{checked (eq fields.state "adv" )}}>
-                    <label>{{localize "IMPMAL.Advantage"}} {{#if advCount}} ({{advCount}}) {{/if}}</label>
+                    <div class="state-label">
+                        <label>{{localize "IMPMAL.Advantage"}}</label>
+                        <span class="state-value">{{advCount}}</span>
+                    </div>
                 </div>
                 <div>
                     <input type="radio" name="state" value="none" {{checked (eq fields.state "none" )}}>
-                    <label>{{localize "IMPMAL.Normal"}}</label>
+                    <div class="state-label">
+                        <label class="state-label">{{localize "IMPMAL.Normal"}}</label>
+                    </div>
                 </div>
                 <div>
                     <input type="radio" name="state" value="dis" {{checked (eq fields.state "dis" )}}>
-                    <label>{{localize "IMPMAL.Disadvantage"}} {{#if disCount}} ({{disCount}}) {{/if}} </label>
+                    <div class="state-label">
+                        <label>{{localize "IMPMAL.Disadvantage"}}</label>
+                        <span class="state-value">{{disCount}}</span>
+                    </div>
                 </div>
             </div>
 
@@ -62,7 +70,7 @@
             <ul class="modifiers">
                 {{#each scripts}}
                 
-                    <li class="modifier {{#if this.isActive}}active {{else if this.isHidden}}hidden{{/if}}" data-index="{{@key}}" ><a>{{this.label}}</a></li>
+                    <li class="modifier {{#if this.isActive}}active {{else if this.isHidden}}hidden{{/if}}" data-index="{{@key}}" >&#8226; <a>{{this.label}}</a></li>
                 {{/each}}
             </ul>
         </div>
