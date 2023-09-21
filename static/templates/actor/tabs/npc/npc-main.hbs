@@ -9,12 +9,83 @@
 {{/if}}
 
 
-{{#if sections.attacks.show}}
-    <div class="item-section">
+{{#if attackItems.length}}
+    <div class="item-section combat">
         <h3>{{localize "IMPMAL.Attacks"}}</h3>
-        {{{sections.attacks.html}}}
+        <section class="list">
+            <div class="list-content">
+                {{#each attackItems}}
+                    <div class="list-item" data-id="{{this.id}}">
+                        <div class="list-row">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="roll list-summary-context" data-type="weapon">{{this.name}}</a>
+                                {{#if (eq ../actor.type "character")}}
+                                    <div class="grip">
+                                        {{#if this.system.equipped.hands.left}}
+                                            <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                                data-hand="left"><i class="fa-solid fa-hand"></i></span>
+                                        {{/if}}
+                                        {{#if this.system.equipped.hands.right}}
+                                            <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                                data-hand="right"><i class="fa-solid fa-hand"></i></span>
+                                        {{/if}}
+                                    </div>
+                                {{/if}}
+                            </div>
+                            <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
+                            <div>{{this.system.damage.value}} {{localize "IMPMAL.Damage"}}</div>
+                            {{#if this.system.isRanged}}
+                                <div>{{configLookup "ranges" this.system.range}} {{localize "IMPMAL.Range"}}</div>
+                            {{/if}}
+                        </div>
+                        <div class="aux-row">
+                            {{#if this.system.traits.list.length}}
+                                <div class="weapon-traits">
+
+                                    <label>{{localize 'IMPMAL.TraitsT'}}</label>
+                                    <div class="trait-list">
+                                        {{this.system.traits.displayString}}
+                                    </div>
+                                </div>
+                            {{/if}}
+                            {{#unless this.system.selfAmmo}}
+                                {{#if this.system.isRanged}}
+                                    <div class="mag">
+                                        <label>{{localize "IMPMAL.Mag"}}</label>
+                                        <div class="values">
+                                            <div class="current">{{this.system.mag.current}}</div>
+                                            <div>/</div>
+                                            <div class="value">{{this.system.mag.value}}</div>
+                                        </div>
+                                    </div>
+                                    <a class="ammo-used">
+                                        {{#if this.system.ammo.document}}
+                                            {{this.system.document.name}}
+                                            ({{item.system.ammo.document.system.quantity}})
+                                        {{else}}
+                                            {{localize "IMPMAL.NoAmmoLoaded"}}
+                                        {{/if}}
+                                    </a>
+                                {{/if}}
+                            {{else}}
+                                <div class="qty">
+                                    <label>{{localize "IMPMAL.Qty."}}</label>
+                                    <div>{{this.system.quantity}}</div>
+                                </div>
+                            {{/unless}}
+                        </div>
+
+                        <div class="summary">
+
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </section>
     </div>
 {{/if}}
+
 
 {{#if sections.traits.show}}
     <div class="item-section">
@@ -23,8 +94,40 @@
     </div>
 {{/if}}
 
-{{#if sections.possessions.show}}
+{{#if possessions.length}}
     <div class="item-section possessions">
-        {{{sections.possessions.html}}}
+        <h3>{{localize "IMPMAL.Possessions"}}</h3>
+        <section class="list">
+            <div class="list-content">
+                {{#each possessions}}
+                    <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                        <div class="list-row">
+                            <div class="list-name list-edit list-summary-context">
+                                <img src="{{this.img}}">
+                                <a>{{this.name}}</a>
+                            </div>
+                            {{#if this.system.equipped}}
+                            <div class="small">
+                                <a class="property-toggle" data-id="{{this.id}}" data-target="system.equipped.value">
+                                    {{#if this.system.equipped.value}}
+                                        <i class="fa-regular fa-circle-check"></i>
+                                    {{else}}
+                                        <i class="fa-regular fa-circle"></i>
+                                    {{/if}}
+                                </a>
+                            </div>
+                            {{/if}}
+                            <div class="list-controls">
+                                <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
+                                <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <div class="summary">
+
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </section>
     </div>
 {{/if}}

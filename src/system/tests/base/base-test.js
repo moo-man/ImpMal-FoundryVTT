@@ -358,6 +358,7 @@ export class BaseTest
                 {
                     try 
                     {
+                        test.context.messageId = this.id;
                         return new game.impmal.testClasses[test.class](test);
                     }
                     catch(e)

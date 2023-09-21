@@ -31,6 +31,7 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
     {
         super.activateListeners(html);
         html.find(".faction-visibility").on("click", this._onFactionToggle.bind(this));
+        html.find(".summary").on("click", this._onSummaryToggle.bind(this));
         if (!this.isEditable)
         {
             return;
@@ -45,5 +46,11 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
 
         this.object.update(getProperty(this.object, path).toggleFactionVisibility(faction, path));
 
+    }
+
+    _onSummaryToggle(ev)
+    {
+        let el = $(ev.currentTarget);
+        el.toggleClass("expanded");
     }
 }

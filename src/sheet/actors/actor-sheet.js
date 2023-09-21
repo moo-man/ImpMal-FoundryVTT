@@ -35,6 +35,11 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         data.conditions = data.conditions.filter(i => i.id != "dead");
         data.defendingAgainst = this.actor.defendingAgainst;
         data.factionsExpanded = this.factionsExpanded;
+        data.enriched = foundry.utils.expandObject({
+            "system.notes.player" : await TextEditor.enrichHTML(data.actor.system.notes.player, {async: true}),
+            "system.notes.gm" : await TextEditor.enrichHTML(data.actor.system.notes.gm, {async: true}),
+        });
+
         return data;
     }
 

@@ -8,7 +8,7 @@
         display: grid;
         grid-template-columns: repeat(9, 11.1%);
         grid-template-rows: repeat(6, 16.6%);//16.6% 16.6% 33% 33%;
-        height: 150px;
+        height: 200px;
         > * {
             line-height: 25px;
         }
@@ -38,6 +38,7 @@
             margin: 0px 5px;
             > * {
                 width: 100%;
+                text-align: center;
             }
         } 
         > label {
@@ -86,7 +87,6 @@
         }
     }
 
-    .item-section.possessions,
     .item-section.skills {
         flex-direction: row;
         flex-wrap: wrap;

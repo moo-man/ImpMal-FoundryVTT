@@ -60,7 +60,7 @@ export class TestContext
      */
     async handleOpposed(message, {updateOpposed=true}={})
     {
-        if (game.user.isGM && updateOpposed)
+        if (game.user.isPrimaryGM && updateOpposed)
         {
             let attackingMessage = this.findAttackingMessage();
             if (attackingMessage) // If defending

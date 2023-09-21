@@ -7,5 +7,11 @@ export default function()
     {
         BaseTest._addMessageTestGetter();
         SocketHandlers.register();
+        Object.defineProperty(User.prototype, "isPrimaryGM", {
+            get : function isPrimaryGM() 
+            {
+                return game.users.find(u => u.isGM && u.active).id == game.user.id;
+            }
+        });
     });
 }

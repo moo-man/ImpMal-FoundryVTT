@@ -144,14 +144,14 @@
                     </div>
                 </div>
                 <div class="aux-row">
+                    {{#if this.system.traits.list.length}}
                     <div class="weapon-traits">
-                        {{#if this.system.traits.list.length}}
                             <label>{{localize 'IMPMAL.TraitsT'}}</label>
                             <div class="trait-list">
                                 {{this.system.traits.displayString}}
                             </div>
-                        {{/if}}
                     </div>
+                    {{/if}}
                     {{#unless this.system.selfAmmo}}
                         <div class="mag">
                             <label>{{localize "IMPMAL.Mag"}}</label>
@@ -162,7 +162,7 @@
                             </div>
                         </div>
                         {{#if (lt this.system.mag.current this.system.mag.value)}}
-                            <a class="reload">Reload</a>
+                            <a class="reload">{{localize "Reload"}}</a>
                         {{/if}}
                     {{else}}
                         <div class="qty">

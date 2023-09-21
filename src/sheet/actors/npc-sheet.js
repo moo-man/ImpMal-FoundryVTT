@@ -45,6 +45,9 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
     {
         let data = await super.getData();
         data.sections = await this._formatSections(data);
+        data.attackItems = data.items.weapon.concat(data.items.trait.filter(t => t.system.attack.enabled));
+        let physicalTypes = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical"));
+        data.possessions = data.actor.items.filter(i => physicalTypes.includes(i.type));
         return data;
     }
 
@@ -52,8 +55,6 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
     {
         let sections = {};
         sections.skills = await this._formatSkills(data);
-        sections.attacks = await this._formatAttacks(data);
-        sections.possessions = await this._formatPossessions(data);
         sections.traits = await this._formatTraits(data);
         return sections;
     }
@@ -158,150 +159,6 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         return {html: elements.join(""), show : elements.length > 0};
     }
         
-    async _formatAttacks(data)
-    {
-        let config = game.impmal.config;
-        let elements = [];
-        let items = data.items.weapon.concat(data.items.trait.filter(t => t.system.attack.enabled));
-
-        let template = 
-        `
-        <div data-id="@ID">
-            <a class="roll list-edit-rc" data-type="@TYPE" data-action="@ACTION"><strong>@NAME: </strong></a>
-            <span>@TESTLABEL @SKILLTOTAL</span>
-            </span>, </span>
-            <span class="damage">@DAMAGE</span>
-            <span class="range">@RANGE</span>
-            <span class="attack-traits">@TRAITS</span>
-            <span class="ammo">@AMMO</span>
-        </div>
-        `;
-
-
-        items.forEach(item => 
-        {
-            let type = item.type;
-            let action = type == "trait" ? "attack" : "";
-            let id = item.id;
-            let name = item.name;
-            let testLabel, skillTotal, damage, range, traits, ammo;
-
-
-            // testLabel
-            if (type == "trait")
-            {
-                testLabel = item.system.attack.label;
-            }
-            else if (type == "weapon")
-            {
-                testLabel = `${config.weaponTypes[item.system.attackType]} (${game.i18n.localize(item.system.specialisation)})`;
-            }
-
-
-            // skillTotal
-            if (type == "trait")
-            {
-                skillTotal = item.system.attack.target;
-            }
-            else if (type == "weapon")
-            {
-                skillTotal = item.system.skillTotal;
-            }
-
-
-            // damage
-            if (type == "trait")
-            {
-                damage = `${item.system.attack.damage.value}`;
-                if (item.system.attack.damage.SL)
-                {
-                    damage += ` + SL ${item.system.isMelee ? "difference" : ""}`;
-                }
-                damage += " Damage.";
-            }
-            else if (type == "weapon")
-            {
-                damage = `${item.system.damage.value} + SL ${item.system.isMelee ? "difference" : ""} Damage.`;
-            }
-
-            // range
-            if (type == "trait")
-            {
-                range = `${item.system.isRanged ? config.ranges[item.system.attack.range] + " Range" : ""}`;
-            }
-            else if (type == "weapon")
-            {
-                range = `${item.system.isRanged ? config.ranges[item.system.range] + " Range" : ""}`;
-            }
-
-            // traits 
-
-            if (type == "trait")
-            {
-                traits = item.system.attack.traits.displayArray.map(i => `<a class="item-trait">${i}</a>`).join(", ");
-            }
-            else if (type == "weapon")
-            {
-                traits = item.system.traits.displayArray.map(i => `<a class="item-trait">${i}</a>`).join(", ");
-            }
-
-
-            if (type == "weapon" && item.system.isRanged)
-            {
-                if (item.system.selfAmmo)
-                {
-                    ammo = `<a class="inc-dec">${game.i18n.localize("IMPMAL.Qty.")} ${item.system.quantity}</a>`;
-                }
-                else 
-                {
-                    ammo = `
-                    <a class="mag">${item.system.mag.current}<img src="systems/impmal/assets/icons/magazine.svg"></a>
-                    <a class="ammo-used ${item.system.ammo.document ? "" : "inactive"}">
-                    ${item.system.ammo.document ? (`${item.system.ammo.document?.name} (${item.system.ammo.document?.system.quantity}) `) : "No Ammo Loaded"}
-                    <img src="systems/impmal/assets/icons/ammo-box.svg">
-                    </a>`;
-                }
-            }
-            else
-            {
-                ammo = "";
-            }
-
-            elements.push(
-                template
-                    .replace("@TYPE", type)
-                    .replace("@ACTION", action)
-                    .replace("@ID", id)
-                    .replace("@NAME", name)
-                    .replace("@TESTLABEL", testLabel)
-                    .replace("@SKILLTOTAL", skillTotal)
-                    .replace("@DAMAGE", damage)
-                    .replace("@RANGE", range)
-                    .replace("@TRAITS", traits)
-                    .replace("@AMMO", ammo)
-            );
-        });
-
-
-        return {html: elements.join(""), show : elements.length > 0};
-    }
-
-    async _formatPossessions(data)
-    {
-        let elements = [];
-
-        let physicalTypes = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical"));
-        let show = false;
-        data.actor.items.filter(i => physicalTypes.includes(i.type)).forEach(i => 
-        {
-            elements.push(`
-                    <a class="list-edit-rc" data-id="${i.id}">${i.name}</a>
-            `);
-            show = true;
-        });
-
-        return {html: `<strong>${game.i18n.localize("IMPMAL.Possessions")}: </strong> ${elements.join(", ")}`, show};
-    }
 
     //#endregion
 
