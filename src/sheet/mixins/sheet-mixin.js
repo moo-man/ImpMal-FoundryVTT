@@ -129,11 +129,11 @@ export default ImpMalSheetMixin = (cls) => class extends cls
      */
     _getDataAttribute(ev, property)
     {
-        let value = ev.currentTarget.dataset[property];
+        let value = ev.target.dataset[property];
 
         if (!value) 
         {
-            const parent = $(ev.currentTarget).parents(`[data-${property}]`);
+            const parent = $(ev.target).parents(`[data-${property}]`);
             if (parent) 
             {
                 value = parent[0]?.dataset[property];

@@ -78,6 +78,15 @@ export class DocumentListModel extends ListModel
         this.list.forEach(i => i.getDocument(collection));
         this.documents = this.list.map(i => i.document);
     }
+
+    addDocument(document)
+    {
+        return this.add({
+            id : document.id,
+            name : document.name,
+            type : document.documentName
+        });
+    }
 }
 
 // List of document references that could point to world items, or compendium items
@@ -99,15 +108,6 @@ export class DeferredDocumentListModel extends DocumentListModel
     getDocuments()
     {
         return Promise.all(this.list.map(i => i.getDocument()));
-    }
-
-    addDocument(document)
-    {
-        return this.add({
-            id : document.id,
-            name : document.name,
-            type : document.documentName
-        });
     }
 
     get html() 

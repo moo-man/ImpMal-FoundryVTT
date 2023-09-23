@@ -1,0 +1,41 @@
+<section class="list crew" data-position="crew">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Crew"}}</div>
+    </header>
+    <div class="list-content">
+        {{#each actor.system.crew.actors}}
+            <div class="list-item" data-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{tokenImg this}}">
+                        <a>{{this.name}}</a>
+                    </div>
+                    <div class="list-controls">
+                        <a class="actor-delete"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
+<section class="list passengers" data-position="passengers">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Passengers"}}</div>
+    </header>
+    <div class="list-content">
+        {{#each actor.system.passengers.actors}}
+            <div class="list-item" data-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{tokenImg this}}">
+                        <a>{{this.name}}</a>
+                    </div>
+                    <div class="list-controls">
+                        <a class="actor-delete"><i class="fa-solid fa-xmark"></i></a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

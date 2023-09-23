@@ -61,3 +61,17 @@ export class DeferredDocumentModel extends DocumentReferenceModel
         };
     }
 }
+
+export class VehicleDocumentModel extends DocumentReferenceModel 
+{
+    static defineSchema() 
+    {
+        let schema = {};
+        schema.id = new fields.StringField();
+        schema.name = new fields.StringField();
+        schema.type = new fields.StringField();
+        schema.position = new fields.StringField();
+        return schema;
+    }
+
+}

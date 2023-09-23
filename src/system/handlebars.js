@@ -94,6 +94,8 @@ export default function registerHandlebars()
         "systems/impmal/templates/actor/tabs/actor-equipment.hbs",
         "systems/impmal/templates/actor/tabs/character/character-main.hbs",
         "systems/impmal/templates/actor/tabs/character/character-notes.hbs",
+        "systems/impmal/templates/actor/tabs/vehicle/vehicle-cargo.hbs",
+        "systems/impmal/templates/actor/tabs/vehicle/vehicle-main.hbs",
         "systems/impmal/templates/item/partials/item-character-notes.hbs",
         "systems/impmal/templates/item/partials/item-damage.hbs",
         "systems/impmal/templates/item/partials/item-effects.hbs",

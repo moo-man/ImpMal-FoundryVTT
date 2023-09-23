@@ -180,6 +180,74 @@
     </div>
 </section>
 
+{{#if items.equipped.vehicle.length}}
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.VehicleWeapons"}}</div>
+        <div>{{localize "IMPMAL.Specialisation"}}</div>
+        <div>{{localize "IMPMAL.Damage"}}</div>
+        <div>{{localize "IMPMAL.Range"}}</div>
+    </header>
+        <div class="list-content">
+            {{#each items.equipped.vehicle}}
+                <div class="list-item" data-id="{{this.uuid}}">
+                    <div class="list-row">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="roll list-summary-context" data-type="weapon">{{this.name}}</a>
+                        </div>
+                        <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
+                        <div>{{this.system.damage.value}} {{localize "IMPMAL.Damage"}}</div>
+                        {{#if this.system.isRanged}}
+                            <div>{{configLookup "ranges" this.system.range}} {{localize "IMPMAL.Range"}}</div>
+                        {{/if}}
+                    </div>
+                    <div class="aux-row">
+                        {{#if this.system.traits.list.length}}
+                            <div class="weapon-traits">
+
+                                <label>{{localize 'IMPMAL.TraitsT'}}</label>
+                                <div class="trait-list">
+                                    {{this.system.traits.displayString}}
+                                </div>
+                            </div>
+                        {{/if}}
+                        {{#unless this.system.selfAmmo}}
+                            {{#if this.system.isRanged}}
+                                <div class="mag">
+                                    <label>{{localize "IMPMAL.Mag"}}</label>
+                                    <div class="values">
+                                        <div class="current">{{this.system.mag.current}}</div>
+                                        <div>/</div>
+                                        <div class="value">{{this.system.mag.value}}</div>
+                                    </div>
+                                </div>
+                                <a class="ammo-used">
+                                    {{#if this.system.ammo.document}}
+                                        {{this.system.document.name}}
+                                        ({{item.system.ammo.document.system.quantity}})
+                                    {{else}}
+                                        {{localize "IMPMAL.NoAmmoLoaded"}}
+                                    {{/if}}
+                                </a>
+                            {{/if}}
+                        {{else}}
+                            <div class="qty">
+                                <label>{{localize "IMPMAL.Qty."}}</label>
+                                <div>{{this.system.quantity}}</div>
+                            </div>
+                        {{/unless}}
+                    </div>
+
+                    <div class="summary">
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </section>
+{{/if}}
+
 <section class="list {{#unless items.equipped.shield.length}}inactive{{/unless}}">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Shield"}}</div>

@@ -35,7 +35,11 @@ export class WeaponTestDialog extends AttackDialog
     {   
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
-        let weapon = actor.items.get(id);
+        let weapon = id.includes(".") ? fromUuidSync(id) : actor.items.get(id); // Could be a vehicle weapon, in which case it's a uuid
+        if (weapon.actor?.type == "vehicle")
+        {
+            weapon.system.computeOwnerDerived(actor);
+        }
         let skill = weapon.system.skill;
 
         if (!weapon.system.hasAmmo())
@@ -50,9 +54,9 @@ export class WeaponTestDialog extends AttackDialog
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.WeaponTest", {name : weapon.name})) + (title?.append || "");
 
-        dialogData.data.weaponId = weapon.id;
         dialogData.data.weapon = weapon;
         dialogData.data.item = weapon;
+        dialogData.data.vehicle = weapon.actor?.type == "vehicle" ? weapon.actor : null;
 
         dialogData.data.scripts = dialogData.data.scripts.concat(weapon.getScripts("dialog") || []);
         dialogData.data.scripts = dialogData.data.scripts.concat(weapon.system.ammo.document?.getScripts("dialog") || []);

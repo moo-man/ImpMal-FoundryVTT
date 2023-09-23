@@ -84,6 +84,7 @@ export class StandardActorModel extends BaseActorModel
         this.runScripts("computeCombat", this);
         this.computeWarpState();
         this.runScripts("computeWarpState", this);
+        this.vehicle = game.actors.find(v => v.type == "vehicle" && (v.system.actors.list.find(i => i.id == this.parent.id)));
     }
 
     computeEncumbrance(items) 

@@ -1,0 +1,216 @@
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Weapon"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="weapon"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each items.weapon}}
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
+                    </div>
+                    <a class="small inc-dec">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="summary">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Ammo"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="ammo"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each items.ammo}}
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
+                    </div>
+                    <a class="small inc-dec">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="summary">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Modification"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="modification"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each items.modification}}
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
+                    </div>
+                    <a class="small inc-dec">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="summary">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Protection"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="protection"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each items.protection}}
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
+                    </div>
+                    <a class="small inc-dec">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="summary">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Forcefield"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="forceField"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each items.forceField}}
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name" {{#if this.system.overload.collapsed}}style="color: darkred"{{/if}}>
+                        <img src="{{this.img}}">
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
+                    </div>
+                    <a class="small inc-dec">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="summary">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Equipment"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="equipment"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each items.equipment}}
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
+                    </div>
+                    <a class="small inc-dec">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="summary">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+
+<section class="list">
+    <header class="list-row">
+        <div class="list-name">{{localize "IMPMAL.Augmetic"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-create" data-type="augmetic"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </header>
+    <div class="list-content">
+        {{#each items.augmetic}}
+            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
+                <div class="list-row">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="list-edit list-summary-context">{{this.name}}</a>
+                    </div>
+                    <a class="small inc-dec">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="summary">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

@@ -3,7 +3,8 @@
     "types": [
       "character",
       "patron",
-      "npc"
+      "npc",
+      "vehicle"
     ],
     "templates": {
       "characteristics": {
@@ -331,6 +332,29 @@
       "warp" : {
         "charge" : 0,
         "state" : 0
+      }
+    },
+    "vehicle" : {
+      "category" : "wheeled",
+      "actors" : [],
+      "crew" : 1,
+      "passengers" : 0,
+      "combat" : {
+        "size": "medium",
+        "armour" : {
+          "front" : 0,
+          "back" : 0
+        },
+        "speed": {
+          "land" : {
+            "value" : "normal",
+            "modifier" : 0
+          },
+          "fly" : {
+            "value" : "none",
+            "modifier" : 0
+          }
+        }
       }
     }
   },

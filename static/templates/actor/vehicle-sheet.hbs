@@ -1,0 +1,95 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile" src="{{actor.img}}" data-edit="img">
+        <div class="header-details">
+            <div class="details-row name">
+                <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'Name'}}">
+            </div>
+    </header>
+    <div class="vehicle-properties">
+        <div class="flexrow">
+            <div class="actor-property">
+                <label>{{localize "IMPMAL.Category"}}</label>
+                <div>
+                    <select name="system.category">
+                        {{#select system.category}}
+                            <option value="wheeled">{{localize "IMPMAL.Wheeled"}}</option>
+                        {{/select}}
+                    </select>
+                </div>
+            </div>
+            <div class="actor-property">
+                <label>{{localize "IMPMAL.Armour"}}</label>
+                <div class="vehicle-armour">
+                    <div>
+                        <label>Front</label>
+                        <input type="number" name="system.combat.armour.front" value="{{system.combat.armour.front}}">
+                    </div>
+                    <div>
+                        <label>Back</label>
+                        <input type="number" name="system.combat.armour.back" value="{{system.combat.armour.back}}">
+                    </div>
+                </div>
+
+            </div>
+            <div class="actor-property">
+                <label>{{localize "IMPMAL.Speed"}}</label>
+                <div>
+                    <select name="system.combat.speed.land.value">
+                        {{#select system.combat.speed.land.value}}
+                            {{#each (config "speeds")}}
+                                <option value="{{@key}}">{{this}}</option>
+                            {{/each}}
+                                <option value="swift">Swift</option>
+                        {{/select}}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="flexrow">
+            <div class="actor-property">
+                <label>{{localize "IMPMAL.Crew"}}</label>
+                <div>
+                    <input type="number" name="system.crew.number" value="{{system.crew.number}}">
+                </div>
+            </div>
+            <div class="actor-property">
+                <label>{{localize "IMPMAL.Passengers"}}</label>
+                <div>
+                    <input type="number" name="system.passengers.number" value="{{system.passengers.number}}">
+                </div>
+            </div>
+            <div class="actor-property">
+                <label>{{localize "IMPMAL.Size"}}</label>
+                <div>
+                    <select name="system.combat.size">
+                        {{#select system.combat.size}}
+                            {{#each (config "sizes")}}
+                                <option value="{{@key}}">{{this}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="tab-section">
+        <nav class="sheet-tabs tabs">
+            <a class="tab-select item active" data-tab="main">{{localize "IMPMAL.Main"}}</a>
+            <a class="tab-select item" data-tab="cargo">{{localize "IMPMAL.Cargo"}}</a>
+            <a class="tab-select item" data-tab="notes">{{localize "IMPMAL.Notes"}}</a>
+        </nav>
+        <div class="tab-content">
+            <div class="tab main" data-tab="main">
+                {{> systems/impmal/templates/actor/tabs/vehicle/vehicle-main.hbs}}
+            </div>
+            <div class="tab equipment cargo" data-tab="cargo">
+                {{> systems/impmal/templates/actor/tabs/vehicle/vehicle-cargo.hbs}}
+            </div>
+            <div class="tab notes-tab" data-tab="notes">
+                {{> systems/impmal/templates/actor/tabs/actor-notes.hbs}}
+            </div>
+
+        </div>
+    </section>
+</form>

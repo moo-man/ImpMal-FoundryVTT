@@ -52,6 +52,8 @@ import FactionItemSheet from "./sheet/items/item-faction-sheet";
 import DutyItemSheet from "./sheet/items/item-duty-sheet";
 import debug from "./system/debug";
 import ImpmalActiveEffectConfig from "./apps/effect-config";
+import { VehicleModel } from "./model/actor/vehicle";
+import ImpMalVehicleSheet from "./sheet/actors/vehicle-sheet";
 
 Hooks.once("init", () => 
 {
@@ -69,6 +71,7 @@ Hooks.once("init", () =>
     Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
     Actors.registerSheet("impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true });
     Actors.registerSheet("impmal", ImpMalNPCSheet, { types: ["npc"], makeDefault: true });
+    Actors.registerSheet("impmal", ImpMalVehicleSheet, { types: ["vehicle"], makeDefault: true });
     Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
     Items.registerSheet("impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
     Items.registerSheet("impmal", TraitItemSheet, { types: ["trait"], makeDefault: true });
@@ -87,6 +90,7 @@ Hooks.once("init", () =>
     CONFIG.Actor.dataModels["character"] = CharacterModel;
     CONFIG.Actor.dataModels["patron"] = PatronModel;
     CONFIG.Actor.dataModels["npc"] = NPCModel;
+    CONFIG.Actor.dataModels["vehicle"] = VehicleModel;
 
     CONFIG.Item.dataModels["boonLiability"] = BoonLiabilityModel;
     CONFIG.Item.dataModels["origin"] = OriginModel;
