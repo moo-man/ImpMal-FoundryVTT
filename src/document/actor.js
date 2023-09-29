@@ -7,6 +7,7 @@ import { WeaponTestDialog } from "../apps/test-dialog/weapon-dialog";
 import { SocketHandlers } from "../system/socket-handlers";
 import { BaseTest } from "../system/tests/base/base-test";
 import { CharacteristicTest } from "../system/tests/characteristic/characteristic-test";
+import { ItemUse } from "../system/tests/item/item-use";
 import { PowerTest } from "../system/tests/power/power-test";
 import { SkillTest } from "../system/tests/skill/skill-test";
 import { TraitTest } from "../system/tests/trait/trait-test";
@@ -53,7 +54,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         // Not sure I like this here but it will do for now
         // Warp State = 2 means you just roll on the Perils table
         // Warp State = 1 is handled in postRoll() of a skill test
-        if (options.warp == 2)
+        if (options?.other?.warp == 2)
         {
             return new Roll(`1d100 + ${10 * (this.system.warp.charge - this.system.warp.threshold)}`).roll({async: true}).then(roll =>
             {
@@ -82,6 +83,12 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     setupTraitTest(id, options={}, roll=true)
     {
         return this._setupTest(TraitTestDialog, TraitTest, id, options, roll);
+    }
+
+    useItem({id, uuid})
+    {
+        let use = ItemUse.fromData({id, uuid, actor : this});
+        use.sendToChat();
     }
 
     /**
@@ -331,17 +338,14 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
                 return false;
             }
             let targeted = e.getFlag("impmal", "itemTargets");
-            if (targeted)
+            if (targeted && targeted.length)
             {
-                // If no items specified, apply to all items
-                if (targeted.length == 0)
-                {
-                    return true;
-                }
-                else 
-                {
-                    return targeted.includes(item.id);
-                }
+                return targeted.includes(item.id);
+            }
+            // If no items specified, apply to all items
+            else 
+            {
+                return true;
             }
             // Create temporary effects that have the item as the parent, so the script context is correct
         }).map(i => new ImpMalEffect(i.toObject(), {parent : item}));

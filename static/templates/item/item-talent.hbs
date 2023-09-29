@@ -19,6 +19,10 @@
                         <input type="text" name="system.requirement.value" value="{{system.requirement.value}}">
                     </div>
                 </div>
+                <fieldset>
+                    <legend>{{localize "IMPMAL.Test"}}</legend>
+                {{> systems/impmal/templates/item/partials/item-test.hbs data=system.test path="system.test"}}
+                </fieldset>
             </div>
             <div class="tab effects" data-tab="effects">
                 {{> systems/impmal/templates/item/partials/item-effects.hbs}}

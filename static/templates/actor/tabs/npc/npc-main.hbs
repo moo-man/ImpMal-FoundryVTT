@@ -15,6 +15,8 @@
         <section class="list">
             <div class="list-content">
                 {{#each attackItems}}
+                    {{log this.name}}
+                    {{log this}}
                     <div class="list-item" data-id="{{this.id}}">
                         <div class="list-row">
                             <div class="list-name">
@@ -33,6 +35,7 @@
                                     </div>
                                 {{/if}}
                             </div>
+                            {{log this.system.skillTotal}}
                             <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
                             <div>{{this.system.damage.value}} {{localize "IMPMAL.Damage"}}</div>
                             {{#if this.system.isRanged}}
@@ -60,9 +63,10 @@
                                         </div>
                                     </div>
                                     <a class="ammo-used">
+                                        {{log this.system.ammo.document}}
                                         {{#if this.system.ammo.document}}
-                                            {{this.system.document.name}}
-                                            ({{item.system.ammo.document.system.quantity}})
+                                            {{this.system.ammo.document.name}}
+                                            ({{this.system.ammo.document.system.quantity}})
                                         {{else}}
                                             {{localize "IMPMAL.NoAmmoLoaded"}}
                                         {{/if}}
@@ -71,7 +75,7 @@
                             {{else}}
                                 <div class="qty">
                                     <label>{{localize "IMPMAL.Qty."}}</label>
-                                    <div>{{this.system.quantity}}</div>
+                                    <a class="inc-dec">{{this.system.quantity}}</a>
                                 </div>
                             {{/unless}}
                         </div>
@@ -117,6 +121,9 @@
                                 </a>
                             </div>
                             {{/if}}
+                            <div class="small">
+                                <a class="inc-dec">{{this.system.quantity}}</a>
+                            </div>
                             <div class="list-controls">
                                 <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
                                 <a class="list-delete"><i class="fa-solid fa-trash"></i></a>

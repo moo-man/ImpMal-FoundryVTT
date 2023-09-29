@@ -81,15 +81,26 @@
                 display: flex;
                 align-items: center;
                 text-align: unset;
-                > *:not(img) {
+                > *:not(img,.use-item) {
                     margin: 0px 5px;
                 }
             }
 
+            .use-item,
             .list-name img,
             .list-image {
                 flex: 0 0 30px;
                 height: 30px;
+            }
+
+            .use-item {
+                font-size: 18px;
+                color: black;
+                text-align: center;
+                line-height : 30px;
+                i {
+                    margin: 0px;
+                }
             }
 
             .small {

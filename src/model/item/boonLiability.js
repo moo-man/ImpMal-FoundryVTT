@@ -1,3 +1,4 @@
+import { TestDataModel } from "./components/test";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
@@ -10,6 +11,7 @@ export class BoonLiabilityModel extends StandardItemModel
         schema.visible = new fields.BooleanField();
         schema.oneUse = new fields.BooleanField();
         schema.used = new fields.BooleanField();
+        schema.test = new fields.EmbeddedDataField(TestDataModel);
         return schema;
     }
 

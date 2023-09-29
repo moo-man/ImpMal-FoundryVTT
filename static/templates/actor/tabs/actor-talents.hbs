@@ -8,7 +8,7 @@
     <div class="list-content">
         {{#each items.talent}}
             <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
-                <div class="list-row">
+                <div class="list-row list-hover">
                     <div class="list-name list-edit list-summary-context">
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
@@ -69,7 +69,7 @@
             {{#each actor.system.patron.document.itemCategories.boonLiability}}
                 {{#if this.system.visible}}
                     <div class="list-item {{#if this.system.used}}inactive{{/if}}" data-uuid="{{this.uuid}}">
-                        <div class="list-row">
+                        <div class="list-row list-hover">
                             <div class="list-name list-edit list-summary-context">
                                 <img src="{{this.img}}">
                                 <a>{{this.name}}</a>

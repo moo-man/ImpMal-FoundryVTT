@@ -54,6 +54,8 @@ import debug from "./system/debug";
 import ImpmalActiveEffectConfig from "./apps/effect-config";
 import { VehicleModel } from "./model/actor/vehicle";
 import ImpMalVehicleSheet from "./sheet/actors/vehicle-sheet";
+import TagManager from "./system/tag-manager";
+import { ItemUse } from "./system/tests/item/item-use";
 
 Hooks.once("init", () => 
 {
@@ -116,12 +118,14 @@ Hooks.once("init", () =>
         config : IMPMAL,
         log : log,
         utility : ImpMalUtility,
+        tags : new TagManager(),
         testClasses : {
             CharacteristicTest,
             SkillTest,
             WeaponTest,
             PowerTest,
-            TraitTest
+            TraitTest,
+            ItemUse
         },
         apps : {
             ChoiceConfig

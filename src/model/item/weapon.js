@@ -19,8 +19,8 @@ export class WeaponModel extends EquippableItemModel
         schema.spec = new fields.StringField();
         schema.range = new fields.StringField();
         schema.mag = new fields.SchemaField({
-            value : new fields.NumberField({min: 0, integer: true}),
-            current : new fields.NumberField({min: 0, integer : true})
+            value : new fields.NumberField({min: 0, integer: true, initial : 1}),
+            current : new fields.NumberField({min: 0, integer : true, initial: 0})
         });
         schema.mods = new fields.EmbeddedDataField(ModListModel);
         return schema;

@@ -43,7 +43,7 @@ export class WeaponTest extends AttackTest
             let ammo = this.item.system.ammo.document;
             if (this.item.system.isRanged && !this.context.ammoUsed)
             {
-                let ammoUsed = this.computeAmmoUsed();
+                let ammoUsed = this.computeAmmoUsed() + this.context.additionalAmmoUsed;
 
                 this.item.update(this.item.system.useAmmo(ammoUsed));
                 ammo?.update(ammo.system.decrease(ammoUsed));

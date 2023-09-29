@@ -145,12 +145,12 @@
                 </div>
                 <div class="aux-row">
                     {{#if this.system.traits.list.length}}
-                    <div class="weapon-traits">
+                        <div class="weapon-traits">
                             <label>{{localize 'IMPMAL.TraitsT'}}</label>
                             <div class="trait-list">
                                 {{this.system.traits.displayString}}
                             </div>
-                    </div>
+                        </div>
                     {{/if}}
                     {{#unless this.system.selfAmmo}}
                         <div class="mag">
@@ -181,13 +181,13 @@
 </section>
 
 {{#if items.equipped.vehicle.length}}
-<section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.VehicleWeapons"}}</div>
-        <div>{{localize "IMPMAL.Specialisation"}}</div>
-        <div>{{localize "IMPMAL.Damage"}}</div>
-        <div>{{localize "IMPMAL.Range"}}</div>
-    </header>
+    <section class="list">
+        <header class="list-row">
+            <div class="list-name">{{localize "IMPMAL.VehicleWeapons"}}</div>
+            <div>{{localize "IMPMAL.Specialisation"}}</div>
+            <div>{{localize "IMPMAL.Damage"}}</div>
+            <div>{{localize "IMPMAL.Range"}}</div>
+        </header>
         <div class="list-content">
             {{#each items.equipped.vehicle}}
                 <div class="list-item" data-id="{{this.uuid}}">
@@ -224,8 +224,8 @@
                                 </div>
                                 <a class="ammo-used">
                                     {{#if this.system.ammo.document}}
-                                        {{this.system.document.name}}
-                                        ({{item.system.ammo.document.system.quantity}})
+                                        {{this.system.ammo.document.name}}
+                                        ({{this.system.ammo.document.system.quantity}})
                                     {{else}}
                                         {{localize "IMPMAL.NoAmmoLoaded"}}
                                     {{/if}}
@@ -290,8 +290,14 @@
                 <div class="location-details collapsed">
                     {{#each this.items}}
                         <div class="protection-item">
-                            <label>{{this.name}} ({{this.system.armour}})</label>
-                            <div class="traits">{{this.system.traits.displayString}}</div>
+                            <label>{{this.name}} </label>
+                            <span>{{this.system.armour}}</span>
+                            {{!-- <div class="traits">{{this.system.traits.displayString}}</div> --}}
+                        </div>
+                        <div class="armour-traits">
+                            <div class="trait-list">
+                                {{this.system.traits.displayString}}
+                            </div>
                         </div>
                     {{/each}}
                     {{#if this.field}}
@@ -299,9 +305,9 @@
                             <label>{{this.field.name}} ({{this.field.system.protection}})</label>
                         </div>
                     {{/if}}
-                    <div class="range">
+                    {{!-- <div class="range">
                         {{this.displayRange}}
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         {{/each}}

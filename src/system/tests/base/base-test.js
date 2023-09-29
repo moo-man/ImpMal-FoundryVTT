@@ -9,6 +9,7 @@ export class BaseTest
 
     static contextClass = TestContext;
     static evaluatorClass = BaseTestEvaluator;
+    static chatType = CONST.CHAT_MESSAGE_TYPES.ROLL;
     rollTemplate = "systems/impmal/templates/chat/rolls/roll.hbs";
     testDetailsTemplate = "";
     itemSummaryTemplate = "systems/impmal/templates/item/partials/item-summary.hbs";
@@ -194,7 +195,7 @@ export class BaseTest
         if (this.item instanceof Item)
         {
             this.itemSummary = await renderTemplate(this.itemSummaryTemplate, mergeObject(this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
-            this.effectButtons = await renderTemplate("systems/impmal/templates/chat/effect-buttons.hbs", {targetEffects : this.item.targetEffects, zoneEffects : this.item.zoneEffects});
+            this.effectButtons = await renderTemplate("systems/impmal/templates/chat/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
         }
         if (this.testDetailsTemplate)
         {
@@ -207,15 +208,15 @@ export class BaseTest
             title : this.context.title,
             speaker : this.context.speaker,
             flavor: this.context.title,
-            type : CONST.CHAT_MESSAGE_TYPES.ROLL,
-            rolls : [this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject], // Trigger DSN
+            type : this.constructor.chatType,                                                                           // Trigger DSN
+            rolls : this.constructor.chatType == CONST.CHAT_MESSAGE_TYPES.ROLL ? ([this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject]) : [], 
             flags : this._saveData()
         });
     }
 
     get tags() 
     {
-        let tags = [];
+        let tags = Object.values(this.context.tags);
         if (this.result.state == "adv")
         {
             tags.push(game.i18n.localize("IMPMAL.Advantage"));
@@ -227,6 +228,15 @@ export class BaseTest
         return tags;
     }
 
+    get targetEffects() 
+    {
+        return this.item.targetEffects;
+    }
+
+    get zoneEffects() 
+    {
+        return this.item.zoneEffects;
+    }
     get actor() 
     {
         return this.context.actor;

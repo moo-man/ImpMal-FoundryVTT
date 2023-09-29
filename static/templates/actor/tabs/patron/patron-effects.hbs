@@ -7,7 +7,7 @@
     </header>
     <div class="list-content">
         {{#each effects}}
-            <div class="list-item" data-id="{{this.id}}" data-collection="effects" {{#if this.item}}data-item={{this.parent.id}}{{/if}}>
+            <div class="list-item" data-uuid="{{this.uuid}}">
                 <div class="list-row">
                     <div class="list-name">
                         <img src="{{this.icon}}">

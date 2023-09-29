@@ -355,6 +355,10 @@ const IMPMAL = {
         prePrepareDerivedData : "IMPMAL.TriggerPrePrepareDerivedData",
         postPrepareDerivedData : "IMPMAL.TriggerPostPrepareDerivedData",
 
+        prepareOwnedItemBaseData : "IMPMAL.TriggerPrepareOwnedItemBaseData",
+        PrePrepareOwnedItemDerivedData : "IMPMAL.TriggerPrePrepareOwnedItemDerivedData",
+        PostPrepareOwnedItemDerivedData : "IMPMAL.TriggerPostPrepareOwnedItemDerivedData",
+
         computeCharacteristics : "Compute Characteristics",
         computeEncumbrance : "Compute Encumbrance",
         computeCombat : "Compute Combat",
@@ -389,6 +393,7 @@ const IMPMAL = {
         preTakeDamage : "IMPMAL.TriggerPreTakeDamage",
         takeDamage : "IMPMAL.TriggerTakeDamage",
 
+        createItem : "IMPMAL.TriggerCreateItem",
         updateDocument : "IMPMAL.TriggerUpdateDocument",
         deleteEffect : "IMPMAL.TriggerDeleteEffect",
 
@@ -417,7 +422,8 @@ const IMPMAL = {
         "rollPowerTest": true, 
         "updateDocument": true, 
         "deleteEffect": true, 
-        "dialog": true 
+        "dialog": true,
+        "createItem" : true
     },
 
 
@@ -778,6 +784,19 @@ const IMPMAL = {
             flags : {
                 impmal : {
                     type : "minor",
+                    applicationData : {
+                        options : {
+                            avoidTest : {
+                                value : "custom",
+                                manual : true,
+                                prevention: false,
+                                skill : {
+                                    key : "athletics",
+                                    specialisation : "might"
+                                }
+                            }
+                        }
+                    },
                     scriptData: [
                         {
                             label: "Disadvantage on Movement tests",

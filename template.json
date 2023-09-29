@@ -234,7 +234,8 @@
       "demeanor": "",
       "payment": {
         "grade": "standard",
-        "override": 0
+        "payOverride" : null,
+        "gradeModifier" : 0
       }
     },
     "character": {
@@ -426,6 +427,14 @@
       ],
       "category" : "boon",
       "visible" : false,
+      "test" : {
+        "difficulty" : "challenging",
+        "characteristic" : "",
+        "skill" : {
+          "key" : "",
+          "specialisation" : ""
+        }
+      },
       "oneUse" : false,
       "used" : false
     },

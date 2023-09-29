@@ -23,7 +23,7 @@ export class ImpMalEffect extends ActiveEffect
         preventCreation = await this._handleEffectPrevention(data, options, user);
         if (preventCreation)
         {
-            ui.notifications.notify(game.i18n.format("IMPMAL.EffectAvoided", {name : this.name}));
+            ui.notifications.notify(game.i18n.format("IMPMAL.EffectPrevented", {name : this.name}));
             return false; // If avoided is true, return false to stop creation
         }
         preventCreation = await this._handleFilter(data, options, user);
@@ -239,7 +239,7 @@ export class ImpMalEffect extends ActiveEffect
         }
 
         let test;
-        let options = {title : {append : " - Avoid " + this.name}};
+        let options = {title : {append : " - " + this.name}, other: {resist : this.key}};
         if (applicationData.options.avoidTest.value == "script")
         {
             let script = new ImpMalScript({label : this.effect + " Avoidance", string : applicationData.options.avoidTest.script}, ImpMalScript.createContext(this));
@@ -256,15 +256,31 @@ export class ImpMalEffect extends ActiveEffect
 
         await test.roll();
 
-        // If the avoid test is marked as opposed, it has to win, not just succeed
-        if (applicationData.options.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
+        if (!applicationData.options.avoidTest.reversed)
         {
-            return test.result.SL > this.getFlag("impmal", "sourceTest").result?.SL;
+            // If the avoid test is marked as opposed, it has to win, not just succeed
+            if (applicationData.options.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
+            {
+                return test.result.SL > this.getFlag("impmal", "sourceTest").result?.SL;
+            }
+            else 
+            {
+                return test.succeeded;
+            }
         }
-        else 
+        else  // Reversed - Failure removes the effect
         {
-            return test.succeeded;
+            // If the avoid test is marked as opposed, it has to win, not just succeed
+            if (applicationData.options.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
+            {
+                return test.result.SL < this.getFlag("impmal", "sourceTest").result?.SL;
+            }
+            else 
+            {
+                return !test.succeeded;
+            }
         }
+
     }
 
     /**
@@ -521,6 +537,7 @@ export class ImpMalEffect extends ActiveEffect
                     value : "none",
                     opposed : false,
                     prevention : true,
+                    reversed : false,
                     manual : false,
                     script : "",
                     difficulty : "",

@@ -6,6 +6,7 @@ export class WeaponTestContext extends SkillTestContext
     weaponId = this.weaponId;
     ammoUsed = this.ammoUsed || false;
     vehicleId = this.vehicleId;
+    additionalAmmoUsed = this.additionalAmmoUsed || 0;
 
     static fromData(data) 
     {

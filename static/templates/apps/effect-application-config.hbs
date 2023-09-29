@@ -98,10 +98,17 @@
                     <p class="notes">{{{localize "IMPMAL.EffectApplicationOptionAvoidTestPrevention"}}}</p>
                 </div>
                 <div class="form-group">
-                    <label>{{localize "IMPMAL.Manual"}}</label>
-                    <input type="checkbox" name="flags.impmal.applicationData.options.avoidTest.manual" {{checked applicationData.options.avoidTest.manual}}>
-                    <p class="notes">{{{localize "IMPMAL.EffectApplicationOptionAvoidTestManual"}}}</p>
+                    <label>{{localize "IMPMAL.Reversed"}}</label>
+                    <input type="checkbox" name="flags.impmal.applicationData.options.avoidTest.reversed" {{checked applicationData.options.avoidTest.reversed}}>
+                    <p class="notes">{{{localize "IMPMAL.EffectApplicationOptionAvoidTestReversed"}}}</p>
                 </div>
+                {{#unless applicationData.options.avoidTest.reversed}}
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.Manual"}}</label>
+                        <input type="checkbox" name="flags.impmal.applicationData.options.avoidTest.manual" {{checked applicationData.options.avoidTest.manual}}>
+                        <p class="notes">{{{localize "IMPMAL.EffectApplicationOptionAvoidTestManual"}}}</p>
+                    </div>
+                {{/unless}}
             {{/unless}}
 
             {{#if (eq applicationData.options.avoidTest.value "custom")}}

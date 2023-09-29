@@ -303,7 +303,8 @@
     .hit-locations {
         display: flex;
         flex-direction: column;
-        flex: 0 0 180px;
+        // flex: 0 0 180px;
+        flex: 0.5;
         .location {
             display: flex;
             flex-direction: row;
@@ -349,6 +350,14 @@
 
     .list .shield-traits {
         flex: 4;
+    }
+
+    .armour-traits {
+        width: 100%;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
     }
 
     .mag {
@@ -476,7 +485,8 @@
         display: flex;
         border: 1px dashed black;
         border-radius: 5px;
-        height: 40px;
+        height: 50px;
+        padding: 5px;
         img {
             object-fit: contain;
             flex: 0 0 40px;
@@ -494,10 +504,10 @@
                 display: flex;
                 justify-content: space-around;
             }
-            .gradient-border {
-                height: 1px;
-                background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 49%, rgba(255,255,255,0) 100%); 
-            }
+        }
+        .gradient-border {
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 49%, rgba(255,255,255,0) 100%); 
         }
 
         .remove-opposed {

@@ -1,3 +1,4 @@
+import DocumentChoice from "../../apps/document-choice";
 import ChatHelpers from "../../system/chat-helpers";
 import { SocketHandlers } from "../../system/socket-handlers";
 import TokenHelpers from "../../system/token-helpers";
@@ -162,8 +163,10 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".influence-source .source-delete").on("click", this._onInfluenceSourceDelete.bind(this));
         html.find(".influence-source button,input,.source-delete").click(ev => ev.stopPropagation());
         html.find(".location").on("click", this._toggleLocationDropdown.bind(this));
+        html.find(".list-hover").on("mouseenter", this._onListHoverIn.bind(this));
+        html.find(".list-hover").on("mouseleave", this._onListHoverOut.bind(this));
+        html.on("click", ".use-item", this._onUseItem.bind(this));
     }
-
 
 
     /**
@@ -318,25 +321,43 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         game.user.updateTokenTargets([]);
     }
 
-    _onCreateSpecialisation(ev)
+    async _onCreateSpecialisation(ev)
     {
-        let skill = this._getKey(ev);      
+        let skill = this._getKey(ev);
+        
+        let specialisations = await game.impmal.utility.getAllItems("specialisation");
 
-        Item.create({
-            type : "specialisation",
-            name : game.i18n.format("IMPMAL.SkillSpecialisation", {skill : game.impmal.config.skills[skill]}), 
-            system : {skill}, 
-        }, {renderSheet:true, parent: this.actor});
+        specialisations = specialisations.filter(i => i.system.skill == skill);
+        let choice;
+        if (specialisations.length)
+        {
+            choice = await DocumentChoice.create(specialisations);
+        }
+
+        if (choice[0])
+        {
+            Item.create(choice[0].toObject(), {parent: this.actor});
+        }
+
+        else 
+        {
+            Item.create({
+                type : "specialisation",
+                name : game.i18n.format("IMPMAL.SkillSpecialisation", {skill : game.impmal.config.skills[skill]}), 
+                system : {skill}, 
+            }, {renderSheet:true, parent: this.actor});
+        }
+            
     }
 
     _onWarpClick()
     {
-        this.actor.setupSkillTest({key : "psychic"}, {warp: this.actor.system.warp.state});
+        this.actor.setupSkillTest({key : "psychic"}, {other : {warp: this.actor.system.warp.state}});
     }
 
     _onPurgeClick()
     {
-        this.actor.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {purge: true,  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
+        this.actor.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {other : {purge: true},  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
     }
 
     _onHoverInAttacker() 
@@ -464,22 +485,44 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         this.actor.update({"system.influence" : this.actor.system.influence.addSource(faction)});
     }
 
-    // _onHoverInLocation (ev) 
-    // {
-    //     console.log("HOVERIN");
-    //     let details = $(ev.currentTarget).find(".location-details");
-    //     details.slideDown(200);
-    //     details.removeClass("collapsed");
-        
-    // }
-    // async _onHoverOutLocation (ev) 
-    // {
-    //     console.log("HOVEROUT");
-    //     await game.impmal.utility.sleep(1000);
-    //     let details = $(ev.currentTarget).find(".location-details");
-    //     details.slideUp(200);
-    //     details.addClass("collapsed");
-    // }
+    _onListHoverIn(ev)
+    {
+        let img = $(ev.currentTarget).find("img");
+        let button = $(ev.currentTarget).find(".use-item");
+        if (img.length)
+        {
+            img.hide();
+            if (button.length == 0)
+            {
+                $(`<a class="use-item"><i class="fa-solid fa-comment"></i></a>`).insertAfter(img);
+            }
+        }
+    }
+    
+    _onListHoverOut(ev)
+    {
+        let img = $(ev.currentTarget).find("img");
+        let button = $(ev.currentTarget).find(".use-item");
+        if (img.length)
+        {
+            img.show();
+        }
+        if (button.length)
+        {
+            button.remove();
+        }
+    }
+
+
+
+    _onUseItem(ev)
+    {
+        ev.stopPropagation();
+        let uuid = this._getUUID(ev);
+        let id = this._getId(ev);
+
+        return this.actor.useItem({id, uuid});
+    }
 
     _toggleLocationDropdown(ev)
     {

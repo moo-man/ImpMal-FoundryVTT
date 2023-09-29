@@ -329,13 +329,13 @@ export class TestDialog extends Application
      * @param {object} data Dialog data, such as title and actor
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(actor, target, {title={}, fields={}}={})
+    static setupData(actor, target, {title={}, fields={}, other={}}={})
     {
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
         let dialogData = {data : {}, fields};
         dialogData.data.speaker = ChatMessage.getSpeaker({actor});
-        dialogData.data.other = {}; // Object that scripts can fill in with arbitrary values
+        dialogData.data.other = other; // Object that scripts can fill in with arbitrary values
         if (!actor.token)
         {
             // getSpeaker retrieves tokens even if this sheet isn't a token's sheet
@@ -346,6 +346,8 @@ export class TestDialog extends Application
         {
             dialogData.data.target = target;
         }
+
+        dialogData.fields.difficulty = dialogData.fields.difficulty || "challenging";
 
         dialogData.data.targets = actor.defendingAgainst ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
 

@@ -42,7 +42,7 @@ export class SkillTest extends CharacteristicTest
 
     _computeWarp() 
     {
-        if (this.context.warp) 
+        if (this.context.other.warp) 
         {
             if (this.succeeded) 
             {
@@ -60,12 +60,12 @@ export class SkillTest extends CharacteristicTest
     {
         // Prevent rerolls from changing it
         // TODO: Click to activate so rerolls don't cause confusion?
-        if (this.context.purge && !this.context.purged) 
+        if (this.context.other.purge && !this.context.other.purged) 
         {
             if (this.succeeded) 
             {
-                this.context.purged = Math.min(this.actor.system.warp.charge, this.actor.system.characteristics.wil.bonus + this.result.SL); // If reroll, remove previous purge
-                this.actor.update({ "system.warp.charge": this.actor.system.warp.charge - this.context.purged });
+                this.context.other.purged = Math.min(this.actor.system.warp.charge, this.actor.system.characteristics.wil.bonus + this.result.SL); // If reroll, remove previous purge
+                this.actor.update({ "system.warp.charge": this.actor.system.warp.charge - this.context.other.purged });
             }
         }
     }
@@ -74,7 +74,7 @@ export class SkillTest extends CharacteristicTest
     {
         let tags = super.tags;
 
-        if (this.context.warp)
+        if (this.context.other.warp)
         {
             if (this.succeeded)
             {
@@ -86,12 +86,12 @@ export class SkillTest extends CharacteristicTest
             }
         }
 
-        if (this.context.purge)
+        if (this.context.other.purge)
         {
             if(this.succeeded)
             {
-                tags.push(`<strong>${game.i18n.localize("IMPMAL.Purged")}</strong>: ${this.context.purged}`);
-                tags.push(`<strong>[[/r 1d100 + ${10 * this.context.purged}]]{${game.i18n.localize("IMPMAL.PsychicPhenomena")}}</strong>`);
+                tags.push(`<strong>${game.i18n.localize("IMPMAL.Purged")}</strong>: ${this.context.other.purged}`);
+                tags.push(`<strong>[[/r 1d100 + ${10 * this.context.other.purged}]]{${game.i18n.localize("IMPMAL.PsychicPhenomena")}}</strong>`);
             }
         }
 

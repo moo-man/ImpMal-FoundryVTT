@@ -103,8 +103,9 @@
 
                 
                 <fieldset>
-                    <legend>{{localize "Opposed"}}</legend>
-                    <div class="form-group">
+                    <legend>{{localize "IMPMAL.Opposed"}}</legend>
+                    {{> systems/impmal/templates/item/partials/item-test.hbs data=system.opposed path="system.opposed"}}
+                    {{!-- <div class="form-group">
                         <label>{{localize "IMPMAL.Difficulty"}}</label>
                         <div class="form-fields">
                             <select name="system.opposed.difficulty">
@@ -150,7 +151,7 @@
                                 value="{{system.opposed.skill.specialisation}}"
                                 placeholder="{{localize 'IMPMAL.Specialisation'}}">
                         </div>
-                    </div>
+                    </div> --}}
                 </fieldset>
 
 

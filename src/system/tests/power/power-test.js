@@ -47,7 +47,7 @@ export class PowerTest extends SkillTest
         if (this.actor.type == "character" || this.actor.type == "npc")
         {
             let charge = this.actor.system.warp.charge;
-            let added = this.context.warpAdded;
+            let added = this.context.other.warpAdded;
             let rating = this.item.system.rating;
 
             // Reduce Warp Rating by WPB if critical
@@ -75,7 +75,7 @@ export class PowerTest extends SkillTest
             }
 
             charge += added;
-            this.context.warpAdded = added;
+            this.context.other.warpAdded = added;
 
             if (this.context.push && !this.context.pushRoll)
             {

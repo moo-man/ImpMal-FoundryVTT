@@ -36,8 +36,12 @@
                     <div class="form-fields">
                         <input type="checkbox" name="system.oneUse" {{checked system.oneUse}}>
                     </div>
-                    <p class="notes">{{localize "IMPMAL.OneUseHint"}}</p>
                 </div>
+
+                <fieldset>
+                    <legend>{{localize "IMPMAL.Test"}}</legend>
+                {{> systems/impmal/templates/item/partials/item-test.hbs data=system.test path="system.test"}}
+                </fieldset>
 
             </div>
             <div class="tab effects" data-tab="effects">

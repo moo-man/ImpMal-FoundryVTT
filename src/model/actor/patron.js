@@ -17,18 +17,31 @@ export class PatronModel extends BaseActorModel
         schema.demeanor = new fields.StringField();
         schema.payment = new fields.SchemaField({
             grade : new fields.StringField(),
-            override : new fields.NumberField()
+            payOverride : new fields.NumberField(),
+            gradeModifier : new fields.NumberField()
         });
         return schema;
     }
 
+
+
     computeDerived(items)
     {
         super.computeDerived(items);
+
+        this.computeGrade();
         this.duty.getDocument(items.all);
         this.faction.getDocument(items.all);
         this.influence.compute(Array.from(this.parent.allApplicableEffects()), items, this.parent.type);
     }
-
+    
+    computeGrade()
+    {
+        let grades = Object.keys(game.impmal.config.paymentGrade);
+        let currentGradeIndex = grades.findIndex(i => i == this.payment.grade);
+        let modifiedGradeIndex = Math.clamped(0, grades.length, currentGradeIndex + this.payment.gradeModifier);
+        this.payment.grade = grades[modifiedGradeIndex];
+        this.payment.value = this.payment.payOverride || game.impmal.config.paymentAmount[this.payment.grade] || 0;
+    }
 }
 

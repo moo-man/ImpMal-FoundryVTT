@@ -45,7 +45,7 @@
             <div class="details-row">
                 <div class="detail-group">
                     <div class="input-group">
-                        <select type="text" name="system.payment.grade">
+                        <select type="text" name="system.payment.grade" {{#if actor.overrides.system.payment.gradeModifier}}disabled data-tooltip="{{localize 'IMPMAL.CannotEditPropertyWithEffect'}}"{{/if}}>
                             {{#select system.payment.grade}}
                                 <option value=""></option>
                                 {{#each (config "paymentGrade")}}

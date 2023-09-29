@@ -1,4 +1,5 @@
 import ImpMalScript from "../../system/script";
+import { TestDataModel } from "./components/test";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
@@ -12,6 +13,7 @@ export class TalentModel extends StandardItemModel
             script : new fields.StringField()
         });
         schema.xp = new fields.NumberField({initial : 100, min: 0});
+        schema.test = new fields.EmbeddedDataField(TestDataModel);
         return schema;
     }
 

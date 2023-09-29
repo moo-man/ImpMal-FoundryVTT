@@ -1,5 +1,35 @@
 export default class ImpMalUtility
 {
+
+
+    static async getAllItems(types = [])
+    {
+        if (typeof types == "string")
+        {
+            types = [types];
+        }
+
+        let packs = game.impmal.tags.getPacksWithTag(types);
+
+        let collection = new Collection();
+
+        for(let pack of packs)
+        {
+            let docs = await pack.getDocuments({type__in: types});
+            docs.forEach(i => 
+            {
+                collection.set(i.id, i);
+            });
+        }
+
+        game.items.filter(i => types.includes(i.type)).forEach(i => 
+        {
+            collection.set(i.id, i);
+        });
+
+        return collection;
+    }
+
     /**
    * Given an ID, find an item within the world, and if necessary, search the compendium using the type argument
    * 

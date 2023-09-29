@@ -366,4 +366,5 @@ export default ImpMalSheetMixin = (cls) => class extends cls
             ((document.documentName == "Actor" && document.type == "patron") || 
             (document.actor?.type == "patron"));
     }
+
 };

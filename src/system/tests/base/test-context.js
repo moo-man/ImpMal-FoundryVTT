@@ -9,15 +9,39 @@ export class TestContext
     title = "";
     fateReroll = false;
     fateAddSL = false;
+
+    tags = {};
+    text = {};   
+    other = {}; // General use object for scripts
     targetSpeakers = [];
     responses = {}; // map of tokenIds to response messages or "unopposed" string
     appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}
     defendingAgainst = undefined; // message ID of attacking test
     opposedFlagsAdded = false;
+    uuid = ""; // Generic UUID variable used in subclasses
 
     constructor(context)
     {
         mergeObject(this, context);
+        // Add a push function to tags and text so they work sorta like an array but handles duplicates
+        let push = function(value)
+        {
+            // Prevent duplicates when re-evaluating
+            if (value)
+            {
+                this[value.slugify()] = value;
+            }
+        };
+
+        Object.defineProperty(this.tags, "push", {
+            value : push,
+            enumerable : false
+        });
+
+        Object.defineProperty(this.text, "push", {
+            value : push,
+            enumerable : false
+        });
     }
 
     get message() 
@@ -47,6 +71,18 @@ export class TestContext
                 damage : this.appliedDamage[speaker.token]
             };
         });
+    }
+
+    get item() 
+    {
+        if (this.uuid)
+        {
+            return fromUuidSync(this.uuid);
+        }
+        else 
+        {
+            return null;
+        }
     }
 
 
@@ -205,14 +241,16 @@ export class TestContext
     static fromData(data) 
     {
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
-        let context = {
+        let context = mergeObject({
             speaker : data.speaker,
             title : data.title,
             fateReroll : data.fateReroll,
             fateAddSL : data.fateAddSL,
+            other : data.other,
             targetSpeakers : data.targets.map(i => ChatMessage.getSpeaker({token : i.document})),
             rollmode : data.rollmode,
-        };
+            uuid : data.uuid
+        });
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;
     }

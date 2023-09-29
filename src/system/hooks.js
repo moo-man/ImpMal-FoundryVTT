@@ -7,6 +7,7 @@ import settings from "./hooks/settings";
 import targets from "./hooks/targets";
 import token from "./hooks/token";
 import i18n from "./hooks/i18n";
+import setup from "./hooks/setup";
 
 export default function() 
 {
@@ -19,4 +20,5 @@ export default function()
     token();
     i18n();
     drawing();
+    setup();
 }

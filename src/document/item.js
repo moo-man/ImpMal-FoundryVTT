@@ -18,6 +18,11 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
             this.updateSource({"flags.impmal.fromEffect" : options.fromEffect});
         }
 
+        if (this.isOwned)
+        {
+            await this.actor.runScripts("createItem", this);
+        }
+
         //_preCreate for effects is where immediate scripts run
         // Effects that come with Items aren't called, so handle them here
         await this.handleImmediateScripts();
@@ -43,8 +48,8 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
         // Add a prepared flag to determine if this item has already been prepared
         // See https://github.com/foundryvtt/foundryvtt/issues/7987
-        this.prepared = false;
-        this.reset();
+        // this.prepared = false;
+        // this.reset();
     }
 
     async _onCreate(data, options, user)
@@ -65,13 +70,25 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
     {
         this.system.computeBase();
         this.runScripts("prepareBaseData", this);
+        if (this.isOwned)
+        {
+            this.actor.runScripts("prepareOwnedItemBaseData", this);
+        }
     }
 
     prepareDerivedData() 
     {
         this.runScripts("prePrepareDerivedData", this);
+        if (this.isOwned)
+        {
+            this.actor.runScripts("PrePrepareOwnedItemDerivedData", this);
+        }
         this.system.computeDerived();
         this.runScripts("postPrepareDerivedData", this);
+        if (this.isOwned)
+        {
+            this.actor.runScripts("PostPrepareOwnedItemDerivedData", this);
+        }
     }
 
     prepareOwnedData()
@@ -83,7 +100,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         this.system.computeOwnerDerived(this.actor);
         this.runScripts("prepareOwnedData", this);
 
-        this.prepared = true;
+        // this.prepared = true;
     }
 
     getScripts(trigger)
@@ -102,17 +119,14 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     runScripts(...args)
     {
-        if (!this.prepared)
-        {
-            return super.runScripts(...args);
-        }
+        return super.runScripts(...args);
     }
 
 
     getTestData() 
     {
         let itemTestData = {};
-        if (["trait", "talent", "equipment"].includes(this.type))
+        if (this.system.test)
         {
             itemTestData = this.system.test.toObject();
         }

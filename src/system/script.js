@@ -37,7 +37,7 @@ export default class ImpMalScript
         {
             try 
             {
-                this._runSubscript(args, this.options.dialog?.hideScript, "Hide");
+                return this._runSubscript(args, this.options.dialog?.hideScript, "Hide");
             }
             catch(e)
             {
@@ -57,7 +57,7 @@ export default class ImpMalScript
         {
             try 
             {
-                this._runSubscript(args, this.options.dialog?.activateScript, "Activate");
+                return this._runSubscript(args, this.options.dialog?.activateScript, "Activate");
             }
             catch(e)
             {
@@ -71,7 +71,7 @@ export default class ImpMalScript
     {
         if (this.options.dialog?.submissionScript)
         {
-            this._runSubscript(args, this.options.dialog?.submissionScript, "Submission");
+            return this._runSubscript(args, this.options.dialog?.submissionScript, "Submission");
         }
     }
 
@@ -80,7 +80,7 @@ export default class ImpMalScript
         try 
         {
             game.impmal.log("Running Script > " + this.label);
-            return new Function("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + this.options.dialog?.submissionScript).bind(this.context)(args);
+            return new Function("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + script).bind(this.context)(args);
         }
         catch(e)
         {
@@ -96,6 +96,8 @@ export default class ImpMalScript
             speaker : {alias : this.context.actor?.name || this.context?.item.name},
             flavor : this.context.effect.name || this.context.item.name || ""
         });
+
+
     }
 
     get actor() 
