@@ -46,9 +46,10 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
                 super._onDrop(ev);
             }
         }
-        else 
+        else if (dropData.type == "ActiveEffect")
         {
-            super._onDrop(ev);
+            let effect = await ActiveEffect.implementation.fromDropData(dropData);
+            this.item.createEmbeddedDocuments("ActiveEffect", [effect.toObject()]);
         }
     }
 

@@ -1,4 +1,5 @@
 import DocumentChoice from "../apps/document-choice";
+import log from "../system/logger";
 import ImpMalScript from "../system/script";
 import { SocketHandlers } from "../system/socket-handlers";
 
@@ -29,7 +30,7 @@ export class ImpMalEffect extends ActiveEffect
         preventCreation = await this._handleFilter(data, options, user);
         if (preventCreation)
         {
-            ui.notifications.notify(game.i18n.format("IMPMAL.EffectFiltered", {name : this.name}));
+            log(game.i18n.format("IMPMAL.EffectFiltered", {name : this.name}), {force: true, args: this});
             return false;
         }
         await this._handleItemApplication(data, options, user);
@@ -128,7 +129,7 @@ export class ImpMalEffect extends ActiveEffect
         if (this.isCondition && !options.condition) 
         {
             // If adding a condition, prevent it and go through `addCondition`
-            this.parent?.addCondition(this.key, {type : this.flags.impmal?.type, origin: this.origin, applicationData : getProperty(data, "flags.impmal.applicationData") || {}});
+            this.parent?.addCondition(this.key, {type : this.flags.impmal?.type, origin: this.origin, flags : this.flags});
             return true;
         }
     }

@@ -25,12 +25,13 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     {
         await super._onUpdate(data, options, user);
         await this.update(this.system.updateChecks(data, options));
-        await this.runScripts("updateDocument");
+        await Promise.all(this.runScripts("updateDocument"));
     }
 
 
-    addCondition(key, {overlay=false, type, origin, create=true, applicationData={}}={})
+    addCondition(key, {overlay=false, type, origin, create=true, flags={}}={})
     {
+
         let existing = this.hasCondition(key);
         let effectData;
         if (existing)
@@ -50,15 +51,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         }
 
         let createData = ImpMalEffect.getCreateData(effectData, overlay);
-        if (!createData.flags)
-        {
-            createData.flags = {impmal : {} };
-        }
-        if (!createData.flags.impmal.applicationData)
-        {
-            createData.flags.impmal.applicationData = {};
-        }
-        mergeObject(createData.flags.impmal.applicationData, applicationData);
+        mergeObject(createData.flags, flags);
         createData.origin = origin;
 
 

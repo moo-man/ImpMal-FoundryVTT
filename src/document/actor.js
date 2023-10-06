@@ -204,14 +204,15 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         let locationData = this.system.combat.hitLocations[locationKey];
 
         let args = {value, ignoreAP, modifiers, locationData, opposed, traits};
-        await opposed?.attackerTest?.actor.runScripts("preApplyDamage", args);
-        await opposed?.attackerTest?.item?.runScripts?.("preApplyDamage", args);
-        await this.runScripts("preTakeDamage", args); 
+        await Promise.all(opposed?.attackerTest?.actor.runScripts("preApplyDamage", args));
+        await Promise.all(opposed?.attackerTest?.item?.runScripts?.("preApplyDamage", args));
+        await Promise.all(this.runScripts("preTakeDamage", args)); 
         // Reassign primitive values that might've changed in the scripts
         value = args.value;
         ignoreAP = args.ignoreAP;
 
         let woundsGained = value;
+
         if (locationData.field)
         {
             woundsGained = await locationData.field.system.applyField(value, modifiers);
@@ -251,9 +252,9 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         }
 
         args = {excess, woundsGained, locationData, opposed};
-        await opposed?.attackerTest?.actor.runScripts("applyDamage", args);
-        await opposed?.attackerTest?.item?.runScripts?.("applyDamage", args);
-        await this.runScripts("takeDamage", args); 
+        await Promise.all(opposed?.attackerTest?.actor.runScripts("applyDamage", args));
+        await Promise.all(opposed?.attackerTest?.item?.runScripts?.("applyDamage", args));
+        await Promise.all(this.runScripts("takeDamage", args)); 
 
         let text = game.i18n.format("IMPMAL.WoundsTaken", {wounds : woundsGained, location : game.i18n.localize(locationData.label)});
         let crit;
@@ -302,6 +303,16 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         }
     }
 
+    runScripts(trigger, args, {itemEffects=false}={})
+    {
+        let scripts = super.runScripts(trigger, args);
+        if (itemEffects)
+        {
+            scripts = scripts.concat(this.items.map(i => i.runScripts(trigger, args)));
+        }
+        return scripts;
+    }
+
     /**
      * Collect effect scripts being applied to the actor
      * 
@@ -337,16 +348,29 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             {
                 return false;
             }
+
+            // An actor effects intended to apply to an item must have the itemTargets flag
+            // Empty array => all items
+            // No flag => Should not apply to items
+            // Array with IDs => Apply only to those IDs
             let targeted = e.getFlag("impmal", "itemTargets");
-            if (targeted && targeted.length)
+            if (targeted)
             {
-                return targeted.includes(item.id);
+                if (targeted.length)
+                {
+                    return targeted.includes(item.id);
+                }
+                // If no items specified, apply to all items
+                else 
+                {
+                    return true;
+                }
             }
-            // If no items specified, apply to all items
-            else 
+            else // If no itemTargets flag, it should not apply to items at all
             {
-                return true;
+                return false;
             }
+
             // Create temporary effects that have the item as the parent, so the script context is correct
         }).map(i => new ImpMalEffect(i.toObject(), {parent : item}));
 
@@ -443,6 +467,11 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     clearOpposed()
     {
         return this.update({"flags.impmal.-=opposed" : null});
+    }
+
+    clearAction() 
+    {
+        return this.update({"system.combat.action" : ""});
     }
 
     _findAttackingMessage()

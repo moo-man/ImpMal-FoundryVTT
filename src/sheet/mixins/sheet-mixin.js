@@ -81,6 +81,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         html.find(".faction-delete").on("click", this._onFactionDelete.bind(this));
         html.find(".faction-create").on("click", this._onFactionCreate.bind(this));
         html.find(".script-config").on("click", this._onScriptConfig.bind(this));
+        game.impmal.utility.listeners(html);
     }
 
     _getId(ev) 

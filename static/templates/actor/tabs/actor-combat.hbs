@@ -45,9 +45,15 @@
     <div class="actor-property inline">
         <label class="property-label">{{localize "IMPMAL.Speed"}}</label>
         <div class="property-value">
-            <input type="text" value="{{configLookup " speeds" system.combat.speed.land.value}}" disabled>
+            <input type="text" value="{{configLookup "speeds" system.combat.speed.land.value}}" disabled>
         </div>
     </div>
+</div>
+
+<div class="action-list">
+    {{#each (config "actions")}}
+        <button type="button" class="action" data-action="{{@key}}">{{localize this.label}}</button>
+    {{/each}}
 </div>
 
 <section class="list {{#unless items.equipped.melee.length}}inactive{{/unless}}">

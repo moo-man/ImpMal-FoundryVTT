@@ -293,6 +293,7 @@ const IMPMAL = {
     },
 
     powerRanges : {
+        special : "IMPMAL.Special",
         self : "IMPMAL.Self",
         immediate : "IMPMAL.Immediate",
         short : "IMPMAL.Short",
@@ -310,6 +311,18 @@ const IMPMAL = {
     corruptionType : {
         mutation : "IMPMAL.Mutation",
         malignancy : "IMPMAL.Malignancy"
+    },
+
+    corruptionValues : {
+        minor : 1,
+        moderate : 2,
+        major : 4
+    },
+
+    corruptionLabel : {
+        minor : "IMPMAL.Minor",
+        moderate : "IMPMAL.Moderate",
+        major : "IMPMAL.Major"
     },
 
     factions: {},
@@ -423,7 +436,83 @@ const IMPMAL = {
         "updateDocument": true, 
         "deleteEffect": true, 
         "dialog": true,
-        "createItem" : true
+        "createItem" : true,
+        "preApplyDamage" : true,
+        "preTakeDamage" : true,
+        "applyDamage" : true,
+        "takeDamage" : true
+    },
+
+
+    actions : {
+        aim : {
+            label : "IMPMAL.Aim",
+            effect :         
+            {
+                icon: "",
+                id: "aim",
+                statuses : ["aim"],
+                name: "IMPMAL.Aim",
+                flags : {
+                    impmal : {
+                        scriptData: [
+                            {
+                                label: "Disadvantage on Melee and Reflexes (Dodge)",
+                                string: "args.disCount++;",
+                                trigger: "dialog",
+                                options: {
+                                    dialog: {
+                                        hideScript: `return !["melee", "reflexes"].includes(args.data.skill);`,
+                                        activateScript: `return args.data.skill == "melee" || args.skillItem?.name == "Dodge"`
+                                    },
+                                }
+                            },
+                        ]
+                    }
+                }
+            },
+            test : {},
+            execute : ``
+        },
+        charge : {
+            label : "IMPMAL.Charge"
+        },
+        defend : {
+            label : "IMPMAL.Defend"
+        },
+        disengage : {
+            label : "IMPMAL.Disengage"
+        },
+        dodge : {
+            label : "IMPMAL.Dodge"
+        },
+        flee : {
+            label : "IMPMAL.Flee"
+        },
+        grapple : {
+            label : "IMPMAL.Grapple"
+        },
+        help : {
+            label : "IMPMAL.Help"
+        },
+        hide : {
+            label : "IMPMAL.Hide"
+        },
+        run : {
+            label : "IMPMAL.Run"
+        },
+        search : {
+            label : "IMPMAL.Search"
+        },
+        seize : {
+            label : "IMPMAL.SeizeTheInitiative"
+        },
+        shove : {
+            label : "IMPMAL.Shove"
+        },
+        cover : {
+            label : "IMPMAL.TakeCover"
+        }
     },
 
 
@@ -736,6 +825,19 @@ const IMPMAL = {
             name: "IMPMAL.ConditionProne",
             flags : {
                 impmal : {
+                    applicationData : {
+                        options : {
+                            avoidTest : {
+                                value : "custom",
+                                manual : true,
+                                prevention: false,
+                                skill : {
+                                    key : "reflexes",
+                                    specialisation : "balance"
+                                }
+                            }
+                        }
+                    },
                     scriptData: [
                         {
                             label: "Disadvantage on Melee Tests",
@@ -982,7 +1084,7 @@ const IMPMAL = {
                 impmal: {
                     scriptData: [
                         {
-                            label: "Disadvantage on Athletics (Running)  and Reflexes (Dodge)",
+                            label: "Disadvantage on Athletics (Running) and Reflexes (Dodge)",
                             string: "args.disCount++;",
                             trigger: "dialog",
                             options: {
@@ -1373,6 +1475,20 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             {
                 return `Error - Table ${match[0]} not Found`;
             }
+        }
+    },
+    {
+        pattern : /@Corruption\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : async (match) => 
+        {
+            let value = match[1];
+
+            const a = document.createElement("a");
+            a.classList.add("corruption-link");
+            a.classList.add("custom-link");
+            a.dataset.value = value;
+            a.innerHTML = `<img src="systems/impmal/assets/icons/chaos.svg"><span>${match[2] || value}</span>`;
+            return a;
         }
     }
 ]);

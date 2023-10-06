@@ -39,7 +39,10 @@ export class CharacterModel extends StandardActorModel
             short : new fields.StringField(),
             long : new fields.StringField()
         });
-        schema.corruption = new fields.NumberField({initial : 0});
+        schema.corruption = new fields.SchemaField({
+            max : new fields.NumberField({initial: 0, min: 0}),
+            value : new fields.NumberField({initial: 0, min: 0})
+        });
         schema.fate = new fields.SchemaField({
             max : new fields.NumberField({initial: 3}),
             value : new fields.NumberField({initial: 3})
@@ -90,6 +93,7 @@ export class CharacterModel extends StandardActorModel
     computeBase()
     {
         super.computeBase();
+        this.combat.superiority = game.impmal.superiority.value;
         this.patron.getDocument(game.actors);
     }
 
@@ -99,13 +103,13 @@ export class CharacterModel extends StandardActorModel
         super.computeDerived(items);
         this.augmetics.max += this.characteristics.tgh.bonus;
         this.augmetics.value = items.augmetic.length;
+        this.corruption.max += (this.characteristics.tgh.bonus + this.characteristics.wil.bonus);
         this.hands.getDocuments(items.all);
         this.origin.getDocument(items.all);
         this.faction.getDocument(items.all);
         this.role.getDocument(items.all);
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
-        this.combat.superiority = game.impmal.superiority.value;
         this.influence.compute(Array.from(this.parent.allApplicableEffects()), items, this.parent.type, this.patron.document?.system?.influence);
     }
 
@@ -153,6 +157,18 @@ export class CharacterModel extends StandardActorModel
             ImpMalEffect.create(ImpMalEffect.getCreateData(effect), {parent : actor});
         }
 
+    }
+
+
+    static migrateData(data)
+    {
+        if (Number.isNumeric(data.corruption))
+        {
+            data.corruption = {
+                value : data.corruption,
+                max : 0
+            };
+        }
     }
 }
 

@@ -78,8 +78,9 @@ export class StandardActorModel extends BaseActorModel
         this.runScripts("computeCharacteristics", this);
         this.skills.computeTotals(this.characteristics);
         this.skills.findSpecialisations(items.specialisation);
-        this.computeEncumbrance(items);
+        this.computeEncumbranceThresholds(items);
         this.runScripts("computeEncumbrance", this);
+        this.computeEncumbranceState();
         this.combat.computeCombat(this.characteristics, items);
         this.runScripts("computeCombat", this);
         this.computeWarpState();
@@ -87,7 +88,7 @@ export class StandardActorModel extends BaseActorModel
         this.vehicle = game.actors.find(v => v.type == "vehicle" && (v.system.actors.list.find(i => i.id == this.parent.id)));
     }
 
-    computeEncumbrance(items) 
+    computeEncumbranceThresholds(items) 
     {
         let list = [];
         let physicalTypes = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical"));
@@ -103,7 +104,10 @@ export class StandardActorModel extends BaseActorModel
         this.encumbrance.overburdened += this.characteristics.str.bonus + this.characteristics.tgh.bonus; 
         this.encumbrance.restrained += (this.characteristics.str.bonus + this.characteristics.tgh.bonus) * 2;
         this.encumbrance.value += list.reduce((acc, item) => acc += item.system.encumbrance.total, 0);
+    }
 
+    computeEncumbranceState()
+    {
         if (this.encumbrance.value <= this.encumbrance.overburdened)
         {
             this.encumbrance.state = 0;

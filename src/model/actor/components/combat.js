@@ -26,6 +26,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             value : new fields.NumberField({initial : 0}),
             max : new fields.NumberField(),
         });
+        schema.action = new fields.StringField({});
         return schema;
     }
 

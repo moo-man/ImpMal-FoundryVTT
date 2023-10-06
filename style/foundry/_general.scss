@@ -1,0 +1,21 @@
+.custom-link {
+    display: flex;
+    align-items: center;
+
+
+    background: #DDD;
+    border: 1px solid var(--color-border-dark-tertiary);
+    border-radius: 2px;
+    white-space: nowrap;
+    word-break: break-all;
+    width: fit-content;
+    img {
+        height: 15px;
+        width: 15px;
+        border: none;
+    }
+    span {
+        height: 15px;
+        padding: 1px 2px 0px 2px;
+    }
+}

@@ -1,3 +1,5 @@
+import { ImpMalChatMessage } from "./chat-message";
+
 export default class ImpMalUtility
 {
 
@@ -116,5 +118,14 @@ export default class ImpMalUtility
 
         </tbody>
     </table>`, {relativeTo : table, async: true});
+    }
+
+    static listeners(html) 
+    {
+        html.find(".corruption-link").on("click", ev => 
+        {
+            let corruptionValue = ev.currentTarget.dataset.value;
+            ImpMalChatMessage.corruptionMessage(corruptionValue);
+        });
     }
 }

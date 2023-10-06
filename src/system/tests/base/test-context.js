@@ -244,13 +244,10 @@ export class TestContext
         let context = mergeObject({
             speaker : data.speaker,
             title : data.title,
-            fateReroll : data.fateReroll,
-            fateAddSL : data.fateAddSL,
-            other : data.other,
             targetSpeakers : data.targets.map(i => ChatMessage.getSpeaker({token : i.document})),
             rollmode : data.rollmode,
             uuid : data.uuid
-        });
+        }, data.context);
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;
     }

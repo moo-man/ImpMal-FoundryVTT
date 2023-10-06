@@ -13,14 +13,14 @@ export class TraitTestDialog extends AttackDialog
      * @param {string} title.append Append to dialog title
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(itemId, actor, {title={}, fields={}, other={}}={})
+    static setupData(itemId, actor, {title={}, fields={}, context={}}={})
     {   
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
         let trait = actor.items.get(itemId);
         let skillKey = trait.system.attack.skill.key || trait.system.attack.type;
 
-        let dialogData = super.setupData({name : trait.system.attack.skill.specialisation, key : skillKey}, actor, {title, fields, other});
+        let dialogData = super.setupData({name : trait.system.attack.skill.specialisation, key : skillKey}, actor, {title, fields, context});
 
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.TraitTest", {trait : trait?.name})) + (title?.append || "");

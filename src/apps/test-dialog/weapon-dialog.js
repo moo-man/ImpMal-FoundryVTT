@@ -19,7 +19,7 @@ export class WeaponTestDialog extends AttackDialog
 
     get weapon() 
     {
-        return this.actor.items.get(this.data.weaponId);
+        return this.data.weapon;
     } 
 
     /**
@@ -31,7 +31,7 @@ export class WeaponTestDialog extends AttackDialog
      * @param {string} title.append Append to dialog title
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(id, actor, {title={}, fields={}, other={}}={})
+    static setupData(id, actor, {title={}, fields={}, context={}}={})
     {   
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
@@ -49,7 +49,7 @@ export class WeaponTestDialog extends AttackDialog
         }
         
         // If skill is a SkillSpec Item, provide the id, if not, provide the skill key
-        let dialogData = super.setupData({itemId : skill.id, key : weapon.system.attackType}, actor, {title, fields, other});
+        let dialogData = super.setupData({itemId : skill.id, key : weapon.system.attackType}, actor, {title, fields, context});
 
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.WeaponTest", {name : weapon.name})) + (title?.append || "");

@@ -20,15 +20,15 @@ export class TraitTest extends AttackTest
     async runPreScripts()
     {
         await super.runPreScripts();
-        await this.actor.runScripts("preRollTraitTest", this);
-        await this.item.runScripts("preRollTraitTest", this);
+        await Promise.all(this.actor.runScripts("preRollTraitTest", this));
+        await Promise.all(this.item.runScripts("preRollTraitTest", this));
     }
 
     async runPostScripts()
     {
         await super.runPostScripts();
-        await this.actor.runScripts("rollTraitTest", this);
-        await this.item.runScripts("rollTraitTest", this);
+        await Promise.all(this.actor.runScripts("rollTraitTest", this));
+        await Promise.all(this.item.runScripts("rollTraitTest", this));
     }
 
     get item() 

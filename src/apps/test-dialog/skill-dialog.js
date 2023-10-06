@@ -20,7 +20,7 @@ export class SkillTestDialog extends CharacteristicTestDialog
      * @param {string} title.append Append to dialog title
      * @param {object} fields Predefine dialog fields
      */
-    static setupData({itemId, name, key}, actor, {title={}, fields={}, other={}}={})
+    static setupData({itemId, name, key}, actor, {title={}, fields={}, context={}}={})
     {   
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
@@ -38,7 +38,7 @@ export class SkillTestDialog extends CharacteristicTestDialog
         let skillObject = actor.system.skills[skillKey];
         let characteristic = skillObject.characteristic;
 
-        let dialogData = super.setupData(characteristic, actor, {title, fields, other});
+        let dialogData = super.setupData(characteristic, actor, {title, fields, context});
 
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.SkillTest", {skill : skillItem?.name || game.impmal.config.skills[skillKey]})) + (title?.append || "");

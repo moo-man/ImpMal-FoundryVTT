@@ -20,6 +20,10 @@ export class AttackDialog extends SkillTestDialog
         return data;
     }
 
+    get isAttack()
+    {
+        return true;
+    }
 
     computeFields() 
     {

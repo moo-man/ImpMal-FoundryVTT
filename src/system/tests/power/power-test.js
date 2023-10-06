@@ -28,15 +28,15 @@ export class PowerTest extends SkillTest
     async runPreScripts()
     {
         await super.runPreScripts();
-        await this.actor.runScripts("preRollPowerTest", this);
-        await this.item.runScripts("preRollPowerTest", this);
+        await Promise.all(this.actor.runScripts("preRollPowerTest", this));
+        await Promise.all(this.item.runScripts("preRollPowerTest", this));
     }
 
     async runPostScripts()
     {
         await super.runPostScripts();
-        await this.actor.runScripts("rollPowerTest", this);
-        await this.item.runScripts("rollPowerTest", this);
+        await Promise.all(this.actor.runScripts("rollPowerTest", this));
+        await Promise.all(this.item.runScripts("rollPowerTest", this));
     }
 
 
@@ -47,8 +47,8 @@ export class PowerTest extends SkillTest
         if (this.actor.type == "character" || this.actor.type == "npc")
         {
             let charge = this.actor.system.warp.charge;
-            let added = this.context.other.warpAdded;
-            let rating = this.item.system.rating;
+            let added = this.context.warpAdded;
+            let rating = this.item.system.rating + this.context.additionalWarp;
 
             // Reduce Warp Rating by WPB if critical
             if (this.result.critical)

@@ -329,13 +329,15 @@ export class TestDialog extends Application
      * @param {object} data Dialog data, such as title and actor
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(actor, target, {title={}, fields={}, other={}}={})
+    static setupData(actor, target, {title={}, fields={}, context={}}={})
     {
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
         let dialogData = {data : {}, fields};
         dialogData.data.speaker = ChatMessage.getSpeaker({actor});
-        dialogData.data.other = other; // Object that scripts can fill in with arbitrary values
+        dialogData.data.context = context; // Arbitrary values - used with scripts
+        dialogData.data.context.tags = context.tags || {}; // Tags shown below test results - used with scripts
+        dialogData.data.context.text = context.text || {}; // Longer text shown below test results - used with scripts
         if (!actor.token)
         {
             // getSpeaker retrieves tokens even if this sheet isn't a token's sheet

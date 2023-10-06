@@ -21,15 +21,15 @@ export class WeaponTest extends AttackTest
     async runPreScripts()
     {
         await super.runPreScripts();
-        await this.actor.runScripts("preRollWeaponTest", this);
-        await this.item.runScripts("preRollWeaponTest", this);
+        await Promise.all(this.actor.runScripts("preRollWeaponTest", this));
+        await Promise.all(this.item.runScripts("preRollWeaponTest", this));
     }
 
     async runPostScripts()
     {
         await super.runPostScripts();
-        await this.actor.runScripts("rollWeaponTest", this);
-        await this.item.runScripts("rollWeaponTest", this);
+        await Promise.all(this.actor.runScripts("rollWeaponTest", this));
+        await Promise.all(this.item.runScripts("rollWeaponTest", this));
     }
 
     async postRoll()

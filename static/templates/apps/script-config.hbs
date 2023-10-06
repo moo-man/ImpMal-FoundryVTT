@@ -4,7 +4,12 @@
         {{#if aceActive}}
             <div class="ace-editor"></div>
         {{else}}
-            <textarea class="no-ace" {{#unless (isGM)}}disabled{{/unless}} name="script">{{script}}</textarea>
+        <div class="form-group stacked">
+            <label>Script</label>
+            <div>
+                <textarea class="no-ace" {{#unless (isGM)}}disabled{{/unless}} name="script">{{script}}</textarea>
+            </div>
+        </div>
         {{/if}}
     </div>
     {{#if (isGM)}}

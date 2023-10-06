@@ -532,4 +532,15 @@
         }
     }
 
+    .action-list {
+        display: flex;
+        flex-wrap: wrap;
+        > * {
+            width: fit-content;
+            height: 20px;
+            margin: 3px;
+            line-height: 10px;
+        }
+    }
+
 }

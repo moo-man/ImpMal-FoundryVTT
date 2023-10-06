@@ -165,6 +165,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".location").on("click", this._toggleLocationDropdown.bind(this));
         html.find(".list-hover").on("mouseenter", this._onListHoverIn.bind(this));
         html.find(".list-hover").on("mouseleave", this._onListHoverOut.bind(this));
+        html.find("button.action").on("click", this._onActionClick.bind(this));
         html.on("click", ".use-item", this._onUseItem.bind(this));
     }
 
@@ -514,6 +515,11 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     }
 
 
+    _onActionClick(ev)
+    {
+        let action = ev.target.dataset.action;
+        this.actor.update({"system.combat.action" : game.impmal.config.actions[action].label});
+    }
 
     _onUseItem(ev)
     {
