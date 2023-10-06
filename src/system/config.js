@@ -413,7 +413,8 @@ const IMPMAL = {
         startRound : "IMPMAL.TriggerStartRound",
         endRound : "IMPMAL.TriggerEndRound",
         startTurn : "IMPMAL.TriggerStartTurn",
-        endTurn : "IMPMAL.TriggerEndTurn"
+        endTurn : "IMPMAL.TriggerEndTurn",
+        updateCombat  : "IMPMAL.UpdateCombat"
     },
 
     scriptTriggerOptions : {
@@ -449,24 +450,44 @@ const IMPMAL = {
             label : "IMPMAL.Aim",
             effect :         
             {
-                icon: "",
-                id: "aim",
-                statuses : ["aim"],
                 name: "IMPMAL.Aim",
-                flags : {
-                    impmal : {
+                statuses : ["aim"],
+                icon: "icons/svg/aura.svg",
+                flags: {
+                    impmal: {
                         scriptData: [
                             {
-                                label: "Disadvantage on Melee and Reflexes (Dodge)",
-                                string: "args.disCount++;",
-                                trigger: "dialog",
+                                label: "Range",
+                                string: "",
+                                trigger: "",
                                 options: {
                                     dialog: {
-                                        hideScript: `return !["melee", "reflexes"].includes(args.data.skill);`,
-                                        activateScript: `return args.data.skill == "melee" || args.skillItem?.name == "Dodge"`
+                                        hideScript: "",
+                                        activateScript: "",
+                                        submissionScript: "",
+                                        targeter: false
                                     },
+                                    immediate: {
+                                        deleteEffect: false
+                                    }
                                 }
                             },
+                            {
+                                label : "No Target Location Penalty",
+                                string : "args.disCount--;",
+                                trigger : "dialog",
+                                options : {
+                                    dialog: {
+                                        hideScript : "return !args.isAttack;",
+                                        activateScript : "return args.fields.hitLocation != \"roll\""
+                                    }
+                                }
+                            },
+                            {
+                                label : "Tag",
+                                string : "args.context.tags[\"aimedShot\"] = \"Aimed Shot\";\nthis.effect.delete();",
+                                trigger : "rollWeaponTest"
+                            }
                         ]
                     }
                 }
@@ -475,16 +496,126 @@ const IMPMAL = {
             execute : ``
         },
         charge : {
-            label : "IMPMAL.Charge"
+            label : "IMPMAL.Charge",
+            effect :  {
+                name: "IMPMAL.Charge",
+                statuses : ["charge"],
+                icon: "icons/svg/aura.svg",
+                flags: {
+                    impmal: {
+                        scriptData: [
+                            {
+                                label : "Advantage with Melee Attack",
+                                string : "args.advCount++;",
+                                trigger : "dialog",
+                                options : {
+                                    dialog: {
+                                        hideScript : "return this.effect.used || !args.isAttack || !args.weapon.system.isMelee;",
+                                        activateScript : "return args.weapon.system.isMelee",
+                                        submissionScript : "this.effect.used = true;"
+                                    }
+                                }
+                            },
+                            {
+                                label : "Disadvantage to defend yourself",
+                                string : "args.disCount++;",
+                                trigger : "dialog",
+                                options : {
+                                    dialog: {
+                                        hideScript : "return !this.actor.defendingAgainst;",
+                                        activateScript : "return this.actor.defendingAgainst && (args.weapon || args.data.skill == 'reflexes')",
+                                    }
+                                }
+                            },
+                            {
+                                label : "Remove",
+                                string : "this.effect.delete();",
+                                trigger : "startTurn"
+                            }
+                        ]
+                    }
+                }
+            },
+            test : {},
+            execute : ``
         },
         defend : {
-            label : "IMPMAL.Defend"
+            label : "IMPMAL.Defend",
+            effect : {
+                label: "IMPMAL.Defended",
+                icon: "icons/svg/aura.svg",
+                statuses : ["defended"],
+                flags: {
+                    impmal: {
+                        scriptData: [
+                            {
+                                label : "Defended",
+                                string: "ui.notifications.warn(`<strong>Defended</strong>: Must target ${this.effect.sourceName}`, {permanent: true});//setTimeout(dlg => dlg.close(), 250, args);",
+                                trigger: "dialog",
+                                options: {
+                                    dialog: {
+                                        hideScript: `return !args.isAttack`,
+                                        activateScript: `return args.isAttack`,
+                                        targeter : true
+                                    },
+                                }
+                            },
+                            {
+                                label : "Remove",
+                                string: "if (args.combatant.actor.uuid == this.effect.origin) this.effect.delete();", // Delete at the start of the defender's turn
+                                trigger: "updateCombat",
+                            }
+                        ]
+                    },
+                }
+            },
+            test : {},
+            execute : function(actor)
+            {
+                let target = Array.from(game.user.targets)[0];
+                let data = foundry.utils.deepClone(this.effect);
+                data.origin = actor.uuid;
+                if (target?.actor)
+                {
+                    target.actor.applyEffect({effectData : [data]});
+                }
+            }
         },
         disengage : {
             label : "IMPMAL.Disengage"
         },
         dodge : {
-            label : "IMPMAL.Dodge"
+            label : "IMPMAL.Dodge",
+            effect :  {
+                name: "IMPMAL.Dodge",
+                statuses : ["dodge"],
+                icon: "icons/svg/aura.svg",
+                flags: {
+                    impmal: {
+                        scriptData: [
+                            {
+                                label : "Advantage to defend yourself",
+                                string : "args.advCount++;",
+                                trigger : "dialog",
+                                options : {
+                                    dialog: {
+                                        hideScript : "return !this.actor.defendingAgainst || this.effect.used;",
+                                        activateScript : "return this.actor.defendingAgainst && (args.weapon || args.data.skill == 'reflexes')",
+                                        submissionScript : "this.effect.used = true;"
+                                    }
+                                }
+                            },
+                            {
+                                label : "Remove",
+                                string : "this.effect.delete();",
+                                trigger : "startTurn"
+                            }
+                        ]
+                    }
+                }
+            },
+            test : {},
+            execute : ``
         },
         flee : {
             label : "IMPMAL.Flee"
@@ -493,22 +624,79 @@ const IMPMAL = {
             label : "IMPMAL.Grapple"
         },
         help : {
-            label : "IMPMAL.Help"
+            label : "IMPMAL.Help",
+            effect :  {
+                label: "Helped",
+                icon: "icons/svg/aura.svg",
+                statuses : ["helped"],
+                flags: {
+                    impmal: {
+                        scriptData: [
+                            {
+                                label : "Advantage on next test",
+                                string: "args.advCount++;",
+                                trigger: "dialog",
+                                options: {
+                                    dialog: {
+                                        hideScript: ``,
+                                        activateScript: `return true`,
+                                        submissionScript : `this.effect.delete();`
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                }
+            },
+            test : {},
+            execute : function(actor)
+            {
+                let target = Array.from(game.user.targets)[0];
+                let data = foundry.utils.deepClone(this.effect);
+                data.origin = actor.uuid;
+                if (target?.actor)
+                {
+                    target.actor.applyEffect({effectData : [data]});
+                }
+            }
         },
         hide : {
-            label : "IMPMAL.Hide"
+            label : "IMPMAL.Hide",
+            test : {
+                skill : {
+                    key : "stealth",
+                    specialisation : "Hide"
+                }
+            }
         },
         run : {
             label : "IMPMAL.Run"
         },
         search : {
-            label : "IMPMAL.Search"
+            label : "IMPMAL.Search",
+            test : {
+                skill : {
+                    key : "awareness",
+                    specialisation : "Sight"
+                }
+            }
         },
         seize : {
-            label : "IMPMAL.SeizeTheInitiative"
+            label : "IMPMAL.SeizeTheInitiative",
+            execute : function(actor)
+            {
+                let combatant = game.combat.combatants.find(i => i.actor?.uuid == actor?.uuid);
+                combatant?.update({initiative : game.combat.turns[0].initiative + 1});
+            }
         },
         shove : {
-            label : "IMPMAL.Shove"
+            label : "IMPMAL.Shove",
+            test : {
+                skill : {
+                    key : "athletics",
+                    specialisation : "Might"
+                }
+            }
         },
         cover : {
             label : "IMPMAL.TakeCover"
@@ -1018,6 +1206,11 @@ const IMPMAL = {
             statuses : ["lightCover"],
             flags: {
                 impmal: {
+                    applicationData : {
+                        options : {
+                            enableConditionScript : `return this.actor.system.combat.action == "cover"`
+                        }
+                    },
                     scriptData: [
                         {
                             "label": "Light Cover",
@@ -1039,6 +1232,11 @@ const IMPMAL = {
             statuses : ["mediumCover"],
             flags: {
                 impmal: {
+                    applicationData : {
+                        options : {
+                            enableConditionScript : `return this.actor.system.combat.action == "cover"`
+                        }
+                    },
                     scriptData: [
                         {
                             "label": "Medium Cover",
@@ -1060,6 +1258,11 @@ const IMPMAL = {
             statuses : ["heavyCover"],
             flags: {
                 impmal: {
+                    applicationData : {
+                        options : {
+                            enableConditionScript : `return this.actor.system.combat.action == "cover"`
+                        }
+                    },
                     scriptData: [
                         {
                             "label": "Heavy Cover",

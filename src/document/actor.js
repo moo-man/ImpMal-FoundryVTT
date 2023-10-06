@@ -276,10 +276,30 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         };
     }
 
+
+    async useAction(action)
+    {
+        let actionData = game.impmal.config.actions[action];
+        let effectAdded = false; // Flag effect being added so scrolling text doesn't overlap
+        if (actionData.execute)
+        {
+            actionData.execute(this);
+        }
+        else if (actionData.effect)
+        {
+            effectAdded = await ImpMalEffect.create(actionData.effect, {parent : this});
+        }
+        else if (actionData.test)
+        {
+            this.setupTestFromData(actionData.test, {title :{ append : ` – ${actionData.label}`}});
+        }
+        this.update({"system.combat.action" : action}, {showActionText : !effectAdded});
+    }
+
     // Handles applying effects to this actor, ensuring that the owner is the one to do so
     // This allows the owner of the document to roll tests and execute scripts, instead of the applying user
     // e.g. the players can actually test to avoid an effect, instead of the GM doing it
-    async applyEffect(effectUuids, messageId)
+    async applyEffect({effectUuids=[], effectData=[], messageId}={})
     {
         let owningUser = game.impmal.utility.getActiveDocumentOwner(this);
 
@@ -295,6 +315,10 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
                 let effect = fromUuidSync(uuid);
                 let message = game.messages.get(messageId);
                 await ActiveEffect.create(effect.convertToApplied(), {parent: this, message : message?.id});
+            }
+            for(let data of effectData)
+            {
+                await ActiveEffect.create(data, {parent: this, message : messageId});
             }
         }   
         else 

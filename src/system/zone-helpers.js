@@ -310,7 +310,7 @@ export default class ZoneHelpers
                 }
             }
             let tokens = this.tokensInDrawing(drawing.object);
-            return Promise.all([drawing.setFlag("impmal", "effects", zoneEffects)].concat(tokens.map(t => t.actor.applyEffect(tokenEffectUuids, messageId))));
+            return Promise.all([drawing.setFlag("impmal", "effects", zoneEffects)].concat(tokens.map(t => t.actor.applyEffect({effectUuids : tokenEffectUuids, messageId}))));
         }
         else 
         {

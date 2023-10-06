@@ -49,6 +49,11 @@ export class StandardActorModel extends BaseActorModel
         {
             TokenHelpers.displayScrollingNumber(options.deltaWounds > 0 ? "+" + options.deltaWounds : options.deltaWounds, this.parent, {color: "0xB31B1B"});
         }
+
+        if (options.showActionText && data.system.combat.action)
+        {
+            TokenHelpers.displayScrollingText(game.impmal.config.actions[data.system.combat.action].label, this.parent);
+        }
     }
     
     initialize() 

@@ -56,6 +56,7 @@ import { VehicleModel } from "./model/actor/vehicle";
 import ImpMalVehicleSheet from "./sheet/actors/vehicle-sheet";
 import TagManager from "./system/tag-manager";
 import { ItemUse } from "./system/tests/item/item-use";
+import { ImpMalChatMessage } from "./system/chat-message";
 
 Hooks.once("init", () => 
 {
@@ -69,6 +70,7 @@ Hooks.once("init", () =>
     CONFIG.Item.documentClass = ImpMalItem;
     CONFIG.ActiveEffect.documentClass = ImpMalEffect;
     CONFIG.ActiveEffect.legacyTransferral = false;
+    CONFIG.ChatMessage.documentClass = ImpMalChatMessage;
 
     Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
     Actors.registerSheet("impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true });

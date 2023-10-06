@@ -133,7 +133,7 @@ export class BaseTest
         {
             if (data.woundsGained > 0 && this.item?.damageEffects.length)
             {
-                opposed.actor.applyEffect(this.item?.damageEffects.map(i => i.uuid), this.message.id);
+                opposed.actor.applyEffect({effectUuids : this.item?.damageEffects.map(i => i.uuid), messageId : this.message.id});
             }
             this.context.setApplied(targetId, data);
             this.roll();

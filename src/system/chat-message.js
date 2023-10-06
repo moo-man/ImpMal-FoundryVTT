@@ -116,7 +116,7 @@ export class ImpMalChatMessage extends ChatMessage
 
                 for(let actor of targetActors)
                 {
-                    actor.applyEffect(ev.currentTarget.dataset.uuid, message.id);                
+                    actor.applyEffect({effectUuids: ev.currentTarget.dataset.uuid, messageId: message.id});                
                 }
             }
             
@@ -144,7 +144,7 @@ export class ImpMalChatMessage extends ChatMessage
             {
                 if (effects.length)
                 {
-                    await a.applyEffect(effects.map(e => e.uuid), test.message.id);
+                    await a.applyEffect({effectUuids: effects.map(e => e.uuid), messageId : test.message.id});
                 }
                 else 
                 {

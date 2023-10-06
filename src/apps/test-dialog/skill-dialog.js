@@ -41,7 +41,7 @@ export class SkillTestDialog extends CharacteristicTestDialog
         let dialogData = super.setupData(characteristic, actor, {title, fields, context});
 
         // TODO find a way to avoid duplicating this code from the parent class
-        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.SkillTest", {skill : skillItem?.name || game.impmal.config.skills[skillKey]})) + (title?.append || "");
+        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.SkillTest", {skill : game.impmal.config.skills[skillKey] + (skillItem?.name ? ` (${skillItem.name})` : "")})) + (title?.append || "");
 
         dialogData.data.skillItemId = skillItem?.id;
         dialogData.data.skill = skillKey;

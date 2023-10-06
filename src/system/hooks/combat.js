@@ -13,7 +13,7 @@ export default function()
             let actor = game.combat.combatants.get(c[0].dataset.combatantId)?.actor;
             if (actor && actor.system.combat.action && c.find(".token-resource").length == 0)
             {
-                $(`<div class="token-resource"><span class="resource">${actor.system.combat.action}</span></div>`).insertAfter(c.find(".token-name"));
+                $(`<div class="token-resource"><span class="resource">${game.impmal.config.actions[actor.system.combat.action].label}</span></div>`).insertAfter(c.find(".token-name"));
             }
         });
 
@@ -44,6 +44,12 @@ export default function()
         newTurn.actor?.runScripts("startTurn", combat, {itemEffects : true});
 
         // TODO guard against going backwards? 
+    });
+
+    Hooks.on("updateCombat", (combat) => 
+    {
+        let actors = combat.combatants.map(a => a.actor).filter(a => a); 
+        actors.forEach(a => a.runScripts("updateCombat", combat));
     });
 
     Hooks.on("combatStart", (combat) => 

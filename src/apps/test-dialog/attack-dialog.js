@@ -22,7 +22,7 @@ export class AttackDialog extends SkillTestDialog
 
     get isAttack()
     {
-        return true;
+        return !this.actor.defendingAgainst;
     }
 
     computeFields() 

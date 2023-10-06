@@ -69,11 +69,11 @@ export class SocketHandlers
         }
     }
     
-    static applyEffect({effectUuids, actorUuid, messageId}, userId)
+    static applyEffect({effectUuids, effectData, actorUuid, messageId}, userId)
     {
         if (game.user.id == userId)
         {
-            return fromUuidSync(actorUuid)?.applyEffect(effectUuids, messageId);
+            return fromUuidSync(actorUuid)?.applyEffect({effectUuids, effectData, messageId});
         }  
     }
 

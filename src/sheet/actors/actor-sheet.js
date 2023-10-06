@@ -517,8 +517,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 
     _onActionClick(ev)
     {
-        let action = ev.target.dataset.action;
-        this.actor.update({"system.combat.action" : game.impmal.config.actions[action].label});
+        this.actor.useAction(ev.target.dataset.action);
     }
 
     _onUseItem(ev)

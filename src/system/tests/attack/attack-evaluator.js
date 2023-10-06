@@ -42,14 +42,12 @@ export class AttackEvaluator extends BaseTestEvaluator
         if (data.hitLocation == "roll")
         {
             let ones = Number(this.roll.toString().split("").pop());
-            this.hitLocation = ones; 
+            this.hitLocation = this.constructor.standardHitLocationMap[ones]; 
         }
         else 
         {
             this.hitLocation = data.hitLocation;
             this.calledShot = true;
         }
-
-        this.hitLocationKey = this.constructor.standardHitLocationMap[this.hitLocation];
     }
 }

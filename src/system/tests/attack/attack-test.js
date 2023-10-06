@@ -22,7 +22,7 @@ export class AttackTest extends SkillTest
         let tags = super.tags;
         if (this.result.hitLocation)
         {
-            tags.push(`${game.impmal.config.hitLocations[this.result.hitLocationKey]}`);
+            tags.push(`${game.impmal.config.hitLocations[this.result.hitLocation]}`);
         }
         if (this.result.calledShot)
         {

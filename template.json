@@ -286,7 +286,10 @@
       "connections": {
         "list": []
       },
-      "corruption": 0,
+      "corruption": {
+        "value" : 0,
+        "threshold" : 0
+      },
       "fate": {
         "max": 3,
         "value": 3

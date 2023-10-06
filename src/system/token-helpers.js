@@ -64,7 +64,7 @@ export default class TokenHelpers
     }
 
 
-    static displayScrollingNumber(number, actor, {color="", stroke="0x000000"}={}) 
+    static displayScrollingNumber(number, actor, {color="0xFFFFFF", stroke="0x000000"}={}) 
     {
         const tokens = actor.getActiveTokens();
 
@@ -72,6 +72,26 @@ export default class TokenHelpers
         {
             if ( !t.visible || !t.renderable ) { continue; }
             canvas.interface.createScrollingText(t.center, number, {
+                anchor: CONST.TEXT_ANCHOR_POINTS.CENTER,
+                direction: CONST.TEXT_ANCHOR_POINTS.TOP,
+                distance: (2 * t.h),
+                fontSize: 36,
+                fill: color,
+                stroke,
+                strokeThickness: 4,
+                jitter: 0.25
+            });
+        }
+    }
+
+    static displayScrollingText(text, actor, {color="0xFFFFFF", stroke="0x000000"}={}) 
+    {
+        const tokens = actor.getActiveTokens();
+
+        for ( let t of tokens ) 
+        {
+            if ( !t.visible || !t.renderable ) { continue; }
+            canvas.interface.createScrollingText(t.center, text, {
                 anchor: CONST.TEXT_ANCHOR_POINTS.CENTER,
                 direction: CONST.TEXT_ANCHOR_POINTS.TOP,
                 distance: (2 * t.h),
