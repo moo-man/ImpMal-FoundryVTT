@@ -77,6 +77,7 @@ export class DocumentListModel extends ListModel
     {
         this.list.forEach(i => i.getDocument(collection));
         this.documents = this.list.map(i => i.document);
+        return this.documents;
     }
 
     addDocument(document)

@@ -14,14 +14,44 @@
             </div>
             <div class="tab details" data-tab="details">
                 <div class="form-group">
-                    <label>{{localize "IMPMAL.Requirement"}} <a class="script-config" data-path="system.requirement.script"><i class="fa-solid fa-gear-complex-code"></i></a></label>
+                    <label>{{localize "IMPMAL.Requirement"}} <a class="script-config"
+                            data-path="system.requirement.script"><i
+                                class="fa-solid fa-gear-complex-code"></i></a></label>
                     <div class="form-fields">
                         <input type="text" name="system.requirement.value" value="{{system.requirement.value}}">
                     </div>
                 </div>
+
+                <section class="list">
+                    <header class="list-row">
+                        <div class="list-name">{{localize "IMPMAL.EffectOptions"}}</div>
+                        <div data-tooltip="{{localize 'IMPMAL.TakenReqToolTip'}}">{{localize "IMPMAL.TakenReq"}} <i class="fa-regular fa-circle-question"></i></div>
+                        <div class="list-controls">
+                            <a class="effect-options"><i class="fa-solid fa-gear"></i></a>
+                        </div>
+                    </header>
+                    <div class="list-content">
+                        {{#each item.system.effectOptions.documents}}
+                                <div class="list-item" data-id="{{this.id}}">
+                                    <div class="list-row">
+                                        <div class="list-name">
+                                            <img src="{{this.icon}}">
+                                            <a>{{this.name}}</a>
+                                        </div>
+                                        <div>
+                                            <input class="taken-req" style="width: 30px" type="number" value="{{lookup ../item.system.effectTakenRequirement this.id}}">
+                                        </div>
+                                        <div class="list-controls">
+                                        </div>
+                                    </div>
+                                </div>
+                        {{/each}}
+                    </div>
+                </section>
+
                 <fieldset>
                     <legend>{{localize "IMPMAL.Test"}}</legend>
-                {{> systems/impmal/templates/item/partials/item-test.hbs data=system.test path="system.test"}}
+                    {{> systems/impmal/templates/item/partials/item-test.hbs data=system.test path="system.test"}}
                 </fieldset>
             </div>
             <div class="tab effects" data-tab="effects">

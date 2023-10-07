@@ -1,6 +1,7 @@
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Talent"}}</div>
+        <div>{{localize "IMPMAL.TimesTaken"}}</div>
         <div class="list-controls">
             <a class="list-create" data-type="talent"><i class="fa-solid fa-plus"></i></a>
         </div>
@@ -13,6 +14,7 @@
                         <img src="{{this.img}}">
                         <a>{{this.name}}</a>
                     </div>
+                    <div>{{this.system.taken}}</div>
                     <div class="list-controls">
                         <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>

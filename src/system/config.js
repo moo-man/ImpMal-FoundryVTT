@@ -1220,6 +1220,11 @@ const IMPMAL = {
                                 args.modifiers.push({value : -2, label : this.effect.name, armour : true})
                             }`,
                             "trigger": "preTakeDamage"
+                        },
+                        {
+                            "label": "Start Turn",
+                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.options.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            "trigger": "startTurn"
                         }
                     ]
                 }
@@ -1246,6 +1251,11 @@ const IMPMAL = {
                                 args.modifiers.push({value : -4, label : this.effect.name, armour : true})
                             }`,
                             "trigger": "preTakeDamage"
+                        },
+                        {
+                            "label": "Start Turn",
+                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.options.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            "trigger": "startTurn"
                         }
                     ]
                 }
@@ -1272,6 +1282,11 @@ const IMPMAL = {
                                 args.modifiers.push({value : -6, label : this.effect.name, armour : true})
                             }`,
                             "trigger": "preTakeDamage"
+                        },
+                        {
+                            "label": "Start Turn",
+                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.options.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            "trigger": "startTurn"
                         }
                     ]
                 }

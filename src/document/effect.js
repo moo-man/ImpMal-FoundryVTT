@@ -324,6 +324,17 @@ export class ImpMalEffect extends ActiveEffect
     determineTransfer()
     {
         let application = this.applicationData;
+
+        if (this.parent.type == "talent")
+        {
+            // Talents may need to be taken multiple times before an effect should be transfered
+            let talentAllowed = this.parent.system.allowEffect(this);
+            if (!talentAllowed)
+            {
+                return false;
+            }
+        }
+        
         return (application.type == "document" && application.options.documentType == "Actor") || (application.type == "zone" && application.options.selfZone);
     }
 

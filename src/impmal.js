@@ -57,6 +57,7 @@ import ImpMalVehicleSheet from "./sheet/actors/vehicle-sheet";
 import TagManager from "./system/tag-manager";
 import { ItemUse } from "./system/tests/item/item-use";
 import { ImpMalChatMessage } from "./system/chat-message";
+import TalentItemSheet from "./sheet/items/item-talent-sheet";
 
 Hooks.once("init", () => 
 {
@@ -79,6 +80,7 @@ Hooks.once("init", () =>
     Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
     Items.registerSheet("impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
     Items.registerSheet("impmal", TraitItemSheet, { types: ["trait"], makeDefault: true });
+    Items.registerSheet("impmal", TalentItemSheet, { types: ["talent"], makeDefault: true });
     Items.registerSheet("impmal", WeaponItemSheet, { types: ["weapon"], makeDefault: true });
     Items.registerSheet("impmal", ModificationItemSheet, { types: ["modification"], makeDefault: true });
     Items.registerSheet("impmal", DutyItemSheet, { types: ["duty"], makeDefault: true });
