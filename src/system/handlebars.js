@@ -81,6 +81,20 @@ export default function registerHandlebars()
     });
 
 
+    // I don't really like this but whatever
+    Handlebars.registerHelper("calc", function (arg1, op, arg2) 
+    {
+        try 
+        {
+            return (0, eval)((arg1 || 0) + op + (arg2 || 0));
+        }
+        catch
+        {
+            return "err";
+        }
+    });
+
+
     loadTemplates([
         "systems/impmal/templates/actor/tabs/npc/npc-main.hbs",
         "systems/impmal/templates/actor/tabs/patron/patron-effects.hbs",

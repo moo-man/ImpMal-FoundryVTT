@@ -39,6 +39,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         for (let loc in this.hitLocations)
         {
             this.hitLocations[loc].armour = 0;
+            this.hitLocations[loc].damage = 0;
             this.hitLocations[loc].field = null;
             this.hitLocations[loc].items = [];
         }
@@ -98,7 +99,9 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             {
                 if (this.hitLocations[loc])
                 {
-                    this.hitLocations[loc].armour += item.system.armour;
+                    let armourDamage = (item.system.damage[loc] || 0);
+                    this.hitLocations[loc].damage += armourDamage;
+                    this.hitLocations[loc].armour += (item.system.armour - armourDamage);
                     this.hitLocations[loc].items.push(item);
                 }
             }

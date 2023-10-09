@@ -11,6 +11,10 @@
              damage=this.result.damage}}
             {{/if}}
 
+            {{#if this.damage.rend}}
+            , <span class="rend">{{localize "IMPMAL.Rend"}} {{this.damage.rend}}</span>
+            {{/if}}
+
             {{#if this.damage.crit}}
             <span class="critical">{{this.damage.crit}}</span>
             {{/if}}

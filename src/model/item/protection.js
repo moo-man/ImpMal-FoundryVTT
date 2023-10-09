@@ -12,6 +12,8 @@ export class ProtectionModel extends EquippableItemModel
         schema.category = new fields.StringField();
         schema.armour = new fields.NumberField();
         schema.locations = new fields.EmbeddedDataField(LocationListModel);
+        schema.damage = new fields.ObjectField({nullable : true});
+        schema.rended = new fields.ObjectField({nullable : true});
         return schema;
     }
 
@@ -46,6 +48,25 @@ export class ProtectionModel extends EquippableItemModel
                 data.system.locations.list = keys;
             }
         }
+
+        let damage = getProperty(data, "system.damage");
+        if (damage)
+        {
+            for(let key in damage)
+            {
+                damage[key] = Math.clamped(damage[key], 0, this.armour);
+            }
+        }
+    }
+
+    get isDamaged() 
+    {
+        return Object.values(this.damage).some(i => i > 0);
+    }
+
+    get isRended() 
+    {
+        return Object.values(this.rended).some(i => i);
     }
 
     

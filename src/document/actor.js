@@ -1,3 +1,4 @@
+import DocumentChoice from "../apps/document-choice";
 import { CharacteristicTestDialog } from "../apps/test-dialog/characteristic-dialog";
 import { PowerTestDialog } from "../apps/test-dialog/power-dialog";
 import { SkillTestDialog } from "../apps/test-dialog/skill-dialog";
@@ -263,17 +264,87 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             crit = ` [[/r 1d10 + ${excess}]]{Critical (+${excess})}`;
         }
 
-
-        this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained});
-        return {
-            text,
-            woundsGained,
+        let damageData = {
+            text, 
+            woundsGained, 
             message : message ? ChatMessage.create({content : (text + crit ? crit : "")}) : null,
             modifiers,
             crit,
             excess,
-            location : locationKey
+            location
         };
+
+        await this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained});
+        if (traits.has("rend"))
+        {
+            damageData.rend = traits.has("rend").value;
+            await this.damageArmour(locationKey, damageData.rend, null, {prompt : true, rend : true});
+        }
+        return damageData;
+    }
+
+    async damageArmour(loc, value, item, {update=true, rend=false, prompt=false}={})
+    {
+        let updateObj = {};
+        let protectionItems = this.system.combat.hitLocations[loc].items.filter(i => i.type == "protection");
+        if (!value)
+        {
+            return;
+        }
+
+        if (!item && prompt && protectionItems.length)
+        {
+            item = (await DocumentChoice.create(protectionItems, 1))[0];
+        }
+        // If no item provided, find the first protection item that is suitable to being damage or repaired
+        item = item || protectionItems.find(i => 
+        {
+            let damageAtLoc = (i.system.damage?.[loc] || 0);
+
+            if (value > 0) // Positive indicates damage
+            {
+                return damageAtLoc < i.system.armour; // If damaging the item, it can't be damaged more than the armour value
+            }
+            else if (value < 0) // Positive indicates repair
+            {
+                return damageAtLoc > 0; // If repairing the item, the damage can't be less than 0
+            }
+        });
+
+        if (item)
+        {
+            let damage = foundry.utils.deepClone(item.system.damage);
+            if (!Number.isNumeric(damage[loc]))
+            {
+                damage[loc] = 0;
+            }
+
+            if (rend && value > 0 && item.system.rended[loc] != true)
+            {
+                updateObj["system.rended." + loc] = true;
+            }
+            else if (rend && value > 0) // If rended has already been applied here, don't apply it again
+            {
+                ui.notifications.notify(game.i18n.localize("IMPMAL.RendAlreadyApplied"));
+                value = 0;
+            }
+
+            damage[loc] += value;
+            updateObj["system.damage"] = damage;
+
+            if (update)
+            {
+                return item.update(updateObj);
+            }
+            else 
+            {
+                return updateObj;
+            }
+        }
+        else 
+        {
+            ui.notifications.notify(game.i18n.localize("IMPMAL.NoItemsToDamage"));
+        }
     }
 
 

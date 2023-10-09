@@ -289,15 +289,20 @@
             <div class="location" data-key="{{this.key}}">
                 <div class="location-values">
                     <label>{{localize this.label}}</label>
-                    <div class="armour-value">
+                    {{#if this.damage}}
+                        <div class="armour-damage">
+                            -{{this.damage}}    
+                        </div>
+                    {{/if}}
+                    <a class="damage-armour armour-value">
                         {{this.armour}}
-                    </div>
+                    </a>
                 </div>
                 <div class="location-details collapsed">
                     {{#each this.items}}
-                        <div class="protection-item">
+                        <div class="protection-item" data-id="{{this.id}}">
                             <label>{{this.name}} </label>
-                            <span>{{this.system.armour}}</span>
+                            <a class="damage-armour {{#if (lookup this.system.damage ../this.key)}}damaged{{/if}}">{{calc this.system.armour "-" (lookup this.system.damage ../this.key)}}{{#if (lookup this.system.rended ../this.key)}}R{{/if}}</a>
                             {{!-- <div class="traits">{{this.system.traits.displayString}}</div> --}}
                         </div>
                         <div class="armour-traits">

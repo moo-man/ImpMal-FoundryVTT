@@ -166,6 +166,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".list-hover").on("mouseenter", this._onListHoverIn.bind(this));
         html.find(".list-hover").on("mouseleave", this._onListHoverOut.bind(this));
         html.find("button.action").on("click", this._onActionClick.bind(this));
+        html.find(".damage-armour").on("mousedown", this._onDamageArmour.bind(this));
         html.on("click", ".use-item", this._onUseItem.bind(this));
     }
 
@@ -527,6 +528,15 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         let id = this._getId(ev);
 
         return this.actor.useItem({id, uuid});
+    }
+
+    _onDamageArmour(ev)
+    {
+        ev.stopPropagation();
+        let key = this._getKey(ev);
+        let id = this._getId(ev);
+        let value = ev.button == 0 ? 1 : -1;
+        this.actor.damageArmour(key, value, this.actor.items.get(id));
     }
 
     _toggleLocationDropdown(ev)
