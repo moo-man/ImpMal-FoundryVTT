@@ -547,6 +547,7 @@
         "value": "",
         "script" : ""
       },
+      "taken" : 1,
       "xp" : 100
     },
     "weapon": {
@@ -609,7 +610,8 @@
       "locations": {
         "list" : [],
         "label" : ""
-      }
+      },
+      "damage" : {}
     },
     "forceField": {
       "templates": [

@@ -39,6 +39,14 @@ export default class DocumentChoice extends FormApplication
 
     static create(documents, number)
     {
+        if (number == 0 || documents.length == 0)
+        {
+            return [];
+        }
+        else if (documents.length == 1)
+        {
+            return documents;
+        }
         return new Promise(resolve => 
         {
             new this(documents, number, resolve).render(true);

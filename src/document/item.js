@@ -1,3 +1,4 @@
+import DocumentChoice from "../apps/document-choice";
 import ImpMalDocumentMixin from "./mixin";
 
 export class ImpMalItem extends ImpMalDocumentMixin(Item)
@@ -21,6 +22,8 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         if (this.isOwned)
         {
             await this.actor.runScripts("createItem", this);
+
+            await this._handleFactionChoice(data, options);
         }
 
         //_preCreate for effects is where immediate scripts run
@@ -63,6 +66,58 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
             
             // If an owned item is created, run actor update scripts
             await this.actor.runScripts("updateDocument");
+        }
+    }
+
+    async _handleFactionChoice()
+    {
+        // All effects that specify faction influence
+        let factionEffects = this.effects.filter(e => e.changes.find(c => c.key.includes("system.influence.factions")));
+
+        for (let e of factionEffects)
+        {
+            let factionChanges = e.changes.filter(c => c.key.includes("system.influence.factions"));
+            let nonFactionChanges = e.changes.filter(c => !c.key.includes("system.influence.factions"));
+            let factions = {};
+
+            // Count the factions 
+            for(let change of factionChanges)
+            {
+                let faction = change.key.split(".")[3];
+                if (!factions[faction])
+                {
+                    factions[faction] = 1;
+                }
+                else 
+                {
+                    factions[faction]++;
+                }
+            }
+
+
+            // Prompt for a choice
+            for (let key in factions)
+            {
+                let regex = key == "*" ? "." : key; // * should be any faction
+                
+                let factionOptions = Object.keys(game.impmal.config.factions).filter(faction => faction.match(regex)).map(i => { return {name : game.impmal.config.factions[i], id : i};});
+                
+                let choices = await DocumentChoice.create(factionOptions, (factions[key] || 0));
+
+                factions[key] = choices.map(i => i.id);
+            }
+
+            // Count the factions 
+            for(let change of factionChanges)
+            {
+                let faction = change.key.split(".")[3];
+                if (factions[faction].length)
+                {
+                    change.key = `system.influence.factions.${(factions[faction].splice(0, 1))}.modifier`; // Currently only modifier is available to active effects
+                }
+            }
+
+            e.updateSource({changes : factionChanges.concat(nonFactionChanges)});
         }
     }
 

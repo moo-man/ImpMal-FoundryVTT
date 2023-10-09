@@ -205,6 +205,12 @@
         }
     }
 
+    .item-actions {
+        display : flex;
+        > * {
+            margin : 5px
+        }
+    }
 
     .compact-list {
         display: flex;

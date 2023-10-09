@@ -11,5 +11,16 @@ export default class ProtectionItemSheet extends ImpMalItemSheet
     activateListeners(html) 
     {
         super.activateListeners(html);
+
+        html.find(".fix-damage").click(() => 
+        {
+            this.item.update({"system.damage" : null}).then(() => this.item.update({"system.damage" : {}}));
+        });
+        
+
+        html.find(".fix-rended").click(() => 
+        {
+            this.item.update({"system.rended" : null}).then(() => this.item.update({"system.rended" : {}}));
+        });
     }
 }
