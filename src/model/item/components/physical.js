@@ -1,3 +1,5 @@
+import { AvailabilityDialog } from "../../../apps/test-dialog/availability-dialog";
+import { AvailabilityTest } from "../../../system/tests/availability/availability-test";
 import { StandardItemModel } from "../standard";
 
 let fields = foundry.data.fields;
@@ -17,6 +19,11 @@ export class PhysicalItemModel extends StandardItemModel
         return schema;
     }
 
+    isPhysical() 
+    {
+        return true;
+    }
+
     computeBase() 
     {
         super.computeBase();
@@ -32,6 +39,22 @@ export class PhysicalItemModel extends StandardItemModel
     decrease(value=1)
     {
         return {"system.quantity" : this.quantity - value};
+    }
+
+    async setupAvailabilityTest(world=null, availability=null, {roll=true}={})
+    {
+        availability = availability || this.availability;
+
+        let dialogData = AvailabilityDialog.setupData({item : this.parent, availability, world});
+
+        let setupData = await AvailabilityDialog.awaitSubmit(dialogData);
+
+        let test = AvailabilityTest.fromData(setupData);
+        if (roll)
+        {
+            await test.roll();
+        }
+        return test;
     }
 
 

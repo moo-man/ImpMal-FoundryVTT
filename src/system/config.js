@@ -127,6 +127,54 @@ const IMPMAL = {
         exotic : "IMPMAL.Exotic",
     },
 
+    worlds : {
+        feral : "IMPMAL.WorldFeral",
+        feudal : "IMPMAL.WorldFeudal",
+        agri : "IMPMAL.WorldAgri",
+        shrine : "IMPMAL.WorldShrine",
+        hive : "IMPMAL.WorldHive",
+        forge : "IMPMAL.WorldForge"
+    },
+
+    worldAvailability : {
+        feral : {
+            common : 100,
+            scarce : 15,
+            rare : 0,
+            exotic : 0
+        },
+        feudal : {
+            common : 100,
+            scarce : 30,
+            rare : 5,
+            exotic : 0
+        },
+        agri : {
+            common : 100,
+            scarce : 45,
+            rare : 15,
+            exotic : 0
+        },
+        shrine : {
+            common : 100,
+            scarce : 60, 
+            rare : 25,
+            exotic : 0
+        },
+        hive : {
+            common : 100,
+            scarce : 75,
+            rare : 35,
+            exotic : 0
+        },
+        forge : {
+            common : 100,
+            scarce : 90,
+            rare : 45,
+            exotic : 0
+        },
+    },
+
     ranges : {
         short : "IMPMAL.Short",
         medium : "IMPMAL.Medium",

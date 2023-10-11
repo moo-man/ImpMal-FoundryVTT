@@ -1,4 +1,6 @@
 import { EditTestForm } from "../apps/edit-test";
+import { AvailabilityDialog } from "../apps/test-dialog/availability-dialog";
+import { AvailabilityTest } from "./tests/availability/availability-test";
 
 export class ImpMalChatMessage extends ChatMessage 
 {
@@ -188,6 +190,33 @@ export class ImpMalChatMessage extends ChatMessage
                     }).render(true);
                 });
             }
+        });
+
+        html.on(".item-image").on("dragstart", ev => 
+        {
+            let el = $(ev.target);
+            let message = game.messages.get(el.parents(".message").attr("data-message-id"));
+            let test = message.test;
+
+            ev.originalEvent.dataTransfer.setData("text/plain", JSON.stringify({type : "Item", uuid : test.context.uuid}));
+        });
+
+        html.on(".availability").on("click", async ev => 
+        {
+            let el = $(ev.target);
+            let message = game.messages.get(el.parents(".message").attr("data-message-id"));
+            let itemData = message.getFlag("impmal", "itemData");
+    
+            let dialogData = AvailabilityDialog.setupData({availability : itemData.system.availability},null, {title : {append : " - " + itemData.name}});
+    
+            let setupData = await AvailabilityDialog.awaitSubmit(dialogData);
+    
+            let test = AvailabilityTest.fromData(setupData);
+            await test.roll();
+            test.sendToChat();
+            return test;
+        
+
         });
     }
 

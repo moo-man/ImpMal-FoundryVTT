@@ -54,6 +54,23 @@
         }
     }
 
+    &.availability .item-image {
+        
+        display: flex;
+        justify-content: center;
+        img {
+            height: 60px;
+            width: 60px;
+            cursor: pointer;
+        }
+
+        &.inactive {
+            img {
+                cursor: not-allowed;
+            }
+        }
+    }
+
     a.inline-roll {
         background: none;
         padding: 1px 3px;

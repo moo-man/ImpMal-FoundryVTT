@@ -1,0 +1,39 @@
+<div class="impmal test availability">
+    {{{itemSummary}}}
+    <div class="comparison">
+        <div class="roll">
+            {{#if result.reversed}}
+                <span class="inactive">{{result.originalRoll}}</span>
+                <span class="reverse-icon"><i class="fa-solid fa-shuffle"></i></span>
+                <span>{{result.roll}}</span>
+            {{else}}
+                {{result.roll}}
+            {{/if}}
+        </div>
+        <div class="vs">
+            vs
+        </div>
+        <div class="target">
+            {{result.target}}
+        </div>
+    </div>
+
+    {{#if context.item.img}}
+    <div class="item-image {{#unless this.succeeded}}inactive{{/unless}} ">
+        <img src="{{context.item.img}}" {{#if this.succeeded}}draggable="true"{{/if}}>
+    </div>
+    {{/if}}
+    <p class="centered"><strong>{{result.outcomeDescription}}</strong></p>
+    <div class="test-details">
+        <div class="tags">
+            {{#each tags}}
+                <div>{{{this}}}</div>
+            {{/each}}
+        </div>
+        {{{testDetails}}}
+
+        {{#each context.text}}
+        <p>{{this}}</p>
+        {{/each}}
+    </div>
+</div>

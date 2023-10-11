@@ -58,6 +58,7 @@ import TagManager from "./system/tag-manager";
 import { ItemUse } from "./system/tests/item/item-use";
 import { ImpMalChatMessage } from "./system/chat-message";
 import TalentItemSheet from "./sheet/items/item-talent-sheet";
+import { AvailabilityTest } from "./system/tests/availability/availability-test";
 
 Hooks.once("init", () => 
 {
@@ -129,7 +130,8 @@ Hooks.once("init", () =>
             WeaponTest,
             PowerTest,
             TraitTest,
-            ItemUse
+            ItemUse,
+            AvailabilityTest
         },
         apps : {
             ChoiceConfig

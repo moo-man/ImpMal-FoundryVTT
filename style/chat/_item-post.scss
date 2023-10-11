@@ -1,13 +1,15 @@
 .item-post {
     border: 2px dotted black;
     cursor: move;
+    margin: 5px;
     padding: 5px;
     .post-header {
         display: flex;
         align-items: center;
         img {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
+            margin-right: 5px;
             border: none
         }
     }

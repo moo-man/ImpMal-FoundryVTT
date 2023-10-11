@@ -1,0 +1,53 @@
+import log from "../../system/logger";
+import { TestDialog } from "./test-dialog";
+
+export class AvailabilityDialog extends TestDialog
+{
+    fieldsTemplate = `systems/impmal/templates/apps/test-dialog/availability-fields.hbs`;
+
+    activateListeners(html)
+    {
+        super.activateListeners(html);
+        html.find(".form-group:has([name='SL']")?.remove();
+        html.find(".form-group:has([name='difficulty']")?.remove();
+    }
+
+    submit(ev) 
+    {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (!this.fields.world)
+        {
+            return ui.notifications.error(game.i18n.localize("IMPMAL.ErrorSelectWorld"));
+        }
+        else 
+        {
+            super.submit(ev);
+        }
+    }
+
+    get availability()
+    {
+        return true;
+    }
+
+    /**
+     * 
+     */
+    static setupData({item, world, availability}, actor, {title={}, fields={}, context={}}={})
+    {
+        log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
+
+        let dialogData = super.setupData(actor, undefined, {title, fields, context});
+        dialogData.data.targets = [];
+        // TODO find a way to avoid duplicating this code from the parent class
+        dialogData.data.title = (title?.replace || game.i18n.localize("IMPMAL.Availability")) + (title?.append || "");
+        dialogData.data.item = item;
+        dialogData.data.actor = actor || game.user.character;
+        dialogData.fields.world = world;
+        dialogData.fields.availability = availability || item.system.availability;
+
+        log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
+        return dialogData;
+    }
+}

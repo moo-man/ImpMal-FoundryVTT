@@ -334,11 +334,14 @@ export class TestDialog extends Application
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
         let dialogData = {data : {}, fields};
-        dialogData.data.speaker = ChatMessage.getSpeaker({actor});
+        if (actor)
+        {
+            dialogData.data.speaker = ChatMessage.getSpeaker({actor});
+        }
         dialogData.data.context = context; // Arbitrary values - used with scripts
         dialogData.data.context.tags = context.tags || {}; // Tags shown below test results - used with scripts
         dialogData.data.context.text = context.text || {}; // Longer text shown below test results - used with scripts
-        if (!actor.token)
+        if (actor && !actor?.token)
         {
             // getSpeaker retrieves tokens even if this sheet isn't a token's sheet
             delete dialogData.data.speaker.scene;
@@ -351,17 +354,17 @@ export class TestDialog extends Application
 
         dialogData.fields.difficulty = dialogData.fields.difficulty || "challenging";
 
-        dialogData.data.targets = actor.defendingAgainst ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
+        dialogData.data.targets = actor?.defendingAgainst ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
 
         // Collect Dialog effects 
         //   - Don't use our own targeter dialog effects, DO use targets' targeter dialog effects
         dialogData.data.scripts = foundry.utils.deepClone(
-            actor.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
+            actor?.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
                 .concat(dialogData.data.targets 
                     .map(t => t.actor)
                     .filter(actor => actor)
                     .reduce((prev, current) => prev.concat(current.getScripts("dialog", (s) => s.options.dialog?.targeter)), []) // DO use targets' targeter dialog effects
-                ));
+                )) || [];
 
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;
