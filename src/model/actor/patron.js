@@ -23,6 +23,12 @@ export class PatronModel extends BaseActorModel
         return schema;
     }
 
+    computeBase(items)
+    {
+        super.computeBase(items);
+        this.influence.initialize();
+    }
+
 
 
     computeDerived(items)

@@ -67,6 +67,16 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
                 icon: "fas fa-comment",
                 onclick: () => this.item.postItem()
             });
+
+        if (!this.item.isOwned && this.item.system.isPhysical)
+        {
+            buttons.unshift(
+                {
+                    class: "availability",
+                    icon: "fa-solid fa-shop",
+                    onclick: () => this.item.system.setupAvailabilityTest().then(test => test.sendToChat())
+                });
+        }
         return buttons;
     }
 
@@ -74,7 +84,7 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
     {
         let data = super.getData();
         data.system = data.item.toObject(true).system; // Use source data to avoid ammo/mods from showing up in the sheet
-        data.isPhysical = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical")).includes(data.item.type);
+        data.isPhysical = data.item.system.isPhysical;
         data.conditions = this.formatConditions(data);
         data.enriched = foundry.utils.expandObject({
             "notes.player" : await TextEditor.enrichHTML(data.item.system.notes?.player, {async: true}),
@@ -100,9 +110,10 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         html.find(".compact-list a").contextmenu(this._onCompactItemRightClick.bind(this));
     }
 
-    _onEditTraits() 
+    _onEditTraits(ev) 
     {
-        new ItemTraitsForm(this.item).render(true);
+        let path = ev.currentTarget.dataset.path;
+        new ItemTraitsForm(this.item, {path}).render(true);
     }
 
     _onChoiceConfig(ev) 

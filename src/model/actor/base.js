@@ -51,6 +51,11 @@ export class BaseActorModel extends foundry.abstract.DataModel
         return {};
     }
 
+    createChecks()
+    {
+        
+    }
+
     itemIsAllowed(item)
     {
         if (this.constructor.preventItemTypes.includes(item.type))

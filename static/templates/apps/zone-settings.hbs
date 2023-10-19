@@ -1,7 +1,8 @@
 <form>
     <div>
 
-        <nav class="sheet-tabs tabs">
+        
+        <nav class="sheet-tabs tabs" {{#unless (eq object.documentName "Drawing")}}style="display: none"{{/unless}}>
             <a class="item" data-tab="traits">{{localize "IMPMAL.Traits"}}</a>
             <a class="item" data-tab="effects">{{localize "IMPMAL.Effects"}}</a>
         </nav>
@@ -12,16 +13,15 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Barrier"}}</label>
                     <div class="form-fields">
-                        <input type="checkbox" name="flags.impmal.traits.barrier" {{checked
-                            object.flags.impmal.traits.barrier}}>
+                        <input type="checkbox" name="{{basePath}}.barrier" {{checked traits.barrier}}>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Cover"}}</label>
                     <div class="form-fields">
-                        <select name="flags.impmal.traits.cover">
-                            {{#select object.flags.impmal.traits.cover}}
+                        <select name="{{basePath}}.cover">
+                            {{#select traits.cover}}
                                 <option value=""></option>
                                 <option value="lightCover">{{localize "IMPMAL.LightCover"}}</option>
                                 <option value="mediumCover">{{localize "IMPMAL.MediumCover"}}</option>
@@ -34,16 +34,15 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.DifficultTerrain"}}</label>
                     <div class="form-fields">
-                        <input type="checkbox" name="flags.impmal.traits.difficultTerrain" {{checked
-                            object.flags.impmal.traits.difficultTerrain}}>
+                        <input type="checkbox" name="{{basePath}}.difficultTerrain" {{checked traits.difficultTerrain}}>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Obscured"}}</label>
                     <div class="form-fields">
-                        <select name="flags.impmal.traits.obscured">
-                            {{#select object.flags.impmal.traits.obscured}}
+                        <select name="{{basePath}}.obscured">
+                            {{#select traits.obscured}}
                                 <option value=""></option>
                                 <option value="lightlyObscured">{{localize "IMPMAL.LightlyObscured"}}</option>
                                 <option value="heavilyObscured">{{localize "IMPMAL.HeavilyObscured"}}</option>
@@ -55,8 +54,8 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Hazard"}}</label>
                     <div class="form-fields">
-                        <select name="flags.impmal.traits.hazard">
-                            {{#select object.flags.impmal.traits.hazard}}
+                        <select name="{{basePath}}.hazard">
+                            {{#select traits.hazard}}
                                 <option value=""></option>
                                 <option value="minorHazard">{{localize "IMPMAL.MinorHazard"}}</option>
                                 <option value="majorHazard">{{localize "IMPMAL.MajorHazard"}}</option>
@@ -69,8 +68,8 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Light"}}</label>
                     <div class="form-fields">
-                        <select name="flags.impmal.traits.light">
-                            {{#select object.flags.impmal.traits.light}}
+                        <select name="{{basePath}}.light">
+                            {{#select traits.light}}
                                 <option value=""></option>
                                 <option value="poorlyLit">{{localize "IMPMAL.PoorlyLit"}}</option>
                                 <option value="dark">{{localize "IMPMAL.Dark"}}</option>
@@ -82,8 +81,7 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.WarpTouched"}}</label>
                     <div class="form-fields">
-                        <input type="checkbox" name="flags.impmal.traits.warpTouched" {{checked
-                            object.flags.impmal.traits.warpTouched}}>
+                        <input type="checkbox" name="{{basePath}}.warpTouched" {{checked traits.warpTouched}}>
                     </div>
                 </div>
             </div>

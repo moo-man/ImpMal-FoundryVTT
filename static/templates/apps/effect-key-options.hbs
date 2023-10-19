@@ -34,6 +34,7 @@
         <option value="system.skills.tech.modifier">{{localize "IMPMAL.Tech"}}</option>
     </optgroup>
     <optgroup label="{{localize 'IMPMAL.Influence'}}">
+        <option value="system.influence.factions.*.modifier">{{localize "IMPMAL.ChooseFaction"}}</option>
         {{#each (config "factions")}}
             <option value="system.influence.factions.{{@key}}.modifier">{{this}}</option>
         {{/each}}

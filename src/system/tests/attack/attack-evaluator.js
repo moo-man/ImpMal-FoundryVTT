@@ -25,8 +25,30 @@ export class AttackEvaluator extends BaseTestEvaluator
         this.supercharge = data.supercharge;
         this.burst = data.burst;
         this.rapidFire = data.rapidFire;
+        this.critModifier = data.critModifier;
         this.computeHitLocation(data);
         super.computeOther(data);
+    }
+
+    computeTagsAndText()
+    {
+        if (this.hitLocation)
+        {
+            this.tags.hitLocation = (`${game.impmal.config.hitLocations[this.hitLocation]}`);
+        }
+        if (this.calledShot)
+        {
+            this.tags.calledShot = `${game.i18n.localize("IMPMAL.CalledShot")}`;
+        }
+        if (this.critical)
+        {
+            let critFormula = "1d10";
+            if (this.critModifier)
+            {
+                critFormula += " + " + this.critModifier;
+            }
+            this.tags.critical = `<span class="critical">[[/r ${critFormula}]]{${game.i18n.localize("IMPMAL.Critical")}}</span>`;
+        }
     }
 
     computeHitLocation(data)

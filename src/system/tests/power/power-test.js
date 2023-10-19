@@ -7,10 +7,10 @@ export class PowerTest extends SkillTest
     static contextClass = PowerTestContext;
     testDetailsTemplate = "systems/impmal/templates/chat/rolls/details/power-test.hbs";
 
-    constructor({data, context})
+    constructor({data, context, result})
     {
         data.computeDoubles = true;
-        super({data, context});
+        super({data, context, result});
     }
 
 
@@ -75,7 +75,7 @@ export class PowerTest extends SkillTest
             }
 
             charge += added;
-            this.context.other.warpAdded = added;
+            this.context.warpAdded = added;
 
             if (this.context.push && !this.context.pushRoll)
             {

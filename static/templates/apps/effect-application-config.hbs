@@ -1,4 +1,5 @@
 <div class="impmal-effect-config">
+    {{#with this.object}}
     <div class="form-group">
         <label>{{localize "IMPMAL.EffectApplication"}}</label>
         <select name="flags.impmal.applicationData.type">
@@ -52,6 +53,11 @@
                     <label>{{localize "IMPMAL.EffectApplicationOptionZoneKeep"}}</label>
                     <input type="checkbox" name="flags.impmal.applicationData.options.keep" {{checked applicationData.options.keep}}>
                     <p class="notes">{{localize "IMPMAL.EffectApplicationOptionZoneKeepHint"}}</p>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.EffectApplicationOptionZoneTraits"}} <a class="traits-config"><i class="fa-solid fa-gear"></i></a></label>
+                    <input type="text" disabled value="{{../zoneTraitsDisplay}}">
                 </div>
             {{/if}}
 
@@ -193,4 +199,5 @@
         {{/if}}
 
     </fieldset>
+    {{/with}}
 </div>

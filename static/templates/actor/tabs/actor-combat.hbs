@@ -316,6 +316,12 @@
                             <label>{{this.field.name}} ({{this.field.system.protection}})</label>
                         </div>
                     {{/if}}
+                    {{#each this.sources}}
+                        <div class="protection-item">
+                            <label>{{this.name}} </label>
+                            <span>{{this.value}}</span>
+                        </div>
+                    {{/each}}
                     {{!-- <div class="range">
                         {{this.displayRange}}
                     </div> --}}

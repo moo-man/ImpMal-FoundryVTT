@@ -22,7 +22,7 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
             }
         }
 
-        data.effects = this.actor.effects.contents.concat(this.actor.items.reduce((prev, current) => prev.concat(current.effects.contents), []));
+        data.effects = this.actor.effects.contents.concat(this.actor.items.reduce((prev, current) => prev.concat(current.effects.contents), [])).filter(e => e.applicationData.options.documentType != "character");
         return data;
     }
 

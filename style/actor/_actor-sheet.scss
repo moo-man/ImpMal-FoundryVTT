@@ -543,4 +543,15 @@
         }
     }
 
+    .manual-scripts {
+        display: flex;
+        margin: 3px;
+    }
+    .trigger-script {
+        display: flex;
+        align-items: center;
+        padding: 3px;
+        font-size: var(--font-size-12);
+    }
+
 }

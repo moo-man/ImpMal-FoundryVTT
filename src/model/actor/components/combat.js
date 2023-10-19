@@ -19,7 +19,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         schema.hitLocations = new fields.ObjectField();
         schema.armourModifier = new fields.NumberField({initial : 0});
         schema.wounds = new fields.SchemaField({
-            value : new fields.NumberField({initial : 0}),
+            value : new fields.NumberField({initial : 0, min : 0}),
             max : new fields.NumberField(),
         });
         schema.criticals = new fields.SchemaField({
@@ -38,10 +38,13 @@ export class StandardCombatModel extends foundry.abstract.DataModel
 
         for (let loc in this.hitLocations)
         {
+
+            this.hitLocations[loc].key = loc;
             this.hitLocations[loc].armour = 0;
             this.hitLocations[loc].damage = 0;
             this.hitLocations[loc].field = null;
             this.hitLocations[loc].items = [];
+            this.hitLocations[loc].sources = [];
         }
     }
 

@@ -1,6 +1,9 @@
 <section class="list">
     <header class="list-row">
         <div class="list-name">{{localize "IMPMAL.Effects"}}</div>
+        <div>
+
+        </div>
         <div class="list-controls">
             <a class="list-create" data-type="effect" data-category="temporary"><i class="fa-solid fa-plus"></i></a>
         </div>
@@ -12,6 +15,18 @@
                     <div class="list-name">
                         <img src="{{this.icon}}">
                         <a class="list-edit">{{this.name}}</a>
+                    </div>
+                    <div>
+                    {{#if this.manualScripts.length}}
+                        <div class="manual-scripts">
+                            {{#each this.manualScripts}}
+                                <a class="trigger-script" data-index="{{@key}}">
+                                    <i class="fa-solid fa-code"></i>
+                                    {{this.label}}
+                                </a>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                     </div>
                     <div class="list-controls">
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>

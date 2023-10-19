@@ -123,6 +123,26 @@ export class TraitListModel extends ListModel
         }
     }
 
+    // Remove traits from list list as specified by the input traits
+    remove(traits)
+    {
+        for(let trait of traits.list)
+        {
+            let existing = this.has(trait.key);
+            if (existing)
+            {
+                if (Number.isNumeric(existing.value) && Number.isNumeric(trait.value))
+                {
+                    existing.value = Number(existing.value) - Number(trait.value);
+                }
+                else 
+                {
+                    this.list = this.list.filter(i => i.key != trait.key);
+                }
+            }
+        }
+    }
+
     get displayArray()
     {
         return this.list

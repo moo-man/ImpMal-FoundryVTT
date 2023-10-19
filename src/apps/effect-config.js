@@ -1,6 +1,7 @@
 import sheetMixin from "../sheet/mixins/sheet-mixin";
 import EffectScriptConfig from "./effect-script-config";
 import ScriptConfig from "./script-config";
+import ZoneSettings from "./zone-settings";
 
 export default class ImpmalActiveEffectConfig extends ActiveEffectConfig 
 {
@@ -11,13 +12,12 @@ export default class ImpmalActiveEffectConfig extends ActiveEffectConfig
         return options;
     }
 
-
     async _render(force, options)
     {
         await super._render(force, options);
 
         let scriptHTML = await renderTemplate("systems/impmal/templates/apps/effect-scripts.hbs", {scripts : this.object.scriptData});
-        let effectApplicationHTML = await renderTemplate("systems/impmal/templates/apps/effect-application-config.hbs", this.object);
+        let effectApplicationHTML = await renderTemplate("systems/impmal/templates/apps/effect-application-config.hbs", this);
 
         // Add Scripts Tab and tab section
         this.element.find("nav").append(`<a class='item' data-tab="scripts"><i class="fa-solid fa-code"></i>${game.i18n.localize("IMPMAL.EffectScripts")}</a>`);
@@ -93,6 +93,27 @@ export default class ImpmalActiveEffectConfig extends ActiveEffectConfig
         {
             this.submit({preventClose: true});
         });
+
+        html.on("click", ".traits-config", () => 
+        {
+            new ZoneSettings(this.object).render(true);
+        });
+    }
+
+    get zoneTraitsDisplay()
+    {
+        let traitList = [];
+        let traits = this.object.applicationData.options.traits;
+
+        for(let key in traits)
+        {
+            if (traits[key])
+            {
+                let effectKey = typeof traits[key] == "boolean" ? key : traits[key];
+                traitList.push(game.impmal.config.zoneEffects[effectKey]?.name);
+            }
+        }
+        return traitList.join(", ");
     }
 
     _getDataAttribute = sheetMixin(this.constructor).prototype._getDataAttribute;

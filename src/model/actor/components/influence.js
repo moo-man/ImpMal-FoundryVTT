@@ -10,19 +10,13 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
         return schema;
     }
 
-    _initializeFactions()
+    initialize() 
     {
-        for(let f in this.factions)
-        {
-            let faction = this.factions[f];
-            faction.effects = [];
-            faction.items = [];
-        }
+        this._initializeFactions();
     }
 
     compute(effects, items, type, patronInfluence)
     {
-        this._initializeFactions();
         this._findInfluenceItems(items, type);
         this._findInfluenceEffects(effects, "system.influence"); // Can assume this is the path currently
         
@@ -33,6 +27,17 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
         }
 
         this._computePatron(patronInfluence);
+    }
+
+    _initializeFactions()
+    {
+        for(let f in this.factions)
+        {
+            let faction = this.factions[f];
+            faction.effects = [];
+            faction.items = [];
+            faction.modifier = 0;
+        }
     }
 
     _findInfluenceEffects(effects, path)

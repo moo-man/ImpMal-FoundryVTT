@@ -58,7 +58,7 @@ export class ImpMalEffect extends ActiveEffect
         // If an owned effect is updated, run parent update scripts
         if (this.parent)
         {
-            await this.parent.runScripts("updateDocument");
+            await this.parent.runScripts("updateDocument", {data, options, user});
         }
     }
 
@@ -69,13 +69,13 @@ export class ImpMalEffect extends ActiveEffect
         // If an owned effect is created, run parent update scripts
         if (this.parent)
         {
-            await this.parent.runScripts("updateDocument");
+            await this.parent.runScripts("updateDocument", {data, options, user});
         }
     }
 
     //#region Creation Handling
 
-    async _handleImmediateScripts()
+    async _handleImmediateScripts(data, options, user)
     {
         let run = false;
         // Effect is direct parent, it's always applied to an actor, so run scripts
@@ -99,7 +99,7 @@ export class ImpMalEffect extends ActiveEffect
             let scripts = this.scripts.filter(i => i.trigger == "immediate");
             if (scripts.length)
             {
-                await Promise.all(scripts.map(s => s.execute()));
+                await Promise.all(scripts.map(s => s.execute({data, options, user})));
                 return !scripts.every(s => s.options.immediate?.deleteEffect);
             }
             // If all scripts agree to delete the effect, return false (to prevent creation);
@@ -240,7 +240,7 @@ export class ImpMalEffect extends ActiveEffect
         }
 
         let test;
-        let options = {title : {append : " - " + this.name}, other: {resist : this.key}};
+        let options = {title : {append : " - " + this.name}, context: {resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest}};
         if (applicationData.options.avoidTest.value == "script")
         {
             let script = new ImpMalScript({label : this.effect + " Avoidance", string : applicationData.options.avoidTest.script}, ImpMalScript.createContext(this));
@@ -281,7 +281,6 @@ export class ImpMalEffect extends ActiveEffect
                 return !test.succeeded;
             }
         }
-
     }
 
     /**
@@ -325,17 +324,24 @@ export class ImpMalEffect extends ActiveEffect
     {
         let application = this.applicationData;
 
-        if (this.parent.type == "talent")
+        let allowed = (application.type == "document" && application.options.documentType == "Actor") || (application.type == "zone" && application.options.selfZone);
+
+        if (this.parent.documentName == "Item")
         {
-            // Talents may need to be taken multiple times before an effect should be transfered
-            let talentAllowed = this.parent.system.allowEffect(this);
-            if (!talentAllowed)
-            {
-                return false;
-            }
+            allowed = allowed && this.item.system.shouldTransferEffect(this);
         }
+
+        // if (this.parent.type == "talent")
+        // {
+        //     // Talents may need to be taken multiple times before an effect should be transfered
+        //     let talentAllowed = this.parent.system.allowEffect(this);
+        //     if (!talentAllowed)
+        //     {
+        //         return false;
+        //     }
+        // }
         
-        return (application.type == "document" && application.options.documentType == "Actor") || (application.type == "zone" && application.options.selfZone);
+        return allowed;
     }
 
     // To be applied, some data needs to be changed
@@ -367,6 +373,11 @@ export class ImpMalEffect extends ActiveEffect
             this._scripts = this.scriptData.map(i => new ImpMalScript(i, ImpMalScript.createContext(this)));
         }
         return this._scripts;
+    }
+
+    get manualScripts()
+    {
+        return this.scripts.filter(i => i.trigger == "manual");
     }
 
     get filterScript()
@@ -427,7 +438,7 @@ export class ImpMalEffect extends ActiveEffect
         }
         else if (this.getFlag("impmal", "fromZone"))
         {
-            return fromUuidSync(this.getFlag("impmal", "fromZone")).text;
+            return fromUuidSync(this.getFlag("impmal", "fromZone"))?.text;
         }
         else
         {
@@ -526,6 +537,10 @@ export class ImpMalEffect extends ActiveEffect
         {
             createData.flags = {core : {overlay : true}};
         }
+        if (!createData.duration)
+        {
+            createData.duration = {};
+        }
         delete createData.id;
         return createData;
     }
@@ -543,6 +558,7 @@ export class ImpMalEffect extends ActiveEffect
                 zoneType : "zone",
                 selfZone : false,
                 keep : false,
+                traits : {},
 
                 // Test Properties
                 avoidTest : { 

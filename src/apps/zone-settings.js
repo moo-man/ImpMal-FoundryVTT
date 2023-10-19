@@ -19,6 +19,14 @@ export default class ZoneSettings extends FormApplication
         return this.object.update(formData);
     }
 
+    async getData()
+    {
+        let data = await super.getData();
+        data.basePath = this.object.documentName == "ActiveEffect" ? "flags.impmal.applicationData.options.traits" : "flags.impmal.traits";
+        data.traits = getProperty(this.object, data.basePath);
+        return data;
+    }
+
 
     activateListeners(html)
     {

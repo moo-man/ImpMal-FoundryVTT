@@ -90,11 +90,12 @@ export class CharacterModel extends StandardActorModel
         this._checkEncumbranceEffects(this.parent);
     }
 
-    computeBase()
+    computeBase(items)
     {
-        super.computeBase();
+        super.computeBase(items);
         this.combat.superiority = game.impmal.superiority.value;
         this.patron.getDocument(game.actors);
+        this.influence.initialize();
     }
 
 

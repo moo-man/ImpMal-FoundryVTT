@@ -51,6 +51,11 @@ export class BaseItemModel extends foundry.abstract.DataModel
         return {};
     }
 
+    createChecks()
+    {
+        
+    }
+
 
     computeBase() 
     {
@@ -92,6 +97,19 @@ export class BaseItemModel extends foundry.abstract.DataModel
         return [];
     }
 
+    /**
+     * 
+     */
+    effectIsApplicable(effect)
+    {
+        return !effect.disabled;
+    }
+
+    // If an item effect is disabled it should still transfer to the actor, so that it's visibly disabled
+    shouldTransferEffect(effect)
+    {
+        return true;
+    }
 
 
     /**

@@ -22,8 +22,8 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     prepareBaseData()
     {
         this.propagateDataModels(this.system, "runScripts", this.runScripts.bind(this));
-        this.system.computeBase();
         this.itemCategories = this.itemTypes;
+        this.system.computeBase(this.itemCategories);
         this.runScripts("prepareBaseData", this);
     }
 
@@ -121,7 +121,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return test;
     }
 
-    async setupTestFromItem(uuid, options)
+    async setupTestFromItem(uuid, options={})
     {
         let item = await fromUuid(uuid);
         if (!item)
@@ -133,6 +133,9 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             return ui.notifications.error("ID " + uuid + " not found");
         }
         let itemTestData = item.getTestData();
+
+        options.context = options.context || {};
+        options.context.resist = options.context.resist ? options.context.resist.concat(item.type) : [item.type];
 
         return this.setupTestFromData(itemTestData, options);
     }
@@ -182,8 +185,8 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     }
 
 
-    async applyDamage(value, {ignoreAP=false, location="roll", message=false, opposed}={})
-    {
+    async applyDamage(value, {ignoreAP=false, location="roll", message=false, opposed, update=true}={})
+    {   
         let modifiers = [];
         let traits = opposed?.attackerTest?.itemTraits;
         let locationKey;
@@ -204,9 +207,9 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         }
         let locationData = this.system.combat.hitLocations[locationKey];
 
-        let args = {value, ignoreAP, modifiers, locationData, opposed, traits};
-        await Promise.all(opposed?.attackerTest?.actor.runScripts("preApplyDamage", args));
-        await Promise.all(opposed?.attackerTest?.item?.runScripts?.("preApplyDamage", args));
+        let args = {actor : this, value, ignoreAP, modifiers, locationData, opposed, traits};
+        await Promise.all(opposed?.attackerTest?.actor.runScripts("preApplyDamage", args) || []);
+        await Promise.all(opposed?.attackerTest?.item?.runScripts?.("preApplyDamage", args) || []);
         await Promise.all(this.runScripts("preTakeDamage", args)); 
         // Reassign primitive values that might've changed in the scripts
         value = args.value;
@@ -247,38 +250,67 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
 
 
         let excess = 0;
+        let critical = false;
         if ((woundsGained + this.system.combat.wounds.value) > this.system.combat.wounds.max)
         {
             excess = (woundsGained + this.system.combat.wounds.value) - this.system.combat.wounds.max;
+            woundsGained -= excess;
+            critical = true;
         }
 
-        args = {excess, woundsGained, locationData, opposed};
-        await Promise.all(opposed?.attackerTest?.actor.runScripts("applyDamage", args));
-        await Promise.all(opposed?.attackerTest?.item?.runScripts?.("applyDamage", args));
+        let critModifier = opposed?.attackerTest?.result.critModifier;
+        let text = "";
+        args = {actor : this, woundsGained, locationData, opposed, critModifier, excess, critical, text};
+        await Promise.all(opposed?.attackerTest?.actor.runScripts("applyDamage", args) || []);
+        await Promise.all(opposed?.attackerTest?.item?.runScripts?.("applyDamage", args) || []);
         await Promise.all(this.runScripts("takeDamage", args)); 
-
-        let text = game.i18n.format("IMPMAL.WoundsTaken", {wounds : woundsGained, location : game.i18n.localize(locationData.label)});
-        let crit;
-        if (excess || args.crit) // scripts might add a critical hit
+        woundsGained = args.woundsGained;
+        critModifier = args.critModifier;
+        excess = args.excess;
+        critical = args.critical;
+        text = args.text;
+        // A script might replace text
+        text = text || game.i18n.format("IMPMAL.WoundsTaken", {wounds : woundsGained, location : game.i18n.localize(locationData.label)});
+        let critFormula = ``;
+        if (excess)
         {
-            crit = ` [[/r 1d10 + ${excess}]]{Critical (+${excess})}`;
+            critFormula += " + " + excess;
         }
+        if (critModifier)
+        {
+            critFormula +=  " + " + critModifier;
+        }
+        let critString;
+        if (critical)
+        {
+            critString = ` [[/r 1d10 ${critFormula}]]{Critical ${critFormula}}`;
+        }
+
+        let updateData = {"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained};
 
         let damageData = {
             text, 
             woundsGained, 
-            message : message ? ChatMessage.create({content : (text + crit ? crit : "")}) : null,
+            message : message ? ChatMessage.create({content : (text + (critString ? critString : ""))}) : null,
             modifiers,
-            crit,
+            critical : critString,
             excess,
-            location
+            location,
+            updateData
         };
 
-        await this.update({"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained});
-        if (traits.has("rend"))
+        if (update)
+        {
+            await this.update(updateData);
+        }
+        if (traits?.has("rend"))
         {
             damageData.rend = traits.has("rend").value;
-            await this.damageArmour(locationKey, damageData.rend, null, {prompt : true, rend : true});
+            // TODO: this isn't supported if update flag is false
+            if (update)
+            {
+                await this.damageArmour(locationKey, damageData.rend, null, {prompt : true, rend : true});
+            }
         }
         return damageData;
     }

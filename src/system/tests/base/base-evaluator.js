@@ -2,7 +2,15 @@ export class BaseTestEvaluator
 {
     constructor(data={})
     {
-        this.computeResult(data);
+        // Start with predefined results
+        Object.assign(this, foundry.utils.deepClone(data.result));
+    }
+
+    static fromData(data)
+    {
+        let result = new this();
+        mergeObject(result, data);
+        return result;
     }
 
     /**
@@ -19,7 +27,9 @@ export class BaseTestEvaluator
 
     async evaluate(data)
     {
-
+        this.clear();
+        this.tags = {};
+        this.text = {};
         let roll = await new Roll("1d100").evaluate({async: true});
         data.result.roll = data.result.roll || roll.total;
         data.result.rollObject = roll;
@@ -28,9 +38,6 @@ export class BaseTestEvaluator
 
     computeResult(data)
     {
-        this.clear();
-        // Start with predefined results
-        Object.assign(this, foundry.utils.deepClone(data.result));
 
         // Do not process result without a roll
         if (!data.result.roll) {return;}
@@ -59,6 +66,18 @@ export class BaseTestEvaluator
         this.outcomeDescription = this.formatOutcomeDescription();
 
         this.computeOther(data);
+    }
+
+    computeTagsAndText() 
+    {
+        if (this.state == "adv")
+        {
+            this.tags.state = game.i18n.localize("IMPMAL.Advantage");
+        }
+        if (this.state == "dis")
+        {
+            this.tags.state = game.i18n.localize("IMPMAL.Disadvantage");
+        }
     }
 
     formatOutcomeDescription() 

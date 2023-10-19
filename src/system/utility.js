@@ -2,10 +2,10 @@ import { ImpMalChatMessage } from "./chat-message";
 
 export default class ImpMalUtility
 {
-
-
     static async getAllItems(types = [])
     {
+
+
         if (typeof types == "string")
         {
             types = [types];
@@ -20,13 +20,19 @@ export default class ImpMalUtility
             let docs = await pack.getDocuments({type__in: types});
             docs.forEach(i => 
             {
-                collection.set(i.id, i);
+                if (i.permission >= 2)
+                {
+                    collection.set(i.id, i);
+                }
             });
         }
 
         game.items.filter(i => types.includes(i.type)).forEach(i => 
         {
-            collection.set(i.id, i);
+            if (i.permission >= 2)
+            {
+                collection.set(i.id, i);
+            }
         });
 
         return collection;

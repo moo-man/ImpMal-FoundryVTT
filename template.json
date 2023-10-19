@@ -581,6 +581,12 @@
       "priceMultiplier" : 1,
       "usedWith": "",
       "damage": 0,
+      "addTraits": {
+        "list": []
+      },
+      "removeTraits": {
+        "list": []
+      },
       "range" : ""
     },
     "modification": {

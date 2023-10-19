@@ -25,11 +25,17 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     {
         await super._onUpdate(data, options, user);
         await this.update(this.system.updateChecks(data, options));
-        await Promise.all(this.runScripts("updateDocument"));
+        await Promise.all(this.runScripts("updateDocument", {data, options, user}));
+    }
+
+    async _onCreate(data, options, user)
+    {
+        await super._onCreate(data, options, user);
+        this.system.createChecks(data, options, user);
     }
 
 
-    addCondition(key, {overlay=false, type, origin, create=true, flags={}}={})
+    addCondition(key, {overlay=false, type, origin, duration={}, create=true, flags={}}={})
     {
 
         let existing = this.hasCondition(key);
@@ -53,6 +59,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         let createData = ImpMalEffect.getCreateData(effectData, overlay);
         mergeObject(createData.flags, flags);
         createData.origin = origin;
+        mergeObject(createData.duration, duration);
 
 
         // Replace minor with major if existing

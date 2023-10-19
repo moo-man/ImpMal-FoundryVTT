@@ -1,6 +1,7 @@
 import { EditTestForm } from "../apps/edit-test";
 import { AvailabilityDialog } from "../apps/test-dialog/availability-dialog";
 import { AvailabilityTest } from "./tests/availability/availability-test";
+import ZoneHelpers from "./zone-helpers";
 
 export class ImpMalChatMessage extends ChatMessage 
 {
@@ -192,7 +193,7 @@ export class ImpMalChatMessage extends ChatMessage
             }
         });
 
-        html.on(".item-image").on("dragstart", ev => 
+        html.on("dragstart", ".item-image", ev => 
         {
             let el = $(ev.target);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
@@ -201,7 +202,7 @@ export class ImpMalChatMessage extends ChatMessage
             ev.originalEvent.dataTransfer.setData("text/plain", JSON.stringify({type : "Item", uuid : test.context.uuid}));
         });
 
-        html.on(".availability").on("click", async ev => 
+        html.on("click", ".availability", async ev => 
         {
             let el = $(ev.target);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));

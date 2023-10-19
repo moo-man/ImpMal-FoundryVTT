@@ -73,25 +73,28 @@ export default class ZoneHelpers
     static zoneEffects(drawing)
     {
         let traits = [];
-        let zoneFlags = drawing.document.flags.impmal || {};
-        for (let key in zoneFlags.traits)
+        let zoneTraits = drawing.document.flags?.impmal?.traits || {};
+        let zoneEffects = drawing.document.flags?.impmal?.effects || {};
+        this._combineTraitsFromEffects(zoneEffects, zoneTraits);
+
+        for (let key in zoneTraits)
         {
-            if (zoneFlags.traits[key])
+            if (zoneTraits[key])
             {
-                if (zoneFlags.traits[key] == true)
+                if (typeof zoneTraits[key] == "boolean")
                 {
                     traits.push(key); // For boolean properties, the effect key is the property name
                 }
-                else if (zoneFlags.traits[key] && typeof zoneFlags.traits[key] == "string")
+                else if (typeof zoneTraits[key] == "string")
                 {
-                    traits.push(zoneFlags.traits[key]); // For selection properties, the effect key is the value 
+                    traits.push(zoneTraits[key]); // For selection properties, the effect key is the value 
                 }
             }
         }
         
         // Return trait effects and any other added effects
         return traits.map(i => foundry.utils.deepClone(game.impmal.config.zoneEffects[i]))
-            .concat(zoneFlags.effects || [])
+            .concat(zoneEffects || [])
             .map(effect => 
             {
             // Designate all zone effects with a flag to easily be distinguished
@@ -100,6 +103,45 @@ export default class ZoneHelpers
                 effect.origin = drawing.document.uuid;
                 return effect;
             });
+    }
+
+    // Zone effects can designate traits to add (e.g. a power making a zone a Minor Hazard)
+    // This collects all of them into a single trait object
+    static _combineTraitsFromEffects(effects, allTraits={})
+    {
+        for(let effect of effects)
+        {
+            let effectTraits = effect.flags.impmal.applicationData.options?.traits || {};
+
+            for(let key in effectTraits)
+            {
+                if (effectTraits[key])
+                {
+
+                    // If effect trait is a boolean, set collection value to true
+                    if (typeof effectTraits[key] == "boolean")
+                    {
+                        allTraits[key] = true;
+                    }
+                    // If effect trait is a string, compare and only set if effect trait is greater
+                    // e.g. if allTraits has mediumCover, and effect specifies heavyCover, use heavyCover if effect specifies lightCover, don't use (medium is greater)
+                    else if (this.isGreaterTrait(effectTraits[key], allTraits[key]))
+                    {
+                        allTraits[key] = effectTraits[key];
+                    }
+                }
+            }
+        }
+        return allTraits;
+    }
+    
+    // returns true if trait1 is greater than trait2
+    // trait1 = lightCover, trait2 = mediumCover, return false
+    // trait1 = heavyCover, trait2 = mediumCover, return true
+    static isGreaterTrait(trait1, trait2)
+    {
+        let effectList = ["lightCover", "mediumCover", "heavyCover", "lightlyObscured", "heavilyObscured", "minorHazard", "majorHazard", "deadlyHazard", "poorlyLit", "dark"];
+        return effectList.findIndex(i => i == trait1) > effectList.findIndex(i => i == trait2);
     }
 
     // Follow Effects are tied to actors, but apply to the zone they are in

@@ -46,7 +46,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         // If an owned item is updated, run actor update scripts
         if (this.actor)
         {
-            await this.actor.runScripts("updateDocument");
+            await this.actor.runScripts("updateDocument", {data, options, user});
         }
 
         // Add a prepared flag to determine if this item has already been prepared
@@ -63,9 +63,9 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         {
             // Some items can only exist once in an actor (like faction)
             await this.actor.system.checkSingletonItems(this);
-            
+
             // If an owned item is created, run actor update scripts
-            await this.actor.runScripts("updateDocument");
+            await this.actor.runScripts("updateDocument", {data, options, user});
         }
     }
 
@@ -160,12 +160,10 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     getScripts(trigger)
     {
-        let effects = this.effects.contents.
+        let effects = this.applicableEffects.
             filter(effect => 
                 effect.applicationData.type == "document" && 
-                effect.applicationData.options.documentType == "Item" && 
-                !effect.disabled)
-            .concat(this.system.getOtherEffects());
+                effect.applicationData.options.documentType == "Item");
 
         let fromActor = this.actor?.getScriptsApplyingToItem(this) || [];
 
@@ -192,6 +190,14 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         return itemTestData; 
     }
 
+    /**
+     * 
+     */
+    get applicableEffects() 
+    {
+        return this.effects.contents.concat(this.system.getOtherEffects()).filter(e => this.system.effectIsApplicable(e));
+    }
+
     get damageEffects() 
     {
         return this._getTypedEffects("damage");
@@ -211,9 +217,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     _getTypedEffects(type)
     {
-        let effects = this.effects.contents.filter(effect => 
-            effect.applicationData.type == type && 
-            !effect.disabled);
+        let effects = this.applicableEffects.filter(effect => effect.applicationData.type == type);
 
         return effects;
     }
@@ -222,10 +226,10 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
     // when the Item is added to an Actor. 
     async handleImmediateScripts()
     {
-        let effects = this.effects.contents.filter(effect => 
+        let effects = this.applicableEffects.filter(effect => 
             effect.applicationData.type == "document" && 
-            effect.applicationData.options.documentType == "Actor" && // We're looking for actor because if the immediate script was for the Item, 
-            !effect.disabled);                                        // it would've been called when it was created. 
+            effect.applicationData.options.documentType == "Actor"); // We're looking for actor because if the immediate script was for the Item, it would've been called when it was created. 
+        
 
         let scripts = effects.reduce((prev, current) => prev.concat(current.scripts.filter(i => i.trigger == "immediate")), []);
 

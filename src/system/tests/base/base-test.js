@@ -12,13 +12,20 @@ export class BaseTest
     testDetailsTemplate = "";
     itemSummaryTemplate = "systems/impmal/templates/item/partials/item-summary.hbs";
 
-    constructor({data, context})
+    constructor({data, context, result=null})
     {
         this.data = mergeObject(data, this._defaultData(), {overwrite : false, recursive : true});
 
         this.context = new this.constructor.contextClass(context);
         this.data.target = this.computeTarget();
-        this.result = new this.constructor.evaluatorClass(data);
+        if (!result)
+        {
+            this.result = new this.constructor.evaluatorClass(data);
+        }
+        else 
+        {
+            this.result = this.constructor.evaluatorClass.fromData(result);
+        }
     }
 
     // Base test has no target computation, just use static value provided
@@ -67,7 +74,7 @@ export class BaseTest
      */
     async postRoll()
     {
-
+        this.result.computeTagsAndText();
     }
 
     reroll(fate=false) 
@@ -182,6 +189,7 @@ export class BaseTest
                 test : {
                     data : this.data,
                     context : this.context,
+                    result : this.result,
                     class : this.constructor.name
                 }
             }
@@ -214,16 +222,16 @@ export class BaseTest
 
     get tags() 
     {
-        let tags = Object.values(this.context.tags);
-        if (this.result.state == "adv")
-        {
-            tags.push(game.i18n.localize("IMPMAL.Advantage"));
-        }
-        if (this.result.state == "dis")
-        {
-            tags.push(game.i18n.localize("IMPMAL.Disadvantage"));
-        }
+        // Tags from context are saved, tags from results are computed
+        let tags = Object.values(mergeObject(foundry.utils.deepClone(this.context.tags), this.result.tags));
         return tags;
+    }
+
+    get text() 
+    {
+        // Tags from context are saved, tags from results are computed
+        let text = Object.values(mergeObject(foundry.utils.deepClone(this.context.text), this.result.text));
+        return text;
     }
 
     get targetEffects() 

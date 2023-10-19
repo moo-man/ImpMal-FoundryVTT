@@ -397,7 +397,7 @@ const IMPMAL = {
         damage : "IMPMAL.EffectApplicationDamage",
         target : "IMPMAL.EffectApplicationTarget",
         zone : "IMPMAL.EffectApplicationZone",
-        activate : "IMPMAL.EffectApplicationActivate"
+        other : "IMPMAL.EffectApplicationOther"
     },
 
     effectApplicationOptions : {
@@ -411,6 +411,7 @@ const IMPMAL = {
 
     
     scriptTriggers : {
+        manual : "IMPMAL.TriggerManual",
         immediate : "IMPMAL.TriggerImmediate",
         prepareBaseData : "IMPMAL.TriggerPrepareBaseData",
         prePrepareDerivedData : "IMPMAL.TriggerPrePrepareDerivedData",
@@ -471,6 +472,7 @@ const IMPMAL = {
     },
 
     asyncTriggers: { 
+        "manual" : true,
         "immediate": true, 
         "preRollTest": true, 
         "preRollSkillTest": true, 
@@ -1432,7 +1434,7 @@ const IMPMAL = {
                         },
                         {
                             label: "Blinded",
-                            string: `await this.actor.addCondition("blinded").then(condition => condition.setFlag("impmal", "fromZone", this.effect.getFlag("impmal", "fromZone")))`,
+                            string: `await this.actor.addCondition("blinded").then(condition => if (condition) condition?.setFlag("impmal", "fromZone", this.effect.getFlag("impmal", "fromZone")))`,
                             trigger: "immediate",
                             options : {
                                 immediate : {

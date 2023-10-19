@@ -39,6 +39,12 @@ export default class DocumentChoice extends FormApplication
 
     static create(documents, number)
     {
+
+        if (typeof documents == "object" && !Array.isArray(documents) && !(documents instanceof Collection))
+        {
+            documents = this.objectToArray(documents);
+        }
+
         if (number == 0 || documents.length == 0)
         {
             return [];
@@ -51,6 +57,19 @@ export default class DocumentChoice extends FormApplication
         {
             new this(documents, number, resolve).render(true);
         });
+    }
+
+    // simulate document structure with key as the ID and the value as the name
+    static objectToArray(object)
+    {
+        return Object.keys(foundry.utils.deepClone(object)).map(key => 
+        {
+            return {
+                id : key,
+                name : object[key]
+            };
+        });
+
     }
 
     activateListeners(html)

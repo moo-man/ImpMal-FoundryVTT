@@ -2,10 +2,12 @@
     <div class="flexrow">
         {{#each conditions}}
             <div class="condition">
-                <img style="opacity : {{this.opacity}}%" class="{{this.existing.flags.impmal.type}}" src="{{this.icon}}" width="50" height="50">
+                <img style="opacity : {{this.opacity}}%" class="{{this.existing.flags.impmal.type}}" src="{{this.icon}}"
+                    width="50" height="50">
                 <div class="pips">
                     {{#each this.pips}}
-                        <div class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}" data-key="{{../this.id}}">
+                        <div class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}"
+                            data-key="{{../this.id}}">
 
                         </div>
                     {{/each}}
@@ -33,13 +35,15 @@
                         <a class="list-edit">{{this.name}}</a>
                     </div>
                     {{#if this.applicationData.options.avoidTest.manual}}
-                    <button class="resist-effect">Resist</button>
+                        <button class="resist-effect">Resist</button>
                     {{/if}}
                     <div>
                         {{#if (eq this.actor.type "patron")}}
-                            <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                            <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
+                                    class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
                         {{else if this.item}}
-                            <a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
+                            <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
+                                    class="fas fa-suitcase"></i>{{this.source}}</a>
                         {{else if this.flags.impmal.fromZone}}
                             <i class="fa-solid fa-game-board-simple"></i>{{this.source}}
                         {{else}}
@@ -50,6 +54,16 @@
                         <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
                     </div>
+                    {{#if this.manualScripts.length}}
+                        <div class="manual-scripts">
+                            {{#each this.manualScripts}}
+                                <a class="trigger-script" data-index="{{@key}}">
+                                    <i class="fa-solid fa-code"></i>
+                                    {{this.label}}
+                                </a>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </div>
             </div>
         {{/each}}
@@ -57,33 +71,30 @@
 </section>
 
 {{#if items.corruption.length}}
-<section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.Corruption"}}</div>
-        <div class="list-controls">
-            <a class="list-create" data-type="corruption"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
-    <div class="list-content">
-        {{#each items.corruption}}
-        <div class="list-item" data-id="{{this.id}}" data-collection="items">
-            <div class="list-row">
-                <div class="list-name list-edit">
-                    <img src="{{this.img}}">
-                    <a>{{this.name}}</a>
-                </div>
-                <div class="list-controls">
-                    <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                    <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
-                </div>
+    <section class="list">
+        <header class="list-row">
+            <div class="list-name">{{localize "IMPMAL.Corruption"}}</div>
+            <div class="list-controls">
+                <a class="list-create" data-type="corruption"><i class="fa-solid fa-plus"></i></a>
             </div>
-            <div class="summary">
-
-            </div>
+        </header>
+        <div class="list-content">
+            {{#each items.corruption}}
+                <div class="list-item" data-id="{{this.id}}" data-collection="items">
+                    <div class="list-row">
+                        <div class="list-name list-edit">
+                            <img src="{{this.img}}">
+                            <a>{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
+                            <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
         </div>
-        {{/each}}
-    </div>
-</section>
+    </section>
 {{/if}}
 
 <section class="list">
@@ -103,21 +114,33 @@
                         <a class="list-edit">{{this.name}}</a>
                     </div>
                     <div>
-                    {{#if (eq this.actor.type "patron")}}
-                        <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
-                    {{else if this.item}}
-                        <a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
-                    {{else if this.flags.impmal.fromZone}}
-                        {{this.source}}
-                    {{else}}
-                        {{this.source}}
-                    {{/if}}
+                        {{#if (eq this.actor.type "patron")}}
+                            <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
+                                    class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                        {{else if this.item}}
+                            <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
+                                    class="fas fa-suitcase"></i>{{this.source}}</a>
+                        {{else if this.flags.impmal.fromZone}}
+                            {{this.source}}
+                        {{else}}
+                            {{this.source}}
+                        {{/if}}
                     </div>
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
                     </div>
                 </div>
+                {{#if this.manualScripts.length}}
+                    <div class="manual-scripts">
+                        {{#each this.manualScripts}}
+                            <a class="trigger-script" data-index="{{@key}}">
+                                <i class="fa-solid fa-code"></i>
+                                {{this.label}}
+                            </a>
+                        {{/each}}
+                    </div>
+                {{/if}}
             </div>
         {{/each}}
     </div>
@@ -140,15 +163,17 @@
                         <a class="list-edit">{{this.name}}</a>
                     </div>
                     <div>
-                    {{#if (eq this.actor.type "patron")}}
-                        <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
-                    {{else if this.item}}
-                        <a class="list-edit" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
-                    {{else if this.flags.impmal.fromZone}}
-                        {{this.source}}
-                    {{else}}
-                        {{this.source}}
-                    {{/if}}
+                        {{#if (eq this.actor.type "patron")}}
+                            <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
+                                    class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                        {{else if this.item}}
+                            <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
+                                    class="fas fa-suitcase"></i>{{this.source}}</a>
+                        {{else if this.flags.impmal.fromZone}}
+                            {{this.source}}
+                        {{else}}
+                            {{this.source}}
+                        {{/if}}
                     </div>
                     <div class="list-controls">
                         <a class="list-toggle"><i class="fa-regular fa-circle"></i></a>

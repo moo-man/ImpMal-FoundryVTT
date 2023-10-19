@@ -301,7 +301,16 @@ export class WeaponModel extends EquippableItemModel
                 this.range = ammoRange;
             }
             
-            this.traits.combine(ammo.system.traits);
+
+            if (ammo.type == "weapon") // Launchers use grenades/explosive weapons
+            {
+                this.traits.combine(ammo.system.traits);
+            }
+            else if (ammo.type == "ammo")
+            {
+                this.traits.combine(ammo.system.addTraits);
+                this.traits.remove(ammo.system.removeTraits);
+            }
         }
     }
 

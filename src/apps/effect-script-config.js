@@ -61,7 +61,7 @@ export default class EffectScriptConfig extends ScriptConfig
             this.showTriggerOptions(ev.currentTarget.value);
         });
 
-        this.showTriggerOptions(this._getScriptObject().trigger);    
+        this.showTriggerOptions(this._getScriptObject().trigger);
     }
 
     showTriggerOptions(trigger)

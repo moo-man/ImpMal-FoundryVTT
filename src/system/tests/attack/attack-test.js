@@ -11,27 +11,15 @@ export class AttackTest extends SkillTest
     static evaluatorClass = AttackEvaluator;
     testDetailsTemplate = "systems/impmal/templates/chat/rolls/details/attack-test.hbs";
 
-    constructor({data, context})
+    constructor({data, context, result})
     {
         data.computeDoubles = true;
-        super({data, context});
+        super({data, context, result});
     }
 
     get tags() 
     {
         let tags = super.tags;
-        if (this.result.hitLocation)
-        {
-            tags.push(`${game.impmal.config.hitLocations[this.result.hitLocation]}`);
-        }
-        if (this.result.calledShot)
-        {
-            tags.push(`${game.i18n.localize("IMPMAL.CalledShot")}`);
-        }
-        if (this.result.critical)
-        {
-            tags.push(`<span class="critical">[[/r 1d10]]{${game.i18n.localize("IMPMAL.Critical")}}</span>`);
-        }
         if (this.result.fumble)
         {
             tags.push(`<span class="fumble">[[/r 1d10]]{${game.i18n.localize("IMPMAL.Fumble")}}</span>`);
@@ -69,6 +57,7 @@ export class AttackTest extends SkillTest
     {
         let data = super._defaultData();
         data.hitLocation = "roll";
+        data.critModifier = 0;
         return data;
     }
 }

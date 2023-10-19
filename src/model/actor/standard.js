@@ -65,11 +65,12 @@ export class StandardActorModel extends BaseActorModel
         this.combat.initialize();
     }
 
-    computeBase() 
+    computeBase(items) 
     {
-        super.computeBase();
+        super.computeBase(items);
         this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
+        this.combat.criticals.value = items.critical.length;
         this.warp.threshold = this.characteristics.wil.bonus; // Put this in base so it's modifiable by effects
 
     }

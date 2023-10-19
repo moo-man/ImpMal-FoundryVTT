@@ -26,6 +26,7 @@
                     <header class="list-row">
                         <div class="list-name">{{localize "IMPMAL.EffectOptions"}}</div>
                         <div data-tooltip="{{localize 'IMPMAL.TakenReqToolTip'}}">{{localize "IMPMAL.TakenReq"}} <i class="fa-regular fa-circle-question"></i></div>
+                        <div>{{localize "IMPMAL.Repeat"}}</div>
                         <div class="list-controls">
                             <a class="effect-options"><i class="fa-solid fa-gear"></i></a>
                         </div>
@@ -40,6 +41,9 @@
                                         </div>
                                         <div>
                                             <input class="taken-req" style="width: 30px" type="number" value="{{lookup ../item.system.effectTakenRequirement this.id}}">
+                                        </div>
+                                        <div>
+                                            <input class="repeat" type="checkbox" {{checked (lookup ../item.system.effectRepeatable this.id)}}>
                                         </div>
                                         <div class="list-controls">
                                         </div>

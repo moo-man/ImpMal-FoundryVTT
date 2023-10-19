@@ -18,7 +18,7 @@ export class PowerModel extends StandardItemModel
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.overt = new fields.BooleanField();
         schema.opposed = new fields.EmbeddedDataField(TestDataModel),
-        schema.xp = new fields.NumberField({initial : 0, min: 0});
+        schema.xpOverride = new fields.NumberField({initial : null, nullable : true});
         return schema;
     }
 
@@ -42,6 +42,11 @@ export class PowerModel extends StandardItemModel
         else
         {
             this.xp = 100;
+        }
+        
+        if (Number.isNumeric(this.xpOverride))
+        {
+            this.xp = this.xpOverride;
         }
     }
 
