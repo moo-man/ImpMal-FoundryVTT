@@ -19,8 +19,8 @@ export default class AmmoItemSheet extends ImpMalItemSheet
             system : {
                 cost : appliedAmmo.system.priceMultiplier * this.item.system.cost,
                 availability : appliedAmmo.system.availability,
-                addTraits : appliedAmmo.system.addTraits,
-                removeTraits : appliedAmmo.system.removeTraits,
+                addedTraits : appliedAmmo.system.addedTraits,
+                removedTraits : appliedAmmo.system.removedTraits,
                 usedWith : appliedAmmo.system.usedWith,
                 damage : appliedAmmo.system.damage
             }

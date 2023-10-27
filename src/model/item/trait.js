@@ -44,6 +44,16 @@ export class TraitModel extends StandardItemModel
         }
     }
 
+    get attackData() 
+    {
+        return {
+            specialisation : this.attack.label,
+            skillTotal : this.attack.target,
+            damage : this.attack.damage, 
+            traits : this.attack.traits
+        };
+    }
+
     get isMelee()
     {
         return this.attack.type == "melee";

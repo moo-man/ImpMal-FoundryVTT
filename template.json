@@ -194,27 +194,33 @@
           "hitLocations": {
             "head": {
               "range": [1,1],
-              "label": "IMPMAL.Head"
+              "label": "IMPMAL.Head",
+              "abbrev": "IMPMAL.HeadAbbrev"
             },
             "leftArm": {
               "range": [2,2],
-              "label": "IMPMAL.LeftArm"
+              "label": "IMPMAL.LeftArm",
+              "abbrev": "IMPMAL.LeftArmAbbrev"
             },
             "rightArm": {
               "range": [3,3],
-              "label": "IMPMAL.RightArm"
+              "label": "IMPMAL.RightArm",
+              "abbrev": "IMPMAL.RightArmAbbrev"
             },
             "leftLeg": {
               "range": [4,4],
-              "label": "IMPMAL.LeftLeg"
+              "label": "IMPMAL.LeftLeg",
+              "abbrev": "IMPMAL.LeftLegAbbrev"
             },
             "rightLeg": {
               "range": [5,5],
-              "label": "IMPMAL.RightLeg"
+              "label": "IMPMAL.RightLeg",
+              "abbrev": "IMPMAL.RightLegAbbrev"
             },
             "body": {
               "range": [6,10],
-              "label": "IMPMAL.Body"
+              "label": "IMPMAL.Body",
+              "abbrev": "IMPMAL.BodyAbbrev"
             }
           }
         }
@@ -324,7 +330,8 @@
         "resolve": 0,
         "armour" : {
           "formula" : "",
-          "value" : 0
+          "value" : 0,
+          "useItems" : false
         }
       },
       "faction" : {
@@ -547,6 +554,14 @@
         "value": "",
         "script" : ""
       },
+      "test" : {
+        "difficulty" : "challenging",
+        "characteristic" : "",
+        "skill" : {
+          "key" : "",
+          "specialisation" : ""
+        }
+      },
       "taken" : 1,
       "xp" : 100
     },
@@ -563,6 +578,10 @@
       "category": "",
       "spec": "",
       "range": "",
+      "rangeModifier" : {
+        "value" : 0,
+        "override" : ""
+      },
       "mag": {
         "value" : 0,
         "current" : 0
@@ -581,10 +600,10 @@
       "priceMultiplier" : 1,
       "usedWith": "",
       "damage": 0,
-      "addTraits": {
+      "addedTraits": {
         "list": []
       },
-      "removeTraits": {
+      "removedTraits": {
         "list": []
       },
       "range" : ""

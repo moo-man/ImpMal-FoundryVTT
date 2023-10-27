@@ -43,10 +43,12 @@ export class BaseTestEvaluator
         if (!data.result.roll) {return;}
 
         this.roll = data.result.roll;
+        this.rollObject = data.result.rollObject;
 
         // Prefer predefined target vs computed target
         this.target = data.result.target || data.target;
         this.state = this.state || data.state;
+        this.onlyAutomaticSuccess = data.onlyAutomaticSuccess;
         this.outcome = "";
         
         this.handleReversal({state : this.state, force : data.reverse});
@@ -60,6 +62,13 @@ export class BaseTestEvaluator
         }
         else if (this.SL < 0 || (this.SL == 0 && this.roll > this.target) || this.roll >= 96)
         {
+            this.outcome = "failure";
+        }
+
+        if (this.onlyAutomaticSuccess && this.roll > 5)
+        {
+            this.SL = 0;
+            this.signedSL = "-0";
             this.outcome = "failure";
         }
 
@@ -77,6 +86,10 @@ export class BaseTestEvaluator
         if (this.state == "dis")
         {
             this.tags.state = game.i18n.localize("IMPMAL.Disadvantage");
+        }
+        if (this.onlyAutomaticSuccess)
+        {
+            this.text.onlyAutomaticSuccess = game.i18n.localize("IMPMAL.OnlyAutomaticSuccess");
         }
     }
 

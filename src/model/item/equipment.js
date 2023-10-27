@@ -11,9 +11,10 @@ export class EquipmentModel extends EquippableItemModel
     {
         let schema = super.defineSchema();
         schema.traits = new fields.EmbeddedDataField(TraitListModel);
+        schema.test = new fields.EmbeddedDataField(TestDataModel);
         schema.uses = new fields.SchemaField({
-            value : new fields.NumberField({initial : 0}),
-            max : new fields.NumberField({initial : 0}),
+            value : new fields.NumberField({initial : 0, nullable : true}),
+            max : new fields.NumberField({initial : 0, nullable : true}),
             enabled : new fields.BooleanField({initial : false}),
         });
         schema.test = new fields.EmbeddedDataField(EnabledMixin(TestDataModel));

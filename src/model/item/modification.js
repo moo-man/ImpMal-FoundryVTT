@@ -36,17 +36,23 @@ export class ModificationModel extends PhysicalItemModel
         data.tags.push(game.impmal.config.modificationTypes[this.category]);
         return data;
     }
+
+    shouldTransferEffect(effect)
+    {
+        return super.shouldTransferEffect(effect) && this.weapon?.system?.shouldTransferEffect(effect);
+    }
 }
 
 export class ModListModel extends ListModel 
 {
     defaultValue = {};
 
-    prepareMods()
+    prepareMods(weapon)
     {
         this.documents = this.list.map(e => new ImpMalItem(e));
         for(let mod of this.documents)
         {
+            mod.system.weapon = weapon;
             // If a mod is disabled, make sure all its effects are disabled
             mod.effects.contents.forEach(e => 
             {

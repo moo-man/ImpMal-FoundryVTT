@@ -25,6 +25,8 @@ export class TraitTestDialog extends AttackDialog
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.TraitTest", {trait : trait?.name})) + (title?.append || "");
 
+        dialogData.data.additionalDamage = 0;
+
         dialogData.data.itemId = trait?.id;
         dialogData.data.item = trait;
 

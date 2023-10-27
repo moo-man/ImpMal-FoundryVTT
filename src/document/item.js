@@ -22,7 +22,6 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         if (this.isOwned)
         {
             await this.actor.runScripts("createItem", this);
-
             await this._handleFactionChoice(data, options);
         }
 
@@ -136,13 +135,13 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         this.runScripts("prePrepareDerivedData", this);
         if (this.isOwned)
         {
-            this.actor.runScripts("PrePrepareOwnedItemDerivedData", this);
+            this.actor.runScripts("prePrepareOwnedItemDerivedData", this);
         }
         this.system.computeDerived();
         this.runScripts("postPrepareDerivedData", this);
         if (this.isOwned)
         {
-            this.actor.runScripts("PostPrepareOwnedItemDerivedData", this);
+            this.actor.runScripts("postPrepareOwnedItemDerivedData", this);
         }
     }
 

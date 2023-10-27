@@ -330,16 +330,6 @@ export class ImpMalEffect extends ActiveEffect
         {
             allowed = allowed && this.item.system.shouldTransferEffect(this);
         }
-
-        // if (this.parent.type == "talent")
-        // {
-        //     // Talents may need to be taken multiple times before an effect should be transfered
-        //     let talentAllowed = this.parent.system.allowEffect(this);
-        //     if (!talentAllowed)
-        //     {
-        //         return false;
-        //     }
-        // }
         
         return allowed;
     }
@@ -559,6 +549,7 @@ export class ImpMalEffect extends ActiveEffect
                 selfZone : false,
                 keep : false,
                 traits : {},
+                equipTransfer : true,
 
                 // Test Properties
                 avoidTest : { 

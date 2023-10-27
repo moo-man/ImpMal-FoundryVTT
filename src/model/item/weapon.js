@@ -18,6 +18,10 @@ export class WeaponModel extends EquippableItemModel
         schema.category = new fields.StringField();
         schema.spec = new fields.StringField();
         schema.range = new fields.StringField();
+        schema.rangeModifier = new fields.SchemaField({
+            value : new fields.NumberField({initial : 0}),
+            override : new fields.StringField({})
+        });
         schema.mag = new fields.SchemaField({
             value : new fields.NumberField({min: 0, integer: true, initial : 1}),
             current : new fields.NumberField({min: 0, integer : true, initial: 0})
@@ -64,9 +68,10 @@ export class WeaponModel extends EquippableItemModel
             this.mag.value *= 5;
             this.mag.multiplied = true;
         }
-        this.mods.prepareMods();
+        this.mods.prepareMods(this.parent);
         this.traits.compute();
         this.specialisation = game.impmal.config[`${this.attackType}Specs`][this.spec];
+        this.computeEquipped();
 
         // Unlike other "equippable" items, weapons should not subtract encumbrance if it is equipped, So redo the calculation
         this.encumbrance.total = this.quantity * this.encumbrance.value;
@@ -74,21 +79,22 @@ export class WeaponModel extends EquippableItemModel
 
     computeOwnerDerived(actor) 
     {
-        this.computeEquipped(actor);
         this.ammo.getDocument(actor.items);
         this.damage.compute(actor);
         this._applyModifications();
         this._applyAmmoMods();
         this._applyShieldMods(actor.items);
+        this.computeRange();
         this.skill = this.getSkill(actor);
         this.skillTotal = this.skill instanceof Item ? this.skill?.system?.total : actor.system.skills[this.skill].total;
     }
 
     // For characters, equipped is determined if the item is held is left or right hand
     // For anything else, not needed, just use the equipped value
-    computeEquipped(actor)
+    computeEquipped()
     {
-        if (actor.type == "character")
+        let actor = this.parent?.actor;
+        if (actor?.type == "character")
         {
             let hands = actor.system.hands.isHolding(this.id);
             this.equipped.value = isEmpty(hands) ? false : true;
@@ -112,6 +118,17 @@ export class WeaponModel extends EquippableItemModel
         let skillItem = skillObject.specialisations.find(i => i.name.slugify() == this.specialisation.slugify());
 
         return skillItem ?? skill;
+    }
+
+    get attackData() 
+    {
+        return {
+            specialisation : this.specialisation,
+            skillTotal : this.skillTotal,
+            damage : this.damage, 
+            traits : this.traits,
+            range : this.range
+        };
     }
 
     get ammoList()
@@ -195,13 +212,27 @@ export class WeaponModel extends EquippableItemModel
         }
     }
 
+    computeRange()
+    {
+        if (this.range)
+        {
+            let ranges = ["short","medium","long","extreme"];
+            let index = ranges.findIndex(i => i == this.range);
+            index = Math.clamped(index + this.rangeModifier.value, 0, ranges.length - 1);
+            this.range = ranges[index];
+        }
+
+        if (this.rangeModifier.override)
+        {
+            this.range = this.rangeModifier.override;
+        }
+    }
+
     /**
      * This should be temporary, as it's ripped from Foundry and not very clean
      */
     _applyModifications()
     {
-
-
         for(let mod of this.mods.documents)
         {
             // Add traits
@@ -232,45 +263,8 @@ export class WeaponModel extends EquippableItemModel
                 {
                     return true;
                 }
-                
-
             });
-
-
-            // Add numeric effect values
-            for(let effect of mod.effects )
-            {
-                for(let change of effect.changes)
-                {
-                    const current = foundry.utils.getProperty(this.parent, change.key) ?? null;
-
-                    const modes = CONST.ACTIVE_EFFECT_MODES;
-                    const changes = {};
-                    switch ( change.mode ) 
-                    {
-
-                    case modes.ADD:
-                        effect._applyAdd(this.parent, change, current, Number(change.value), changes);
-                        break;
-                    case modes.MULTIPLY:
-                        effect._applyMultiply(this.parent, change, current, Number(change.value), changes);
-                        break;
-                    case modes.OVERRIDE:
-                        effect._applyOverride(actor, change, current, Number(change.value), changes);
-                        break;
-                    case modes.UPGRADE:
-                    case modes.DOWNGRADE:
-                        effect._applyUpgrade(this.parent, change, current, Number(change.value), changes);
-                        break;
-                    default:
-                        effect._applyCustom(this.parent, change, current, Number(change.value), changes);
-                        break;
-                    }
-
-                    // Apply all changes to the Actor data
-                    foundry.utils.mergeObject(this.parent, changes);
-                }
-            }
+            this._applyEffects(mod.effects.filter(i => !i.disabled));
         }
     }
 
@@ -291,7 +285,7 @@ export class WeaponModel extends EquippableItemModel
                 ammoDamage = (Number(ammo.system.damage) || 0);
                 if (ammo.system.range)
                 {
-                    ammoRange = this.range = ammo.system.range;
+                    ammoRange = ammo.system.range;
                 }
             }
 
@@ -308,15 +302,60 @@ export class WeaponModel extends EquippableItemModel
             }
             else if (ammo.type == "ammo")
             {
-                this.traits.combine(ammo.system.addTraits);
-                this.traits.remove(ammo.system.removeTraits);
+                this.traits.combine(ammo.system.addedTraits);
+                this.traits.remove(ammo.system.removedTraits);
+            }
+
+            this._applyEffects(ammo.effects.filter(e => e.applicationData.type == "document" && e.applicationData.options.documentType== "Item" && !e.disabled));
+        }
+    }
+
+    _applyEffects(effects)
+    {
+        // Add numeric effect values
+        for(let effect of effects)
+        {
+            for(let change of effect.changes)
+            {
+                const current = foundry.utils.getProperty(this.parent, change.key) ?? null;
+        
+                const modes = CONST.ACTIVE_EFFECT_MODES;
+                const changes = {};
+                switch ( change.mode ) 
+                {
+        
+                case modes.ADD:
+                    effect._applyAdd(this.parent, change, current, Number(change.value), changes);
+                    break;
+                case modes.MULTIPLY:
+                    effect._applyMultiply(this.parent, change, current, Number(change.value), changes);
+                    break;
+                case modes.OVERRIDE:
+                    effect._applyOverride(this.parent, change, current, change.value, changes);
+                    break;
+                case modes.UPGRADE:
+                case modes.DOWNGRADE:
+                    effect._applyUpgrade(this.parent, change, current, Number(change.value), changes);
+                    break;
+                default:
+                    effect._applyCustom(this.parent, change, current, Number(change.value), changes);
+                    break;
+                }
+        
+                // Apply all changes to the Actor data
+                foundry.utils.mergeObject(this.parent, changes);
             }
         }
     }
 
     getOtherEffects()
     {
-        return super.getOtherEffects().concat(this.mods.documents.reduce((prev, current) => prev.concat(current.effects.contents), []).filter(e => !e.disabled && e.applicationData.options.documentType == "modItem"));
+        // A weapon has more effects than just its own, it should include modification and ammo effects
+        return super.getOtherEffects().concat(
+            (this.mods.documents || []).concat(
+                this.ammo.document || [])
+                .reduce((prev, current) => prev.concat(current.effects.contents), []));
+        // .filter(e => e.applicationData.options.documentType == "Item"));
     }
 
 

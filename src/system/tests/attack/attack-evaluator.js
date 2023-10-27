@@ -22,6 +22,7 @@ export class AttackEvaluator extends BaseTestEvaluator
      */
     computeOther(data) 
     {
+        this.additionalDamage = data.additionalDamage;
         this.supercharge = data.supercharge;
         this.burst = data.burst;
         this.rapidFire = data.rapidFire;
@@ -32,6 +33,7 @@ export class AttackEvaluator extends BaseTestEvaluator
 
     computeTagsAndText()
     {
+        super.computeTagsAndText();
         if (this.hitLocation)
         {
             this.tags.hitLocation = (`${game.impmal.config.hitLocations[this.hitLocation]}`);

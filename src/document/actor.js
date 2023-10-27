@@ -216,19 +216,30 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         ignoreAP = args.ignoreAP;
 
         let woundsGained = value;
+        let armourRoll;
 
         if (locationData.field)
         {
             woundsGained = await locationData.field.system.applyField(value, modifiers);
         }
 
-        if (!ignoreAP && locationData.armour)
+        if (!ignoreAP && (locationData.armour || locationData.formula))
         {
-            let armourValue = locationData.armour;
+            let armourValue = locationData.armour || 0;
+            if (locationData.formula)
+            {
+                armourRoll = new Roll(locationData.formula);
+                await armourRoll.roll();
+                if (game.dice3d)
+                {
+                    game.dice3d.showForRoll(armourRoll);
+                }
+                armourValue += armourRoll.total;
+            }
             let penetrating = traits?.has("penetrating");
             if (penetrating)
             {
-                armourValue = Math.max(0, locationData.armour - Number(penetrating.value || 0));
+                armourValue = Math.max(0, armourValue - Number(penetrating.value || 0));
                 // modifiers.push({value : penetrating.value, label : game.i18n.localize("IMPMAL.Penetrating")});
             }
             modifiers.push({value : -armourValue, label : game.i18n.localize("IMPMAL.Protection"), armour : true});
@@ -296,7 +307,8 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             critical : critString,
             excess,
             location,
-            updateData
+            updateData,
+            armourRoll
         };
 
         if (update)
@@ -520,24 +532,30 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
      */
     *allApplicableEffects(includeItemEffects=false)
     {
-        for(let effect of super.allApplicableEffects())
-        {
-            // So I was relying on effect.transfer, which is computed in the effect's prepareData
-            // However, apparently when you first load the world, that is computed after the actor
-            // On subsequent data updates, it's computed before. I don't know if this is intentional
-            // Regardless, we need to doublecheck whether this effect should transfer to the actor
-            if (effect.parent.documentName == "Item" && !effect.determineTransfer())
-            {
-                continue;
-            }
 
-            if (includeItemEffects)
+        for ( const effect of this.effects ) 
+        {
+            if (effect.applicationData.options.documentType == "Item" && includeItemEffects) // Some effects are intended to modify items, but are placed on the actor for ease of tracking
             {
                 yield effect;
             }
-            else if (effect.applicationData.options.documentType != "Item")
+            else if (effect.applicationData.options.documentType == "Actor") // Normal effects (default documentType is actor)
             {
                 yield effect;
+            }
+        }
+        for ( const item of this.items ) 
+        {
+            for ( const effect of item.effects.contents.concat(item.system.getOtherEffects())) 
+            {
+                // So I was relying on effect.transfer, which is computed in the effect's prepareData
+                // However, apparently when you first load the world, that is computed after the actor
+                // On subsequent data updates, it's computed before. I don't know if this is intentional
+                // Regardless, we need to doublecheck whether this effect should transfer to the actor
+                if ( effect.determineTransfer() ) 
+                {
+                    yield effect;
+                }
             }
         }
 
@@ -588,6 +606,26 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         else
         {
             return this._findAttackingMessage()?.test;
+        }
+    }
+
+    sameSideAs(actor)
+    {
+        if (this.hasPlayerOwner && actor.hasPlayerOwner) // If both are owned by players, probably the same side
+        {
+            return true;
+        }
+        else if (this.hasPlayerOwner) // If this actor is owned by a player, and the other is friendly, probably the same side
+        {
+            return actor.prototypeToken.disposition == CONST.TOKEN_DISPOSITIONS.FRIENDLY; 
+        }
+        else if (actor.hasPlayerOwner) // If this actor is friendly, and the other is owned by a player, probably the same side
+        {
+            return this.prototypeToken.disposition == CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+        }
+        else // If neither are owned by a player, only same side if they have the same disposition
+        {
+            return this.prototypeToken.disposition == actor.prototypeToken.disposition;
         }
     }
 

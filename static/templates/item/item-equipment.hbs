@@ -21,19 +21,24 @@
                 </div>
 
                 {{#if system.uses.enabled}}
-                <div class="form-group">
-                    <label>{{localize "IMPMAL.Uses"}}</label>
-                    <div class="form-fields">
-                        <label>{{localize "IMPMAL.Value"}}</label>
-                        <input type="number" name="system.uses.value" value={{system.uses.value}}>
-                        <label>{{localize "IMPMAL.Max"}}</label>
-                        <input type="number" name="system.uses.max" value={{system.uses.max}}>
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.Uses"}}</label>
+                        <div class="form-fields">
+                            <label>{{localize "IMPMAL.Value"}}</label>
+                            <input type="number" name="system.uses.value" value={{system.uses.value}}>
+                            <label>{{localize "IMPMAL.Max"}}</label>
+                            <input type="number" name="system.uses.max" value={{system.uses.max}}>
+                        </div>
                     </div>
-                </div>
                 {{/if}}
 
 
                 {{> systems/impmal/templates/item/partials/item-traits.hbs}}
+
+                <fieldset>
+                    <legend>{{localize "IMPMAL.Test"}}</legend>
+                    {{> systems/impmal/templates/item/partials/item-test.hbs data=system.test path="system.test"}}
+                </fieldset>
             </div>
             <div class="tab effects" data-tab="effects">
                 {{> systems/impmal/templates/item/partials/item-effects.hbs}}

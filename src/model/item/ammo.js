@@ -9,8 +9,8 @@ export class AmmoModel extends PhysicalItemModel
         let schema = super.defineSchema();
         schema.custom = new fields.BooleanField();
         schema.priceMultiplier = new fields.NumberField({initial: 1, min: 1});
-        schema.addTraits = new fields.EmbeddedDataField(TraitListModel);
-        schema.removeTraits = new fields.EmbeddedDataField(TraitListModel);
+        schema.addedTraits = new fields.EmbeddedDataField(TraitListModel);
+        schema.removedTraits = new fields.EmbeddedDataField(TraitListModel);
         schema.usedWith = new fields.StringField();
         schema.damage = new fields.NumberField();
         return schema;
@@ -19,8 +19,8 @@ export class AmmoModel extends PhysicalItemModel
     computeBase() 
     {
         super.computeBase();
-        this.addTraits.compute();
-        this.removeTraits.compute();
+        this.addedTraits.compute();
+        this.removedTraits.compute();
     }
 
     summaryData()
@@ -47,7 +47,15 @@ export class AmmoModel extends PhysicalItemModel
     {
         if (data.traits)
         {
-            data.addTraits = data.traits;
+            data.addedTraits = data.traits;
+        }
+        else if (data.addTraits)
+        {
+            data.addedTraits = data.addTraits;
+        }
+        if (data.removeTraits)
+        {
+            data.removedTraits = data.removeTraits;
         }
     }
 }

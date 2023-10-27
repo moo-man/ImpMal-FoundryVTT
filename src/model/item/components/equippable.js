@@ -29,4 +29,10 @@ export class EquippableItemModel extends PhysicalItemModel
     {
         return this.equipped.value;
     }
+
+    shouldTransferEffect(effect)
+    {
+        // effect.equipTransfer means to check the item equip state and only transfer the effect if true. If equipTransfer is false, always transfer the effect
+        return super.shouldTransferEffect(effect) && (!effect.applicationData.options.equipTransfer || (effect.applicationData.options.equipTransfer && this.isEquipped));
+    }
 }

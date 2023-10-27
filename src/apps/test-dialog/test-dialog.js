@@ -147,12 +147,12 @@ export class TestDialog extends Application
             return this.forceState;
         }
 
-        else if (this.advCount > this.disCount)
+        else if (this.advCount > this.disCount && this.advCount > 0)
         {
             return "adv";
         }
 
-        else if (this.disCount > this.advCount)
+        else if (this.disCount > this.advCount && this.disCount > 0)
         {
             return "dis";
         }
@@ -359,12 +359,12 @@ export class TestDialog extends Application
         // Collect Dialog effects 
         //   - Don't use our own targeter dialog effects, DO use targets' targeter dialog effects
         dialogData.data.scripts = foundry.utils.deepClone(
-            actor?.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
-                .concat(dialogData.data.targets 
-                    .map(t => t.actor)
-                    .filter(actor => actor)
-                    .reduce((prev, current) => prev.concat(current.getScripts("dialog", (s) => s.options.dialog?.targeter)), []) // DO use targets' targeter dialog effects
-                )) || [];
+            (dialogData.data.targets 
+                .map(t => t.actor)
+                .filter(actor => actor)
+                .reduce((prev, current) => prev.concat(current.getScripts("dialog", (s) => s.options.dialog?.targeter)), []) // Retrieve targets' targeter dialog effects
+                .concat(actor?.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
+                ))) || [];
 
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

@@ -344,8 +344,8 @@ export class BaseTest
             SL : data.SL,       
             state : data.state,   
             reverse : data.reverse,
+            onlyAutomaticSuccess : data.onlyAutomaticSuccess,
             target : data.target,
-            other : data.other
         };
     }
 
@@ -359,6 +359,7 @@ export class BaseTest
             state : "none",               // Advantage/disadvantage
             reverse : false,              // Force reversal
             computeDoubles : false,       // Note whether criticals/fumbles happened
+            onlyAutomaticSuccess : false,
             result : {}                   // Predefined result
         };
     }

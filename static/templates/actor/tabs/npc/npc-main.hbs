@@ -2,6 +2,13 @@
     {{> systems/impmal/templates/actor/partials/defendingAgainst.hbs}}
 {{/if}}
 
+<div class="action-list">
+    {{#each (config "actions")}}
+        <button type="button" class="action" data-action="{{@key}}">{{localize this.label}}</button>
+    {{/each}}
+</div>
+
+
 {{#if sections.skills.show}}
     <div class="item-section skills">
         {{{sections.skills.html}}}
@@ -15,40 +22,25 @@
         <section class="list">
             <div class="list-content">
                 {{#each attackItems}}
-                    {{log this.name}}
-                    {{log this}}
                     <div class="list-item" data-id="{{this.id}}">
                         <div class="list-row">
                             <div class="list-name">
                                 <img src="{{this.img}}">
-                                <a class="roll list-summary-context" data-type="weapon">{{this.name}}</a>
-                                {{#if (eq ../actor.type "character")}}
-                                    <div class="grip">
-                                        {{#if this.system.equipped.hands.left}}
-                                            <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
-                                                data-hand="left"><i class="fa-solid fa-hand"></i></span>
-                                        {{/if}}
-                                        {{#if this.system.equipped.hands.right}}
-                                            <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
-                                                data-hand="right"><i class="fa-solid fa-hand"></i></span>
-                                        {{/if}}
-                                    </div>
-                                {{/if}}
+                                <a class="roll list-summary-context" data-type="{{this.type}}">{{this.name}}</a>
                             </div>
-                            {{log this.system.skillTotal}}
-                            <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
-                            <div>{{this.system.damage.value}} {{localize "IMPMAL.Damage"}}</div>
+                            <div class="wide">{{localize this.system.attackData.specialisation}} ({{this.system.attackData.skillTotal}})</div>
+                            <div>{{this.system.attackData.damage.value}} {{localize "IMPMAL.Damage"}}</div>
                             {{#if this.system.isRanged}}
-                                <div>{{configLookup "ranges" this.system.range}} {{localize "IMPMAL.Range"}}</div>
+                                <div>{{configLookup "ranges" this.system.attackData.range}} {{localize "IMPMAL.Range"}}</div>
                             {{/if}}
                         </div>
                         <div class="aux-row">
-                            {{#if this.system.traits.list.length}}
+                            {{#if this.system.attackData.traits.list.length}}
                                 <div class="weapon-traits">
 
                                     <label>{{localize 'IMPMAL.TraitsT'}}</label>
                                     <div class="trait-list">
-                                        {{this.system.traits.displayString}}
+                                        {{this.system.attackData.traits.displayString}}
                                     </div>
                                 </div>
                             {{/if}}

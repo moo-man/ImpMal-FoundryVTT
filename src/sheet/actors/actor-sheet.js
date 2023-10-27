@@ -1,3 +1,4 @@
+import ArmourConfig from "../../apps/armour-config";
 import DocumentChoice from "../../apps/document-choice";
 import ChatHelpers from "../../system/chat-helpers";
 import { SocketHandlers } from "../../system/socket-handlers";
@@ -168,6 +169,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find("button.action").on("click", this._onActionClick.bind(this));
         html.find(".damage-armour").on("mousedown", this._onDamageArmour.bind(this));
         html.find(".trigger-script").on("click", this._onTriggerScript.bind(this));
+        html.find(".armour-config").on("click", this._onClickArmourConfig.bind(this));
         html.on("click", ".use-item", this._onUseItem.bind(this));
     }
 
@@ -540,6 +542,11 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         let script = effect.manualScripts[index];
 
         script.execute({actor : this.actor});
+    }
+
+    _onClickArmourConfig()
+    {
+        new ArmourConfig(this.object).render(true);
     }
 
     _onDamageArmour(ev)

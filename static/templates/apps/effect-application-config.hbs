@@ -23,8 +23,8 @@
                         <option value="Actor">{{localize "Actor"}}</option>
                         {{#if (eq this.parent.type "boonLiability")}}
                             <option value="character">{{localize "TYPES.Actor.character"}}</option>
-                        {{else if (eq this.parent.type "modification")}}
-                            <option value="modItem">{{localize "IMPMAL.ModifiedItem"}}</option>
+                        {{!-- {{else if (eq this.parent.type "modification")}}
+                            <option value="modItem">{{localize "IMPMAL.ModifiedItem"}}</option> --}}
                         {{else}}
                             <option value="Item">{{localize "Item"}}</option>
                         {{/if}}
@@ -166,6 +166,15 @@
                 </div>
             {{/if}}
         {{/if}}
+
+        {{#if (hasProperty this "applicationData.options.equipTransfer")}}
+            <div class="form-group">
+                <label>{{localize "IMPMAL.EffectApplicationOptionEquipTransfer"}}</label>
+                <input type="checkbox" name="flags.impmal.applicationData.options.equipTransfer" {{checked flags.impmal.applicationData.options.equipTransfer}}>
+                <p class="notes">{{localize "IMPMAL.EffectApplicationOptionEquipTransferHint"}}</p>
+            </div>
+        {{/if}}
+
         {{#if (hasProperty this "applicationData.options.enableConditionScript")}}
             <div class="form-group">
                 <label>{{localize "IMPMAL.EffectApplicationOptionEnableScript"}}<a class="script-config"

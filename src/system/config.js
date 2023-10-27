@@ -418,8 +418,8 @@ const IMPMAL = {
         postPrepareDerivedData : "IMPMAL.TriggerPostPrepareDerivedData",
 
         prepareOwnedItemBaseData : "IMPMAL.TriggerPrepareOwnedItemBaseData",
-        PrePrepareOwnedItemDerivedData : "IMPMAL.TriggerPrePrepareOwnedItemDerivedData",
-        PostPrepareOwnedItemDerivedData : "IMPMAL.TriggerPostPrepareOwnedItemDerivedData",
+        prePrepareOwnedItemDerivedData : "IMPMAL.TriggerPrePrepareOwnedItemDerivedData",
+        postPrepareOwnedItemDerivedData : "IMPMAL.TriggerPostPrepareOwnedItemDerivedData",
 
         computeCharacteristics : "Compute Characteristics",
         computeEncumbrance : "Compute Encumbrance",
@@ -508,19 +508,8 @@ const IMPMAL = {
                         scriptData: [
                             {
                                 label: "Range",
-                                string: "",
-                                trigger: "",
-                                options: {
-                                    dialog: {
-                                        hideScript: "",
-                                        activateScript: "",
-                                        submissionScript: "",
-                                        targeter: false
-                                    },
-                                    immediate: {
-                                        deleteEffect: false
-                                    }
-                                }
+                                string: `if (args.type == "weapon" && args.system.isRanged) args.system.rangeModifier.value+= 0.5; //gross workaround for double preparation bug`,
+                                trigger: "prePrepareOwnedItemDerivedData",
                             },
                             {
                                 label : "No Target Location Penalty",
@@ -846,6 +835,18 @@ const IMPMAL = {
             flags : {
                 impmal : {
                     scriptData: [
+                        {
+                            label: "Tests that rely on sight only succeed on a roll of 01-05",
+                            string: "",
+                            trigger: "dialog",
+                            options: {
+                                dialog: {
+                                    hideScript: `return !(["awareness"].includes(args.data.skill) || args.weapon?.system?.isRanged)`,
+                                    activateScript: `return args.skillItem?.name == "Sight" || args.weapon?.system?.isRanged`,
+                                    submissionScript: `args.data.onlyAutomaticSuccess = true`,
+                                },
+                            }
+                        },
                         {
                             label: "Disadvantage on Melee and Reflexes (Dodge)",
                             string: "args.disCount++;",
@@ -1570,40 +1571,41 @@ const IMPMAL = {
             flags : {
                 impmal: {
                     scriptData: [
-                        // {
-                        //     label: "Advantage on Stealth (Hide)",
-                        //     string: "args.advCount++;",
-                        //     trigger: "dialog",
-                        //     options: {
-                        //         dialog: {
-                        //             hideScript: `return !["stealth"].includes(args.data.skill);`,
-                        //             activateScript: `return args.skillItem?.name == "Hide"`
-                        //         },
-                        //     }
-                        // },
-                        // {
-                        //     label: "Disadvantage on Awareness (Sight) and Ranged Tests",
-                        //     string: "args.disCount++;",
-                        //     trigger: "dialog",
-                        //     options: {
-                        //         dialog: {
-                        //             hideScript: `return !(["awareness"].includes(args.data.skill) || args.weapon?.system?.isRanged)`,
-                        //             activateScript: `return args.skillItem?.name == "Sight" || args.weapon?.system?.isRanged`
-                        //         },
-                        //     }
-                        // },
-                        // {
-                        //     label: "Dark ",
-                        //     string: "args.disCount++;",
-                        //     trigger: "dialog",
-                        //     options: {
-                        //         dialog: {
-                        //             hideScript: `return !args.weapon?.system?.isRanged`,
-                        //             activateScript: `return args.weapon?.system?.isRanged`,
-                        //             targeter : true
-                        //         },
-                        //     }
-                        // }
+                        {
+                            label: "Advantage on Stealth (Hide)",
+                            string: "args.advCount++;",
+                            trigger: "dialog",
+                            options: {
+                                dialog: {
+                                    hideScript: `return !["stealth"].includes(args.data.skill);`,
+                                    activateScript: `return args.skillItem?.name == "Hide"`
+                                },
+                            }
+                        },
+                        {
+                            label: "Only succeeds on a roll of 01-05",
+                            string: "",
+                            trigger: "dialog",
+                            options: {
+                                dialog: {
+                                    hideScript: `return !(["awareness"].includes(args.data.skill) || args.weapon?.system?.isRanged)`,
+                                    activateScript: `return args.skillItem?.name == "Sight" || args.weapon?.system?.isRanged`,
+                                    submissionScript: `args.data.onlyAutomaticSuccess = true`,
+                                    targeter : true
+                                },
+                            }
+                        },
+                        {
+                            label: "Disadvantage on Tests affected by the absence of light",
+                            string: "args.disCount++;",
+                            trigger: "dialog",
+                            options: {
+                                dialog: {
+                                    hideScript: ``,
+                                    activateScript: `return ["melee", "reflexes", "dexterity", "tech"].includes(args.data.skill)`,
+                                },
+                            }
+                        }
                     ]
                 }
             }
@@ -1626,6 +1628,21 @@ const IMPMAL = {
                                     activateScript: `return args.power`
                                 },
                             }
+                        },
+                        {
+                            label: "Additional Warp Charge",
+                            string: `
+                            args.context.additionalWarp += args.result.SL;
+                            args.context.tags.warpTouched = game.i18n.localize("IMPMAL.WarpTouched") + ": " + args.result.SL;
+                            `,
+                            trigger: "rollPowerTest",
+                        },
+                        {
+                            label: "Minor Source of Corruption",
+                            string: `
+                                this.actor.setupSkillTest({key : "fortitude"}, {title : {append : " - Warp Touched"}, fields: {difficulty : "routine"}, context : {corruption : 1}})
+                            `,
+                            trigger: "endTurn",
                         }
                     ]
                 }

@@ -70,9 +70,9 @@ export class OpposedTestResult
         switch(item.type)
         {
         case "weapon" : 
-            return this._computeWeaponDamage(item, {attackerTest, defenderTest}) + (add || 0);
+            return this._computeWeaponDamage(item, {attackerTest, defenderTest}) + (add || 0) + attackerTest.result.additionalDamage;
         case "trait" : 
-            return this._computeTraitDamage(item, {attackerTest, defenderTest}) + (add || 0);
+            return this._computeTraitDamage(item, {attackerTest, defenderTest}) + (add || 0) + attackerTest.result.additionalDamage;
         case "power" : 
             return this._computePowerDamage(item, {attackerTest, defenderTest}) + (add || 0);
         }

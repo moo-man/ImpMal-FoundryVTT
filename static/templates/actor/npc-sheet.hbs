@@ -67,10 +67,35 @@
                 <input type="number" name="system.characteristics.{{@key}}.starting" value="{{this.total}}" {{#if (lookup ../actor.overrides.system.characteristics @key)}}disabled data-tooltip="{{localize 'IMPMAL.CannotEditPropertyWithEffect'}}"{{/if}}>
             </div>
         {{/each}}
-        <div class="grid-property">
-            <label>{{localize "IMPMAL.Armour"}}</label>
+        <div class="grid-property armour-properties">
+            <label>{{localize "IMPMAL.Armour"}} <a class="armour-config"><i class="fa-solid fa-gear"></i></a></label>
             <div>
-                <input type="number" name="system.combat.armour.value" value="{{system.combat.armour.value}}">
+                {{#if system.combat.armour.useItems}}
+
+
+                <div class="locations">
+                    {{#each system.combat.hitLocations}}
+                        <div class="location" data-key="{{this.key}}">
+                            <div class="location-values">
+                                <label data-tooltip="{{localize this.label}}" data-tooltip-direction="UP"><a class="damage-armour">{{localize this.abbrev}}</a></label>
+                                <a class="armour-value {{#if this.damage}}damaged{{/if}}">
+                                    {{this.armour}}
+                                </a>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+
+
+
+
+                {{else}}
+                    <input type="number" disabled name="system.combat.armour.value" value="{{system.combat.armour.value}}">
+                    {{#if system.combat.armour.formula}}
+                        <span class="plus">+</span>
+                        <input type="text" disabled name="system.combat.armour.formula" value="{{system.combat.armour.formula}}">
+                    {{/if}}
+                {{/if}}
             </div>
         </div>
         <div class="grid-property">
@@ -87,8 +112,7 @@
                     <span>-</span>
                 {{else}}
                     <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
-                    <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}"
-                        disabled>
+                    <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}" disabled>
                 {{/if}}
             </div>
         </div>

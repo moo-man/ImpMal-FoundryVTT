@@ -66,7 +66,7 @@ export class AttackDialog extends SkillTestDialog
 
     get traits() 
     {
-        return this.data.item.system.traits || this.item.system.attack.traits;
+        return this.data.item.system.traits || this.data.item.system.attack.traits;
     }
 
     _defaultFields() 

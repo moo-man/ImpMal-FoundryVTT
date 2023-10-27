@@ -39,7 +39,7 @@ export class ImpMalChatMessage extends ChatMessage
         }
     }
 
-    static corruptionMessage(value=1, chatData={})
+    static corruptionMessage(value=1, options={}, chatData={})
     {
         if (Number.isNumeric(value))
         {
@@ -64,7 +64,7 @@ export class ImpMalChatMessage extends ChatMessage
         }
         ChatMessage.create(mergeObject({content : `
             <h3 style="text-align: center">${game.i18n.format("IMPMAL.ExposureToCorruption", {label : game.i18n.localize(label)})}</h3>
-            <button type="button" class="resist-corruption" data-value=${value}>${game.i18n.localize("IMPMAL.Resist")}</button>
+            <button type="button" class="resist-corruption" data-value=${value} difficulty=${options.difficulty}>${game.i18n.localize("IMPMAL.Resist")}</button>
         `}, chatData));
     }
 

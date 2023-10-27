@@ -38,13 +38,14 @@ export class StandardCombatModel extends foundry.abstract.DataModel
 
         for (let loc in this.hitLocations)
         {
-
             this.hitLocations[loc].key = loc;
             this.hitLocations[loc].armour = 0;
             this.hitLocations[loc].damage = 0;
+            this.hitLocations[loc].formula = "";
             this.hitLocations[loc].field = null;
             this.hitLocations[loc].items = [];
             this.hitLocations[loc].sources = [];
+            this.hitLocations[loc].flak = false;
         }
     }
 
@@ -92,7 +93,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     {
         for (let loc in this.hitLocations)
         {
-            this.hitLocations[loc].armour += this.armourModifier; // TODO: Add aCtive effect to source list (so it's displayed in the hit loc section)
+            this.hitLocations[loc].armour += this.armourModifier; // TODO: Add active effect to source list (so it's displayed in the hit loc section)
         }
         
         let protectionItems = items.protection.filter(i => i.system.isEquipped);
@@ -106,6 +107,23 @@ export class StandardCombatModel extends foundry.abstract.DataModel
                     this.hitLocations[loc].damage += armourDamage;
                     this.hitLocations[loc].armour += (item.system.armour - armourDamage);
                     this.hitLocations[loc].items.push(item);
+
+                    // item.system.traits.list.forEach(i => 
+                    // {
+                    //     let key = i.key;
+                    //     let value = i.value;
+                    //     if (this.hitlocations[loc].traits[key])
+                    //     {
+                    //         if (Number.isNumeric(value) && Number.isNumeric(this.hitlocations[loc].traits[key]))
+                    //         {
+                    //             this.hitLocations[loc].traits[key] += value;
+                    //         }
+                    //     }
+                    //     else 
+                    //     {
+                    //         this.hitLocations[loc].traits[key] = value || true;
+                    //     }
+                    // });
                 }
             }
         }
@@ -163,7 +181,8 @@ export class NPCCombatModel extends StandardCombatModel
         schema.resolve = new fields.NumberField();
         schema.armour = new fields.SchemaField({
             formula : new fields.StringField(),
-            value : new fields.NumberField({min : 0})
+            value : new fields.NumberField({min : 0}),
+            useItems : new fields.BooleanField()
         });
         return schema;
     }
@@ -171,12 +190,19 @@ export class NPCCombatModel extends StandardCombatModel
     // Add NPC static armour value to all locations
     computeArmour(items)
     {
-        super.computeArmour(items);
-        for (let loc in this.hitLocations)
+        if (this.armour.useItems)
         {
-            if (this.hitLocations[loc])
+            super.computeArmour(items);
+        }
+        else 
+        {
+            for (let loc in this.hitLocations)
             {
-                this.hitLocations[loc].armour += (this.armour.value || 0);
+                if (this.hitLocations[loc])
+                {
+                    this.hitLocations[loc].armour += (this.armour.value || 0);
+                    this.hitLocations[loc].formula = this.armour.formula;
+                }
             }
         }
     }
