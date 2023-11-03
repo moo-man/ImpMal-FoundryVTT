@@ -456,7 +456,9 @@ const IMPMAL = {
         takeDamage : "IMPMAL.TriggerTakeDamage",
 
         createItem : "IMPMAL.TriggerCreateItem",
+        preUpdateDocument : "IMPMAL.TriggerPreUpdateDocument",
         updateDocument : "IMPMAL.TriggerUpdateDocument",
+        createCondition : "IMPMAL.TriggerCreateCondition",
         deleteEffect : "IMPMAL.TriggerDeleteEffect",
 
         startRound : "IMPMAL.TriggerStartRound",
@@ -485,6 +487,7 @@ const IMPMAL = {
         "rollTraitTest": true, 
         "rollPowerTest": true, 
         "updateDocument": true, 
+        "createCondition": true, 
         "deleteEffect": true, 
         "dialog": true,
         "createItem" : true,

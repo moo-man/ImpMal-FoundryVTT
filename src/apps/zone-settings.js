@@ -43,7 +43,7 @@ export default class ZoneSettings extends FormApplication
 
     static _addZoneConfig(html, drawing)
     {
-        let button = $(`<div class="control-icon"><i class="fa-regular fa-gear"></i></div>`);
+        let button = $(`<div class="control-icon"><i class="fa-regular fa-game-board-simple"></i></div>`);
         button.on("click", () => 
         {
             new this(drawing).render(true);

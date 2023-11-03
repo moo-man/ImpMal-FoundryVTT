@@ -37,7 +37,7 @@ export class ImpMalEffect extends ActiveEffect
 
         await this._handleFollowedEffect(data, options);
 
-        return await this._handleImmediateScripts(data, options, user);
+        return await this.handleImmediateScripts(data, options, user);
     }
 
     async _onDelete(options, user)
@@ -75,7 +75,7 @@ export class ImpMalEffect extends ActiveEffect
 
     //#region Creation Handling
 
-    async _handleImmediateScripts(data, options, user)
+    async handleImmediateScripts(data, options, user)
     {
         let run = false;
         // Effect is direct parent, it's always applied to an actor, so run scripts
@@ -103,6 +103,10 @@ export class ImpMalEffect extends ActiveEffect
                 return !scripts.every(s => s.options.immediate?.deleteEffect);
             }
             // If all scripts agree to delete the effect, return false (to prevent creation);
+            else 
+            {
+                return true;
+            }
         }
     }
 

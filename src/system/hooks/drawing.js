@@ -15,4 +15,20 @@ export default function()
             ZoneHelpers.checkDrawingUpdate(drawing.object);
         }
     });
+
+    Hooks.on("getDrawingConfigHeaderButtons", (app, buttons) => 
+    {
+        buttons.unshift(            
+            {
+                label : "Zone",
+                class: "post",
+                icon: "fa-regular fa-game-board-simple",
+                onclick: () => new ZoneSettings(app.document).render(true)
+            });
+    });
+
+    Hooks.on("renderDrawingConfig", (app, html) => 
+    {
+        html[0].classList.add("impmal");
+    });
 }

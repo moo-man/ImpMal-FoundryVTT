@@ -614,6 +614,8 @@
     "IMPMAL.TriggerRollPowerTest" : "Roll Power Test",
     "IMPMAL.TriggerCreateItem" : "Create Item",
     "IMPMAL.TriggerUpdateDocument" : "Update Document",
+    "IMPMAL.TriggerPreUpdateDocument" : "Pre-Update Document",
+    "IMPMAL.TriggerCreateCondition" : "Create Condition",
     "IMPMAL.TriggerDeleteEffect" : "Delete Effect",
     "IMPMAL.TriggerStartRound" : "Start Round",
     "IMPMAL.TriggerEndRound" : "End Round",

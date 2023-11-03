@@ -89,15 +89,18 @@ export default class ImpMalScript
         }
     }
 
-    scriptMessage(content)
+    scriptMessage(content, chatData={})
     {
-        ChatMessage.create({
+        ChatMessage.create(mergeObject({
             content,
             speaker : {alias : this.context.actor?.name || this.context?.item.name},
             flavor : this.context.effect.name || this.context.item.name || ""
-        });
+        }, chatData));
+    }
 
-
+    scriptNotification(content, type="info")
+    {
+        ui.notifications.notify(`<strong>${this.context.effect.name}: ${content}</strong>`, type);
     }
 
     get actor() 

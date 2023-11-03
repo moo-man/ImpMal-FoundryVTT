@@ -19,6 +19,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     {
         await super._preUpdate(data, options, user);
         await this.system.preUpdateChecks(data, options);
+        await Promise.all(this.runScripts("preUpdateDocument", {data, options, user}));
     }
 
     async _onUpdate(data, options, user)
@@ -67,6 +68,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         {
             return existing.update(createData).then(e => 
             {
+                this.runScripts("createCondition", e);
                 if (e.parent.documentName == "Actor")
                 {
                     e._displayScrollingStatus(true);
@@ -78,7 +80,10 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
             const cls = getDocumentClass("ActiveEffect");
             if (create)
             {
-                return cls.create(createData, {parent: this, condition: true}); // condition flag tells the creation flow that this has gone through addCondition
+                return cls.create(createData, {parent: this, condition: true}).then(e => // condition flag tells the creation flow that this has gone through addCondition
+                {
+                    this.runScripts("createCondition", e);
+                }); 
             }
             else 
             {

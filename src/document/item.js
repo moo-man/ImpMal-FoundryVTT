@@ -228,11 +228,19 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         let effects = this.applicableEffects.filter(effect => 
             effect.applicationData.type == "document" && 
             effect.applicationData.options.documentType == "Actor"); // We're looking for actor because if the immediate script was for the Item, it would've been called when it was created. 
-        
 
-        let scripts = effects.reduce((prev, current) => prev.concat(current.scripts.filter(i => i.trigger == "immediate")), []);
+        for(let e of effects)
+        {
+            let keepEffect = await e.handleImmediateScripts();
+            if (!keepEffect) // Can't actually delete the effect because it's owned by an item in _preCreate. Change it to `other` type so it doesn't show in the actor
+            {
+                e.updateSource({"flags.impmal.applicationData.type" : "other"});
+            }
+        }
 
-        await Promise.all(scripts.map(s => s.execute()));
+        // let scripts = effects.reduce((prev, current) => prev.concat(current.scripts.filter(i => i.trigger == "immediate")), []);
+
+        // await Promise.all(scripts.map(s => s.execute()));
     }
 
     get typeLabel()

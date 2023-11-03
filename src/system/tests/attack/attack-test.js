@@ -49,6 +49,7 @@ export class AttackTest extends SkillTest
         testData.supercharge = data.supercharge;
         testData.burst = data.burst;
         testData.rapidFire = data.rapidFire;
+        testData.additionalDamage = data.additionalDamage;
         return testData;
     }
 
@@ -58,6 +59,7 @@ export class AttackTest extends SkillTest
         let data = super._defaultData();
         data.hitLocation = "roll";
         data.critModifier = 0;
+        data.additionalDamage = 0;
         return data;
     }
 }
