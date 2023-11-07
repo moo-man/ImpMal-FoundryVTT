@@ -82,7 +82,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
 
     computeSpeed(speed)
     {
-        const speeds = ["none", "slow", "normal", "fast", "swift"];
+        const speeds = ["slow", "normal", "fast", "swift"];
         let speedIndex = speeds.indexOf(speed.value) + (speed.modifier || 0);
         speedIndex = Math.clamped(speedIndex, 0, 3);
         speed.value = speeds[speedIndex];

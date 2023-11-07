@@ -19,7 +19,7 @@ export class BaseActorModel extends foundry.abstract.DataModel
         return schema;
     }
     
-    preCreateData(data) 
+    async preCreateData(data) 
     {
         let preCreateData = {};
         if (!data.prototypeToken)
@@ -41,12 +41,12 @@ export class BaseActorModel extends foundry.abstract.DataModel
 
     }
 
-    preUpdateChecks(data)
+    async preUpdateChecks(data)
     {
         return data;
     }
 
-    updateChecks()
+    async updateChecks()
     {
         return {};
     }

@@ -708,12 +708,20 @@
     "critical": {
       "templates": [
         "notes"
-      ]
+      ],
+      "location" : {
+        "value" : "",
+        "choices" : []
+      }
     },
     "injury": {
       "templates": [
         "notes"
-      ]
+      ],
+      "location" : {
+        "value" : "",
+        "choices" : []
+      }
     },
     "trait": {
       "templates": [

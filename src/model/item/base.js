@@ -31,27 +31,27 @@ export class BaseItemModel extends foundry.abstract.DataModel
         }
     }
 
-    preCreateData()//data) 
+    async preCreateData()//data) 
     {
         return {};
     }
 
-    preUpdateChecks(data)
+    async preUpdateChecks(data)
     {
         return data;
     }
 
-    updateChecks()
+    async updateChecks()
     {
         if (this.parent.actor)
         {
-            this.parent.actor.update(this.parent.actor.system.updateChecks({}, {}));
+            await this.parent.actor.update(await this.parent.actor.system.updateChecks({}, {}));
         }
 
         return {};
     }
 
-    createChecks()
+    async createChecks()
     {
         
     }
@@ -106,7 +106,7 @@ export class BaseItemModel extends foundry.abstract.DataModel
     }
 
     // If an item effect is disabled it should still transfer to the actor, so that it's visibly disabled
-    shouldTransferEffect(effect)
+    shouldTransferEffect()
     {
         return true;
     }

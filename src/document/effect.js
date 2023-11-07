@@ -16,11 +16,6 @@ export class ImpMalEffect extends ActiveEffect
         this.updateSource({"flags.impmal.sourceTest" : game.messages.get(options.message)?.test});
 
         let preventCreation = false;
-        preventCreation = await this._handleConditionCreation(data, options, user);
-        if (preventCreation) // Conditions need to be handled before prevention because if it's a condition, it cancels and goes through creation again
-        {
-            return false;
-        }
         preventCreation = await this._handleEffectPrevention(data, options, user);
         if (preventCreation)
         {
@@ -31,6 +26,11 @@ export class ImpMalEffect extends ActiveEffect
         if (preventCreation)
         {
             log(game.i18n.format("IMPMAL.EffectFiltered", {name : this.name}), {force: true, args: this});
+            return false;
+        }
+        preventCreation = await this._handleConditionCreation(data, options, user);
+        if (preventCreation) // Conditions need to be handled before prevention because if it's a condition, it cancels and goes through creation again
+        {
             return false;
         }
         await this._handleItemApplication(data, options, user);
@@ -100,7 +100,7 @@ export class ImpMalEffect extends ActiveEffect
             if (scripts.length)
             {
                 await Promise.all(scripts.map(s => s.execute({data, options, user})));
-                return !scripts.every(s => s.options.immediate?.deleteEffect);
+                return !this.scripts.every(s => s.options.immediate?.deleteEffect);
             }
             // If all scripts agree to delete the effect, return false (to prevent creation);
             else 

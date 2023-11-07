@@ -31,8 +31,9 @@ export class ProtectionModel extends EquippableItemModel
         this.traits.compute();
     }
 
-    preUpdateChecks(data)
+    async preUpdateChecks(data)
     {
+        await super.preUpdateChecks(data);
         // If location label is modified, try to parse which location keys to use
         let locationLabel = getProperty(data, "system.locations.label");
         if (locationLabel)

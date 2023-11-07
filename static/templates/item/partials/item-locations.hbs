@@ -1,0 +1,20 @@
+{{#if this.item.isOwned}}
+    <div class="form-group">
+        <label>{{localize "IMPMAL.Location"}}</label>
+        <div class="form-fields">
+            <input type="text" disabled value="{{configLookup "hitLocations" system.location.value}}"> <!-- Easier than looking in the actor -->
+        </div>
+    </div>
+{{else}}
+    <div class="locations">
+        <label>{{localize "IMPMAL.LocationChoices"}} <a class="array-create" data-target="system.location.choices"><i class="fa-solid fa-plus"></i></a></label>
+        <div class="location-keys array">
+            {{#each system.location.choices}}
+                <div class="array-group" data-index="{{@key}}" data-target="system.location.choices">
+                    <input class="array-edit" type="text" value="{{this}}">
+                    <a class="array-delete"><i class="fa-solid fa-xmark"></i></a>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+{{/if}}

@@ -13,6 +13,18 @@ export class HandsModel extends foundry.abstract.DataModel
     }
 
 
+    // Convenience getters - injuries/criticals use hit locations: left/rightArm and check whether a weapon is being used 
+    get leftArm() 
+    {
+        return this.left;
+    }
+
+    get rightArm()
+    {
+        return this.right;
+    }
+
+
     getDocuments(collection) 
     {
         for(let hand in this)
@@ -21,15 +33,16 @@ export class HandsModel extends foundry.abstract.DataModel
         }
     }
 
-    toggle(item, hand)
+    toggle(hand, item) // Item necessary if equipping, if null, always unequip
     {
-        let id = item.id;
+        item = item || this[hand].document;
+        let id = item?.id;
 
         // Other hand
         let other = hand == "left" ? "right" : "left";        
         let update = {};
 
-        if(item.system.isEquipped) // If currently equipped, clear from hand fields
+        if(item?.system.isEquipped) // If currently equipped, clear from hand fields
         {
             for(let hand in this)
             {
@@ -39,9 +52,17 @@ export class HandsModel extends foundry.abstract.DataModel
                 }
             }
         }
-        
-        else // If not currently equipped, add IDs to hand fields
+
+        else if (item) // If not currently equipped, add IDs to hand fields
         {
+
+            if (this[hand].useless)
+            {
+                let error = game.i18n.localize("IMPMAL.ErrorHandUnusable");
+                ui.notifications.error(error);
+                throw new Error(error);
+            }
+
             if (item.system.traits.has("twohanded"))
             {
                 update[`system.hands.left.id`] = id;
@@ -59,7 +80,6 @@ export class HandsModel extends foundry.abstract.DataModel
         }
 
         return update;
-
     }
 
     isHolding(id)

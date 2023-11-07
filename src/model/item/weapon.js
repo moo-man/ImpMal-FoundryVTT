@@ -31,18 +31,18 @@ export class WeaponModel extends EquippableItemModel
     }
 
 
-    preUpdateChecks(data)
+    async preUpdateChecks(data)
     {
-        super.preUpdateChecks(data);
+        await super.preUpdateChecks(data);
         if (hasProperty(data, "system.mag.value") && this.ammo.document)
         {
             setProperty(data, "system.mag.current", data.system.mag.value);
         }
     }
 
-    updateChecks(updateData)
+    async updateChecks(updateData)
     {
-        let data = super.updateChecks();
+        let data = await super.updateChecks();
 
         // If ammo changed, also update current mag value
         // Can't be in preUpdateChecks because need to check ammo quantity, ammo.document would not ready 

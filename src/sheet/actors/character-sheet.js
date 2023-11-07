@@ -68,7 +68,7 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
             let hand = ev.currentTarget.dataset.hand;
             let item = this.actor.items.get(itemId);
 
-            this.actor.update(this.actor.system.hands.toggle(item, hand));
+            this.actor.update(this.actor.system.hands.toggle(hand, item));
             
         });
 

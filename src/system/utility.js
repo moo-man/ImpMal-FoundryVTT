@@ -4,8 +4,6 @@ export default class ImpMalUtility
 {
     static async getAllItems(types = [])
     {
-
-
         if (typeof types == "string")
         {
             types = [types];

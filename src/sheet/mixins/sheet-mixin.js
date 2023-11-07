@@ -206,7 +206,14 @@ export default ImpMalSheetMixin = (cls) => class extends cls
     {
         let target = ev.currentTarget.dataset.target; // Location of the list model
         let arrayModel = getProperty(this.item, target);
-        return this.item.update({[target + ".list"] : arrayModel.add()});
+        if (arrayModel instanceof Array)
+        {
+            return this.item.update({[target] : arrayModel.concat(null)});
+        }
+        else 
+        {
+            return this.item.update({[target + ".list"] : arrayModel.add()});
+        }
     }
 
     _onEditArrayElement(ev)
@@ -234,7 +241,16 @@ export default ImpMalSheetMixin = (cls) => class extends cls
             }
         }
 
-        return this.item.update({[target + ".list"] : arrayModel.edit(index, ev.target.value)});
+        if (arrayModel instanceof Array)
+        {
+            let newArray = foundry.utils.deepClone(arrayModel);
+            newArray[index] = value;
+            return this.item.update({[target] : newArray});
+        }
+        else 
+        {
+            return this.item.update({[target + ".list"] : arrayModel.edit(index, value)});
+        }
     }
 
     _onDeleteArrayElement(ev)
@@ -242,7 +258,17 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         let target = ev.currentTarget.parentElement.dataset.target;    // Location of the list model
         let index = ev.currentTarget.parentElement.dataset.index;      // Index to be deleted
         let arrayModel = getProperty(this.item, target);
-        return this.item.update({[target + ".list"] : arrayModel.remove(index)});
+        
+        if (arrayModel instanceof Array)
+        {
+            let newArray = foundry.utils.deepClone(arrayModel);
+            newArray.splice(index, 1);
+            return this.item.update({[target] : newArray});
+        }
+        else 
+        {
+            return this.item.update({[target + ".list"] : arrayModel.remove(index)});
+        }
     }
 
     _onPostItem(event) 

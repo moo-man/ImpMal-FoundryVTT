@@ -47,8 +47,9 @@ export class ForceFieldModel extends EquippableItemModel
         return damage - roll.total;
     }
 
-    preUpdateChecks(data)
+    async preUpdateChecks(data)
     {
+        await super.preUpdateChecks(data);
         if (data?.system?.equipped?.value == true && this.overload.collapsed)
         {
             data.system.equipped.value = false;

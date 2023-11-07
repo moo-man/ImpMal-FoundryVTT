@@ -65,7 +65,7 @@ export class BaseTestEvaluator
             this.outcome = "failure";
         }
 
-        if (this.onlyAutomaticSuccess && this.roll > 5)
+        if (this.outcome == "success" && this.onlyAutomaticSuccess && this.roll > 5)
         {
             this.SL = 0;
             this.signedSL = "-0";

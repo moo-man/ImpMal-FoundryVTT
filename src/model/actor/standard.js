@@ -24,9 +24,9 @@ export class StandardActorModel extends BaseActorModel
         return schema;
     }
 
-    preUpdateChecks(data, options)
+    async preUpdateChecks(data, options)
     {
-        super.preUpdateChecks(data, options);
+        await super.preUpdateChecks(data, options);
 
         // Prevent wounds from exceeding max
         if (hasProperty(data, "system.combat.wounds.value"))
@@ -40,9 +40,9 @@ export class StandardActorModel extends BaseActorModel
         }
     }
 
-    updateChecks(data, options)
+    async updateChecks(data, options)
     {
-        super.updateChecks(data, options);
+        await super.updateChecks(data, options);
         //TODO: Check for dead effect if above critical wound threshold
 
         if (options.deltaWounds)

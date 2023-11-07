@@ -57,9 +57,9 @@ export class CharacterModel extends StandardActorModel
         return schema;
     }
 
-    preCreateData(data, options) 
+    async preCreateData(data, options) 
     {
-        let preCreateData = super.preCreateData(data, options);
+        let preCreateData = await super.preCreateData(data, options);
         if (!data.prototypeToken)
         {
             mergeObject(preCreateData, {
@@ -72,9 +72,9 @@ export class CharacterModel extends StandardActorModel
     }
 
     
-    preUpdateChecks(data, options)
+    async preUpdateChecks(data, options)
     {
-        super.preUpdateChecks(data, options);
+        await super.preUpdateChecks(data, options);
         // Warp state is both computed and saved
         // If charge is below threshold, it is computed => state = 0
         if (data?.system?.warp?.charge < this.warp.threshold)
@@ -84,9 +84,9 @@ export class CharacterModel extends StandardActorModel
         }
     }
 
-    updateChecks(data, options)
+    async updateChecks(data, options)
     {
-        super.updateChecks(data, options);
+        await super.updateChecks(data, options);
         this._checkEncumbranceEffects(this.parent);
     }
 

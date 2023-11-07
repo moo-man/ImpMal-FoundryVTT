@@ -52,9 +52,9 @@ export class TalentModel extends StandardItemModel
         return schema;
     }
 
-    createChecks(data, options, user) 
+    async createChecks(data, options, user) 
     {
-        super.createChecks(data, options, user);
+        await super.createChecks(data, options, user);
         this.handleEffectSelection();
     }
 

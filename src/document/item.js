@@ -23,7 +23,9 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         {
             await this.actor.runScripts("createItem", this);
             await this._handleFactionChoice(data, options);
+            await this._handleConditions(data, options);
         }
+
 
         //_preCreate for effects is where immediate scripts run
         // Effects that come with Items aren't called, so handle them here
@@ -118,6 +120,19 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
             e.updateSource({changes : factionChanges.concat(nonFactionChanges)});
         }
+    }
+
+    // Conditions shouldn't be tied to the item. Add them to the actor independently.
+    async _handleConditions()
+    {
+        let conditions = this.effects.filter(e => e.isCondition);
+
+        // updateSource doesn't seem to work here for some reason: 
+        // this.updateSource({effects : []})
+        this._source.effects = this.effects.filter(e => !e.isCondition).filter(e => e.toObject());
+
+        this.actor?.createEmbeddedDocuments("ActiveEffect", conditions);
+
     }
 
     prepareBaseData() 

@@ -11,7 +11,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         {
             return false;
         }
-        await this.updateSource(this.system.preCreateData(data, options));
+        this.updateSource(await this.system.preCreateData(data, options));
         return allow;
     }
 
@@ -25,14 +25,14 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     async _onUpdate(data, options, user)
     {
         await super._onUpdate(data, options, user);
-        await this.update(this.system.updateChecks(data, options));
+        await this.update(await this.system.updateChecks(data, options));
         await Promise.all(this.runScripts("updateDocument", {data, options, user}));
     }
 
     async _onCreate(data, options, user)
     {
         await super._onCreate(data, options, user);
-        this.system.createChecks(data, options, user);
+        await this.system.createChecks(data, options, user);
     }
 
 
@@ -58,7 +58,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         }
 
         let createData = ImpMalEffect.getCreateData(effectData, overlay);
-        mergeObject(createData.flags, flags);
+        mergeObject(flags, createData.flags);
         createData.origin = origin;
         mergeObject(createData.duration, duration);
 
