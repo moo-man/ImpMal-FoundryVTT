@@ -44,6 +44,11 @@ export default class ImpMalUtility
    */
     static findId(id) 
     {
+        if (!id)
+        {
+            return;
+        }
+        
         if (id.includes("."))
         {
             return fromUuid(id);

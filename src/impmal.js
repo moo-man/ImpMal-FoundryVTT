@@ -59,6 +59,7 @@ import { ItemUse } from "./system/tests/item/item-use";
 import { ImpMalChatMessage } from "./system/chat-message";
 import TalentItemSheet from "./sheet/items/item-talent-sheet";
 import { AvailabilityTest } from "./system/tests/availability/availability-test";
+import ImpMalTables from "./system/tables";
 
 Hooks.once("init", () => 
 {
@@ -124,6 +125,7 @@ Hooks.once("init", () =>
         log : log,
         utility : ImpMalUtility,
         tags : new TagManager(),
+        tables : ImpMalTables,
         testClasses : {
             CharacteristicTest,
             SkillTest,

@@ -119,6 +119,15 @@ const IMPMAL = {
         body : "IMPMAL.Body"
     },
 
+    generalizedHitLocations : {
+        head : "head",
+        leftArm : "arm",
+        rightArm : "arm",
+        leftLeg : "leg",
+        rightLeg : "leg",
+        body : "body"
+    },
+
     availability : {
         "" : "-",
         common : "IMPMAL.Common",
@@ -1763,6 +1772,25 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             {
                 return `Error - Table ${match[0]} not Found`;
             }
+        }
+    },
+    {
+        pattern : /@TableRoll\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : async (match) => 
+        {
+            let values = match[1].split(",");
+            let key = values[0];
+            let formula = values[1];
+
+            const a = document.createElement("a");
+            a.classList.add("table-roll");
+            a.dataset.table = key;
+            if (formula)
+            {
+                a.dataset.formula = formula;
+            }
+            a.innerHTML = `<i class="fa-solid fa-list"></i> ${match[2]}`;
+            return a;
         }
     },
     {

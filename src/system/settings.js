@@ -1,3 +1,5 @@
+import TableSettings from "../apps/table-settings";
+
 export default function registerSettings() 
 {
     game.settings.register("impmal", "systemMigrationVersion", {
@@ -23,5 +25,31 @@ export default function registerSettings()
         config: true,
         type: Boolean,
         default: false
+    });
+
+    game.settings.registerMenu("impmal", "tableSettingsMenu", {
+        name : game.i18n.localize("IMPMAL.TableSettings"),
+        label : game.i18n.localize("IMPMAL.TableSettings"),
+        hint : game.i18n.localize("IMPMAL.TableSettingsHint"),
+        type : TableSettings,
+        restricted : true
+    })  ;
+
+    game.settings.register("impmal", "tableSettings", {
+        name: "IMPMAL.TableSettings",
+        scope: "world",
+        config: false,
+        type: Object,
+        default: {
+            "critarm" : "7PZdfk0TRBPDr0QR",
+            "critleg" : "2GOSTiyV8FH51YD2",
+            "crithead" : "dvsiB3K8ezHI8F7M",
+            "critbody" : "kCP63j7ZWPVquLqW",
+            "critvehicle" : "wyIDvsnkkI18FbJy",
+            "fumble" : "3uBH6hO5EoJUORN9",
+            "perils" : "90WGBoSRiUCOdFVS",
+            "phenomena" : "Syx01tKswPV4oEsz",
+            "talents" : "9SLhM8FOgluaUwvO"
+        }
     });
 }

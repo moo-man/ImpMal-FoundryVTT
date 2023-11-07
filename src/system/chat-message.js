@@ -1,5 +1,6 @@
 import { EditTestForm } from "../apps/edit-test";
 import { AvailabilityDialog } from "../apps/test-dialog/availability-dialog";
+import ImpMalTables from "./tables";
 import { AvailabilityTest } from "./tests/availability/availability-test";
 import ZoneHelpers from "./zone-helpers";
 
@@ -71,6 +72,9 @@ export class ImpMalChatMessage extends ChatMessage
 
     static chatListeners(html)
     {
+
+        ImpMalTables.listeners(html);
+
         html.on("click", ".apply-damage", async ev => 
         {
             let el = $(ev.currentTarget);

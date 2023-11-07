@@ -49,7 +49,7 @@ export class AttackEvaluator extends BaseTestEvaluator
             {
                 critFormula += " + " + this.critModifier;
             }
-            this.tags.critical = `<span class="critical">[[/r ${critFormula}]]{${game.i18n.localize("IMPMAL.Critical")}}</span>`;
+            this.tags.critical = `<a class="table-roll critical" data-table="crit${game.impmal.config.generalizedHitLocations[this.hitLocation]}" data-formula="${critFormula}"><span class="inline-roll">${game.i18n.localize("IMPMAL.Critical")}</span></a>`;
         }
     }
 

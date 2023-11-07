@@ -6,6 +6,7 @@ import { TestDialog } from "../apps/test-dialog/test-dialog";
 import { TraitTestDialog } from "../apps/test-dialog/trait-dialog";
 import { WeaponTestDialog } from "../apps/test-dialog/weapon-dialog";
 import { SocketHandlers } from "../system/socket-handlers";
+import ImpMalTables from "../system/tables";
 import { BaseTest } from "../system/tests/base/base-test";
 import { CharacteristicTest } from "../system/tests/characteristic/characteristic-test";
 import { ItemUse } from "../system/tests/item/item-use";
@@ -55,15 +56,16 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         // Not sure I like this here but it will do for now
         // Warp State = 2 means you just roll on the Perils table
         // Warp State = 1 is handled in postRoll() of a skill test
-        if (options?.other?.warp == 2)
+        if (options?.context?.warp == 2)
         {
-            return new Roll(`1d100 + ${10 * (this.system.warp.charge - this.system.warp.threshold)}`).roll({async: true}).then(roll =>
-            {
-                roll.toMessage({speaker : ChatMessage.getSpeaker(this), flavor : game.i18n.localize("IMPMAL.PerilsOfTheWarp")});
-                this.update({"system.warp.charge" : 0});
-            });
+            let formula = `1d100 + ${10 * (this.system.warp.charge - this.system.warp.threshold)}`;
+            ImpMalTables.rollTable("perils", formula);
+            this.update({"system.warp.charge" : 0});
         }
-        return this._setupTest(SkillTestDialog, SkillTest, {itemId, name, key}, options, roll);
+        else 
+        {
+            return this._setupTest(SkillTestDialog, SkillTest, {itemId, name, key}, options, roll);
+        }
     }
 
     setupWeaponTest(id, options={}, roll=true)

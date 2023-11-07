@@ -357,12 +357,12 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 
     _onWarpClick()
     {
-        this.actor.setupSkillTest({key : "psychic"}, {other : {warp: this.actor.system.warp.state}});
+        this.actor.setupSkillTest({key : "psychic"}, {context : {warp: this.actor.system.warp.state}});
     }
 
     _onPurgeClick()
     {
-        this.actor.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {other : {purge: true},  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
+        this.actor.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {context : {purge: true},  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
     }
 
     _onHoverInAttacker() 
