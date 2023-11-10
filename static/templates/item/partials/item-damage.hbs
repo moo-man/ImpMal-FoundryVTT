@@ -11,8 +11,10 @@
                 {{/each}}
             {{/select}}
         </select>
-        <input type="checkbox" name="system.damage.SL" {{checked system.damage.SL}}>
-        <label class="{{#unless system.damage.SL}}inactive{{/unless}}">+SL</label>
+        {{#unless hideSL}}
+            <input type="checkbox" name="system.damage.SL" {{checked system.damage.SL}}>
+            <label class="{{#unless system.damage.SL}}inactive{{/unless}}">+SL</label>
+        {{/unless}}
     </div>
 
 </div>

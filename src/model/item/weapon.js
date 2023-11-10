@@ -70,6 +70,7 @@ export class WeaponModel extends EquippableItemModel
         }
         this.mods.prepareMods(this.parent);
         this.traits.compute();
+        this.damage.SL = true;
         this.specialisation = game.impmal.config[`${this.attackType}Specs`][this.spec];
         this.computeEquipped();
 

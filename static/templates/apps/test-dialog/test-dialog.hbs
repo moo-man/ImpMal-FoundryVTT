@@ -2,19 +2,19 @@
     <div class="dialog-sections">
 
         <div class="dialog-fields">
-            <div class="form-group">
+            <div class="form-group" {{#if tooltips.modifier}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.modifier}}"{{/if}}>
                 <label>{{localize "IMPMAL.Modifier"}}</label>
                 <div class="form-fields">
                     <input type="number" value="{{fields.modifier}}" name="modifier">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" {{#if tooltips.SL}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.SL}}"{{/if}}>
                 <label>{{localize "IMPMAL.SL"}}</label>
                 <div class="form-fields">
                     <input type="number" value="{{fields.SL}}" name="SL">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" {{#if tooltips.difficulty}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.difficulty}}"{{/if}}>
                 <label>{{localize "IMPMAL.Difficulty"}}</label>
                 <div class="form-fields">
                     <select name="difficulty">
@@ -31,7 +31,7 @@
             <div class="adv-dis">
                 <div>
                     <input type="radio" name="state" value="adv" {{checked (eq fields.state "adv" )}}>
-                    <div class="state-label">
+                    <div class="state-label" {{#if tooltips.advantage}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.advantage}}"{{/if}}>
                         <label>{{localize "IMPMAL.Advantage"}}</label>
                         <span class="state-value">{{advCount}}</span>
                     </div>
@@ -44,7 +44,7 @@
                 </div>
                 <div>
                     <input type="radio" name="state" value="dis" {{checked (eq fields.state "dis" )}}>
-                    <div class="state-label">
+                    <div class="state-label" {{#if tooltips.disadvantage}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.disadvantage}}"{{/if}}>
                         <label>{{localize "IMPMAL.Disadvantage"}}</label>
                         <span class="state-value">{{disCount}}</span>
                     </div>

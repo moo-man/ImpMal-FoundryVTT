@@ -32,31 +32,37 @@ export class AttackDialog extends SkillTestDialog
         if (this.fields.hitLocation != "roll")
         {
             this.disCount++;
+            this.tooltips.addDisadvantage(1, "Targeting Location");
         }
 
         if (this.fields.rapidFire)
         {
             this.advCount++;
+            this.tooltips.addAdvantage(1, "Rapid Fire");
         }
 
         if (this.fields.burst)
         {
             this.fields.SL++;
+            this.tooltips.addSL(1, "Burst");
         }
 
         if (this.traits.has("shoddy"))
         {
             this.fields.SL--;
+            this.tooltips.addSL(-1, "Shoddy");
         }
 
         if (this.traits.has("defensive") && this.actor.defendingAgainst)
         {
             this.advCount++;
+            this.tooltips.addAdvantage(1, "Defensive");
         }
 
         if (this.data.context.twf)
         {
             this.disCount++;
+            this.tooltips.addDisadvantage(1, "Two Weapon Fighting");
         }
     }
 

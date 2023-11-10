@@ -13,6 +13,7 @@ export class WeaponTestDialog extends AttackDialog
         if (this.data.weapon.system.equipped.offhand)
         {
             this.disCount++;
+            this.tooltips.addDisadvantage(1, "Offhand");
         }
     
     }

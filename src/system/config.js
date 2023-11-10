@@ -1076,19 +1076,6 @@ const IMPMAL = {
             name: "IMPMAL.ConditionProne",
             flags : {
                 impmal : {
-                    applicationData : {
-                        options : {
-                            avoidTest : {
-                                value : "custom",
-                                manual : true,
-                                prevention: false,
-                                skill : {
-                                    key : "reflexes",
-                                    specialisation : "balance"
-                                }
-                            }
-                        }
-                    },
                     scriptData: [
                         {
                             label: "Disadvantage on Melee Tests",
@@ -1137,19 +1124,6 @@ const IMPMAL = {
             flags : {
                 impmal : {
                     type : "minor",
-                    applicationData : {
-                        options : {
-                            avoidTest : {
-                                value : "custom",
-                                manual : true,
-                                prevention: false,
-                                skill : {
-                                    key : "athletics",
-                                    specialisation : "might"
-                                }
-                            }
-                        }
-                    },
                     scriptData: [
                         {
                             label: "Disadvantage on Movement tests",

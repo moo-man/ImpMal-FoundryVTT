@@ -1,4 +1,5 @@
 import log from "../../system/logger";
+import { DialogTooltips } from "./tooltips";
 
 export class TestDialog extends Application
 {
@@ -38,6 +39,7 @@ export class TestDialog extends Application
         this.data = data;
         this.fields = mergeObject(this._defaultFields(),fields);
         this.userEntry = foundry.utils.deepClone(this.fields);
+        this.tooltips = new DialogTooltips();
 
         // Keep count of sources of advantage and disadvantage
         this.advCount = 0;
@@ -67,9 +69,15 @@ export class TestDialog extends Application
         this.advCount = 0;
         this.disCount = 0;
 
-        
+        this.tooltips.clear();
+
         // Reset values so they don't accumulate 
+        
         mergeObject(this.fields, this.userEntry);
+
+        // calling tooltips.start/finish between the merge object caused issues
+        this.tooltips.addModifier(this.userEntry.modifier, "User Entry");
+        this.tooltips.addSL(this.userEntry.SL, "User Entry");
 
         // For some reason cloning the scripts doesn't prevent isActive and isHidden from persisisting
         // So for now, just reset them manually
@@ -91,6 +99,7 @@ export class TestDialog extends Application
             fields : mergeObject(this.fields, {state}),
             advCount : this.advCount,
             disCount : this.disCount,
+            tooltips : this.tooltips,
             subTemplate : await this.getFieldsTemplate()
         };
     }
@@ -149,13 +158,17 @@ export class TestDialog extends Application
 
         else if (this.advCount > this.disCount && this.advCount > 0)
         {
+            this.tooltips.start(this);
             this.fields.modifier += 10 * ((this.advCount - 1) - this.disCount);
+            this.tooltips.finish(this, "Excess Advantage");
             return "adv";
         }
 
         else if (this.disCount > this.advCount && this.disCount > 0)
         {
+            this.tooltips.start(this);
             this.fields.modifier -= 10 * ((this.disCount - 1) - this.advCount);
+            this.tooltips.finish(this, "Excess Disadvantage");
             return "dis";
 
         }
@@ -181,7 +194,9 @@ export class TestDialog extends Application
         {
             if (script.isActive)
             {
+                this.tooltips.start(this);
                 await script.execute(this);
+                this.tooltips.finish(this, script.label);
             }
         }
     }

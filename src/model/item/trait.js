@@ -22,6 +22,7 @@ export class TraitModel extends StandardItemModel
     computeBase() 
     {
         super.computeBase();
+        this.attack.damage.SL = true;
         this.attack.traits.compute();
     }
 
