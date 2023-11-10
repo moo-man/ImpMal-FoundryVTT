@@ -53,6 +53,11 @@ export class AttackDialog extends SkillTestDialog
         {
             this.advCount++;
         }
+
+        if (this.data.context.twf)
+        {
+            this.disCount++;
+        }
     }
 
     get showTraits() 

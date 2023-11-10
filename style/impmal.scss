@@ -130,3 +130,19 @@
         }
     }
 }
+
+blockquote.foundry-note {
+    border-left: none;
+    font-style: normal;
+    border-radius: 20px;
+    padding: 5px;
+    background: linear-gradient(rgba(255, 143, 32, 0.76) 0%, rgba(255, 77, 30, 0.75) 100%);
+    box-shadow: 0 0 7px black;
+    font-style: normal;
+  
+    &::before {
+        content: url(../../../icons/vtt.png);
+        float: left;
+        margin-right: 5px;
+      }
+  }

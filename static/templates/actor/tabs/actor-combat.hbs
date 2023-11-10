@@ -54,6 +54,9 @@
     {{#each (config "actions")}}
         <button type="button" class="action" data-action="{{@key}}">{{localize this.label}}</button>
     {{/each}}
+    {{#if canUseTWF}}
+        <button type="button" class="action" data-action="twf">{{localize "IMPMAL.TwoWeaponFighting"}}</button>
+    {{/if}}
 </div>
 
 <section class="list {{#unless items.equipped.melee.length}}inactive{{/unless}}">

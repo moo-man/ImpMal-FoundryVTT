@@ -398,6 +398,12 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     {
         let actionData = game.impmal.config.actions[action];
         let effectAdded = false; // Flag effect being added so scrolling text doesn't overlap
+
+        if (action == "twf")
+        {
+            return this.useTWF();
+        }
+
         if (actionData.execute)
         {
             actionData.execute(this);
@@ -411,6 +417,30 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             this.setupTestFromData(actionData.test, {title :{ append : ` – ${actionData.label}`}});
         }
         this.update({"system.combat.action" : action}, {showActionText : !effectAdded});
+    }
+
+    async useTWF()
+    {
+        let weapons = [];
+        if (this.type == "character")
+        {
+            weapons = [this.system.hands.left.document, this.system.hands.right.document];
+        }
+        else if (this.type == "npc")
+        {
+            equipped = this.itemCategories.weapon.filter(i => i.system.isEquipped);
+            if (equipped.length == 2)
+            {
+                weapons = equipped;
+            }
+            else 
+            {
+                // dialog to select weapons
+            }
+        }
+
+        await this.setupWeaponTest(weapons[0].id, {context : {twf : true}});
+        await this.setupWeaponTest(weapons[1].id, {context : {twf : true}});
     }
 
     // Handles applying effects to this actor, ensuring that the owner is the one to do so

@@ -149,12 +149,15 @@ export class TestDialog extends Application
 
         else if (this.advCount > this.disCount && this.advCount > 0)
         {
+            this.fields.modifier += 10 * ((this.advCount - 1) - this.disCount);
             return "adv";
         }
 
         else if (this.disCount > this.advCount && this.disCount > 0)
         {
+            this.fields.modifier -= 10 * ((this.disCount - 1) - this.advCount);
             return "dis";
+
         }
 
         else 

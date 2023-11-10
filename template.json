@@ -497,7 +497,10 @@
       },
       "category" : "character",
       "patron": {
-        "table": {
+        "boonTable": {
+          "id": ""
+        },
+        "liabilityTable": {
           "id": ""
         },
         "boon": {

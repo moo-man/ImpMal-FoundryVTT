@@ -15,7 +15,8 @@ export class DutyModel extends DualItemModel
         schema.faction = new fields.EmbeddedDataField(DeferredDocumentModel);
         schema.category = new fields.StringField({initial : "character"});
         mergeObject(schema.patron.fields, {
-            table : new fields.EmbeddedDataField(DeferredDocumentModel),
+            boonTable : new fields.EmbeddedDataField(DeferredDocumentModel),
+            liabilityTable : new fields.EmbeddedDataField(DeferredDocumentModel),
             boon : new fields.EmbeddedDataField(DeferredDocumentModel),
             influence : new fields.EmbeddedDataField(ItemInfluenceModel),
         });

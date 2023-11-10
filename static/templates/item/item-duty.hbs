@@ -30,10 +30,16 @@
                 {{> systems/impmal/templates/item/partials/item-patron-notes.hbs}}
             </div>
             <div class="tab details" data-tab="details-patron">
-                {{> systems/impmal/templates/item/partials/influence.hbs factions=system.patron.influence.factions path="system.patron.influence" showNotes=false}}
 
-                <hr> 
-                
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.Faction"}}</label>
+                    <div class="form-fields">
+                        <div class="compact-list">
+                            <a data-id="{{system.patron.faction.id}}">{{system.faction.name}}</a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Boon"}}</label>
                     <div class="form-fields">
@@ -42,6 +48,29 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.TableBoon"}}</label>
+                    <div class="form-fields">
+                        <div class="compact-list" data-path="system.patron.boonTable">
+                            <a data-id="{{system.patron.boonTable.id}}">{{system.patron.boonTable.name}}</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.TableLiability"}}</label>
+                    <div class="form-fields">
+                        <div class="compact-list" data-path="system.patron.liabilityTable">
+                            <a data-id="{{system.patron.liabilityTable.id}}">{{system.patron.liabilityTable.name}}</a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr> 
+
+                {{> systems/impmal/templates/item/partials/influence.hbs factions=system.patron.influence.factions path="system.patron.influence" showNotes=false}}
+
             </div>
             <div class="tab notes-tab" data-tab="notes-character">
                 {{> systems/impmal/templates/item/partials/item-character-notes.hbs}}

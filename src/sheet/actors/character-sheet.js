@@ -34,6 +34,15 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         return buttons;
     }
 
+    async getData()
+    {
+        let data = await super.getData();
+        let hands = this.actor.system.hands;
+        // If holding two different weapons, can use TWF
+        data.canUseTWF = (hands.left.document && hands.right.document && hands.left.id != hands.right.id);
+        return data;
+    }
+
     async _onDrop(ev)
     {
         let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
