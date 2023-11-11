@@ -119,7 +119,10 @@ export class DialogTooltips
 
     _addTooltip(type, value, label)
     {
-        this[`_${type}`].push({value, label});
+        if (value && label)
+        {
+            this[`_${type}`].push({value, label});
+        }
     }
 
     _computeDiff(label)

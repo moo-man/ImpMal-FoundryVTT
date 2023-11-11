@@ -94,6 +94,18 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         for (let loc in this.hitLocations)
         {
             this.hitLocations[loc].armour += this.armourModifier; // TODO: Add active effect to source list (so it's displayed in the hit loc section)
+
+            // Don't like this but whatever
+            this.parent.parent.appliedEffects.forEach(e => 
+            {
+                e.changes.forEach(c => 
+                {
+                    if ([`system.combat.hitLocations.${loc}.armour`, `system.combat.armourModifier`].includes(c.key))
+                    {
+                        this.hitLocations[loc].sources.push({name : e.name, value : c.value});
+                    }
+                });
+            });
         }
         
         let protectionItems = items.protection.filter(i => i.system.isEquipped);
