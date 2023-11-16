@@ -1,3 +1,4 @@
+import DocumentChoice from "../apps/document-choice";
 import { ImpMalEffect } from "../document/effect";
 import { SocketHandlers } from "./socket-handlers";
 
@@ -286,31 +287,18 @@ export default class ZoneHelpers
         }
 
         // Zone must have Text
-        let zones = canvas.scene.drawings.contents.filter(d => d.text);
+        let zones = canvas.scene.drawings.contents.filter(d => d.text).map(d => 
+        {
+            return {
+                name : d.text,
+                id : d.id
+            };
+        });
 
-        new Dialog({
-            title : "Choose Zone",
-            content : `
-            <p>Pick the Zone you wish to apply to. A Drawing must have Text to be selected.</p>
-            <select>
-            <option value=""></option>
-            ${zones.map(zone => `<option value=${zone.id}>${zone.text}</option>`)}
-            </select>`,
-            buttons : {
-                apply : {
-                    label : "Apply",
-                    callback : (dlg) => 
-                    {
-                        let select = dlg.find("select")[0];
-                        let id = select.value;
-                        if (id)
-                        {
-                            this.applyEffectToZone(effectUuids, messageId, canvas.scene.drawings.get(id));
-                        }
-                    }
-                }
-            }
-        }).render(true);
+        DocumentChoice.create(zones, 1, {text : game.i18n.localize("IMPMAL.PickZone")}).then(choices => 
+        {
+            this.applyEffectToZone(effectUuids, messageId, canvas.scene.drawings.get(choices[0].id));
+        });
     }
 
     /**

@@ -67,7 +67,6 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             vehicle : data.system.vehicle?.itemCategories.weapon
         };
 
-
         return sheetItems;
     }
 
@@ -336,7 +335,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         let choice;
         if (specialisations.length)
         {
-            choice = await DocumentChoice.create(specialisations);
+            choice = await DocumentChoice.create(specialisations, 1, {text : game.i18n.localize("IMPMAL.ChooseSpecialisation")});
         }
 
         if (choice[0])

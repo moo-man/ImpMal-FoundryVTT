@@ -14,36 +14,20 @@ export default class DutyItemSheet extends BackgroundItemSheet
         this.item.update({[`system.patron.boon`] : this.item.system.patron.boon.set(item)});
     }
 
-
     _onDropItemFaction(ev, item)
     {
         this.item.update({"system.faction" : this.item.system.faction.set(item)});
     }
-    async _onDrop(ev)
+
+    _onDropTable(ev, table)
     {
-        let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-        if (dropData.type == "RollTable")
+        if (ev.target.dataset.path)
         {
-            let table = await RollTable.implementation.fromDropData(dropData);
-            if (table)
-            {
-                if (ev.target.dataset.path)
-                {
-                    this.item.update({[ev.target.dataset.path] : getProperty(this.item, ev.target.dataset.path).set(table)});
-                }
-                else 
-                {
-                    ui.notifications.error(game.i18n.localize("IMPMAL.ErrorDutyTableDrop"));
-                }
-            }
-            else 
-            {
-                super._onDrop(ev);
-            }
+            this.item.update({[ev.target.dataset.path] : getProperty(this.item, ev.target.dataset.path).set(table)});
         }
-        else
+        else 
         {
-            super._onDrop(ev);
+            ui.notifications.error(game.i18n.localize("IMPMAL.ErrorDutyTableDrop"));
         }
     }
 

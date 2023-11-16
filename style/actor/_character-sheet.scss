@@ -92,16 +92,16 @@
                 width: 100%;
                 > .group {
                     margin: 0px 5px;
-                    text-align: center;
                     display:flex;
                     flex-direction: column;
                     flex: 1;
-                    label {
-                        border-top: 1px solid black;
-                    }
-                    > div 
-                    {
-                        min-height: 17px; // If no text is present, keep height the same as if there were
+                    border : 1px solid;
+                    height: 70%;
+                    div {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 70%
                     }
                 }
             }

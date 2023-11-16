@@ -116,7 +116,7 @@ export class ImpMalChatMessage extends ChatMessage
                     ? Array.from(game.user.targets).map(i => i.actor) 
                     : test.context.targets.map(i => i.actor);
                 
-                if (targetActors.length == 0)
+                if (targetActors.length == 0 || test.item?.system?.target?.slugify() == "self") // Self powers should only target self
                 {
                     targetActors = [test.actor];
                 }

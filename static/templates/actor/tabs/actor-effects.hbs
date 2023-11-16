@@ -1,4 +1,4 @@
-<div class="conditions">
+{{!-- <div class="conditions">
     <div class="flexrow">
         {{#each conditions}}
             <div class="condition">
@@ -15,172 +15,197 @@
             </div>
         {{/each}}
     </div>
-</div>
+</div> --}}
 
-<section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.TemporaryEffects"}}</div>
-        <div></div>
-        <div>{{localize "IMPMAL.Source"}}</div>
-        <div class="list-controls">
-            <a class="list-create" data-type="effect" data-category="temporary"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
-    <div class="list-content">
-        {{#each effects.active}}
-            <div class="list-item" data-uuid="{{this.uuid}}">
-                <div class="list-row">
-                    <div class="list-name">
-                        <img src="{{this.icon}}">
-                        <a class="list-edit">{{this.name}}</a>
-                    </div>
-                    {{#if this.applicationData.options.avoidTest.manual}}
-                        <button class="resist-effect">Resist</button>
-                    {{/if}}
-                    <div>
-                        {{#if (eq this.actor.type "patron")}}
-                            <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
-                                    class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
-                        {{else if this.item}}
-                            <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
-                                    class="fas fa-suitcase"></i>{{this.source}}</a>
-                        {{else if this.flags.impmal.fromZone}}
-                            <i class="fa-solid fa-game-board-simple"></i>{{this.source}}
-                        {{else}}
-                            {{this.source}}
-                        {{/if}}
-                    </div>
-                    <div class="list-controls">
-                        <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
-                        <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
-                    </div>
-                    {{#if this.manualScripts.length}}
-                        <div class="manual-scripts">
-                            {{#each this.manualScripts}}
-                                <a class="trigger-script" data-index="{{@key}}">
-                                    <i class="fa-solid fa-code"></i>
-                                    {{this.label}}
-                                </a>
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                </div>
-            </div>
-        {{/each}}
-    </div>
-</section>
+<div class="flexrow">
 
-{{#if items.corruption.length}}
-    <section class="list">
-        <header class="list-row">
-            <div class="list-name">{{localize "IMPMAL.Corruption"}}</div>
-            <div class="list-controls">
-                <a class="list-create" data-type="corruption"><i class="fa-solid fa-plus"></i></a>
-            </div>
-        </header>
-        <div class="list-content">
-            {{#each items.corruption}}
-                <div class="list-item" data-id="{{this.id}}" data-collection="items">
-                    <div class="list-row">
-                        <div class="list-name list-edit">
-                            <img src="{{this.img}}">
-                            <a>{{this.name}}</a>
-                        </div>
-                        <div class="list-controls">
-                            <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                            <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
-                        </div>
+    <div class="conditions">
+            {{#each conditions}}
+                <div class="condition">
+                    <label>{{this.name}}</label>
+                    <div class="pips">
+                        {{#each this.pips}}
+                            <div class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}"
+                                data-key="{{../this.id}}">
+
+                            </div>
+                        {{/each}}
                     </div>
                 </div>
             {{/each}}
-        </div>
-    </section>
-{{/if}}
+    </div>
 
-<section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.PassiveEffects"}}</div>
-        <div>{{localize "IMPMAL.Source"}}</div>
-        <div class="list-controls">
-            <a class="list-create" data-type="effect" data-category="passive"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
-    <div class="list-content">
-        {{#each effects.passive}}
-            <div class="list-item" data-uuid="{{this.uuid}}">
-                <div class="list-row">
-                    <div class="list-name">
-                        <img src="{{this.icon}}">
-                        <a class="list-edit">{{this.name}}</a>
+    <div>
+
+        <section class="list">
+            <header class="list-row">
+                <div class="list-name">{{localize "IMPMAL.TemporaryEffects"}}</div>
+                <div></div>
+                <div>{{localize "IMPMAL.Source"}}</div>
+                <div class="list-controls">
+                    <a class="list-create" data-type="effect" data-category="temporary"><i
+                            class="fa-solid fa-plus"></i></a>
+                </div>
+            </header>
+            <div class="list-content">
+                {{#each effects.active}}
+                    <div class="list-item" data-uuid="{{this.uuid}}">
+                        <div class="list-row">
+                            <div class="list-name">
+                                <img src="{{this.icon}}">
+                                <a class="list-edit">{{this.name}}</a>
+                            </div>
+                            {{#if this.applicationData.options.avoidTest.manual}}
+                                <button class="resist-effect">Resist</button>
+                            {{/if}}
+                            <div>
+                                {{#if (eq this.actor.type "patron")}}
+                                    <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
+                                            class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                                {{else if this.item}}
+                                    <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
+                                            class="fas fa-suitcase"></i>{{this.source}}</a>
+                                {{else if this.flags.impmal.fromZone}}
+                                    <i class="fa-solid fa-game-board-simple"></i>{{this.source}}
+                                {{else}}
+                                    {{this.source}}
+                                {{/if}}
+                            </div>
+                            <div class="list-controls">
+                                <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
+                                <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                            </div>
+                            {{#if this.manualScripts.length}}
+                                <div class="manual-scripts">
+                                    {{#each this.manualScripts}}
+                                        <a class="trigger-script" data-index="{{@key}}">
+                                            <i class="fa-solid fa-code"></i>
+                                            {{this.label}}
+                                        </a>
+                                    {{/each}}
+                                </div>
+                            {{/if}}
+                        </div>
                     </div>
-                    <div>
-                        {{#if (eq this.actor.type "patron")}}
-                            <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
-                                    class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
-                        {{else if this.item}}
-                            <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
-                                    class="fas fa-suitcase"></i>{{this.source}}</a>
-                        {{else if this.flags.impmal.fromZone}}
-                            {{this.source}}
-                        {{else}}
-                            {{this.source}}
+                {{/each}}
+            </div>
+        </section>
+
+        {{#if items.corruption.length}}
+            <section class="list">
+                <header class="list-row">
+                    <div class="list-name">{{localize "IMPMAL.Corruption"}}</div>
+                    <div class="list-controls">
+                        <a class="list-create" data-type="corruption"><i class="fa-solid fa-plus"></i></a>
+                    </div>
+                </header>
+                <div class="list-content">
+                    {{#each items.corruption}}
+                        <div class="list-item" data-id="{{this.id}}" data-collection="items">
+                            <div class="list-row">
+                                <div class="list-name list-edit">
+                                    <img src="{{this.img}}">
+                                    <a>{{this.name}}</a>
+                                </div>
+                                <div class="list-controls">
+                                    <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
+                                    <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </section>
+        {{/if}}
+
+        <section class="list">
+            <header class="list-row">
+                <div class="list-name">{{localize "IMPMAL.PassiveEffects"}}</div>
+                <div>{{localize "IMPMAL.Source"}}</div>
+                <div class="list-controls">
+                    <a class="list-create" data-type="effect" data-category="passive"><i
+                            class="fa-solid fa-plus"></i></a>
+                </div>
+            </header>
+            <div class="list-content">
+                {{#each effects.passive}}
+                    <div class="list-item" data-uuid="{{this.uuid}}">
+                        <div class="list-row">
+                            <div class="list-name">
+                                <img src="{{this.icon}}">
+                                <a class="list-edit">{{this.name}}</a>
+                            </div>
+                            <div>
+                                {{#if (eq this.actor.type "patron")}}
+                                    <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
+                                            class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                                {{else if this.item}}
+                                    <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
+                                            class="fas fa-suitcase"></i>{{this.source}}</a>
+                                {{else if this.flags.impmal.fromZone}}
+                                    {{this.source}}
+                                {{else}}
+                                    {{this.source}}
+                                {{/if}}
+                            </div>
+                            <div class="list-controls">
+                                <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
+                                <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                            </div>
+                        </div>
+                        {{#if this.manualScripts.length}}
+                            <div class="manual-scripts">
+                                {{#each this.manualScripts}}
+                                    <a class="trigger-script" data-index="{{@key}}">
+                                        <i class="fa-solid fa-code"></i>
+                                        {{this.label}}
+                                    </a>
+                                {{/each}}
+                            </div>
                         {{/if}}
                     </div>
-                    <div class="list-controls">
-                        <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
-                        <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
-                    </div>
-                </div>
-                {{#if this.manualScripts.length}}
-                    <div class="manual-scripts">
-                        {{#each this.manualScripts}}
-                            <a class="trigger-script" data-index="{{@key}}">
-                                <i class="fa-solid fa-code"></i>
-                                {{this.label}}
-                            </a>
-                        {{/each}}
-                    </div>
-                {{/if}}
+                {{/each}}
             </div>
-        {{/each}}
-    </div>
-</section>
+        </section>
 
-<section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.DisabledEffects"}}</div>
-        <div>{{localize "IMPMAL.Source"}}</div>
-        <div class="list-controls">
-            <a class="list-create" data-type="effect" data-category="disabled"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
-    <div class="list-content inactive">
-        {{#each effects.disabled}}
-            <div class="list-item" data-uuid="{{this.uuid}}">
-                <div class="list-row">
-                    <div class="list-name">
-                        <img src="{{this.icon}}">
-                        <a class="list-edit">{{this.name}}</a>
-                    </div>
-                    <div>
-                        {{#if (eq this.actor.type "patron")}}
-                            <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
-                                    class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
-                        {{else if this.item}}
-                            <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
-                                    class="fas fa-suitcase"></i>{{this.source}}</a>
-                        {{else if this.flags.impmal.fromZone}}
-                            {{this.source}}
-                        {{else}}
-                            {{this.source}}
-                        {{/if}}
-                    </div>
-                    <div class="list-controls">
-                        <a class="list-toggle"><i class="fa-regular fa-circle"></i></a>
-                        <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
-                    </div>
+        <section class="list">
+            <header class="list-row">
+                <div class="list-name">{{localize "IMPMAL.DisabledEffects"}}</div>
+                <div>{{localize "IMPMAL.Source"}}</div>
+                <div class="list-controls">
+                    <a class="list-create" data-type="effect" data-category="disabled"><i
+                            class="fa-solid fa-plus"></i></a>
                 </div>
+            </header>
+            <div class="list-content inactive">
+                {{#each effects.disabled}}
+                    <div class="list-item" data-uuid="{{this.uuid}}">
+                        <div class="list-row">
+                            <div class="list-name">
+                                <img src="{{this.icon}}">
+                                <a class="list-edit">{{this.name}}</a>
+                            </div>
+                            <div>
+                                {{#if (eq this.actor.type "patron")}}
+                                    <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
+                                            class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+                                {{else if this.item}}
+                                    <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
+                                            class="fas fa-suitcase"></i>{{this.source}}</a>
+                                {{else if this.flags.impmal.fromZone}}
+                                    {{this.source}}
+                                {{else}}
+                                    {{this.source}}
+                                {{/if}}
+                            </div>
+                            <div class="list-controls">
+                                <a class="list-toggle"><i class="fa-regular fa-circle"></i></a>
+                                <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
             </div>
-        {{/each}}
+        </section>
     </div>
-</section>
+</div>

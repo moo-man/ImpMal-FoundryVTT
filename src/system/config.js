@@ -477,9 +477,15 @@ const IMPMAL = {
         updateCombat  : "IMPMAL.UpdateCombat"
     },
 
-    scriptTriggerOptions : {
-        addItems : "IMPMAL.TriggerOptionAddItems",
-        targeter : "IMPMAL.TriggerOptionTargeter"
+    scriptDialogOptions : {
+        targeter : "",
+        hideScript : "",
+        activateScript : "",
+        submissionScript : ""
+    },
+
+    scriptImmediateOptions : {
+        deleteEffect : ""
     },
 
     asyncTriggers: { 

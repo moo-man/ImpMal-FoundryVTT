@@ -32,8 +32,12 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         await this.handleImmediateScripts();
     }
 
-    async _onDelete()
+    async _onDelete(options, user)
     {
+        if (game.user.id != user)
+        {
+            return;
+        }
         for(let effect of this.effects)
         {
             await effect.deleteCreatedItems();
@@ -42,8 +46,12 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     async _onUpdate(data, options, user)
     {
+        
+        if (game.user.id != user)
+        {
+            return;
+        }
         await super._onUpdate(data, options, user);
-
         // If an owned item is updated, run actor update scripts
         if (this.actor)
         {
@@ -58,6 +66,10 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     async _onCreate(data, options, user)
     {
+        if (game.user.id != user)
+        {
+            return;
+        }
         await super._onCreate(data, options, user);
 
         if (this.actor)
@@ -103,7 +115,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
                 
                 let factionOptions = Object.keys(game.impmal.config.factions).filter(faction => faction.match(regex)).map(i => { return {name : game.impmal.config.factions[i], id : i};});
                 
-                let choices = await DocumentChoice.create(factionOptions, (factions[key] || 0));
+                let choices = await DocumentChoice.create(factionOptions, (factions[key] || 0), {text : "Select a Faction"});
 
                 factions[key] = choices.map(i => i.id);
             }
@@ -266,7 +278,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
     async postItem()
     {
         let summary = await renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", this.system.summaryData());
-        let content = await renderTemplate("systems/impmal/templates/chat/item-post.hbs", {name : this.name, img : this.img, summary});
+        let content = await renderTemplate("systems/impmal/templates/chat/item-post.hbs", {name : this.name, img : this.img, summary, item : this});
         ChatMessage.create({
             content,
             flags: {

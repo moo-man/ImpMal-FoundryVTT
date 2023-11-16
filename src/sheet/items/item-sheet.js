@@ -46,6 +46,18 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
                 super._onDrop(ev);
             }
         }
+        if (dropData.type == "RollTable")
+        {
+            let table = await RollTable.implementation.fromDropData(dropData);
+            if (table)
+            {
+                return this._onDropTable(ev, table);
+            }
+            else 
+            {
+                super._onDrop(ev);
+            }
+        }
         else if (dropData.type == "ActiveEffect")
         {
             let effect = await ActiveEffect.implementation.fromDropData(dropData);
@@ -56,6 +68,16 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
     _onDropItem(ev, item)
     {
         return this[`_onDropItem${item.type[0].toUpperCase() + item.type.substring(1)}`]?.(ev, item);
+    }
+
+    /**
+     * @abstract
+     * @param {Event} ev Triggering Event
+     * @param {RollTable} table 
+     */
+    _onDropTable()
+    {
+
     }
 
     _getHeaderButtons() 

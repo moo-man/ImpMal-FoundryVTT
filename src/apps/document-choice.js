@@ -14,9 +14,9 @@ export default class DocumentChoice extends FormApplication
 
 
 
-    constructor(documents, number=1, resolve)
+    constructor(documents, number=1, resolve, options)
     {
-        super({});
+        super({}, options);
         this.documents = documents;
         this.number = number;
         this.resolve = resolve;
@@ -27,6 +27,7 @@ export default class DocumentChoice extends FormApplication
         let data = await super.getData();
         data.documents = this.documents;
         data.number = this.number;
+        data.text = this.options.text;
         return data;
     }
 
@@ -37,7 +38,7 @@ export default class DocumentChoice extends FormApplication
         return chosen;
     }
 
-    static create(documents, number)
+    static create(documents, number, {text})
     {
 
         if (typeof documents == "object" && !Array.isArray(documents) && !(documents instanceof Collection))
@@ -55,7 +56,7 @@ export default class DocumentChoice extends FormApplication
         }
         return new Promise(resolve => 
         {
-            new this(documents, number, resolve).render(true);
+            new this(documents, number, resolve, {text}).render(true);
         });
     }
 

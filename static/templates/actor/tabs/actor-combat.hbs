@@ -304,7 +304,7 @@
                 <div class="location-details collapsed">
                     {{#each this.items}}
                         <div class="protection-item" data-id="{{this.id}}">
-                            <label>{{this.name}} </label>
+                            <label>– {{this.name}} </label>
                             <a class="damage-armour {{#if (lookup this.system.damage ../this.key)}}damaged{{/if}}">{{calc this.system.armour "-" (lookup this.system.damage ../this.key)}}{{#if (lookup this.system.rended ../this.key)}}R{{/if}}</a>
                             {{!-- <div class="traits">{{this.system.traits.displayString}}</div> --}}
                         </div>
@@ -318,12 +318,12 @@
                     {{/each}}
                     {{#if this.field}}
                         <div class="protection-item">
-                            <label>{{this.field.name}} ({{this.field.system.protection}})</label>
+                            <label>– {{this.field.name}} ({{this.field.system.protection}})</label>
                         </div>
                     {{/if}}
                     {{#each this.sources}}
                         <div class="protection-item">
-                            <label>{{this.name}} </label>
+                            <label>– {{this.name}} </label>
                             <span>{{this.value}}</span>
                         </div>
                     {{/each}}

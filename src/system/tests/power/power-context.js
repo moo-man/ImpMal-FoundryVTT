@@ -3,10 +3,11 @@ import { SkillTestContext } from "../skill/skill-context";
 
 export class PowerTestContext extends SkillTestContext
 {
-    powerId = this.powerId;
-    push = this.push;
+    // powerId = this.powerId;
+    // push = this.push;
+    additionalWarp = this.additionalWarp || 0;
     warpAdded = this.warpAdded || 0;
-    pushRoll = this.pushRoll; // Undefined if not applied, if number, it's been applied
+    // pushRoll = this.pushRoll; // Undefined if not applied, if number, it's been applied
 
     static fromData(data) 
     {

@@ -25,7 +25,7 @@ export class ImpMalEffect extends ActiveEffect
         preventCreation = await this._handleFilter(data, options, user);
         if (preventCreation)
         {
-            log(game.i18n.format("IMPMAL.EffectFiltered", {name : this.name}), {force: true, args: this});
+            log(game.i18n.format("IMPMAL.EffectFiltered", {name : this.name, target : this.parent?.name}), {force: true, args: this});
             return false;
         }
         preventCreation = await this._handleConditionCreation(data, options, user);
@@ -482,6 +482,10 @@ export class ImpMalEffect extends ActiveEffect
         return this.getFlag("impmal", "sourceTest");
     }
 
+    get sourceActor() 
+    {
+        return ChatMessage.getSpeakerActor(this.sourceTest.context.speaker);
+    }
 
     get applicationData() 
     {
@@ -553,7 +557,6 @@ export class ImpMalEffect extends ActiveEffect
                 selfZone : false,
                 keep : false,
                 traits : {},
-                equipTransfer : true,
 
                 // Test Properties
                 avoidTest : { 
@@ -572,6 +575,7 @@ export class ImpMalEffect extends ActiveEffect
                 },
 
                 // Other
+                equipTransfer : true,
                 enableConditionScript : "",
                 filter : "",
                 prompt : false,

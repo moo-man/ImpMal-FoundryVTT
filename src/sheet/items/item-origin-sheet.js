@@ -8,6 +8,10 @@ export default class OriginItemSheet extends BackgroundItemSheet
         return this.item.update({"system.equipment.list" : this.item.system.equipment.add({id : item.id})});
     }
 
+    _onDropTable(ev, table)
+    {
+        this.item.update({"system.factionTable" : this.item.system.factionTable.set(table)});
+    }
 
     _onListEdit(ev)
     {

@@ -304,7 +304,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         let damageData = {
             text, 
             woundsGained, 
-            message : message ? ChatMessage.create({content : (text + (critString ? critString : ""))}) : null,
+            message : message ? ChatMessage.create({content : (text + (critString ? critString : "")), speaker : ChatMessage.getSpeaker({actor : this})}) : null,
             modifiers,
             critical : critString,
             excess,
@@ -473,17 +473,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             SocketHandlers.executeOnOwner(this, "applyEffect", {effectUuids, actorUuid : this.uuid, messageId});
         }
     }
-
-    runScripts(trigger, args, {itemEffects=false}={})
-    {
-        let scripts = super.runScripts(trigger, args);
-        if (itemEffects)
-        {
-            scripts = scripts.concat(this.items.map(i => i.runScripts(trigger, args)));
-        }
-        return scripts;
-    }
-
+    
     /**
      * Collect effect scripts being applied to the actor
      * 

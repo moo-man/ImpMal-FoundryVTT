@@ -458,6 +458,10 @@
       "characteristics": {
         "base": "",
         "choices": []
+      },
+      "factionTable" : {
+        "id" : "",
+        "name" : ""
       }
     },
     "faction": {
@@ -498,13 +502,16 @@
       "category" : "character",
       "patron": {
         "boonTable": {
-          "id": ""
+          "id": "",
+          "name": ""
         },
         "liabilityTable": {
-          "id": ""
+          "id": "",
+          "name": ""
         },
         "boon": {
-          "id": ""
+          "id": "",
+          "name": ""
         },
         "influence" : {
           "factions" : {}

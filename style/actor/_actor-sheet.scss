@@ -305,22 +305,40 @@
         flex-direction: column;
         // flex: 0 0 180px;
         flex: 0.5;
+        border: 1px solid black;
+        padding: 5px;
+        margin: 5px;
+
         .location {
+                    
+            &:nth-of-type(even) {   
+                background:rgba(0, 0, 0, 0.1)
+            }
+
+
             display: flex;
-            flex-direction: row;
-            // padding: 3px;   
-            // border-radius: 5px;
-            // border: 1px solid black;
-            // text-align: center;
-            // min-height: 80px;
-            // width: 164px;
-            // margin: 5px;
-            // display: flex;
-            // flex-direction: column;
-            margin: 5px 0px;
+            flex-direction: column;
+            padding: 5px 3px;
             
-            .protection-list {
-                flex: 1;
+            .location-values {
+                display: flex;
+                justify-content: space-between;
+                > * {
+                    flex: 0 0 25px;
+                }
+                label {
+                    flex: 1
+                }
+            }
+
+            .location-details {
+                &.collapsed {
+                    display: none;
+                }
+            }
+
+            .armour-damage {
+                color: darkred;
             }
 
             .range {
@@ -328,6 +346,24 @@
                 opacity: 0.5;
             }
         }
+
+        .protection-item {
+            
+            display: flex;
+            justify-content: space-between;
+            label {
+                margin-left: 10px;
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .damage-armour {
+                color: darkred;
+                flex: 0 0 25px;
+            }
+        }
+
     }
 
     .list .aux-row {
@@ -339,6 +375,13 @@
         display : flex;
         label {
             font-weight: bold;
+            border: 1px solid black;
+            width: 15px;
+            height: 15px;
+            background:rgba(0, 0, 0, 0.1);
+            text-align: center;
+            line-height: 15px;
+            margin-right: 3px;
         }
         .trait-list {
             display: flex;
@@ -363,6 +406,16 @@
     .mag {
         display : flex;
         align-items: center;
+
+        border: 1px solid black;
+        padding: 3px;
+        height: 15px;
+        background:rgba(0, 0, 0, 0.1);
+        text-align: center;
+        line-height: 15px;
+        margin: 0px 3px;
+
+
         margin-right: 10px;
         > * {
             margin-right: 5px;
@@ -451,32 +504,55 @@
         height: 100%;
     }
 
+    .tab.effects {
+        .list-name {
+            flex: 1
+        }
+    }
+
+
     .conditions {
+        flex: 0 0 130px;
+        margin-right: 10px;
+
         .condition {
+            flex: 1;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            flex-direction: row;
+            justify-content: space-between;
             text-align: center;
             align-items: center;
+
+            border: 1px solid black;
+            margin: 3px;
+            padding: 3px;
 
             .pips {
                 display: flex;
                 width: 100%;
-                justify-content: center;
+                justify-content: right;
                 height: 10px;
                 .pip {
-                    border-radius: 10px;
-                    border:  1px solid #5E82AF;
+                    // border-radius: 10px;
+                    border:  1px solid black;
                     cursor: pointer;
-                    width: 20px;
+                    width: 10px;
                     margin: 0px 3px;
                 }
 
                 .pip.filled {
-                    background: #5E82AF;
+                    background: black;
                 }
             }
         }
+    }
+
+
+
+    .trigger-script {
+        border : 1px solid black;
+        border-radius: 5px;
+        background:rgba(0, 0, 0, 0.05)
     }
 
     .defending-against {

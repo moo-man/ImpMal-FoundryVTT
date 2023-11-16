@@ -73,6 +73,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
                 {
                     e._displayScrollingStatus(true);
                 }
+                e.handleImmediateScripts({}, {}, game.user.id); // If a minor condition goes to major, run any immediate conditions for major
             });
         }
         else 
