@@ -129,6 +129,43 @@
             flex: 1
         }
     }
+
+    .conditions {
+        flex: 0 0 130px;
+        margin-right: 10px;
+
+        .condition {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            text-align: center;
+            align-items: center;
+
+            border: 1px solid black;
+            margin: 3px;
+            padding: 3px;
+
+            .pips {
+                display: flex;
+                width: 100%;
+                justify-content: right;
+                height: 10px;
+                .pip {
+                    // border-radius: 10px;
+                    border:  1px solid black;
+                    cursor: pointer;
+                    width: 10px;
+                    margin: 0px 3px;
+                }
+
+                .pip.filled {
+                    background: black;
+                }
+            }
+        }
+    }
+
 }
 
 blockquote.foundry-note {

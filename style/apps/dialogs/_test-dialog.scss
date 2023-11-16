@@ -12,6 +12,7 @@
     .dialog-modifiers {
         flex: 1;
         padding: 10px;
+
         > label {
             display: block;
             text-align: center;
@@ -19,7 +20,8 @@
         }
 
         .modifier {
-            &.active {
+        list-style: none;
+        &.active {
                 text-shadow: 0px 0px 5px skyblue;
             }
         }
@@ -33,6 +35,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;            
+        }
+
+        .state-label {
+            margin: 10px;
+            // padding: 3px;
+            label {
+                margin: 5px 5px;
+            }
         }
     }
 }

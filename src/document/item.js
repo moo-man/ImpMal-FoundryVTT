@@ -189,7 +189,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         let effects = this.applicableEffects.
             filter(effect => 
                 effect.applicationData.type == "document" && 
-                effect.applicationData.options.documentType == "Item");
+                effect.applicationData.documentType == "Item");
 
         let fromActor = this.actor?.getScriptsApplyingToItem(this) || [];
 
@@ -232,13 +232,13 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
     get targetEffects() 
     {
         // "follow" type zone effects should be applied to a token, not the zone
-        return this._getTypedEffects("target").concat(this._getTypedEffects("zone").filter(e => e.applicationData.options.zoneType == "follow" && !e.applicationData.options.selfZone));
+        return this._getTypedEffects("target").concat(this._getTypedEffects("zone").filter(e => e.applicationData.zoneType == "follow" && !e.applicationData.selfZone));
     }
 
     get zoneEffects() 
     {
         // "follow" type zone effects should be applied to a token, not the zone
-        return this._getTypedEffects("zone").filter(e => e.applicationData.options.zoneType != "follow");
+        return this._getTypedEffects("zone").filter(e => e.applicationData.zoneType != "follow");
     }
 
     _getTypedEffects(type)
@@ -254,7 +254,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
     {
         let effects = this.applicableEffects.filter(effect => 
             effect.applicationData.type == "document" && 
-            effect.applicationData.options.documentType == "Actor"); // We're looking for actor because if the immediate script was for the Item, it would've been called when it was created. 
+            effect.applicationData.documentType == "Actor"); // We're looking for actor because if the immediate script was for the Item, it would've been called when it was created. 
 
         for(let e of effects)
         {

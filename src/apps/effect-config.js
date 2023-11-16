@@ -103,7 +103,7 @@ export default class ImpmalActiveEffectConfig extends ActiveEffectConfig
     get zoneTraitsDisplay()
     {
         let traitList = [];
-        let traits = this.object.applicationData.options.traits;
+        let traits = this.object.applicationData.traits;
 
         for(let key in traits)
         {

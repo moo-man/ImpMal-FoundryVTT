@@ -307,7 +307,7 @@ export class WeaponModel extends EquippableItemModel
                 this.traits.remove(ammo.system.removedTraits);
             }
 
-            this._applyEffects(ammo.effects.filter(e => e.applicationData.type == "document" && e.applicationData.options.documentType== "Item" && !e.disabled));
+            this._applyEffects(ammo.effects.filter(e => e.applicationData.type == "document" && e.applicationData.documentType== "Item" && !e.disabled));
         }
     }
 
@@ -356,7 +356,7 @@ export class WeaponModel extends EquippableItemModel
             (this.mods.documents || []).concat(
                 this.ammo.document || [])
                 .reduce((prev, current) => prev.concat(current.effects.contents), []));
-        // .filter(e => e.applicationData.options.documentType == "Item"));
+        // .filter(e => e.applicationData.documentType == "Item"));
     }
 
 

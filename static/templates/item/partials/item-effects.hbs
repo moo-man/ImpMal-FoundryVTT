@@ -1,21 +1,20 @@
+<div class="flexrow">
 
 <div class="conditions">
-    <div class="flexrow">
         {{#each conditions}}
             <div class="condition">
-                <img style="opacity : {{this.opacity}}%" class="{{this.existing.flags.impmal.type}}" src="{{this.icon}}" width="50" height="50">
+                <label>{{this.name}}</label>
                 <div class="pips">
                     {{#each this.pips}}
-                        <div class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}" data-key="{{../this.id}}">
+                        <div class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}"
+                            data-key="{{../this.id}}">
 
                         </div>
                     {{/each}}
                 </div>
             </div>
         {{/each}}
-    </div>
 </div>
-
 
 <section class="list">
     <header class="list-row">
@@ -105,3 +104,4 @@
     </div>
 </section>
 {{/if}}
+</div>

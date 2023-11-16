@@ -100,7 +100,7 @@ export default class ZoneHelpers
             {
             // Designate all zone effects with a flag to easily be distinguished
                 setProperty(effect, "flags.impmal.fromZone", drawing.document.uuid);
-                setProperty(effect, "flags.impmal.applicationData.options.zoneType",  "");
+                setProperty(effect, "flags.impmal.applicationData.zoneType",  "");
                 effect.origin = drawing.document.uuid;
                 return effect;
             });
@@ -112,7 +112,7 @@ export default class ZoneHelpers
     {
         for(let effect of effects)
         {
-            let effectTraits = effect.flags.impmal.applicationData.options?.traits || {};
+            let effectTraits = effect.flags.impmal.applicationData?.traits || {};
 
             for(let key in effectTraits)
             {
@@ -156,7 +156,7 @@ export default class ZoneHelpers
             .filter(t => t)
             .reduce((prev, current) => prev // Reduce them to just their "Follow" zone effects
                 .concat(Array.from(current.allApplicableEffects())
-                    .filter(e => e.applicationData.options.zoneType == "follow")), [])
+                    .filter(e => e.applicationData.zoneType == "follow")), [])
             .map(effect =>                  // Convert these effects to data  
             {
                 let data = effect.toObject();
@@ -215,7 +215,7 @@ export default class ZoneHelpers
             // Note that some effects are denoted as "kept" and are not removed upon leaving the zone
             for(let drawing of left)
             {
-                toRemove = toRemove.concat(currentZoneEffects.filter(effect => effect.flags.impmal.fromZone == drawing.document.uuid && !effect.flags.impmal.applicationData?.options?.keep));
+                toRemove = toRemove.concat(currentZoneEffects.filter(effect => effect.flags.impmal.fromZone == drawing.document.uuid && !effect.flags.impmal.applicationData?.keep));
             }
 
             for(let drawing of entered)
@@ -330,11 +330,11 @@ export default class ZoneHelpers
                 let message = game.messages.get(messageId);
                 let zoneEffect = await ImpMalEffect.create(originalEffect.convertToApplied(), {temporary : true, message : message?.id});
 
-                if (zoneEffect.applicationData.options.zoneType == "tokens")
+                if (zoneEffect.applicationData.zoneType == "tokens")
                 {
                     tokenEffectUuids.push(uuid);
                 }
-                else if (zoneEffect.applicationData.options.zoneType == "zone")
+                else if (zoneEffect.applicationData.zoneType == "zone")
                 {
                     zoneEffects.push(zoneEffect.toObject());
                 }

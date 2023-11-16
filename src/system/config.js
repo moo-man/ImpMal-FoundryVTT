@@ -1266,7 +1266,7 @@ const IMPMAL = {
                         },
                         {
                             "label": "Start Turn",
-                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.options.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
                             "trigger": "startTurn"
                         }
                     ]
@@ -1297,7 +1297,7 @@ const IMPMAL = {
                         },
                         {
                             "label": "Start Turn",
-                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.options.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
                             "trigger": "startTurn"
                         }
                     ]
@@ -1328,7 +1328,7 @@ const IMPMAL = {
                         },
                         {
                             "label": "Start Turn",
-                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.options.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
                             "trigger": "startTurn"
                         }
                     ]

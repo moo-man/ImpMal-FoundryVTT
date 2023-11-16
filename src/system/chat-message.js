@@ -145,7 +145,7 @@ export class ImpMalChatMessage extends ChatMessage
                 actors = canvas.tokens.controlled.map(t => t.actor);
             }
 
-            let effects = (test.item?.targetEffects || []).filter(e => e.applicationData.options.avoidTest?.opposed);
+            let effects = (test.item?.targetEffects || []).filter(e => e.applicationData.avoidTest?.opposed);
 
             actors.forEach(async a => 
             {

@@ -89,7 +89,7 @@ export class ImpMalEffect extends ActiveEffect
             run = true;
         }
         // If effect is child of Item, and Item is what it's applying to
-        else if (this.parent?.documentName == "Item" && this.applicationData.options.documentType == "Item")
+        else if (this.parent?.documentName == "Item" && this.applicationData.documentType == "Item")
         {
             run = true;
         }
@@ -112,7 +112,7 @@ export class ImpMalEffect extends ActiveEffect
 
     async _handleEffectPrevention()
     {
-        if (this.applicationData.options.avoidTest.prevention)
+        if (this.applicationData.avoidTest.prevention)
         {
             return this.resistEffect();
         }
@@ -140,7 +140,7 @@ export class ImpMalEffect extends ActiveEffect
 
     async _handleFollowedEffect(data, options)
     {
-        if (this.parent?.documentName == "Actor" && this.applicationData.options.zoneType == "follow")
+        if (this.parent?.documentName == "Actor" && this.applicationData.zoneType == "follow")
         {
             let drawing = this.parent.currentZone[0];
             if (drawing)
@@ -158,7 +158,7 @@ export class ImpMalEffect extends ActiveEffect
 
     async _handleFollowedEffectDeletion()
     {
-        if (this.parent.documentName == "Actor" && this.applicationData.options.zoneType == "follow")
+        if (this.parent.documentName == "Actor" && this.applicationData.zoneType == "follow")
         {
             let drawing = this.parent.currentZone[0];
             if (drawing)
@@ -181,7 +181,7 @@ export class ImpMalEffect extends ActiveEffect
     async _handleItemApplication()
     {
         let applicationData = this.applicationData;
-        if (applicationData.options.documentType == "Item" && this.parent?.documentName == "Actor")
+        if (applicationData.documentType == "Item" && this.parent?.documentName == "Actor")
         {
             let items = [];
             let filter = this.filterScript;
@@ -193,7 +193,7 @@ export class ImpMalEffect extends ActiveEffect
             }
 
             // If this effect specifies a prompt, create an item dialog prompt to select the items
-            if (applicationData.options.prompt)
+            if (applicationData.prompt)
             {
                 items = await DocumentChoice.create(items, "unlimited");
             }
@@ -212,7 +212,7 @@ export class ImpMalEffect extends ActiveEffect
             return;
         }
 
-        if (applicationData.options.documentType == "Item" && this.parent?.documentName == "Actor")
+        if (applicationData.documentType == "Item" && this.parent?.documentName == "Actor")
         {
             return; // See above, _handleItemApplication
         }
@@ -238,33 +238,33 @@ export class ImpMalEffect extends ActiveEffect
         let applicationData = this.applicationData;
 
         // If no test, cannot be avoided
-        if (applicationData.options.avoidTest.value == "none")
+        if (applicationData.avoidTest.value == "none")
         {
             return false;
         }
 
         let test;
         let options = {title : {append : " - " + this.name}, context: {resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest}};
-        if (applicationData.options.avoidTest.value == "script")
+        if (applicationData.avoidTest.value == "script")
         {
-            let script = new ImpMalScript({label : this.effect + " Avoidance", string : applicationData.options.avoidTest.script}, ImpMalScript.createContext(this));
+            let script = new ImpMalScript({label : this.effect + " Avoidance", string : applicationData.avoidTest.script}, ImpMalScript.createContext(this));
             return await script.execute();
         }
-        else if (applicationData.options.avoidTest.value == "item")
+        else if (applicationData.avoidTest.value == "item")
         {
             test = await this.actor.setupTestFromItem(this.item.uuid, options);
         }
-        else if (applicationData.options.avoidTest.value == "custom")
+        else if (applicationData.avoidTest.value == "custom")
         {
-            test = await this.actor.setupTestFromData(this.applicationData.options.avoidTest, options);
+            test = await this.actor.setupTestFromData(this.applicationData.avoidTest, options);
         }
 
         await test.roll();
 
-        if (!applicationData.options.avoidTest.reversed)
+        if (!applicationData.avoidTest.reversed)
         {
             // If the avoid test is marked as opposed, it has to win, not just succeed
-            if (applicationData.options.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
+            if (applicationData.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
             {
                 return test.result.SL > this.getFlag("impmal", "sourceTest").result?.SL;
             }
@@ -276,7 +276,7 @@ export class ImpMalEffect extends ActiveEffect
         else  // Reversed - Failure removes the effect
         {
             // If the avoid test is marked as opposed, it has to win, not just succeed
-            if (applicationData.options.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
+            if (applicationData.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
             {
                 return test.result.SL < this.getFlag("impmal", "sourceTest").result?.SL;
             }
@@ -309,9 +309,9 @@ export class ImpMalEffect extends ActiveEffect
     {
         super.prepareData();
 
-        if (this.applicationData.options.enableConditionScript && this.actor)
+        if (this.applicationData.enableConditionScript && this.actor)
         {
-            this.conditionScript = new ImpMalScript({string : this.applicationData.options.enableConditionScript, label : `Enable Script for ${this.name}`}, ImpMalScript.createContext(this));
+            this.conditionScript = new ImpMalScript({string : this.applicationData.enableConditionScript, label : `Enable Script for ${this.name}`}, ImpMalScript.createContext(this));
             this.disabled = !this.conditionScript.execute();
         }
 
@@ -328,7 +328,7 @@ export class ImpMalEffect extends ActiveEffect
     {
         let application = this.applicationData;
 
-        let allowed = (application.type == "document" && application.options.documentType == "Actor") || (application.type == "zone" && application.options.selfZone);
+        let allowed = (application.type == "document" && application.documentType == "Actor") || (application.type == "zone" && application.selfZone);
 
         if (this.parent.documentName == "Item")
         {
@@ -351,10 +351,10 @@ export class ImpMalEffect extends ActiveEffect
 
         // When transferred to another actor, effects lose their reference to the item it was in
         // So if a effect pulls its avoid test from the item data, it can't, so place it manually
-        if (this.applicationData.options.avoidTest.value == "item")
+        if (this.applicationData.avoidTest.value == "item")
         {
-            effect.flags.impmal.applicationData.options.avoidTest.value = "custom";
-            mergeObject(effect.flags.impmal.applicationData.options.avoidTest, this.item?.getTestData() || {});
+            effect.flags.impmal.applicationData.avoidTest.value = "custom";
+            mergeObject(effect.flags.impmal.applicationData.avoidTest, this.item?.getTestData() || {});
         }
 
         return effect;
@@ -376,11 +376,11 @@ export class ImpMalEffect extends ActiveEffect
 
     get filterScript()
     {
-        if (this.applicationData.options.filter)
+        if (this.applicationData.filter)
         {
             try 
             {
-                return new ImpMalScript({string : this.applicationData.options.filter, label : `${this.name} Filter`}, ImpMalScript.createContext(this));
+                return new ImpMalScript({string : this.applicationData.filter, label : `${this.name} Filter`}, ImpMalScript.createContext(this));
             }
             catch(e)
             {
@@ -494,23 +494,23 @@ export class ImpMalEffect extends ActiveEffect
         // // Delete non-relevant properties based on application type
         // if (applicationData.type == "document")
         // {
-        //     delete applicationData.options.avoidTest;
-        //     delete applicationData.options.filters;
-        //     delete applicationData.options.prompt;
-        //     delete applicationData.options.consume;
+        //     delete applicationData.avoidTest;
+        //     delete applicationData.filters;
+        //     delete applicationData.prompt;
+        //     delete applicationData.consume;
         // }
 
         // if (applicationData.type == "damage")
         // {
-        //     delete applicationData.options.avoidTest;
+        //     delete applicationData.avoidTest;
 
-        //     if (applicationData.options.documentType == "Actor")
+        //     if (applicationData.documentType == "Actor")
         //     {
-        //         delete applicationData.options.filters;
-        //         delete applicationData.options.prompt;
+        //         delete applicationData.filters;
+        //         delete applicationData.prompt;
         //     }
 
-        //     delete applicationData.options.consume;
+        //     delete applicationData.consume;
         // }
 
         return applicationData;
@@ -549,37 +549,35 @@ export class ImpMalEffect extends ActiveEffect
     {
         return {
             type : "document",
-            options : {
-                documentType : "Actor",
+            documentType : "Actor",
 
-                // Zone Properties
-                zoneType : "zone",
-                selfZone : false,
-                keep : false,
-                traits : {},
+            // Zone Properties
+            zoneType : "zone",
+            selfZone : false,
+            keep : false,
+            traits : {},
 
-                // Test Properties
-                avoidTest : { 
-                    value : "none",
-                    opposed : false,
-                    prevention : true,
-                    reversed : false,
-                    manual : false,
-                    script : "",
-                    difficulty : "",
-                    characteristic : "",
-                    skill : {
-                        key : "",
-                        specialisation : ""
-                    }
-                },
+            // Test Properties
+            avoidTest : { 
+                value : "none",
+                opposed : false,
+                prevention : true,
+                reversed : false,
+                manual : false,
+                script : "",
+                difficulty : "",
+                characteristic : "",
+                skill : {
+                    key : "",
+                    specialisation : ""
+                }
+            },
 
-                // Other
-                equipTransfer : true,
-                enableConditionScript : "",
-                filter : "",
-                prompt : false,
-            }
+            // Other
+            equipTransfer : true,
+            enableConditionScript : "",
+            filter : "",
+            prompt : false,
         };
     }
 }

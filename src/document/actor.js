@@ -557,11 +557,11 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
 
         for ( const effect of this.effects ) 
         {
-            if (effect.applicationData.options.documentType == "Item" && includeItemEffects) // Some effects are intended to modify items, but are placed on the actor for ease of tracking
+            if (effect.applicationData.documentType == "Item" && includeItemEffects) // Some effects are intended to modify items, but are placed on the actor for ease of tracking
             {
                 yield effect;
             }
-            else if (effect.applicationData.options.documentType == "Actor") // Normal effects (default documentType is actor)
+            else if (effect.applicationData.documentType == "Actor") // Normal effects (default documentType is actor)
             {
                 yield effect;
             }
@@ -586,7 +586,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         {
             for(let effect of this.system.patron.document.items.reduce((prev, current) => prev.concat(current.effects.contents), []))
             {
-                if (effect.applicationData.type == "document" && effect.applicationData.options.documentType == "character")
+                if (effect.applicationData.type == "document" && effect.applicationData.documentType == "character")
                 {
                     yield effect;
                 }
