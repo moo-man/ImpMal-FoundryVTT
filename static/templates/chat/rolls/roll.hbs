@@ -50,9 +50,9 @@
 
     {{#if defending}}
         {{#with defending as |attacker|}}
-            <div class="defense">
+            <div class="defense {{#if (eq attacker.result.winner "attacker")}}color-positive attacker{{else}}color-negative defender{{/if}} ">
                 <div class="targeter" data-id="{{attacker.id}}">
-                    <a class="{{attacker.result.winner}} opposed-icon"><i class="fa-solid fa-shield-halved"></i></a>
+                    <a class="opposed-icon"><i class="fa-solid fa-shield-halved"></i></a>
                     <img data-tooltip="{{tokenName attacker.actor}}" src="{{tokenImg attacker.actor}}">
                     <div class="opposed-result {{result.winner}}">
                         <span class="opposedSL">

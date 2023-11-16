@@ -296,7 +296,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         let critString;
         if (critical)
         {
-            critString = ` [[/r 1d10 ${critFormula}]]{Critical ${critFormula}}`;
+            critString = ` <a class="table-roll" data-table="crit${game.impmal.config.generalizedHitLocations[locationKey]}" data-formula="1d10 + ${critFormula}"><i class="fa-solid fa-dice-d10"></i>Critical ${critFormula}</a>`;
         }
 
         let updateData = {"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained};

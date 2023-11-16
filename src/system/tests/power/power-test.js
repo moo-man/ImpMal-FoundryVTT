@@ -110,18 +110,18 @@ export class PowerTest extends SkillTest
 
         if (this.result.critical)
         {
-            tags.push(`<span class="critical" data-tooltip='${game.i18n.localize("IMPMAL.PowerCriticalTooltip")}'>${game.i18n.localize("IMPMAL.Critical")}</span>`);
+            tags.push(`<span class="critical color-positive" data-tooltip='${game.i18n.localize("IMPMAL.PowerCriticalTooltip")}'>${game.i18n.localize("IMPMAL.Critical")}</span>`);
         }
 
         if (this.result.fumble)
         {
-            tags.push(`<span class="fumble" data-tooltip='${game.i18n.localize("IMPMAL.PowerFumbleTooltip")}'>${game.i18n.localize("IMPMAL.Fumble")}</span>`);
+            tags.push(`<a class="table-roll color-negative fumble" data-table="fumble" data-formula="1d10" data-tooltip='${game.i18n.localize("IMPMAL.PowerFumbleTooltip")}'><i class="fa-solid fa-dice-d10"></i>${game.i18n.localize("IMPMAL.Fumble")}</a>`);
         }
 
         // fumble while pushing - perils roll
         if (this.context.push && this.result.fumble)
         {
-            tags.push(`<span class="fumble">[[/r 1d100]]{${game.i18n.localize("IMPMAL.PerilsOfTheWarp")}}</span>`);
+            tags.push(`<a class="table-roll color-negative fumble" data-table="fumble" data-formula="1d10"><i class="fa-solid fa-dice-d10"></i>${game.i18n.localize("IMPMAL.PerilsOfTheWarp")}</a>`);
         }
         return tags;
     }

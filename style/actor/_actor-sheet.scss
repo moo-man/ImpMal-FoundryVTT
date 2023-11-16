@@ -359,7 +359,9 @@
                 text-overflow: ellipsis;
             }
             .damage-armour {
-                color: darkred;
+                &.damaged {
+                    color: darkred;
+                }
                 flex: 0 0 25px;
             }
         }
@@ -371,7 +373,7 @@
         flex-wrap: wrap;
     }
 
-    .list .weapon-traits {
+    .weapon-traits {
         display : flex;
         label {
             font-weight: bold;

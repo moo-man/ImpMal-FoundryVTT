@@ -101,34 +101,27 @@
         white-space: nowrap;
     }
 
-    .critical {
-        color: darkblue;
-
-        i {
-            color: darkblue;
-        }
-    }
-
-    .fumble {
+    .color-negative
+    {
         color: darkred;
-
         i {
             color: darkred;
         }
     }
 
+    .color-positive
+    {
+        color: darkblue;
+        i {
+            color: darkblue;
+        }
+    }
+
+
     .defense,
     .targets {
         display: flex;
         align-items: center;
-
-        a.attacker {
-            color: darkblue
-        }
-
-        a.defender {
-            color: darkred
-        }
     }
 
     .defense,
@@ -167,13 +160,13 @@
                 }
             }
 
-            .attacker .opposedSL {
-                color: darkblue
-            }
+            // .attacker .opposedSL {
+            //     color: darkblue
+            // }
 
-            .defender .opposedSL {
-                color: darkred
-            }
+            // .defender .opposedSL {
+            //     color: darkred
+            // }
 
             .opposedSL {
                 font-weight: bold;

@@ -22,7 +22,7 @@ export class AttackTest extends SkillTest
         let tags = super.tags;
         if (this.result.fumble)
         {
-            tags.push(`<span class="fumble">[[/r 1d10]]{${game.i18n.localize("IMPMAL.Fumble")}}</span>`);
+            tags.push(`<a class="table-roll color-negative fumble" data-table="fumble" data-formula="1d10"><i class="fa-solid fa-dice-d10"></i>${game.i18n.localize("IMPMAL.Fumble")}</a>`);
             if (this.itemTraits.has("reliable"))
             {
                 tags.push(`<span>[[/r 1d10]]{${game.i18n.localize("IMPMAL.Reliable")}}</span>`);

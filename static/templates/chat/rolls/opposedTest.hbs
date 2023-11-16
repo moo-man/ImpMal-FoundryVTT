@@ -1,9 +1,8 @@
-{{log this}}
-<div class="target" data-id="{{this.id}}">
+<div class="target {{#if (eq this.result.winner "attacker")}}color-positive attacker{{else}}color-negative defender{{/if}}" data-id="{{this.id}}">
     <a class="{{this.result.winner}} opposed-icon"><i class="fa-solid fa-crosshairs"></i></a>
     <img data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
     {{#if this.result}}
-        <div class="opposed-result {{this.result.winner}}">
+        <div class="opposed-result">
             <span class="opposedSL">
                 {{numberFormat this.result.SL sign=true}}
             </span>
@@ -17,7 +16,7 @@
             {{/if}}
 
             {{#if this.damage.critical}}
-            <span class="critical">{{this.damage.critical}}</span>
+            <span class="color-positive critical">{{{this.damage.critical}}}</span>
             {{/if}}
         </div>
         {{#if this.result.damage}}
