@@ -39,6 +39,8 @@
 
         .state-label {
             margin: 10px;
+            display: flex;
+            align-items: center;
             // padding: 3px;
             label {
                 margin: 5px 5px;

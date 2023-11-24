@@ -77,6 +77,12 @@ export class ImpMalEffect extends ActiveEffect
 
     async handleImmediateScripts(data, options, user)
     {
+        let scripts = this.scripts.filter(i => i.trigger == "immediate");
+        if (scripts.length == 0)
+        {
+            return true;
+        }
+
         let run = false;
         // Effect is direct parent, it's always applied to an actor, so run scripts
         if (this.parent?.documentName == "Actor")
@@ -96,19 +102,15 @@ export class ImpMalEffect extends ActiveEffect
 
         if (run)
         {
-            let scripts = this.scripts.filter(i => i.trigger == "immediate");
             if (scripts.length)
             {
                 await Promise.all(scripts.map(s => s.execute({data, options, user})));
                 return !this.scripts.every(s => s.options.immediate?.deleteEffect);
-            }
-            // If all scripts agree to delete the effect, return false (to prevent creation);
-            else 
-            {
-                return true;
+                // If all scripts agree to delete the effect, return false (to prevent creation);
             }
         }
     }
+
 
     async _handleEffectPrevention()
     {
@@ -187,6 +189,7 @@ export class ImpMalEffect extends ActiveEffect
             let filter = this.filterScript;
 
             // If this effect specifies a filter, narrow down the items according to it
+            // TODO this filter only happens on creation, so it won't apply to items added later
             if (filter)
             {
                 items = this.parent.items.contents.filter(i => filter.execute(i)); // Ids of items being affected. If empty, affect all

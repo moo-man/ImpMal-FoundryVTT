@@ -3,8 +3,9 @@ import { CharacteristicTestContext } from "../characteristic/characteristic-cont
 
 export class SkillTestContext extends CharacteristicTestContext
 {
-    skill = this.skill;   
-    skillItemId = this.skillItemId;
+    // skill = this.skill;   
+    // skillItemId = this.skillItemId;
+    // corruption = this.corruption;
 
     static fromData(data) 
     {

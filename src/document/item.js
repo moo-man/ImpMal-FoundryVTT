@@ -259,7 +259,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         for(let e of effects)
         {
             let keepEffect = await e.handleImmediateScripts();
-            if (!keepEffect) // Can't actually delete the effect because it's owned by an item in _preCreate. Change it to `other` type so it doesn't show in the actor
+            if (keepEffect == false) // Can't actually delete the effect because it's owned by an item in _preCreate. Change it to `other` type so it doesn't show in the actor
             {
                 e.updateSource({"flags.impmal.applicationData.type" : "other"});
             }

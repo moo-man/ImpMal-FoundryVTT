@@ -38,7 +38,7 @@ export default class DocumentChoice extends FormApplication
         return chosen;
     }
 
-    static create(documents, number, {text})
+    static create(documents, number, {text=""}={})
     {
 
         if (typeof documents == "object" && !Array.isArray(documents) && !(documents instanceof Collection))

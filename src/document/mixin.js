@@ -58,7 +58,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         }
 
         let createData = ImpMalEffect.getCreateData(effectData, overlay);
-        mergeObject(flags, createData.flags);
+        mergeObject(createData.flags, flags, {overwrite : false});
         createData.origin = origin;
         mergeObject(createData.duration, duration);
 

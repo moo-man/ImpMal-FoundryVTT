@@ -3,7 +3,7 @@ import { TestContext } from "../base/test-context";
 
 export class ItemUseContext extends TestContext
 {
-    itemId = this.itemId || "";
+    // itemId = this.itemId || "";
 
     static fromData(data) 
     {

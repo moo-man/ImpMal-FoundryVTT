@@ -2,23 +2,21 @@ import log from "../../logger";
 
 export class TestContext
 {
-    messageId = "";
-    rerolled = false;
-    speaker = {};
-    rollmode = "publicroll";
-    title = "";
-    fateReroll = false;
-    fateAddSL = false;
-
-    tags = {};
-    text = {};   
-    other = {}; // General use object for scripts
+    // messageId = "";
+    // rerolled = false;
+    // speaker = {};
+    // rollmode = "publicroll";
+    // title = "";
+    // fateReroll = false;
+    // fateAddSL = false;
+    // tags = {};
+    // text = {};   
     targetSpeakers = [];
     responses = {}; // map of tokenIds to response messages or "unopposed" string
     appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}
     defendingAgainst = undefined; // message ID of attacking test
     opposedFlagsAdded = false;
-    uuid = ""; // Generic UUID variable used in subclasses
+    // uuid = ""; // Generic UUID variable used in subclasses
 
     constructor(context)
     {

@@ -3,7 +3,7 @@ import { TestContext } from "../base/test-context";
 
 export class CharacteristicTestContext extends TestContext
 {
-    characteristic = this.characteristic;   
+    // characteristic = this.characteristic;   
 
 
     static fromData(data) 

@@ -332,7 +332,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         let specialisations = await game.impmal.utility.getAllItems("specialisation");
 
         specialisations = specialisations.filter(i => i.system.skill == skill);
-        let choice;
+        let choice = [];
         if (specialisations.length)
         {
             choice = await DocumentChoice.create(specialisations, 1, {text : game.i18n.localize("IMPMAL.ChooseSpecialisation")});
