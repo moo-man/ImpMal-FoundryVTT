@@ -40,6 +40,12 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         let hands = this.actor.system.hands;
         // If holding two different weapons, can use TWF
         data.canUseTWF = (hands.left.document && hands.right.document && hands.left.id != hands.right.id);
+        data.dodgeValue = this.actor.system.skills.reflexes.total;
+        let dodge = this.actor.itemTypes.specialisation.find(i => i.name == "Dodge" && i.system.skill == "reflexes");
+        if (dodge)
+        {
+            data.dodgeValue = dodge.system.total;
+        }
         return data;
     }
 
