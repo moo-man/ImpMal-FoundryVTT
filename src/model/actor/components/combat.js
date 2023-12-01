@@ -218,4 +218,9 @@ export class NPCCombatModel extends StandardCombatModel
             }
         }
     }
+
+    computeCriticals()
+    {
+        // Do not compute criticals, handled by computeRole()
+    }
 }

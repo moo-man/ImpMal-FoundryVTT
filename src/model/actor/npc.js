@@ -29,11 +29,15 @@ export class NPCModel extends StandardActorModel
     {
         if (this.role == "troop")
         {
-            this.combat.criticals.max = 0;
+            // Initialized already to 0
         }
         else if (this.role == "elite")
         {
-            this.combat.criticals.max = 1;
+            this.combat.criticals.max += 1;
+        }
+        else 
+        {
+            this.combat.criticals.max += this.characteristics.tgh.bonus;
         }
     }
 

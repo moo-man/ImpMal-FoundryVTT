@@ -108,7 +108,7 @@
         <div class="grid-property">
             <label>{{localize "IMPMAL.CriticalWounds"}}</label>
             <div>
-                {{#if (eq system.role "troop")}}
+                {{#if (eq system.combat.criticals.max 0)}}
                     <span>-</span>
                 {{else}}
                     <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
