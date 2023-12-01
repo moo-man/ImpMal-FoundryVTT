@@ -183,13 +183,36 @@ export default ImpMalSheetMixin = (cls) => class extends cls
             });
         }
     }
-    _onListCreate(event) 
+    async _onListCreate(event) 
     {
         let type = event.currentTarget.dataset.type;
         let category = event.currentTarget.dataset.category;
         if (type == "effect") 
         {
             return this._onEffectCreate.bind(this)(event);
+        }
+
+        let types = type.split(",").map(i => i.trim());
+        if (types.length != 1)
+        {
+            let buttons = {};
+            for(let t of types)
+            {
+                buttons[t] = {
+                    label : game.i18n.localize(CONFIG.Item.typeLabels[t]),
+                    callback : () => 
+                    {
+                        return t;
+                    }
+                };
+            }
+            let choice = await Dialog.wait({
+                title : "Select Item Type",
+                content : "Select which Item type to create.",
+                buttons
+            });
+
+            type = choice;
         }
 
 
@@ -199,7 +222,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
             createData["system.category"] = category;
         }
 
-        return this.object.createEmbeddedDocuments("Item", [createData]);
+        return this.object.createEmbeddedDocuments("Item", [createData]).then(items => items[0].sheet.render(true));
     }
 
     _onCreateArrayElement(ev)

@@ -16,9 +16,9 @@
 {{/if}}
 
 
-{{#if attackItems.length}}
     <div class="item-section combat">
-        <h3>{{localize "IMPMAL.Attacks"}}</h3>
+        <h3>{{localize "IMPMAL.Attacks"}} <a class="list-create" data-type="weapon"><i class="fa-solid fa-plus"></i></a></h3>
+        {{#if attackItems.length}}
         <section class="list">
             <div class="list-content">
                 {{#each attackItems}}
@@ -55,7 +55,6 @@
                                         </div>
                                     </div>
                                     <a class="ammo-used">
-                                        {{log this.system.ammo.document}}
                                         {{#if this.system.ammo.document}}
                                             {{this.system.ammo.document.name}}
                                             ({{this.system.ammo.document.system.quantity}})
@@ -79,20 +78,20 @@
                 {{/each}}
             </div>
         </section>
+        {{/if}}
     </div>
-{{/if}}
 
 
-{{#if sections.traits.show}}
     <div class="item-section">
-        <h3>{{localize "IMPMAL.Traits"}}</h3>
-        {{{sections.traits.html}}}
+        <h3>{{localize "IMPMAL.Traits"}}<a class="list-create" data-type="trait"><i class="fa-solid fa-plus"></i></a></h3>
+        {{#if sections.traits.show}}
+            {{{sections.traits.html}}}
+        {{/if}}
     </div>
-{{/if}}
 
-{{#if possessions.length}}
     <div class="item-section possessions">
-        <h3>{{localize "IMPMAL.Possessions"}}</h3>
+        <h3>{{localize "IMPMAL.Possessions"}}<a class="list-create" data-type="protection,equipment,augmetic,weapon"><i class="fa-solid fa-plus"></i></a></h3>
+        {{#if possessions.length}}
         <section class="list">
             <div class="list-content">
                 {{#each possessions}}
@@ -128,5 +127,5 @@
                 {{/each}}
             </div>
         </section>
+        {{/if}}
     </div>
-{{/if}}

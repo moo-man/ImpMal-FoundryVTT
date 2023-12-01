@@ -106,7 +106,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
 
         for (let item of items)
         {
-            description = await TextEditor.enrichHTML(item.system.notes.player, {async: true});
+            description = await TextEditor.enrichHTML(item.system.notes.player, {async: true}) || `<p></p>`;
             if (game.user.isGM)
             {
                 description += await TextEditor.enrichHTML(item.system.notes.gm, {async: true});

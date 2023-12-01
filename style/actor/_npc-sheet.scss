@@ -81,6 +81,11 @@
             text-transform: uppercase;
             border-bottom: none;
             margin: 0px;
+            display: flex;
+            justify-content: space-between;
+            a {
+                font-size: var(--font-size-14)
+            }
         }
 
         .trait-name {
