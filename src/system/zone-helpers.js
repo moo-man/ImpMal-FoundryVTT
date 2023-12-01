@@ -75,7 +75,7 @@ export default class ZoneHelpers
     {
         let traits = [];
         let zoneTraits = drawing.document.flags?.impmal?.traits || {};
-        let zoneEffects = drawing.document.flags?.impmal?.effects || {};
+        let zoneEffects = drawing.document.flags?.impmal?.effects || [];
         this._combineTraitsFromEffects(zoneEffects, zoneTraits);
 
         for (let key in zoneTraits)

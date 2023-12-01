@@ -1275,7 +1275,7 @@ const IMPMAL = {
         },
         mediumCover : {
             icon: "icons/svg/aura.svg",
-            name : "IMPMAL.mediumCover",
+            name : "IMPMAL.MediumCover",
             id : "mediumCover",
             statuses : ["mediumCover"],
             flags: {
