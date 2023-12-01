@@ -581,6 +581,13 @@
             margin: 3px;
             line-height: 10px;
         }
+        .current-action {
+            display: flex;
+            align-items: center;
+            label {
+                margin: 0px 5px 0px 0px;
+            }
+        }
     }
 
     .manual-scripts {

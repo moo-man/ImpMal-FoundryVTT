@@ -60,6 +60,17 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         }
 
     }
+    
+
+    _onRollDodge()
+    {
+        this.actor.setupSkillTest({key : "reflexes", name : "Dodge"});
+    }
+
+    _onRollInitiative()
+    {
+        this.actor.rollInitiative({createCombatants : true});
+    }
 
 
     activateListeners(html) 
@@ -70,6 +81,9 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         {
             return;
         }
+
+        html.find(".roll-dodge").on("click", this._onRollDodge.bind(this));
+        html.find(".roll-initiative").on("click", this._onRollInitiative.bind(this));
 
         html.find(".equip").click(ev => 
         {

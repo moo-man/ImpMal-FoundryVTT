@@ -2,12 +2,7 @@
     {{> systems/impmal/templates/actor/partials/defendingAgainst.hbs}}
 {{/if}}
 
-<div class="action-list">
-    {{#each (config "actions")}}
-        <button type="button" class="action" data-action="{{@key}}">{{localize this.label}}</button>
-    {{/each}}
-</div>
-
+{{> systems/impmal/templates/actor/partials/actions.hbs}}
 
 {{#if sections.skills.show}}
     <div class="item-section skills">

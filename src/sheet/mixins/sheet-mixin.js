@@ -207,8 +207,8 @@ export default ImpMalSheetMixin = (cls) => class extends cls
                 };
             }
             let choice = await Dialog.wait({
-                title : "Select Item Type",
-                content : "Select which Item type to create.",
+                title : game.i18n.localize("IMPMAL.SelectItemType"),
+                content : game.i18n.localize("IMPMAL.SelectItemTypeHint"),
                 buttons
             });
 

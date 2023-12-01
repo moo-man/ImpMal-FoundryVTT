@@ -68,7 +68,7 @@
                 {{localize "IMPMAL.GMNotes"}}
             </div>
             <div class="notes-content">
-                {{editor system.notes.gm target="system.notes.gm" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
+                    {{editor enriched.system.notes.gm target="system.notes.gm" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
             </div>
         </div>
     {{/if}}
@@ -79,7 +79,7 @@
             {{localize "IMPMAL.Notes"}}
         </div>
         <div class="notes-content">
-            {{editor system.notes.player target="system.notes.player" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
+            {{editor enriched.system.notes.player target="system.notes.player" engine="prosemirror" button="true" button=true owner=owner editable=editable}}
         </div>
     </div>
 </section>

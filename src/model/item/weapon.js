@@ -116,7 +116,7 @@ export class WeaponModel extends EquippableItemModel
     {
         let skill = this.attackType;
         let skillObject = actor.system.skills[skill];
-        let skillItem = skillObject.specialisations.find(i => i.name.slugify() == this.specialisation.slugify());
+        let skillItem = skillObject.specialisations.find(i => i.name.slugify() == this.specialisation?.slugify());
 
         return skillItem ?? skill;
     }

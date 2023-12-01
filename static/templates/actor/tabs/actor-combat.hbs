@@ -4,13 +4,13 @@
 
 <div class="flexrow combat-values">
     <div class="actor-property inline roll">
-        <label class="property-label"><a>{{localize "IMPMAL.Initiative"}}</a></label>
+        <label class="property-label"><a class="roll-initiative">{{localize "IMPMAL.Initiative"}}</a></label>
         <div class="property-value">
             <input type="number" value="{{system.combat.initiative}}" disabled>
         </div>
     </div>
     <div class="actor-property inline roll">
-        <label class="property-label"><a>{{localize "IMPMAL.Reflexes"}}</a></label>
+        <label class="property-label"><a class="roll-dodge">{{localize "IMPMAL.Reflexes"}}</a></label>
         <div class="property-value">
             <input type="number" value="{{system.skills.reflexes.total}}" disabled>
         </div>
@@ -50,14 +50,7 @@
     </div>
 </div>
 
-<div class="action-list">
-    {{#each (config "actions")}}
-        <button type="button" class="action" data-action="{{@key}}">{{localize this.label}}</button>
-    {{/each}}
-    {{#if canUseTWF}}
-        <button type="button" class="action" data-action="twf">{{localize "IMPMAL.TwoWeaponFighting"}}</button>
-    {{/if}}
-</div>
+{{> systems/impmal/templates/actor/partials/actions.hbs}}
 
 <section class="list {{#unless items.equipped.melee.length}}inactive{{/unless}}">
     <header class="list-row">

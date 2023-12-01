@@ -169,6 +169,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         html.find(".damage-armour").on("mousedown", this._onDamageArmour.bind(this));
         html.find(".trigger-script").on("click", this._onTriggerScript.bind(this));
         html.find(".armour-config").on("click", this._onClickArmourConfig.bind(this));
+        html.find(".clear-action").on("click", this._onClearAction.bind(this));
         html.on("click", ".use-item", this._onUseItem.bind(this));
     }
 
@@ -546,6 +547,11 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     _onClickArmourConfig()
     {
         new ArmourConfig(this.object).render(true);
+    }
+
+    _onClearAction()
+    {
+        this.actor.clearAction();
     }
 
     _onDamageArmour(ev)
