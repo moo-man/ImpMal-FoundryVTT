@@ -1250,9 +1250,7 @@ const IMPMAL = {
             flags: {
                 impmal: {
                     applicationData : {
-                        options : {
-                            enableConditionScript : `return this.actor.system.combat.action == "cover"`
-                        }
+                        enableConditionScript : `return this.actor.system.combat.action == "cover"`
                     },
                     scriptData: [
                         {
@@ -1281,9 +1279,7 @@ const IMPMAL = {
             flags: {
                 impmal: {
                     applicationData : {
-                        options : {
-                            enableConditionScript : `return this.actor.system.combat.action == "cover"`
-                        }
+                        enableConditionScript : `return this.actor.system.combat.action == "cover"`
                     },
                     scriptData: [
                         {
@@ -1312,9 +1308,7 @@ const IMPMAL = {
             flags: {
                 impmal: {
                     applicationData : {
-                        options : {
-                            enableConditionScript : `return this.actor.system.combat.action == "cover"`
-                        }
+                        enableConditionScript : `return this.actor.system.combat.action == "cover"`
                     },
                     scriptData: [
                         {
