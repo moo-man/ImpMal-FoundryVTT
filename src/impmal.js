@@ -60,6 +60,7 @@ import { ImpMalChatMessage } from "./system/chat-message";
 import TalentItemSheet from "./sheet/items/item-talent-sheet";
 import { AvailabilityTest } from "./system/tests/availability/availability-test";
 import ImpMalTables from "./system/tables";
+import ModuleInitializer from "./apps/module-initialization";
 
 Hooks.once("init", () => 
 {
@@ -136,7 +137,8 @@ Hooks.once("init", () =>
             AvailabilityTest
         },
         apps : {
-            ChoiceConfig
+            ChoiceConfig,
+            ModuleInitializer
         }
     };
 

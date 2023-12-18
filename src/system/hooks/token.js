@@ -2,6 +2,7 @@ import ZoneHelpers from "../zone-helpers";
 
 export default function() 
 {
+
     Hooks.on("renderTokenHUD", (app, html) => 
     {
         _addImpmalStatusEffects(html, app?.object?.document?.actor);
@@ -10,6 +11,14 @@ export default function()
     Hooks.on("preUpdateToken", async (token, data) => 
     {
         ZoneHelpers.checkTokenUpdate(token, data, canvas.drawings.placeables);
+    });
+
+    Hooks.on("createToken", async (token, data, user) => 
+    {
+        if (game.user.id == user.id)
+        {
+            token.actor.runScripts("createToken", token);
+        }
     });
 }
 

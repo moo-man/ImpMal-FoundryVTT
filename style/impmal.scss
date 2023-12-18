@@ -176,7 +176,12 @@ blockquote.foundry-note {
     background: linear-gradient(rgba(255, 143, 32, 0.76) 0%, rgba(255, 77, 30, 0.75) 100%);
     box-shadow: 0 0 7px black;
     font-style: normal;
-  
+    color: black;
+
+    a.content-link {
+        color: #1c3132;
+    }
+
     &::before {
         content: url(../../../icons/vtt.png);
         float: left;

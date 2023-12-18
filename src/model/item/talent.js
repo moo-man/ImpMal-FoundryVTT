@@ -131,6 +131,12 @@ export class TalentModel extends StandardItemModel
 
     async handleEffectSelection()
     {
+        // Only relevant to owned items
+        if (!this.parent?.actor)
+        {
+            return;
+        }
+
         let effectOptions = this.effectOptions
             .findDocuments(this.parent.effects) // Retrieve talent effects
             .filter(i =>i) 
@@ -145,7 +151,7 @@ export class TalentModel extends StandardItemModel
                 return this.parent.update({["system.effectChoices." + choice[0].id] : this.taken}).then(() => 
                 {
                     // Simulate the selected effect being created
-                    choice[0]._handleImmediateScripts();
+                    choice[0].handleImmediateScripts();
                 });
             }
         }

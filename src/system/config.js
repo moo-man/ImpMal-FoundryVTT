@@ -464,6 +464,7 @@ const IMPMAL = {
         preTakeDamage : "IMPMAL.TriggerPreTakeDamage",
         takeDamage : "IMPMAL.TriggerTakeDamage",
 
+        createToken : "IMPMAL.TriggerCreateToken",
         createItem : "IMPMAL.TriggerCreateItem",
         preUpdateDocument : "IMPMAL.TriggerPreUpdateDocument",
         updateDocument : "IMPMAL.TriggerUpdateDocument",
@@ -509,7 +510,8 @@ const IMPMAL = {
         "preApplyDamage" : true,
         "preTakeDamage" : true,
         "applyDamage" : true,
-        "takeDamage" : true
+        "takeDamage" : true,
+        "createToken" : true
     },
 
 

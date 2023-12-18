@@ -2,6 +2,42 @@ import { ImpMalChatMessage } from "./chat-message";
 
 export default class ImpMalUtility
 {
+
+    static _keepID(id, document) 
+    {
+        try 
+        {
+            let compendium = !!document.pack;
+            let world = !compendium;
+            let collection;
+    
+            if (compendium) 
+            {
+                let pack = game.packs.get(document.pack);
+                collection = pack.index;
+            }
+            else if (world)
+            {
+                collection = document.collection;
+            }
+    
+            if (collection.has(id)) 
+            {
+                ui.notifications.notify(`${game.i18n.format("IMPMAL.ErrorID", {name: document.name})}`);
+                return false;
+            }
+            else 
+            {
+                return true;
+            }
+        }
+        catch (e) 
+        {
+            console.error(e);
+            return false;
+        }
+    }
+
     static async getAllItems(types = [])
     {
         if (typeof types == "string")

@@ -109,10 +109,10 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         data.isPhysical = data.item.system.isPhysical;
         data.conditions = this.formatConditions(data);
         data.enriched = foundry.utils.expandObject({
-            "notes.player" : await TextEditor.enrichHTML(data.item.system.notes?.player, {async: true}),
-            "notes.gm" : await TextEditor.enrichHTML(data.item.system.notes?.gm, {async: true}),
-            "patron.notes" : await TextEditor.enrichHTML(data.item.system.patron?.notes, {async: true}),
-            "character.notes" : await TextEditor.enrichHTML(data.item.system.character?.notes, {async: true})
+            "notes.player" : await TextEditor.enrichHTML(data.item.system.notes?.player, {relativeTo: this.actor, async: true}),
+            "notes.gm" : await TextEditor.enrichHTML(data.item.system.notes?.gm, {relativeTo: this.actor, async: true}),
+            "patron.notes" : await TextEditor.enrichHTML(data.item.system.patron?.notes, {relativeTo: this.actor, async: true}),
+            "character.notes" : await TextEditor.enrichHTML(data.item.system.character?.notes, {relativeTo: this.actor, async: true})
         });
         return data;
     }

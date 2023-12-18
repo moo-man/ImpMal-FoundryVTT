@@ -1,3 +1,4 @@
+import ImpMalUtility from "../system/utility";
 import { ImpMalEffect } from "./effect";
 
 export default ImpMalDocumentMixin = (cls) => class extends cls 
@@ -5,6 +6,11 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
 
     async _preCreate(data, options, user) 
     {
+        if (data._id)
+        {
+            options.keepId = ImpMalUtility._keepID(data._id, this);
+        }
+
         await super._preCreate(data, options, user);
         let allow = this.system.allowCreation();
         if (!allow)
