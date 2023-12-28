@@ -9,6 +9,7 @@ export class AdvancementForm extends FormApplication
         options.height = 600;
         options.width = 400;
         options.template = "systems/impmal/templates/apps/advancement.hbs";
+        options.scrollY = [".tab-content"];
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "characteristics" }];
         return options;
     }

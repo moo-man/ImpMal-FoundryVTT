@@ -580,7 +580,7 @@ export class ImpMalEffect extends ActiveEffect
             equipTransfer : true,
             enableConditionScript : "",
             filter : "",
-            prompt : false,
+            prompt : false
         };
     }
 }

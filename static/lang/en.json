@@ -683,6 +683,7 @@
     "IMPMAL.WR" : "WR",
     "IMPMAL.WS" : "WS",
     "IMPMAL.WarpCharge" : "Warp Charge",
+    "IMPMAL.WarpChargeThreshold" : "Warp Charge Threshold",
     "IMPMAL.WarpChargeGained" : "Warp Charge Gained",
     "IMPMAL.WarpRating" : "Warp Rating",
     "IMPMAL.WarpTouched" : "Warp-Touched",

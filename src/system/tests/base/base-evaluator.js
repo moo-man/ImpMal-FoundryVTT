@@ -47,6 +47,7 @@ export class BaseTestEvaluator
 
         // Prefer predefined target vs computed target
         this.target = data.result.target || data.target;
+        this.signedSL = data.result.signedSL > 0 ? `+${data.result.signedSL}` : data.result.signedSL; // SL predefined
         this.state = this.state || data.state;
         this.onlyAutomaticSuccess = data.onlyAutomaticSuccess;
         this.outcome = "";

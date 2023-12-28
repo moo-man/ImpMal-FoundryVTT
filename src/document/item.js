@@ -55,7 +55,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         // If an owned item is updated, run actor update scripts
         if (this.actor)
         {
-            await this.actor.runScripts("updateDocument", {data, options, user});
+            await this.actor.runScripts("updateDocument", {document : this, data, options, user});
         }
 
         // Add a prepared flag to determine if this item has already been prepared

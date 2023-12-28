@@ -88,9 +88,10 @@ export class TalentModel extends StandardItemModel
         let existing = this.parent.actor?.itemCategories.talent.find(i => i.name == this.parent.name);
         if (existing)
         {
-            existing.update({"system.taken" : existing.system.taken + 1}).then(item => 
+            existing.update({"system.taken" : existing.system.taken + 1}).then(async item => 
             {
-                item.system.handleEffectSelection();
+                await item.system.handleEffectSelection();
+                await item.handleImmediateScripts();
             });
             allowed = false;
         }
