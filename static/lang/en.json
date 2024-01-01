@@ -282,6 +282,7 @@
     "IMPMAL.Eyes" : "Eyes",
     "IMPMAL.Faction" : "Faction",
     "IMPMAL.Failure" : "Failure",
+    "IMPMAL.FailedRanged" : "<strong>Failed Ranged Test</strong>: Cancelling Opposed Test",
     "IMPMAL.Fast" : "Fast",
     "IMPMAL.Fate" : "Fate",
     "IMPMAL.Fel" : "Fel",

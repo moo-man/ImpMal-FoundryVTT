@@ -54,6 +54,14 @@ export class WeaponTest extends AttackTest
         {
             ui.notifications.error(`${game.i18n.localize("IMPMAL.ErrorAmmoUse")}: ${e}`);
         }
+
+        // If this test is with a ranged weapon and fails, no defender test is needed
+        if (this.item.system.attackType == "ranged" && this.result.outcome == "failure")
+        {
+            await this.context.fillUnopposed();
+            this.context.opposedFlagsAdded = true;
+            this.result.text["failedRanged"] = game.i18n.localize("IMPMAL.FailedRanged");
+        }
     }
 
 
