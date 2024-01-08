@@ -131,7 +131,8 @@ export class OpposedTestResult
             damage += attackerTest.result.SL;
         }
 
-        if (item?.system.isMelee)
+        // melee always takes the difference in SL, ranged only takes the difference if the defence won
+        if (item?.system.isMelee || defenderTest?.result?.SL > 0)
         {
             damage -= (defenderTest?.result?.SL || 0);
         }
