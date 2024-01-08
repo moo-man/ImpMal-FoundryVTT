@@ -1637,6 +1637,8 @@ const IMPMAL = {
             }
         },
     },
+
+    effectScripts : {}
     
 };
 

@@ -5,19 +5,36 @@ export default class ImpMalScript
         this.script = data.string;
         this.label = data.label;
         this.trigger = data.trigger;
-        this.options = data.options;
+        this.options = data.options || {};
         this.async = game.impmal.config.asyncTriggers?.[this.trigger] || async;
         this.context = context;
         this.context.script = this;
+    }
+
+    _handleScriptId(string)
+    {
+        let script;
+        let regex = /\[Script.([a-zA-Z0-9]{16})\]/gm;
+        let id = Array.from(string.matchAll(regex))[0]?.[1];
+        if (id)
+        {
+            script = game.impmal.config.effectScripts[id];
+        }
+        if (!script)
+        {
+            console.warn(`Script ID ${id} not found`, this);
+        }
+        return script || string;
     }
 
     execute(args)
     {
         try 
         {
+            let script = this._handleScriptId(this.script);
             let scriptFunction =this.async ? Object.getPrototypeOf(async function () { }).constructor : Function;
             game.impmal.log("Running Script > " + this.label);
-            return (new scriptFunction("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + this.script)).bind(this.context)(args);
+            return (new scriptFunction("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + script)).bind(this.context)(args);
         }
         catch(e)
         {
@@ -79,6 +96,7 @@ export default class ImpMalScript
     {
         try 
         {
+            script = this._handleScriptId(script);
             game.impmal.log("Running Script > " + this.label);
             return new Function("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + script).bind(this.context)(args);
         }
@@ -100,7 +118,7 @@ export default class ImpMalScript
 
     scriptNotification(content, type="info")
     {
-        ui.notifications.notify(`<strong>${this.context.effect.name}: ${content}</strong>`, type);
+        ui.notifications.notify(`<strong>${this.context.effect.name}</strong>: ${content}`, type);
     }
 
     get actor() 
@@ -116,6 +134,11 @@ export default class ImpMalScript
     get effect()
     {
         return this.context.effect;
+    }
+
+    get Label() 
+    {
+        return Roll.parse(this.label, this).map(t => t.formula).join(" ");
     }
 
     static createContext(document)

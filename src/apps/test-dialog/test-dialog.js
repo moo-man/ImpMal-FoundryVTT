@@ -196,7 +196,7 @@ export class TestDialog extends Application
             {
                 this.tooltips.start(this);
                 await script.execute(this);
-                this.tooltips.finish(this, script.label);
+                this.tooltips.finish(this, script.Label);
             }
         }
     }

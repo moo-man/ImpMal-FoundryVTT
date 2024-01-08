@@ -15,23 +15,31 @@
     </select>
 </div>
 
+
 <div class="form-group" data-option="dialog">
     <label>{{localize "IMPMAL.DialogModifierTargeter"}}</label>
     <input name="targeter" type="checkbox" {{checked script.options.dialog.targeter}}>
 </div>
 
-
 <div class="form-group stacked" data-option="dialog">
     <label>{{localize "IMPMAL.DialogModifierHideScript"}}</label>
     <div>
-        <textarea class="no-ace" {{#unless (isGM)}}disabled{{/unless}} name="hideScript">{{script.options.dialog.hideScript}}</textarea>
+        {{#if lockedScripts.hideScript}}
+        <textarea disabled class="inactive" name="hideScript">{{dereferencedScripts.options.dialog.hideScript}}</textarea>
+        {{else}}
+        <textarea  class="no-ace" {{#unless (isGM)}}disabled{{/unless}} name="hideScript">{{script.options.dialog.hideScript}}</textarea>
+        {{/if}}
     </div>
 </div>
 
 <div class="form-group stacked" data-option="dialog">
     <label>{{localize "IMPMAL.DialogModifierAcivationScript"}}</label>
     <div>
+        {{#if lockedScripts.activateScript}}
+        <textarea disabled class="inactive" name="activateScript">{{dereferencedScripts.options.dialog.activateScript}}</textarea>
+        {{else}}
         <textarea class="no-ace" {{#unless (isGM)}}disabled{{/unless}} name="activateScript">{{script.options.dialog.activateScript}}</textarea>
+        {{/if}}
     </div>
 </div>
 
@@ -39,7 +47,11 @@
 <div class="form-group stacked" data-option="dialog">
     <label>{{localize "IMPMAL.DIalogModifierSubmissionScript"}}</label>
     <div>
+        {{#if lockedScripts.submissionScript}}
+        <textarea disabled class="inactive" name="submissionScript">{{dereferencedScripts.options.dialog.submissionScript}}</textarea>
+        {{else}}
         <textarea class="no-ace" {{#unless (isGM)}}disabled{{/unless}} name="submissionScript">{{script.options.dialog.submissionScript}}</textarea>
+        {{/if}}
     </div>
 </div>
 
