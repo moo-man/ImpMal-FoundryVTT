@@ -33,7 +33,7 @@ export default class ImpMalScript
         {
             let script = this._handleScriptId(this.script);
             let scriptFunction =this.async ? Object.getPrototypeOf(async function () { }).constructor : Function;
-            game.impmal.log("Running Script > " + this.label);
+            game.impmal.log("Running Script > " + this.Label);
             return (new scriptFunction("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + script)).bind(this.context)(args);
         }
         catch(e)
@@ -97,7 +97,7 @@ export default class ImpMalScript
         try 
         {
             script = this._handleScriptId(script);
-            game.impmal.log("Running Script > " + this.label);
+            game.impmal.log("Running Script > " + this.Label);
             return new Function("args",`${CONFIG.debug.scripts ? "debugger;" : ""}` + script).bind(this.context)(args);
         }
         catch(e)
@@ -109,11 +109,15 @@ export default class ImpMalScript
 
     scriptMessage(content, chatData={})
     {
-        ChatMessage.create(mergeObject({
-            content,
+        ChatMessage.create(mergeObject({content}, this.getChatData(chatData)));
+    }
+
+    getChatData(merge={})
+    {
+        return mergeObject({
             speaker : {alias : this.context.actor?.name || this.context?.item.name},
             flavor : this.context.effect.name || this.context.item.name || ""
-        }, chatData));
+        }, merge);
     }
 
     scriptNotification(content, type="info")

@@ -103,14 +103,22 @@ export class ImpMalChatMessage extends ChatMessage
             let el = $(ev.currentTarget);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
             let test = message.test;
-
+            let effect = await fromUuid(ev.currentTarget.dataset.uuid);
             if (ev.currentTarget.dataset.type == "zone")
             {
+                if (!(await effect.runPreApplyScript({test})))
+                {
+                    return;
+                }
                 ZoneHelpers.promptZoneEffect(ev.currentTarget.dataset.uuid, message.id);
             }
 
             else if (ev.currentTarget.dataset.type == "target")
             {
+                if (!(await effect.runPreApplyScript({test, targets})))
+                {
+                    return;
+                }
                 // If user has active targets, use those, otherwise, use test's targets, if there aren't any, use test's own actor
                 let targetActors = game.user.targets.size > 0 
                     ? Array.from(game.user.targets).map(i => i.actor) 

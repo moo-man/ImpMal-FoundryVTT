@@ -23,4 +23,14 @@ export default function()
     drawing();
     setup();
     journal();
+
+    Hooks.on("preCreateJournalEntry", _keepID);
+    Hooks.on("preCreateScene", _keepID);
+    Hooks.on("preCreateRollTable", _keepID);
+
+    
+    function _keepID(document, data, options)
+    {
+        options.keepId = game.impmal.utility._keepID(data._id, document);
+    }
 }

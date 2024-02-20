@@ -73,12 +73,16 @@
                             </div>
                             <div class="list-controls">
                                 <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
-                                <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                                    {{#if this.item}}
+                                    <a class="inactive" data-tooltip="{{localize 'IMPMAL.CannotDeleteItemEffect'}}"><i class="fa-solid fa-xmark"></i></a>
+                                    {{else}}
+                                    <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                                    {{/if}}
                             </div>
                             {{#if this.manualScripts.length}}
                                 <div class="manual-scripts">
                                     {{#each this.manualScripts}}
-                                        <a class="trigger-script" data-index="{{@key}}">
+                                        <a class="trigger-script" data-index="{{this.index}}">
                                             <i class="fa-solid fa-code"></i>
                                             {{this.label}}
                                         </a>
@@ -150,13 +154,17 @@
                             </div>
                             <div class="list-controls">
                                 <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
-                                <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                                {{#if this.item}}
+                                    <a class="inactive" data-tooltip="{{localize 'IMPMAL.CannotDeleteItemEffect'}}"><i class="fa-solid fa-xmark"></i></a>
+                                {{else}}
+                                    <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                                {{/if}}
                             </div>
                         </div>
                         {{#if this.manualScripts.length}}
                             <div class="manual-scripts">
                                 {{#each this.manualScripts}}
-                                    <a class="trigger-script" data-index="{{@key}}">
+                                    <a class="trigger-script" data-index="{{this.index}}">
                                         <i class="fa-solid fa-code"></i>
                                         {{this.label}}
                                     </a>
@@ -200,7 +208,11 @@
                             </div>
                             <div class="list-controls">
                                 <a class="list-toggle"><i class="fa-regular fa-circle"></i></a>
-                                <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                                {{#if this.item}}
+                                    <a class="inactive" data-tooltip="{{localize 'IMPMAL.CannotDeleteItemEffect'}}"><i class="fa-solid fa-xmark"></i></a>
+                                {{else}}
+                                    <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
+                                {{/if}}
                             </div>
                         </div>
                     </div>

@@ -49,6 +49,11 @@ export class ImpMalEffect extends ActiveEffect
         {
             await script.execute({options, user});
         }
+        // If an owned effect is deleted, run parent update scripts
+        if (this.parent)
+        {
+            await this.parent.runScripts("updateDocument", {options, user});
+        }
     }
 
     async _onUpdate(data, options, user)
@@ -290,6 +295,19 @@ export class ImpMalEffect extends ActiveEffect
         }
     }
 
+    async runPreApplyScript(args)
+    {
+        if (!this.applicationData.preApplyScript)
+        {
+            return true; // If no preApplyScript, do not prevent applying
+        }
+        else 
+        {
+            let script = new ImpMalScript({string : this.applicationData.preApplyScript, label : `Pre-Apply Script for ${this.name}`, async: true}, ImpMalScript.createContext(this));
+            return await script.execute(args);
+        }
+    }
+
     /**
      * Delete all items created by scripts in this effect
      */
@@ -297,13 +315,18 @@ export class ImpMalEffect extends ActiveEffect
     {
         if (this.actor)
         {
-            let createdItems = this.actor.items.filter(i => i.getFlag("impmal", "fromEffect"), this.id);
+            let createdItems = this.getCreatedItems();
             if (createdItems.length)
             {
                 ui.notifications.notify(game.i18n.format("IMPMAL.DeletingEffectItems", {items : createdItems.map(i => i.name).join(", ")}));
                 return this.actor.deleteEmbeddedDocuments("Item", createdItems.map(i => i.id));
             }
         }
+    }
+
+    getCreatedItems()
+    {
+        return this.actor.items.filter(i => i.getFlag("impmal", "fromEffect") == this.id);
     }
 
     //#endregion
@@ -352,6 +375,11 @@ export class ImpMalEffect extends ActiveEffect
         effect.origin = this.actor?.uuid;
         effect.statuses = [this.key || effect.name.slugify()]; // this.key is prioritized if it's a condition, we don't want ablaze-(minor) as the key, just ablaze
 
+        if (this.item)
+        {
+            effect.flags.impmal.sourceItem = this.item.uuid;
+        }
+
         // When transferred to another actor, effects lose their reference to the item it was in
         // So if a effect pulls its avoid test from the item data, it can't, so place it manually
         if (this.applicationData.avoidTest.value == "item")
@@ -374,7 +402,11 @@ export class ImpMalEffect extends ActiveEffect
 
     get manualScripts()
     {
-        return this.scripts.filter(i => i.trigger == "manual");
+        return this.scripts.filter(i => i.trigger == "manual").map((script, index)=> 
+        {
+            script.index = index; // When triggering manual scripts, need to know the index (listing all manual scripts on an actor is messy)
+            return script;
+        });
     }
 
     get filterScript()
@@ -440,6 +472,24 @@ export class ImpMalEffect extends ActiveEffect
         else
         {
             return super.sourceName;
+        }
+    }
+
+    get sourceItem() 
+    {
+        return fromUuidSync(this.flags.impmal.sourceItem);
+    }
+
+    get itemTargets() 
+    {
+        let ids = this.getFlag("impmal", "itemTargets");
+        if (ids.length == 0)
+        {
+            return this.actor.items.contents;
+        }
+        else 
+        {
+            return ids.map(i => this.actor.items.get(i));
         }
     }
 
@@ -577,6 +627,8 @@ export class ImpMalEffect extends ActiveEffect
             },
 
             // Other
+            testIndependent : false,
+            preApplyScript : "", // A script that runs before an effect is applied - this runs on the source, not the target
             equipTransfer : true,
             enableConditionScript : "",
             filter : "",

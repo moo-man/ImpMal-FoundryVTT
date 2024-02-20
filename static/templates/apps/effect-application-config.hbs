@@ -164,6 +164,13 @@
             {{/if}}
         {{/if}}
 
+        <div class="form-group">
+            <label>{{localize "IMPMAL.EffectApplicationPreApplyScript"}}<a class="script-config"
+                    data-path="flags.impmal.applicationData.preApplyScript"><i
+                        class="fa-solid fa-gear-complex-code"></i></a></label>
+            <p class="notes">{{localize "IMPMAL.EffectApplicationPreApplyScriptHint"}}</p>
+        </div>
+
         {{#if (hasProperty this "applicationData.equipTransfer")}}
             <div class="form-group">
                 <label>{{localize "IMPMAL.EffectApplicationEquipTransfer"}}</label>

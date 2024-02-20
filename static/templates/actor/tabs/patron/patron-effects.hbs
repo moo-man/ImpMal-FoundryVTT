@@ -20,7 +20,7 @@
                     {{#if this.manualScripts.length}}
                         <div class="manual-scripts">
                             {{#each this.manualScripts}}
-                                <a class="trigger-script" data-index="{{@key}}">
+                                <a class="trigger-script" data-index="{{this.index}}">
                                     <i class="fa-solid fa-code"></i>
                                     {{this.label}}
                                 </a>

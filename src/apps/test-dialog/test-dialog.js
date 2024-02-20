@@ -47,6 +47,13 @@ export class TestDialog extends Application
         this.forceState = undefined;
         // If the user specifies a state, use that
 
+        // If an effect deems this dialog cannot be rolled, it can switch this property to true and the dialog will close
+        this.abort = false;
+
+        // The flags object is for scripts to use freely, but it's mostly intended for preventing duplicate effects
+        // A specific object is needed as it must be cleared every render when scripts run again
+        this.flags = {};
+
         if (resolve)
         {
             this.resolve = resolve;
@@ -64,12 +71,23 @@ export class TestDialog extends Application
         };
     }
 
+    async _render(...args)
+    {
+        await super._render(args);
+        
+        if (this.abort)
+        {
+            this.close();
+        }
+    }
+
     async getData() 
     {
         this.advCount = 0;
         this.disCount = 0;
 
         this.tooltips.clear();
+        this.flags = {};
 
         // Reset values so they don't accumulate 
         
