@@ -3,7 +3,7 @@
   "name" : "impmal",
   "title": "Warhammer 40,000: Imperium Maledictum",
   "description": "In the grim darkness of the 41st millennium, players take on the role of citizens of the Imperium in service to a powerful patron, drawing them into tales focused on intrigue, betrayal, and conspiracy",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "minimumCoreVersion" : 11,
   "compatibility" : {
     "minimum" : 11,
@@ -50,7 +50,7 @@
   "url": "https://github.com/moo-man/ImpMal-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/ImpMal-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/ImpMal-FoundryVTT/releases/download/1.1.0/impmal.zip",
+  "download": "https://github.com/moo-man/ImpMal-FoundryVTT/releases/download/1.1.1/impmal.zip",
   "license": "LICENSE.txt"
 }
 
