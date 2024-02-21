@@ -31,6 +31,9 @@
         "no-undef" : [
             "off"
         ],
+        "no-unused-vars" : [
+            "off"
+        ],
         "curly" : ["error"],
         "brace-style": ["error", "allman", {"allowSingleLine" : true}]
 

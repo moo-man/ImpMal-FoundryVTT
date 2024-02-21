@@ -80,14 +80,7 @@
                                     {{/if}}
                             </div>
                             {{#if this.manualScripts.length}}
-                                <div class="manual-scripts">
-                                    {{#each this.manualScripts}}
-                                        <a class="trigger-script" data-index="{{this.index}}">
-                                            <i class="fa-solid fa-code"></i>
-                                            {{this.label}}
-                                        </a>
-                                    {{/each}}
-                                </div>
+                                {{> systems/impmal/templates/partials/manual-scripts.hbs scripts=this.manualScripts}}
                             {{/if}}
                         </div>
                     </div>
@@ -162,14 +155,7 @@
                             </div>
                         </div>
                         {{#if this.manualScripts.length}}
-                            <div class="manual-scripts">
-                                {{#each this.manualScripts}}
-                                    <a class="trigger-script" data-index="{{this.index}}">
-                                        <i class="fa-solid fa-code"></i>
-                                        {{this.label}}
-                                    </a>
-                                {{/each}}
-                            </div>
+                            {{> systems/impmal/templates/partials/manual-scripts.hbs scripts=this.manualScripts}}
                         {{/if}}
                     </div>
                 {{/each}}

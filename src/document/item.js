@@ -248,6 +248,11 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         return effects;
     }
 
+    get manualScripts() 
+    {
+        return this.effects.reduce((scripts, effect) => scripts.concat(effect.manualScripts), []);
+    }
+
     // This function runs the immediate scripts an Item contains in its effects
     // when the Item is added to an Actor. 
     async handleImmediateScripts()

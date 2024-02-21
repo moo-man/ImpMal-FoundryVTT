@@ -1,16 +1,13 @@
 # Warhammer 40,000 Roleplay: Imperium Maledictum
-The unofficial system for playing *Warhammer 40,000 Roleplay: Imperium Maledictum* on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.
+The **official** system for playing *Warhammer 40,000 Roleplay: Imperium Maledictum* on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.
+
+![](https://user-images.githubusercontent.com/.jpg)
 
 ![](https://img.shields.io/github/v/release/moo-man/ImpMal-FoundryVTT?label=Latest%20Version)
 
 ![](https://img.shields.io/github/downloads/moo-man/ImpMal-FoundryVTT/latest/impmal.zip?label=Downloads%20%28Latest%20Version%29)
 
 ![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V11-orange)
-
-## Current State
-With 1.0.0 released, the Imperium Maledictum Foundry system is now considered fit for play, though issues and oversights are still expected to be encountered. 
-
-Please feel free to message me on Discord - `moo.man`
 
 ## Install
 1. Go to the setup page and choose **Game Systems**.
@@ -19,9 +16,8 @@ Please feel free to message me on Discord - `moo.man`
 
 See **Environment Setup** for instructions on how to build the project for development purposes.
 
-
 ## Official Modules
-- Incoming!
+- [Warhammer 40,000: Imperium Maledictum Core Rulebook Module](https://foundryvtt.com/packages/impmal-core)
 
 ## Special Thanks
 - Cubicle 7

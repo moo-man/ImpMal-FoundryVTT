@@ -155,9 +155,20 @@ export default class ImpMalUtility
         <tbody class="${noCenter ? "no-center" : ""}">
     ${table.results.map(r => 
     {
+        let uuid;
+
+        if (r.type == 1)
+        {
+            uuid = `${r.documentCollection}.${r.documentId}`;
+        }
+        else if (r.type == 2)
+        {
+            uuid = `Compendium.${r.documentCollection}.${r.documentId}`;
+        }
+
         return `<tr>
             <td>${r.range[0] == r.range[1] ? r.range[0] : `${r.range[0]}–${r.range[1]}`}</td>
-            <td>${r.type == 1 ? `@UUID[${r.documentCollection}.${r.documentId}]` : r.text}</td>
+            <td>${[1,2].includes(r.type) ? `@UUID[${uuid}]` : r.text}</td>
             </tr>`;
     }).join("")}
 

@@ -133,6 +133,7 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
                     name = `<i class="fa-regular fa-dice-d10"></i>` + name;
                 }
                 
+                let buttons = ``;
                 if (item.system.test.enabled)
                 {
                     let testClass = item.system.test.target == "target" ? "target-test" : "roll";
@@ -143,7 +144,17 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
                     {
                         testName = `<i class="fa-solid fa-crosshairs"></i>` + testName ;
                     }
-                    description += `<button type="button" data-type="item" class="${testClass}">${testName} Test</button>`;
+                    buttons += `<button type="button" data-type="item" class="${testClass}">${testName} Test</button>`;
+                }
+
+                for(let script of item.manualScripts)
+                {
+                    buttons += `<button class="trigger-script" data-index="${script.index}" data-uuid="${script.effect.uuid}"><i class="fa-solid fa-code"></i>${script.Label}</button>`;
+                }
+
+                if (buttons)
+                {
+                    description += `<div class="npc-buttons">${buttons}</div>`;
                 }
             }
             
