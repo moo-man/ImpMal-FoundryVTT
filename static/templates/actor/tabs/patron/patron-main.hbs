@@ -25,10 +25,7 @@
                             </div>
                         </div>
                         <div class="summary">
-                            {{#if (isGM)}}
-                                {{{this.system.notes.gm}}}
-                            {{/if}}
-                            {{{this.system.notes.player}}}
+                            {{{lookup ../enriched.items this.id}}}
                         </div>
                     </div>
                 {{/if}}
@@ -61,10 +58,7 @@
                             </div>
                         </div>
                         <div class="summary">
-                            {{#if (isGM)}}
-                                {{{this.system.notes.gm}}}
-                            {{/if}}
-                            {{{this.system.notes.player}}}
+                            {{{lookup ../enriched.items this.id}}}
                         </div>
                     </div>
                 {{/if}}

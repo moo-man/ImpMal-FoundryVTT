@@ -12,7 +12,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         }
 
         await super._preCreate(data, options, user);
-        let allow = this.system.allowCreation();
+        let allow = await this.system.allowCreation(data, options, user);
         if (!allow)
         {
             return false;

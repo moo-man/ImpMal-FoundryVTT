@@ -22,10 +22,26 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
             }
         }
 
+        data.enriched.items = await this.enrichItemDescriptions(data);
+
         data.effects = this.actor.effects.contents.concat(this.actor.items.reduce((prev, current) => prev.concat(current.effects.contents), [])).filter(e => e.applicationData.documentType != "character");
         return data;
     }
 
+
+    async enrichItemDescriptions(data)
+    {
+        let enrichedItems = {};
+        for (let i of data.items.boonLiability)
+        {
+            enrichedItems[i.id] = await TextEditor.enrichHTML(i.system.notes.player, {async: true});
+            if (game.user.isGM)
+            {
+                enrichedItems[i.id] += await TextEditor.enrichHTML(i.system.notes.gm, {async: true});
+            }
+        }
+        return enrichedItems;
+    }
 
     activateListeners(html) 
     {

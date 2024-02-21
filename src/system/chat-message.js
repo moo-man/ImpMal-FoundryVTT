@@ -115,14 +115,15 @@ export class ImpMalChatMessage extends ChatMessage
 
             else if (ev.currentTarget.dataset.type == "target")
             {
-                if (!(await effect.runPreApplyScript({test, targets})))
-                {
-                    return;
-                }
                 // If user has active targets, use those, otherwise, use test's targets, if there aren't any, use test's own actor
                 let targetActors = game.user.targets.size > 0 
                     ? Array.from(game.user.targets).map(i => i.actor) 
                     : test.context.targets.map(i => i.actor);
+
+                if (!(await effect.runPreApplyScript({test, targets : targetActors})))
+                {
+                    return;
+                }
                 
                 if (targetActors.length == 0 || test.item?.system?.target?.slugify() == "self") // Self powers should only target self
                 {

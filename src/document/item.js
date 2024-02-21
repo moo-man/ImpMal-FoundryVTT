@@ -137,11 +137,11 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
     // Conditions shouldn't be tied to the item. Add them to the actor independently.
     async _handleConditions()
     {
-        let conditions = this.effects.filter(e => e.isCondition);
+        let conditions = this.transferredEffects.filter(e => e.isCondition);
 
         // updateSource doesn't seem to work here for some reason: 
         // this.updateSource({effects : []})
-        this._source.effects = this.effects.filter(e => !e.isCondition).filter(e => e.toObject());
+        this._source.effects = this.effects.filter(e => !(e.isCondition && this.transferredEffects.find(te => te.id == e.id))).filter(e => e.toObject());
 
         this.actor?.createEmbeddedDocuments("ActiveEffect", conditions);
 

@@ -72,9 +72,9 @@ export class TalentModel extends StandardItemModel
         return data;
     }
 
-    allowCreation()
+    async allowCreation(data, options, user)
     {
-        let allowed = super.allowCreation(this.parent);
+        let allowed = await super.allowCreation(data, options, user);
         
         if (allowed && this.parent.actor && this.requirement.script)
         {
@@ -82,7 +82,7 @@ export class TalentModel extends StandardItemModel
             allowed = script.execute() ? true : false; // Make sure it's boolified
             if (!allowed)
             {
-                ui.notifications.error("Talent Requirement not met");
+                allowed = await Dialog.confirm({title : game.i18n.localize("IMPMAL.IgnorePrerequisite"), content : game.i18n.localize("IMPMAL.IgnorePrerequisiteContent")});
             }
         }
         let existing = this.parent.actor?.itemCategories.talent.find(i => i.name == this.parent.name);
