@@ -211,9 +211,9 @@ class ModuleDocumentResolver extends FormApplication
         options.resizable = true;
         options.height = 600;
         options.width = 400;
-        options.template = "systems/wfrp4e/templates/apps/document-resolver.hbs";
-        options.classes.push("document-resolver");
-        options.title = game.i18n.localize("INIT.ResolveDuplicates");
+        options.template = "systems/impmal/templates/apps/document-resolver.hbs";
+        options.classes = options.classes.concat(["document-resolver", "impmal"]);
+        options.title = game.i18n.localize("IMPMAL.ResolveDuplicates");
         return options;
     }
 

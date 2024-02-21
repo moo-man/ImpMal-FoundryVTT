@@ -50,7 +50,7 @@
   "url": "https://github.com/moo-man/ImpMal-FoundryVTT",
   "socket": true,
   "manifest": "https://github.com/moo-man/ImpMal-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/moo-man/ImpMal-FoundryVTT/releases/download/1.0.2/impmal.zip",
+  "download": "https://github.com/moo-man/ImpMal-FoundryVTT/releases/download/1.1.0/impmal.zip",
   "license": "LICENSE.txt"
 }
 

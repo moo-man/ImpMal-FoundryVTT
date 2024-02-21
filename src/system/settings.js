@@ -46,9 +46,9 @@ export default function registerSettings()
             "crithead" : "dvsiB3K8ezHI8F7M",
             "critbody" : "kCP63j7ZWPVquLqW",
             "critvehicle" : "wyIDvsnkkI18FbJy",
-            "fumble" : "3uBH6hO5EoJUORN9",
-            "perils" : "90WGBoSRiUCOdFVS",
-            "phenomena" : "Syx01tKswPV4oEsz",
+            "fumble" : "HL6DtTGWIUQy5NZ9",
+            "perils" : "2YYlAUyaVIt4bZVa",
+            "phenomena" : "9aSbu2mswOOI43J1",
             "talents" : "9SLhM8FOgluaUwvO"
         }
     });

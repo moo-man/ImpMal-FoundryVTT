@@ -507,6 +507,8 @@
     "IMPMAL.RerollTest" : "Reroll Test",
     "IMPMAL.RerollTestFate" : "Fate Reroll Test",
     "IMPMAL.Resolve" : "Resolve",
+    "IMPMAL.ResolveDuplicates" : "Resolve Duplicates",
+    "IMPMAL.ResolveDuplicatesNote" : "These Documents already exist in the world; would you like to apply the data from the initialized module instead?<br><br>Leaving a Document checked will apply the new data, otherwise no modifications will be made.",
     "IMPMAL.Resist" : "Resist",
     "IMPMAL.RestrainedThreshold" : "Restrained Threshold",
     "IMPMAL.Restricted" : "Restricted",
