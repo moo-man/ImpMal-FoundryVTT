@@ -117,7 +117,7 @@ export class SkillTest extends CharacteristicTest
             if(this.succeeded)
             {
                 tags.push(`<strong>${game.i18n.localize("IMPMAL.Purged")}</strong>: ${this.context.purged}`);
-                tags.push(`<strong>[[/r 1d100 + ${10 * this.context.purged}]]{${game.i18n.localize("IMPMAL.PsychicPhenomena")}}</strong>`);
+                tags.push(`<a class="table-roll color-negative fumble" data-table="phenomena" data-formula="1d10 + ${10 * this.context.purged}"}'><i class="fa-solid fa-dice-d10"></i>${game.i18n.localize("IMPMAL.PsychicPhenomena")}</a>`);
             }
         }
 
