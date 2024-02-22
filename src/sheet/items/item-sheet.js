@@ -70,6 +70,11 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         return this[`_onDropItem${item.type[0].toUpperCase() + item.type.substring(1)}`]?.(ev, item);
     }
 
+    _canDragDrop()
+    {
+        return true;
+    }
+
     /**
      * @abstract
      * @param {Event} ev Triggering Event
