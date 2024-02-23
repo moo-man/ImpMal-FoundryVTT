@@ -58,9 +58,9 @@ export class PhysicalItemModel extends StandardItemModel
     }
 
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
         data.details.physical = `<div>${game.i18n.format("IMPMAL.ItemDisplayXSolars", {solars : this.cost})}</div> <div>${game.impmal.config.availability[this.availability]}</div> <div>${game.i18n.format("IMPMAL.ItemDisplayXEnc", {enc : this.encumbrance.value})}</div>`;
         return data;
     }

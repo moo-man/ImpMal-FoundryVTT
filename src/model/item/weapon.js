@@ -384,9 +384,9 @@ export class WeaponModel extends EquippableItemModel
         return this.attackType == "ranged";
     }
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
         let config = game.impmal.config;
         data.tags = data.tags.concat([
             game.i18n.format("IMPMAL.ItemDisplayXDamage", {damage : this.damage.value}),

@@ -25,9 +25,9 @@ export class ModificationModel extends PhysicalItemModel
         this.removedTraits.compute();
     }
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
 
         data.details.item.addedTraits = `<strong>${game.i18n.localize("IMPMAL.TraitsAdded")}</strong>: ${this.addedTraits.htmlArray}`,
         data.details.item.removedTraits = `<strong>${game.i18n.localize("IMPMAL.TraitsRemoved")}</strong>: ${this.removedTraits.htmlArray}`,

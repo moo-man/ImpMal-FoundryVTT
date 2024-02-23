@@ -14,12 +14,12 @@ export default class DocumentChoice extends FormApplication
 
 
 
-    constructor(documents, number=1, resolve, options)
+    constructor(documents, number=1, options)
     {
         super({}, options);
         this.documents = documents;
         this.number = number;
-        this.resolve = resolve;
+        this.resolve = options.resolve;
     }
 
     async getData()
@@ -38,7 +38,13 @@ export default class DocumentChoice extends FormApplication
         return chosen;
     }
 
-    static create(documents, number, {text=""}={})
+    close(options)
+    {
+        this.resolve([]);
+        super.close(options);
+    }
+
+    static create(documents, number, {text="", title=""}={})
     {
 
         if (typeof documents == "object" && !Array.isArray(documents) && !(documents instanceof Collection))
@@ -50,13 +56,9 @@ export default class DocumentChoice extends FormApplication
         {
             return [];
         }
-        else if (documents.length == 1)
+        return new Promise((resolve) => 
         {
-            return documents;
-        }
-        return new Promise(resolve => 
-        {
-            new this(documents, number, resolve, {text}).render(true);
+            new this(documents, number, {text, title, resolve}).render(true);
         });
     }
 

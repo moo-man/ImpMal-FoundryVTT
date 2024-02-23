@@ -31,7 +31,7 @@ export class BaseActorModel extends foundry.abstract.DataModel
         return preCreateData;
     }
 
-    allowCreation()
+    async allowCreation(data, options, user)
     {
         return true;
     }

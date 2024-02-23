@@ -108,11 +108,12 @@
                 <hr>
                 {{> systems/impmal/templates/item/partials/item-choices.hbs label='Items' display=item.system.character.items.textDisplay path='character.items'}}
 
+
                 <div class="form-group">
                     <label>
-                        <input type="number" value="{{system.character.solars}}" name="system.character.solars">
                         {{localize "IMPMAL.Solars"}}
                     </label>
+                    <input type="number" value="{{system.character.solars}}" name="system.character.solars">
                 </div>
             </div>
         </div>

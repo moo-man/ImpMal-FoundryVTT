@@ -1,3 +1,4 @@
+import { ImpMalActor } from "../../document/actor";
 import { ChoiceModel } from "../shared/choices";
 import { DeferredDocumentListModel } from "../shared/list";
 import { DeferredDocumentModel } from "../shared/reference";
@@ -34,11 +35,102 @@ export class DutyModel extends DualItemModel
         return schema;
     }
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
         data.details.item.faction = `${game.i18n.localize("IMPMAL.Faction")}: ${this.faction}`;
         return data;
     }
+
+    async applyDutyTo(actor)
+    {
+        let data = actor.toObject();
+        let items = [];
+        for(let ch in this.character.characteristics)
+        {
+            if (this.character.characteristics[ch])
+            {
+                data.system.characteristics[ch].starting += this.character.characteristics[ch];
+            }
+        }
+
+        for(let ch in this.character.skills)
+        {
+            if (this.character.skills[ch])
+            {
+                data.system.skills[ch].advances += this.character.skills[ch];
+            }
+        }
+
+
+        for(let item of this.character.items.options)
+        {
+            if (item.type == "placeholder")
+            {
+                items.push({name : item.name, type : "equipment"});
+            }
+            else if (item.type == "item")
+            {
+                if (item.idType == "id")
+                {
+                    items.push(await game.impmal.utility.findId(item.documentId));
+                }
+                else if (item.idType == "uuid")
+                {
+                    items.push(await fromUuid(item.documentId));
+                }
+            }
+        }
+
+        items = items.map(i => i.toObject());
+
+        data.system.solars += this.character.solars;
+
+        if (actor.type == "npc")
+        {
+            data.name = this.parent.name;
+        }
+        else if (actor.type == "character")
+        {
+            let temp = new ImpMalActor(data);
+            temp.prepareData();
+            let expSpent = temp.system.xp.spent;
+            data.system.xp.other.list.push({description : this.parent.name, xp : -1 * expSpent});
+            for(let item of items)
+            {
+                if (item.type =="talent")
+                {
+                    item.system.xpCost = 0;
+                }
+            }
+        }
+        await actor.update(data);
+        await actor.createEmbeddedDocuments("Item", items, {skipRequirement : true});
+        ui.notifications.notify(game.i18n.format("IMPMAL.DutyApplied", {name : this.parent.name}));
+    }
+
+    async allowCreation(data, options, user)
+    {
+        let allowed = await super.allowCreation(data, options, user);
+
+        if (this.category == this.parent.actor?.type || (this.category == "character" && this.parent.actor?.type == "npc")) // can add character duties to npcs for quick stats
+        {
+            if (this.category == "character")
+            {
+                let apply = await Dialog.confirm({title : game.i18n.localize("IMPMAL.ApplyDuty"), content : game.i18n.localize("IMPMAL.ApplyDutyContent")});
+                if (apply)
+                {
+                    this.applyDutyTo(this.parent?.actor);
+                }
+                allowed = false;
+            }
+        }
+        else 
+        {
+            allowed = false;
+        }
+        return allowed;
+    }
+
 
 }

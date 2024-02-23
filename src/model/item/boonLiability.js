@@ -15,9 +15,9 @@ export class BoonLiabilityModel extends StandardItemModel
         return schema;
     }
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
         data.tags.push(game.i18n.localize(this.category == "boon" ? "IMPMAL.Boon" : "IMPMAL.Liability"));
         return data;
     }

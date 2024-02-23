@@ -65,9 +65,9 @@ export class TalentModel extends StandardItemModel
         this.xp = this.xpCost * this.taken;
     }
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
         data.details.item.requirement = `<strong>${game.i18n.localize("IMPMAL.Requirement")}</strong>: ${this.requirement.value}`;
         return data;
     }
@@ -76,7 +76,7 @@ export class TalentModel extends StandardItemModel
     {
         let allowed = await super.allowCreation(data, options, user);
         
-        if (allowed && this.parent.actor && this.requirement.script)
+        if (allowed && this.parent.actor && this.requirement.script && !options.skipRequirement)
         {
             let script = new ImpMalScript({string : this.requirement.script, label : "Talent Requirement"}, ImpMalScript.createContext(this.parent));
             allowed = script.execute() ? true : false; // Make sure it's boolified

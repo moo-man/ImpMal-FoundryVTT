@@ -57,9 +57,9 @@ export class ForceFieldModel extends EquippableItemModel
         }
     }
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
         data.details.item.protection = `${game.i18n.localize("IMPMAL.Protection")}: ${this.protection}`,
         data.details.item.overload = `${game.i18n.localize("IMPMAL.Overload")}: ${this.overload.value}`,
         data.tags = data.tags.concat(this.traits.htmlArray);

@@ -15,11 +15,11 @@ export class StandardItemModel extends BaseItemModel
         return schema;
     }
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
-        data.notes = this.notes.player;
-        data.gmnotes = this.notes.gm;
+        let data = await super.summaryData();
+        data.notes = await TextEditor.enrichHTML(this.notes.player, {async: true, relativeTo: this.parent});
+        data.gmnotes = await TextEditor.enrichHTML(this.notes.gm, {async: true, relativeTo: this.parent});
         return data;
     }
 }

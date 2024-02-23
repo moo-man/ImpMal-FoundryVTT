@@ -19,7 +19,7 @@ export class BaseItemModel extends foundry.abstract.DataModel
         return {};
     }
 
-    allowCreation()
+    async allowCreation(data, options, user)
     {
         if (this.parent.actor)
         {
@@ -51,7 +51,7 @@ export class BaseItemModel extends foundry.abstract.DataModel
         return {};
     }
 
-    async createChecks()
+    async createChecks(data, options, user)
     {
         
     }
@@ -115,7 +115,7 @@ export class BaseItemModel extends foundry.abstract.DataModel
     /**
      * Used by sheet dropdowns, posting to chat, and test details
      */
-    summaryData()
+    async summaryData()
     {
         return {
             notes : "",

@@ -13,9 +13,9 @@ export class CorruptionModel extends StandardItemModel
         return schema;
     }
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
         data.tags.push(game.impmal.config.corruptionType[this.category]);
         return data;
     }

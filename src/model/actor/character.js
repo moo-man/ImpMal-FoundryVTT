@@ -11,7 +11,7 @@ let fields = foundry.data.fields;
 
 export class CharacterModel extends StandardActorModel 
 {
-    static preventItemTypes = ["boonLiability", "duty"];
+    static preventItemTypes = ["boonLiability"];
     static singletonItemTypes = ["role", "faction", "origin"];
 
     static defineSchema() 

@@ -56,9 +56,9 @@ export class PowerModel extends StandardItemModel
         this.damage.compute(actor);
     }
 
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
         let config = game.impmal.config;
         data.tags = data.tags.concat([
             config[this.discipline],

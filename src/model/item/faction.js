@@ -1,3 +1,4 @@
+import DocumentChoice from "../../apps/document-choice";
 import { ChoiceModel } from "../shared/choices";
 import { DeferredDocumentListModel } from "../shared/list";
 import { ItemInfluenceModel } from "./components/influence";
@@ -35,4 +36,22 @@ export class FactionModel extends DualItemModel
         return schema;
     }
 
+
+    async createChecks(data, options, user)
+    {
+        if (["character", "npc"].includes(this.parent.actor?.type))
+        {
+            let duties = await this.character.duty.getDocuments();
+            if (duties.length >= 1)
+            {
+                DocumentChoice.create(duties, 1, {text : game.i18n.localize("IMPMAL.DutyChoice"), title : game.i18n.localize("IMPMAL.ApplyDuty")}).then(duty => 
+                {
+                    if (duty[0])
+                    {
+                        duty[0].system.applyDutyTo(this.parent?.actor);
+                    }
+                });
+            }
+        }
+    }
 }

@@ -6,7 +6,7 @@ let fields = foundry.data.fields;
 export class NPCModel extends StandardActorModel 
 {
     static singletonItemTypes = ["faction"];
-    static preventItemTypes = ["duty", "role", "boonLiability", "origin"];
+    static preventItemTypes = ["role", "boonLiability", "origin"];
 
     static defineSchema() 
     {

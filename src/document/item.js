@@ -282,7 +282,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     async postItem()
     {
-        let summary = await renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", this.system.summaryData());
+        let summary = await renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", await this.system.summaryData());
         let content = await renderTemplate("systems/impmal/templates/chat/item-post.hbs", {name : this.name, img : this.img, summary, item : this});
         ChatMessage.create({
             content,

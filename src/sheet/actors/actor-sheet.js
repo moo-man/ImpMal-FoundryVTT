@@ -417,7 +417,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         else 
         {
             // Add a div with the item summary below the item
-            let summaryData = document?.system?.summaryData();
+            let summaryData = await document?.system?.summaryData();
             if (!summaryData)
             {
                 game.impmal.log(`No Summary Data found for Document ${document?.name}`, {force : true});

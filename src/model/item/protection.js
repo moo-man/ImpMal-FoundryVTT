@@ -71,9 +71,9 @@ export class ProtectionModel extends EquippableItemModel
     }
 
     
-    summaryData()
+    async summaryData()
     {
-        let data = super.summaryData();
+        let data = await super.summaryData();
         data.details.item.protection = `${game.i18n.localize("IMPMAL.Protection")}: ${this.protection}`,
         data.tags = data.tags.concat(
             game.impmal.config.protectionTypes[this.category], 
