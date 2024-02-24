@@ -3,6 +3,14 @@ import BackgroundItemSheet from "./item-background-sheet";
 
 export default class OriginItemSheet extends BackgroundItemSheet
 {
+    async getData()
+    {
+        let data = await super.getData();
+        data.item.system.equipment.documents = await Promise.all(data.item.system.equipment.documents);
+        return data;
+    }
+
+
     _onDropItem(ev, item)
     {
         return this.item.update({"system.equipment.list" : this.item.system.equipment.add({id : item.id})});
@@ -13,7 +21,7 @@ export default class OriginItemSheet extends BackgroundItemSheet
         this.item.update({"system.factionTable" : this.item.system.factionTable.set(table)});
     }
 
-    _onListEdit(ev)
+    async _onListEdit(ev)
     {
         let id = this._getId(ev);
         let collection = this._getCollection(ev);
@@ -21,7 +29,7 @@ export default class OriginItemSheet extends BackgroundItemSheet
         {
             return super._onListEdit(ev);
         }
-        let item = this.item.system.equipment.documents.find(i => i.id == id);
+        let item = (await Promise.all(this.item.system.equipment.documents)).find(i => i.id == id);
         item.sheet?.render(true, {editable : false});
     }
 
