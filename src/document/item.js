@@ -6,11 +6,15 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
 
     async _preCreate(data, options, user)
     {
-        let allowed = await super._preCreate(data, options, user);
+        await super._preCreate(data, options, user);
 
-        if (!allowed)
+        if (this.isOwned)
         {
-            return allowed;
+            let allow = await this.system.allowCreation(data, options, user);
+            if (!allow)
+            {
+                return false;
+            }
         }
 
         // If this item was added from an effect, mark it so it can be deleted along with the effect

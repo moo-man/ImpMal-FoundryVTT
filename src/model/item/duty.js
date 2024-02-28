@@ -128,6 +128,7 @@ export class DutyModel extends DualItemModel
         else 
         {
             allowed = false;
+            ui.notifications.error("IMPMAL.ErrorPatronDutyCharacter", {localize : true});
         }
         return allowed;
     }
