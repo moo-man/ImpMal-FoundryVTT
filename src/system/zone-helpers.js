@@ -295,6 +295,11 @@ export default class ZoneHelpers
             };
         });
 
+        if (zones.length == 0)
+        {
+            return ui.notifications.error("IMPMAL.ErrorNoZones", {localize : true});
+        }
+
         DocumentChoice.create(zones, 1, {text : game.i18n.localize("IMPMAL.PickZone")}).then(choices => 
         {
             this.applyEffectToZone(effectUuids, messageId, canvas.scene.drawings.get(choices[0].id));
