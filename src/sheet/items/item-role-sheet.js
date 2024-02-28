@@ -17,6 +17,11 @@ export default class RoleItemSheet extends BackgroundItemSheet
     {
         ev.stopPropagation();
         let id = this._getId(ev);
+        let collection = this._getCollection(ev);
+        if (collection == "effects")
+        {
+            return super._onListEdit(ev);
+        }
         let item = this.item.system.talents.documents.find(i => i.id == id);
         item.sheet?.render(true, {editable : false});
     }
@@ -25,6 +30,11 @@ export default class RoleItemSheet extends BackgroundItemSheet
     {
         ev.stopPropagation();
         let id = this._getId(ev);
+        let collection = this._getCollection(ev);
+        if (collection == "effects")
+        {
+            return super._onListDelete(ev);
+        }
         let path = this._getPath(ev);
         if (id)
         {
