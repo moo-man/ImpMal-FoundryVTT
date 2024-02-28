@@ -218,7 +218,7 @@ export default function()
             "mWJZyZvlCRIV4IJ1": "let injury = (await game.impmal.utility.findId(\"QAcwzyxchW3ihCfd\")).toObject()\nawait this.actor.createEmbeddedDocuments(\"Item\", [injury]);",
             "IEBxTD2DMp2NAgkF": "        let test = await this.actor.setupSkillTest({key : \"discipline\", name : \"Fear\"}, {title : {append : \" - \" + this.effect.name}})\n        if (test.failed)\n        {\n            this.actor.addCondition(\"frightened\");\n        }",
             "MCzYYTFe1kpGHs7l": "return args.data.weapon || args.data.power",
-            "JjyiHkKRDBb6RYlq": "        let location = this.effect.getFlag(\"impmal\", \"location\");\n        if (location)\n        {\n            args.system.combat.hitLocations[location].armour++;\n            // TODO add label tooltip \n        }",
+            "JjyiHkKRDBb6RYlq": "        let location = this.effect.getFlag(\"impmal\", \"location\");\n        if (location)\n        {\n            args.system.combat.hitLocations[location].armour++;\n            args.system.combat.hitLocations[location].sources.push({name : this.effect.name, value : 1}) \n        }",
             "2QUNwoSgjTrWeZqz": "setProperty(this.actor, \"flags.impmal.eyesLost\", this.actor.flags.impmal?.eyesLost || 0)\n\nthis.actor.flags.impmal.eyesLost++;\n\nif (this.actor.flags.impmal.eyesLost >= 2 && !this.actor.hasCondition(\"blinded\"))\n{\n    this.actor.addCondition(\"blinded\");\n}",
             "AxOlBrKoqY17Pebt": "return args.data.skill != \"awareness\" || (this.actor.getFlag(\"impmal\", \"eyesLost\") || 0) != 1\n\n",
             "Fh4C7WHQYiiCG305": "args.advCount += 1;",
