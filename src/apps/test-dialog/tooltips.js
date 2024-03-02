@@ -89,7 +89,7 @@ export class DialogTooltips
     finish(dialog, label)
     {
         this._modifier2 = dialog.fields.modifier;
-        this._SL1 = dialog.fields.SL;
+        this._SL2 = dialog.fields.SL;
         this._difficulty2 = dialog.fields.difficulty;
         this._advantage2 = dialog.advCount;
         this._disadvantage2 = dialog.disCount; 
@@ -160,8 +160,17 @@ export class DialogTooltips
         }
     }
 
-    _formatTooltip(type)
+    _formatTooltip(type, addLabel=false)
     {
+
+        let typeLabel = ({
+            "modifier" : "",
+            "difficulty" : "",
+            "SL" : "SL",
+            "advantage" : "Advantage",
+            "disadvantage" : "Disadvantage",
+        })[type];
+
         if (this[`_${type}`].length == 0)
         {
             return "";
@@ -173,7 +182,7 @@ export class DialogTooltips
                 if (i.value)
                 {
                     // Add sign to positive numbers
-                    return `&#8226; ${i.label} (${i.value > 0 ? "+" + i.value : i.value})`;
+                    return `&#8226; ${i.label} (${HandlebarsHelpers.numberFormat(i.value, {hash : {sign: true}})}${(addLabel && typeLabel) ? " " + typeLabel : ""})`;
                 }
                 else 
                 { 
@@ -182,5 +191,33 @@ export class DialogTooltips
 
             }).join("</p><p>")}</p>`;
         }   
+    }
+
+
+    // Collection of all typed tooltips
+    // used to display modifiers in the chat card
+    getCollectedTooltips()
+    {
+        return this._formatTooltip("modifier", true) + this._formatTooltip("difficulty", true) + this._formatTooltip("SL", true) + this._formatTooltip("advantage", true) + this._formatTooltip("disadvantage", true);
+    }
+
+    getBreakdown(dialog)
+    {
+        let breakdown = ``;
+        let difficulty = game.impmal.config.difficulties[dialog.fields.difficulty];
+        breakdown += `<p>${game.i18n.localize("IMPMAL.Base")}: @BASE</p>`;
+        breakdown += `<p>${game.i18n.localize("IMPMAL.Modifier")}: ${HandlebarsHelpers.numberFormat(dialog.fields.modifier, {hash : {sign: true}})}</p>`;
+        breakdown += `<p>${game.i18n.localize("IMPMAL.Difficulty")}: ${game.i18n.localize(difficulty.name)} (${HandlebarsHelpers.numberFormat(difficulty.modifier, {hash : {sign: true}})})</p>`;
+        breakdown += `<p>${game.i18n.localize("IMPMAL.SL")}: ${HandlebarsHelpers.numberFormat(dialog.fields.SL, {hash : {sign: true}})}</p>`;
+        breakdown += `<p>${game.i18n.localize("IMPMAL.Advantage")}: ${dialog.advCount} ${dialog.userEntry.state == "adv" ? "(" + "Forced" + ")" : "" }</p>`;
+        breakdown += `<p>${game.i18n.localize("IMPMAL.Disadvantage")}: ${dialog.disCount} ${dialog.userEntry.state == "dis" ? "(" + "Forced" + ")" : "" }</p>`;
+
+        let modifierBreakdown = this.getCollectedTooltips();
+        if (modifierBreakdown)
+        {
+            breakdown += `<hr><p>${game.i18n.localize("IMPMAL.ModifierBreakdown")}</p>`;
+            breakdown += this.getCollectedTooltips();
+        }
+        return breakdown;
     }
 }

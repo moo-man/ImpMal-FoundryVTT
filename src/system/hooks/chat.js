@@ -23,5 +23,9 @@ export default function()
     {
         ImpMalItem.itemPostListeners(html);
         ChatHelpers.removeGMOnlyElements(html);
+        if (!app.isAuthor && !app.isOwner)
+        {
+            ChatHelpers.removeNonOwnerElements(html);
+        }
     });
 }

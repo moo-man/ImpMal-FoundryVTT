@@ -6,15 +6,27 @@ export class TraitTest extends AttackTest
 {
     static contextClass = TraitTestContext;
 
-    computeTarget() 
+    /**
+     * Compute the target value for this test
+     * 
+     * @param {Boolean} base Whether to add modifiers/difficulty
+     * @returns 
+     */
+    computeTarget(base=false)
     {
-        return TargetCalculator.compute({
+        let targetData = {
             actor : this.actor, 
             type : "skill", 
             data : {skill : this.context.actorSkill, characteristic : this.context.characteristic}, 
-            modifier : this.data.modifier, 
-            difficulty : this.data.difficulty
-        });
+        };
+     
+        if (!base)
+        {
+            targetData.modifier = this.data.modifier, 
+            targetData.difficulty = this.data.difficulty;
+        }
+     
+        return TargetCalculator.compute(targetData);
     }
 
     async runPreScripts()

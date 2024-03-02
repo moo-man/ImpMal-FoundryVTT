@@ -248,6 +248,7 @@ export class TestDialog extends Application
         ev.preventDefault();
         ev.stopPropagation();
         let dialogData = mergeObject(this.data, this.fields);
+        dialogData.context.breakdown = this.tooltips.getBreakdown(this);
 
         for(let script of this.data.scripts)
         {

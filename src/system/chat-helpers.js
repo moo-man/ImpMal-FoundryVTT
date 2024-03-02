@@ -42,6 +42,11 @@ export default class ChatHelpers
         }
     }
 
+    static removeNonOwnerElements(html)
+    {
+        html.find(".test-breakdown").remove();
+    }
+
     static addOpposedHighlightListeners(html)
     {
         html.on("mouseover", ".targets img", TokenHelpers._onHoverInOpposedImg.bind(TokenHelpers));

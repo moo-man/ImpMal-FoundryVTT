@@ -7,15 +7,27 @@ export class CharacteristicTest extends BaseTest
 
     static contextClass = CharacteristicTestContext;
 
-    computeTarget() 
+    /**
+     * Compute the target value for this test
+     * 
+     * @param {Boolean} base Whether to add modifiers/difficulty
+     * @returns 
+     */
+    computeTarget(base=false) 
     {
-        return TargetCalculator.compute({
+        let targetData = {
             actor : this.actor, 
             type : "characteristic", 
             data : this.context.characteristic, 
-            modifier : this.data.modifier, 
-            difficulty : this.data.difficulty
-        });
+        };
+
+        if (!base)
+        {
+            targetData.modifier = this.data.modifier, 
+            targetData.difficulty = this.data.difficulty;
+        }
+
+        return TargetCalculator.compute(targetData);
     }
 
     get characteristic() 

@@ -18,6 +18,7 @@ export class BaseTest
 
         this.context = new this.constructor.contextClass(context);
         this.data.target = this.computeTarget();
+        this.context.breakdown = this.context.breakdown.replace("@BASE", this.computeTarget(true));
         if (!result)
         {
             this.result = new this.constructor.evaluatorClass(data);
@@ -28,10 +29,23 @@ export class BaseTest
         }
     }
 
-    // Base test has no target computation, just use static value provided
-    computeTarget() 
+    /**
+     * Compute the target value for this test
+     * Base test has no target computation, just use static value provided
+     * 
+     * @param {Boolean} base Whether to add modifiers/difficulty
+     * @returns 
+     */
+    computeTarget(base=false) 
     {
-        return this.data.target + this.data.modifier + (game.impmal.config.difficulties[this.data.difficulty]?.modifier || 0);
+        if (base)
+        {
+            return this.data.target;
+        }
+        else
+        {
+            return this.data.target + this.data.modifier + (game.impmal.config.difficulties[this.data.difficulty]?.modifier || 0);
+        }
     }
 
     async roll() 
