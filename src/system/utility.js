@@ -184,4 +184,60 @@ export default class ImpMalUtility
             ImpMalChatMessage.corruptionMessage(corruptionValue);
         });
     }
+
+    static async rollItemMacro(uuid, actor)
+    {
+        let item = await fromUuid(uuid);
+        if (item.type == "specialisation")
+        {
+            actor.setupSkillTest({itemId : item.id});
+        }
+        else if (item.type == "weapon")
+        {
+            actor.setupWeaponTest(item.id);
+        }
+        else if (item.type == "power")
+        {
+            actor.setupPowerTest(item.id);
+        }
+        else if (item.type == "trait")
+        {
+            actor.setupTraitTest(item.id);
+        }
+    }
+
+
+    static async createMacro(data, position)
+    {
+        let macroData = {};
+
+
+        if (data.type == "Item")
+        {
+            let item = await fromUuid(data.uuid);
+            macroData.name = item.name;
+            macroData.img = item.img;
+            macroData.command = `game.impmal.utility.rollItemMacro("${item.uuid}", token.actor || character)`;
+            macroData.type = "script";
+        }
+
+        let existingMacro = game.macros.contents.find(m => 
+            m.canExecute && 
+            m.name == macroData.name && 
+            m.command == macroData.command);
+            
+        // If macro already exists, do not create a new one
+        let macro;
+        if (existingMacro)
+        {
+            macro = existingMacro;
+        }
+        else 
+        {
+            macro = await Macro.create(macroData);
+        }
+
+
+        game.user.assignHotbarMacro(macro, position);
+    }
 }

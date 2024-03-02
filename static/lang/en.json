@@ -278,7 +278,7 @@
     "IMPMAL.ErrorNoFateLeft" : "No Fate points left!",
     "IMPMAL.ErrorNoZones" : "No Zones to select. Add Drawings with text to the Scene to create Zones.",
     "IMPMAL.ErrorNoActorsOrTargets" : "No Assigned Actors or Targets",
-    "IMPMAL.ErrorReloadNoAmmo" : "ErrorReloadNoAmmo",
+    "IMPMAL.ErrorReloadNoAmmo" : "No Ammo Item associated with this Weapon",
     "IMPMAL.ErrorOwnedEffectOptions" : "Effect Options should not be configured while the Item is owned.",
     "IMPMAL.ErrorApplyCustomAmmo" : "Custom ammo can only be applied to non-custom ammo. ",
     "IMPMAL.ErrorTypeAmmo" : "Cannot buy ammunition for this Weapon type",

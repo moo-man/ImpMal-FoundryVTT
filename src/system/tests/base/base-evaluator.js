@@ -161,7 +161,7 @@ export class BaseTestEvaluator
         // Two cases, natural roll, or SL modified. Both cases can be solved by looking at the original roll vs target
         else if (SL == 0)
         {
-            if (roll <= target)
+            if (roll <= target || modifier > 0) // If SL modifier exists, that means it went from -X SL to 0 SL, in that case it becomes +0 SL
             {
                 return `+${SL}`;
             }

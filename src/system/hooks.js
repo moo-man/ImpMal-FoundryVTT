@@ -10,6 +10,7 @@ import i18n from "./hooks/i18n";
 import setup from "./hooks/setup";
 import journal from "./hooks/journal";
 import loadScripts from "./hooks/loadScripts";
+import sidebar from "./hooks/sidebar";
 
 export default function() 
 {
@@ -25,10 +26,20 @@ export default function()
     setup();
     journal();
     loadScripts();
+    sidebar();
 
     Hooks.on("preCreateJournalEntry", _keepID);
     Hooks.on("preCreateScene", _keepID);
     Hooks.on("preCreateRollTable", _keepID);
+
+    Hooks.on("hotbarDrop", (hotbar, data, pos) => 
+    {
+        if (data.type == "Item")
+        {
+            game.impmal.utility.createMacro(data, pos);
+            return false;
+        }
+    });
 
     
     function _keepID(document, data, options)
