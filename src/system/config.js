@@ -1047,7 +1047,7 @@ const IMPMAL = {
                         },
                         {
                             label: "SL",
-                            string: "if (args.result.SL > 0) { args.result.SL = Math.min(args.result.SL, this.actor.system.characteristics.tgh.bonus); args.result.signedSL = '+' + args.result.SL; }",
+                            string: "if (args.result.SL > 0) { args.result.SL = Math.min(args.result.SL, this.actor.system.characteristics.tgh.bonus); }",
                             trigger: "rollTest",
                         }
                     ]

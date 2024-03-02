@@ -33,6 +33,11 @@ export class TestDialog extends Application
         return ChatMessage.getSpeakerActor(this.data.speaker);
     }
 
+    get context() 
+    {
+        return this.data.context;
+    }
+
     constructor(data={}, fields={}, resolve)
     {
         super();

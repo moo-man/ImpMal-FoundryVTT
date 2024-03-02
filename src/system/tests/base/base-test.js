@@ -122,7 +122,6 @@ export class BaseTest
         }
 
         this.data.SL += num;
-        delete this.data.result.signedSL; // Remove 
         this.roll();
     }
 

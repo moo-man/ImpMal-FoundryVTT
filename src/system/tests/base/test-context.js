@@ -16,6 +16,7 @@ export class TestContext
     appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}
     defendingAgainst = undefined; // message ID of attacking test
     opposedFlagsAdded = false;
+    resist = [];
     // uuid = ""; // Generic UUID variable used in subclasses
 
     constructor(context)

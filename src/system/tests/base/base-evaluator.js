@@ -47,15 +47,14 @@ export class BaseTestEvaluator
 
         // Prefer predefined target vs computed target
         this.target = data.result.target || data.target;
-        this.signedSL = data.result.signedSL > 0 ? `+${data.result.signedSL}` : data.result.signedSL; // SL predefined
+        this.SL = data.result.SL; // SL predefined
         this.state = this.state || data.state;
         this.onlyAutomaticSuccess = data.onlyAutomaticSuccess;
         this.outcome = "";
         
         this.handleReversal({state : this.state, force : data.reverse});
         
-        this.signedSL = this.signedSL ? this.signedSL : this.calculateSL(this.roll, this.target, data.SL);
-        this.SL = Number(this.signedSL);
+        this.SL = Number.isNumeric(this.SL) ? this.SL : this.calculateSL(this.roll, this.target, data.SL);
 
         if (this.SL > 0 || (this.SL == 0 && this.roll <= this.target) || this.roll <= 5)
         {
@@ -66,10 +65,15 @@ export class BaseTestEvaluator
             this.outcome = "failure";
         }
 
+        // if an SL modifier made the SL be 0 (-2 SL with a +2 SL bonus), it it considered +0
+        if (this.outcome == "failure" && this.SL == 0 && data.SL && this.roll < 96 && !this.onlyAutomaticSuccess)
+        {
+            this.outcome = "success";
+        }
+
         if (this.outcome == "success" && this.onlyAutomaticSuccess && this.roll > 5)
         {
             this.SL = 0;
-            this.signedSL = "-0";
             this.outcome = "failure";
         }
 
@@ -136,39 +140,30 @@ export class BaseTestEvaluator
         let op = target < 0 ? "ceil" : "floor";
         let SL = Math[op](target / 10) - Math.floor(roll / 10);
         SL += modifier;
+        return SL;
+    }
 
-        // Automatic Success/Failure
-        if (roll >= 96)
+    get signedSL()
+    {
+        
+        if (this.outcome == "success")
         {
-            // If SL is less than 0, use SL, otherwise use -0
-            return `${SL < 0 ? SL : ("-" + 0)}` ;
+            return `+${this.SL}`;
         }
-        else if (roll <= 5)
+        else if (this.outcome == "failure")
         {
-            // If SL is greater than 0, use +SL, otherwise use +0
-            return `+${SL > 0 ? SL : 0}`;
-        }
-
-        if (SL > 0)
-        {
-            return `+${SL}`;
-        }
-        else if (SL < 0)
-        {
-            return `${SL}`;
-        }
-        // If 0, could be either +0 or -0
-        // Two cases, natural roll, or SL modified. Both cases can be solved by looking at the original roll vs target
-        else if (SL == 0)
-        {
-            if (roll <= target || modifier > 0) // If SL modifier exists, that means it went from -X SL to 0 SL, in that case it becomes +0 SL
+            if (this.SL == 0)
             {
-                return `+${SL}`;
+                return `-0`;
             }
-            else if (roll > target)
+            else 
             {
-                return `-${SL}`;
+                return `${this.SL}`;
             }
+        }
+        else 
+        {
+            throw Error("SL not calculated yet");
         }
     }
 
