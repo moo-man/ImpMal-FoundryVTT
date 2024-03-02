@@ -23,7 +23,14 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 
     get template()
     {
-        return `systems/impmal/templates/actor/${this.actor.type}-sheet.hbs`;
+        if (this.actor.limited)
+        {
+            return `systems/impmal/templates/actor/limited-sheet.hbs`;
+        }
+        else 
+        {
+            return `systems/impmal/templates/actor/${this.actor.type}-sheet.hbs`;
+        }
     }
 
     async getData()
