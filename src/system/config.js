@@ -1650,85 +1650,99 @@ const IM_CONFIG = {
             icon: "systems/impmal/assets/icons/conditions/ablaze.svg",
             id: "ablaze",
             statuses : ["ablaze"],
-            name: "IMPMAL.ConditionAblaze"
+            name: "IMPMAL.ConditionAblaze",
+            title: "IMPMAL.ConditionAblaze"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/bleeding.svg",
             id: "bleeding",
             statuses : ["bleeding"],
-            name: "IMPMAL.ConditionBleeding"
+            name: "IMPMAL.ConditionBleeding",
+            title: "IMPMAL.ConditionBleeding"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/blinded.svg",
             id: "blinded",
             statuses : ["blinded"],
-            name: "IMPMAL.ConditionBlinded"
+            name: "IMPMAL.ConditionBlinded",
+            title: "IMPMAL.ConditionBlinded"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/deafened.svg",
             id: "deafened",
             statuses : ["deafened"],
-            name: "IMPMAL.ConditionDeafened"
+            name: "IMPMAL.ConditionDeafened",
+            title: "IMPMAL.ConditionDeafened"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/fatigued.svg",
             id: "fatigued",
             statuses : ["fatigued"],
-            name: "IMPMAL.ConditionFatigued"
+            name: "IMPMAL.ConditionFatigued",
+            title: "IMPMAL.ConditionFatigued"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/frightened.svg",
             id: "frightened",
             statuses : ["frightened"],
-            name: "IMPMAL.ConditionFrightened"
+            name: "IMPMAL.ConditionFrightened",
+            title: "IMPMAL.ConditionFrightened"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/incapacitated.svg",
             id: "incapacitated",
             statuses : ["incapacitated"],
-            name: "IMPMAL.ConditionIncapacitated"
+            name: "IMPMAL.ConditionIncapacitated",
+            title: "IMPMAL.ConditionIncapacitated"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/overburdened.svg",
             id: "overburdened",
             statuses : ["overburdened"],
-            name: "IMPMAL.ConditionOverburdened"
+            name: "IMPMAL.ConditionOverburdened",
+            title: "IMPMAL.ConditionOverburdened"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/poisoned.svg",
             id: "poisoned",
             statuses : ["poisoned"],
-            name: "IMPMAL.ConditionPoisoned"
+            name: "IMPMAL.ConditionPoisoned",
+            title: "IMPMAL.ConditionPoisoned"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/prone.svg",
             id: "prone",
             statuses : ["prone"],
-            name: "IMPMAL.ConditionProne"
+            name: "IMPMAL.ConditionProne",
+            title: "IMPMAL.ConditionProne"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/restrained.svg",
             id: "restrained",
             statuses : ["restrained"],
-            name: "IMPMAL.ConditionRestrained"
+            name: "IMPMAL.ConditionRestrained",
+            title: "IMPMAL.ConditionRestrained"
         },
         {
             icon: "systems/impmal/assets/icons/conditions/stunned.svg",
             id: "stunned",
             statuses : ["stunned"],
             name: "IMPMAL.ConditionStunned",
+            title: "IMPMAL.ConditionStunned",
         },
         {
             icon: "systems/impmal/assets/icons/conditions/unconscious.svg",
             id: "unconscious",
             statuses : ["unconscious"],
             name: "IMPMAL.ConditionUnconscious",
+            title: "IMPMAL.ConditionUnconscious",
         },
         {
             icon: "systems/impmal/assets/icons/conditions/dead.svg",
             id: "dead",
             statuses : ["dead"],
             name: "IMPMAL.Dead",
+            title: "IMPMAL.Dead",
         },
     ]
 };
