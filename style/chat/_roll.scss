@@ -35,11 +35,10 @@
 
         .target {
             display: flex;
-            justify-content: start;
+            justify-content: space-between;
         }
 
         .test-breakdown {
-            margin-left: 75px;
             opacity: 0.7;
         }
     }
