@@ -42,6 +42,9 @@ export class BaseTestEvaluator
         // Do not process result without a roll
         if (!data.result.roll) {return;}
 
+        let automaticSuccess = game.settings.get("impmal", "automaticSuccess");
+        let automaticFailure = game.settings.get("impmal", "automaticFailure");
+
         this.roll = data.result.roll;
         this.rollObject = data.result.rollObject;
 
@@ -56,22 +59,22 @@ export class BaseTestEvaluator
         
         this.SL = Number.isNumeric(this.SL) ? this.SL : this.calculateSL(this.roll, this.target, data.SL);
 
-        if (this.SL > 0 || (this.SL == 0 && this.roll <= this.target) || this.roll <= 5)
+        if (this.SL > 0 || (this.SL == 0 && this.roll <= this.target) || this.roll <= automaticSuccess)
         {
             this.outcome = "success";
         }
-        else if (this.SL < 0 || (this.SL == 0 && this.roll > this.target) || this.roll >= 96)
+        else if (this.SL < 0 || (this.SL == 0 && this.roll > this.target) || this.roll >= automaticFailure)
         {
             this.outcome = "failure";
         }
 
         // if an SL modifier made the SL be 0 (-2 SL with a +2 SL bonus), it it considered +0
-        if (this.outcome == "failure" && this.SL == 0 && data.SL && this.roll < 96 && !this.onlyAutomaticSuccess)
+        if (this.outcome == "failure" && this.SL == 0 && data.SL && this.roll < automaticFailure && !this.onlyAutomaticSuccess)
         {
             this.outcome = "success";
         }
 
-        if (this.outcome == "success" && this.onlyAutomaticSuccess && this.roll > 5)
+        if (this.outcome == "success" && this.onlyAutomaticSuccess && this.roll > automaticSuccess)
         {
             this.SL = 0;
             this.outcome = "failure";

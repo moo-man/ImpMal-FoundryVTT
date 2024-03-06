@@ -27,6 +27,26 @@ export default function registerSettings()
         default: false
     });
 
+    // Register Automatic Success threshold
+    game.settings.register("impmal", "automaticSuccess", {
+        name: "IMPMAL.AutomaticSuccess",
+        hint : "IMPMAL.AutomaticSuccessHint",
+        scope: "world",
+        config: true,
+        type: Number,
+        default: 5
+    });
+
+    // Register Automatic Failure threshold
+    game.settings.register("impmal", "automaticFailure", {
+        name: "IMPMAL.AutomaticFailure",
+        hint : "IMPMAL.AutomaticFailureHint",
+        scope: "world",
+        config: true,
+        type: Number,
+        default: 96
+    });
+
     game.settings.registerMenu("impmal", "tableSettingsMenu", {
         name : game.i18n.localize("IMPMAL.TableSettings"),
         label : game.i18n.localize("IMPMAL.TableSettings"),
