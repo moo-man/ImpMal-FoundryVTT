@@ -20,6 +20,54 @@ export class OpposedTestResult
         {
             this.winner = "defender";
         }
+        else {
+            // If both parties in an Opposed Test get the same SL, the character with the higher Skill wins
+            if (defenderTest)
+            {
+                const getSkillSpecTotal = test =>
+                {
+                    let skillObject;
+                    if (typeof test.skill == "string")
+                    {
+                        skillObject = test.actor.system.skills[test.skill];
+                    }
+                    else if (test.skill instanceof Item)
+                    {
+                        skillObject = test.skill.system;
+                    }
+                    else if (typeof test.skill == "object")
+                    {
+                        skillObject = test.skill;
+                    }
+                    return skillObject.getTotalFor(skillObject.characteristic, test.actor);
+                };
+                
+                let attackerSkillTotal = getSkillSpecTotal(attackerTest);
+                let defenderSkillTotal = getSkillSpecTotal(defenderTest);
+
+                if (attackerSkillTotal > defenderSkillTotal)
+                {
+                    this.winner = "attacker";
+                }
+                else if (attackerSkillTotal < defenderSkillTotal)
+                {
+                    this.winner = "defender";
+                }
+                // GM decides in event of skill tie
+            }
+            // If Unopposed, use the outcome of the attacker test to determine winner
+            else
+            {
+                if (attackerTest.result.outcome == "success")
+                {
+                    this.winner = "attacker";
+                }
+                else
+                {
+                    this.winner = "defender";
+                }
+            }
+        }
 
         if (this.winner == "attacker" && attackerTest.item && this.constructor.damagingItems.includes(attackerTest.item?.type))
         {
