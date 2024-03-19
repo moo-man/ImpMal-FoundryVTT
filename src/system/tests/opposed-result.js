@@ -20,30 +20,13 @@ export class OpposedTestResult
         {
             this.winner = "defender";
         }
-        else {
+        else if (this.SL == 0)
+        {
             // If both parties in an Opposed Test get the same SL, the character with the higher Skill wins
             if (defenderTest)
             {
-                const getSkillSpecTotal = test =>
-                {
-                    let skillObject;
-                    if (typeof test.skill == "string")
-                    {
-                        skillObject = test.actor.system.skills[test.skill];
-                    }
-                    else if (test.skill instanceof Item)
-                    {
-                        skillObject = test.skill.system;
-                    }
-                    else if (typeof test.skill == "object")
-                    {
-                        skillObject = test.skill;
-                    }
-                    return skillObject.getTotalFor(skillObject.characteristic, test.actor);
-                };
-                
-                let attackerSkillTotal = getSkillSpecTotal(attackerTest);
-                let defenderSkillTotal = getSkillSpecTotal(defenderTest);
+                let attackerSkillTotal = attackerTest.computeTarget(true);
+                let defenderSkillTotal = defenderTest.computeTarget(true);
 
                 if (attackerSkillTotal > defenderSkillTotal)
                 {
@@ -58,7 +41,7 @@ export class OpposedTestResult
             // If Unopposed, use the outcome of the attacker test to determine winner
             else
             {
-                if (attackerTest.result.outcome == "success")
+                if (attackerTest.succeeded)
                 {
                     this.winner = "attacker";
                 }
