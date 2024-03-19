@@ -20,6 +20,37 @@ export class OpposedTestResult
         {
             this.winner = "defender";
         }
+        else if (this.SL == 0)
+        {
+            // If both parties in an Opposed Test get the same SL, the character with the higher Skill wins
+            if (defenderTest)
+            {
+                let attackerSkillTotal = attackerTest.computeTarget(true);
+                let defenderSkillTotal = defenderTest.computeTarget(true);
+
+                if (attackerSkillTotal > defenderSkillTotal)
+                {
+                    this.winner = "attacker";
+                }
+                else if (attackerSkillTotal < defenderSkillTotal)
+                {
+                    this.winner = "defender";
+                }
+                // GM decides in event of skill tie
+            }
+            // If Unopposed, use the outcome of the attacker test to determine winner
+            else
+            {
+                if (attackerTest.succeeded)
+                {
+                    this.winner = "attacker";
+                }
+                else
+                {
+                    this.winner = "defender";
+                }
+            }
+        }
 
         if (this.winner == "attacker" && attackerTest.item && this.constructor.damagingItems.includes(attackerTest.item?.type))
         {
