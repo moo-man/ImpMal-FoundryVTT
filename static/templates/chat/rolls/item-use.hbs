@@ -15,7 +15,11 @@
                 {{#each opposedTests}}
                     <div class="target" data-id="{{this.id}}">
                         <a class="opposed-icon"><i class="fa-solid fa-crosshairs"></i></a>
+                        {{#isTokenVideo this.actor }}
+                        <video autoplay muted loop data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
+                        {{else}}
                         <img data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
+                        {{/isTokenVideo}}
                     </div>
                 {{/each}}
             </div>
