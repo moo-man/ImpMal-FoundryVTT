@@ -54,7 +54,11 @@
             <div class="defense {{#if (eq attacker.result.winner "attacker")}}color-positive attacker{{else}}color-negative defender{{/if}} ">
                 <div class="targeter" data-id="{{attacker.id}}">
                     <a class="opposed-icon"><i class="fa-solid fa-shield-halved"></i></a>
+                    {{#isTokenVideo attacker.actor }}
+                    <video autoplay muted loop data-tooltip="{{tokenName attacker.actor}}" src="{{tokenImg attacker.actor}}">
+                    {{else}}
                     <img data-tooltip="{{tokenName attacker.actor}}" src="{{tokenImg attacker.actor}}">
+                    {{/isTokenVideo}}
                     <div class="opposed-result {{result.winner}}">
                         <span class="opposedSL">
                             {{numberFormat attacker.result.SL sign=true}}
