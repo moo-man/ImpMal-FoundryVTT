@@ -33,7 +33,7 @@
                     <input type="radio" name="state" value="adv" {{checked (eq fields.state "adv" )}}>
                     <div class="state-label" {{#if tooltips.advantage}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.advantage}}"{{/if}}>
                         <label>{{localize "IMPMAL.Advantage"}}</label>
-                        <span class="state-value">{{advCount}}</span>
+                        <span class="state-value">{{advantage}}</span>
                     </div>
                 </div>
                 <div>
@@ -46,7 +46,7 @@
                     <input type="radio" name="state" value="dis" {{checked (eq fields.state "dis" )}}>
                     <div class="state-label" {{#if tooltips.disadvantage}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.disadvantage}}"{{/if}}>
                         <label>{{localize "IMPMAL.Disadvantage"}}</label>
-                        <span class="state-value">{{disCount}}</span>
+                        <span class="state-value">{{disadvantage}}</span>
                     </div>
                 </div>
             </div>

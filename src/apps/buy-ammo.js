@@ -38,7 +38,7 @@ export class BuyAmmoForm extends FormApplication
         let cost = ev.submitter.classList.contains("buy") ? this.object.system.ammoCost * formData.count : 0;
         let quantity = formData.count * this.object.system.mag.value;
         let name = this.object.name  + " Ammo";
-        let existing = this.object.actor.itemCategories["ammo"].find(i => i.name == name); // Ammo with the same name already owned by Actor (don't create duplicates)
+        let existing = this.object.actor.itemTypes["ammo"].find(i => i.name == name); // Ammo with the same name already owned by Actor (don't create duplicates)
         // Check if Actor can afford ammo
         if (this.object.actor)
         {

@@ -16,9 +16,9 @@ export class XPModel extends foundry.abstract.DataModel
     {
         return this._computeCharacteristicXP(actor.system.characteristics) + 
             this._computeSkillXP(actor.system.skills) +
-            this._computeSpecXP(actor.itemCategories.specialisation) + 
-            this._computeTalentXP(actor.itemCategories.talent) +
-            this._computePowerXP(actor.itemCategories.power) +
+            this._computeSpecXP(actor.itemTypes.specialisation) + 
+            this._computeTalentXP(actor.itemTypes.talent) +
+            this._computePowerXP(actor.itemTypes.power) +
             this._computeOtherXP(actor.system.xp);
     }
 

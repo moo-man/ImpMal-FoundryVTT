@@ -30,7 +30,7 @@ export class TraitModel extends StandardItemModel
     {
         this.attack.damage.compute(actor);
         const characteristic = this.attack.characteristic || this.attack.type;
-        const skill = actor.itemCategories.specialisation.find(i => i.name == this.attack.skill.specialisation) || this.attack.skill.key;
+        const skill = actor.itemTypes.specialisation.find(i => i.name == this.attack.skill.specialisation) || this.attack.skill.key;
         if (skill instanceof Item)
         {
             this.attack.target = skill.system.total;

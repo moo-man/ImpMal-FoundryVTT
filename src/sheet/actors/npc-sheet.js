@@ -227,12 +227,12 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
         {
             let id = this._getId(ev);
             let item = this.actor.items.get(id);
-            if (this.actor.itemCategories.ammo.length == 0)
+            if (this.actor.itemTypes.ammo.length == 0)
             {
                 ui.notifications.error(game.i18n.localize("IMPMAL.ErrorNoAmmoItems"));
                 return;
             }
-            DocumentChoice.create(this.actor.itemCategories.ammo).then(documents => 
+            DocumentChoice.create(this.actor.itemTypes.ammo).then(documents => 
             {
                 let ammo = documents[0];
                 item.update({"system.ammo.id" : ammo?.id});

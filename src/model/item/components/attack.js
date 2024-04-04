@@ -27,7 +27,7 @@ export class AttackDataModel extends TestDataModel
     {
         this.damage.compute(actor);
         const characteristic = this.characteristic || this.type;
-        const skill = actor.itemCategories.specialisation.find(i => i.name == this.attack.skill.specialisation) || this.attack.skill.key;
+        const skill = actor.itemTypes.specialisation.find(i => i.name == this.attack.skill.specialisation) || this.attack.skill.key;
         if (skill instanceof Item)
         {
             this.target = skill.system.total;

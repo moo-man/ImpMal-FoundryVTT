@@ -55,7 +55,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 
     organizeItems(data)
     {
-        let sheetItems = data.actor.itemCategories;
+        let sheetItems = data.actor.itemTypes;
 
         for(let key in sheetItems)
         {
@@ -71,7 +71,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             protection : sheetItems.protection.filter(i => i.system.equipped.value).filter(i => i.system.category != "shield"),
             shield : sheetItems.protection.filter(i => i.system.equipped.value).filter(i => i.system.category == "shield"),
             equipment : sheetItems.equipment.filter(i => i.system.equipped.value),
-            vehicle : data.system.vehicle?.itemCategories.weapon
+            vehicle : data.system.vehicle?.itemTypes.weapon
         };
 
         return sheetItems;

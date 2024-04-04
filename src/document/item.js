@@ -46,6 +46,14 @@ export class ImpMalItem extends ImpMalDocumentMixin(Item)
         {
             await effect.deleteCreatedItems();
         }
+
+        for(let effect of this.effects)
+        {
+            for(let script of effect.scripts.filter(i => i.trigger == "deleteEffect"))
+            {
+                await script.execute({options, user});
+            }
+        }
     }
 
     async _onUpdate(data, options, user)

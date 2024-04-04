@@ -23,15 +23,15 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
     prepareBaseData()
     {
         this.propagateDataModels(this.system, "runScripts", this.runScripts.bind(this));
-        this.itemCategories = this.itemTypes;
-        this.system.computeBase(this.itemCategories);
+        this._itemTypes = null; 
+        this.system.computeBase(this.itemTypes);
         this.runScripts("prepareBaseData", this);
     }
 
     prepareDerivedData()
     {
         this.runScripts("prePrepareDerivedData", this);
-        this.system.computeDerived(mergeObject(this.itemCategories, {all : this.items}, {inplace : false}));
+        this.system.computeDerived(mergeObject(this.itemTypes, {all : this.items}, {inplace : false}));
         this.items.forEach(i => i.prepareOwnedData());
         this.runScripts("prepareOwnedItems", this);
         this.runScripts("postPrepareDerivedData", this);
@@ -428,7 +428,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         }
         else if (this.type == "npc")
         {
-            equipped = this.itemCategories.weapon.filter(i => i.system.isEquipped);
+            equipped = this.itemTypes.weapon.filter(i => i.system.isEquipped);
             if (equipped.length == 2)
             {
                 weapons = equipped;
@@ -630,6 +630,18 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
             return this._findAttackingMessage()?.test;
         }
     }
+
+    _itemTypes = null;
+
+    get itemTypes()
+    {
+        if (!this._itemTypes)
+        {
+            this._itemTypes = super.itemTypes;
+        }
+        return this._itemTypes;
+    }
+  
 
     sameSideAs(actor)
     {

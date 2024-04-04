@@ -76,7 +76,7 @@ export class TalentModel extends StandardItemModel
     {
         let allowed = await super.allowCreation(data, options, user);
         
-        if (allowed && this.parent.actor && this.requirement.script && !options.skipRequirement)
+        if (allowed && this.parent.actor?.type == "character" && this.requirement.script && !options.skipRequirement)
         {
             let script = new ImpMalScript({string : this.requirement.script, label : "Talent Requirement"}, ImpMalScript.createContext(this.parent));
             allowed = script.execute() ? true : false; // Make sure it's boolified
@@ -85,7 +85,7 @@ export class TalentModel extends StandardItemModel
                 allowed = await Dialog.confirm({title : game.i18n.localize("IMPMAL.IgnorePrerequisite"), content : game.i18n.localize("IMPMAL.IgnorePrerequisiteContent")});
             }
         }
-        let existing = this.parent.actor?.itemCategories.talent.find(i => i.name == this.parent.name);
+        let existing = this.parent.actor?.itemTypes.talent.find(i => i.name == this.parent.name);
         if (existing)
         {
             existing.update({"system.taken" : existing.system.taken + 1}).then(async item => 

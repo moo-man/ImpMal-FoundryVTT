@@ -38,17 +38,41 @@ export class TestDialog extends Application
         return this.data.context;
     }
 
-    constructor(data={}, fields={}, resolve)
+
+    // Backwards compatibility for scripts referencing adv/disCount
+    get advCount()
     {
-        super();
+        return this.advantage;
+    }
+
+    set advCount(value)
+    {
+        this.advantage = value;
+    }
+
+    get disCount()
+    {
+        return this.disadvantage;
+    }
+
+    set disCount(value)
+    {
+        this.disadvantage = value;
+    }
+
+    constructor(data={}, fields={}, resolve, options={})
+    {
+        super(options);
         this.data = data;
-        this.fields = mergeObject(this._defaultFields(),fields);
-        this.userEntry = foundry.utils.deepClone(this.fields);
         this.tooltips = new DialogTooltips();
 
+        this.initialFields = mergeObject(this._defaultFields(), fields);
+        this.fields = this._defaultFields();
+        this.userEntry = {};
+
         // Keep count of sources of advantage and disadvantage
-        this.advCount = 0;
-        this.disCount = 0;
+        this.advantage = 0;
+        this.disadvantage = 0;
         this.forceState = undefined;
         // If the user specifies a state, use that
 
@@ -88,19 +112,31 @@ export class TestDialog extends Application
 
     async getData() 
     {
-        this.advCount = 0;
-        this.disCount = 0;
-
+        // Reset values so they don't accumulate 
         this.tooltips.clear();
         this.flags = {};
+        this.fields = this._defaultFields();
+        this.advantage = 0;
+        this.disadvantage = 0;
 
-        // Reset values so they don't accumulate 
         
-        mergeObject(this.fields, this.userEntry);
+        this.tooltips.start(this);
+        mergeObject(this.fields, this.initialFields);
+        this.tooltips.finish(this, this.options.initialTooltip || "Initial");
 
-        // calling tooltips.start/finish between the merge object caused issues
-        this.tooltips.addModifier(this.userEntry.modifier, "User Entry");
-        this.tooltips.addSL(this.userEntry.SL, "User Entry");
+        this.tooltips.start(this);
+        for(let key in this.userEntry)
+        {
+            if (["string", "boolean"].includes(typeof this.userEntry[key]))
+            {
+                this.fields[key] = this.userEntry[key];
+            }
+            else if (Number.isNumeric(this.userEntry[key]))
+            {
+                this.fields[key] += this.userEntry[key];
+            }
+        }
+        this.tooltips.finish(this, "User Entry");
 
         // For some reason cloning the scripts doesn't prevent isActive and isHidden from persisisting
         // So for now, just reset them manually
@@ -120,8 +156,8 @@ export class TestDialog extends Application
         return {
             scripts : this.data.scripts,
             fields : mergeObject(this.fields, {state}),
-            advCount : this.advCount,
-            disCount : this.disCount,
+            advantage : this.advantage,
+            disadvantage : this.disadvantage,
             tooltips : this.tooltips,
             subTemplate : await this.getFieldsTemplate()
         };
@@ -179,18 +215,18 @@ export class TestDialog extends Application
             return this.forceState;
         }
 
-        else if (this.advCount > this.disCount && this.advCount > 0)
+        else if (this.advantage > this.disadvantage && this.advantage > 0)
         {
             this.tooltips.start(this);
-            this.fields.modifier += 10 * ((this.advCount - 1) - this.disCount);
+            this.fields.modifier += 10 * ((this.advantage - 1) - this.disadvantage);
             this.tooltips.finish(this, "Excess Advantage");
             return "adv";
         }
 
-        else if (this.disCount > this.advCount && this.disCount > 0)
+        else if (this.disadvantage > this.advantage && this.disadvantage > 0)
         {
             this.tooltips.start(this);
-            this.fields.modifier -= 10 * ((this.disCount - 1) - this.advCount);
+            this.fields.modifier -= 10 * ((this.disadvantage - 1) - this.advantage);
             this.tooltips.finish(this, "Excess Disadvantage");
             return "dis";
 
