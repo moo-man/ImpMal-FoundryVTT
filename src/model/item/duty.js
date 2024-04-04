@@ -63,26 +63,31 @@ export class DutyModel extends DualItemModel
         }
 
 
-        for(let item of this.character.items.options)
+        for(let option of this.character.items.options)
         {
-            if (item.type == "placeholder")
+            if (option.type == "placeholder")
             {
-                items.push({name : item.name, type : "equipment"});
+                items.push({name : option.name, type : "equipment"});
             }
-            else if (item.type == "item")
+            else if (option.type == "item")
             {
-                if (item.idType == "id")
+                let item;
+                if (option.idType == "id")
                 {
-                    items.push(await game.impmal.utility.findId(item.documentId));
+                    item = await game.impmal.utility.findId(option.documentId);
                 }
-                else if (item.idType == "uuid")
+                else if (option.idType == "uuid")
                 {
-                    items.push(await fromUuid(item.documentId));
+                    item = await fromUuid(option.documentId);
                 }
+
+                let data = item?.toObject() || {};
+
+                mergeObject(data, option.diff);
+                data.name = option.name;
+                items.push(data);
             }
         }
-
-        items = items.map(i => i.toObject());
 
         data.system.solars += this.character.solars;
 
@@ -98,6 +103,7 @@ export class DutyModel extends DualItemModel
             data.system.xp.other.list.push({description : this.parent.name, xp : -1 * expSpent});
             for(let item of items)
             {
+                delete item._id;
                 if (item.type =="talent")
                 {
                     item.system.xpCost = 0;
