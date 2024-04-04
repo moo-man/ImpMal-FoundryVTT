@@ -244,7 +244,7 @@ export class TestContext
             speaker : data.speaker,
             title : data.title,
             targetSpeakers : data.targets.map(i => ChatMessage.getSpeaker({token : i.document})),
-            rollmode : data.rollmode,
+            rollMode : data.rollMode,
             uuid : data.uuid
         }, data.context);
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});

@@ -73,7 +73,7 @@ export class BaseTest
     // Optionally update message (useful for rerendering targets or attackers)
     async evaluate(render=false)
     {
-        await this.result.evaluate(this.data);
+        await this.result.evaluate(this.data, this.context.rollMode);
         // Save roll
         mergeObject(this.data.result, this.result.getPersistentData());
         if (render)
@@ -220,14 +220,15 @@ export class BaseTest
         {
             this.testDetails = await renderTemplate(this.testDetailsTemplate, this);
         }
-        let chatData = ChatMessage.applyRollMode({}, this.context.rollmode);
+        let chatData = ChatMessage.applyRollMode({}, this.context.rollMode);
         let content = await renderTemplate(this.rollTemplate, this);
         return mergeObject( chatData, {
             content,
             title : this.context.title,
             speaker : this.context.speaker,
             flavor: this.context.title,
-            type : this.constructor.chatType,                                                                           // Trigger DSN
+            type : this.constructor.chatType,     
+            rollMode : this.context.rollMode,                                         // Trigger DSN
             rolls : this.constructor.chatType == CONST.CHAT_MESSAGE_TYPES.ROLL ? ([this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject]) : [], 
             flags : this._saveData()
         });

@@ -96,7 +96,7 @@ export class TestDialog extends Application
             SL : 0,
             difficulty : "challenging",
             state : "none",
-            rollmode : game.settings.get("core", "rollMode") || "publicroll"
+            rollMode : game.settings.get("core", "rollMode") || "publicroll"
         };
     }
 
