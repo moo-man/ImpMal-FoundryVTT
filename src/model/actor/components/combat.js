@@ -117,7 +117,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
                 {
                     let armourDamage = (item.system.damage[loc] || 0);
                     this.hitLocations[loc].damage += armourDamage;
-                    this.hitLocations[loc].armour += (item.system.armour - armourDamage);
+                    this.hitLocations[loc].armour += (item.system.armour - armourDamage + (item.system.traits.has("mastercrafted") ? 2 : 0));
                     this.hitLocations[loc].items.push(item);
 
                     // item.system.traits.list.forEach(i => 

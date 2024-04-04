@@ -31,6 +31,16 @@ export class ProtectionModel extends EquippableItemModel
         this.traits.compute();
     }
 
+    computeOwnerDerived(actor) 
+    {
+        // Must put this in OwnerDerived, as normal preparation applies double
+        // See https://github.com/foundryvtt/foundryvtt/issues/7987
+        if (this.traits.has("mastercrafted"))
+        {
+            this.armour += 2;
+        }
+    }
+
     async preUpdateChecks(data)
     {
         await super.preUpdateChecks(data);

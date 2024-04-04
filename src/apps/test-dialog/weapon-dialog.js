@@ -15,6 +15,12 @@ export class WeaponTestDialog extends AttackDialog
             this.disCount++;
             this.tooltips.addDisadvantage(1, "Offhand");
         }
+
+        if (this.data.weapon.system.traits.has("mastercrafted"))
+        {
+            this.fields.SL++;
+            this.tooltips.addSL(1, "Mastercrafted");
+        }
     
     }
 
