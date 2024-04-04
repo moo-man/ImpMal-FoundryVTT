@@ -149,7 +149,7 @@ export class BaseTest
     {
         let opposed = this.opposedTests.find(t => t.id == targetId);
 
-        opposed.actor.applyDamage(opposed.result.damage, {location: this.result.hitLocation, opposed}).then(data => 
+        opposed.actor.applyDamage(opposed.result.damage, {ignoreAP : this.item?.system?.damage?.ignoreAP, location: this.result.hitLocation, opposed}).then(data => 
         {
             if (data.woundsGained > 0 && this.item?.damageEffects.length)
             {
