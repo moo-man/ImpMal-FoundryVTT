@@ -1,0 +1,1 @@
+return !["tech", "piloting"].includes(args.data.skill);

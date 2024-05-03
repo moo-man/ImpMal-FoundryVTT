@@ -1,0 +1,1 @@
+delete args.data.onlyAutomaticSuccess

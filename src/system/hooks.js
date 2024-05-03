@@ -9,7 +9,6 @@ import token from "./hooks/token";
 import i18n from "./hooks/i18n";
 import setup from "./hooks/setup";
 import journal from "./hooks/journal";
-import loadScripts from "./hooks/loadScripts";
 
 export default function() 
 {
@@ -24,7 +23,6 @@ export default function()
     drawing();
     setup();
     journal();
-    loadScripts();
 
     Hooks.on("preCreateJournalEntry", _keepID);
     Hooks.on("preCreateScene", _keepID);

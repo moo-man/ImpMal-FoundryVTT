@@ -1,0 +1,1 @@
+return args.isAttack && args.actor.type == "character" && args.weapon && args.actor.system.hands[this.item.system.location.value].id == args.weapon.id

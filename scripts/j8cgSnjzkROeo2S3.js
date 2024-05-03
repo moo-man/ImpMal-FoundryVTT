@@ -1,0 +1,1 @@
+return !["melee"].includes(args.data.skill);

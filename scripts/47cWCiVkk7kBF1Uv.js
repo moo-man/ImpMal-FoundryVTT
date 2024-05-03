@@ -1,0 +1,1 @@
+return args.skillItem?.name == "Sight" || args.weapon?.system?.isRanged

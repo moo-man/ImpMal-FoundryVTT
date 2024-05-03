@@ -1,0 +1,1 @@
+return !args.isAttack || ChatMessage.getSpeakerActor(this.effect.sourceTest.context.speaker).uuid != args.actor.uuid

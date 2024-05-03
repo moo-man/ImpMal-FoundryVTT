@@ -38,7 +38,7 @@ export default class ImpMalScript
         }
         catch(e)
         {
-            console.error(`Script ${this.label} threw error: ${e}.\n Context and Arguments:`, this.context, args);
+            console.error(`Script ${this.Label} threw error: ${e}.\n Context and Arguments:`, this.context, args);
         }
     }
 
@@ -102,7 +102,7 @@ export default class ImpMalScript
         }
         catch(e)
         {
-            console.error(`${name} Subscript ${this.label} threw error: ${e}.\n Context and Arguments:`, this.context, args);
+            console.error(`${name} Subscript ${this.Label} threw error: ${e}.\n Context and Arguments:`, this.context, args);
             throw e;
         }
     }

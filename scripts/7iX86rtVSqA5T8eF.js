@@ -1,0 +1,1 @@
+return game.impmal.config.difficulties[args.fields.difficulty]?.modifier < 0

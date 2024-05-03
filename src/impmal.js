@@ -61,6 +61,7 @@ import TalentItemSheet from "./sheet/items/item-talent-sheet";
 import { AvailabilityTest } from "./system/tests/availability/availability-test";
 import ImpMalTables from "./system/tables";
 import ModuleInitializer from "./apps/module-initialization";
+import loadScripts from "../loadScripts.js";
 
 Hooks.once("init", () => 
 {
@@ -152,3 +153,4 @@ Hooks.once("init", () =>
 
 FoundryOverrides();
 registerHooks();
+loadScripts();

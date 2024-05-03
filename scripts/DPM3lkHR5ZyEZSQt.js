@@ -1,0 +1,1 @@
+if (args.round == 0) {this.script.scriptMessage("You can draw and fire a Pistol before anyone else")}

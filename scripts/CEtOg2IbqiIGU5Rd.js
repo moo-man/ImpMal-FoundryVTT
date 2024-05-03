@@ -1,0 +1,1 @@
+args.system.encumbrance.value -= Math.min(this.effect.sourceTest.result.SL, args.system.encumbrance.value)

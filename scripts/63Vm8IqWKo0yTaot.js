@@ -1,0 +1,1 @@
+this.actor.system.combat.speed.land.value = "fast";

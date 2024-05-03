@@ -1,0 +1,1 @@
+if (this.actor.system.warp.charge == 0) this.effect.delete();

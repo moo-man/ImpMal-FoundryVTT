@@ -1,0 +1,1 @@
+//args.context.addedEffects = args.context.addedEffects.concat(["blinded", "deafened"])

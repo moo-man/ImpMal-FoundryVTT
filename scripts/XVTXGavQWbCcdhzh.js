@@ -1,0 +1,1 @@
+await this.actor.addCondition("blinded").then(condition => condition.setFlag("impmal", "fromZone", this.effect.getFlag("impmal", "fromZone")))

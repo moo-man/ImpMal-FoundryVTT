@@ -1,0 +1,1 @@
+return args.actor.system.combat.action != "aim" || !args.weapon?.system?.isRanged

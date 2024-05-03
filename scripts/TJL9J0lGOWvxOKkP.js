@@ -1,0 +1,1 @@
+return args.data.characteristic == "fel" && args.actor?.system.influence.usePatron

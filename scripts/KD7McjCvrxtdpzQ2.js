@@ -1,0 +1,1 @@
+this.actor.addCondition("blinded", {duration : {rounds : 3}});

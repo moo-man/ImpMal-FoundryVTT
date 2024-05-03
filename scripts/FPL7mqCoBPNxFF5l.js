@@ -1,0 +1,1 @@
+args.characteristics.str.bonus += 1;

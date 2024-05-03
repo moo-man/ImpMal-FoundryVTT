@@ -1,0 +1,1 @@
+return !["discipline", "presence", "navigation", "stealth"].includes(args.data.skill);

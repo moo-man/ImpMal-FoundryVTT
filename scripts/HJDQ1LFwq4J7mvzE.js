@@ -1,0 +1,1 @@
+this.actor.applyDamage(2, {ignoreAP : true});

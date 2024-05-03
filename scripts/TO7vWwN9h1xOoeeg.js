@@ -1,0 +1,1 @@
+return args.data.skill == "melee" || args.skillItem?.name == "Dodge"

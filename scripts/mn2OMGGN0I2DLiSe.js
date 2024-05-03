@@ -1,0 +1,1 @@
+this.actor.system.augmetics.max += this.actor.system.characteristics.tgh.bonus

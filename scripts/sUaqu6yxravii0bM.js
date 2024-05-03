@@ -1,0 +1,1 @@
+return args.data.context.corruption || args.data.context.resist?.includes("power")

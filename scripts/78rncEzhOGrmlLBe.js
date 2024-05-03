@@ -1,0 +1,1 @@
+return args.isAttack && args.actor.type == "character" && args.weapon && args.actor.system.hands[this.effect.flags.impmal.hand].id == args.weapon.id

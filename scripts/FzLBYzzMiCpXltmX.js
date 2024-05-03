@@ -1,0 +1,1 @@
+return args.data.skill == "rapport" && ["Haggle", "Inquiry", "Charm"].includes(args.skillItem?.name)

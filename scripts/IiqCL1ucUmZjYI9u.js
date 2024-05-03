@@ -1,0 +1,1 @@
+return !["rapport", "presence"].includes(args.data.skill)

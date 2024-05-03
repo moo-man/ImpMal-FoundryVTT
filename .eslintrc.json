@@ -10,6 +10,7 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
+    "ignores": ["./static/scripts/"],
     "rules": {
         "indent": [
             "error",

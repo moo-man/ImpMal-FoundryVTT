@@ -1,0 +1,1 @@
+return this.actor.itemTypes.critical.length == 0

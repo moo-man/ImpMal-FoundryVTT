@@ -1,0 +1,1 @@
+if (game.combat.combatant.actor?.uuid == this.effect.origin) this.effect.delete();

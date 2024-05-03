@@ -1,0 +1,1 @@
+return !["reflexes", "athletics"].includes(args.data.skill);

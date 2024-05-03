@@ -1,0 +1,1 @@
+return args.data.skill == "awareness" && args.skillItem?.name == "Hearing" && (this.actor.getFlag("impmal", "earsLost") || 0) >= 2

@@ -1,0 +1,1 @@
+return args.data.targets[0]?.actor?.itemTypes?.power?.length > 0

@@ -1,0 +1,1 @@
+return args.skillItem?.name == "Running" || args.skillItem?.name == "Dodge";
