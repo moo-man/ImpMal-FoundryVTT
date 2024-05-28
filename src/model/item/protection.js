@@ -12,8 +12,8 @@ export class ProtectionModel extends EquippableItemModel
         schema.category = new fields.StringField();
         schema.armour = new fields.NumberField();
         schema.locations = new fields.EmbeddedDataField(LocationListModel);
-        schema.damage = new fields.ObjectField({nullable : true});
-        schema.rended = new fields.ObjectField({nullable : true});
+        schema.damage = new fields.ObjectField({});
+        schema.rended = new fields.ObjectField({});
         return schema;
     }
 

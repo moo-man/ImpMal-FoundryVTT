@@ -142,7 +142,7 @@ export default class ImpMalScript
 
     get Label() 
     {
-        return Roll.parse(this.label, this).map(t => t.formula).join(" ");
+        return Roll.replaceFormulaData(this.label, this);
     }
 
     static createContext(document)
