@@ -1,6 +1,10 @@
 <div class="target {{#if (eq this.result.winner "attacker")}}color-positive attacker{{else}}color-negative defender{{/if}}" data-id="{{this.id}}">
     <a class="{{this.result.winner}} opposed-icon"><i class="fa-solid fa-crosshairs"></i></a>
+    {{#isTokenVideo this.actor }}
+    <video autoplay muted loop data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
+    {{else}}
     <img data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
+    {{/isTokenVideo}}
     {{#if this.result}}
         <div class="opposed-result">
             <span class="opposedSL">
