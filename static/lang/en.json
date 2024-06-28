@@ -500,6 +500,7 @@
     "IMPMAL.PsychicPhenomena": "Psychic Phenomena",
     "IMPMAL.Push" : "Push",
     "IMPMAL.Purge" : "Purge",
+    "IMPMAL.PurgeDialog" : "Roll a Purgation Test?",
     "IMPMAL.Purged" : "Purged",
     "IMPMAL.Pyromancy" : "Pyromancy",
     "IMPMAL.Qty." : "Qty.",

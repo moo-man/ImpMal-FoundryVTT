@@ -186,6 +186,19 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         return testFunction(testData, mergeObject(testOptions, options));
     }
 
+    async purge(roll=false)
+    {
+        if (roll || this.inCombat || (await Dialog.confirm({title : game.i18n.localize("IMPMAL.Purge"), content : game.i18n.localize("IMPMAL.PurgeDialog")})))
+        {
+            this.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {context : {purge: true},  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
+        }
+        else 
+        {
+            this.update({ "system.warp.charge": 0});
+            ImpMalTables.rollTable("phenomena");
+        }
+    }
+
 
     async applyDamage(value, {ignoreAP=false, location="roll", message=false, opposed, update=true}={})
     {   
