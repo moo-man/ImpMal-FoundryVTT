@@ -1,4 +1,5 @@
 import log from "../../system/logger";
+import ImpMalScript from "../../system/script";
 import { DialogTooltips } from "./tooltips";
 
 export class TestDialog extends Application
@@ -83,6 +84,9 @@ export class TestDialog extends Application
         // A specific object is needed as it must be cleared every render when scripts run again
         this.flags = {};
 
+        Hooks.call("impmal:createRollDialog", this);
+        data.scripts = data.scripts.concat(this._createScripts(this.options.scripts))
+
         if (resolve)
         {
             this.resolve = resolve;
@@ -165,7 +169,10 @@ export class TestDialog extends Application
 
     updateTargets()
     {
-        this.data.targets = Array.from(game.user.targets);
+        if (!this.context.skipTargets)
+        {
+            this.data.targets = Array.from(game.user.targets);
+        }
         this.render(true);
     }
 
@@ -260,6 +267,18 @@ export class TestDialog extends Application
         }
     }
 
+    _createScripts(scriptData = [])
+    {
+        return scriptData.map(i => new ImpMalScript(mergeObject(i, {
+            options : {
+                dialog : {
+                    hideScript : i.hide, 
+                    activateScript : i.activate, 
+                    submissionScript : i.submit}}}),
+            ImpMalScript.createContext(this.item instanceof Item ? this.item : this.actor)))
+    }
+
+
     /**
      * Allows subclasses to insert custom fields
      */
@@ -299,6 +318,23 @@ export class TestDialog extends Application
             this.resolve(dialogData);
         }
         this.close();
+        return dialogData;
+    }
+
+
+    async bypass()
+    {
+        await this.getData();
+        let dialogData = mergeObject(this.data, this.fields);
+        dialogData.context.breakdown = this.tooltips.getBreakdown(this);
+
+        for(let script of this.data.scripts)
+        {
+            if (script.isActive)
+            {
+                script.submission(this);
+            }
+        }
         return dialogData;
     }
 
@@ -407,24 +443,25 @@ export class TestDialog extends Application
      * @param {object} data Dialog data, such as title and actor
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(actor, target, {title={}, fields={}, context={}}={})
+    static setupData(actor, target, options={})
     {
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
-        let dialogData = {data : {}, fields};
+        let dialogData = {data : {}, fields : options.fields || {}};
         if (actor)
         {
             dialogData.data.speaker = ChatMessage.getSpeaker({actor});
         }
-        dialogData.data.context = context; // Arbitrary values - used with scripts
-        dialogData.data.context.tags = context.tags || {}; // Tags shown below test results - used with scripts
-        dialogData.data.context.text = context.text || {}; // Longer text shown below test results - used with scripts
+        dialogData.data.context = options.context || {}; // Arbitrary values - used with scripts
+        dialogData.data.context.tags = options.context?.tags || {}; // Tags shown below test results - used with scripts
+        dialogData.data.context.text = options.context?.text || {}; // Longer text shown below test results - used with scripts
+        dialogData.data.context.skipTargets = options.skipTargets
         if (actor && !actor?.token)
         {
             // getSpeaker retrieves tokens even if this sheet isn't a token's sheet
             delete dialogData.data.speaker.scene;
         }
-        dialogData.data.title = (title?.replace || game.i18n.localize("IMPMAL.Test")) + (title?.append || "");
+        dialogData.data.title = (options.title?.replace || game.i18n.localize("IMPMAL.Test")) + (options.title?.append || "");
         if (target)
         {
             dialogData.data.target = target;
@@ -432,17 +469,26 @@ export class TestDialog extends Application
 
         dialogData.fields.difficulty = dialogData.fields.difficulty || "challenging";
 
-        dialogData.data.targets = actor?.defendingAgainst ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
+        dialogData.data.targets = (actor?.defendingAgainst || options.skipTargets) ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
 
-        // Collect Dialog effects 
-        //   - Don't use our own targeter dialog effects, DO use targets' targeter dialog effects
-        dialogData.data.scripts = foundry.utils.deepClone(
-            (dialogData.data.targets 
-                .map(t => t.actor)
-                .filter(actor => actor)
-                .reduce((prev, current) => prev.concat(current.getScripts("dialog", (s) => s.options.dialog?.targeter)), []) // Retrieve targets' targeter dialog effects
-                .concat(actor?.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
-                ))) || [];
+
+        if (!options.skipTargets) 
+        {
+            // Collect Dialog effects 
+            //   - Don't use our own targeter dialog effects, DO use targets' targeter dialog effects
+            dialogData.data.scripts = foundry.utils.deepClone(
+                (dialogData.data.targets
+                    .map(t => t.actor)
+                    .filter(actor => actor)
+                    .reduce((prev, current) => prev.concat(current.getScripts("dialog", (s) => s.options.dialog?.targeter)), []) // Retrieve targets' targeter dialog effects
+                    .concat(actor?.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
+                    ))) || [];
+        }
+        else 
+        {
+            dialogData.data.scripts = actor?.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
+        }
+
 
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

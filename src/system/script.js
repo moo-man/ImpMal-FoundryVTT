@@ -160,6 +160,11 @@ export default class ImpMalScript
             context.actor = document.actor;
             context.item = document;
         }
+        
+        if (document.documentName == "Actor")
+        {
+            context.actor = document;
+        }
 
         return context;
     }
