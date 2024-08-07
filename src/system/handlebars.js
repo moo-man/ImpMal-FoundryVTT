@@ -80,6 +80,23 @@ export default function registerHandlebars()
         }
     });
 
+    Handlebars.registerHelper("isTokenVideo", function (actor, options) 
+    {
+        try 
+        {
+            let condition =  actor.token ? actor.token.object.isVideo : actor.prototypeToken.texture.src.split('.').pop() == 'webm';
+            if (condition) {
+                return options.fn(this);
+            } else {
+                return options.inverse(this);
+            }
+        }
+        catch (e) 
+        {
+            return options.inverse(this);
+        }
+    });
+
 
     // I don't really like this but whatever
     Handlebars.registerHelper("calc", function (arg1, op, arg2) 

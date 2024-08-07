@@ -54,6 +54,11 @@ export default class ChatHelpers
         html.on("dblclick", ".targets img", TokenHelpers._onDoubleClickOpposedImg.bind(TokenHelpers));
         html.on("mouseout", ".targets img", TokenHelpers._onHoverOutOpposedImg.bind(TokenHelpers));
 
+        html.on("mouseover", ".targets video", TokenHelpers._onHoverInOpposedImg.bind(TokenHelpers));
+        html.on("click", ".targets video", TokenHelpers._onClickOpposedImg.bind(TokenHelpers));
+        html.on("dblclick", ".targets video", TokenHelpers._onDoubleClickOpposedImg.bind(TokenHelpers));
+        html.on("mouseout", ".targets video", TokenHelpers._onHoverOutOpposedImg.bind(TokenHelpers));
+
         html.on("mouseover", ".opposed-icon", this._onHoverOpposedIcon.bind(this));
         html.on("mouseout", ".opposed-icon", this._onHoverOpposedIcon.bind(this));
         html.on("click", ".opposed-icon", this._onClickOpposedIcon.bind(this));
