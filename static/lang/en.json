@@ -149,6 +149,40 @@
     "IMPMAL.ConditionStunnedMajor" : "Stunned (Major)",
     "IMPMAL.ConditionStunnedMinor" : "Stunned (Minor)",
     "IMPMAL.ConditionUnconscious" : "Unconscious",
+
+    "IMPMAL.CHARGEN" : {
+        "NoGMWarning" : "",
+        "Stages" : "Stages",
+        "StageCharactertistics" : "Charactertistics",
+        "StageDetails" : "Details",
+        "StageFaction" : "Faction",
+        "StageOrigin" : "Origin",
+        "StageRole" : "Role",
+
+
+        "UseExistingData" : "",
+        "UseExistingDataContent" : "",
+        "Message" : {
+            "Start": "",
+            "Created" : "",
+            "CharacteristicAllocation" : "",
+            "CharacteristicAllocationBounds" : "",
+            "AllocateCharacteristics" : "",
+            "SwappedCharacteristics" : "",
+            "Chosen" : "",
+            "Rolled" : "",
+            "RolledCharacteristics" : "",
+            "ReRolledCharacteristics" : ""
+        },
+        "ERROR" : {
+            "Create" : "",
+            "StageStart" : "",
+            "Faction" : "",
+            "Origin" : "",
+            "Role" : ""
+        }
+    },
+
     "IMPMAL.CountEveryBullet" : "Count Every Bullet",
     "IMPMAL.CountEveryBulletHint" : "Use 'Counting Every Bullet' optional rule defined on page 314.",
     "IMPMAL.Corruption" : "Corruption",

@@ -1,0 +1,153 @@
+<form>
+
+  <div class="chargen-content">
+
+    <div class="stage-buttons">
+      <div class="stage-title">
+        <p>{{localize "IMPMAL.CHARGEN.Stages"}}</p>
+      </div>
+      {{#each stages as |stage index|}}
+        <button type="button" class='chargen-button' data-stage='{{index}}'>{{stage.title}}</button>
+      {{/each}}
+    </div>
+
+    <div class="chargen-data">
+      <div class="group">
+        <div class="details">
+          <label>{{localize "Name"}}</label>
+          <input type="text" disabled value="{{data.details.name}}">
+        </div>
+
+        <div class="details">
+          <label>{{localize "IMPMAL.Origin"}}</label>
+          <input type="text" disabled value="{{data.items.origin.name}}">
+        </div>
+
+        <div class="details">
+          <label>{{localize "IMPMAL.Faction"}}</label>
+          <input type="text" disabled value="{{data.items.faction.name}}">
+        </div>
+
+        <div class="details">
+          <label>{{localize "IMPMAL.Role"}}</label>
+          <input type="text" disabled value="{{data.items.role.name}}">
+        </div>
+
+
+        <div class="details">
+          <label>{{localize "IMPMAL.XP"}}</label>
+          <input type="text" disabled value="{{exp}}">
+        </div>
+      </div>
+
+        <table>
+          <tbody>
+            <tr>
+              <td></td>
+              {{#each characteristics}}
+                <th data-tooltip="{{configLookup "characteristics" @key}}">
+                  {{configLookup "characteristicAbbrev" @key}}</th>
+              {{/each}}
+            </tr>
+            <tr>
+              <td>{{localize "IMPMAL.Starting"}}</td>
+              {{#each characteristics}}
+                <td>{{this.starting}}</td>
+              {{/each}}
+            </tr>
+            <tr>
+              <td>{{localize "IMPMAL.Advances"}}</td>
+              {{#each characteristics}}
+                <td>{{this.advances}}</td>
+              {{/each}}
+            </tr>
+            <tr>
+              <td>{{localize "IMPMAL.Total"}}</td>
+              {{#each characteristics}}
+                <td>{{this.total}}</td>
+              {{/each}}
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="group">
+          <div class="details long">
+            <label>{{localize "IMPMAL.Skills"}}</label>
+            <input type="text" disabled>{{skills}}</input>
+          </div>
+        </div>
+
+        <div class="group">
+
+          <div class="details long">
+            <label>{{localize "IMPMAL.Talents"}}</label>
+            <input type="text" disabled>{{talents}}</input>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="details long">
+            <label>{{localize "IMPMAL.Equipment"}}</label>
+            <input type="text" disabled>{{trappings}}</input>
+          </div>
+        </div>
+
+
+        <div class="group">
+          <div class="details">
+            <label>{{localize "IMPMAL.Fate"}}</label>
+            <input type="text" disabled value="{{data.fate.total}}">
+          </div>
+          <div class="details">
+            <label>{{localize "IMPMAL.Resilience"}}</label>
+            <input type="text" disabled value="{{data.resilience.total}}">
+          </div>
+
+
+          <div class="details">
+            <label>{{localize "IMPMAL.Move"}}</label>
+            <input type="text" disabled value="{{data.move}}">
+          </div>
+
+          <div class="details">
+            <label>{{localize "IMPMAL.Gender"}}</label>
+            <input type="text" disabled value="{{data.details.gender}}">
+          </div>
+
+
+          <div class="details">
+            <label>{{localize "IMPMAL.Age"}}</label>
+            <input type="text" disabled value="{{data.details.age}}">
+          </div>
+
+          <div class="details">
+            <label>{{localize "IMPMAL.Height"}}</label>
+            <input type="text" disabled value="{{data.details.height}}">
+          </div>
+
+
+          <div class="details">
+            <label>{{localize "IMPMAL.CHARGEN.Details.Hair"}}</label>
+            <input type="text" disabled value="{{data.details.hair}}">
+          </div>
+
+
+
+          <div class="details">
+            <label>{{localize "IMPMAL.CHARGEN.Details.Eyes"}}</label>
+            <input type="text" disabled value="{{data.details.eyes}}">
+          </div>
+        </div>
+
+        <div class="group extra">
+          {{{stageHTML}}}
+        </div>
+
+      </div>
+
+  </div>
+
+  <div class="controls">
+    <button type="submit">{{localize "Submit"}}</button>
+  </div>
+</form>

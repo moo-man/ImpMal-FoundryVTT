@@ -1,0 +1,126 @@
+.impmal.chargen
+{
+    .chargen-content {
+        display: flex;
+        .stage-buttons {
+            flex: 0 0 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
+            button {
+                margin: 5px 0px;
+            }
+        }
+
+        table {
+            text-align: center;
+            background: none;
+            border: 0px;
+            tr {
+                background: none;
+                border-bottom: 1px solid black;
+                td {
+                    border-right: 1px solid black;
+                }
+                td:last-of-type {
+                    border-right: 0px;
+                }
+                td:first-of-type {
+                    text-align: left;
+                    width: 100px;
+                }
+            }
+            tr:last-of-type {
+                border-bottom: 0px;
+            }
+        }
+
+        .chargen-data {
+            display: flex;
+            flex-direction: column;
+            .group {
+                display: flex;
+                .details {
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                    flex: 1;
+                    &.long {
+                    }
+                }
+            }
+        }
+    }
+}
+
+.impmal.chargen-stage {
+    form > :first-child {
+        height: 2rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .stage-details {
+        height: calc(100% - 5rem);
+    }
+
+    .buttons {
+        margin: 5px;
+    }
+
+    &.characteristics {
+        line-height: 2rem;
+        .ch-rolls {
+            text-align: center;
+            > * {
+                :first-child
+                {
+                    text-align: left;
+                }
+            }
+        }
+
+        .allocation-input {
+            margin: 3px 0px;
+            flex: 0 0 2rem;
+        }
+
+        .ch-roll {
+            border: 1px solid transparent;
+        }
+
+        .ch-drag {
+            border: 1px dashed black;
+            border-radius: 5px;
+            box-sizing:content-box;
+        }
+
+        .ch-allocate {
+            text-align: center;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+
+    .rolled-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+        h4 {
+            text-align: center;
+        }
+        .item-image {
+
+            height: 200px;
+            width: 200px;
+        }
+        div.item-image {
+            border: 2px dashed black
+        }
+    }
+}

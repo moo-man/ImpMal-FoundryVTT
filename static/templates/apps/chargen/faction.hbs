@@ -1,0 +1,54 @@
+<form>
+  <div class="stage-title">
+    <p>{{localize "CHARGEN.StageTitle.Faction"}}</p>
+  </div>
+
+
+  <div class="stage-details">
+
+ <div class="rolled-item">
+      {{#if context.faction}}
+        <h4>{{context.faction.name}}</h4>
+        <img class="item-image" src="{{context.faction.img}}">
+        {{{factionDescription}}}
+      {{else}}
+        <h4>{{context.faction.name}}</h4>
+        <div class="item-image"></div>
+      {{/if}}
+    </div>
+    
+
+        {{#if context.faction}}
+      <div class="choice-section">
+        <h4 class="centered">{{localize "IMPMAL.Choices"}}</h4>
+        <p class="centered">{{localize "Gain +5 to selected Characteristics"}}</p>
+        <div class="choices">
+          <select disabled>
+            <option>{{configLookup "characteristics" context.faction.system.character.characteristics.base}}</option>
+          </select>
+          <select name="characteristic">
+            <option>-</option>
+            {{#each context.faction.system.character.characteristics.choices}}
+              <option value="{{this}}">{{configLookup "characteristics" this}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    {{/if}}
+
+        {{#if (eq context.step 0)}}
+    <div class="buttons">
+      <button data-action='rollFaction'>{{localize "Roll"}}</button>
+    </div>
+    {{/if}}
+
+  </div>
+
+    <div class="result">
+      <span><b>{{localize "CHARGEN.StageFactions"}}</b>: {{context.faction.name}}</span>
+      <span class="xp">{{localize "XP"}}: {{context.exp}}</span>
+    </div>
+    <div class="controls">
+      <button type="submit">{{localize "Submit"}}</button>
+    </div>
+</form>

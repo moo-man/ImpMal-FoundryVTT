@@ -1,3 +1,4 @@
+import CharGenIM from "../apps/chargen/char-gen";
 import log from "./logger";
 
 export default function() 
@@ -17,7 +18,6 @@ export default function()
 
     Hooks.on("ready", () => 
     {
-        // Add startup debug code here
-
+        new CharGenIM().render(true);
     });
 }

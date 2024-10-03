@@ -1,0 +1,71 @@
+<form>
+  <div class="stage-title">
+    <p>{{localize "IMPMAL.Characteristics"}}</p>
+  </div>
+
+  <div class="stage-details">
+
+    {{#if (eq context.step 0)}}
+    <div class="buttons">
+      <button type="button" data-action='rollCharacteristics'>{{localize "Roll"}}</button>
+    </div>
+    {{else}}
+
+    <div class="flexcol ch-rolls">
+      <div class="flexrow">
+        <strong class="ch-name">{{localize "IMPMAL.Characteristic"}}</strong>
+        <strong>{{localize "IMPMAL.Formula"}}</strong>
+        {{#if (eq context.step 4 )}}
+        <strong>{{localize "Allocation"}}</strong>
+        {{else}}
+        <strong>{{localize "Roll"}}</strong>
+        {{/if}}
+        <strong>{{localize "IMPMAL.Total"}}</strong>
+      </div>
+      
+        {{#each context.characteristics as |characteristic key|}}
+        <div class="flexrow allocation-input">
+          <span class="ch-name">{{configLookup "characteristics" key}}</span>
+          <span>{{characteristic.formula}}</span>
+          {{#if (eq ../context.step 4)}}
+            <input class="ch-allocate" data-ch="{{key}}" type="number" value="{{characteristic.allocated}}">
+          {{else}}
+          <a class="ch-roll {{#if (eq ../context.step 2)}}ch-drag{{/if}}" data-ch="{{key}}">{{characteristic.roll}}</a>
+          {{/if}}
+          <span>{{characteristic.total}}</span>
+        </div>
+        {{/each}}
+      </div>
+
+      {{#if (eq context.step 4)}}
+      <p>{{localize "IMPMAL.CHARGEN.Characteristics.AllocationPoints"}}<br>{{localize "IMPMAL.CHARGEN.Characteristics.AllocationSpent" spent=context.allocation.spent}}</p>
+      {{else}}
+      <p class="centered">{{localize "IMPMAL.CHARGEN.Characteristics.NotHappy"}}</p>
+      {{/if}}
+      
+        <div class="buttons">
+          {{#if (eq context.step 2)}}
+          <button type="button" data-action="cancel">{{localize "Cancel"}}</button>
+          {{else}}
+          <button type="button" data-action="rearrange">{{localize "IMPMAL.CHARGEN.Characteristics.Rearrange"}}</button>
+          {{/if}}
+          <button type="button" data-action="reroll">{{localize "IMPMAL.CHARGEN.Characteristics.Reroll"}}</button>
+          {{#if (eq context.step 4)}}
+          <button type="button" data-action="cancel">{{localize "Cancel"}}</button>
+          {{else}}
+          <button type="button" data-action="allocate">{{localize "IMPMAL.CHARGEN.Characteristics.Allocate"}}</button>
+          {{/if}}
+        </div>
+        <p class="centered">{{localize "IMPMAL.CHARGEN.Characteristics.Instructions"}}</p>
+    </div>
+    {{/if}}
+  </div>
+
+    <div class="result">
+      <div></div>
+      <span class="xp">{{localize "IMPMAL.XP"}}: {{context.exp}}</span>
+    </div>
+    <div class="controls">
+      <button type="submit">{{localize "Submit"}}</button>
+    </div>
+</form>

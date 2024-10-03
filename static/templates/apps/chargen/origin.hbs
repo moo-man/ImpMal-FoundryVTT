@@ -1,0 +1,54 @@
+<form>
+  <div class="stage-title">
+    <p>{{localize "CHARGEN.StageTitle.Origin"}}</p>
+  </div>
+
+
+  <div class="stage-details">
+
+    <div class="rolled-item">
+      {{#if context.origin}}
+        <h4>{{context.origin.name}}</h4>
+        <img class="item-image" src="{{context.origin.img}}">
+        {{{originDescription}}}
+      {{else}}
+        <h4>{{context.origin.name}}</h4>
+        <div class="item-image"></div>
+      {{/if}}
+    </div>
+
+    {{#if (eq context.step 0)}}
+      <div class="buttons">
+        <button data-action='rollOrigin'>{{localize "Roll"}}</button>
+      </div>
+    {{/if}}
+
+    {{#if context.origin}}
+      <div class="choice-section">
+        <h4 class="centered">{{localize "IMPMAL.Choices"}}</h4>
+        <p class="centered">{{localize "Gain +5 to selected Characteristics"}}</p>
+        <div class="choices">
+          <select disabled>
+            <option>{{configLookup "characteristics" context.origin.system.characteristics.base}}</option>
+          </select>
+          <select name="characteristic">
+            <option>-</option>
+            {{#each context.origin.system.characteristics.choices}}
+              <option value="{{this}}">{{configLookup "characteristics" this}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    {{/if}}
+
+
+  </div>
+
+  <div class="result">
+    <span><b>{{localize "CHARGEN.StageOrigins"}}</b>: {{context.origin.name}}</span>
+    <span class="xp">{{localize "XP"}}: {{context.exp}}</span>
+  </div>
+  <div class="controls">
+    <button type="submit">{{localize "Submit"}}</button>
+  </div>
+</form>

@@ -69,7 +69,8 @@ export default function registerSettings()
             "fumble" : "HL6DtTGWIUQy5NZ9",
             "perils" : "2YYlAUyaVIt4bZVa",
             "phenomena" : "9aSbu2mswOOI43J1",
-            "talents" : "9SLhM8FOgluaUwvO"
+            "talents" : "9SLhM8FOgluaUwvO",
+            "origin" : "nyaEnNOrR8Sq8Wf4"
         }
     });
 }
