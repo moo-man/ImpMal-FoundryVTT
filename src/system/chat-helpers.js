@@ -1,4 +1,3 @@
-import TokenHelpers from "./token-helpers";
 
 export default class ChatHelpers 
 {
@@ -49,10 +48,10 @@ export default class ChatHelpers
 
     static addOpposedHighlightListeners(html)
     {
-        html.on("mouseover", ".targets img", TokenHelpers._onHoverInOpposedImg.bind(TokenHelpers));
-        html.on("click", ".targets img", TokenHelpers._onClickOpposedImg.bind(TokenHelpers));
-        html.on("dblclick", ".targets img", TokenHelpers._onDoubleClickOpposedImg.bind(TokenHelpers));
-        html.on("mouseout", ".targets img", TokenHelpers._onHoverOutOpposedImg.bind(TokenHelpers));
+        html.on("mouseover", ".targets img", TokenHelpers.onHoverInOpposedImg.bind(TokenHelpers));
+        html.on("click", ".targets img", TokenHelpers.onClickOpposedImg.bind(TokenHelpers));
+        html.on("dblclick", ".targets img", TokenHelpers.onDoubleClickOpposedImg.bind(TokenHelpers));
+        html.on("mouseout", ".targets img", TokenHelpers.onHoverOutOpposedImg.bind(TokenHelpers));
 
         html.on("mouseover", ".opposed-icon", this._onHoverOpposedIcon.bind(this));
         html.on("mouseout", ".opposed-icon", this._onHoverOpposedIcon.bind(this));

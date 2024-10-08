@@ -1,4 +1,4 @@
-import log from "../../logger";
+
 import { TestContext } from "../base/test-context";
 
 export class CharacteristicTestContext extends TestContext

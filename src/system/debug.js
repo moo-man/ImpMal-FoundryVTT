@@ -1,4 +1,3 @@
-import log from "./logger";
 
 export default function() 
 {
@@ -12,7 +11,7 @@ export default function()
 
     Hooks.on("renderApplication", (app, html, data) => 
     {
-        log(`Rendering ${app.constructor.name}`, {args : data});
+        warhammer.utility.log(`Rendering ${app.constructor.name}`, {args : data});
     });
 
     Hooks.on("ready", () => 

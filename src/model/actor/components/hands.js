@@ -1,5 +1,3 @@
-import { DocumentReferenceModel } from "../../shared/reference";
-
 let fields = foundry.data.fields;
 
 export class HandsModel extends foundry.abstract.DataModel 
@@ -24,19 +22,11 @@ export class HandsModel extends foundry.abstract.DataModel
         return this.right;
     }
 
-
-    getDocuments(collection) 
-    {
-        for(let hand in this)
-        {
-            this[hand].getDocument(collection);
-        }
-    }
-
     toggle(hand, item) // Item necessary if equipping, if null, always unequip
     {
+        let path = this.schema.fieldPath
         item = item || this[hand].document;
-        let id = item?.id;
+        let uuid = item?.uuid;
 
         // Other hand
         let other = hand == "left" ? "right" : "left";        
@@ -46,14 +36,14 @@ export class HandsModel extends foundry.abstract.DataModel
         {
             for(let hand in this)
             {
-                if(this[hand].id == id)
+                if(this[hand].uuid == uuid)
                 {
-                    update[`system.hands.${hand}.id`] = "";
+                    update[`${path}.${hand}.uuid`] = "";
                 }
             }
         }
 
-        else if (item) // If not currently equipped, add IDs to hand fields
+        else if (item) // If not currently equipped, add UUID to hand fields
         {
 
             if (this[hand].useless)
@@ -65,16 +55,16 @@ export class HandsModel extends foundry.abstract.DataModel
 
             if (item.system.traits.has("twohanded"))
             {
-                update[`system.hands.left.id`] = id;
-                update[`system.hands.right.id`] = id;
+                update[`${path}.left.uuid`] = uuid;
+                update[`${path}.right.uuid`] = uuid;
             }
             else 
             {
-                update[`system.hands.${hand}.id`] = id;
+                update[`${path}.${hand}.uuid`] = uuid;
                 // If other hand is holding a two handed weapon, unequip it
                 if (this[hand].document?.system.traits.has("twohanded"))
                 {
-                    update[`system.hands.${other}.id`] = "";   
+                    update[`${path}.${other}.uuid`] = "";   
                 }
             }
         }
@@ -82,12 +72,12 @@ export class HandsModel extends foundry.abstract.DataModel
         return update;
     }
 
-    isHolding(id)
+    isHolding(uuid)
     {
         let hands = {};
         for(let hand in this)
         {
-            if (this[hand].id == id)
+            if (this[hand].uuid == uuid)
             {
                 hands[hand] = true;
             }

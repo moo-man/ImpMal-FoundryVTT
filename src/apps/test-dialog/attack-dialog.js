@@ -2,7 +2,7 @@ import { SkillTestDialog } from "./skill-dialog";
 
 export class AttackDialog extends SkillTestDialog
 {  
-    fieldsTemplate = `systems/impmal/templates/apps/test-dialog/attack-fields.hbs`;
+    subTemplate = `systems/impmal/templates/apps/test-dialog/attack-fields.hbs`;
 
     async getTemplateFields() 
     {

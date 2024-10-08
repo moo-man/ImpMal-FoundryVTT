@@ -1,5 +1,3 @@
-import { ListModel } from "../../shared/list";
-
 let fields = foundry.data.fields;
 
 export class TraitListModel extends ListModel

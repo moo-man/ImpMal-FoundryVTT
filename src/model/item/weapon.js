@@ -1,4 +1,3 @@
-import { DocumentReferenceModel } from "../shared/reference";
 import { DamageModel } from "./components/damage";
 import { EquippableItemModel } from "./components/equippable";
 import { TraitListModel } from "./components/traits";
@@ -31,33 +30,36 @@ export class WeaponModel extends EquippableItemModel
     }
 
 
-    async preUpdateChecks(data)
+    async _preUpdate(data, options, user)
     {
-        await super.preUpdateChecks(data);
-        if (hasProperty(data, "system.mag.value") && this.ammo.document)
+        await super._preUpdate(data, options, user);
+        if (foundry.utils.hasProperty(options.changed, "system.mag.value") && this.ammo.document)
         {
-            setProperty(data, "system.mag.current", data.system.mag.value);
+            foundry.utils.setProperty(data, "system.mag.current", data.system.mag.value);
         }
     }
 
-    async updateChecks(updateData)
+    async _onUpdate(data, options, user)
     {
-        let data = await super.updateChecks();
-
+        await super._onUpdate(data, options, user);
+        let updateData = {}
         // If ammo changed, also update current mag value
-        // Can't be in preUpdateChecks because need to check ammo quantity, ammo.document would not ready 
-        if (hasProperty(updateData, "system.ammo.id"))
+        // Can't be in _preUpdate because need to check ammo quantity, ammo.document would not ready 
+        if (foundry.utils.hasProperty(data, "system.ammo.id"))
         {
             if (this.ammo.document)
             {
-                setProperty(data, "system.mag.current", Math.min(this.mag.value, this.ammo.document.system.quantity));
+                foundry.utils.setProperty(updateData, "system.mag.current", Math.min(this.mag.value, this.ammo.document.system.quantity));
             }
             else if (!this.ammo.document)
             {
-                setProperty(data, "system.mag.current", 0);
+                foundry.utils.setProperty(updateData, "system.mag.current", 0);
             }
         }
-        return data;
+        if (!foundry.utils.isEmpty(updateData))
+        {
+            this.parent.update(updateData);
+        }
     }
 
     computeBase() 
@@ -78,9 +80,8 @@ export class WeaponModel extends EquippableItemModel
         this.encumbrance.total = this.quantity * this.encumbrance.value;
     }
 
-    computeOwnerDerived(actor) 
+    computeOwned(actor) 
     {
-        this.ammo.getDocument(actor.items);
         this.damage.compute(actor);
         this._applyModifications();
         this._applyAmmoMods();
@@ -97,7 +98,7 @@ export class WeaponModel extends EquippableItemModel
         let actor = this.parent?.actor;
         if (actor?.type == "character")
         {
-            let hands = actor.system.hands.isHolding(this.id);
+            let hands = actor.system.hands.isHolding(this.parent.uuid);
             this.equipped.value = isEmpty(hands) ? false : true;
             this.equipped.hands = hands;
             if (this.traits.has("twohanded"))
@@ -307,7 +308,7 @@ export class WeaponModel extends EquippableItemModel
                 this.traits.remove(ammo.system.removedTraits);
             }
 
-            this._applyEffects(ammo.effects.filter(e => e.applicationData.type == "document" && e.applicationData.documentType== "Item" && !e.disabled));
+            this._applyEffects(ammo.effects.filter(e => e.system.transferData.type == "document" && e.system.transferData.documentType== "Item" && !e.disabled));
         }
     }
 

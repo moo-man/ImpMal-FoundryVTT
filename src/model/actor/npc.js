@@ -1,11 +1,10 @@
-import { SingletonItemModel } from "../shared/singleton-item";
 import { NPCCombatModel } from "./components/combat";
 import { StandardActorModel } from "./standard";
 let fields = foundry.data.fields;
 
 export class NPCModel extends StandardActorModel 
 {
-    static singletonItemTypes = ["faction"];
+    static singletonItemPaths = {"faction" : "faction"};
     static preventItemTypes = ["role", "boonLiability", "origin"];
 
     static defineSchema() 
@@ -18,10 +17,9 @@ export class NPCModel extends StandardActorModel
         return schema;
     }
 
-    computeDerived(items)
+    computeDerived()
     {
-        super.computeDerived(items);
-        this.faction.getDocument(items.all);
+        super.computeDerived();
         this.computeRole();
     }
 

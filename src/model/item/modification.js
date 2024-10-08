@@ -1,5 +1,4 @@
 import { ImpMalItem } from "../../document/item";
-import { ListModel } from "../shared/list";
 import { PhysicalItemModel } from "./components/physical";
 import { TraitListModel } from "./components/traits";
 let fields = foundry.data.fields;

@@ -23,7 +23,6 @@ import registerHandlebars from "./system/handlebars";
 import registerSettings from "./system/settings";
 import ImpMalCharacterSheet from "./sheet/actors/character-sheet";
 import ImpMalItemSheet from "./sheet/items/item-sheet";
-import log  from "./system/logger";
 import ProtectionItemSheet from "./sheet/items/item-protection-sheet";
 import registerHooks from "./system/hooks";
 import { CharacteristicTest } from "./system/tests/characteristic/characteristic-test";
@@ -60,8 +59,9 @@ import { ImpMalChatMessage } from "./system/chat-message";
 import TalentItemSheet from "./sheet/items/item-talent-sheet";
 import { AvailabilityTest } from "./system/tests/availability/availability-test";
 import ImpMalTables from "./system/tables";
-import ModuleInitializer from "./apps/module-initialization";
 import loadScripts from "../loadScripts.js";
+import tokenHelpers from "./system/token-helpers.js";
+import { ImpMalActiveEffectModel } from "./model/effect/effect.js";
 
 Hooks.once("init", () => 
 {
@@ -122,9 +122,11 @@ Hooks.once("init", () =>
     CONFIG.Item.dataModels["critical"] = CriticalModel;
     CONFIG.Item.dataModels["trait"] = TraitModel;
 
+    CONFIG.ActiveEffect.dataModels["base"] = ImpMalActiveEffectModel
+    CONFIG.ChatMessage.dataModels["test"] = WarhammerTestMessageModel;
+
     game.impmal = {
         config : IMPMAL,
-        log : log,
         utility : ImpMalUtility,
         tags : new TagManager(),
         tables : ImpMalTables,
@@ -139,7 +141,6 @@ Hooks.once("init", () =>
         },
         apps : {
             ChoiceConfig,
-            ModuleInitializer
         }
     };
 
@@ -154,3 +155,4 @@ Hooks.once("init", () =>
 FoundryOverrides();
 registerHooks();
 loadScripts();
+tokenHelpers()

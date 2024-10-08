@@ -1,130 +1,11 @@
-import DocumentChoice from "../apps/document-choice";
-import log from "../system/logger";
-import ImpMalScript from "../system/script";
-import { SocketHandlers } from "../system/socket-handlers";
-
-export class ImpMalEffect extends ActiveEffect
+export class ImpMalEffect extends WarhammerActiveEffect
 {
 
-    async _preCreate(data, options, user)
-    {
-        await super._preCreate(data, options, user);
+    static CONFIGURATION = {
+        zones : true,
+        exclude : {}
+    };
 
-        // Take a copy of the test result that this effect comes from, if any
-        // We can't use simply take a reference to the message id and retrieve the test as
-        // creating a Test object before actors are ready (scripts can execute before that) throws errors
-        this.updateSource({"flags.impmal.sourceTest" : game.messages.get(options.message)?.test});
-
-        let preventCreation = false;
-        preventCreation = await this._handleEffectPrevention(data, options, user);
-        if (preventCreation)
-        {
-            ui.notifications.notify(game.i18n.format("IMPMAL.EffectPrevented", {name : this.name}));
-            return false; // If avoided is true, return false to stop creation
-        }
-        preventCreation = await this._handleFilter(data, options, user);
-        if (preventCreation)
-        {
-            log(game.i18n.format("IMPMAL.EffectFiltered", {name : this.name, target : this.parent?.name}), {force: true, args: this});
-            return false;
-        }
-        preventCreation = await this._handleConditionCreation(data, options, user);
-        if (preventCreation) // Conditions need to be handled before prevention because if it's a condition, it cancels and goes through creation again
-        {
-            return false;
-        }
-        await this._handleItemApplication(data, options, user);
-
-        await this._handleFollowedEffect(data, options);
-
-        return await this.handleImmediateScripts(data, options, user);
-    }
-
-    async _onDelete(options, user)
-    {
-        await super._onDelete(options, user);
-        await this.deleteCreatedItems();
-        await this._handleFollowedEffectDeletion();
-        for(let script of this.scripts.filter(i => i.trigger == "deleteEffect"))
-        {
-            await script.execute({options, user});
-        }
-        // If an owned effect is deleted, run parent update scripts
-        if (this.parent)
-        {
-            await this.parent.runScripts("updateDocument", {options, user});
-        }
-    }
-
-    async _onUpdate(data, options, user)
-    {
-        await super._onUpdate(data, options, user);
-
-        // If an owned effect is updated, run parent update scripts
-        if (this.parent)
-        {
-            await this.parent.runScripts("updateDocument", {data, options, user});
-        }
-    }
-
-    async _onCreate(data, options, user)
-    {
-        await super._onCreate(data, options, user);
-
-        // If an owned effect is created, run parent update scripts
-        if (this.parent)
-        {
-            await this.parent.runScripts("updateDocument", {data, options, user});
-        }
-    }
-
-    //#region Creation Handling
-
-    async handleImmediateScripts(data, options, user)
-    {
-        let scripts = this.scripts.filter(i => i.trigger == "immediate");
-        if (scripts.length == 0)
-        {
-            return true;
-        }
-
-        let run = false;
-        // Effect is direct parent, it's always applied to an actor, so run scripts
-        if (this.parent?.documentName == "Actor")
-        {
-            run = true;
-        }
-        // If effect is grandchild, only run scripts if the effect should apply to the actor
-        else if (this.parent?.documentName == "Item" && this.parent?.parent?.documentName == "Actor" && this.transfer)
-        {
-            run = true;
-        }
-        // If effect is child of Item, and Item is what it's applying to
-        else if (this.parent?.documentName == "Item" && this.applicationData.documentType == "Item")
-        {
-            run = true;
-        }
-
-        if (run)
-        {
-            if (scripts.length)
-            {
-                await Promise.all(scripts.map(s => s.execute({data, options, user})));
-                return !this.scripts.every(s => s.options.immediate?.deleteEffect);
-                // If all scripts agree to delete the effect, return false (to prevent creation);
-            }
-        }
-    }
-
-
-    async _handleEffectPrevention()
-    {
-        if (this.applicationData.avoidTest.prevention)
-        {
-            return this.resistEffect();
-        }
-    }
-    
     /** 
      * This function handles creation of new conditions on an actor
      * If an Item adds a Condition, prevent that condition from being added, and instead call `addCondition` 
@@ -145,94 +26,6 @@ export class ImpMalEffect extends ActiveEffect
         }
     }
 
-    async _handleFollowedEffect(data, options)
-    {
-        if (this.parent?.documentName == "Actor" && this.applicationData.zoneType == "follow")
-        {
-            let drawing = this.parent.currentZone[0];
-            if (drawing)
-            {
-                let zoneEffects = foundry.utils.deepClone(drawing.document.flags.impmal?.effects || []);
-                this.updateSource({"flags.impmal.following" : this.parent.getActiveTokens()[0]?.document?.uuid});
-                zoneEffects.push(this.toObject());
-
-                // keep ID lets us remove it from the drawing when the source is removed, see _handleFollowedEffectDeletion
-                options.keepId = true;
-                await SocketHandlers.executeOnOwner(drawing.document, "updateDrawing", {uuid: drawing.document.uuid, data : {flags : {impmal: {effects : zoneEffects}}}});
-            }
-        }
-    }
-
-    async _handleFollowedEffectDeletion()
-    {
-        if (this.parent.documentName == "Actor" && this.applicationData.zoneType == "follow")
-        {
-            let drawing = this.parent.currentZone[0];
-            if (drawing)
-            {
-                let zoneEffects = foundry.utils.deepClone(drawing.document.flags.impmal?.effects || []);
-                zoneEffects = zoneEffects.filter(i => i._id != this.id);
-                await SocketHandlers.executeOnOwner(drawing.document, "updateDrawing", {uuid: drawing.document.uuid, data : {flags : {impmal: {effects : zoneEffects}}}});
-            }
-        }
-    }
-
-
-    /**
-     * There is a need to support applying effects TO items, but I don't like the idea of actually
-     * adding the document to the item, as it would not work with duration handling modules and 
-     * would need a workaround to show the icon on a Token. Instead, when an Item type Active Effect
-     * is applied, keep it on the actor, but keep a reference to the item(s) being modified (if none, modify all)
-     * 
-     */
-    async _handleItemApplication()
-    {
-        let applicationData = this.applicationData;
-        if (applicationData.documentType == "Item" && this.parent?.documentName == "Actor")
-        {
-            let items = [];
-            let filter = this.filterScript;
-
-            // If this effect specifies a filter, narrow down the items according to it
-            // TODO this filter only happens on creation, so it won't apply to items added later
-            if (filter)
-            {
-                items = this.parent.items.contents.filter(i => filter.execute(i)); // Ids of items being affected. If empty, affect all
-            }
-
-            // If this effect specifies a prompt, create an item dialog prompt to select the items
-            if (applicationData.prompt)
-            {
-                items = await DocumentChoice.create(items, "unlimited");
-            }
-
-
-            this.updateSource({"flags.impmal.itemTargets" : items.map(i => i.id)});
-        }
-    }
-
-    async _handleFilter()
-    {
-        let applicationData = this.applicationData;
-        let filter = this.filterScript;
-        if (!filter)
-        {
-            return;
-        }
-
-        if (applicationData.documentType == "Item" && this.parent?.documentName == "Actor")
-        {
-            return; // See above, _handleItemApplication
-        }
-
-
-        if (this.parent)
-        {
-            return filter.execute(this.parent);
-        }
-    }
-
-
     async resistEffect()
     {
         let actor = this.actor;
@@ -243,38 +36,38 @@ export class ImpMalEffect extends ActiveEffect
             return false;
         }
 
-        let applicationData = this.applicationData;
+        let transferData = this.system.transferData;
 
         // If no test, cannot be avoided
-        if (applicationData.avoidTest.value == "none")
+        if (transferData.avoidTest.value == "none")
         {
             return false;
         }
 
         let test;
         let options = {title : {append : " - " + this.name}, context: {resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest}};
-        if (applicationData.avoidTest.value == "script")
+        if (transferData.avoidTest.value == "script")
         {
-            let script = new ImpMalScript({label : this.effect + " Avoidance", string : applicationData.avoidTest.script}, ImpMalScript.createContext(this));
+            let script = new WarhammerScript({label : this.effect + " Avoidance", string : transferData.avoidTest.script}, WarhammerSCript.createContext(this));
             return await script.execute();
         }
-        else if (applicationData.avoidTest.value == "item")
+        else if (transferData.avoidTest.value == "item")
         {
             test = await this.actor.setupTestFromItem(this.item.uuid, options);
         }
-        else if (applicationData.avoidTest.value == "custom")
+        else if (transferData.avoidTest.value == "custom")
         {
-            test = await this.actor.setupTestFromData(this.applicationData.avoidTest, options);
+            test = await this.actor.setupTestFromData(this.transferData.avoidTest, options);
         }
 
         await test.roll();
 
-        if (!applicationData.avoidTest.reversed)
+        if (!transferData.avoidTest.reversed)
         {
             // If the avoid test is marked as opposed, it has to win, not just succeed
-            if (applicationData.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
+            if (transferData.avoidTest.opposed && this.sourceTest)
             {
-                return test.result.SL > this.getFlag("impmal", "sourceTest").result?.SL;
+                return test.result.SL > this.sourceTest.result?.SL;
             }
             else 
             {
@@ -284,9 +77,9 @@ export class ImpMalEffect extends ActiveEffect
         else  // Reversed - Failure removes the effect
         {
             // If the avoid test is marked as opposed, it has to win, not just succeed
-            if (applicationData.avoidTest.opposed && this.getFlag("impmal", "sourceTest"))
+            if (transferData.avoidTest.opposed && this.sourceTest)
             {
-                return test.result.SL < this.getFlag("impmal", "sourceTest").result?.SL;
+                return test.result.SL < this.sourceTest.result?.SL;
             }
             else 
             {
@@ -295,219 +88,13 @@ export class ImpMalEffect extends ActiveEffect
         }
     }
 
-    async runPreApplyScript(args)
-    {
-        if (!this.applicationData.preApplyScript)
-        {
-            return true; // If no preApplyScript, do not prevent applying
-        }
-        else 
-        {
-            let script = new ImpMalScript({string : this.applicationData.preApplyScript, label : `Pre-Apply Script for ${this.name}`, async: true}, ImpMalScript.createContext(this));
-            return await script.execute(args);
-        }
-    }
 
-    /**
-     * Delete all items created by scripts in this effect
-     */
-    deleteCreatedItems()
-    {
-        if (this.actor)
-        {
-            let createdItems = this.getCreatedItems();
-            if (createdItems.length)
-            {
-                ui.notifications.notify(game.i18n.format("IMPMAL.DeletingEffectItems", {items : createdItems.map(i => i.name).join(", ")}));
-                return this.actor.deleteEmbeddedDocuments("Item", createdItems.map(i => i.id));
-            }
-        }
-    }
-
-    getCreatedItems()
-    {
-        return this.actor.items.filter(i => i.getFlag("impmal", "fromEffect") == this.id);
-    }
-
-    //#endregion
-
-    prepareData() 
-    {
-        super.prepareData();
-
-        if (this.applicationData.enableConditionScript && this.actor)
-        {
-            this.conditionScript = new ImpMalScript({string : this.applicationData.enableConditionScript, label : `Enable Script for ${this.name}`}, ImpMalScript.createContext(this));
-            this.disabled = !this.conditionScript.execute();
-        }
-
-        // Refresh scripts
-        this._scripts = undefined;
-
-        if (this.parent?.documentName == "Item")
-        {
-            this.transfer = this.determineTransfer();
-        }
-    }
-
-    determineTransfer()
-    {
-        let application = this.applicationData;
-
-        let allowed = (application.type == "document" && application.documentType == "Actor") || (application.type == "zone" && application.selfZone);
-
-        if (this.parent.documentName == "Item")
-        {
-            allowed = allowed && this.item.system.shouldTransferEffect(this);
-        }
-        
-        return allowed;
-    }
-
-    // To be applied, some data needs to be changed
-    // Convert type to document, as applying should always affect the document being applied
-    // Set the origin as the actor's uuid
-    // convert name to status so it shows up on the token
-    convertToApplied()
-    {
-        let effect = this.toObject();
-        effect.flags.impmal.applicationData.type = "document";
-        effect.origin = this.actor?.uuid;
-        effect.statuses = [this.key || effect.name.slugify()]; // this.key is prioritized if it's a condition, we don't want ablaze-(minor) as the key, just ablaze
-
-        if (this.item)
-        {
-            effect.flags.impmal.sourceItem = this.item.uuid;
-        }
-
-        // When transferred to another actor, effects lose their reference to the item it was in
-        // So if a effect pulls its avoid test from the item data, it can't, so place it manually
-        if (this.applicationData.avoidTest.value == "item")
-        {
-            effect.flags.impmal.applicationData.avoidTest.value = "custom";
-            mergeObject(effect.flags.impmal.applicationData.avoidTest, this.item?.getTestData() || {});
-        }
-
-        return effect;
-    }
-
-    get scripts()
-    {  
-        if (!this._scripts)
-        {
-            this._scripts = this.scriptData.map(i => new ImpMalScript(i, ImpMalScript.createContext(this)));
-        }
-        return this._scripts;
-    }
-
-    get manualScripts()
-    {
-        return this.scripts.filter(i => i.trigger == "manual").map((script, index)=> 
-        {
-            script.index = index; // When triggering manual scripts, need to know the index (listing all manual scripts on an actor is messy)
-            return script;
-        });
-    }
-
-    get filterScript()
-    {
-        if (this.applicationData.filter)
-        {
-            try 
-            {
-                return new ImpMalScript({string : this.applicationData.filter, label : `${this.name} Filter`}, ImpMalScript.createContext(this));
-            }
-            catch(e)
-            {
-                console.error("Error creating filter script: " + e);
-                return null;
-            }
-        }
-        else { return null; }
-    }
-
-    get item()
-    {
-        if (this.parent?.documentName == "Item")
-        {
-            return this.parent;
-        }
-        else
-        {
-            return undefined;
-        }
-    }
-
-    get originDocument() 
-    {
-        return fromUuidSync(this.origin);
-    }
-
-    get actor()
-    {
-        if (this.parent?.documentName == "Item")
-        {
-            return this.parent.parent;
-        }
-        else if (this.parent?.documentName == "Actor")
-        {
-            return this.parent;
-        }
-        else 
-        {
-            return undefined;
-        }
-    }
-
-    get source()
-    {
-        if (this.parent?.documentName == "Item")
-        {
-            return this.parent.name; // TODO: a lot to change here, account for origin
-        }
-        else if (this.getFlag("impmal", "fromZone"))
-        {
-            return fromUuidSync(this.getFlag("impmal", "fromZone"))?.text;
-        }
-        else
-        {
-            return super.sourceName;
-        }
-    }
 
     get sourceItem() 
     {
         return fromUuidSync(this.flags.impmal.sourceItem);
     }
 
-    get itemTargets() 
-    {
-        let ids = this.getFlag("impmal", "itemTargets");
-        if (ids.length == 0)
-        {
-            return this.actor.items.contents;
-        }
-        else 
-        {
-            return ids.map(i => this.actor.items.get(i));
-        }
-    }
-
-    get scriptData() 
-    {
-        return this.flags?.impmal?.scriptData || [];
-
-        /**
-         * label
-         * string
-         * trigger
-         */
-    }
-
-    get key () 
-    {
-        return Array.from(this.statuses)[0];
-    }
 
     get isCondition() 
     {
@@ -516,57 +103,18 @@ export class ImpMalEffect extends ActiveEffect
 
     get isMinor()
     {
-        return this.getFlag("impmal", "type") == "minor"; 
+        return this.system.type == "minor"; 
     }
 
     get isMajor()
     {
-        return this.getFlag("impmal", "type") == "major"; 
+        return this.system.type == "major"; 
     }
 
     // Computed effects mean flagged to know that they came from a calculation, notably encumbrance causing overburdened or restrained
     get isComputed()
     {
-        return this.getFlag("impmal", "computed");
-    }
-
-    get sourceTest() 
-    {
-        return this.getFlag("impmal", "sourceTest");
-    }
-
-    get sourceActor() 
-    {
-        return ChatMessage.getSpeakerActor(this.sourceTest.context.speaker);
-    }
-
-    get applicationData() 
-    {
-        let applicationData = mergeObject(this.constructor._defaultApplicationData(), this.getFlag("impmal", "applicationData"));
-
-        // // Delete non-relevant properties based on application type
-        // if (applicationData.type == "document")
-        // {
-        //     delete applicationData.avoidTest;
-        //     delete applicationData.filters;
-        //     delete applicationData.prompt;
-        //     delete applicationData.consume;
-        // }
-
-        // if (applicationData.type == "damage")
-        // {
-        //     delete applicationData.avoidTest;
-
-        //     if (applicationData.documentType == "Actor")
-        //     {
-        //         delete applicationData.filters;
-        //         delete applicationData.prompt;
-        //     }
-
-        //     delete applicationData.consume;
-        // }
-
-        return applicationData;
+        return this.system.computed;
     }
 
     static findEffect(key, type="minor")
@@ -579,60 +127,5 @@ export class ImpMalEffect extends ActiveEffect
             effect = effects.find(i => i.id == key);
         }
         return effect;
-    }
-
-    static getCreateData(effectData, overlay=false)
-    {
-        const createData = foundry.utils.deepClone(effectData);
-        if ( overlay ) 
-        {
-            createData.flags = {core : {overlay : true}};
-        }
-        if (!createData.duration)
-        {
-            createData.duration = {};
-        }
-        delete createData.id;
-        return createData;
-    }
-
-
-
-    static _defaultApplicationData() 
-    {
-        return {
-            type : "document",
-            documentType : "Actor",
-
-            // Zone Properties
-            zoneType : "zone",
-            selfZone : false,
-            keep : false,
-            traits : {},
-
-            // Test Properties
-            avoidTest : { 
-                value : "none",
-                opposed : false,
-                prevention : true,
-                reversed : false,
-                manual : false,
-                script : "",
-                difficulty : "",
-                characteristic : "",
-                skill : {
-                    key : "",
-                    specialisation : ""
-                }
-            },
-
-            // Other
-            testIndependent : false,
-            preApplyScript : "", // A script that runs before an effect is applied - this runs on the source, not the target
-            equipTransfer : true,
-            enableConditionScript : "",
-            filter : "",
-            prompt : false
-        };
     }
 }

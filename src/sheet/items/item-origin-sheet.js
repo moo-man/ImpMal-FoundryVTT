@@ -6,7 +6,7 @@ export default class OriginItemSheet extends BackgroundItemSheet
     async getData()
     {
         let data = await super.getData();
-        data.item.system.equipment.documents = await Promise.all(data.item.system.equipment.documents);
+        await data.item.system.equipment.awaitDocuments();
         return data;
     }
 

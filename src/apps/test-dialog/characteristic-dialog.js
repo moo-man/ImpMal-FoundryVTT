@@ -1,4 +1,4 @@
-import log from "../../system/logger";
+
 import { TestDialog } from "./test-dialog";
 
 export class CharacteristicTestDialog extends TestDialog

@@ -179,7 +179,7 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
             {
                 new ImpMalItemDiffSheet(document, {diffUpdater : (newDiff) => 
                 {
-                    game.impmal.log("Updating DIFF: ", this.object, index, newDiff);
+                    warhammer.utility.log("Updating DIFF: ", this.object, index, newDiff);
                     options[index].diff = newDiff;
                     if (newDiff.name)
                     {

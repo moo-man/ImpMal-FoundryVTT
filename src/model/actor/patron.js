@@ -1,4 +1,3 @@
-import { SingletonItemModel } from "../shared/singleton-item";
 import { BaseActorModel } from "./base";
 import { ActorInfluenceModel } from "./components/influence";
 let fields = foundry.data.fields;
@@ -6,7 +5,7 @@ let fields = foundry.data.fields;
 export class PatronModel extends BaseActorModel 
 {
     static preventItemTypes = ["weapon", "augmetic", "ammo", "forceField", "modification", "origin", "power", "protection", "specialisation", "talent", "injury"];
-    static singletonItemTypes = ["faction", "duty"];
+    static singletonItemPaths = {"faction" : "faction", "duty" : "faction"};
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -23,22 +22,20 @@ export class PatronModel extends BaseActorModel
         return schema;
     }
 
-    computeBase(items)
+    computeBase()
     {
-        super.computeBase(items);
+        super.computeBase();
         this.influence.initialize();
     }
 
 
 
-    computeDerived(items)
+    computeDerived()
     {
-        super.computeDerived(items);
+        super.computeDerived();
 
         this.computeGrade();
-        this.duty.getDocument(items.all);
-        this.faction.getDocument(items.all);
-        this.influence.compute(Array.from(this.parent.allApplicableEffects()), items, this.parent.type);
+        this.influence.compute(Array.from(this.parent.allApplicableEffects()), this.parent.itemTypes, this.parent.type);
     }
     
     computeGrade()

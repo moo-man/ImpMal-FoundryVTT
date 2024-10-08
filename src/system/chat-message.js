@@ -2,7 +2,6 @@ import { EditTestForm } from "../apps/edit-test";
 import { AvailabilityDialog } from "../apps/test-dialog/availability-dialog";
 import ImpMalTables from "./tables";
 import { AvailabilityTest } from "./tests/availability/availability-test";
-import ZoneHelpers from "./zone-helpers";
 
 export class ImpMalChatMessage extends ChatMessage 
 {
@@ -154,7 +153,7 @@ export class ImpMalChatMessage extends ChatMessage
                 actors = canvas.tokens.controlled.map(t => t.actor);
             }
 
-            let effects = (test.item?.targetEffects || []).filter(e => e.applicationData.avoidTest?.opposed);
+            let effects = (test.item?.targetEffects || []).filter(e => e.system.transferData.avoidTest?.opposed);
 
             actors.forEach(async a => 
             {

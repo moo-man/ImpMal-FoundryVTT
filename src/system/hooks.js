@@ -4,7 +4,6 @@ import combat from "./hooks/combat";
 import drawing from "./hooks/drawing";
 import ready from "./hooks/ready";
 import settings from "./hooks/settings";
-import targets from "./hooks/targets";
 import token from "./hooks/token";
 import i18n from "./hooks/i18n";
 import setup from "./hooks/setup";
@@ -15,7 +14,6 @@ export default function()
     ready();
     actor();
     chat();
-    targets();
     settings();
     combat();
     token();
@@ -23,10 +21,6 @@ export default function()
     drawing();
     setup();
     journal();
-
-    Hooks.on("preCreateJournalEntry", _keepID);
-    Hooks.on("preCreateScene", _keepID);
-    Hooks.on("preCreateRollTable", _keepID);
 
     Hooks.on("hotbarDrop", (hotbar, data, pos) => 
     {
@@ -36,10 +30,4 @@ export default function()
             return false;
         }
     });
-
-    
-    function _keepID(document, data, options)
-    {
-        options.keepId = game.impmal.utility._keepID(data._id, document);
-    }
 }

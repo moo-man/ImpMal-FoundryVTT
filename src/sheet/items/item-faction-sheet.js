@@ -5,7 +5,7 @@ export default class FactionItemSheet extends BackgroundItemSheet
 {
     _onDropItemDuty(ev, item)
     {
-        this.item.update({[`system.${item.system.category}.duty.list`] : this.item.system[item.system.category].duty.addDocument(item)});
+        this.item.update(this.item.system[item.system.category].duty.add(item));
     }
 
     async getData() 

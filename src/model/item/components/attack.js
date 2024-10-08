@@ -23,7 +23,7 @@ export class AttackDataModel extends TestDataModel
         this.traits.compute();
     }
 
-    computeOwnerDerived(actor) 
+    computeOwned(actor) 
     {
         this.damage.compute(actor);
         const characteristic = this.characteristic || this.type;

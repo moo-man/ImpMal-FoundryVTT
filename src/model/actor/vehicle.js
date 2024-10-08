@@ -1,5 +1,3 @@
-import { DocumentListModel } from "../shared/list";
-import { VehicleDocumentModel } from "../shared/reference";
 import { BaseActorModel } from "./base";
 let fields = foundry.data.fields;
 
@@ -41,28 +39,36 @@ export class VehicleModel extends BaseActorModel
     computeDerived(items)
     {
         super.computeDerived(items);
-        this.actors.findDocuments(game.actors);
         this.crew.actors = this.actors.list.filter(i => i.position == "crew").map(i => this.actors.documents.find(actor => actor.id == i.id));
         this.passengers.actors = this.actors.list.filter(i => i.position == "passengers").map(i => this.actors.documents.find(actor => actor.id == i.id));
     }
 }
 
-export class VehicleActorList extends DocumentListModel
+export class VehicleActorList extends DocumentReferenceListModel
 {
-    static defineSchema()
-    {
-        let schema = super.defineSchema();
-        schema.list = new fields.ArrayField(new fields.EmbeddedDataField(VehicleDocumentModel));
-        return schema;
-    }
+    listSchema = VehicleDocumentModel
 
-    addDocument(document, position="crew")
+    add(document, position="crew")
     {
         return this.add({
-            id : document.id,
+            uuid : document.uuid,
             name : document.name,
             type : document.documentName,
             position : position
         });
     }
+}
+
+export class VehicleDocumentModel extends DocumentReferenceModel 
+{
+    static defineSchema() 
+    {
+        let schema = {};
+        schema.uuid = new fields.StringField();
+        schema.name = new fields.StringField();
+        schema.type = new fields.StringField();
+        schema.position = new fields.StringField();
+        return schema;
+    }
+
 }

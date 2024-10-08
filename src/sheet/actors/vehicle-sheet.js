@@ -29,7 +29,7 @@ export default class ImpMalVehicleSheet extends ImpMalActorSheet
             if (actor.type == "character" || actor.type == "npc")
             {
                 let position = this._getDataAttribute(ev, "position");
-                let newList = this.object.system.actors.addDocument(actor, position);
+                let newList = this.object.system.actors.add(actor, position);
 
                 let ontoActorId = this._getId(ev);
                 // If this actor was dragged from a different position onto an actor in the new position, swap the actors

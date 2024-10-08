@@ -1,9 +1,9 @@
-import log from "../../system/logger";
+
 import { CharacteristicTestDialog } from "./characteristic-dialog";
 
 export class SkillTestDialog extends CharacteristicTestDialog
 {
-    fieldsTemplate = `systems/impmal/templates/apps/test-dialog/skill-fields.hbs`;
+    subTemplate = `systems/impmal/templates/apps/test-dialog/skill-fields.hbs`;
 
 
     get skillItem() 

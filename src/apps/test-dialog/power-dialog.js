@@ -1,9 +1,9 @@
-import log from "../../system/logger";
+
 import { SkillTestDialog } from "./skill-dialog";
 
 export class PowerTestDialog extends SkillTestDialog
 {
-    fieldsTemplate = `systems/impmal/templates/apps/test-dialog/power-fields.hbs`;
+    subTemplate = `systems/impmal/templates/apps/test-dialog/power-fields.hbs`;
     
 
     computeFields() 
