@@ -7,7 +7,7 @@ export default function registerSettings()
         scope: "world",
         config: false,
         type: String,
-        default: 0
+        default: "0.0.0"
     });
 
     game.settings.register("impmal", "superiority", {

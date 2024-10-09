@@ -62,6 +62,7 @@ import ImpMalTables from "./system/tables";
 import loadScripts from "../loadScripts.js";
 import tokenHelpers from "./system/token-helpers.js";
 import { ImpMalActiveEffectModel } from "./model/effect/effect.js";
+import Migration from "./system/migration.js";
 
 Hooks.once("init", () => 
 {
@@ -130,6 +131,7 @@ Hooks.once("init", () =>
         utility : ImpMalUtility,
         tags : new TagManager(),
         tables : ImpMalTables,
+        migration : Migration,
         testClasses : {
             CharacteristicTest,
             SkillTest,

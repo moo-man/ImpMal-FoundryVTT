@@ -18,5 +18,10 @@ export default function()
             tables.origin = "nyaEnNOrR8Sq8Wf4";
             game.settings.set("impmal", "tableSettings", tables);
         }
+
+        if(game.impmal.migration.shouldMigrate())
+        {
+            game.impmal.migration.migrateWorld(true, true);
+        }
     });
 }
