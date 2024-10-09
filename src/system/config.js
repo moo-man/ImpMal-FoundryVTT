@@ -1657,15 +1657,15 @@ const IMPMAL = {
     avoidTestTemplate : "systems/impmal/templates/apps/effect-avoid-test.hbs",
     effectScripts : {},
     
-    logFormat : [`%cIMPMAL` + `%c | @MESSAGE`, "color: #DDD;background: #065c63;font-weight:bold", "color: unset"],
+    logFormat : [`%cIMPMAL` + `%c @MESSAGE`, "color: #DDD;background: #065c63;font-weight:bold", "color: unset"],
     
     rollClasses : {},
     
     bugReporterConfig : {
         endpoint  : "https://aa5qja71ih.execute-api.us-east-2.amazonaws.com/Prod/soulbound",
-        githubURL : "https://api.github.com/repos/moo-man/AoS-Soulbound-FoundryVTT/",
+        githubURL : "https://api.github.com/repos/moo-man/ImpMal-FoundryVTT/",
         successMessage : "Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: @URL",
-        troubleshootingURL : "https://moo-man.github.io/AoS-Soulbound-FoundryVTT/pages/troubleshooting.html"
+        troubleshootingURL : "https://moo-man.github.io/ImpMal-FoundryVTT/pages/troubleshooting.html"
     },
     
     premiumModules : {
@@ -1835,4 +1835,5 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     }
 ]);
 
+foundry.utils.mergeObject(IMPMAL, defaultWarhammerConfig)
 export {IMPMAL, IM_CONFIG};

@@ -44,7 +44,7 @@ export class ModificationModel extends PhysicalItemModel
 
 export class ModListModel extends ListModel 
 {
-    defaultValue = {};
+    static listSchema = new fields.ObjectField({})
 
     prepareMods(weapon)
     {

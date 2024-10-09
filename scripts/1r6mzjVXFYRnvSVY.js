@@ -1,5 +1,3 @@
-console.log(this.effect.sourceTest)
-
 let damage = 4 + this.effect.sourceActor.system.characteristics.wil.bonus + this.effect.sourceTest.result.SL
 
 this.actor.applyDamage(damage, {location : "body"})

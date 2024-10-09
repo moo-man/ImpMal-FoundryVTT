@@ -75,7 +75,7 @@ export class TalentModel extends StandardItemModel
         
         if (allowed && this.parent.actor?.type == "character" && this.requirement.script && !options.skipRequirement)
         {
-            let script = new WarhammerScript({string : this.requirement.script, label : "Talent Requirement"}, WarhammerScript.createContext(this.parent));
+            let script = new WarhammerScript({script : this.requirement.script, label : "Talent Requirement"}, WarhammerScript.createContext(this.parent));
             allowed = script.execute() ? true : false; // Make sure it's boolified
             if (!allowed)
             {

@@ -15,7 +15,7 @@ export default class WeaponItemSheet extends ImpMalItemSheet
 
     _onDropItemModification(ev, item)
     {
-        this.item.update({"system.mods.list" : this.item.system.mods.add(item.toObject())});
+        this.item.update(this.item.system.mods.add(item.toObject()));
     }
 
     activateListeners(html) 
@@ -27,7 +27,7 @@ export default class WeaponItemSheet extends ImpMalItemSheet
             let index = Number(this._getIndex(ev));
             if (Number.isInteger(index))
             {
-                this.item.update({"system.mods.list" : this.item.system.mods.remove(index)});
+                this.item.update(this.item.system.mods.remove(index));
             }
         });
 

@@ -48,7 +48,7 @@ export class ImpMalEffect extends WarhammerActiveEffect
         let options = {title : {append : " - " + this.name}, context: {resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest}};
         if (transferData.avoidTest.value == "script")
         {
-            let script = new WarhammerScript({label : this.effect + " Avoidance", string : transferData.avoidTest.script}, WarhammerSCript.createContext(this));
+            let script = new WarhammerScript({label : this.effect + " Avoidance", script : transferData.avoidTest.script}, WarhammerSCript.createContext(this));
             return await script.execute();
         }
         else if (transferData.avoidTest.value == "item")

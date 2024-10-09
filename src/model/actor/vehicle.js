@@ -39,27 +39,13 @@ export class VehicleModel extends BaseActorModel
     computeDerived(items)
     {
         super.computeDerived(items);
-        this.crew.actors = this.actors.list.filter(i => i.position == "crew").map(i => this.actors.documents.find(actor => actor.id == i.id));
-        this.passengers.actors = this.actors.list.filter(i => i.position == "passengers").map(i => this.actors.documents.find(actor => actor.id == i.id));
+        this.crew.actors = this.actors.list.filter(i => i.position == "crew").map(i => this.actors.documents.find(actor => actor.uuid == i.uuid)).filter(i => i);
+        this.passengers.actors = this.actors.list.filter(i => i.position == "passengers").map(i => this.actors.documents.find(actor => actor.uuid == i.uuid)).filter(i => i);
     }
 }
 
-export class VehicleActorList extends DocumentReferenceListModel
-{
-    listSchema = VehicleDocumentModel
 
-    add(document, position="crew")
-    {
-        return this.add({
-            uuid : document.uuid,
-            name : document.name,
-            type : document.documentName,
-            position : position
-        });
-    }
-}
-
-export class VehicleDocumentModel extends DocumentReferenceModel 
+export class VehicleRiderDocumentModel extends DocumentReferenceModel 
 {
     static defineSchema() 
     {
@@ -71,4 +57,19 @@ export class VehicleDocumentModel extends DocumentReferenceModel
         return schema;
     }
 
+}
+
+export class VehicleActorList extends DocumentReferenceListModel
+{
+    static listSchema = VehicleRiderDocumentModel;
+
+    add(document, position="crew")
+    {
+        return this._add({
+            uuid : document.uuid,
+            name : document.name,
+            type : document.documentName,
+            position : position
+        });
+    }
 }

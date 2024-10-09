@@ -45,7 +45,7 @@ export default class DutyItemSheet extends BackgroundItemSheet
         let id = this._getId(ev);
         if (id)
         {
-            this.item.update({"system.talents.list" : this.item.system.talents.removeId(id)});
+            this.item.update(this.item.system.talents.removeId(id));
         }
     }
 }

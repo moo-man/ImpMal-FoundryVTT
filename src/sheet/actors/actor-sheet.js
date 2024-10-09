@@ -246,7 +246,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         let id = this._getId(ev);
         let item = this.actor.items.get(id);
 
-        item.update({"system.ammo.id" : ev.target.value});
+        item.update({"system.ammo.uuid" : ev.target.value});
     }
 
     _onReload(ev)

@@ -29,13 +29,13 @@ export default class ImpMalVehicleSheet extends ImpMalActorSheet
             if (actor.type == "character" || actor.type == "npc")
             {
                 let position = this._getDataAttribute(ev, "position");
-                let newList = this.object.system.actors.add(actor, position);
+                let newList = Object.values(this.object.system.actors.add(actor, position))[0];
 
-                let ontoActorId = this._getId(ev);
+                let ontoActorId = this._getUUID(ev);
                 // If this actor was dragged from a different position onto an actor in the new position, swap the actors
                 if (ontoActorId && dropData.previousPosition)
                 {
-                    let ontoActor = newList.find(i => i.id == ontoActorId);
+                    let ontoActor = newList.find(i => i.uuid == ontoActorId);
                     ontoActor.updateSource({position : dropData.previousPosition});
                 }
 
@@ -51,11 +51,11 @@ export default class ImpMalVehicleSheet extends ImpMalActorSheet
     _onDragStart(ev)
     {
         let position = this._getDataAttribute(ev, "position");
-        let id = this._getId(ev);
+        let uuid = this._getUUID(ev);
         if (position  == "crew" || position == "passengers")
         {
-            ev.dataTransfer.setData("text/plain", JSON.stringify(mergeObject(this.object.system.actors.documents.find(i => i.id == id)?.toDragData(), {previousPosition : position})));
-            this.object.update({"system.actors.list" : this.object.system.actors.removeId(id)});
+            ev.dataTransfer.setData("text/plain", JSON.stringify(foundry.utils.mergeObject(this.object.system.actors.documents.find(i => i.uuid == uuid)?.toDragData(), {previousPosition : position})));
+            this.object.update(this.object.system.actors.removeId(uuid));
         }   
         else 
         {
@@ -87,11 +87,21 @@ export default class ImpMalVehicleSheet extends ImpMalActorSheet
         {
             ev.stopPropagation();
             ev.preventDefault();
-            let id = this._getId(ev);
-            this.object.update({"system.actors.list" : this.object.system.actors.removeId(id)});
+            let id = this._getUUID(ev);
+            this.object.update(this.object.system.actors.removeId(id));
 
         }));
     
+        
+        html.find(".actor-edit").on("click", (ev => 
+            {
+                ev.stopPropagation();
+                ev.preventDefault();
+                let id = this._getUUID(ev);
+                fromUuid(id).then(actor => actor.sheet.render(true));
+    
+            }));
+
         html.find(".mag").on("click", ev => 
         {
             let id = this._getId(ev);

@@ -5,7 +5,7 @@ let fields = foundry.data.fields;
 export class PatronModel extends BaseActorModel 
 {
     static preventItemTypes = ["weapon", "augmetic", "ammo", "forceField", "modification", "origin", "power", "protection", "specialisation", "talent", "injury"];
-    static singletonItemPaths = {"faction" : "faction", "duty" : "faction"};
+    static singletonItemPaths = {"faction" : "faction", "duty" : "duty"};
     static defineSchema() 
     {
         let schema = super.defineSchema();
