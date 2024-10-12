@@ -1,13 +1,8 @@
 export default class Migration {
     static stats = {};
     static MIGRATION_VERSION = "2.0.0"
-    static shouldMigrate()
-    {
-        let systemMigrationVersion = game.settings.get("impmal", "systemMigrationVersion")
 
-        return foundry.utils.isNewerVersion(this.MIGRATION_VERSION, systemMigrationVersion);
-    }
-
+    // #region High Level Migration Handling
     static async migrateWorld(update=false, updateVersion=false) {
         this.stats = {
             actors : {
@@ -34,7 +29,7 @@ export default class Migration {
             this.stats.actors.total++;
             warhammer.utility.log(`+++| Actor: ${doc.name} |+++`, true, null, {groupCollapsed : true})
             try {
-                let migration = this.migrateActor(doc);
+                let migration = await this.migrateActor(doc);
                 if (!isEmpty(migration)) 
                 {
                     this.stats.actors.updated++;
@@ -52,7 +47,7 @@ export default class Migration {
             }
             catch (e) {
                 this.stats.actors.error.push(doc.name);
-                warhammer.utility.error("+++| MIGRATION FAILED |+++ Error: " + e, true, doc)
+                warhammer.utility.error("+++| MIGRATION FAILED |+++ Error: " + e.stack, true, doc)
             }
             finally
             {
@@ -66,7 +61,7 @@ export default class Migration {
             this.stats.items.total++;
             warhammer.utility.log(`+++| Item: ${doc.name} |+++`, true, null, {groupCollapsed : true})
             try {
-                let migration = this.migrateItem(doc);
+                let migration = await this.migrateItem(doc);
                 if (!isEmpty(migration)) 
                 {
                     this.stats.items.updated++;
@@ -94,17 +89,24 @@ export default class Migration {
 
         console.log(`%c+++++++++++++++++| ${game.system.version} Migration Complete |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
         this._printStatistics(this.stats)
-        ui.notifications.notify(`>>> Migration Complete — See Console for details <<<`)
+        if (this.stats.actors.error.length || this.stats.items.error.length)
+        {
+            ui.notifications.warn(`>>> Migration Complete with ${this.stats.actors.error.length + this.stats.items.error.length} errors — See Console for details <<<`)
+        }
+        else 
+        {
+            ui.notifications.notify(`>>> Migration Complete — See Console for details <<<`)
+        }
         game.settings.set("impmal", "systemMigrationVersion", game.system.version)
     }
 
-    static migrateActor(actor) {
+    static async migrateActor(actor) {
         let migration = {
-            items : actor.items.map(i => this.migrateItem(i, actor)).filter(i => !isEmpty(i)),
-            effects: actor.effects.map(e => this.migrateEffect(e, actor)).filter(i => !isEmpty(i))
+            items : (await Promise.all(actor.items.map(i => this.migrateItem(i, actor)))).filter(i => !isEmpty(i)),
+            effects: (await Promise.all(actor.effects.map(e => this.migrateEffect(e, actor)))).filter(i => !isEmpty(i))
         };
 
-        foundry.utils.mergeObject(migration, this._performActorDataMigration(actor))
+        foundry.utils.mergeObject(migration, await this.actorDataMigration(actor))
 
         this.stats.actors.items += migration.items.length;
         this.stats.actors.effects += migration.effects.length;
@@ -133,14 +135,14 @@ export default class Migration {
         return migration;
     }
 
-    static migrateItem(item, parent) {
+    static async migrateItem(item, parent) {
         if (parent)
         {
             warhammer.utility.log(`\t|--- Embedded Item: ${item.name}`, true)
         }
 
         let migration = {
-            effects: item.effects.map(e => this.migrateEffect(e, item)).filter(e => !isEmpty(e))
+            effects: (await Promise.all(item.effects.map(e => this.migrateEffect(e, item)))).filter(e => !isEmpty(e))
         };
 
         if (parent)
@@ -157,7 +159,7 @@ export default class Migration {
             warhammer.utility.log(`${parent ? '\t' : ""}\t|--- Migrated ${migration.effects.length} / ${actor.effects.size} Embedded Effects`, true)
         }
 
-        foundry.utils.mergeObject(migration, this._performItemDataMigration(item))
+        foundry.utils.mergeObject(migration, await this.itemDataMigration(item))
 
         if (migration.effects.length == 0)
         {
@@ -171,11 +173,11 @@ export default class Migration {
         return migration;
     }
 
-    static migrateEffect(effect, parent) {
+    static async migrateEffect(effect, parent) {
         warhammer.utility.log(`\t${parent.parent ? "\t" : ""}|--- Active Effect: ${effect.name}`, true)
         let migration = {};
 
-        foundry.utils.mergeObject(migration, this._performEffectDataMigration(effect))
+        foundry.utils.mergeObject(migration, await this.effectDataMigration(effect))
 
         if (!isEmpty(migration))
         {
@@ -183,25 +185,161 @@ export default class Migration {
         }
         return migration;
     }
+    //#endregion
 
-    static _performActorDataMigration(actor)
+
+    // #region Data Migrations
+    static async actorDataMigration(actor)
     {
         let migrated = {}
-        migrated.name = actor.name;
+
+            await this._migrateReference(actor, "patron", migrated);
+            await this._migrateReference(actor, "faction", migrated);
+            await this._migrateReference(actor, "origin", migrated);
+            await this._migrateReference(actor, "role", migrated);
+            await this._migrateReference(actor, "duty", migrated);
+
+        if (actor.system.hands)
+        {
+            await this._migrateReference(actor, "hands.left", migrated);
+            await this._migrateReference(actor, "hands.right", migrated);
+        }
+
+
         return migrated;
     }
-    static _performItemDataMigration(item)
+    static async itemDataMigration(item)
     {
         let migrated = {}
-        migrated.name = item.name;
+        let parent = item.actor;
+        if (item.system.ammo?.id && parent)
+        {
+            setProperty(migrated, "system.ammo", {uuid : parent.items.get(item.system.ammo.id)?.uuid, id : null});
+        }
+
+        if (item.type == "duty")
+        {
+            await this._migrateReference(item, "patron.faction", migrated);
+            await this._migrateReference(item, "patron.boonTable", migrated);
+            await this._migrateReference(item, "patron.liabilityTable", migrated);
+            await this._migrateReference(item, "patron.boon", migrated);
+
+            if (item.system.character.equipment.list.some(i => i.id))
+            {
+                setProperty(migrated, "system.character.equipment.list", await this._migrateReferenceList(item.system.character.equipment.list))
+            }
+        }
+
+        if (item.type == "faction")
+        {
+            await this._migrateReference(item, "patron.duty", migrated);
+
+            if (item.system.character.duty.list.some(i => i.id))
+            {
+                setProperty(migrated, "system.character.duty.list", await this._migrateReferenceList(item.system.character.duty.list))
+            }
+
+            if (item.system.patron.duty.list.some(i => i.id))
+            {
+                setProperty(migrated, "system.patron.duty.list", await this._migrateReferenceList(item.system.patron.duty.list))
+            }
+        }
+
+        if (item.type == "origin")
+        {
+
+            if (item.system.equipment.list.some(i => i.id))
+            {
+                setProperty(migrated, "system.equipment.list", await this._migrateReferenceList(item.system.equipment.list))
+            }
+
+            await this._migrateReference(item, "factionTable", migrated);
+        }
+
         return migrated;
     }  
-    static _performEffectDataMigration(effect)
+    static async effectDataMigration(effect)
     {
         let migrated = {}
-        migrated.name = effect.name;
+        let applicationData = effect.getFlag("impmal", "applicationData")
+        if (applicationData)
+        {
+            let transferData = {
+                type : applicationData.type,
+                documentType : applicationData.documentType,
+                avoidTest : applicationData.avoidTest,
+                testIndependent : applicationData.testIndependent,
+                preApplyScript : applicationData.preApplyScript,
+                equipTransfer : applicationData.equipTransfer,
+                enableConditionScript : applicationData.enableConditionScript,
+                filter : applicationData.filter,
+                prompt : applicationData.prompt,
+
+                zone : {
+                    type : applicationData.zoneType,
+                    keep : applicationData.keep,
+                    tarits : applicationData.traits
+                }
+            };
+            setProperty(migrated, "system.transferData", transferData);
+            migrated["flags.impmal.-=applicationData"] = null;
+        }
+        let scriptData = effect.getFlag("impmal", "scriptData")
+        if (scriptData)
+        {
+            setProperty(migrated, "system.scriptData", scriptData);
+            migrated.system.scriptData.forEach(s => {
+                s.script = s.script || s.string;
+                s.options = s.options || {};
+                foundry.utils.mergeObject(s.options, s.options.dialog)
+                foundry.utils.mergeObject(s.options, s.options.immediate)
+            })
+            migrated["flags.impmal.-=scriptData"] = null;
+        }
         return migrated;
     }  
+
+    //#endregion
+
+    //#region Utilities
+    static shouldMigrate()
+    {
+        let systemMigrationVersion = game.settings.get("impmal", "systemMigrationVersion")
+
+        return foundry.utils.isNewerVersion(this.MIGRATION_VERSION, systemMigrationVersion);
+    }
+
+    static async _migrateReference(document, field, migration)
+    {
+        let property = getProperty(document.system, field);
+        if (!property || property.uuid)
+        {
+            return;
+        }
+        if (property.id)
+        {
+            let referencedDocument = await game.impmal.utility.findId(property.id, true)
+
+            if (referencedDocument)
+            {
+                setProperty(migration, `system.${field}`, {uuid : referencedDocument.uuid, id : null});
+            }
+        }
+    }
+
+    static async _migrateReferenceList(list)
+    {
+        let migratedList = [];
+        let core = game.packs.get("impmal-core.items")
+        for(let i of list)
+        {
+            if (core.get(i.id))
+            {
+                migratedList.push({uuid : `Compendium.impmal-core.items.Item.${i.id}`})
+            }
+        }
+        return migratedList
+    }
 
     static _printStatistics(stats)
     {
@@ -211,4 +349,5 @@ export default class Migration {
         warhammer.utility.log(`Items - Updated: ${stats.items.updated}; Skipped: ${stats.items.skipped}; Error: ${stats.items.error.length} ${stats.items.error.length ? "(" + stats.items.error.join(", ") + ")" : ""}`, true)
         console.groupEnd();
     }
+    //#endregion
 }

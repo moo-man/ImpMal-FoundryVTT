@@ -78,7 +78,7 @@ export default class ImpMalUtility
    * @param {String} id id of the item
    * @returns an Item object if the item is in the world, or a Promise of an Item if it was from the compendium
    */
-    static findId(id) 
+    static findId(id, compendiumOnly=false) 
     {
         if (!id)
         {
@@ -90,11 +90,14 @@ export default class ImpMalUtility
             return fromUuid(id);
         }
     
-        for(let collection of game.collections)
+        if (!compendiumOnly)
         {
-            if (collection.has(id))
+            for(let collection of game.collections)
             {
-                return collection.get(id);
+                if (collection.has(id))
+                    {
+                        return collection.get(id);
+                    }
             }
         }
     
