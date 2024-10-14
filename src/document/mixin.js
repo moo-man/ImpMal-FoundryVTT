@@ -4,38 +4,6 @@ import { ImpMalEffect } from "./effect";
 export default ImpMalDocumentMixin = (cls) => class extends cls 
 {
 
-    async _preCreate(data, options, user) 
-    {
-        if (data._id)
-        {
-            options.keepId = ImpMalUtility._keepID(data._id, this);
-        }
-
-        await super._preCreate(data, options, user);
-        this.updateSource(await this.system.preCreateData(data, options));
-    }
-
-    async _preUpdate(data, options, user) 
-    {
-        await super._preUpdate(data, options, user);
-        await this.system.preUpdateChecks(data, options);
-        await Promise.all(this.runScripts("preUpdateDocument", {data, options, user}));
-    }
-
-    async _onUpdate(data, options, user)
-    {
-        await super._onUpdate(data, options, user);
-        await this.update(await this.system.updateChecks(data, options));
-        await Promise.all(this.runScripts("updateDocument", {data, options, user}));
-    }
-
-    async _onCreate(data, options, user)
-    {
-        await super._onCreate(data, options, user);
-        await this.system.createChecks(data, options, user);
-    }
-
-
     addCondition(key, {overlay=false, type, origin, duration={}, create=true, flags={}}={})
     {
 
@@ -119,47 +87,5 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
     hasCondition(key)
     {
         return this.effects.find(e => e.key == key);
-    }
-
-    runScripts(trigger, args)
-    {
-        let scripts = this.getScripts(trigger);
-
-        let promises = [];
-
-        for(let script of scripts)
-        {
-            if (script.async)
-            {
-                promises.push(script.execute(args));
-            }
-            else
-            {
-                script.execute(args);
-            }
-        }
-
-        return promises;
-    }
-
-
-    // Assigns a property to all datamodels are their embedded models
-    propagateDataModels(model, name, value)
-    {
-        if (model instanceof foundry.abstract.DataModel && !model[name])
-        {
-            Object.defineProperty(model, name, {
-                value, 
-                enumerable : false
-            });
-        }
-
-        for(let property in model)
-        {
-            if (model[property] instanceof foundry.abstract.DataModel)
-            {
-                this.propagateDataModels(model[property], name, value);
-            }
-        }
     }
 };

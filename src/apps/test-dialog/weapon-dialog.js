@@ -1,4 +1,4 @@
-import log from "../../system/logger";
+
 import { AttackDialog } from "./attack-dialog";
 
 export class WeaponTestDialog extends AttackDialog
@@ -45,7 +45,7 @@ export class WeaponTestDialog extends AttackDialog
         let weapon = id.includes(".") ? fromUuidSync(id) : actor.items.get(id); // Could be a vehicle weapon, in which case it's a uuid
         if (weapon.actor?.type == "vehicle")
         {
-            weapon.system.computeOwnerDerived(actor);
+            weapon.system.computeOwned(actor);
         }
         let skill = weapon.system.skill;
 

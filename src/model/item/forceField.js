@@ -47,10 +47,10 @@ export class ForceFieldModel extends EquippableItemModel
         return damage - roll.total;
     }
 
-    async preUpdateChecks(data)
+    async _preUpdate(data, options, user)
     {
-        await super.preUpdateChecks(data);
-        if (data?.system?.equipped?.value == true && this.overload.collapsed)
+        await super._preUpdate(data, options, user);
+        if (foundry.utils.getProperty(options.changed, "system.equipped.value") == true && this.overload.collapsed)
         {
             data.system.equipped.value = false;
             ui.notifications.notify(game.i18n.localize("IMPMAL.CannotEquipForceField"));

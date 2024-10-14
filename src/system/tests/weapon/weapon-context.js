@@ -1,4 +1,4 @@
-import log from "../../logger";
+
 import { SkillTestContext } from "../skill/skill-context";
 
 export class WeaponTestContext extends SkillTestContext
@@ -21,7 +21,7 @@ export class WeaponTestContext extends SkillTestContext
         if (this.vehicleId)
         {
             let weapon =  game.actors.get(this.vehicleId).items.get(this.weaponId);
-            weapon.system.computeOwnerDerived(this.actor); // If it's a vehicle weapon, this actor doesn't own it, so prepare it as if they did so the values are correct
+            weapon.system.computeOwned(this.actor); // If it's a vehicle weapon, this actor doesn't own it, so prepare it as if they did so the values are correct
             return weapon;
         }
         return this.actor.items.get(this.weaponId);

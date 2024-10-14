@@ -50,7 +50,7 @@ export class PowerModel extends StandardItemModel
         }
     }
 
-    computeOwnerDerived(actor)
+    computeOwned(actor)
     {
         this.skill = this.getSkill(actor);
         this.damage.compute(actor);

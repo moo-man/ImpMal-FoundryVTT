@@ -1,4 +1,3 @@
-import ScriptConfig from "../../apps/script-config";
 
 export default ImpMalSheetMixin = (cls) => class extends cls 
 {
@@ -83,76 +82,6 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         html.find(".script-config").on("click", this._onScriptConfig.bind(this));
         game.impmal.utility.listeners(html);
     }
-
-    _getId(ev) 
-    {
-        return this._getDataAttribute(ev, "id");
-    }
-    
-    _getIndex(ev) 
-    {
-        return Number(this._getDataAttribute(ev, "index"));
-    }
-
-    _getKey(ev) 
-    {
-        return this._getDataAttribute(ev, "key");
-    }
-
-    _getType(ev) 
-    {
-        return this._getDataAttribute(ev, "type");
-    }
-
-    _getPath(ev) 
-    {
-        return this._getDataAttribute(ev, "path");
-    }
-
-    _getCollection(ev) 
-    {
-        return this._getDataAttribute(ev, "collection") || "items";
-    }
-
-    _getUUID(ev)
-    {
-        return this._getDataAttribute(ev, "uuid");
-    }
-
-
-    /**
-     * Search for an HTML data property, specified as data-<property>
-     * First search target of the event, then search in parent properties
-     * 
-     * @param {Event} ev Event triggered
-     * @param {String} property data-<property> being searched for
-     * @returns 
-     */
-    _getDataAttribute(ev, property)
-    {
-        let value = ev.target.dataset[property];
-
-        if (!value) 
-        {
-            const parent = $(ev.target).parents(`[data-${property}]`);
-            if (parent) 
-            {
-                value = parent[0]?.dataset[property];
-            }
-        }
-        return value;
-    }
-
-    _getDocument(event)
-    {
-        let id = this._getId(event);
-        let collection = this._getCollection(event);
-        let uuid = this._getUUID(event);
-
-        return (uuid ? fromUuidSync(uuid) : this.object[collection].get(id));
-
-    }
-
     //#region Sheet Listeners
     _onListEdit(event) 
     {
@@ -334,7 +263,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
             // If you disable a patron effect, the update won't cause a rerender because it's an effect from another document, so rerender and reprepare manually
             if (this._isPatronDocument(updated))
             {
-                game.impmal.log("Rerendering Sheet and Repreparing from Patron Update");
+                warhammer.utility.log("Rerendering Sheet and Repreparing from Patron Update");
                 this.object.reset();
                 this.render(true);
             }

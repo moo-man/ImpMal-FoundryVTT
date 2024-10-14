@@ -5,7 +5,6 @@ import { SkillTestDialog } from "../apps/test-dialog/skill-dialog";
 import { TestDialog } from "../apps/test-dialog/test-dialog";
 import { TraitTestDialog } from "../apps/test-dialog/trait-dialog";
 import { WeaponTestDialog } from "../apps/test-dialog/weapon-dialog";
-import { SocketHandlers } from "../system/socket-handlers";
 import ImpMalTables from "../system/tables";
 import { BaseTest } from "../system/tests/base/base-test";
 import { CharacteristicTest } from "../system/tests/characteristic/characteristic-test";
@@ -14,29 +13,11 @@ import { PowerTest } from "../system/tests/power/power-test";
 import { SkillTest } from "../system/tests/skill/skill-test";
 import { TraitTest } from "../system/tests/trait/trait-test";
 import { WeaponTest } from "../system/tests/weapon/weapon-test";
-import ZoneHelpers from "../system/zone-helpers";
 import { ImpMalEffect } from "./effect";
 import ImpMalDocumentMixin from "./mixin";
 
-export class ImpMalActor extends ImpMalDocumentMixin(Actor)
+export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
 {
-    prepareBaseData()
-    {
-        this.propagateDataModels(this.system, "runScripts", this.runScripts.bind(this));
-        this._itemTypes = null; 
-        this.system.computeBase(this.itemTypes);
-        this.runScripts("prepareBaseData", this);
-    }
-
-    prepareDerivedData()
-    {
-        this.runScripts("prePrepareDerivedData", this);
-        this.system.computeDerived(mergeObject(this.itemTypes, {all : this.items}, {inplace : false}));
-        this.items.forEach(i => i.prepareOwnedData());
-        this.runScripts("prepareOwnedItems", this);
-        this.runScripts("postPrepareDerivedData", this);
-    }
-
     /**
      *
      * @param {string} characteristic Characteristic key, such as "ws" or "str"
@@ -94,53 +75,6 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         use.sendToChat();
     }
 
-    /**
-     *
-     * @param {class} dialogClass Class used for the test dialog
-     * @param {class} testClass Class used to compute the test result
-     * @param {any} data data relevant to the specific test (such as what characteristic/item to use)
-     * @param {object} options Optional properties to customize the test
-     * @param {boolean} roll Whether to evaluate the test or not
-     * @returns
-     */
-    async _setupTest(dialogClass, testClass, data, options={}, roll=true)
-    {
-        let dialogData = dialogClass.setupData(data, this, options);
-        let setupData;
-        if (options.skipDialog)
-        {
-            setupData = await (new dialogClass(dialogData.data, dialogData.fields).bypass())
-        }
-        else
-        {
-            setupData = await dialogClass.awaitSubmit(dialogData);
-        }
-        let test = testClass.fromData(setupData);
-        if (roll)
-        {
-            await test.roll();
-        }
-        return test;
-    }
-
-    async setupTestFromItem(uuid, options={})
-    {
-        let item = await fromUuid(uuid);
-        if (!item)
-        {
-            item = this.items.get(uuid); // Maybe uuid is actually simple id
-        }
-        if (!item)
-        {
-            return ui.notifications.error("ID " + uuid + " not found");
-        }
-        let itemTestData = item.getTestData();
-
-        options.context = options.context || {};
-        options.context.resist = options.context.resist ? options.context.resist.concat(item.type) : [item.type];
-
-        return this.setupTestFromData(itemTestData, options);
-    }
 
     /**
      * Setup a test from common data structure
@@ -456,110 +390,6 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         await this.setupWeaponTest(weapons[1].id, {context : {twf : true}});
     }
 
-    // Handles applying effects to this actor, ensuring that the owner is the one to do so
-    // This allows the owner of the document to roll tests and execute scripts, instead of the applying user
-    // e.g. the players can actually test to avoid an effect, instead of the GM doing it
-    async applyEffect({effectUuids=[], effectData=[], messageId}={})
-    {
-        let owningUser = game.impmal.utility.getActiveDocumentOwner(this);
-
-        if (typeof effectUuids == "string")
-        {
-            effectUuids = [effectUuids];
-        }
-
-        if (owningUser?.id == game.user.id)
-        {
-            for (let uuid of effectUuids)
-            {
-                let effect = fromUuidSync(uuid);
-                let message = game.messages.get(messageId);
-                await ActiveEffect.create(effect.convertToApplied(), {parent: this, message : message?.id});
-            }
-            for(let data of effectData)
-            {
-                await ActiveEffect.create(data, {parent: this, message : messageId});
-            }
-        }   
-        else 
-        {
-            SocketHandlers.executeOnOwner(this, "applyEffect", {effectUuids, actorUuid : this.uuid, messageId});
-        }
-    }
-    
-    /**
-     * Collect effect scripts being applied to the actor
-     * 
-     * @param {String} trigger Specify stript triggers to retrieve
-     * @param {Function} scriptFilter Optional function to filter out more scripts
-     * @returns 
-     */
-    getScripts(trigger, scriptFilter)
-    {
-        let effects = Array.from(this.allApplicableEffects()).filter(i => !i.disabled);
-        let scripts = effects.reduce((prev, current) => prev.concat(current.scripts.filter(i => i.trigger == trigger)), []);
-        if (scriptFilter)
-        {
-            scripts = scripts.filter(scriptFilter);
-        }
-        return scripts;
-    }
-
-    /**
-     * Some effects applied to an actor are actually intended for items, but to make other things convenient
-     * (like duration handling modules, or showing the effect icon on the token), they are given to an actor
-     * 
-     * These should supply their scripts to an Item as if they were 
-     * 
-     * @param {*} item 
-     */
-    getEffectsApplyingToItem(item)
-    {
-        // Get effects that should be applied to item argument
-        return this.effects.contents.filter(e => 
-        {
-            if (e.disabled)
-            {
-                return false;
-            }
-
-            // An actor effects intended to apply to an item must have the itemTargets flag
-            // Empty array => all items
-            // No flag => Should not apply to items
-            // Array with IDs => Apply only to those IDs
-            let targeted = e.getFlag("impmal", "itemTargets");
-            if (targeted)
-            {
-                if (targeted.length)
-                {
-                    return targeted.includes(item.id);
-                }
-                // If no items specified, apply to all items
-                else 
-                {
-                    return true;
-                }
-            }
-            else // If no itemTargets flag, it should not apply to items at all
-            {
-                return false;
-            }
-
-            // Create temporary effects that have the item as the parent, so the script context is correct
-        }).map(i => new ImpMalEffect(i.toObject(), {parent : item}));
-
-    }
-
-    /**
-     * Same logic as getEffectsApplyingToItem, but reduce the effects to their scripts
-     * 
-     * @param {*} item 
-     */
-    getScriptsApplyingToItem(item)
-    {
-        return this.getEffectsApplyingToItem(item).reduce((prev, current) => prev.concat(current.scripts), []);
-    }
-     
 
     /**
      * 
@@ -567,31 +397,9 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
      */
     *allApplicableEffects(includeItemEffects=false)
     {
-
-        for ( const effect of this.effects ) 
+        for(let effect of Array.from(super.allApplicableEffects(includeItemEffects)))
         {
-            if (effect.applicationData.documentType == "Item" && includeItemEffects) // Some effects are intended to modify items, but are placed on the actor for ease of tracking
-            {
-                yield effect;
-            }
-            else if (effect.applicationData.documentType == "Actor") // Normal effects (default documentType is actor)
-            {
-                yield effect;
-            }
-        }
-        for ( const item of this.items ) 
-        {
-            for ( const effect of item.effects.contents.concat(item.system.getOtherEffects())) 
-            {
-                // So I was relying on effect.transfer, which is computed in the effect's prepareData
-                // However, apparently when you first load the world, that is computed after the actor
-                // On subsequent data updates, it's computed before. I don't know if this is intentional
-                // Regardless, we need to doublecheck whether this effect should transfer to the actor
-                if ( effect.determineTransfer() ) 
-                {
-                    yield effect;
-                }
-            }
+            yield effect
         }
 
         // Add specified patron effects to character effects
@@ -599,38 +407,13 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         {
             for(let effect of this.system.patron.document.items.reduce((prev, current) => prev.concat(current.effects.contents), []))
             {
-                if (effect.applicationData.type == "document" && effect.applicationData.documentType == "character")
+                if (effect.system.transferData.type == "document" && effect.system.transferData.documentType == "character")
                 {
                     yield effect;
                 }
             }
         }
     }
-
-    get currentZoneEffects() 
-    {
-        return this.effects.contents.filter(e => e.getFlag("impmal", "fromZone"));
-    }
-
-    get currentZone()
-    {
-        let token = this.getActiveTokens()[0];
-        return canvas.drawings.placeables.filter(d => ZoneHelpers.isInDrawing(token.center, d));
-    }
-
-    /**
-     * Overriden from foundry to pass true to allApplicableEffects
-     */
-    get temporaryEffects() 
-    {
-        const effects = [];
-        for ( const effect of this.allApplicableEffects(true) ) 
-        {
-            if ( effect.active && effect.isTemporary ) {effects.push(effect);}
-        }
-        return effects;
-    }
-
 
     get defendingAgainst()
     {
@@ -641,38 +424,6 @@ export class ImpMalActor extends ImpMalDocumentMixin(Actor)
         else
         {
             return this._findAttackingMessage()?.test;
-        }
-    }
-
-    _itemTypes = null;
-
-    get itemTypes()
-    {
-        if (!this._itemTypes)
-        {
-            this._itemTypes = super.itemTypes;
-        }
-        return this._itemTypes;
-    }
-  
-
-    sameSideAs(actor)
-    {
-        if (this.hasPlayerOwner && actor.hasPlayerOwner) // If both are owned by players, probably the same side
-        {
-            return true;
-        }
-        else if (this.hasPlayerOwner) // If this actor is owned by a player, and the other is friendly, probably the same side
-        {
-            return actor.prototypeToken.disposition == CONST.TOKEN_DISPOSITIONS.FRIENDLY; 
-        }
-        else if (actor.hasPlayerOwner) // If this actor is friendly, and the other is owned by a player, probably the same side
-        {
-            return this.prototypeToken.disposition == CONST.TOKEN_DISPOSITIONS.FRIENDLY;
-        }
-        else // If neither are owned by a player, only same side if they have the same disposition
-        {
-            return this.prototypeToken.disposition == actor.prototypeToken.disposition;
         }
     }
 

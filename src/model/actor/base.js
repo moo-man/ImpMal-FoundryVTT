@@ -2,12 +2,9 @@ let fields = foundry.data.fields;
 /**
  * Abstract class that interfaces with the Actor class
  */
-export class BaseActorModel extends foundry.abstract.DataModel 
+export class BaseActorModel extends BaseWarhammerActorModel 
 {
 
-    static preventItemTypes = [];
-    static singletonItemTypes = [];
-    
     static defineSchema() 
     {
         let schema = {};
@@ -19,72 +16,26 @@ export class BaseActorModel extends foundry.abstract.DataModel
         return schema;
     }
     
-    async preCreateData(data) 
+    async _preCreate(data, options, user) 
     {
-        let preCreateData = {};
+        super._preCreate(data, options, user)
         if (!data.prototypeToken)
         {
-            mergeObject(preCreateData, {
+            this.parent.updateSource({
                 "prototypeToken.name" : data.name,
+                "prototypeToken.displayName" : CONST.TOKEN_DISPLAY_MODES.HOVER,
+                "prototypeToken.displayBars" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
             });
         }
-        return preCreateData;
-    }
-
-    async allowCreation(data, options, user)
-    {
-        return true;
     }
 
     initialize() 
     {
 
     }
-
-    async preUpdateChecks(data)
-    {
-        return data;
-    }
-
-    async updateChecks()
-    {
-        return {};
-    }
-
-    createChecks()
-    {
-        
-    }
-
-    itemIsAllowed(item)
-    {
-        if (this.constructor.preventItemTypes.includes(item.type))
-        {
-            ui.notifications.error(game.i18n.localize("IMPMAL.ItemsNotAllowed"), {type : item.type});
-            return false;
-        }
-        else 
-        {
-            return true;
-        }
-    }
     
-    checkSingletonItems(item)
-    {
-        if (this.constructor.singletonItemTypes.includes(item.type))
-        {
-            return item.actor.update({[`system.${item.type}`] : this[item.type].updateSingleton(item)});
-        }
-    }
-
-
     computeBase() 
     {
         this.initialize();
-    }
-
-    computeDerived() 
-    {
-        // Abstract
     }
 }

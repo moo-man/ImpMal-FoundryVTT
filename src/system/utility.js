@@ -78,7 +78,7 @@ export default class ImpMalUtility
    * @param {String} id id of the item
    * @returns an Item object if the item is in the world, or a Promise of an Item if it was from the compendium
    */
-    static findId(id) 
+    static findId(id, compendiumOnly=false) 
     {
         if (!id)
         {
@@ -90,11 +90,14 @@ export default class ImpMalUtility
             return fromUuid(id);
         }
     
-        for(let collection of game.collections)
+        if (!compendiumOnly)
         {
-            if (collection.has(id))
+            for(let collection of game.collections)
             {
-                return collection.get(id);
+                if (collection.has(id))
+                    {
+                        return collection.get(id);
+                    }
             }
         }
     
@@ -146,7 +149,7 @@ export default class ImpMalUtility
         let noCenter = options.includes("no-center");
         return await TextEditor.enrichHTML(`<table class="impmal">
         <thead>
-        <tr class="title"><td colspan="2">${table.name}</td></tr>
+        <tr class="title"><td colspan="2">@UUID[${table.uuid}]{${table.name}}</td></tr>
         <tr class="subheader">
             <td class="formula">${table.formula}</td>
             <td class="label">${label}</td>

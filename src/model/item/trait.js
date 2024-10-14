@@ -26,7 +26,7 @@ export class TraitModel extends StandardItemModel
         this.attack.traits.compute();
     }
 
-    computeOwnerDerived(actor) 
+    computeOwned(actor) 
     {
         this.attack.damage.compute(actor);
         const characteristic = this.attack.characteristic || this.attack.type;

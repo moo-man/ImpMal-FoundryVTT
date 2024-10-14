@@ -1,6 +1,5 @@
 import DocumentChoice from "../../apps/document-choice";
 import { ChoiceModel } from "../shared/choices";
-import { DeferredDocumentListModel } from "../shared/list";
 import { ItemInfluenceModel } from "./components/influence";
 import { DualItemModel } from "./dual";
 let fields = foundry.data.fields;
@@ -12,7 +11,7 @@ export class FactionModel extends DualItemModel
         // Patron Fields
         let schema = super.defineSchema();
         mergeObject(schema.patron.fields, {
-            duty : new fields.EmbeddedDataField(DeferredDocumentListModel),
+            duty : new fields.EmbeddedDataField(DeferredReferenceListModel),
             influence : new fields.EmbeddedDataField(ItemInfluenceModel),
         });
 
@@ -31,20 +30,20 @@ export class FactionModel extends DualItemModel
             talents : new fields.EmbeddedDataField(ChoiceModel),
             equipment : new fields.EmbeddedDataField(ChoiceModel),
             solars : new fields.NumberField(),
-            duty : new fields.EmbeddedDataField(DeferredDocumentListModel),
+            duty : new fields.EmbeddedDataField(DeferredReferenceListModel),
         });
         return schema;
     }
 
 
-    async createChecks(data, options, user)
+    async _onCreate(data, options, user)
     {
         if (["character", "npc"].includes(this.parent.actor?.type))
         {
-            let duties = await this.character.duty.getDocuments();
+            let duties = await this.character.duty.documents;
             if (duties.length >= 1)
             {
-                DocumentChoice.create(duties, 1, {text : game.i18n.localize("IMPMAL.DutyChoice"), title : game.i18n.localize("IMPMAL.ApplyDuty")}).then(duty => 
+                ItemDialog.create(duties, 1, {text : game.i18n.localize("IMPMAL.DutyChoice"), title : game.i18n.localize("IMPMAL.ApplyDuty")}).then(duty => 
                 {
                     if (duty[0])
                     {

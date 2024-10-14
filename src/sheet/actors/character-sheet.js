@@ -57,7 +57,7 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
             let actor = await Actor.fromDropData(dropData);
             if (actor.type == "patron")
             {
-                this.object.update({"system.patron.id" : actor.id});
+                this.object.update(this.object.system.patron.set(actor));
             }
         }
         else 

@@ -5,26 +5,26 @@ export class SkillsModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.athletics = new fields.EmbeddedDataField(SkillModel);
-        schema.awareness = new fields.EmbeddedDataField(SkillModel);
-        schema.dexterity = new fields.EmbeddedDataField(SkillModel);
-        schema.discipline = new fields.EmbeddedDataField(SkillModel);
-        schema.fortitude = new fields.EmbeddedDataField(SkillModel);
-        schema.intuition = new fields.EmbeddedDataField(SkillModel);
-        schema.linguistics = new fields.EmbeddedDataField(SkillModel);
-        schema.logic = new fields.EmbeddedDataField(SkillModel);
-        schema.lore = new fields.EmbeddedDataField(SkillModel);
-        schema.medicae = new fields.EmbeddedDataField(SkillModel);
-        schema.melee = new fields.EmbeddedDataField(SkillModel);
-        schema.navigation = new fields.EmbeddedDataField(SkillModel);
-        schema.presence = new fields.EmbeddedDataField(SkillModel);
-        schema.piloting = new fields.EmbeddedDataField(SkillModel);
-        schema.psychic = new fields.EmbeddedDataField(SkillModel);
-        schema.ranged = new fields.EmbeddedDataField(SkillModel);
-        schema.rapport = new fields.EmbeddedDataField(SkillModel);
-        schema.reflexes = new fields.EmbeddedDataField(SkillModel);
-        schema.stealth = new fields.EmbeddedDataField(SkillModel);
-        schema.tech = new fields.EmbeddedDataField(SkillModel);
+        schema.athletics = SkillModel.createModel("str");
+        schema.awareness = SkillModel.createModel("per");
+        schema.dexterity = SkillModel.createModel("ag");
+        schema.discipline = SkillModel.createModel("wil");
+        schema.fortitude = SkillModel.createModel("tgh");
+        schema.intuition = SkillModel.createModel("per");
+        schema.linguistics = SkillModel.createModel("int");
+        schema.logic = SkillModel.createModel("int");
+        schema.lore = SkillModel.createModel("int");
+        schema.medicae = SkillModel.createModel("int");
+        schema.melee = SkillModel.createModel("ws");
+        schema.navigation = SkillModel.createModel("int");
+        schema.presence = SkillModel.createModel("ag");
+        schema.piloting = SkillModel.createModel("wil");
+        schema.psychic = SkillModel.createModel("wil");
+        schema.ranged = SkillModel.createModel("bs");
+        schema.rapport = SkillModel.createModel("fel");
+        schema.reflexes = SkillModel.createModel("ag");
+        schema.stealth = SkillModel.createModel("ag");
+        schema.tech = SkillModel.createModel("int");
         return schema;
     }
 
@@ -51,7 +51,7 @@ export class SkillsModel extends foundry.abstract.DataModel
             }
             catch (e)
             {
-                game.impmal.log("Error assigning skill specialisation:", {args: item});
+                warhammer.utility.log("Error assigning skill specialisation:", {args: item});
             }
         }
     }
@@ -59,13 +59,22 @@ export class SkillsModel extends foundry.abstract.DataModel
 
 export class SkillModel extends foundry.abstract.DataModel 
 {
+    static _characteristic = "";
+
     static defineSchema() 
     {
         let schema = {};
-        schema.characteristic = new fields.StringField();
+        schema.characteristic = new fields.StringField({initial : this._characteristic});
         schema.advances = new fields.NumberField({min: 0, initial: 0});
         schema.modifier = new fields.NumberField({initial : 0});
         return schema;
+    }
+
+    static createModel(characteristic)
+    {
+        return new fields.EmbeddedDataField(class cls extends SkillModel {
+            static _characteristic = characteristic
+        })
     }
 
     computeTotal(characteristics) 

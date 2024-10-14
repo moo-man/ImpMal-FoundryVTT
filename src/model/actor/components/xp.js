@@ -1,4 +1,3 @@
-import { ListModel } from "../../shared/list";
 
 let fields = foundry.data.fields;
 
@@ -8,7 +7,10 @@ export class XPModel extends foundry.abstract.DataModel
     {
         let schema = {};
         schema.total = new fields.NumberField({initial : 0});
-        schema.other = new fields.EmbeddedDataField(ListModel);
+        schema.other = ListModel.createListModel(new fields.SchemaField({
+            xp : new fields.NumberField({initial : 0}),
+            description : new fields.StringField({})
+        }));
         return schema;
     }
 

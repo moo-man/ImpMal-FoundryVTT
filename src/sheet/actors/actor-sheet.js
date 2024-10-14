@@ -1,11 +1,10 @@
 import ArmourConfig from "../../apps/armour-config";
 import DocumentChoice from "../../apps/document-choice";
 import ChatHelpers from "../../system/chat-helpers";
-import { SocketHandlers } from "../../system/socket-handlers";
 import TokenHelpers from "../../system/token-helpers";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
-export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
+export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorSheet)
 {
 
     factionsExpanded={}; // Retain expanded influence sections on rerender;
@@ -202,7 +201,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         {
             if (this._isPatronDocument(updated))
             {
-                game.impmal.log("Rerendering Sheet from Patron Update");
+                warhammer.utility.log("Rerendering Sheet from Patron Update");
                 this.render(true);
             }
         });
@@ -220,7 +219,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         {
             if (this._isPatronDocument(updated))
             {
-                game.impmal.log("Rerendering Sheet from Patron Update");
+                warhammer.utility.log("Rerendering Sheet from Patron Update");
                 this.render(true);
             }
         });
@@ -247,7 +246,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         let id = this._getId(ev);
         let item = this.actor.items.get(id);
 
-        item.update({"system.ammo.id" : ev.target.value});
+        item.update({"system.ammo.uuid" : ev.target.value});
     }
 
     _onReload(ev)
@@ -301,14 +300,14 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
     {
         let type = ev.currentTarget.dataset.type;
 
-        this.actor.system[type]?.document?.delete();
+        this.actor.update(this.actor.system[type]?.delete());
     }
 
     
     _onRemoveReference(ev)
     {
         ev.stopPropagation();
-        this.actor.update({[`${ev.currentTarget.dataset.path}.id`] : ""});
+        this.actor.update({[`${ev.currentTarget.dataset.path}.uuid`] : ""});
     }
 
     _onTraitRoll(ev)
@@ -427,7 +426,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
             let summaryData = await document?.system?.summaryData();
             if (!summaryData)
             {
-                game.impmal.log(`No Summary Data found for Document ${document?.name}`, {force : true});
+                warhammer.utility.log(`No Summary Data found for Document ${document?.name}`, {force : true});
                 return;
             }
 
@@ -540,17 +539,6 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
         return this.actor.useItem({id, uuid});
     }
     
-    _onTriggerScript(ev)
-    {
-        let uuid = this._getUUID(ev);
-        let index = this._getIndex(ev);
-
-        let effect =  fromUuidSync(uuid);
-        let script = effect.manualScripts[index];
-
-        script.execute({actor : this.actor});
-    }
-
     _onClickArmourConfig()
     {
         new ArmourConfig(this.object).render(true);

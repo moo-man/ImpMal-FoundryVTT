@@ -1,4 +1,4 @@
-import log from "../../logger";
+
 import { SkillTestContext } from "../skill/skill-context";
 
 export class PowerTestContext extends SkillTestContext

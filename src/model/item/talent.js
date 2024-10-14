@@ -1,6 +1,4 @@
 import DocumentChoice from "../../apps/document-choice";
-import ImpMalScript from "../../system/script";
-import { DocumentListModel } from "../shared/list";
 import { TestDataModel } from "./components/test";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
@@ -45,23 +43,22 @@ export class TalentModel extends StandardItemModel
         schema.taken = new fields.NumberField({initial : 1});
         schema.xpCost = new fields.NumberField({initial : 100, min: 0});
         schema.test = new fields.EmbeddedDataField(TestDataModel);
-        schema.effectOptions = new fields.EmbeddedDataField(DocumentListModel);
+        schema.effectOptions = new fields.EmbeddedDataField(DocumentReferenceListModel);
         schema.effectTakenRequirement = new fields.ObjectField({}); // How many times must the talent be taken before each effect option can be selected, usually 2
         schema.effectRepeatable = new fields.ObjectField({}); // How many times must the talent be taken before each effect option can be selected, usually 2
         schema.effectChoices = new fields.ObjectField({}); // Choices selected
         return schema;
     }
 
-    async createChecks(data, options, user) 
+    async _onCreate(data, options, user) 
     {
-        await super.createChecks(data, options, user);
+        await super._onCreate(data, options, user);
         this.handleEffectSelection();
     }
 
     computeDerived()
     {
         super.computeDerived();
-        this.effectOptions.findDocuments(this.parent.effects);
         this.xp = this.xpCost * this.taken;
     }
 
@@ -78,7 +75,7 @@ export class TalentModel extends StandardItemModel
         
         if (allowed && this.parent.actor?.type == "character" && this.requirement.script && !options.skipRequirement)
         {
-            let script = new ImpMalScript({string : this.requirement.script, label : "Talent Requirement"}, ImpMalScript.createContext(this.parent));
+            let script = new WarhammerScript({script : this.requirement.script, label : "Talent Requirement"}, WarhammerScript.createContext(this.parent));
             allowed = script.execute() ? true : false; // Make sure it's boolified
             if (!allowed)
             {
@@ -97,17 +94,6 @@ export class TalentModel extends StandardItemModel
         }
         return allowed;
     }
-
-    // updateChecks(data, options)
-    // {
-    //     super.updateChecks();
-    //     if (data.system.taken)
-    //     {
-    //         this.handleEffectSelection();
-    //     }
-    //     return {};
-    // }
-
 
     // Applicable - Basically just checks whether an effect has been chosen and isn't disabled
     effectIsApplicable(effect)
@@ -139,7 +125,7 @@ export class TalentModel extends StandardItemModel
         }
 
         let effectOptions = this.effectOptions
-            .findDocuments(this.parent.effects) // Retrieve talent effects
+            .documents
             .filter(i =>i) 
             .filter(i => this.effectTakenRequirement[i.id] <= this.taken) // Choices should only be those available to select (should not show if talent has been taken twice but needs 3)
             .filter(i => !this.effectChoices[i.id] || this.effectRepeatable[i.id]); // Filter out choices that have already been selected and can't be selected more than once

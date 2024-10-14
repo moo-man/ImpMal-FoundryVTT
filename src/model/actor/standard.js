@@ -24,12 +24,12 @@ export class StandardActorModel extends BaseActorModel
         return schema;
     }
 
-    async preUpdateChecks(data, options)
+    async _preUpdate(data, options, user)
     {
-        await super.preUpdateChecks(data, options);
+        await super._preUpdate(data, options, user);
 
         // Prevent wounds from exceeding max
-        if (hasProperty(data, "system.combat.wounds.value"))
+        if (foundry.utils.hasProperty(data, "system.combat.wounds.value"))
         {
             if (data.system.combat.wounds.value > this.combat.wounds.max)
             {
@@ -40,14 +40,21 @@ export class StandardActorModel extends BaseActorModel
         }
     }
 
-    async updateChecks(data, options)
+    async _onUpdate(data, options, user)
     {
-        await super.updateChecks(data, options);
+        await super._onUpdate(data, options, user);
         //TODO: Check for dead effect if above critical wound threshold
 
         if (options.deltaWounds)
         {
-            TokenHelpers.displayScrollingNumber(options.deltaWounds > 0 ? "+" + options.deltaWounds : options.deltaWounds, this.parent, {color: "0xB31B1B"});
+            if (options.deltaWounds > 0)
+            {
+                TokenHelpers.displayScrollingText("+" + options.deltaWounds, this.parent, {fill: "0xB31B1B"});
+            }
+            else if (options.deltaWounds < 0)
+            {
+                TokenHelpers.displayScrollingText(options.deltaWounds, this.parent, {fill: "0xB31B1B"});
+            }
         }
 
         if (options.showActionText && data.system.combat.action)
@@ -65,29 +72,29 @@ export class StandardActorModel extends BaseActorModel
         this.combat.initialize();
     }
 
-    computeBase(items) 
+    computeBase() 
     {
-        super.computeBase(items);
+        super.computeBase();
         this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
-        this.combat.criticals.value = items.critical.length;
+        this.combat.criticals.value = this.parent.itemTypes.critical.length;
         this.warp.threshold = this.characteristics.wil.bonus; // Put this in base so it's modifiable by effects
 
     }
 
-    computeDerived(items) 
+    computeDerived() 
     {
-        super.computeDerived(items);
+        super.computeDerived();
         // Recompute bonuses as active effects may have changed it
         this.characteristics.computeTotals();
         this.characteristics.computeBonuses();
         this.runScripts("computeCharacteristics", this);
         this.skills.computeTotals(this.characteristics);
-        this.skills.findSpecialisations(items.specialisation);
-        this.computeEncumbranceThresholds(items);
+        this.skills.findSpecialisations(this.parent.itemTypes.specialisation);
+        this.computeEncumbranceThresholds(this.parent.itemTypes);
         this.runScripts("computeEncumbrance", this);
         this.computeEncumbranceState();
-        this.combat.computeCombat(this.characteristics, items);
+        this.combat.computeCombat(this.characteristics, this.parent.itemTypes);
         this.runScripts("computeCombat", this);
         this.computeWarpState();
         this.runScripts("computeWarpState", this);

@@ -41,10 +41,25 @@
         "extensions": ["css", "hbs", "json"]
       }
   },
+  "relationships": {
+    "requires": [{
+      "id": "warhammer-lib",
+      "type": "module",
+      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/1.1.0/module.json",
+      "compatibility": {
+        "minimum" : "1.1.0",
+        "verified": "1.1.0"
+      }
+    }]
+  },
   "background" : "modules/impmal-core/assets/images/login.webp",
   "initiative": "@combat.initiative + @skills.reflexes.total/100",
-  "gridDistance": 1,
-  "gridUnits": "m",
+  "grid": {
+    "distance": 1,
+    "units": "m",
+    "type": 1,
+    "diagonals": 4
+  },
   "primaryTokenAttribute": null,
   "secondaryTokenAttribute": null,
   "url": "https://github.com/moo-man/ImpMal-FoundryVTT",

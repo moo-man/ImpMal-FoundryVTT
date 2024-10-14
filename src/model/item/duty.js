@@ -1,7 +1,5 @@
 import { ImpMalActor } from "../../document/actor";
 import { ChoiceModel } from "../shared/choices";
-import { DeferredDocumentListModel } from "../shared/list";
-import { DeferredDocumentModel } from "../shared/reference";
 import { ItemInfluenceModel } from "./components/influence";
 import { DualItemModel } from "./dual";
 let fields = foundry.data.fields;
@@ -13,19 +11,19 @@ export class DutyModel extends DualItemModel
         // Patron Fields
         let schema = super.defineSchema();
 
-        schema.faction = new fields.EmbeddedDataField(DeferredDocumentModel);
+        schema.faction = new fields.EmbeddedDataField(DeferredReferenceModel);
         schema.category = new fields.StringField({initial : "character"});
         mergeObject(schema.patron.fields, {
-            boonTable : new fields.EmbeddedDataField(DeferredDocumentModel),
-            liabilityTable : new fields.EmbeddedDataField(DeferredDocumentModel),
-            boon : new fields.EmbeddedDataField(DeferredDocumentModel),
+            boonTable : new fields.EmbeddedDataField(DeferredReferenceModel),
+            liabilityTable : new fields.EmbeddedDataField(DeferredReferenceModel),
+            boon : new fields.EmbeddedDataField(DeferredReferenceModel),
             influence : new fields.EmbeddedDataField(ItemInfluenceModel),
         });
 
 
         // Character Fields
         mergeObject(schema.character.fields, {
-            equipment : new fields.EmbeddedDataField(DeferredDocumentListModel),
+            equipment : new fields.EmbeddedDataField(DeferredReferenceListModel),
             characteristics : new fields.ObjectField({}),
             skills : new fields.ObjectField({}),
             influence : new fields.EmbeddedDataField(ItemInfluenceModel),

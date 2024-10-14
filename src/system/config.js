@@ -478,17 +478,6 @@ const IMPMAL = {
         updateCombat  : "IMPMAL.UpdateCombat"
     },
 
-    scriptDialogOptions : {
-        targeter : "",
-        hideScript : "",
-        activateScript : "",
-        submissionScript : ""
-    },
-
-    scriptImmediateOptions : {
-        deleteEffect : ""
-    },
-
     asyncTriggers: { 
         "manual" : true,
         "immediate": true, 
@@ -1638,7 +1627,52 @@ const IMPMAL = {
         },
     },
 
-    effectScripts : {}
+    effectScripts : {},
+
+    transferTypes : {
+        document : "WH.TransferType.Document",
+        damage : "WH.TransferType.Damage",
+        target : "WH.TransferType.Target",
+        zone : "WH.TransferType.Zone",
+        other : "WH.TransferType.Other"
+    },
+    
+    // mergeObject(scriptTriggers, {
+    
+    //     equipToggle : "WH.Trigger.EquipToggle",
+    
+    //     takeDamageMod : "WH.Trigger.TakeDamageMod",
+    //     applyDamageMod : "WH.Trigger.ApplyDamageMod",
+    
+    //     preRollTest : "WH.Trigger.PreRollTest",
+    //     preRollCombatTest : "WH.Trigger.PreRollCombatTest",
+    //     preRollSpellTest : "WH.Trigger.PreRollSpellTest",
+    
+    //     rollTest : "WH.Trigger.RollTest",
+    //     rollCombatTest : "WH.Trigger.RollCombatTest",
+    //     rollSpellTest : "WH.Trigger.RollSpellTest",
+    // }),
+    
+    effectKeysTemplate : "systems/impmal/templates/apps/effect-key-options.hbs",
+    avoidTestTemplate : "systems/impmal/templates/apps/effect-avoid-test.hbs",
+    effectScripts : {},
+    
+    logFormat : [`%cIMPMAL` + `%c @MESSAGE`, "color: #DDD;background: #065c63;font-weight:bold", "color: unset"],
+    
+    rollClasses : {},
+    
+    bugReporterConfig : {
+        endpoint  : "https://aa5qja71ih.execute-api.us-east-2.amazonaws.com/Prod/soulbound",
+        githubURL : "https://api.github.com/repos/moo-man/ImpMal-FoundryVTT/",
+        successMessage : "Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: @URL",
+        troubleshootingURL : "https://moo-man.github.io/ImpMal-FoundryVTT/pages/troubleshooting.html"
+    },
+    
+    premiumModules : {
+        "impmal" : "Imperium Maledictum System",
+        "impmal-core" : "Core Rulebook",
+        "impmal-starter-set" : "Starter Set",
+    }
     
 };
 
@@ -1795,10 +1829,11 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             a.classList.add("corruption-link");
             a.classList.add("custom-link");
             a.dataset.value = value;
-            a.innerHTML = `<img src="systems/impmal/assets/icons/chaos.svg"><span>${match[2] || value}</span>`;
+            a.innerHTML = `<img src="systems/impmal/assets/icons/chsvg"><span>${match[2] || value}</span>`;
             return a;
         }
     }
 ]);
 
+foundry.utils.mergeObject(IMPMAL, defaultWarhammerConfig)
 export {IMPMAL, IM_CONFIG};

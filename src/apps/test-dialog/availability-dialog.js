@@ -1,9 +1,9 @@
-import log from "../../system/logger";
+
 import { TestDialog } from "./test-dialog";
 
 export class AvailabilityDialog extends TestDialog
 {
-    fieldsTemplate = `systems/impmal/templates/apps/test-dialog/availability-fields.hbs`;
+    subTemplate = `systems/impmal/templates/apps/test-dialog/availability-fields.hbs`;
 
     activateListeners(html)
     {

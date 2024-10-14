@@ -1,4 +1,3 @@
-import { StringListModel } from "../shared/list";
 import { EquippableItemModel } from "./components/equippable";
 import { TraitListModel } from "./components/traits";
 let fields = foundry.data.fields;
@@ -11,7 +10,7 @@ export class ProtectionModel extends EquippableItemModel
         schema.traits = new fields.EmbeddedDataField(TraitListModel),
         schema.category = new fields.StringField();
         schema.armour = new fields.NumberField();
-        schema.locations = new fields.EmbeddedDataField(LocationListModel);
+        schema.locations = ListModel.createListModel(new fields.StringField({}));
         schema.damage = new fields.ObjectField({});
         schema.rended = new fields.ObjectField({});
         return schema;
@@ -31,7 +30,7 @@ export class ProtectionModel extends EquippableItemModel
         this.traits.compute();
     }
 
-    computeOwnerDerived(actor) 
+    computeOwned(actor) 
     {
         // Must put this in OwnerDerived, as normal preparation applies double
         // See https://github.com/foundryvtt/foundryvtt/issues/7987
@@ -41,11 +40,11 @@ export class ProtectionModel extends EquippableItemModel
         }
     }
 
-    async preUpdateChecks(data)
+    async _preUpdate(data, options, user)
     {
-        await super.preUpdateChecks(data);
+        await super._preUpdate(data, options, user);
         // If location label is modified, try to parse which location keys to use
-        let locationLabel = getProperty(data, "system.locations.label");
+        let locationLabel = foundry.utils.getProperty(options.changed, "system.locations.label");
         if (locationLabel)
         {
             let keys = [];
@@ -60,7 +59,7 @@ export class ProtectionModel extends EquippableItemModel
             }
         }
 
-        let damage = getProperty(data, "system.damage");
+        let damage = foundry.utils.getProperty(options.changed, "system.damage");
         if (damage)
         {
             for(let key in damage)
@@ -91,17 +90,4 @@ export class ProtectionModel extends EquippableItemModel
             this.traits.htmlArray);
         return data;
     }
-
-
-}
-
-class LocationListModel extends StringListModel 
-{
-    static defineSchema() 
-    {
-        let schema = super.defineSchema();
-        schema.label = new fields.StringField();
-        return schema;
-    }
-
 }

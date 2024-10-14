@@ -1,6 +1,4 @@
 import DocumentChoice from "../../apps/document-choice";
-import { DocumentListModel } from "../shared/list";
-import { DeferredDocumentModel } from "../shared/reference";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
@@ -9,8 +7,8 @@ export class OriginModel extends StandardItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.equipment = new fields.EmbeddedDataField(DocumentListModel);
-        schema.factionTable = new fields.EmbeddedDataField(DeferredDocumentModel),
+        schema.equipment = new fields.EmbeddedDataField(DeferredReferenceListModel);
+        schema.factionTable = new fields.EmbeddedDataField(DeferredReferenceModel),
         schema.characteristics = new fields.SchemaField({
             base : new fields.StringField(),
             choices : new fields.ArrayField(new fields.StringField())
@@ -20,7 +18,6 @@ export class OriginModel extends StandardItemModel
 
     computeDerived()
     {
-        this.equipment.findDocuments();
     }
 
     async applyOriginTo(actor)
@@ -38,7 +35,7 @@ export class OriginModel extends StandardItemModel
             await actor.createEmbeddedDocuments("Item", await Promise.all(this.equipment.documents));
             ui.notifications.notify(game.i18n.format("IMPMAL.OriginApplied", {name : this.parent.name}));
 
-            let factionTable = await this.factionTable.getDocument();
+            let factionTable = await this.factionTable.document;
             if (factionTable && await Dialog.confirm({title : game.i18n.localize("IMPMAL.RollFaction"), content : game.i18n.format("IMPMAL.RollFactionContent", {name : factionTable.name})}))
             {
                 let result = (await factionTable.draw())?.results[0];
@@ -60,8 +57,9 @@ export class OriginModel extends StandardItemModel
     }
 
     
-    async createChecks(data, options, user)
+    async _onCreate(data, options, user)
     {
+        await super._onCreate(data, options, user)
         if (["character", "npc"].includes(this.parent.actor?.type) && !this.parent.actor?.system.origin?.id)
         {
             this.applyOriginTo(this.parent?.actor);

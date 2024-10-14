@@ -1,4 +1,4 @@
-import log from "../../logger";
+
 import { CharacteristicTestContext } from "../characteristic/characteristic-context";
 
 export class SkillTestContext extends CharacteristicTestContext

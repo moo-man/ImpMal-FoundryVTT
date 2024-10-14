@@ -2,7 +2,7 @@ import ItemTraitsForm from "../../apps/item-traits";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
 
-export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
+export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet)
 {
     static get defaultOptions() 
     {
@@ -159,7 +159,7 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(ItemSheet)
         }
         else 
         {
-            document = await property.getDocument();
+            document = await property.document;
         }
         document.sheet.render(true);
     }

@@ -1,18 +1,19 @@
 import { CharacterCombatModel } from "./components/combat";
-import { ListModel } from "../shared/list";
 import { StandardActorModel } from "./standard";
 import { HandsModel } from "./components/hands";
 import { XPModel } from "./components/xp";
 import { ImpMalEffect } from "../../document/effect";
-import { SingletonItemModel } from "../shared/singleton-item";
-import { DocumentReferenceModel } from "../shared/reference";
 import { ActorInfluenceModel } from "./components/influence";
 let fields = foundry.data.fields;
 
 export class CharacterModel extends StandardActorModel 
 {
     static preventItemTypes = ["boonLiability"];
-    static singletonItemTypes = ["role", "faction", "origin"];
+    static singletonItemPaths = {
+        "role" : "role", 
+        "faction" : "faction",  
+        "origin" : "origin"
+    };
 
     static defineSchema() 
     {
@@ -51,67 +52,65 @@ export class CharacterModel extends StandardActorModel
             max : new fields.NumberField({initial: 0}),
             value : new fields.NumberField({initial: 0})
         });
-        schema.connections = new fields.EmbeddedDataField(ListModel);
+        schema.connections = ListModel.createListModel(new fields.StringField());
         schema.influence = new fields.EmbeddedDataField(ActorInfluenceModel);
         schema.hands = new fields.EmbeddedDataField(HandsModel);
         return schema;
     }
 
-    async preCreateData(data, options) 
+    async _preCreate(data, options, user) 
     {
-        let preCreateData = await super.preCreateData(data, options);
+        await super._preCreate(data, options, user);
         if (!data.prototypeToken)
         {
-            mergeObject(preCreateData, {
+            this.parent.updateSource({
                 "prototypeToken.sight" : {enabled : true},
                 "prototypeToken.actorLink" : true,
                 "prototypeToken.disposition" : CONST.TOKEN_DISPOSITIONS.FRIENDLY
             });
         }
-        return preCreateData;
     }
 
     
-    async preUpdateChecks(data, options)
+    async _preUpdate(data, options, user)
     {
-        await super.preUpdateChecks(data, options);
+        await super._preUpdate(data, options, user);
         // Warp state is both computed and saved
         // If charge is below threshold, it is computed => state = 0
         if (data?.system?.warp?.charge < this.warp.threshold)
         {
             data.system.warp.state = 0;
-            return data;
         }
     }
 
-    async updateChecks(data, options)
+    async _onUpdate(data, options, user)
     {
-        await super.updateChecks(data, options);
+        await super._onUpdate(data, options, user);
+        if (user != game.user.id)
+        {
+            return;
+        }
+        
         this._checkEncumbranceEffects(this.parent);
     }
 
-    computeBase(items)
+    computeBase()
     {
-        super.computeBase(items);
+        super.computeBase();
         this.combat.superiority = game.impmal.superiority.value;
-        this.patron.getDocument(game.actors);
         this.influence.initialize();
     }
 
 
-    computeDerived(items)
+    computeDerived()
     {
-        super.computeDerived(items);
+        super.computeDerived();
         this.augmetics.max += this.characteristics.tgh.bonus;
-        this.augmetics.value = items.augmetic.length;
+        this.augmetics.value = this.parent.itemTypes.augmetic.length;
         this.corruption.max += (this.characteristics.tgh.bonus + this.characteristics.wil.bonus);
-        this.hands.getDocuments(items.all);
-        this.origin.getDocument(items.all);
-        this.faction.getDocument(items.all);
-        this.role.getDocument(items.all);
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
-        this.influence.compute(Array.from(this.parent.allApplicableEffects()), items, this.parent.type, this.patron.document?.system?.influence);
+        this.influence.compute(Array.from(this.parent.allApplicableEffects()), this.parent.itemTypes, this.parent.type, this.patron.document?.system?.influence);
     }
 
     _checkEncumbranceEffects(actor)

@@ -5,9 +5,6 @@ let fields = foundry.data.fields;
 export class CriticalModel extends StandardItemModel 
 {
     allowedConditions = ["bleeding", "stunned", "blinded", "deafened", "incapacitated", "prone", "stunned", "fatigued"];
-    allowedEffectApplications = ["document"];
-    effectApplicationOptions = {documentType : "Actor"};
-    
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -16,16 +13,12 @@ export class CriticalModel extends StandardItemModel
         return schema;
     }
 
-    async preCreateData(data, options, user)
+    async _preCreate(data, options, user)
     {
-        super.preCreateData(data, options, user);
+        super._preCreate(data, options, user);
         if (this.parent.actor)
         {
-            return {"system.location.value" : await this.location.promptChoice(this.parent.actor)};
-        }
-        else 
-        {
-            return {};
+            this.updateSource({"location.value" : await this.location.promptChoice(this.parent.actor)});
         }
     }
 }
