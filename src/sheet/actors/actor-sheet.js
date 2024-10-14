@@ -369,7 +369,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(ActorSheet)
 
     _onPurgeClick()
     {
-        this.actor.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {context : {purge: true},  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
+        this.actor.purge();
     }
 
     _onHoverInAttacker() 
