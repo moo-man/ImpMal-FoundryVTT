@@ -1,26 +1,39 @@
 <form>
   <div class="stage-title">
-    <p>{{localize "CHARGEN.StageTitle.Role"}}</p>
+    <h3>{{localize "IMPMAL.CHARGEN.StageTitle.Role"}}</h3>
   </div>
 
 
-  <div class="chargen-content">
+  <div class="stage-details">
 
-    <div class="chargen-items">
+ <div class="rolled-item">
       {{#if context.role}}
-      <div class="flexcol">
         <h4>{{context.role.name}}</h4>
-        <img src="{{context.role.img}}">
+        <img class="item-image" src="{{context.role.img}}">
         {{{roleDescription}}}
-      </div>
+      {{else}}
+        <h4>{{context.role.name}}</h4>
+        <div class="item-image"></div>
       {{/if}}
-    </div>
-
   </div>
+
+  {{#unless context.role}}
+  <p>Drag and drop a Role. If your Patron has selected your role for you, enter the XP received (usually 50) below.</p>
+  {{else}}
+          <p class="centered">{{localize "Select Specialisations"}}</p>
+        <div class="choices">
+          {{#each context.specialisations}}
+            <a class="choose-spec choice content-link" data-index="{{@key}}"><i class="fas fa-suitcase"></i> {{this.text}} {{#if this.chosen}}+1{{/if}}</a>
+          {{/each}}
+        </div>
+  {{/unless}}
 
     <div class="result">
-      <span><b>{{localize "CHARGEN.StageRoles"}}</b>: {{context.role.name}}</span>
-      <input class="xp">{{localize "XP"}}: {{context.exp}}</input>
+      <p><b>{{localize "IMPMAL.CHARGEN.StageTitle.Role"}}</b>: {{context.role.name}}</p>
+      <div class="xp">
+        {{localize "XP"}}: 
+        <input type="number" class="xp"/>
+      </div>
     </div>
     <div class="controls">
       <button type="submit">{{localize "Submit"}}</button>

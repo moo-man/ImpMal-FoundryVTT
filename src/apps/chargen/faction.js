@@ -9,11 +9,13 @@ export class FactionStage extends ChargenStage {
         options.height = "auto";
         options.classes.push("faction");
         options.minimizable = true;
-        options.title = game.i18n.localize("IMPMAL.CHARGEN.StageFaction");
+        options.dragDrop.push({dragSelector : ".list .list-item:not(.no-drag)"});
+        options.title = game.i18n.localize("IMPMAL.CHARGEN.StageTitle.Faction");
+        options.cannotResubmit = true;
         return options;
     }
 
-    static get title() { return game.i18n.localize("IMPMAL.CHARGEN.StageFaction"); }
+    static get title() { return game.i18n.localize("IMPMAL.CHARGEN.StageTitle.Faction"); }
 
     // Origin item maps to a faction table
     // get factionTableMap() 
@@ -50,6 +52,8 @@ export class FactionStage extends ChargenStage {
         super(...args);
         this.context.step = 0;
         this.context.faction = null;
+        this.context.characteristic = null;
+        this.context.skills = {};
         this.context.origin = this.data.items.origin;
         this.context.exp = 0;
     }
@@ -67,6 +71,13 @@ export class FactionStage extends ChargenStage {
     }
 
     _updateObject(event, formData) {
+        let data = foundry.utils.expandObject(formData);
+        this.context.characteristic = data.characteristic;
+        this.context.skills = data.skills;
+        for(let skill in data.skills)
+        {
+            this.data.skills[skill] += data.skills[skill];
+        }
         this.data.items.faction = this.context.faction.toObject();
         this.data.exp.faction = this.context.exp;
 
@@ -110,7 +121,34 @@ export class FactionStage extends ChargenStage {
             this.showError("Faction")
             return false
         }
-        else return true
+        if (!this.validateChoices())
+        {
+            this.activateChoiceAlerts();
+            this.showError("Choices")
+            return false;
+        }
+        if (!this.validateAdvances())
+        {
+            return false;
+        }
+        return super.validate();
+    }
+
+    validateAdvances()
+    {
+        let allocated = Array.from(this.element.find(".skills input")).reduce((allocated, input) => allocated + (Number(input.value) || 0), 0)
+        let total = this.context.faction.system.character.advances.value;
+        if (total > allocated)
+        {
+            this.showError("LowAdvances", {allocated, total})
+            return false;
+        }
+        if (total < allocated)
+        {
+            this.showError("HighAdvances", {allocated, total})
+            return false;
+        }
+        return true;
     }
 
     async rollFaction(event) {
@@ -125,6 +163,7 @@ export class FactionStage extends ChargenStage {
         {
             let roll = await table.roll();
             let factionName = roll?.results[0]?.text;
+            console.log(factionName);
             let factionId = this.factionItemMap[factionName];
             await this.retrieveFaction(factionId);
             if (this.context.faction)

@@ -230,6 +230,19 @@ export default class Migration {
             }
         }
 
+        if (item.type == "role")
+        {
+            if (item.system.specialisations.list.some(i => i.id))
+            {
+                setProperty(migrated, "system.specialisations.list", await this._migrateReferenceList(item.system.specialisations.list))
+            }
+
+            if (item.system.talents.list.some(i => i.id))
+            {
+                setProperty(migrated, "system.talents.list", await this._migrateReferenceList(item.system.talents.list))
+            }
+        }
+
         if (item.type == "faction")
         {
             await this._migrateReference(item, "patron.duty", migrated);

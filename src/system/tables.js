@@ -1,6 +1,6 @@
 export default class ImpMalTables 
 {
-    static async rollTable(key, formula, {showRoll=true}={})
+    static async rollTable(key, formula, {showRoll=true, showResult=true}={})
     {
         let id = game.settings.get("impmal", "tableSettings")[key];
         let table = game.tables.get(id);
@@ -39,7 +39,7 @@ export default class ImpMalTables
 
             let result = table.getResultsForRoll(roll)[0];
 
-            if (result)
+            if (result && showResult)
             {
                 let document = await game.impmal.utility.findId(result.documentId);
                 if (document) // Assumed item

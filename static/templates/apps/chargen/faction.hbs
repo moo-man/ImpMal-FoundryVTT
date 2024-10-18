@@ -1,6 +1,6 @@
 <form>
   <div class="stage-title">
-    <p>{{localize "CHARGEN.StageTitle.Faction"}}</p>
+    <h3>{{localize "IMPMAL.CHARGEN.StageTitle.Faction"}}</h3>
   </div>
 
 
@@ -18,7 +18,7 @@
     </div>
     
 
-        {{#if context.faction}}
+      {{#if context.faction}}
       <div class="choice-section">
         <h4 class="centered">{{localize "IMPMAL.Choices"}}</h4>
         <p class="centered">{{localize "Gain +5 to selected Characteristics"}}</p>
@@ -26,27 +26,38 @@
           <select disabled>
             <option>{{configLookup "characteristics" context.faction.system.character.characteristics.base}}</option>
           </select>
-          <select name="characteristic">
-            <option>-</option>
+          <select name="characteristic" class="choice">
+            {{#select context.characteristic}}
+            <option value="">-</option>
             {{#each context.faction.system.character.characteristics.choices}}
               <option value="{{this}}">{{configLookup "characteristics" this}}</option>
             {{/each}}
           </select>
+            {{/select}}
+        </div>
+        <p class="centered">{{localize "Allocate 5 Advances to the following Skills"}}</p>
+        <div class="choices skills wrap">
+          {{#each context.faction.system.character.advances.skills}}
+          <div class="choice-group">
+            <label>{{configLookup "skills" this}}</label>
+            <input type="number" name="skills.{{this}}" value="{{lookup ../context.skills this}}" min="0">
+          </div>
+          {{/each}}
         </div>
       </div>
     {{/if}}
 
-        {{#if (eq context.step 0)}}
+      {{#unless context.faction}}
     <div class="buttons">
-      <button data-action='rollFaction'>{{localize "Roll"}}</button>
+      <button type="button" data-action='rollFaction'>{{localize "Roll"}}</button>
     </div>
-    {{/if}}
+    {{/unless}}
 
   </div>
 
     <div class="result">
-      <span><b>{{localize "CHARGEN.StageFactions"}}</b>: {{context.faction.name}}</span>
-      <span class="xp">{{localize "XP"}}: {{context.exp}}</span>
+      <p><b>{{localize "IMPMAL.CHARGEN.StageTitle.Faction"}}</b>: {{context.faction.name}}</p>
+      <p class="xp">{{localize "XP"}}: {{context.exp}}</p>
     </div>
     <div class="controls">
       <button type="submit">{{localize "Submit"}}</button>

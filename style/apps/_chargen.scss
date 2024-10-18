@@ -56,17 +56,74 @@
 
 .impmal.chargen-stage {
     form > :first-child {
-        height: 2rem;
+        height: unset;
         overflow-y: auto;
         overflow-x: hidden;
     }
 
+    .stage-title {
+        text-align: center;
+        h3 {
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, rgba(6,92,99,0) 0%, rgba(6,92,99,1) 50%, rgba(6,92,99,0) 100%);
+             border-image-slice: 1;
+        }
+    }
+
+    .alert {
+        color:rgba(214, 150, 0, 0.8);
+        flex: 0 0 20px;
+        font-size: 20px;
+        text-align: 20px;
+        line-height: 20px;
+    }
+
     .stage-details {
-        height: calc(100% - 5rem);
+        height: calc(100% - 7rem);
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    
+    .choices {
+        display: flex;
+        align-items: center;
+        a,
+        > select {
+            flex: 1;
+            margin: 0px 20px;
+        }
+        
+        .choice-group {
+            label {
+                margin-right: 5px;
+            }
+            display: flex;
+            align-items: center;
+            margin: 3px;
+            flex: 0 0 130px;
+        }
+        input {
+            flex: 0 0 30px;
+        }
+        &.wrap {
+            flex-wrap: wrap;
+        }
     }
 
     .buttons {
         margin: 5px;
+        display: flex;
+        justify-content:space-evenly;
+        > button {
+            flex: 0 1 200px;;
+            margin: 0px 10px;
+        }
+    }
+
+    .result {
+        margin: 5px 0px;
     }
 
     &.characteristics {
@@ -88,21 +145,30 @@
 
         .ch-roll {
             border: 1px solid transparent;
+            height: 2rem;
         }
 
         .ch-drag {
             border: 1px dashed black;
             border-radius: 5px;
-            box-sizing:content-box;
+            height: 2rem;
+
         }
 
         .ch-allocate {
             text-align: center;
+            height: 2rem;
         }
+    }
 
-        .buttons {
+    &.role {
+        .xp {
             display: flex;
-            flex-wrap: wrap;
+            input {
+                width : 5rem;
+                margin: 0px 5px;
+            }
+            align-items: center;
         }
     }
 

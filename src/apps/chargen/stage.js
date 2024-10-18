@@ -66,6 +66,19 @@ export class ChargenStage extends FormApplication {
     ui.notifications.error(game.i18n.format("IMPMAL.CHARGEN.ERROR." + key, args))
   }
 
+  validateChoices()
+  {
+    return Array.from(this.element.find(".choice")).every(i => i.value)
+  }
+
+  activateChoiceAlerts()
+  {
+    if (!this.alertsAdded)
+    {
+      this.alertsAdded = true;
+      Array.from(this.element.find(".choice")).filter(i => !i.value).forEach(e => $(`<i class="alert fa-solid fa-triangle-exclamation"></i>`).insertBefore(e));
+    }
+  }
 
   updateMessage(key, args={}, string = null)
   {
@@ -129,8 +142,12 @@ export class ChargenStage extends FormApplication {
 
   onButtonClick(ev) {
     let type = ev.currentTarget.dataset.action;
-    if (typeof this[type] == "function") {
-      this[type](ev);
+    if (typeof this[type] == "function") 
+      {
+      ev.currentTarget.disabled = true;
+      this[type](ev).then(() => {
+        ev.currentTarget.disabled = false;
+      });
     }
   }
 }

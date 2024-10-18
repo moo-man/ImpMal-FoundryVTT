@@ -21,7 +21,7 @@ export default class CharGenIM extends FormApplication {
       choices : {
 
       },
-      skillAdvances: {
+      specialisations: {
 
       },
       characteristics: {
@@ -124,7 +124,7 @@ export default class CharGenIM extends FormApplication {
       }
     }
 
-    this.actor = {type: "character", system: foundry.utils.deepClone(game.system.model.Actor.character), items: [] }
+    this.actor = {type: "character", system: foundry.utils.deepClone(game.model.Actor.character), items: [] }
 
     if (!game.user.isGM)
     {

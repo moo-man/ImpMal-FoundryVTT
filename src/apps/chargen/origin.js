@@ -9,11 +9,12 @@ export class OriginStage extends ChargenStage {
         options.height = "auto";
         options.classes.push("origin");
         options.minimizable = true;
-        options.title = game.i18n.localize("IMPMAL.CHARGEN.StageOrigin");
+        options.dragDrop.push({dragSelector : ".list .list-item:not(.no-drag)"});
+        options.title = game.i18n.localize("IMPMAL.CHARGEN.StageTitle.Origin");
         return options;
     }
 
-    static get title() { return game.i18n.localize("IMPMAL.CHARGEN.StageOrigin"); }
+    static get title() { return game.i18n.localize("IMPMAL.CHARGEN.StageTitle.Origin"); }
 
     constructor(...args) {
         super(...args);
@@ -36,9 +37,9 @@ export class OriginStage extends ChargenStage {
 
     _updateObject(event, formData) {
         this.data.items.origin = this.context.origin.toObject();
+        this.context.characteristic = formData.characteristic;
         this.data.choices.origin = formData.characteristic;
         this.data.exp.origin = this.context.exp;
-
         super._updateObject(event, formData)
     }
 
@@ -54,7 +55,7 @@ export class OriginStage extends ChargenStage {
         dragDrop.bind(html[0]);
     }
 
-    async _onDrop(event)
+    async _onDrop(ev)
     {
         let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
 
@@ -79,12 +80,18 @@ export class OriginStage extends ChargenStage {
             this.showError("Origin")
             return false
         }
-        return true;
+        if (!this.validateChoices())
+        {
+            this.activateChoiceAlerts();
+            this.showError("Choices")
+            return false;
+        }
+        return super.validate();
     }
 
     async rollOrigin(event) {
         this.context.step++;
-        let roll = await game.impmal.tables.rollTable("origin")
+        let roll = await game.impmal.tables.rollTable("origin", null, {showRoll : false, showResult : false});
         this.context.exp = 25
         this.updateMessage("Rolled", {rolled : roll.text})
         this.retrieveOrigin(roll.documentId)

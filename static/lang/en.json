@@ -153,11 +153,15 @@
     "IMPMAL.CHARGEN" : {
         "NoGMWarning" : "",
         "Stages" : "Stages",
-        "StageCharactertistics" : "Charactertistics",
-        "StageDetails" : "Details",
-        "StageFaction" : "Faction",
-        "StageOrigin" : "Origin",
         "StageRole" : "Role",
+
+        "StageTitle" : {
+            "Characteristics" : "Characteristics",
+            "Origin" : "Origin",
+            "Details" : "Details",
+            "Faction" : "Faction",
+            "Role" : "Role"
+        },
 
 
         "UseExistingData" : "",
@@ -175,11 +179,24 @@
             "ReRolledCharacteristics" : ""
         },
         "ERROR" : {
-            "Create" : "",
-            "StageStart" : "",
-            "Faction" : "",
-            "Origin" : "",
-            "Role" : ""
+            "Create" : "Error Creating Actor: {error}",
+            "StageStart" : "Cannot start this stage: Need to complete {stage} first",
+            "Faction" : "Please roll for Faction, or select one manually by dragging and dropping.",
+            "Origin" : "Please roll for Origin, or select one manually by dragging and dropping.",
+            "Role" : "Please Add an Origin by dragging and dropping.",
+            "Choices" : "There are pending choices that need to be made before this Stage is complete.",
+            "LowAdvances" : "Unallocated Advances ({allocated} out of {total})",
+            "HighAdvances" : "Overallocated Advances ({allocated} out of {total})"
+        },
+
+        "Characteristics" : {
+            "AllocationPoints" : "Allocate 90 Points to characteristics (min. 4, max: 18)",
+            "AllocationSpent" : "You have spent {spent}",
+            "NotHappy" : "Not happy with these numbers?",
+            "Rearrange" : "Rearrange",
+            "Reroll" : "Reroll",
+            "Allocate" : "Allocate",
+            "Instructions" : "Drag and drop the Roll values to rearrange the stats (but doing so provides less XP). Or you can reroll and receive no XP. Alternatively, allocate 90 points as you wish (for no XP)."
         }
     },
 

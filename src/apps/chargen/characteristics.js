@@ -12,11 +12,11 @@ export class CharacteristicsStage extends ChargenStage {
     options.height = 785;
     options.classes.push("characteristics");
     options.minimizable = true;
-    options.title = game.i18n.localize("IMPMAL.CHARGEN.StageCharactertistics");
+    options.title = game.i18n.localize("IMPMAL.CHARGEN.StageTitle.Characteristics");
     return options;
   }
 
-  static get title() { return game.i18n.localize("IMPMAL.CHARGEN.StageCharactertistics"); }
+  static get title() { return game.i18n.localize("IMPMAL.CHARGEN.StageTitle.Characteristics"); }
   get template() { return "systems/impmal/templates/apps/chargen/characteristics.hbs"; }
 
 
