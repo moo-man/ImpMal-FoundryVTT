@@ -346,7 +346,7 @@ export default class Migration {
         let core = game.packs.get("impmal-core.items")
         for(let i of list)
         {
-            if (core.get(i.id))
+            if (core.index.get(i.id))
             {
                 migratedList.push({uuid : `Compendium.impmal-core.items.Item.${i.id}`})
             }

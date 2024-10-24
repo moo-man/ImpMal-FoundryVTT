@@ -1,3 +1,4 @@
+import ChoiceTree from "../choice-tree";
 import { ChargenStage } from "./stage";
 export class FactionStage extends ChargenStage {
     journalId = "JournalEntry.rwldURPIV6B6iNBT.JournalEntryPage.fznKbHtkiCXchcDg"
@@ -16,21 +17,6 @@ export class FactionStage extends ChargenStage {
     }
 
     static get title() { return game.i18n.localize("IMPMAL.CHARGEN.StageTitle.Faction"); }
-
-    // Origin item maps to a faction table
-    // get factionTableMap() 
-    // {
-    //     return {
-    //         "ADwxsrnXWBFViy5k" : "ep3s7nKOUoph2xIi", // Agri
-    //         "jPXulXRUoZ099Cwl" : "oACrVcayoED73eW3", // Feral
-    //         "pzvSXkckglOmZgdk" : "bWToySiNl72h2LiY", // Feudal
-    //         "5SLj6QlgqqR0K5GX" : "EyH7uN45LGlL7zvy", // Forge
-    //         "OjFcYwOwNH6WlUjT" : "BJ6DhPFbEXII8C9f", // Hive 
-    //         "7E0Gkel1gSaxTgVu" : "hqHL2rKcOsSfYsrw", // Schola Progenium
-    //         "i7qRAalBsnddJYeW" : "7MVzDzO1f96P1eWh", // Shrine
-    //         "bFXPJAp4GsM8TB8F" : "71shyC6qN7Tnf0Rx", // Voidborn
-    //     }
-    // }
 
     get factionItemMap() 
     {
@@ -54,7 +40,9 @@ export class FactionStage extends ChargenStage {
         this.context.faction = null;
         this.context.characteristic = null;
         this.context.skills = {};
-        this.context.origin = this.data.items.origin;
+        this.context.origin = this.data.items.origin.item;
+        this.context.equipment = [];
+        this.context.talents = [];
         this.context.exp = 0;
     }
 
@@ -67,18 +55,33 @@ export class FactionStage extends ChargenStage {
         let data = await super.getData()
         if (this.context.faction)
             data.factionDescription = await TextEditor.enrichHTML(this.context.faction.system.character.notes, {async : true})
+
+        
+        if (this.context.equipment.length)
+        {
+            data.equipmentList = this.context.equipment.map(i => i.name).join(", ");
+        }
+
+        if (this.context.talents.length)
+        {
+            data.talentList = this.context.talents.map(i => i.name).join(", ");
+        }
+
         return data
     }
 
-    _updateObject(event, formData) {
+    async _updateObject(event, formData) {
         let data = foundry.utils.expandObject(formData);
-        this.context.characteristic = data.characteristic;
-        this.context.skills = data.skills;
+        this.data.choices.faction = data.characteristic;
         for(let skill in data.skills)
         {
             this.data.skills[skill] += data.skills[skill];
         }
-        this.data.items.faction = this.context.faction.toObject();
+        this.data.items.faction = {
+            item : this.context.faction.toObject(),
+            equipment : (await Promise.all(this.context.equipment.map(i => this.context.faction.system.character.equipment.getOptionDocument(i.id)))).filter(i => i),
+            talents : (await Promise.all(this.context.talents.map(i => this.context.faction.system.character.talents.getOptionDocument(i.id)))).filter(i => i),
+        }
         this.data.exp.faction = this.context.exp;
 
         super._updateObject(event, formData)
@@ -94,9 +97,25 @@ export class FactionStage extends ChargenStage {
           });
 
         dragDrop.bind(html[0]);
+
+        html.find(".choice-menu").click(async ev => {
+            let path = ev.currentTarget.dataset.path;
+            let choices = await ChoiceTree.awaitSubmit(this.context.faction.system.character[path]);
+            if (choices.length)
+            {
+                this.context[path] = choices;
+                this.render(true);
+            }
+        })
+
+        html.find(".choice-reset").click(async ev => {
+            let path = ev.currentTarget.dataset.path;
+            this.context[path] = []
+            this.render(true);
+        })
     }
 
-    async _onDrop(event)
+    async _onDrop(ev)
     {
         let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
 
@@ -108,7 +127,7 @@ export class FactionStage extends ChargenStage {
     
           this.context.step = 1;
           this.context.exp = 0;
-          this.context.faction = faction
+          this.setFaction(faction)
           this.updateMessage("Chosen", {chosen : faction.name})
         }
         this.render(true);
@@ -148,6 +167,14 @@ export class FactionStage extends ChargenStage {
             this.showError("HighAdvances", {allocated, total})
             return false;
         }
+
+        let tooHigh = Object.keys(this.context.skills).filter(skill => this.data.skills[skill] + this.context.skills[skill] > 2)
+        if (tooHigh.length)
+        {
+            this.showError("TooManySkillAdvances", {skill : tooHigh.map(s => game.impmal.config.skills[s]).join(", ")});
+            return false;
+        }
+
         return true;
     }
 
@@ -158,28 +185,37 @@ export class FactionStage extends ChargenStage {
             ui.notifications.error("No Origin Item found to determine Faction Table")
             return;
         }
-        let table = await game.impmal.utility.findId(this.context.origin.system.factionTable.id)
+        let table = await this.context.origin.system.factionTable.document;
         if (table)
         {
             let roll = await table.roll();
             let factionName = roll?.results[0]?.text;
-            console.log(factionName);
             let factionId = this.factionItemMap[factionName];
-            await this.retrieveFaction(factionId);
+            let faction = await game.impmal.utility.findId(factionId);
+            this.setFaction(faction);
             if (this.context.faction)
             {
                 this.context.exp = 25
-                this.updateMessage("Rolled", {rolled : roll.text})
+                this.updateMessage("Rolled", {rolled : faction.name})
             }
             else 
             {
                 ui.notifications.error("Faction Item couldn't be found")
             }
+            this.render(true);
         }
     }
-    
-    async retrieveFaction(id) {
-        this.context.faction = await game.impmal.utility.findId(id);
-        this.render(true);
+
+    setFaction(faction)
+    {
+        this.context.faction = faction;
+        if (faction.system.character.equipment.options.length == 1)
+        {
+            this.context.equipment = [faction.system.character.equipment.options[0]]
+        }
+        if (faction.system.character.talents.options.length == 1)
+        {
+            this.context.talents = [faction.system.character.talents.options[0]]
+        }
     }
 }

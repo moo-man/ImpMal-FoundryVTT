@@ -35,10 +35,16 @@ export class OriginStage extends ChargenStage {
         return data
     }
 
-    _updateObject(event, formData) {
-        this.data.items.origin = this.context.origin.toObject();
-        this.context.characteristic = formData.characteristic;
-        this.data.choices.origin = formData.characteristic;
+    async _updateObject(event, formData) {
+        this.data.items.origin = {
+            item : this.context.origin,
+            equipment : await Promise.all(this.context.origin.system.equipment.documents)
+        }
+        if (formData.characteristic)
+        {
+            this.context.characteristic = formData.characteristic;
+            this.data.choices.origin = formData.characteristic;
+        }
         this.data.exp.origin = this.context.exp;
         super._updateObject(event, formData)
     }

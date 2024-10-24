@@ -8,6 +8,7 @@ import token from "./hooks/token";
 import i18n from "./hooks/i18n";
 import setup from "./hooks/setup";
 import journal from "./hooks/journal";
+import sidebar from "./hooks/sidebar";
 
 export default function() 
 {
@@ -21,6 +22,7 @@ export default function()
     drawing();
     setup();
     journal();
+    sidebar();
 
     Hooks.on("hotbarDrop", (hotbar, data, pos) => 
     {

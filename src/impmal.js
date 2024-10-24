@@ -1,3 +1,4 @@
+import "../style/impmal.scss";
 import { ImpMalActor } from "./document/actor";
 import { ImpMalItem } from "./document/item";
 import { CharacterModel } from "./model/actor/character";

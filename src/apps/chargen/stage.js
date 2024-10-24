@@ -48,6 +48,7 @@ export class ChargenStage extends FormApplication {
   }
 
   async getData() {
+    this.alertsAdded = false;
     return { data: this.data, context: this.context };
   }
 
@@ -68,7 +69,7 @@ export class ChargenStage extends FormApplication {
 
   validateChoices()
   {
-    return Array.from(this.element.find(".choice")).every(i => i.value)
+    return Array.from(this.element.find(".choice")).every(i => i.value) && this.element.find(".choice-menu").length == 0
   }
 
   activateChoiceAlerts()
@@ -76,7 +77,7 @@ export class ChargenStage extends FormApplication {
     if (!this.alertsAdded)
     {
       this.alertsAdded = true;
-      Array.from(this.element.find(".choice")).filter(i => !i.value).forEach(e => $(`<i class="alert fa-solid fa-triangle-exclamation"></i>`).insertBefore(e));
+      Array.from(this.element.find(".choice")).filter(i => !i.value).concat(Array.from(this.element.find(".choice-menu"))).forEach(e => $(`<i class="alert fa-solid fa-triangle-exclamation"></i>`).insertBefore(e));
     }
   }
 
@@ -92,12 +93,14 @@ export class ChargenStage extends FormApplication {
       else
         content += game.i18n.format("IMPMAL.CHARGEN.Message." + key, args)
 
-     return this.options.message.update({content})
+      return this.options.message.update({content})
     }
 
   }
 
-
+  _canDragDrop() {
+    return true;
+  }
 
   // HTML to add to the char gen application
   async addToDisplay() {
@@ -137,6 +140,16 @@ export class ChargenStage extends FormApplication {
     html.find("input").on("focusin", ev => {
       ev.target.select();
     });
+
+    html.find(".add-context").change(ev => {
+      let property = ev.target.dataset.property;
+      let value = ev.target.value;
+      if (Number.isNumeric(value))
+      {
+        value = Number(value);
+      }
+      foundry.utils.setProperty(this.context, property, value);
+    })
   }
 
 

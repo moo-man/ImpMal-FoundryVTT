@@ -38,7 +38,7 @@ export class FactionModel extends DualItemModel
 
     async _onCreate(data, options, user)
     {
-        if (["character", "npc"].includes(this.parent.actor?.type))
+        if (["character", "npc"].includes(this.parent.actor?.type) && !options.skipFaction)
         {
             let duties = await this.character.duty.documents;
             if (duties.length >= 1)

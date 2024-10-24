@@ -1,0 +1,39 @@
+.tree-container {
+    display: flex;
+    .option {
+        border : 1px solid var(--color-light-5);
+        text-align: center;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 10px;
+    }
+
+    .choice.chosen
+    {
+        background-color: var(--color-warm-2);
+        border-color: var(--color-right-3);
+        color: (--color-light-1);
+    }
+
+    .choice.and,
+    .choice.or
+    {
+        margin: 5px;
+        border: 2px solid var(--color-cool-4)
+    }
+
+    .choice.invalid {
+        opacity : 0.5;
+        pointer-events: none;
+    }
+
+    .choice {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        label:last-child
+        {
+            display: none
+        }
+    }
+}

@@ -6,26 +6,34 @@ export class DetailsStage extends ChargenStage {
     const options = super.defaultOptions;
     options.resizable = true;
     options.width = 500;
-    options.height = 700;
     options.classes.push("details");
     options.minimizable = true;
-    options.title = game.i18n.localize("IMPMAL.CHARGEN.StageDetails");
+    options.title = game.i18n.localize("IMPMAL.CHARGEN.StageTitle.Details");
     return options;
   }
 
-  static get title() { return game.i18n.localize("IMPMAL.CHARGEN.StageDetails"); }
+  static get title() { return game.i18n.localize("IMPMAL.CHARGEN.StageTitle.Details"); }
 
   get template() {
     return "systems/impmal/templates/apps/chargen/details.hbs";
   }
 
+  TABLES = {
+    rollName :["ZqI4aqwNimSIvn0u", "LQQSVSJW5j8d87MJ", "l3wReEEnU5MMjiMR", "4fSZRyUTFHNuCHiB", "coJHDTpSkUfDMXAJ"],
+    rollAge :[],
+    rollHeight :[],
+    rollEyes :["X0ki23WlGEfkxMYI"],
+    rollHairColour :["kwryVvk6y1FeCCmG"],
+    rollHairStyle :["BOxQIj5TwduOo1Bk"],
+    rollConnections :["r1enfoBH64ajVnBa"],
+    rollFeature : ["yNzbUdTn7e4psIZW"]
+  }
+
   constructor(...args) {
     super(...args);
+    this.context = {};
+    this.context.connections = [];
   }
-  context = {
-    gender: ""
-  };
-
 
   async getData() {
     let data = await super.getData();
@@ -37,16 +45,52 @@ export class DetailsStage extends ChargenStage {
 
     html.find(".roll-details").click(async (ev) => {
       let type = ev.currentTarget.dataset.type;
-      if (this[type]) {
-        let value = await this[type]();
-        let input = $(ev.target).parents(".detail-form").find("input")[0];
-        input.value = value;
+      let key = ev.currentTarget.parentElement.querySelector("input").name
+      if (this[type])
+      {
+        await this[type]();
       }
+      else if (this.TABLES[type].length)
+      {
+        let tables = await Promise.all(this.TABLES[type].map(game.impmal.utility.findId))
+        let choice = await ItemDialog.create(tables, 1, {title : "Choose Table", text : "Choose a Table to roll on", skipSingularItemPrompt : true});
+        if (choice[0])
+        {
+          let result = await choice[0].roll();
+        if (type == "rollConnections")
+        {
+          this.context.connections.push(result.results[0].text)
+        }
+        else
+        {
+          this.context[key] = result.results[0].text;
+        }
+        }
+      }
+      this.render(true);
+
     });
 
-    html.find("input[name='gender']").change(ev => {
-      this.context.gender = ev.currentTarget.value; // Need to store gender to pass to name generation
+    html.find("input[name],textarea").change(ev => {
+      this.context[ev.target.name] = ev.target.value;
     });
+
+    html.find(".connections input").change(ev => {
+
+        if (!ev.target.value)
+        {
+          this.context.connections = this.context.connections.filter((_, index) => index != Number(ev.target.parentElement.dataset.index));
+        }
+        else if (ev.target.parentElement.dataset.index)
+        {
+          this.context.connections[0] = ev.target.value;
+        }
+        else 
+        {
+          this.context.connections.push(ev.target.value);
+        }
+        this.render(true)
+    })
   }
 
   _updateObject(ev, formData) {
@@ -55,34 +99,28 @@ export class DetailsStage extends ChargenStage {
     this.data.details.age = formData.age;
     this.data.details.height = formData.height;
     this.data.details.eyes = formData.eyes;
-    this.data.details.hair = formData.hair;
-    this.data.details.motivation = formData.motivation;
+    this.data.details.hair = formData.hairColour + " " + formData.hairStyle;
+    this.data.details.feature = formData.feature;
     this.data.details.short = formData.short;
     this.data.details.long = formData.long;
+    this.data.details.connections = this.context.connections;
     super._updateObject(ev, formData)
   }
 
-  rollName() {
-    return NameGenWfrp.generateName({ species: this.data.species, gender: this.context.gender });
-  }
   async rollAge() {
-    return (await new Roll(game.impmal.config.speciesAge[this.data.species]).roll({async: true})).total;
+    let bracket = (await ItemDialog.create(ItemDialog.objectToArray(game.impmal.config.age, null, "name")))[0]?.id;
+    let data = game.impmal.config.age[bracket];
+    if (data)
+    {
+      this.context.age = (await new Roll(data.formula).roll()).total;
+    }
   }
+
   async rollHeight() {
-    let heightRoll = (await new Roll(game.impmal.config.speciesHeight[this.data.species].die).roll({async : true})).total;
-    let hFeet = game.impmal.config.speciesHeight[this.data.species].feet;
-    let hInches = game.impmal.config.speciesHeight[this.data.species].inches + heightRoll;
-    hFeet += Math.floor(hInches / 12);
-    hInches = hInches % 12;
-    return `${hFeet}'${hInches}`;
-  }
-  async rollEyes() {
-    return (await game.impmal.tables.rollTable("eyes", {}, this.data.species)).result;
-  }
-  async rollHair() {
-    return (await game.impmal.tables.rollTable("hair", {}, this.data.species)).result;
-  }
-  async rollMotivation() {
-    return (await game.impmal.tables.rollTable("motivation")).result;
+    let heightRoll = (await new Roll("2d10").roll()).total;
+    let inches = (4 * 12) + 9 + heightRoll;
+    let feet = Math.floor(inches / 12);
+    inches = inches % 12
+    this.context.height = `${feet}'${inches}`;
   }
 }

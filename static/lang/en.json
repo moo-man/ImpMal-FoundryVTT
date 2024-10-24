@@ -102,6 +102,7 @@
     "IMPMAL.Chain" : "Chain",
     "IMPMAL.Challenging" : "Challenging",
     "IMPMAL.Change" : "Change",
+    "IMPMAL.CharacterCreation" : "Character Creation",
     "IMPMAL.Characteristic" : "Characteristic",
     "IMPMAL.CharacteristicTest" : "{characteristic} Test",
     "IMPMAL.Characteristics" : "Characteristics",
@@ -149,34 +150,37 @@
     "IMPMAL.ConditionStunnedMajor" : "Stunned (Major)",
     "IMPMAL.ConditionStunnedMinor" : "Stunned (Minor)",
     "IMPMAL.ConditionUnconscious" : "Unconscious",
+    "IMPMAL.Connections" : "Connections",
 
     "IMPMAL.CHARGEN" : {
         "NoGMWarning" : "",
         "Stages" : "Stages",
-        "StageRole" : "Role",
+        "Title" : "Character Creation",
 
         "StageTitle" : {
             "Characteristics" : "Characteristics",
             "Origin" : "Origin",
-            "Details" : "Details",
             "Faction" : "Faction",
-            "Role" : "Role"
+            "Role" : "Role",
+            "Details" : "Details"
+        },
+
+        "Warn" : {
+            "NoGM" : "In order to create a character either a GM must be logged in or players be given the 'Create New Actors' Permission"
         },
 
 
-        "UseExistingData" : "",
-        "UseExistingDataContent" : "",
+        "UseExistingData" : "Use Existing Data",
+        "UseExistingDataContent" : "Existing data from a previous session was found. Do you wish to use this data?",
         "Message" : {
-            "Start": "",
-            "Created" : "",
-            "CharacteristicAllocation" : "",
-            "CharacteristicAllocationBounds" : "",
-            "AllocateCharacteristics" : "",
-            "SwappedCharacteristics" : "",
-            "Chosen" : "",
-            "Rolled" : "",
-            "RolledCharacteristics" : "",
-            "ReRolledCharacteristics" : ""
+            "Start": "<p><b>{user}</b> has started character generation!</p>",
+            "Created" : "<p><b>{name}</b> created!",
+            "AllocateCharacteristics" : "<p>Started Allocating Characteristics</p>",
+            "SwappedCharacteristics" : "<p>Swapped {ch1} with {ch2}</p>",
+            "Chosen" : "<p>Chose: <b>{chosen}</b>!</p>",
+            "Rolled" : "<p>Rolled: <b>{rolled}</b>!</p>",
+            "RolledCharacteristics" : "<p>Rolled Characterstics</p>",
+            "ReRolledCharacteristics" : "<p>Rerolled Characterstics</p>"
         },
         "ERROR" : {
             "Create" : "Error Creating Actor: {error}",
@@ -186,7 +190,11 @@
             "Role" : "Please Add an Origin by dragging and dropping.",
             "Choices" : "There are pending choices that need to be made before this Stage is complete.",
             "LowAdvances" : "Unallocated Advances ({allocated} out of {total})",
-            "HighAdvances" : "Overallocated Advances ({allocated} out of {total})"
+            "HighAdvances" : "Overallocated Advances ({allocated} out of {total})",
+            "TooManySkillAdvances" : "A new Character cannot have more than 2 Advances in any one Skill ({skill})",
+            "TooManySpecAdvances" : "A new Character cannot have more than 1 Advance in any one Specialisation",
+            "CharacteristicAllocation" : "Characteristic allocation points must not exceed 90",
+            "CharacteristicAllocationBounds" : "Cannot allocate less than 4 or more than 18 in a single characteristic"
         },
 
         "Characteristics" : {
@@ -370,11 +378,14 @@
     "IMPMAL.Fortitude" : "Fortitude",
     "IMPMAL.Free" : "Free",
     "IMPMAL.Fumble" : "Fumble",
+    "IMPMAL.Gender" : "Gender",
     "IMPMAL.GMNotes" : "GM Notes",
     "IMPMAL.Good" : "Good",
     "IMPMAL.Grapple" : "Grapple",
     "IMPMAL.GrenadesExplosives" : "Grenades & Explosives",
     "IMPMAL.Hair" : "Hair",
+    "IMPMAL.HairColour" : "Hair Colour",
+    "IMPMAL.HairStyle" : "Hair Style",
     "IMPMAL.Handed" : "Handed",
     "IMPMAL.Hard" : "Hard",
     "IMPMAL.Hazard" : "Hazard",

@@ -1,4 +1,3 @@
-
 let fields = foundry.data.fields;
 
 /**
@@ -13,9 +12,8 @@ export class ChoiceModel extends foundry.abstract.DataModel
     {
         let schema = {};
  
-        // Root is always "or" because otherwise it's not a choice
         schema.structure = new fields.ObjectField({initial : {
-            type : "or",
+            type : "or", // "or", "and", or "option"
             id : "root",
             options : []
         }
@@ -23,11 +21,11 @@ export class ChoiceModel extends foundry.abstract.DataModel
         // Universal fields - All types have these
         schema.options = new fields.ArrayField(new fields.SchemaField({
             type : new fields.StringField(), // Types are item, effect, filter, placeholder
-            id : new fields.StringField(), // Used by structure
+            id : new fields.StringField(), // Id of option, used by structure
             name : new fields.StringField(), // Store name so async retrieval doesn't cause issues
              
             // Type specific fields
-            documentId : new fields.StringField(), // filters ande placeholders don't need IDs
+            documentId : new fields.StringField(), // filters and placeholders don't need IDs
             diff : new fields.ObjectField(), // Changes to choice document
             idType : new fields.StringField(), // uuid, id, or relative ID
             filters : new fields.ArrayField(new fields.SchemaField({
@@ -39,10 +37,22 @@ export class ChoiceModel extends foundry.abstract.DataModel
         return schema;
     }
 
-    get compiled()
+    compileTree()
     {
-        let compiled = foundry.utils.deepClone(this.structure);
+        let compiled = new this.constructor(this.toObject());
+        this._populateTree(compiled.structure);
         return compiled;
+    }
+
+    _populateTree(tree)
+    {
+        tree.content = this.options.find(i => i.id == tree.id);
+        if (tree.options)
+        {
+            tree.options.forEach(o => {
+                this._populateTree(o);
+            })
+        }
     }
  
     addOption(data, location)
@@ -66,7 +76,7 @@ export class ChoiceModel extends foundry.abstract.DataModel
         }
         else if (data.type == "and" || data.type == "or")
         {
-            return {structure : this.insert(mergeObject(data, {id : randomID(), options : []}), location)};
+            return {structure : this.insert(foundry.utils.mergeObject(data, {id : randomID(), options : []}), location)};
         }
         else 
         {
@@ -103,6 +113,72 @@ export class ChoiceModel extends foundry.abstract.DataModel
                 {
                     return found;   
                 }
+            }
+        }
+    }
+
+    // Find a choice in the structure
+    findParent(id, structure)
+    {   
+        structure = structure || this.structure;
+    
+        if (structure.options?.find(i => i.id == id))
+        {
+            return structure;
+        }
+    
+        if (structure.options)
+        {
+            for (let option of structure.options)
+            {
+                let found = this.findParent(id, option);
+                if (found)
+                {
+                    return found;   
+                }
+            }
+        }
+    }
+
+    async getOptionDocument(optionId, parent)
+    {
+        let option = this.options.find(o => o.id == optionId);
+
+        if (!option)
+        {
+            return;
+        }
+
+        if (option.type == "filter")
+        {
+            let choice = (await ItemDialog.createFromFilters(option.filters, 1, {text : option.name, title : "Choose"}))[0];
+            if (!choice)
+            {
+                return foundry.utils.mergeObject({name : option.name}, systemConfig().placeholderItemData);
+            }
+            else  
+            {
+                return choice;
+            }
+        }
+        else if (option.type == "placeholder")
+        {
+            return foundry.utils.mergeObject({name : option.name}, systemConfig().placeholderItemData);
+        }
+        else if (["id", "uuid"].includes(option.idType))
+        {
+            return await game.impmal.utility.findId(option.documentId);
+        }
+        else if (option.idType == "relative")
+        {
+            let split = option.documentId.split(".");
+            if (split[1] == "ActiveEffect")
+            {
+                return parent.effects.get(split[2]);
+            }
+            else 
+            {
+                return parent.items.get(split[2]);
             }
         }
     }

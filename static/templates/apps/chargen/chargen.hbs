@@ -20,17 +20,17 @@
 
         <div class="details">
           <label>{{localize "IMPMAL.Origin"}}</label>
-          <input type="text" disabled value="{{data.items.origin.name}}">
+          <input type="text" disabled value="{{data.items.origin.item.name}}">
         </div>
 
         <div class="details">
           <label>{{localize "IMPMAL.Faction"}}</label>
-          <input type="text" disabled value="{{data.items.faction.name}}">
+          <input type="text" disabled value="{{data.items.faction.item.name}}">
         </div>
 
         <div class="details">
           <label>{{localize "IMPMAL.Role"}}</label>
-          <input type="text" disabled value="{{data.items.role.name}}">
+          <input type="text" disabled value="{{data.items.role.item.name}}">
         </div>
 
 
@@ -73,7 +73,7 @@
         <div class="group">
           <div class="details long">
             <label>{{localize "IMPMAL.Skills"}}</label>
-            <input type="text" disabled>{{skills}}</input>
+            <input type="text" disabled value="{{skills}}"/>
           </div>
         </div>
 
@@ -81,34 +81,19 @@
 
           <div class="details long">
             <label>{{localize "IMPMAL.Talents"}}</label>
-            <input type="text" disabled>{{talents}}</input>
+            <input type="text" disabled value="{{talents}}"/>
           </div>
         </div>
 
         <div class="group">
           <div class="details long">
             <label>{{localize "IMPMAL.Equipment"}}</label>
-            <input type="text" disabled>{{trappings}}</input>
+            <input type="text" disabled value="{{equipment}}"/>
           </div>
         </div>
 
 
         <div class="group">
-          <div class="details">
-            <label>{{localize "IMPMAL.Fate"}}</label>
-            <input type="text" disabled value="{{data.fate.total}}">
-          </div>
-          <div class="details">
-            <label>{{localize "IMPMAL.Resilience"}}</label>
-            <input type="text" disabled value="{{data.resilience.total}}">
-          </div>
-
-
-          <div class="details">
-            <label>{{localize "IMPMAL.Move"}}</label>
-            <input type="text" disabled value="{{data.move}}">
-          </div>
-
           <div class="details">
             <label>{{localize "IMPMAL.Gender"}}</label>
             <input type="text" disabled value="{{data.details.gender}}">
@@ -127,16 +112,23 @@
 
 
           <div class="details">
-            <label>{{localize "IMPMAL.CHARGEN.Details.Hair"}}</label>
+            <label>{{localize "IMPMAL.Hair"}}</label>
             <input type="text" disabled value="{{data.details.hair}}">
           </div>
 
 
-
           <div class="details">
-            <label>{{localize "IMPMAL.CHARGEN.Details.Eyes"}}</label>
+            <label>{{localize "IMPMAL.Eyes"}}</label>
             <input type="text" disabled value="{{data.details.eyes}}">
           </div>
+        </div>
+
+        <div class="group">
+          <div class="details">
+            <label>{{localize "IMPMAL.DistinguishingFeatures"}}</label>
+            <input type="text" disabled value="{{data.details.feature}}">
+          </div>
+
         </div>
 
         <div class="group extra">

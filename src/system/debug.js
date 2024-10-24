@@ -1,4 +1,5 @@
 import CharGenIM from "../apps/chargen/char-gen";
+import ChoiceTree from "../apps/choice-tree";
 
 export default function() 
 {
@@ -17,6 +18,6 @@ export default function()
 
     Hooks.on("ready", () => 
     {
-        new CharGenIM().render(true);
+
     });
 }

@@ -29,6 +29,7 @@ export class CharacterModel extends StandardActorModel
         schema.details = new fields.SchemaField({
             age : new fields.NumberField(),
             feature : new fields.StringField(),
+            gender : new fields.StringField(),
             eyes : new fields.StringField(),
             hair : new fields.StringField(),
             height : new fields.StringField(),

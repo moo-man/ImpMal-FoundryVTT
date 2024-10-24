@@ -21,6 +21,7 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
     constructor(...args)
     {
         super(...args);
+        warhammer.utility.addSheetHelpers(this);
         this.choices = getProperty(this.object.system, this.options.path);
     }
 
@@ -84,28 +85,6 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
         this._updateObject({structure : this.choices.move(optionId, dropId)});
     }
 
-    getOptionDocument(id, idType)
-    {
-        if (idType == "id" || idType == "uuid")
-        {
-            return game.impmal.utility.findId(id);
-        }
-        else if (idType == "relative")
-        {
-            let split = id.split(".");
-            if (split[1] == "ActiveEffect")
-            {
-                return this.object.effects.get(split[2]);
-            }
-            else 
-            {
-                return this.object.items.get(split[2]);
-            }
-        }
-    }
-
-
-
     async _updateObject(choices)
     {
         await this.object.update({[`system.${this.options.path}`] : choices});
@@ -120,7 +99,7 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
         this.addGenericListeners(html);
         html.find(".connector").on("click", (ev) => 
         {
-            this._updateObject({structure : this.choices.switch(this._getId(ev))});
+            this._updateObject({structure : this.choices.switch(ev.target.parentElement.dataset.id)});
         });
     }
 
@@ -171,32 +150,35 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
         let optionId = this._getId(event);
         let options = foundry.utils.deepClone(this.choices.options);
         let index = options.findIndex(o => o.id == optionId);
-        let {documentId, idType} = options[index];
-        if (documentId)
+        if (index != -1)
         {
-            let document = await this.getOptionDocument(documentId, idType);
-            if (document.documentName == "Item")
+            if (["placeholder", "filter"].includes(options[index].type))
             {
-                new ImpMalItemDiffSheet(document, {diffUpdater : (newDiff) => 
-                {
-                    warhammer.utility.log("Updating DIFF: ", this.object, index, newDiff);
-                    options[index].diff = newDiff;
-                    if (newDiff.name)
-                    {
-                        options[index].name = newDiff.name;
-                    }
-                    this._updateObject({options});
-                }, diff : options[index].diff}).render(true);
-                
+                new ChoiceOptionForm({choices : this.choices, index, update : this._updateObject.bind(this)}).render(true);
             }
             else 
             {
-                document.sheet.render(true);
+                let document = await this.choices.getOptionDocument(options[index].id, this.object);
+                if (document.documentName == "Item")
+                {
+                    new ImpMalItemDiffSheet(document, {diffUpdater : (newDiff) => 
+                    {
+                        warhammer.utility.log("Updating DIFF: ", this.object, index, newDiff);
+                        options[index].diff = newDiff;
+                        if (newDiff.name)
+                        {
+                            options[index].name = newDiff.name;
+                        }
+                        this._updateObject({options});
+                    }, diff : options[index].diff}).render(true);
+                    
+                }
+                else 
+                {
+                    document.sheet.render(true);
+                }
             }
-        }
-        else if (["placeholder", "filter"].includes(options[index].type))
-        {
-            new ChoiceOptionForm({choices : this.choices, index, update : this._updateObject.bind(this)}).render(true);
+
         }
     }
 

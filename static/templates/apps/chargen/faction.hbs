@@ -26,7 +26,7 @@
           <select disabled>
             <option>{{configLookup "characteristics" context.faction.system.character.characteristics.base}}</option>
           </select>
-          <select name="characteristic" class="choice">
+          <select name="characteristic" class="choice add-context" data-property="characteristic">
             {{#select context.characteristic}}
             <option value="">-</option>
             {{#each context.faction.system.character.characteristics.choices}}
@@ -35,15 +35,39 @@
           </select>
             {{/select}}
         </div>
-        <p class="centered">{{localize "Allocate 5 Advances to the following Skills"}}</p>
+          <p class="centered">Allocate {{context.faction.system.character.advances.value}} Advances to the following Skills</p>
         <div class="choices skills wrap">
           {{#each context.faction.system.character.advances.skills}}
           <div class="choice-group">
             <label>{{configLookup "skills" this}}</label>
-            <input type="number" name="skills.{{this}}" value="{{lookup ../context.skills this}}" min="0">
+            <input type="number" name="skills.{{this}}" class="add-context" data-property="skills.{{this}}" value="{{lookup ../context.skills this}}" min="0">
           </div>
           {{/each}}
         </div>
+
+
+        {{#if context.faction.system.character.equipment.options.length}}
+        <p class="centered">{{localize "Equipment"}} {{#if equipmentList}}<a class="choice-reset" data-path="equipment"><i class="fas fa-rotate-left"></i></a>{{/if}}</p>
+        <div class="choices">
+            {{#if equipmentList}}
+              <p class="centered">{{equipmentList}}</p>
+             {{else}}
+             <a class="choose choice-menu content-link" data-path="equipment"><i class="fas fa-suitcase"></i> Choose Equipment</a>
+            {{/if}}
+        </div>
+        {{/if}}
+
+        {{#if context.faction.system.character.talents.options.length}}
+        <p class="centered">{{localize "Talents"}} {{#if talentList}}<a class="choice-reset" data-path="talents"><i class="fas fa-rotate-left"></i></a>{{/if}}</p>
+        <div class="choices">
+                      {{#if talentList}}
+              <p class="centered">{{talentList}}</p>
+              {{else}}
+            <a class="choose choice-menu content-link" data-path="talents"><i class="fas fa-suitcase"></i> Choose Talents</a>
+            {{/if}}
+        </div>
+        {{/if}}
+
       </div>
     {{/if}}
 

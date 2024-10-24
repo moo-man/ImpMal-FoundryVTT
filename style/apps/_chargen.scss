@@ -39,8 +39,12 @@
         .chargen-data {
             display: flex;
             flex-direction: column;
+            width: 100%;
             .group {
                 display: flex;
+                label {
+                    margin: 3px;
+                }
                 .details {
                     display: flex;
                     flex-direction: column;
@@ -89,10 +93,14 @@
     .choices {
         display: flex;
         align-items: center;
+        p,
         a,
         > select {
             flex: 1;
             margin: 0px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .choice-group {
@@ -187,6 +195,47 @@
         }
         div.item-image {
             border: 2px dashed black
+        }
+    }
+
+    .roll-details {
+        flex: 0 0 20px;
+    }
+
+    .goals 
+    {
+        display: flex;
+        height: 100px;
+        label {
+            flex: unset;
+        }
+        .form-group
+        {
+            margin: 5px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        textarea {
+            resize: none;
+        }
+    }
+
+    .connections {
+        margin-top: 5px;
+        text-align: center;
+    }
+
+    .connection-field {
+        display : flex;
+        align-items: center;
+        text-align: center;
+        margin: 5px 0px;
+        input {
+            flex: 1;
+        }
+        * {
+            flex: 0 0 30px;
         }
     }
 }

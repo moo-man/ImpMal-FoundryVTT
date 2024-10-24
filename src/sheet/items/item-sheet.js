@@ -1,3 +1,4 @@
+import ChoiceTree from "../../apps/choice-tree";
 import ItemTraitsForm from "../../apps/item-traits";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
@@ -133,6 +134,7 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet
         this.addGenericListeners(html);
         html.find(".edit-traits").click(this._onEditTraits.bind(this));
         html.find(".choice-config").click(this._onChoiceConfig.bind(this));
+        html.find(".choice-tree").click(this._onChoiceTree.bind(this));
         html.find(".compact-list a").click(this._onCompactItemClick.bind(this));
         html.find(".compact-list a").contextmenu(this._onCompactItemRightClick.bind(this));
     }
@@ -147,6 +149,12 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet
     {
         new game.impmal.apps.ChoiceConfig(this.item, {path : ev.currentTarget.dataset.path}).render(true);
     }
+
+    _onChoiceTree(ev) 
+    {
+        new ChoiceTree(foundry.utils.getProperty(this.item.system, ev.currentTarget.dataset.path)).render(true);
+    }
+
 
     async _onCompactItemClick(ev)
     {

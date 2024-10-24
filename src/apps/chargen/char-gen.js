@@ -3,6 +3,8 @@ import { CharacteristicsStage } from "./characteristics";
 import { FactionStage } from "./faction";
 import { RoleStage } from "./role";
 import { OriginStage } from "./origin";
+import { ImpMalItem } from "../../document/item";
+import { XPModel } from "../../model/actor/components/xp";
 
 /**
  * This class is the center of character generation through the chat prompts
@@ -10,7 +12,7 @@ import { OriginStage } from "./origin";
 export default class CharGenIM extends FormApplication {
   constructor(existing={}, options) {
     super(null, options);
-    this.data = existing?.createData || {
+    this.data = existing?.data || {
       exp: {
         characteristics: 0,
         origin: 0,
@@ -126,7 +128,7 @@ export default class CharGenIM extends FormApplication {
 
     this.actor = {type: "character", system: foundry.utils.deepClone(game.model.Actor.character), items: [] }
 
-    if (!game.user.isGM)
+    // if (!game.user.isGM)
     {
       ChatMessage.create({content : game.i18n.format("IMPMAL.CHARGEN.Message.Start", {user : game.user.name})}).then(msg => this.message = msg)
     }
@@ -134,7 +136,7 @@ export default class CharGenIM extends FormApplication {
     // Warn user if they won't be able to create a character
     if (!game.user.isGM && !game.settings.get("core", "permissions").ACTOR_CREATE.includes(game.user.role) && !game.users.find(u => u.isGM && u.active))
     {
-      ui.notifications.warn(game.i18n.localize("IMPMAL.CHARGEN.NoGMWarning"), {permanent : true})
+      ui.notifications.warn(game.i18n.localize("IMPMAL.CHARGEN.Warn.NoGM"), {permanent : true})
     }
 
 
@@ -158,23 +160,57 @@ export default class CharGenIM extends FormApplication {
 
   async getData() {
 
-    let skills = []
-
-
     let allItems = []
-    for(let key in this.data.items)
+    for(let stage of Object.values(this.data.items))
     {
-      allItems = allItems.concat(this.data.items[key])
+      for(let items of Object.values(stage))
+      {
+          allItems = allItems.concat(items)
+      }
     }
+
+    allItems = allItems.map(i => {
+      if (i instanceof Item)
+      {
+        return i;
+      }
+      else 
+      {
+        return new ImpMalItem(i);
+      }
+    })
 
 
     let allChanges = allItems
     .filter(i => i)
-    .reduce((prev, current) => prev.concat(Array.from(current.effects)), []) // reduce items to effects
+    .reduce((prev, current) => prev.concat(Array.from(current.effects.contents)), []) // reduce items to effects
     .reduce((prev, current) => prev.concat(current.changes), [])      // reduce effects to changes
     .filter(c => c.key.includes("characteristics"))                   // filter changes to characteristics
 
-    let characteristics = duplicate(this.data.characteristics)
+    let characteristics = foundry.utils.deepClone(this.data.characteristics);
+    let skills = foundry.utils.deepClone(this.data.skills);
+    let origin = foundry.utils.getProperty(this.data.items, "origin.item");
+    let faction = foundry.utils.getProperty(this.data.items, "faction.item");
+
+
+    if (faction)
+    {
+      characteristics[faction.system.character.characteristics.base].starting += 5;
+      characteristics[this.data.choices.faction].starting += 5;
+    }
+
+    if (origin)
+    {
+      if (origin.system.characteristics.base)
+      {
+        characteristics[origin.system.characteristics.base].starting += 5;
+      }
+      if (this.data.choices.origin)
+      {
+        characteristics[this.data.choices.origin].starting += 5;
+      }
+    }
+  
 
     for (let ch in characteristics)
     {
@@ -191,24 +227,37 @@ export default class CharGenIM extends FormApplication {
     }
 
 
+    let skillText = []
+    let specialisations = await Promise.all(Object.keys(this.data.specialisations).map(fromUuid));
 
-    for(let key in this.data.skillAdvances)
+    // Show Advanced Skills
+    for(let skill in skills)
     {
-      let skill //= await game.wfrp4e.utility.findSkill(key)
-      if (skill)
+      if (skills[skill] != 0)
       {
-        let ch = characteristics[skill.system.characteristic.value]
-        if (ch && this.data.skillAdvances[key] > 0)
+        let skillName = game.impmal.config.skills[skill];
+        skills[skill] = 5 * skills[skill] + characteristics[game.impmal.config.defaultSkillCharacteristics[skill]].total
+        skillText.push(`${skillName} ${skills[skill]}`)
+        // Add any specialisations that have been advanced for each skill
+        for(let spec of specialisations.filter(i => i.system.skill == skill))
         {
-          skills.push(`${key} (+${this.data.skillAdvances[key]}) ${ch.starting + ch.advances + this.data.skillAdvances[key]}`)
+          skillText.push(`${skillName} (${spec.name}) ${skills[skill] + 5 * this.data.specialisations[spec.uuid]}` )
         }
       }
     }
 
-    let exp = 0
-    for(let key in this.data.exp)
+    // Add Specialisations where the base skill hasn't been advanced
+    for(let spec of specialisations.filter(i => skills[i.system.skill] == 0))
     {
-      exp += this.data.exp[key]
+      let skillName = game.impmal.config.skills[spec.system.skill];
+
+      skillText.push(`${skillName} (${spec.name}) ${characteristics[game.impmal.config.defaultSkillCharacteristics[spec.system.skill]].total + 5 * this.data.specialisations[spec.uuid]}` )
+    }
+
+    let exp = 0
+    for(let stageExp of Object.values(this.data.exp))
+    {
+      exp += stageExp
     }
 
     this.stages.forEach(stage => {
@@ -220,9 +269,9 @@ export default class CharGenIM extends FormApplication {
       characteristics,
       data : this.data,
       stageHTML :  await this._getStageHTML(),
-      skills : skills.join(", "),
-      talents : this.data.items.talents?.map(i => i.name).join(", "),
-      trappings : this.data.items.trappings?.map(i => i.name).join(", "),
+      skills : skillText.join(", "),
+      talents : allItems.filter(i => i.type == "talent").map(i => i.name).join(", "),
+      equipment : allItems.filter(i => ["weapon", "equipment", "protection"].includes(i.type)).map(i => i.name).join(", "),
       exp
     }
   }
@@ -278,127 +327,120 @@ export default class CharGenIM extends FormApplication {
       if (this.message)
         this.message.update({content : this.message.content + game.i18n.format("IMPMAL.CHARGEN.Message.Created", {name : this.data.details.name})})
 
-      this.actor.system.details.species.value = this.data.species
-      this.actor.system.details.species.subspecies = this.data.subspecies
-
       for(let exp in this.data.exp)
       {
         if (Number.isNumeric(this.data.exp[exp]))
-          this.actor.system.details.experience.total += Number(this.data.exp[exp])
+          this.actor.system.xp.total += Number(this.data.exp[exp])
       }
 
-      for(let key in this.data.items)
+      for(let stage in this.data.items)
       {
-        let items = this.data.items[key]
-        if (!(items instanceof Array))
+        let stageItems = [];
+        for(let key in this.data.items[stage])
         {
-          items = [items]
+          stageItems = stageItems.concat(this.data.items[stage][key])
         }
-        this.actor.items = this.actor.items.concat(items)
-      }
-
-      let money = await WFRP_Utility.allMoneyItems()
-
-      money.forEach(m => m.system.quantity.value = 0)
-
-      this.actor.items = this.actor.items.concat(money)
-
-      // Get basic skills, add advancements (if skill advanced and isn't basic, find and add it)
-      let skills = await WFRP_Utility.allBasicSkills();
-      for(let skill in this.data.skillAdvances)
-      {
-        let adv = this.data.skillAdvances[skill]
-        if (Number.isNumeric(adv))
-        {
-          let existing = skills.find(s => s.name == skill)
-
-          if (!existing)
+        this.actor.items = this.actor.items.concat(stageItems.map(i => {
+          if (i instanceof Item)
           {
-            existing = await WFRP_Utility.findSkill(skill)
-            existing = existing.toObject()
-            skills.push(existing)
+            return i.toObject()
           }
-          existing.system.advances.value += Number(adv)
+          else 
+          {
+            return i;
+          }
+        }));
+      }
+
+
+      for(let skill in this.data.skills)
+      {
+        this.actor.system.skills[skill].advances = this.data.skills[skill];
+      }
+
+      for(let uuid in this.data.specialisations)      
+      {
+        let spec = await fromUuid(uuid);
+        let specData = spec.toObject()
+        specData.system.advances = this.data.specialisations[uuid];
+        this.actor.items.push(specData);
+      }
+
+      mergeObject(this.actor.system.characteristics, this.data.characteristics);
+
+      for(let characteristic of Object.values(this.data.choices))
+      {
+        if (characteristic)
+        {
+          this.actor.system.characteristics[characteristic].starting += 5;
         }
       }
-      this.actor.items = this.actor.items.concat(skills);
 
-      mergeObject(this.actor.system.characteristics, this.data.characteristics, {overwrite : true})
-      this.actor.system.status.fate.value = this.data.fate.base + this.data.fate.allotted
-      this.actor.system.status.resilience.value = this.data.resilience.base + this.data.resilience.allotted
-
-      this.actor.system.status.fortune.value =  this.actor.system.status.fate.value
-      this.actor.system.status.resolve.value =  this.actor.system.status.resilience.value
-
-      this.actor.system.details.move.value = this.data.move
+      let origin = foundry.utils.getProperty(this.data.items, "origin.item");
+      let faction = foundry.utils.getProperty(this.data.items, "faction.item");
+  
+      if (faction)
+      {
+        this.actor.system.characteristics[faction.system.character.characteristics.base].starting += 5;
+      }
+  
+      if (origin && origin.system.characteristics.base)
+      {
+        this.actor.system.characteristics[origin.system.characteristics.base].starting += 5;
+      }
+    
 
       this.actor.name = this.data.details.name || "New Character"
-      this.actor.system.details.gender.value = this.data.details.gender
-      this.actor.system.details.age.value = this.data.details.age
-      this.actor.system.details.height.value = this.data.details.height
-      this.actor.system.details.haircolour.value = this.data.details.hair
-      this.actor.system.details.eyecolour.value = this.data.details.eyes
-      this.actor.system.details.motivation.value = this.data.details.motivation
-      this.actor.system.details["personal-ambitions"] = {
-        "short-term" : this.data.details.short,
-        "long-term" : this.data.details.long
-      }
+
+      this.actor.system.details.gender = this.data.details.gender
+      this.actor.system.details.age = this.data.details.age
+      this.actor.system.details.species = "Human"
+      this.actor.system.details.height = this.data.details.height
+      this.actor.system.details.eyes = this.data.details.eyes
+      this.actor.system.details.hair = this.data.details.hair
+      this.actor.system.details.feature = this.data.details.feature
+      this.actor.system.goal.short = this.data.details.short
+      this.actor.system.goal.long = this.data.details.long
+      this.actor.system.connections.list = this.data.details.connections
+
+
+      let xp = XPModel.computeSpentFor(new Actor.implementation(foundry.utils.deepClone(this.actor)));
+
+      this.actor.system.xp.other = {list : [{xp : -xp, description : "Character Creation"}]};
+
 
       mergeObject(this.actor, expandObject(this.data.misc), {overwrite : true})
 
-
-      this.actor.items = this.actor.items.filter(i => {
-        if (i.type == "skill")
-        {
-          // Include any skill with advances
-          if (i.system.advances.value > 0)
-          {
-            return true
-          }
-          // or include any basic skill that isn't a specialization
-          if (i.system.advanced.value == "bsc" && i.system.grouped.value == "noSpec")
-          {
-            return true;
-          }
-          // or include any basic skill that IS a specialisation (but not specialised, i.e. Art, or Ride)
-          if(i.system.advanced.value == "bsc" && i.system.grouped.value == "isSpec" && !i.name.includes("(") && !i.name.includes(")")) 
-          {
-            return true
-          }
-          else return false;
-        }
-        else // Return true if any other item besides skills
-        {
-          return true
-        };
-      })
-
       if (game.user.isGM || game.settings.get("core", "permissions").ACTOR_CREATE.includes(game.user.role))
       {
-        let document = await Actor.create(this.actor);
-        document.createEmbeddedDocuments("Item", items);
+        // Create items separately
+        let items = this.actor.items;
+        delete this.actor.items;
+
+        let document = await Actor.implementation.create(this.actor);
+        document.createEmbeddedDocuments("Item", items, {skipRequirement : true, skipOrigin : true, skipFaction : true});
         document.sheet.render(true);
         localStorage.removeItem("impmal-chargen")
       }
       else {
         // Create temp actor to handle any immediate scripts
-        let tempActor = await Actor.create(this.actor, {temporary: true})
+        let tempActor = await Actor.implementation.create(this.actor, {temporary: true})
+
         for(let i of tempActor.items.contents)
         {
-          await i._preCreate(i._source, {}, game.user.id);
+          await i._preCreate(i._source, {skipRequirement : true, skipOrigin : true, skipFaction : true}, game.user.id);
         }
-        const payload =  {id : game.user.id, data : tempActor.toObject()}
-        let id = await game.impmal.socket.executeOnUserAndWait("GM", "createActor", payload);
-        let actor = game.actors.get(id);
-        if (actor && actor.isOwner) {
-          actor.sheet.render(true)
-          localStorage.removeItem("impmal-chargen")
-        }
+
+        let actorData = tempActor.toObject();
+        actorData._id = randomID();
+        game.user.flags.waitingForCreatedActor = actorData._id;
+        const payload =  {fromId : game.user.id, actor : actorData}
+        SocketHandlers.call("createActor", payload);
       }
     }
     catch(e)
     {
-      ui.notifications.error(game.i18n.format("IMPMAL.CHARGEN.ERROR.Create", {error: e}))
+      ui.notifications.error(game.i18n.format("IMPMAL.CHARGEN.ERROR.Create", {error: e.stack}))
     }
   }
 
@@ -461,5 +503,24 @@ export default class CharGenIM extends FormApplication {
   }
 }
 
+
+// Complete character creation for a user who has sent their actor data to a GM to create
+// If the ID matches the locally stored ID, render actor and complete process
+Hooks.on("createActor", async (document) => {
+  if (document.id == game.user.flags.waitingForCreatedActor)
+  {
+    if (document && document.isOwner) 
+    {
+      for(let i of document.items.contents)
+        {
+          // Run onCreate scripts
+          await i._onCreate(i._source, {skipRequirement : true, skipOrigin : true, skipFaction : true}, game.user.id);
+        }
+        document.sheet.render(true)
+        localStorage.removeItem("impmal-chargen")
+      }
+    delete game.user.flags.waitingForCreatedActor;
+  }
+})
 
 

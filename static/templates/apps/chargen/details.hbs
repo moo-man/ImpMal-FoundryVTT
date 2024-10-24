@@ -1,51 +1,92 @@
 <form>
     <div class="stage-title">
-        <p class="subtitle">{{localize "CHARGEN.StageTitle.Details"}}</p>
+        <h3 class="subtitle">{{localize "IMPMAL.CHARGEN.StageTitle.Details"}}</h3>
     </div>
 
 
     <div class="chargen-content">
         <div class="form-group">
-            <label>{{localize "Gender"}}</label>
-            <input name="gender" type="text">
+            <label>{{localize "IMPMAL.Gender"}}</label>
+            <div class="form-fields">
+                <input name="gender" type="text" value="{{context.gender}}">
+            </div>
         </div>
         <div class="form-group">
-            <label>{{localize "Name"}} <a class="roll-details" data-type="rollName"><i class="fa-solid fa-dice"></i></a></label>
-            <input name="name" type="text" value="{{data.system.details.name}}">
+            <label>{{localize "Name"}}</label>
+            <div class="form-fields">
+
+                <input name="name" type="text" value="{{context.name}}">
+                <a class="roll-details" data-type="rollName"><i class="fa-solid fa-dice"></i></a>
+            </div>
         </div>
         <div class="form-group">
-            <label>{{localize "Age"}} <a class="roll-details" data-type="rollAge"><i class="fa-solid fa-dice"></i></a></label>
-            <input name="age" type="text" value="{{data.system.details.age}}">
+            <label>{{localize "IMPMAL.Age"}}</label>
+            <div class="form-fields">
+
+                <input name="age" type="text" value="{{context.age}}">
+                <a class="roll-details" data-type="rollAge"><i class="fa-solid fa-dice"></i></a>
+            </div>
+        </div>
+            <div class="form-group">
+            <label>{{localize "IMPMAL.DistinguishingFeatures"}}</label>
+            <div class="form-fields">
+                <input name="feature" type="text" value="{{context.feature}}">
+                <a class="roll-details" data-type="rollFeature"><i class="fa-solid fa-dice"></i></a>
+            </div>
         </div>
         <div class="form-group">
-            <label>{{localize "Height"}} <a class="roll-details" data-type="rollHeight"><i class="fa-solid fa-dice"></i></a></label>
-            <input name="height" type="text" value="{{data.system.details.height}}">
+            <label>{{localize "IMPMAL.Height"}}</label>
+            <div class="form-fields">
+
+                <input name="height" type="text" value="{{context.height}}">
+                <a class="roll-details" data-type="rollHeight"><i class="fa-solid fa-dice"></i></a>
+            </div>
         </div>
         <div class="form-group">
-            <label>{{localize "Eye Colour"}} <a class="roll-details" data-type="rollEyes"><i class="fa-solid fa-dice"></i></a></label>
-            <input name="eyes" type="text" value="{{data.system.details.eyes}}">
+            <label>{{localize "IMPMAL.Eyes"}}</label>
+            <div class="form-fields">
+
+                <input name="eyes" type="text" value="{{context.eyes}}">
+                <a class="roll-details" data-type="rollEyes"><i class="fa-solid fa-dice"></i></a>
+            </div>
         </div>
         <div class="form-group">
-            <label>{{localize "Hair Colour"}} <a class="roll-details" data-type="rollHair"><i class="fa-solid fa-dice"></i></a></label>
-            <input name="hair" type="text" value="{{data.system.details.hair}}">
+            <label>{{localize "IMPMAL.HairColour"}}</label>
+            <div class="form-fields">
+
+                <input name="hairColour" type="text" value="{{context.hairColour}}">
+                <a class="roll-details" data-type="rollHairColour"><i class="fa-solid fa-dice"></i></a>
+            </div>
+        </div>
+                <div class="form-group">
+            <label>{{localize "IMPMAL.HairStyle"}}</label>
+            <div class="form-fields">
+                <input name="hairStyle" type="text" value="{{context.hairStyle}}">
+                <a class="roll-details" data-type="rollHairStyle"><i class="fa-solid fa-dice"></i></a>
+            </div>
         </div>
         <div class="goals">
             <div class="form-group">
                 <label>{{localize "IMPMAL.ShortTermGoal"}}</label>
-                <textarea name="short">{{data.system.goal.short}}</textarea>
+                <textarea name="short">{{context.short}}</textarea>
             </div>
             <div class="form-group">
                 <label>{{localize "IMPMAL.LongTermGoal"}}</label>
-                <textarea name="long" >{{data.system.goal.long}}</textarea>
+                <textarea name="long">{{context.long}}</textarea>
             </div>
         </div>
         <div class="connections">
-            <label>{{localize "IMPMAL.Connections"}} <a class="roll-details" data-type="rollConnections"><i class="fa-solid fa-dice"></i></a></label>
+            <label>{{localize "IMPMAL.Connections"}}</label>
             <div class="connection-list">
-            {{#each data.system.connections}}
-            <input type="text" value={{this}}>
-            {{/each}}
-
+                {{#each context.connections}}
+                    <div class="connection-field" data-index="{{@key}}">
+                        <input type="text" value="{{this}}">
+                    </div>
+                {{/each}}
+                <div class="connection-field">
+                    <input type="text" value="">
+                    <a class="roll-details" data-type="rollConnections"><i class="fa-solid fa-dice"></i></a>
+                </div>
             </div>
         </div>
     </div>

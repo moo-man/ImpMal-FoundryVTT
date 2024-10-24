@@ -11,12 +11,12 @@ let systemPath = foundryPath(manifest.id);
 console.log("Bundling to " + systemPath);
 
 export default {
-    input: [`./src/${manifest.id}.js`, `./style/${manifest.id}.scss`],
+    input: [`./src/${manifest.id}.js`],
     output: {
         dir : systemPath
     },
     watch : {
-        clareScreen: true
+        clearScreen: true
     },
     plugins: [
         jscc({      

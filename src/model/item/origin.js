@@ -28,7 +28,10 @@ export class OriginModel extends StandardItemModel
 
         if (characteristicChoice.length)
         {
-            characteristics[this.characteristics.base].starting += 5;
+            if (this.characteristics.base)
+            {
+                characteristics[this.characteristics.base].starting += 5;
+            }
             characteristics[characteristicChoice[0].id].starting += 5;
             
             await actor.update({"system.characteristics" : characteristics});
@@ -60,7 +63,7 @@ export class OriginModel extends StandardItemModel
     async _onCreate(data, options, user)
     {
         await super._onCreate(data, options, user)
-        if (["character", "npc"].includes(this.parent.actor?.type) && !this.parent.actor?.system.origin?.id)
+        if (["character", "npc"].includes(this.parent.actor?.type) && !this.parent.actor?.system.origin?.id && !options.skipOrigin)
         {
             this.applyOriginTo(this.parent?.actor);
         }

@@ -20,12 +20,46 @@
   {{#unless context.role}}
   <p>Drag and drop a Role. If your Patron has selected your role for you, enter the XP received (usually 50) below.</p>
   {{else}}
-          <p class="centered">{{localize "Select Specialisations"}}</p>
+  <hr>
+
+          <p class="centered">Allocate {{context.role.system.skills.value}} Advances to the following Skills</p>
+        <div class="choices skills wrap">
+          {{#each context.role.system.skills.list}}
+          <div class="choice-group">
+            <label>{{configLookup "skills" this}}</label>
+            <input type="number" name="skills.{{this}}" class="add-context" data-property="skills.{{this}}" value="{{lookup ../context.skills this}}" min="0">
+          </div>
+          {{/each}}
+        </div>
+
+          <h4 class="centered">{{localize "Select Specialisations"}}</h4>
         <div class="choices">
           {{#each context.specialisations}}
             <a class="choose-spec choice content-link" data-index="{{@key}}"><i class="fas fa-suitcase"></i> {{this.text}} {{#if this.chosen}}+1{{/if}}</a>
           {{/each}}
         </div>
+
+        {{#if context.role.system.equipment.options.length}}
+        <h4 class="centered">{{localize "Equipment"}} {{#if equipmentList}}<a class="choice-reset" data-path="equipment"><i class="fas fa-rotate-left"></i></a>{{/if}}</h4>
+        <div class="choices">
+            {{#if equipmentList}}
+              <p class="centered">{{equipmentList}}</p>
+             {{else}}
+             <a class="choose choice-menu content-link" data-path="equipment"><i class="fas fa-suitcase"></i> Equipment</a>
+            {{/if}}
+        </div>
+        {{/if}}
+
+        {{#if context.role.system.talents.options.length}}
+        <h4 class="centered">{{localize "Talents"}} {{#if talentList}}<a class="choice-reset" data-path="talents"><i class="fas fa-rotate-left"></i></a>{{/if}}</h4>
+        <div class="choices">
+                      {{#if talentList}}
+              <p class="centered">{{talentList}}</p>
+              {{else}}
+            <a class="choose choice-menu content-link" data-path="talents"><i class="fas fa-suitcase"></i> Talents</a>
+            {{/if}}
+        </div>
+        {{/if}}
   {{/unless}}
 
     <div class="result">

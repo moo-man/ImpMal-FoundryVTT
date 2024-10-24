@@ -25,21 +25,27 @@
 
     {{#if context.origin}}
       <div class="choice-section">
+        {{#if (or context.origin.system.characteristics.base context.origin.system.characteristics.choices.length)}}
         <h4 class="centered">{{localize "IMPMAL.Choices"}}</h4>
         <p class="centered">{{localize "Gain +5 to selected Characteristics"}}</p>
         <div class="choices">
-          <select disabled>
-            <option>{{configLookup "characteristics" context.origin.system.characteristics.base}}</option>
-          </select>
-          <select name="characteristic" class="choice">
-            {{#select context.characteristic}}
-            <option value="">-</option>
-            {{#each context.origin.system.characteristics.choices}}
-              <option value="{{this}}">{{configLookup "characteristics" this}}</option>
-            {{/each}}
-            {{/select}}
-          </select>
+          {{#if context.origin.system.characteristics.base}}
+            <select disabled>
+              <option>{{configLookup "characteristics" context.origin.system.characteristics.base}}</option>
+            </select>
+          {{/if}}
+          {{#if context.origin.system.characteristics.choices.length}}
+            <select name="characteristic" class="choice">
+              {{#select context.characteristic}}
+              <option value="">-</option>
+              {{#each context.origin.system.characteristics.choices}}
+                <option value="{{this}}">{{configLookup "characteristics" this}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          {{/if}}
         </div>
+        {{/if}}
       </div>
     {{/if}}
 

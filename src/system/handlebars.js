@@ -49,4 +49,8 @@ export default function registerHandlebars()
         "systems/impmal/templates/item/partials/influence.hbs",
         "systems/impmal/templates/partials/manual-scripts.hbs",
     ]);
+
+    loadTemplates({
+        choiceTree : "systems/impmal/templates/partials/choice-tree.hbs"
+    })
 }

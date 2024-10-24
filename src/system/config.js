@@ -382,6 +382,7 @@ const IMPMAL = {
         major : "IMPMAL.Major"
     },
 
+    age: {},
     factions: {},
 
     tieredCondition: {
@@ -501,6 +502,11 @@ const IMPMAL = {
         "applyDamage" : true,
         "takeDamage" : true,
         "createToken" : true
+    },
+
+    placeholderItemData : {
+        type : "equipment",
+        img : "modules/impmal-core/assets/icons/equipment/equipment.webp"
     },
 
 
