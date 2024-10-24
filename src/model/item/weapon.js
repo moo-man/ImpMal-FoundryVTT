@@ -45,7 +45,7 @@ export class WeaponModel extends EquippableItemModel
         let updateData = {}
         // If ammo changed, also update current mag value
         // Can't be in _preUpdate because need to check ammo quantity, ammo.document would not ready 
-        if (foundry.utils.hasProperty(data, "system.ammo.id"))
+        if (foundry.utils.hasProperty(data, "system.ammo.uuid"))
         {
             if (this.ammo.document)
             {

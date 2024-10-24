@@ -3,7 +3,7 @@
     <div class="form-fields">
         <select name="hitLocation">
             {{#select fields.hitLocation}}
-                {{#each hitLocations}}
+                {{#each data.hitLocations}}
                     <option value="{{@key}}">{{localize this}}</option>
                 {{/each}}
             {{/select}}
@@ -11,7 +11,7 @@
     </div>
 </div>
 
-{{#if showTraits.burst}}
+{{#if data.showTraits.burst}}
     <div class="form-group">
         <label>{{localize "IMPMAL.Burst"}}</label>
         <div class="form-fields">
@@ -20,7 +20,7 @@
     </div>
 {{/if}}
 
-{{#if showTraits.rapidFire}}
+{{#if data.showTraits.rapidFire}}
     <div class="form-group">
         <label>{{localize "IMPMAL.RapidFire"}}</label>
         <div class="form-fields">
@@ -29,7 +29,7 @@
     </div>
 {{/if}}
 
-{{#if showTraits.supercharge}}
+{{#if data.showTraits.supercharge}}
     <div class="form-group">
         <label>{{localize "IMPMAL.Supercharge"}}</label>
         <div class="form-fields">

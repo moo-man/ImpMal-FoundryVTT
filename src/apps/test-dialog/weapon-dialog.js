@@ -8,20 +8,18 @@ export class WeaponTestDialog extends AttackDialog
 
     computeFields() 
     {
-        super.computeFields();
-
         if (this.data.weapon.system.equipped.offhand)
         {
-            this.disCount++;
-            this.tooltips.addDisadvantage(1, "Offhand");
+            this.disadvantage++;
+            this.tooltips.add("disadvantage", 1, "Offhand");
         }
 
         if (this.data.weapon.system.traits.has("mastercrafted"))
         {
             this.fields.SL++;
-            this.tooltips.addSL(1, "Mastercrafted");
+            this.tooltips.add("SL", 1, "Mastercrafted");
         }
-    
+        super.computeFields();    
     }
 
     get weapon() 

@@ -18,7 +18,7 @@ export class BaseTest
 
         this.context = new this.constructor.contextClass(context);
         this.data.target = this.computeTarget();
-        this.context.breakdown = this.context.breakdown.replace("@BASE", this.computeTarget(true));
+        this.context.breakdown = this._formatBreakdown(this.context.breakdown);
         if (!result)
         {
             this.result = new this.constructor.evaluatorClass(data);
@@ -361,6 +361,14 @@ export class BaseTest
             onlyAutomaticSuccess : data.onlyAutomaticSuccess,
             target : data.target,
         };
+    }
+
+    
+    _formatBreakdown(breakdown)
+    {
+        breakdown.base = breakdown.base.replace("@BASE", this.computeTarget(true));
+        breakdown.modifiersBreakdown = `<hr><p>${game.i18n.localize("IMPMAL.ModifierBreakdown")}</p>${breakdown.modifiersBreakdown}`;
+        return Object.values(breakdown).join("");
     }
 
 

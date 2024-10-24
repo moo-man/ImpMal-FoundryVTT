@@ -3,6 +3,36 @@
 export class TestDialog extends WarhammerRollDialog
 {
 
+
+    static tooltipConfig = {
+        modifier : {
+            label : "IMPMAL.Modifier",
+            type : 1,
+            path : "fields.modifier",
+            hideLabel : true
+        },
+        SL : {
+            label : "IMPMAL.SL",
+            type : 1,
+            path : "fields.SL"
+        },
+        difficulty : {
+            label : "IMPMAL.Difficulty",
+            type : 0,
+            path : "fields.difficulty"
+        },
+        advantage : {
+            label : "IMPMAL.Advantage",
+            type : 1,
+            path : "advantage"
+        },
+        disadvantage : {
+            label : "IMPMAL.Disadvantage",
+            type : 1,
+            path : "disadvantage"
+        }
+    }
+
     static get defaultOptions() 
     {
         const options = super.defaultOptions;
@@ -43,6 +73,10 @@ export class TestDialog extends WarhammerRollDialog
         this.disadvantage = value;
     }
 
+    advantage = 0;
+    disadvantage = 0;
+    forceState = "";
+
     _defaultFields() 
     {
         return foundry.utils.mergeObject(super._defaultFields(), {
@@ -54,17 +88,18 @@ export class TestDialog extends WarhammerRollDialog
     }
     async getData() 
     {
-
+        this.advantage = 0;
+        this.disadvantage = 0;
         let data = await super.getData();
+        
         data.advantage = this.advantage;
         data.disadvantage = this.disadvantage;
-        data.state = this.data.state;
         return data
     }
 
     async computeFields() 
     {
-        this.data.state = this.computeState();
+        this.fields.state = this.computeState();
     }
 
     /**
@@ -99,6 +134,32 @@ export class TestDialog extends WarhammerRollDialog
             return "none";
         }
     }
+
+    _onFieldChange(ev) 
+    {
+        // If the user clicks advantage or disadvantage, force that state to be true despite calculations
+        if (ev.currentTarget.name == "state")
+        {
+            this.forceState = ev.currentTarget.value;
+            this.render(true);
+        }
+        else return super._onFieldChange(ev);
+    }
+
+    createBreakdown()
+    {
+        let breakdown = super.createBreakdown();
+        let difficulty = game.impmal.config.difficulties[this.fields.difficulty];
+        breakdown.base = `<p>${game.i18n.localize("IMPMAL.Base")}: @BASE</p>`;
+        breakdown.modifier = `<p>${game.i18n.localize("IMPMAL.Modifier")}: ${HandlebarsHelpers.numberFormat(this.fields.modifier, {hash : {sign: true}})}</p>`;
+        breakdown.difficulty = `<p>${game.i18n.localize("IMPMAL.Difficulty")}: ${game.i18n.localize(difficulty.name)} (${HandlebarsHelpers.numberFormat(difficulty.modifier, {hash : {sign: true}})})</p>`;
+        breakdown.SL = `<p>${game.i18n.localize("IMPMAL.SL")}: ${HandlebarsHelpers.numberFormat(this.fields.SL, {hash : {sign: true}})}</p>`;
+        breakdown.advantage = `<p>${game.i18n.localize("IMPMAL.Advantage")}: ${this.advCount} ${this.userEntry.state == "adv" ? "(" + "Forced" + ")" : "" }</p>`;
+        breakdown.disadvantage = `<p>${game.i18n.localize("IMPMAL.Disadvantage")}: ${this.disCount} ${this.userEntry.state == "dis" ? "(" + "Forced" + ")" : "" }</p>`;
+
+        breakdown.modifiersBreakdown = this.tooltips.getCollectedTooltips();
+        return breakdown;
+    }
    
     /**
      * 
@@ -115,6 +176,7 @@ export class TestDialog extends WarhammerRollDialog
         {
             dialogData.data.speaker = ChatMessage.getSpeaker({actor});
         }
+        dialogData.data.actor = actor;
         dialogData.data.context = options.context || {}; // Arbitrary values - used with scripts
         dialogData.data.context.tags = options.context?.tags || {}; // Tags shown below test results - used with scripts
         dialogData.data.context.text = options.context?.text || {}; // Longer text shown below test results - used with scripts

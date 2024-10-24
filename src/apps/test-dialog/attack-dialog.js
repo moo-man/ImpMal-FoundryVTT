@@ -4,10 +4,11 @@ export class AttackDialog extends SkillTestDialog
 {  
     subTemplate = `systems/impmal/templates/apps/test-dialog/attack-fields.hbs`;
 
-    async getTemplateFields() 
+    constructor(...args)
     {
-        let data = await super.getTemplateFields();
-        data.hitLocations = {
+        super(...args)
+        this.data.showTraits = this.showTraits;
+        this.data.hitLocations = {
             "roll" : "IMPMAL.Roll",
             "head" : "IMPMAL.Head",
             "body" : "IMPMAL.Body",
@@ -16,8 +17,7 @@ export class AttackDialog extends SkillTestDialog
             "leftLeg" : "IMPMAL.LeftLeg",
             "rightLeg" : "IMPMAL.RightLeg",
         };
-        data.showTraits = this.showTraits;
-        return data;
+
     }
 
     get isAttack()
@@ -32,37 +32,37 @@ export class AttackDialog extends SkillTestDialog
         if (this.fields.hitLocation != "roll")
         {
             this.disCount++;
-            this.tooltips.addDisadvantage(1, "Targeting Location");
+            this.tooltips.add("disadvantage", 1, "Targeting Location");
         }
 
         if (this.fields.rapidFire)
         {
             this.advCount++;
-            this.tooltips.addAdvantage(1, "Rapid Fire");
+            this.tooltips.add("advantage", 1, "Rapid Fire");
         }
 
         if (this.fields.burst)
         {
             this.fields.SL++;
-            this.tooltips.addSL(1, "Burst");
+            this.tooltips.add("SL", 1, "Burst");
         }
 
         if (this.traits.has("shoddy"))
         {
             this.fields.SL--;
-            this.tooltips.addSL(-1, "Shoddy");
+            this.tooltips.add("SL", -1, "Shoddy");
         }
 
         if (this.traits.has("defensive") && this.actor.defendingAgainst)
         {
             this.advCount++;
-            this.tooltips.addAdvantage(1, "Defensive");
+            this.tooltips.add("advantage", 1, "Defensive");
         }
 
         if (this.data.context.twf)
         {
             this.disCount++;
-            this.tooltips.addDisadvantage(1, "Two Weapon Fighting");
+            this.tooltips.add("disadvantage", 1, "Two Weapon Fighting");
         }
     }
 
@@ -87,7 +87,7 @@ export class AttackDialog extends SkillTestDialog
         return fields;
     }
 
-    _onInputChanged(ev)
+    _onFieldChange(ev)
     {
         // Can't have both burst and rapidFire active
         let multiplier = game.settings.get("impmal", "countEveryBullet") ? 5 : 1;
@@ -109,6 +109,6 @@ export class AttackDialog extends SkillTestDialog
             }
             delete this.fields.burst;
         }
-        super._onInputChanged(ev);
+        super._onFieldChange(ev);
     }
 }
