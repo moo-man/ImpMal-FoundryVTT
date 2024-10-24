@@ -100,6 +100,127 @@ export default class Migration {
         game.settings.set("impmal", "systemMigrationVersion", game.system.version)
     }
 
+    static async migratePacks(update=false, {world=true, compendium=false}={})
+    {
+        this.stats = {
+            actors : {
+                updated : 0,
+                skipped : 0,
+                error : [],
+                total : 0,
+                items : 0,
+                effects : 0,
+                itemEffects : 0
+            },
+            items : {
+                updated : 0,
+                skipped : 0,
+                error : [],
+                total : 0,
+                effects : 0
+            }
+        }
+
+        for(let pack of game.packs)
+        {
+            if (world && pack.metadata.package == "world")
+            {
+                await this.migratePack(pack, update);
+            }
+            else if (compendium && pack.metadata.package != "world")
+            {
+                await this.migratePack(pack, update);
+            }
+        }
+
+        this._printStatistics(this.stats)
+    }
+
+    static async migratePack(pack, update)
+    {
+        if (typeof pack == "string")
+        {
+            pack = game.packs.get(pack);
+        }
+        if (!["Actor", "Item"].includes(pack.metadata.type))
+        {
+            return
+        }
+
+        if (update && pack.locked)
+        {
+            console.error(`Skipping ${pack.metadata.label} - Locked`);
+            return;
+        }
+
+        console.log(`%c+++++++++++++++++| Begin Migration of ${pack.metadata.label} |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+        let documents = await pack.getDocuments();
+        for(let doc of documents)
+        {
+            if (doc.documentName == "Actor")
+            {
+                this.stats.actors.total++;
+                warhammer.utility.log(`+++| Actor: ${doc.name} |+++`, true, null, {groupCollapsed : true})
+                try {
+                    let migration = await this.migrateActor(doc);
+                    if (!isEmpty(migration)) 
+                    {
+                        this.stats.actors.updated++;
+                        if (update)
+                        {
+                            await doc.update(migration);
+                        }
+                        warhammer.utility.log(`+++| Migration Data: `, true, migration)
+                    }
+                    else 
+                    {
+                        this.stats.actors.skipped++;
+                        warhammer.utility.log(`+++| Nothing to migrate for ${doc.name} |+++`, true)
+                    }
+                }
+                catch (e) {
+                    this.stats.actors.error.push(doc.name);
+                    warhammer.utility.error("+++| MIGRATION FAILED |+++ Error: " + e.stack, true, doc)
+                }
+                finally
+                {
+                    console.groupEnd();
+                }
+            }
+            if (doc.documentName == "Item")
+            {
+                this.stats.items.total++;
+                warhammer.utility.log(`+++| Item: ${doc.name} |+++`, true, null, {groupCollapsed : true})
+                try {
+                    let migration = await this.migrateItem(doc);
+                    if (!isEmpty(migration)) 
+                    {
+                        this.stats.items.updated++;
+                        if (update)
+                        {
+                            await doc.update(migration);
+                        }
+                        warhammer.utility.log(`+++| Migration Data: `, true, migration)
+                    }
+                    else 
+                    {
+                        this.stats.items.skipped++;
+                        warhammer.utility.log(`+++| Nothing to migrate for ${doc.name} |+++`, true)
+                    }
+                }
+                catch (e) {
+                    this.stats.actors.error.push(doc.name);
+                    warhammer.utility.error("+++| MIGRATION FAILED |+++ Error: " + e, true, doc)
+                }
+                finally
+                {
+                    console.groupEnd();
+                }
+            }
+        }
+        console.log(`%c+++++++++++++++++| ${pack.metadata.label} Migration Complete |+++++++++++++++++`, "color: #DDD;background: #065c63;font-weight:bold");
+    }
+
     static async migrateActor(actor) {
         let migration = {
             items : (await Promise.all(actor.items.map(i => this.migrateItem(i, actor)))).filter(i => !isEmpty(i)),
