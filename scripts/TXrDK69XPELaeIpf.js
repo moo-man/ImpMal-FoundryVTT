@@ -33,6 +33,6 @@ mergeObject(plasmaCannon, {name : "Plasma Cannon", system : {
     id : randomID()
 })
 
-let choice = await DocumentChoice.create([heavyBolter, plasmaCannon, multimelta], 1, "Choose Weapon");
+let choice = await ItemDialog.create([heavyBolter, plasmaCannon, multimelta], 1, "Choose Weapon");
 
 this.actor.createEmbeddedDocuments("Item", choice);

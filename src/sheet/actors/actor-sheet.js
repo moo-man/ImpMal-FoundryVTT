@@ -1,5 +1,4 @@
 import ArmourConfig from "../../apps/armour-config";
-import DocumentChoice from "../../apps/document-choice";
 import ChatHelpers from "../../system/chat-helpers";
 import TokenHelpers from "../../system/token-helpers";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
@@ -342,7 +341,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         let choice = [];
         if (specialisations.length)
         {
-            choice = await DocumentChoice.create(specialisations, 1, {text : game.i18n.localize("IMPMAL.ChooseSpecialisation")});
+            choice = await ItemDialog.create(specialisations, 1, {text : game.i18n.localize("IMPMAL.ChooseSpecialisation")});
         }
 
         if (choice[0])

@@ -1,4 +1,3 @@
-import DocumentChoice from "../../apps/document-choice";
 import ImpMalItemSheet from "./item-sheet";
 
 export default class TalentItemSheet extends ImpMalItemSheet
@@ -24,7 +23,7 @@ export default class TalentItemSheet extends ImpMalItemSheet
                 return;
             }
 
-            let choices = await DocumentChoice.create(this.item.effects, "unlimited");
+            let choices = await ItemDialog.create(this.item.effects, "unlimited");
             this.item.update({
                 system : {
                     "effectOptions.list" : choices.map(i => {return {id : i.id};}),

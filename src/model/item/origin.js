@@ -1,4 +1,3 @@
-import DocumentChoice from "../../apps/document-choice";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
@@ -24,7 +23,7 @@ export class OriginModel extends StandardItemModel
     {
         let characteristics = actor.toObject().system.characteristics;
 
-        let characteristicChoice = await DocumentChoice.create(this.characteristics.choices.map(c => {return {id : c, name : game.impmal.config.characteristics[c]};}), 1, {text : game.i18n.localize("IMPMAL.ApplyOriginPrompt"), title : "IMPMAL.ApplyOriginTitle"});
+        let characteristicChoice = await ItemDialog.create(this.characteristics.choices.map(c => {return {id : c, name : game.impmal.config.characteristics[c]};}), 1, {text : game.i18n.localize("IMPMAL.ApplyOriginPrompt"), title : "IMPMAL.ApplyOriginTitle"});
 
         if (characteristicChoice.length)
         {

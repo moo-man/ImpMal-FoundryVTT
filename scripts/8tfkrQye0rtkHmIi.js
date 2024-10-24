@@ -1,6 +1,6 @@
 let skills = args.actor.itemTypes.specialisation.filter(s => ["People", "High Gothic", "Evaluation", "Investigation", "Academics", "Common", "Human", "Inquiry"].includes(s.name));
 
-let chosen = (await DocumentChoice.create(skills, 1))[0]
+let chosen = (await ItemDialog.create(skills, 1))[0]
 
 if (chosen)
 {

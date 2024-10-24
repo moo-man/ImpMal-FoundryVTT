@@ -1,6 +1,6 @@
         let items = (await game.impmal.utility.getAllItems(["equipment", "weapon", "modification", "protection", "augmetic"])).filter(i => i.system.encumbrance.value == 0);
 
-        let choice = await DocumentChoice.create(items, 1)
+        let choice = await ItemDialog.create(items, 1)
 
         if (choice.length) {
             if (choice[0].system.cost > this.actor.system.solars)

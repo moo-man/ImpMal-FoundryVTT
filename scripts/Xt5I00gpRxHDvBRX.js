@@ -8,7 +8,7 @@
         {
 
             let factionOptions = Object.keys(game.impmal.config.factions).filter(i => ["astra-militarum", "imperial-fleet"].includes(i)).map(i => { return {name : game.impmal.config.factions[i], id : i};});
-            let choices = await DocumentChoice.create(factionOptions, 1);
+            let choices = await ItemDialog.create(factionOptions, 1);
             if (choices.length)
             {
                 changes.push({key : "system.influence.factions." + choices[0].id + ".modifier", value : 1});

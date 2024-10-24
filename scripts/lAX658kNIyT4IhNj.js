@@ -8,7 +8,7 @@
 	    i.id = i._id;
         });
 
-        let choice = await DocumentChoice.create(skills, 1);
+        let choice = await ItemDialog.create(skills, 1);
 
 	choice[0].name = "Forbidden"
 

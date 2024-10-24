@@ -3,13 +3,13 @@
             return {id : k, name : game.i18n.localize(this.actor.system.combat.hitLocations[k].label)};
         });
             
-        let location = (await DocumentChoice.create(locations, 1))[0].id;
+        let location = (await ItemDialog.create(locations, 1))[0].id;
             
         let protection = this.actor.system.combat.hitLocations[location].items.filter(i => i.type == "protection");
         let item;
         if (protection.length > 1)
         {
-            item = (await DocumentChoice.create(protection, 1))[0];
+            item = (await ItemDialog.create(protection, 1))[0];
         }
         else 
         {

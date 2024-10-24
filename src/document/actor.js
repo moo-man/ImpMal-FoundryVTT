@@ -1,4 +1,3 @@
-import DocumentChoice from "../apps/document-choice";
 import { CharacteristicTestDialog } from "../apps/test-dialog/characteristic-dialog";
 import { PowerTestDialog } from "../apps/test-dialog/power-dialog";
 import { SkillTestDialog } from "../apps/test-dialog/skill-dialog";
@@ -287,7 +286,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
 
         if (!item && prompt && protectionItems.length)
         {
-            item = (await DocumentChoice.create(protectionItems, 1))[0];
+            item = (await ItemDialog.create(protectionItems, 1))[0];
         }
         // If no item provided, find the first protection item that is suitable to being damage or repaired
         item = item || protectionItems.find(i => 

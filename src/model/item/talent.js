@@ -1,4 +1,3 @@
-import DocumentChoice from "../../apps/document-choice";
 import { TestDataModel } from "./components/test";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
@@ -132,7 +131,7 @@ export class TalentModel extends StandardItemModel
 
         if (effectOptions.length > 0)
         {
-            let choice = await DocumentChoice.create(effectOptions, 1);
+            let choice = await ItemDialog.create(effectOptions, 1);
             if (choice.length)
             {
                 return this.parent.update({["system.effectChoices." + choice[0].id] : this.taken}).then(() => 

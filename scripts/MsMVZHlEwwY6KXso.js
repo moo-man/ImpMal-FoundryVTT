@@ -253,7 +253,7 @@
     }
 ]
 
-    let choice = (await DocumentChoice.create(weapons, 1, {text : "Choose the weapon used by the Heavy Weapons Team"}))
+    let choice = (await ItemDialog.create(weapons, 1, {text : "Choose the weapon used by the Heavy Weapons Team"}))
 
     if (choice && choice.length)
     {

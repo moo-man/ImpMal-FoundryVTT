@@ -1,5 +1,4 @@
 import ImpMalActorSheet from "./actor-sheet";
-import DocumentChoice from "../../apps/document-choice";
 
 export default class ImpMalVehicleSheet extends ImpMalActorSheet
 {
@@ -133,7 +132,7 @@ export default class ImpMalVehicleSheet extends ImpMalActorSheet
                 ui.notifications.error(game.i18n.localize("IMPMAL.ErrorNoAmmoItems"));
                 return;
             }
-            DocumentChoice.create(this.actor.itemTypes.ammo).then(documents => 
+            ItemDialog.create(this.actor.itemTypes.ammo).then(documents => 
             {
                 let ammo = documents[0];
                 item.update({"system.ammo.id" : ammo?.id});

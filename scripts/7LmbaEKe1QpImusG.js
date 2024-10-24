@@ -1,7 +1,7 @@
         let minor = [];
         if (this.item.system.taken < 2)
         {
-            minor = await DocumentChoice.create((await game.impmal.utility.getAllItems(["power"])).filter(i => i.system.discipline == "minor"), 1);
+            minor = await ItemDialog.create((await game.impmal.utility.getAllItems(["power"])).filter(i => i.system.discipline == "minor"), 1, {text : "Select a Minor Power", title : this.item.name});
         }
 
         let disciplines = foundry.utils.deepClone(game.impmal.config.disciplines);
@@ -11,9 +11,9 @@
             delete disciplines[power.system.discipline];
         }
 
-        let discipline = (await DocumentChoice.create(disciplines, 1))[0];
+        let discipline = (await ItemDialog.create(disciplines, 1, {text : "Select a Discipline", title : this.item.name}))[0];
 
-        let major = await DocumentChoice.create((await game.impmal.utility.getAllItems(["power"])).filter(i => i.system.discipline == discipline.id), 1);
+        let major = await ItemDialog.create((await game.impmal.utility.getAllItems(["power"])).filter(i => i.system.discipline == discipline.id), 1, {text : "Select a Pyschic Power", title : this.item.name});
 
         return this.actor.createEmbeddedDocuments("Item", minor.concat(major).map(i => {
             i = i.toObject();
