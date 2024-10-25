@@ -64,7 +64,7 @@ export class TestContext
         {
             return {
                 id : speaker.token,
-                test : game.messages.get(this.responses[speaker.token])?.test,
+                test : game.messages.get(this.responses[speaker.token])?.system.test,
                 unopposed : this.responses[speaker.token] == "unopposed",
                 actor : ChatMessage.getSpeakerActor(speaker),
                 damage : this.appliedDamage[speaker.token]
@@ -109,7 +109,7 @@ export class TestContext
                 }
                 // await game.dice3d?.waitFor3DAnimationByMessageID(message.id);
 
-                let attackingTest = attackingMessage.test;
+                let attackingTest = attackingMessage.system.test;
                 attackingTest.context.addOpposedResponse(message.id);
                 attackingTest.sendToChat();
             }
@@ -219,12 +219,8 @@ export class TestContext
     saveContext(message)
     {
         let data = {
-            flags: {
-                impmal : {
-                    test : {
-                        context: {...this}
-                    }
-                }
+            system: {
+                context: {...this}
             }
         };
         if (game.user.isGM || this.message.isAuthor)
@@ -245,7 +241,8 @@ export class TestContext
             title : data.title,
             targetSpeakers : data.targets.map(i => ChatMessage.getSpeaker({token : i.document})),
             rollMode : data.rollMode,
-            uuid : data.uuid
+            uuid : data.uuid,
+            breakdownData : data.context.breakdown
         }, data.context);
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;

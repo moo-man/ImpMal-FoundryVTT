@@ -8,35 +8,13 @@ export class ImpMalChatMessage extends ChatMessage
     async _onCreate(data, options, userId)
     {
         await super._onCreate(data, options, userId);
-        this.test?.context?.handleOpposed(this);
+        this.system.test?.context?.handleOpposed(this);
     }
 
     async _onUpdate(data, options, userId)
     {
         await super._onUpdate(data, options, userId);
-        this.test?.context?.handleOpposed(this, options);
-    }
-
-    get test() 
-    {
-        let test = this.getFlag("impmal", "test");
-        if (test)
-        {
-            try 
-            {
-                test.context.messageId = this.id;
-                return new game.impmal.testClasses[test.class](test);
-            }
-            catch(e)
-            {
-                console.error("Could not construct Test object: " + e);
-                return undefined;
-            }
-        }
-        else 
-        {
-            return undefined;
-        }
+        this.system.test?.context?.handleOpposed(this, options);
     }
 
     static corruptionMessage(value=1, options={}, chatData={})
@@ -78,7 +56,7 @@ export class ImpMalChatMessage extends ChatMessage
         {
             let el = $(ev.currentTarget);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
-            let test = message.test;
+            let test = message.system.test;
             let targetId = el.parents(".target").attr("data-id");
             let apply = true;
             if (test.context.appliedDamage[targetId])
@@ -101,7 +79,7 @@ export class ImpMalChatMessage extends ChatMessage
         {
             let el = $(ev.currentTarget);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
-            let test = message.test;
+            let test = message.system.test;
             let effect = await fromUuid(ev.currentTarget.dataset.uuid);
             if (ev.currentTarget.dataset.type == "zone")
             {
@@ -141,7 +119,7 @@ export class ImpMalChatMessage extends ChatMessage
         {
             let el = $(ev.currentTarget);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
-            let test = message.test;
+            let test = message.system.test;
             let uuid = ev.currentTarget.dataset.uuid;
             let actors = [];
             if (game.user.character)
@@ -209,7 +187,7 @@ export class ImpMalChatMessage extends ChatMessage
         {
             let el = $(ev.target);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
-            let test = message.test;
+            let test = message.system.test;
 
             ev.originalEvent.dataTransfer.setData("text/plain", JSON.stringify({type : "Item", uuid : test.context.uuid}));
         });
@@ -238,13 +216,13 @@ export class ImpMalChatMessage extends ChatMessage
         let hasTest = li =>
         {
             let message = game.messages.get(li.attr("data-message-id"));
-            return message.test;
+            return message.type == "test";
         };
 
         let hasPendingOpposedTests = li => 
         {
             let message = game.messages.get(li.attr("data-message-id"));
-            return hasTest(li) && message.test.context.targets.some(t => !t.test && !t.unopposed); // If no response test, and not unopposed = pending opposed test
+            return hasTest(li) && message.system.test.context.targets.some(t => !t.test && !t.unopposed); // If no response test, and not unopposed = pending opposed test
         };
 
         let canEdit = li =>
@@ -260,7 +238,7 @@ export class ImpMalChatMessage extends ChatMessage
                 callback: li =>
                 {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.test;
+                    let test = message.system.test;
                     test.context.fillUnopposed();
                     test.roll();
                 }
@@ -272,7 +250,7 @@ export class ImpMalChatMessage extends ChatMessage
                 callback: li =>
                 {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    new EditTestForm(message.test).render(true);
+                    new EditTestForm(message.system.test).render(true);
                 }
             },
             {
@@ -282,7 +260,7 @@ export class ImpMalChatMessage extends ChatMessage
                 callback: li =>
                 {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    message.test.reroll();
+                    message.system.test.reroll();
                 }
             },
             {
@@ -292,7 +270,7 @@ export class ImpMalChatMessage extends ChatMessage
                 callback: li =>
                 {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    message.test.reroll(true);
+                    message.system.test.reroll(true);
                 }
             },
             {
@@ -302,7 +280,7 @@ export class ImpMalChatMessage extends ChatMessage
                 callback: li =>
                 {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    message.test.addSL(1, true);
+                    message.system.test.addSL(1, true);
                 }
             },
             {
@@ -312,7 +290,7 @@ export class ImpMalChatMessage extends ChatMessage
                 callback: li =>
                 {
                     let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.test;
+                    let test = message.system.test;
 
                     let targetedSpeakers = Array.from(game.user.targets).map(i => ChatMessage.getSpeaker({token : i.document}));
 

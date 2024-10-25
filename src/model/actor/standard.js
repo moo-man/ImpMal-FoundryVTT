@@ -1,4 +1,3 @@
-import TokenHelpers from "../../system/token-helpers";
 import { BaseActorModel } from "./base";
 import { CharacteristicsModel } from "./components/characteristics";
 import { StandardCombatModel } from "./components/combat";

@@ -2,7 +2,7 @@ import { OpposedTestResult } from "../opposed-result";
 import { BaseTestEvaluator } from "./base-evaluator";
 import { TestContext } from "./test-context";
 
-export class BaseTest 
+export class BaseTest extends WarhammerTestBase
 {
 
     static contextClass = TestContext;
@@ -14,11 +14,12 @@ export class BaseTest
 
     constructor({data, context, result=null})
     {
-        this.data = mergeObject(data, this._defaultData(), {overwrite : false, recursive : true});
+        super();
 
+        this.data = mergeObject(data, this._defaultData(), {overwrite : false, recursive : true});
         this.context = new this.constructor.contextClass(context);
+        this.context.breakdown = this._formatBreakdown(this.context.breakdownData);
         this.data.target = this.computeTarget();
-        this.context.breakdown = this._formatBreakdown(this.context.breakdown);
         if (!result)
         {
             this.result = new this.constructor.evaluatorClass(data);
@@ -151,9 +152,9 @@ export class BaseTest
 
         opposed.actor.applyDamage(opposed.result.damage, {ignoreAP : this.item?.system?.damage?.ignoreAP, location: this.result.hitLocation, opposed}).then(data => 
         {
-            if (data.woundsGained > 0 && this.item?.damageEffects.length)
+            if (data.woundsGained > 0 && this.damageEffects.length)
             {
-                opposed.actor.applyEffect({effectUuids : this.item?.damageEffects.map(i => i.uuid), messageId : this.message.id});
+                opposed.actor.applyEffect({effectUuids : this.damageEffects.map(i => i.uuid), messageId : this.message.id});
             }
             this.context.setApplied(targetId, data);
             this.roll();
@@ -190,22 +191,16 @@ export class BaseTest
 
     save() 
     {
-        return this.message?.update({
-            flags : this._saveData()
-        });
+        return this.message?.update({system : this._saveData()});
     }
 
     _saveData()
     {
         return {
-            impmal : {
-                test : {
-                    data : this.data,
-                    context : this.context,
-                    result : this.result,
-                    class : this.constructor.name
-                }
-            }
+            data : this.data,
+            context : this.context,
+            result : this.result,
+            class : this.constructor.name
         };
     }
 
@@ -227,10 +222,10 @@ export class BaseTest
             title : this.context.title,
             speaker : this.context.speaker,
             flavor: this.context.title,
-            type : this.constructor.chatType,     
+            type : "test",     
             rollMode : this.context.rollMode,                                         // Trigger DSN
             rolls : this.constructor.chatType == CONST.CHAT_MESSAGE_TYPES.ROLL ? ([this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject]) : [], 
-            flags : this._saveData()
+            system : this._saveData()
         });
     }
 
@@ -248,15 +243,6 @@ export class BaseTest
         return text;
     }
 
-    get targetEffects() 
-    {
-        return this.item.targetEffects;
-    }
-
-    get zoneEffects() 
-    {
-        return this.item.zoneEffects;
-    }
     get actor() 
     {
         return this.context.actor;
@@ -287,7 +273,7 @@ export class BaseTest
     get defending() 
     {
         let attackMessage = this.context.findAttackingMessage();
-        let attackingTest = attackMessage?.test;
+        let attackingTest = attackMessage?.system.test;
         if (attackingTest)
         {
 

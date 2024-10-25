@@ -1,6 +1,5 @@
 import ArmourConfig from "../../apps/armour-config";
 import ChatHelpers from "../../system/chat-helpers";
-import TokenHelpers from "../../system/token-helpers";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
 export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorSheet)
@@ -372,21 +371,21 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
 
     _onHoverInAttacker() 
     {
-        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.test;
+        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.system.test;
         ChatHelpers.highlightMessage(test.context.messageId);
         TokenHelpers.highlightToken(test.context.speaker.token);
     }
 
     _onHoverOutAttacker() 
     {
-        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.test;
+        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.system.test;
         ChatHelpers.unhighlightMessage(test.context.messageId);
         TokenHelpers.unhighlightToken(test.context.speaker.token);
     }
 
     _onClickAttacker() 
     {
-        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.test;
+        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.system.test;
         ChatHelpers.scrollToMessage(test.context.messageId);
     }
 

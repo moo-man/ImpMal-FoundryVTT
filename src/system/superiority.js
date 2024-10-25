@@ -1,5 +1,4 @@
 import ImpMalActorSheet from "../sheet/actors/actor-sheet";
-import TokenHelpers from "./token-helpers";
 
 export default class SuperiorityManager
 {
@@ -15,7 +14,7 @@ export default class SuperiorityManager
         for(let a of game.actors.filter(i => i.type == "character"))
         {
             let old = a.system.combat.superiority || 0;
-            TokenHelpers.displayScrollingNumber((this.value - old) > 0 ? `+${this.value - old}` : `${this.value - old}`, a, {color: "#065c63"} );
+            TokenHelpers.displayScrollingText((this.value - old) > 0 ? `+${this.value - old}` : `${this.value - old}`, a, {fill: "#065c63"} );
             a.prepareData();
         }
 

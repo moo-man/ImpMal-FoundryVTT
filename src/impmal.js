@@ -64,6 +64,7 @@ import loadScripts from "../loadScripts.js";
 import tokenHelpers from "./system/token-helpers.js";
 import { ImpMalActiveEffectModel } from "./model/effect/effect.js";
 import Migration from "./system/migration.js";
+import { ImpMalMessageModel } from "./model/message.js";
 
 Hooks.once("init", () => 
 {
@@ -125,7 +126,7 @@ Hooks.once("init", () =>
     CONFIG.Item.dataModels["trait"] = TraitModel;
 
     CONFIG.ActiveEffect.dataModels["base"] = ImpMalActiveEffectModel
-    CONFIG.ChatMessage.dataModels["test"] = WarhammerTestMessageModel;
+    CONFIG.ChatMessage.dataModels["test"] = ImpMalMessageModel;
 
     game.impmal = {
         config : IMPMAL,

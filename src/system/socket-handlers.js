@@ -5,7 +5,7 @@ export  default socketHandlers = {
     {
         if (game.user.isPrimaryGM)
         {
-            return game.messages.get(id)?.test?.context.addTargetFlags();
+            return game.messages.get(id)?.system.test?.context.addTargetFlags();
         }
     },
 
@@ -15,7 +15,7 @@ export  default socketHandlers = {
         {
             ids.forEach(id => 
             {
-                return game.messages.get(id)?.test?.evaluate(true);
+                return game.messages.get(id)?.system.test?.evaluate(true);
             });
         }
     },

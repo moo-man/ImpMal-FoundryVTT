@@ -101,11 +101,11 @@ function _findOpposedMessageId(ev)
     let messageId = el.parents(".message").attr("data-message-id");
 
     let opposed = el.parents("[data-id]");
-    let side = opposed.hasClass("target") ? "defending" : "attacking";
+    let side = opposed.hasClass("targeter") ? "defending" : "attacking";
     let tokenId = opposed.attr("data-id");
-    let test = game.messages.get(messageId)?.test;
+    let test = game.messages.get(messageId)?.system.test;
     if (test)
     {
-        return side == "defending" ? test.context.responses[tokenId] : test.context.defendingAgainst;
+        return side == "attacking" ? test.context.responses[tokenId] : test.context.defendingAgainst;
     }
 }

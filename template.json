@@ -771,5 +771,11 @@
         "label" : ""
       }
     }
+  },
+  "ChatMessage" : {
+    "types" : [
+      "base",
+      "test"
+    ]
   }
 }

@@ -422,7 +422,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
         else
         {
-            return this._findAttackingMessage()?.test;
+            return this._findAttackingMessage()?.system.test;
         }
     }
 
