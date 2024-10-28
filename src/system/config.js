@@ -382,6 +382,32 @@ const IMPMAL = {
         major : "IMPMAL.Major"
     },
 
+    coverTypes : {
+        "" : "",
+        lightCover : "IMPMAL.LightCover",
+        mediumCover : "IMPMAL.MediumCover",
+        heavyCover : "IMPMAL.HeavyCover"
+    },
+
+    obscuredTypes : {
+        "" : "",
+        lightlyObscured : "IMPMAL.LightlyObscured",
+        heavilyObscured : "IMPMAL.HeavilyObscured"
+    },
+
+    hazardTypes : {
+        "" : "",
+        minorHazard:  "IMPMAL.MinorHazard",
+        majorHazard:  "IMPMAL.MajorHazard",
+        deadlyHazard:  "IMPMAL.DeadlyHazard"
+    },
+
+    lightTypes : {
+        "" : "",
+        poorlyLit : "IMPMAL.PoorlyLit",
+        dark : "IMPMAL.Dark"
+    },
+
     age: {},
     factions: {},
 
@@ -402,24 +428,7 @@ const IMPMAL = {
         dead: false
     },
 
-    effectApplications : {
-        document : "IMPMAL.EffectApplicationDocument",
-        damage : "IMPMAL.EffectApplicationDamage",
-        target : "IMPMAL.EffectApplicationTarget",
-        zone : "IMPMAL.EffectApplicationZone",
-        other : "IMPMAL.EffectApplicationOther"
-    },
-
-    effectApplicationOptions : {
-        documentType : "Actor or Item or Character (patron only)",
-        test : "define test or link to item's test",
-        filters : "regex or script",
-        enableCondition : "",
-        prompt : false,
-        consume : false
-    },
-
-    
+  
     scriptTriggers : {
         manual : "IMPMAL.TriggerManual",
         immediate : "IMPMAL.TriggerImmediate",
@@ -1667,13 +1676,6 @@ const IMPMAL = {
     
     rollClasses : {},
     
-    bugReporterConfig : {
-        endpoint  : "https://aa5qja71ih.execute-api.us-east-2.amazonaws.com/Prod/soulbound",
-        githubURL : "https://api.github.com/repos/moo-man/ImpMal-FoundryVTT/",
-        successMessage : "Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: @URL",
-        troubleshootingURL : "https://moo-man.github.io/ImpMal-FoundryVTT/pages/troubleshooting.html"
-    },
-    
     premiumModules : {
         "impmal" : "Imperium Maledictum System",
         "impmal-core" : "Core Rulebook",
@@ -1803,6 +1805,23 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             else 
             {
                 return `Error - Table ${match[0]} not Found`;
+            }
+        }
+    },
+    {
+        pattern : /@ActorHTML\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : async (match) => 
+        {
+            let [uuid, ...options] = match[1].split(",")
+            let actor = await fromUuid(uuid);
+            let label = match[2];
+            if (actor)
+            {
+                return $(await ImpMalUtility.actorToHTML(actor, label, options))[0];
+            }
+            else 
+            {
+                return `Error - Actor ${uuid} not Found`;
             }
         }
     },

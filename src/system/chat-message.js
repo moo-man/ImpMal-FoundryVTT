@@ -52,6 +52,10 @@ export class ImpMalChatMessage extends ChatMessage
 
         ImpMalTables.listeners(html);
 
+        
+        html.on("click", ".apply-target", WarhammerChatListeners.onApplyTargetEffect)
+        html.on("click", ".apply-zone", WarhammerChatListeners.onApplyZoneEffect)
+
         html.on("click", ".apply-damage", async ev => 
         {
             let el = $(ev.currentTarget);
@@ -73,46 +77,6 @@ export class ImpMalChatMessage extends ChatMessage
             {
                 test.applyDamageTo(targetId);
             }
-        });
-
-        html.on("click", ".apply-effect", async ev => 
-        {
-            let el = $(ev.currentTarget);
-            let message = game.messages.get(el.parents(".message").attr("data-message-id"));
-            let test = message.system.test;
-            let effect = await fromUuid(ev.currentTarget.dataset.uuid);
-            if (ev.currentTarget.dataset.type == "zone")
-            {
-                if (!(await effect.runPreApplyScript({test})))
-                {
-                    return;
-                }
-                ZoneHelpers.promptZoneEffect(ev.currentTarget.dataset.uuid, message.id);
-            }
-
-            else if (ev.currentTarget.dataset.type == "target")
-            {
-                // If user has active targets, use those, otherwise, use test's targets, if there aren't any, use test's own actor
-                let targetActors = game.user.targets.size > 0 
-                    ? Array.from(game.user.targets).map(i => i.actor) 
-                    : test.context.targets.map(i => i.actor);
-
-                if (!(await effect.runPreApplyScript({test, targets : targetActors})))
-                {
-                    return;
-                }
-                
-                if (targetActors.length == 0 || test.item?.system?.target?.slugify() == "self") // Self powers should only target self
-                {
-                    targetActors = [test.actor];
-                }
-
-                for(let actor of targetActors)
-                {
-                    actor.applyEffect({effectUuids: ev.currentTarget.dataset.uuid, messageId: message.id});                
-                }
-            }
-            
         });
 
         html.on("click", ".roll", ev => 

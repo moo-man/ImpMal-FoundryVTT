@@ -1,4 +1,6 @@
-import ZoneSettings from "./zone-settings";
+// import ZoneSettings from "./zone-settings";
+
+import ZoneConfig from "./zone-config";
 
 export default class ImpMalActiveEffectConfig extends WarhammerActiveEffectConfig {
 
@@ -16,7 +18,7 @@ export default class ImpMalActiveEffectConfig extends WarhammerActiveEffectConfi
         await super._render(...args);
 
         this.element.find(".zone-traits").click(ev => {
-            new ZoneSettings(this.object, {path : "system.transferData.zone.traits"}).render(true);
+            new ZoneConfig(this.document).render(true);
         })
     }
 }

@@ -1,5 +1,6 @@
 .tree-container {
     display: flex;
+    flex-wrap: wrap;
     .option {
         border : 1px solid var(--color-light-5);
         text-align: center;
@@ -31,6 +32,7 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
+        flex-wrap:wrap;
         label:last-child
         {
             display: none

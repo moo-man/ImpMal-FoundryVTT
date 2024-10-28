@@ -1,7 +1,6 @@
 import actor from "./hooks/actor";
 import chat from "./hooks/chat";
 import combat from "./hooks/combat";
-import drawing from "./hooks/drawing";
 import ready from "./hooks/ready";
 import settings from "./hooks/settings";
 import token from "./hooks/token";
@@ -19,7 +18,6 @@ export default function()
     combat();
     token();
     i18n();
-    drawing();
     setup();
     journal();
     sidebar();

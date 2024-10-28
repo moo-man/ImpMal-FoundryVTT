@@ -22,15 +22,22 @@ export class ImpMalActiveEffectModel extends WarhammerActiveEffectModel {
         let schema = super.defineSchema();
         schema.type = new fields.StringField({});
         schema.computed = new fields.BooleanField({initial: false})
-        schema.zone.fields.traits = new fields.SchemaField({
-            barrier : new fields.BooleanField(),
-            cover : new fields.StringField({initial : ""}),
-            hazard : new fields.StringField({initial : ""}),
-            difficult : new fields.BooleanField({initial : false}),
-            obscured : new fields.StringField({initial : ""}),
-            light : new fields.StringField({initial : ""}), 
-            warpTouched : new fields.BooleanField(), 
-        })
+        schema.zone.fields.traits = new fields.EmbeddedDataField(ImpMalZoneTraitsModel)
         return schema
     }
 }   
+
+export class ImpMalZoneTraitsModel extends foundry.abstract.DataModel {
+    static defineSchema()
+    {
+        let schema = {};
+        schema.barrier = new fields.BooleanField({label : "IMPMAL.Barrier"});
+        schema.cover = new fields.StringField({label : "IMPMAL.Cover", choices : game.impmal.config.coverTypes});
+        schema.hazard = new fields.StringField({label : "IMPMAL.Hazard", choices : game.impmal.config.hazardtypes});
+        schema.difficult = new fields.BooleanField({label : "IMPMAL.DifficultTerrain"});
+        schema.obscured = new fields.StringField({label : "IMPMAL.Obscured", choices : game.impmal.config.obscuredTypes});
+        schema.light = new fields.StringField({label : "IMPMAL.Light", choices : game.impmal.config.lightTypes});
+        schema.warpTouched = new fields.BooleanField({label : "IMPMAL.WarpTouched"});
+        return schema;
+    }
+}

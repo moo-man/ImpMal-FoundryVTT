@@ -1,13 +1,13 @@
 <div class="effect-buttons">
     {{#each targetEffects}}
-        <button type="button" class="apply-effect" data-uuid="{{this.uuid}}" data-type="target">
+        <button type="button" class="apply-target" data-uuid="{{this.uuid}}" data-type="target">
                 <i class="fa-solid fa-crosshairs"></i>
             <img src="{{this.img}}">
             {{this.name}}
         </button>
     {{/each}}
     {{#each zoneEffects}}
-        <button type="button" class="apply-effect" data-uuid="{{this.uuid}}" data-type="zone">
+        <button type="button" class="apply-zone" data-uuid="{{this.uuid}}" data-type="zone">
             <i class="fa-solid fa-game-board-simple"></i>
             <img src="{{this.img}}">
             {{this.name}}

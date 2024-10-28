@@ -65,6 +65,7 @@ import tokenHelpers from "./system/token-helpers.js";
 import { ImpMalActiveEffectModel } from "./model/effect/effect.js";
 import Migration from "./system/migration.js";
 import { ImpMalMessageModel } from "./model/message.js";
+import ZoneConfig from "./apps/zone-config.js";
 
 Hooks.once("init", () => 
 {
@@ -160,3 +161,4 @@ FoundryOverrides();
 registerHooks();
 loadScripts();
 tokenHelpers()
+ZoneConfig.addRegionControls();
