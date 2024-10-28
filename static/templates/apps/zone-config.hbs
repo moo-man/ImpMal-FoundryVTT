@@ -10,7 +10,6 @@
             <label>{{localize "IMPMAL.Cover"}}</label>
             <div class="form-fields">
                 <select name="{{basePath}}.cover">
-                    <option value=""></option>
                     {{selectOptions (config "coverTypes") selected=traits.cover}}
                 </select>
             </div>
@@ -27,7 +26,6 @@
             <label>{{localize "IMPMAL.Obscured"}}</label>
             <div class="form-fields">
                 <select name="{{basePath}}.obscured">
-                    <option value=""></option>
                     {{selectOptions (config "obscuredTypes") selected=traits.obscured}}
                 </select>
             </div>
@@ -37,7 +35,6 @@
             <label>{{localize "IMPMAL.Hazard"}}</label>
             <div class="form-fields">
                 <select name="{{basePath}}.hazard">
-                        <option value=""></option>
                         {{selectOptions (config "hazardTypes") selected=traits.hazard}}
                 </select>
             </div>
@@ -47,7 +44,6 @@
             <label>{{localize "IMPMAL.Light"}}</label>
             <div class="form-fields">
                 <select name="{{basePath}}.light">
-                        <option value=""></option>
                         {{selectOptions (config "lightTypes") selected=traits.light}}
                 </select>
             </div>

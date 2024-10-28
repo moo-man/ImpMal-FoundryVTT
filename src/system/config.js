@@ -263,7 +263,7 @@ const IMPMAL = {
         },
         difficult : {
             modifier : -10,
-            name : "IMPMAL.Difficult"
+            name : "IMPMAL.DifficultTerrain"
         },
         hard: {
             modifier : -20,
@@ -408,6 +408,53 @@ const IMPMAL = {
         dark : "IMPMAL.Dark"
     },
 
+    traitOrder : ["lightCover", "mediumCover", "heavyCover", "lightlyObscured", "heavilyObscured", "minorHazard", "majorHazard", "deadlyHazard", "poorlyLit", "dark"],
+
+    getZoneTraitEffects : (region, getGreatestTrait) => 
+    {
+        let effects = [];
+        let zoneEffects = game.impmal.config.zoneEffects;
+        let flags = region.flags.impmal || {};
+
+        let barrier = [flags.traits?.barrier].concat(flags.effects?.map(i => i.system.transferData.zone.traits.barrier)).some(i => i);
+        let cover = getGreatestTrait([flags.traits?.cover].concat(flags.effects?.map(i => i.system.transferData.zone.traits.cover)).filter(i => i));
+        let hazard = getGreatestTrait([flags.traits?.hazard].concat(flags.effects?.map(i => i.system.transferData.zone.traits.hazard)).filter(i => i));
+        let obscured = getGreatestTrait([flags.traits?.obscured].concat(flags.effects?.map(i => i.system.transferData.zone.traits.obscured)).filter(i => i));
+        let difficult = [flags.traits?.difficultTerrain].concat(flags.effects?.map(i => i.system.transferData.zone.traits.difficultTerrain)).some(i => i);
+        let light = getGreatestTrait([flags.traits?.light].concat(flags.effects?.map(i => i.system.transferData.zone.traits.light)).filter(i => i));
+        let warpTouched = [flags.traits?.warpTouched].concat(flags.effects?.map(i => i.system.transferData.zone.traits.warpTouched)).some(i => i);
+
+        if (barrier)
+        {
+            effects.push(zoneEffects.barrier);
+        }
+        if (cover)
+        {
+            effects.push(zoneEffects[cover]);
+        }
+        if (difficult)
+        {
+            effects.push(zoneEffects.difficultTerrain);
+        }
+        if (hazard)
+        {
+            effects.push(zoneEffects[hazard]);
+        }
+        if (obscured)
+        {
+            effects.push(zoneEffects[obscured])
+        }
+        if (light)
+        {
+            effects.push(zoneEffects[light])
+        }
+        if (warpTouched)
+        {
+            effects.push(zoneEffects.warpTouched);
+        }
+        return effects;
+    },
+
     age: {},
     factions: {},
 
@@ -526,34 +573,31 @@ const IMPMAL = {
             {
                 name: "IMPMAL.Aim",
                 statuses : ["aim"],
-                icon: "icons/svg/aura.svg",
-                flags: {
-                    impmal: {
+                img: "icons/svg/aura.svg",
+                system : {
                         scriptData: [
                             {
                                 label: "Range",
-                                string: `if (args.type == "weapon" && args.system.isRanged) args.system.rangeModifier.value+= 0.5; //gross workaround for double preparation bug`,
+                                script: `if (args.type == "weapon" && args.system.isRanged) args.system.rangeModifier.value+= 0.5; //gross workaround for double preparation bug`,
                                 trigger: "prePrepareOwnedItemDerivedData",
                             },
                             {
                                 label : "No Target Location Penalty",
-                                string : "args.disCount--;",
+                                script : "args.disCount--;",
                                 trigger : "dialog",
                                 options : {
-                                    dialog: {
                                         hideScript : "return !args.isAttack;",
                                         activateScript : "return args.fields.hitLocation != \"roll\""
-                                    }
                                 }
                             },
                             {
                                 label : "Tag",
-                                string : "args.context.tags[\"aimedShot\"] = \"Aimed Shot\";\nthis.effect.delete();",
+                                script : "args.context.tags[\"aimedShot\"] = \"Aimed Shot\";\nthis.effect.delete();",
                                 trigger : "rollWeaponTest"
                             }
                         ]
                     }
-                }
+                
             },
             test : {},
             execute : ``
@@ -563,40 +607,35 @@ const IMPMAL = {
             effect :  {
                 name: "IMPMAL.Charge",
                 statuses : ["charge"],
-                icon: "icons/svg/aura.svg",
-                flags: {
-                    impmal: {
+                img: "icons/svg/aura.svg",
+                system : {
                         scriptData: [
                             {
                                 label : "Advantage with Melee Attack",
-                                string : "args.advCount++;",
+                                script : "args.advCount++;",
                                 trigger : "dialog",
                                 options : {
-                                    dialog: {
                                         hideScript : "return this.effect.used || !args.isAttack || !args.weapon.system.isMelee;",
                                         activateScript : "return args.weapon.system.isMelee",
                                         submissionScript : "this.effect.used = true;"
-                                    }
                                 }
                             },
                             {
                                 label : "Disadvantage to defend yourself",
-                                string : "args.disCount++;",
+                                script : "args.disCount++;",
                                 trigger : "dialog",
                                 options : {
-                                    dialog: {
                                         hideScript : "return !this.actor.defendingAgainst;",
                                         activateScript : "return this.actor.defendingAgainst && (args.weapon || args.data.skill == 'reflexes')",
-                                    }
                                 }
                             },
                             {
                                 label : "Remove",
-                                string : "this.effect.delete();",
+                                script : "this.effect.delete();",
                                 trigger : "startTurn"
                             }
                         ]
-                    }
+                    
                 }
             },
             test : {},
@@ -606,31 +645,28 @@ const IMPMAL = {
             label : "IMPMAL.Defend",
             effect : {
                 label: "IMPMAL.Defended",
-                icon: "icons/svg/aura.svg",
+                img: "icons/svg/aura.svg",
                 statuses : ["defended"],
-                flags: {
-                    impmal: {
+                system : {
                         scriptData: [
                             {
                                 label : "Defended",
-                                string: "ui.notifications.warn(`<strong>Defended</strong>: Must target ${this.effect.sourceName}`, {permanent: true});//setTimeout(dlg => dlg.close(), 250, args);",
+                                script: "ui.notifications.warn(`<strong>Defended</strong>: Must target ${this.effect.sourceName}`, {permanent: true});//setTimeout(dlg => dlg.close(), 250, args);",
                                 trigger: "dialog",
                                 options: {
-                                    dialog: {
                                         hideScript: `return !args.isAttack`,
                                         activateScript: `return args.isAttack`,
                                         targeter : true
                                     },
-                                }
                             },
                             {
                                 label : "Remove",
-                                string: "if (args.combatant.actor.uuid == this.effect.origin) this.effect.delete();", // Delete at the start of the defender's turn
+                                script: "if (args.combatant.actor.uuid == this.effect.origin) this.effect.delete();", // Delete at the start of the defender's turn
                                 trigger: "updateCombat",
                             }
                         ]
                     },
-                }
+                
             },
             test : {},
             execute : function(actor)
@@ -652,29 +688,26 @@ const IMPMAL = {
             effect :  {
                 name: "IMPMAL.Dodge",
                 statuses : ["dodge"],
-                icon: "icons/svg/aura.svg",
-                flags: {
-                    impmal: {
+                img: "icons/svg/aura.svg",
+                system : {
                         scriptData: [
                             {
                                 label : "Advantage to defend yourself",
-                                string : "args.advCount++;",
+                                script : "args.advCount++;",
                                 trigger : "dialog",
                                 options : {
-                                    dialog: {
                                         hideScript : "return !this.actor.defendingAgainst || this.effect.used;",
                                         activateScript : "return this.actor.defendingAgainst && (args.weapon || args.data.skill == 'reflexes')",
                                         submissionScript : "this.effect.used = true;"
-                                    }
                                 }
                             },
                             {
                                 label : "Remove",
-                                string : "this.effect.delete();",
+                                script : "this.effect.delete();",
                                 trigger : "startTurn"
                             }
                         ]
-                    }
+                    
                 }
             },
             test : {},
@@ -690,26 +723,22 @@ const IMPMAL = {
             label : "IMPMAL.Help",
             effect :  {
                 label: "Helped",
-                icon: "icons/svg/aura.svg",
+                img: "icons/svg/aura.svg",
                 statuses : ["helped"],
-                flags: {
-                    impmal: {
+                system : {
                         scriptData: [
                             {
                                 label : "Advantage on next test",
-                                string: "args.advCount++;",
+                                script: "args.advCount++;",
                                 trigger: "dialog",
                                 options: {
-                                    dialog: {
                                         hideScript: ``,
                                         activateScript: `return true`,
                                         submissionScript : `this.effect.delete();`
-                                    }
                                 }
                             }
                         ]
-                    },
-                }
+                    }
             },
             test : {},
             execute : function(actor)
@@ -769,17 +798,16 @@ const IMPMAL = {
 
     conditions : [
         {
-            icon: "systems/impmal/assets/icons/conditions/ablaze-minor.svg",
+            img: "systems/impmal/assets/icons/conditions/ablaze-minor.svg",
             id: "ablaze",
             statuses : ["ablaze"],
             name: "IMPMAL.ConditionAblazeMinor",
-            flags : {
-                impmal : {
+            system : {
                     type : "minor",
                     scriptData: [
                         {
                             label: "Damage",
-                            string: `
+                            script: `
                             let roll = new Roll("1d5").roll().then(async roll => {
                                 this.actor.applyDamage(roll.total, {ignoreAP : true}).then(data => this.script.scriptMessage("Took " + data.woundsGained + " Damage from Ablaze"));
                             })
@@ -787,23 +815,21 @@ const IMPMAL = {
                             trigger: "startTurn",
                         }
                     ]
-                }
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/ablaze-major.svg",
+            img: "systems/impmal/assets/icons/conditions/ablaze-major.svg",
             id: "ablaze",
             statuses : ["ablaze"],
             name: "IMPMAL.ConditionAblazeMajor",
-            flags : {
-                impmal : {
+            system : {
                     type : "major",
                     impmal : {
                         type : "minor",
                         scriptData: [
                             {
                                 label: "Damage",
-                                string: `
+                                script: `
                                 let roll = new Roll("1d10").roll().then(async roll => {
                                     this.actor.applyDamage(roll.total, {ignoreAP : true}).then(data => this.script.scriptMessage("Took " + data.woundsGained + " Damage"));
                                 })
@@ -813,170 +839,152 @@ const IMPMAL = {
                         ]
                     }
                 }
-            }
+            
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/bleeding-minor.svg",
+            img: "systems/impmal/assets/icons/conditions/bleeding-minor.svg",
             id: "bleeding",
             statuses : ["bleeding"],
             name: "IMPMAL.ConditionBleedingMinor",
-            flags : {
-                impmal : {
+            system : {
                     type : "minor",
                     scriptData: [
                         {
                             label: "Damage",
-                            string: `this.actor.applyDamage(1, {ignoreAP : true}).then(data => this.script.scriptMessage("Took " + data.woundsGained + " Damage"));`,
+                            script: `this.actor.applyDamage(1, {ignoreAP : true}).then(data => this.script.scriptMessage("Took " + data.woundsGained + " Damage"));`,
                             trigger: "endTurn",
                         }
                     ]
                 }
-            }
+            
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/bleeding-major.svg",
+            img: "systems/impmal/assets/icons/conditions/bleeding-major.svg",
             id: "bleeding",
             statuses : ["bleeding"],
             name: "IMPMAL.ConditionBleedingMajor",
-            flags : {
-                impmal : {
+            system : {
                     type : "major",
                     scriptData: [
                         {
                             label: "Damage",
-                            string: `this.actor.applyDamage(3, {ignoreAP : true}).then(data => this.script.scriptMessage("Took " + data.woundsGained + " Damage"));`,
+                            script: `this.actor.applyDamage(3, {ignoreAP : true}).then(data => this.script.scriptMessage("Took " + data.woundsGained + " Damage"));`,
                             trigger: "endTurn",
                         }
                     ]
                 }
-            }
+            
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/blinded.svg",
+            img: "systems/impmal/assets/icons/conditions/blinded.svg",
             id: "blinded",
             statuses : ["blinded"],
             name: "IMPMAL.ConditionBlinded",
-            flags : {
-                impmal : {
+            system : {
                     scriptData: [
                         {
                             label: "Tests that rely on sight only succeed on a roll of 01-05",
-                            string: "",
+                            script: "",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !(["awareness"].includes(args.data.skill) || args.weapon?.system?.isRanged)`,
                                     activateScript: `return args.skillItem?.name == "Sight" || args.weapon?.system?.isRanged`,
                                     submissionScript: `args.data.onlyAutomaticSuccess = true`,
-                                },
                             }
                         },
                         {
                             label: "Disadvantage on Melee and Reflexes (Dodge)",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !["melee", "reflexes"].includes(args.data.skill);`,
                                     activateScript: `return args.data.skill == "melee" || args.skillItem?.name == "Dodge"`
-                                },
                             }
                         },
                     ]
-                }
+                
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/deafened.svg",
+            img: "systems/impmal/assets/icons/conditions/deafened.svg",
             id: "deafened",
             statuses : ["deafened"],
             name: "IMPMAL.ConditionDeafened"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/fatigued-minor.svg",
+            img: "systems/impmal/assets/icons/conditions/fatigued-minor.svg",
             id: "fatigued",
             statuses : ["fatigued"],
             name: "IMPMAL.ConditionFatiguedMinor",
-            flags : {
-                impmal : {
+            system : {
                     type : "minor",
                     scriptData: [
                         {
                             label: "Disadvantage on all Tests",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: ``,
                                     activateScript: `return true`
-                                },
                             }
                         },
                     ]
-                }
+                
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/fatigued-major.svg",
+            img: "systems/impmal/assets/icons/conditions/fatigued-major.svg",
             id: "fatigued",
             statuses : ["fatigued"],
             name: "IMPMAL.ConditionFatiguedMajor",
-            flags : {
-                impmal : {
+            system : {
                     type : "major",
                     scriptData: [
                         {
                             label: "All Tests are Very Hard (-30)",
-                            string: "args.fields.difficulty = 'veryHard';",
+                            script: "args.fields.difficultTerrainy = 'veryHard';",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: ``,
                                     activateScript: `return true`
-                                },
                             }
                         },
                     ]
-                }
+                
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/frightened-minor.svg",
+            img: "systems/impmal/assets/icons/conditions/frightened-minor.svg",
             id: "frightened",
             statuses : ["frightened"],
             name: "IMPMAL.ConditionFrightenedMinor",
-            flags : {
-                impmal : {
+            system : {
                     type : "minor",
                     scriptData: [
                         {
                             label: "Disadvantage to confront the source of Fear",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: ``,
                                     activateScript: ``
-                                },
                             }
                         },
                         {
                             label: "Advantage on Awareness and Intuition",
-                            string: "args.advCount++;",
+                            script: "args.advCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !["awareness", "intuition"].includes(args.data.skill);`,
                                     activateScript: `return ["awareness", "intuition"].includes(args.data.skill);`
-                                },
                             }
                         }
                     ]
                 }
-            }
+            
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/frightened-major.svg",
+            img: "systems/impmal/assets/icons/conditions/frightened-major.svg",
             id: "frightened",
             statuses : ["frightened"],
             name: "IMPMAL.ConditionFrightenedMajor",
@@ -987,12 +995,11 @@ const IMPMAL = {
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/incapacitated.svg",
+            img: "systems/impmal/assets/icons/conditions/incapacitated.svg",
             id: "incapacitated",
             statuses : ["incapacitated"],
             name: "IMPMAL.ConditionIncapacitated",
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             "label": "Automatic Crits",
@@ -1003,180 +1010,158 @@ const IMPMAL = {
                         }
                     ]
                 }
-            }
+            
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/overburdened.svg",
+            img: "systems/impmal/assets/icons/conditions/overburdened.svg",
             id: "overburdened",
             statuses : ["overburdened"],
             name: "IMPMAL.ConditionOverburdened",
             changes : [{key: "system.combat.speed.land.modifier", value: "-1", mode: 2}],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Disadvantage on Agility Tests",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     "hideScript": `return args.data.characteristic != "ag";`,
                                     "activateScript": `return args.data.characteristic == "ag";`,
-                                },
                             }
                         }
                     ]
                 }
-            }
+            
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/poisoned-minor.svg",
+            img: "systems/impmal/assets/icons/conditions/poisoned-minor.svg",
             id: "poisoned",
             statuses : ["poisoned"],
             name: "IMPMAL.ConditionPoisonedMinor",
-            flags : {
-                impmal : {
+            system : {
                     type : "minor",
                     scriptData: [
                         {
                             label: "Disadvantage on Strength and Toughness Tests",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     "hideScript": `return !["str", "tgh"].includes(args.data.characteristic)`,
                                     "activateScript": `return ["str", "tgh"].includes(args.data.characteristic)`,
-                                },
                             }
                         },
                         {
                             label: "SL",
-                            string: "if (args.result.SL > 0) { args.result.SL = Math.min(args.result.SL, this.actor.system.characteristics.tgh.bonus); }",
+                            script: "if (args.result.SL > 0) { args.result.SL = Math.min(args.result.SL, this.actor.system.characteristics.tgh.bonus); }",
                             trigger: "rollTest",
                         }
                     ]
-                }
+                
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/poisoned-major.svg",
+            img: "systems/impmal/assets/icons/conditions/poisoned-major.svg",
             id: "poisoned",
             statuses : ["poisoned"],
             name: "IMPMAL.ConditionPoisonedMajor",
-            flags : {
-                impmal : {
+            system : {
                     type : "major",
                     scriptData: [
                         {
                             label: "Prone and Incapacitated",
-                            string: "await this.actor.addCondition('prone'); await this.actor.addCondition('incapacitated')",
+                            script: "await this.actor.addCondition('prone'); await this.actor.addCondition('incapacitated')",
                             trigger: "immediate",
                             options : {
-                                immediate : {
                                     deleteEffect : false
-                                }
                             }
                         }
                     ]
-                }
+                
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/prone.svg",
+            img: "systems/impmal/assets/icons/conditions/prone.svg",
             id: "prone",
             statuses : ["prone"],
             name: "IMPMAL.ConditionProne",
-            flags : {
-                impmal : {
+            system : {
                     scriptData: [
                         {
                             label: "Disadvantage on Melee Tests",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !["melee"].includes(args.data.skill);`,
                                     activateScript: `return args.data.skill == "melee"`
-                                },
                             }
                         },
                         {
                             label: "Advantage from within Immediate Range",
-                            string: "args.advCount++;",
+                            script: "args.advCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !args.weapon && !args.trait`,
                                     targeter : true
-                                },
                             }
                         },
                         {
                             label: "Disadvantage from outside immediate Range",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !args.weapon && !args.trait`,
                                     targeter : true
-                                },
                             }
                         }
                     ]
-                }
+                
 
             }
         },
 
         {
-            icon: "systems/impmal/assets/icons/conditions/restrained-minor.svg",
+            img: "systems/impmal/assets/icons/conditions/restrained-minor.svg",
             id: "restrained",
             statuses : ["restrained"],
             name: "IMPMAL.ConditionRestrainedMinor",
-            flags : {
-                impmal : {
+            system : {
                     type : "minor",
                     scriptData: [
                         {
                             label: "Disadvantage on Movement tests",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: ``,
                                     activateScript: `return ["athletics", "dexterity", "melee", "reflexes", "ranged"].includes(args.data.skill);`
-                                },
                             }
                         }
                     ]
                 }
-            }
+            
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/restrained-major.svg",
+            img: "systems/impmal/assets/icons/conditions/restrained-major.svg",
             id: "restrained",
             statuses : ["restrained"],
             name: "IMPMAL.ConditionRestrainedMajor",
-            flags : {
-                impmal : {
+            system : {
                     type : "major",
                     scriptData: [
                         {
                             label: "Incapacitated",
-                            string: "await this.actor.addCondition('incapacitated');",
+                            script: "await this.actor.addCondition('incapacitated');",
                             trigger: "immediate",
                             options : {
-                                immediate : {
                                     deleteEffect : false
-                                }
                             }
                         }
                     ]
-                }
+                
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/stunned-minor.svg",
+            img: "systems/impmal/assets/icons/conditions/stunned-minor.svg",
             id: "stunned",
             statuses : ["stunned"],
             name: "IMPMAL.ConditionStunnedMinor",
@@ -1187,54 +1172,48 @@ const IMPMAL = {
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/stunned-major.svg",
+            img: "systems/impmal/assets/icons/conditions/stunned-major.svg",
             id: "stunned",
             statuses : ["stunned"],
             name: "IMPMAL.ConditionStunnedMajor",
-            flags : {
-                impmal : {
+            system : {
                     type : "major",
                     scriptData: [
                         {
                             label: "Disadvantage on all Tests",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: ``,
                                     activateScript: `return true;`
-                                },
                             }
                         }
                     ]
                 }
-            }
+            
         },
 
         {
-            icon: "systems/impmal/assets/icons/conditions/unconscious.svg",
+            img: "systems/impmal/assets/icons/conditions/unconscious.svg",
             id: "unconscious",
             statuses : ["unconscious"],
             name: "IMPMAL.ConditionUnconscious",
-            flags : {
-                impmal : {
+            system : {
                     scriptData : [
                         {
                             label: "Prone and Incapacitated",
-                            string: "await this.actor.addCondition('prone'); await this.actor.addCondition('incapacitated')",
+                            script: "await this.actor.addCondition('prone'); await this.actor.addCondition('incapacitated')",
                             trigger: "immediate",
                             options : {
-                                immediate : {
                                     deleteEffect : false
-                                }
                             }
                         }
                     ]
-                }
+                
             }
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/dead.svg",
+            img: "systems/impmal/assets/icons/conditions/dead.svg",
             id: "dead",
             statuses : ["dead"],
             name: "IMPMAL.Dead"
@@ -1243,19 +1222,18 @@ const IMPMAL = {
 
     zoneEffects : {
         barrier : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.Barrier",
             id : "barrier",
             statuses : ["barrier"]
         },
         lightCover : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.LightCover",
             id : "lightCover",
             statuses : ["lightCover"],
-            flags: {
-                impmal: {
-                    applicationData : {
+            system : {
+                    transferData : {
                         enableConditionScript : `return this.actor.system.combat.action == "cover"`
                     },
                     scriptData: [
@@ -1270,21 +1248,20 @@ const IMPMAL = {
                         },
                         {
                             "label": "Start Turn",
-                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            "string": `delete this.effect.conditionScript; this.effect.update({"system.transferData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
                             "trigger": "startTurn"
                         }
                     ]
                 }
-            }
+            
         },
         mediumCover : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.MediumCover",
             id : "mediumCover",
             statuses : ["mediumCover"],
-            flags: {
-                impmal: {
-                    applicationData : {
+            system : {
+                    transferData : {
                         enableConditionScript : `return this.actor.system.combat.action == "cover"`
                     },
                     scriptData: [
@@ -1299,21 +1276,20 @@ const IMPMAL = {
                         },
                         {
                             "label": "Start Turn",
-                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            "string": `delete this.effect.conditionScript; this.effect.update({"system.transferData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
                             "trigger": "startTurn"
                         }
                     ]
                 }
-            }
+            
         },
         heavyCover : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.HeavyCover",
             id : "heavyCover",
             statuses : ["heavyCover"],
-            flags: {
-                impmal: {
-                    applicationData : {
+            system : {
+                    transferData : {
                         enableConditionScript : `return this.actor.system.combat.action == "cover"`
                     },
                     scriptData: [
@@ -1328,302 +1304,263 @@ const IMPMAL = {
                         },
                         {
                             "label": "Start Turn",
-                            "string": `delete this.effect.conditionScript; this.effect.update({"flags.impmal.applicationData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            "string": `delete this.effect.conditionScript; this.effect.update({"system.transferData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
                             "trigger": "startTurn"
                         }
                     ]
                 }
-            }
+            
         },
         difficultTerrain : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.DifficultTerrain",
             id : "difficultTerrain",
             statuses : ["difficultTerrain"],
             changes : [{key: "system.combat.speed.land.modifier", value: "-1", mode: 2}],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Disadvantage on Athletics (Running) and Reflexes (Dodge)",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     "hideScript": `return !["reflexes", "athletics"].includes(args.data.skill);`,
                                     "activateScript": `return args.skillItem?.name == "Running" || args.skillItem?.name == "Dodge";`,
-                                },
                             }
                         }
                     ]
-                }
+                
             }
         },
         lightlyObscured : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.LightlyObscured",
             id : "lightlyObscured",
             statuses : ["lightlyObscured"],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Advantage on Stealth (Hide)",
-                            string: "args.advCount++;",
+                            script: "args.advCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !["stealth"].includes(args.data.skill);`,
                                     activateScript: `return args.skillItem?.name == "Hide"`
-                                },
                             }
                         },
                         {
                             label: "Disadvantage on Awareness (Sight) and Ranged Tests",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !(["awareness"].includes(args.data.skill) || args.weapon?.system?.isRanged)`,
                                     activateScript: `return args.skillItem?.name == "Sight" || args.weapon?.system?.isRanged`
-                                },
                             }
                         },
                         {
                             label: "Lightly Obscured",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !args.weapon?.system?.isRanged`,
                                     activateScript: `return args.weapon?.system?.isRanged`,
                                     targeter : true
-                                },
                             }
                         }
                     ]
                 }
-            }
+            
         },
         heavilyObscured : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.HeavilyObscured",
             id : "heavilyObscured",
             statuses : ["heavilyObscured"],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Heavily Obscured",
-                            string: `ui.notifications.notify("Cannot target Heavily Obscured target with Ranged Attacks");//setTimeout(dlg => dlg.close(), 250, args);`,
+                            script: `ui.notifications.notify("Cannot target Heavily Obscured target with Ranged Attacks");//setTimeout(dlg => dlg.close(), 250, args);`,
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !args.weapon?.system?.isRanged`,
                                     activateScript: `return args.weapon?.system?.isRanged`,
                                     targeter : true
-                                },
                             }
                         },
                         {
                             label: "Blinded",
-                            string: `await this.actor.addCondition("blinded").then(condition => if (condition) condition?.setFlag("impmal", "fromZone", this.effect.getFlag("impmal", "fromZone")))`,
+                            script: `await this.actor.addCondition("blinded").then(condition => if (condition) condition?.setFlag("impmal", "fromZone", this.effect.getFlag("impmal", "fromZone")))`,
                             trigger: "immediate",
                             options : {
-                                immediate : {
                                     deleteEffect : false
-                                }
                             }
                         },
                     ]
-                }
+                
             }
         },
         minorHazard : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.MinorHazard",
             id : "minorHazard",
             statuses : ["minorHazard"],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Hazard Damage",
-                            string: `this.actor.applyDamage(5).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(5).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "immediate",
                             options : {
-                                immediate : {
                                     deleteEffect : false
-                                }
                             }
                         },
                         {
                             label: "Hazard Damage",
-                            string: `this.actor.applyDamage(5).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(5).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "startTurn"
                         }
                     ]
-                }
+                
             }
         },
         majorHazard : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.MajorHazard",
             id : "majorHazard",
             statuses : ["majorHazard"],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Hazard Damage",
-                            string: `this.actor.applyDamage(10).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(10).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "immediate",
                             options : {
-                                immediate : {
                                     deleteEffect : false
-                                }
                             }
                         },
                         {
                             label: "Hazard Damage",
-                            string: `this.actor.applyDamage(10).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(10).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "startTurn"
                         }
                     ]
-                }
+                
             }
         },
         deadlyHazard : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.DeadlyHazard",
             id : "deadlyHazard",
             statuses : ["deadlyHazard"],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Hazard Damage",
-                            string: `this.actor.applyDamage(15).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(15).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "immediate",
                             options : {
-                                immediate : {
                                     deleteEffect : false
-                                }
                             }
                         },
                         {
                             label: "Hazard Damage",
-                            string: `this.actor.applyDamage(15).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(15).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "startTurn"
                         }
                     ]
-                }
+                
             }
         },
         poorlyLit : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.PoorlyLit",
             id : "poorlyLit",
             statuses : ["poorlyLit"],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Disadvantage on Awareness (Sight) in the Poorly Lit Zone",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !(["awareness"].includes(args.data.skill))`,
                                     activateScript: `return args.skillItem?.name == "Sight"`
-                                },
                             }
                         },
                         {
                             label: "Poorly Lit",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !args.weapon?.system?.isRanged`,
                                     activateScript: `return args.weapon?.system?.isRanged`,
                                     targeter : true
-                                },
                             }
                         }
                     ]
-                }
+                
             }
         },
         dark : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.Dark",
             id : "dark",
             statuses : ["dark"],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Advantage on Stealth (Hide)",
-                            string: "args.advCount++;",
+                            script: "args.advCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !["stealth"].includes(args.data.skill);`,
                                     activateScript: `return args.skillItem?.name == "Hide"`
-                                },
                             }
                         },
                         {
                             label: "Only succeeds on a roll of 01-05",
-                            string: "",
+                            script: "",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !(["awareness"].includes(args.data.skill) || args.weapon?.system?.isRanged)`,
                                     activateScript: `return args.skillItem?.name == "Sight" || args.weapon?.system?.isRanged`,
                                     submissionScript: `args.data.onlyAutomaticSuccess = true`,
                                     targeter : true
-                                },
                             }
                         },
                         {
                             label: "Disadvantage on Tests affected by the absence of light",
-                            string: "args.disCount++;",
+                            script: "args.disCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: ``,
                                     activateScript: `return ["melee", "reflexes", "dexterity", "tech"].includes(args.data.skill)`,
-                                },
                             }
                         }
                     ]
                 }
-            }
+            
         },
         warpTouched : {
-            icon: "icons/svg/aura.svg",
+            img: "icons/svg/aura.svg",
             name : "IMPMAL.WarpTouched",
             id : "warpTouched",
             statuses : ["warpTouched"],
-            flags : {
-                impmal: {
+            system : {
                     scriptData: [
                         {
                             label: "Advantage on Psychic Power Tests",
-                            string: "args.advCount++;",
+                            script: "args.advCount++;",
                             trigger: "dialog",
                             options: {
-                                dialog: {
                                     hideScript: `return !args.power`,
                                     activateScript: `return args.power`
-                                },
                             }
                         },
                         {
                             label: "Additional Warp Charge",
-                            string: `
+                            script: `
                             args.context.additionalWarp += args.result.SL;
                             args.context.tags.warpTouched = game.i18n.localize("IMPMAL.WarpTouched") + ": " + args.result.SL;
                             `,
@@ -1631,14 +1568,14 @@ const IMPMAL = {
                         },
                         {
                             label: "Minor Source of Corruption",
-                            string: `
+                            script: `
                                 this.actor.setupSkillTest({key : "fortitude"}, {title : {append : " - Warp Touched"}, fields: {difficulty : "routine"}, context : {corruption : 1}})
                             `,
                             trigger: "endTurn",
                         }
                     ]
                 }
-            }
+            
         },
     },
 
@@ -1689,98 +1626,98 @@ const IMPMAL = {
 const IM_CONFIG = {
     statusEffects : [
         {
-            icon: "systems/impmal/assets/icons/conditions/ablaze.svg",
+            img: "systems/impmal/assets/icons/conditions/ablaze.svg",
             id: "ablaze",
             statuses : ["ablaze"],
             name: "IMPMAL.ConditionAblaze",
             title: "IMPMAL.ConditionAblaze"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/bleeding.svg",
+            img: "systems/impmal/assets/icons/conditions/bleeding.svg",
             id: "bleeding",
             statuses : ["bleeding"],
             name: "IMPMAL.ConditionBleeding",
             title: "IMPMAL.ConditionBleeding"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/blinded.svg",
+            img: "systems/impmal/assets/icons/conditions/blinded.svg",
             id: "blinded",
             statuses : ["blinded"],
             name: "IMPMAL.ConditionBlinded",
             title: "IMPMAL.ConditionBlinded"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/deafened.svg",
+            img: "systems/impmal/assets/icons/conditions/deafened.svg",
             id: "deafened",
             statuses : ["deafened"],
             name: "IMPMAL.ConditionDeafened",
             title: "IMPMAL.ConditionDeafened"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/fatigued.svg",
+            img: "systems/impmal/assets/icons/conditions/fatigued.svg",
             id: "fatigued",
             statuses : ["fatigued"],
             name: "IMPMAL.ConditionFatigued",
             title: "IMPMAL.ConditionFatigued"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/frightened.svg",
+            img: "systems/impmal/assets/icons/conditions/frightened.svg",
             id: "frightened",
             statuses : ["frightened"],
             name: "IMPMAL.ConditionFrightened",
             title: "IMPMAL.ConditionFrightened"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/incapacitated.svg",
+            img: "systems/impmal/assets/icons/conditions/incapacitated.svg",
             id: "incapacitated",
             statuses : ["incapacitated"],
             name: "IMPMAL.ConditionIncapacitated",
             title: "IMPMAL.ConditionIncapacitated"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/overburdened.svg",
+            img: "systems/impmal/assets/icons/conditions/overburdened.svg",
             id: "overburdened",
             statuses : ["overburdened"],
             name: "IMPMAL.ConditionOverburdened",
             title: "IMPMAL.ConditionOverburdened"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/poisoned.svg",
+            img: "systems/impmal/assets/icons/conditions/poisoned.svg",
             id: "poisoned",
             statuses : ["poisoned"],
             name: "IMPMAL.ConditionPoisoned",
             title: "IMPMAL.ConditionPoisoned"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/prone.svg",
+            img: "systems/impmal/assets/icons/conditions/prone.svg",
             id: "prone",
             statuses : ["prone"],
             name: "IMPMAL.ConditionProne",
             title: "IMPMAL.ConditionProne"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/restrained.svg",
+            img: "systems/impmal/assets/icons/conditions/restrained.svg",
             id: "restrained",
             statuses : ["restrained"],
             name: "IMPMAL.ConditionRestrained",
             title: "IMPMAL.ConditionRestrained"
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/stunned.svg",
+            img: "systems/impmal/assets/icons/conditions/stunned.svg",
             id: "stunned",
             statuses : ["stunned"],
             name: "IMPMAL.ConditionStunned",
             title: "IMPMAL.ConditionStunned",
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/unconscious.svg",
+            img: "systems/impmal/assets/icons/conditions/unconscious.svg",
             id: "unconscious",
             statuses : ["unconscious"],
             name: "IMPMAL.ConditionUnconscious",
             title: "IMPMAL.ConditionUnconscious",
         },
         {
-            icon: "systems/impmal/assets/icons/conditions/dead.svg",
+            img: "systems/impmal/assets/icons/conditions/dead.svg",
             id: "dead",
             statuses : ["dead"],
             name: "IMPMAL.Dead",
@@ -1860,5 +1797,5 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     }
 ]);
 
-foundry.utils.mergeObject(IMPMAL, defaultWarhammerConfig)
+foundry.utils.mergeObject(IMPMAL, defaultWarhammerConfig, {overwrite: false})
 export {IMPMAL, IM_CONFIG};
