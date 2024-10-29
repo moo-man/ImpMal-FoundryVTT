@@ -179,6 +179,121 @@ export default class ImpMalUtility
     </table>`, {relativeTo : table, async: true});
     }
 
+    static async actorToHTML(actor, label, options=[]) 
+    {
+        let html = "";
+
+        if (options.table)
+        {
+            let armour = actor.system.combat.armour.value;
+            if (actor.system.combat.armour.formula)
+            {
+                armour = `${actor.system.combat.armour.formula} + ${armour}`;
+            }
+
+            let skills = [];
+            for (let skillKey in actor.system.skills)
+            {
+                let skill = actor.system.skills[skillKey];
+                // Only include skills in the main tab if they have advances
+                if (skill.advances > 0)
+                {
+                    skills.push(`${game.impmal.config.skills[skillKey]} ${skill.total}`);
+                }
+    
+                for(let skillItem of skill.specialisations)
+                {
+                    if (skillItem.system.advances > 0)
+                    {
+                        skills.push(`${skillItem.system.skillNameAndTotal}`);
+                    }
+                }
+            }
+
+            let physicalTypes = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical"));
+            let possessions = actor.items.filter(i => physicalTypes.includes(i.type));
+
+            let traits = actor.itemTypes.trait.filter(i => i.system.notes.player).map(i => {
+                return i.system.notes.player.replace("<p>", `<p><strong>${i.name}</strong>: `)
+            });
+        
+            return await TextEditor.enrichHTML(`<table border="1" style="${options.style || ""}" class="impmal-actor">
+            <thead>
+            <tr class="title">
+                <td colspan="9"><p class="name">@UUID[${actor.uuid}]{${label || actor.name}}</p><p class="subtitle">${game.impmal.config.sizes[actor.system.combat.size]} ${actor.system.species} (${actor.system.faction.name}), ${game.impmal.config.npcRoles[actor.system.role]}</p></td>
+            </tr>
+            </thead>
+            <tbody>
+                <tr class="characteristics">
+                    <th>${Object.keys(actor.system.characteristics).map(key => game.impmal.config.characteristicAbbrev[key]).join("</th><th>")}</th>
+                </tr>
+                <tr class="characteristics">
+                    <td>${Object.values(actor.system.characteristics).map(c => c.total).join("</td><td>")}</td>
+                </tr>
+                <tr class="npc-attributes">
+                    <td colspan="3">
+                        <p>${game.i18n.localize("IMPMAL.Armour")}</p>
+                        <p>${armour}</p>
+                    </td>
+                    <td colspan="3">
+                        <p>${game.i18n.localize("IMPMAL.Wounds")}</p>
+                        <p>${actor.system.combat.wounds.max}</p>
+                    </td>
+                    <td colspan="3">
+                        <p>${game.i18n.localize("IMPMAL.CriticalWounds")}</p>
+                        <p>${actor.system.combat.criticals.max}</p>
+                    </td>
+                </tr>
+                <tr class="npc-attributes">
+                    <td colspan="3">
+                        <p>${game.i18n.localize("IMPMAL.Initiative")}</p>
+                        <p>${actor.system.combat.initiative}</p>
+                    </td>
+                    <td colspan="3">
+                        <p>${game.i18n.localize("IMPMAL.Speed")}</p>
+                        <p>${game.impmal.config.speeds[actor.system.combat.speed.land.value]}</p>
+                    </td>
+                    <td colspan="3">
+                        <p>${game.i18n.localize("IMPMAL.Resolve")}</p>
+                        <p>${actor.system.combat.resolve}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="9"><strong>${game.i18n.localize("IMPMAL.Skills")}</strong>: ${skills.join(", ")}</td>
+                </tr>
+                <tr>
+                    <td colspan="9">
+                    <p class="item-header">${game.i18n.localize("IMPMAL.Traits")}</p>${traits.join("")}
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="9"><strong>${game.i18n.localize("IMPMAL.Possessions")}</strong>: ${possessions.map(i => `@UUID[${i.uuid}]`).join(", ")}</td>
+                </tr>   
+            </tbody>
+        </table>`, {relativeTo : actor, async: true});
+        }
+        else 
+        {
+            let image = actor.img;
+            if (options.token)
+            {
+                image = actor.prototypeToken.texture.src;
+            }
+            html += `<div class="journal-image centered" ><img src="${image}" width="200" height="200"></div>`
+            html += `<p style="text-align:center">@UUID[${actor.uuid}]{${label || actor.name}}</p>`
+            if (options.description)
+            {
+                if (game.user.isGM)
+                {
+                    html += actor.system.notes.gm || ""
+                }
+                html += actor.system.notes.player || ""
+            }
+        }   
+        return await TextEditor.enrichHTML(`<div>${html}</div>`, {relativeTo : actor, async: true});
+    }
+
     static listeners(html) 
     {
         html.find(".corruption-link").on("click", ev => 

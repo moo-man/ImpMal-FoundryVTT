@@ -3,6 +3,15 @@ import BackgroundItemSheet from "./item-background-sheet";
 
 export default class RoleItemSheet extends BackgroundItemSheet
 {
+
+    async getData()
+    {
+        let data = await super.getData();
+        await data.item.system.specialisations.awaitDocuments();
+        await data.item.system.talents.awaitDocuments();
+        return data;
+    }
+
     _onDropItemTalent(ev, item)
     {
         return this.item.update({"system.talents.list" : this.item.system.talents.add({id : item.id})});

@@ -226,7 +226,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
     _onPostItem(event) 
     {
         let itemId = this._getId(event);
-        if (itemId) { return this.object.items.get(itemId)?.postToChat(); }
+        if (itemId) { return this.object.items.get(itemId)?.postItem(); }
     }
 
     async _onEffectCreate(ev) 

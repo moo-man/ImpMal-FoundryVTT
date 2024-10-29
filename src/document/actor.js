@@ -74,6 +74,25 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         use.sendToChat();
     }
 
+    async setupTestFromItem(uuid, options={})
+    {
+        let item = await fromUuid(uuid);
+        if (!item)
+        {
+            item = this.items.get(uuid); // Maybe uuid is actually simple id
+        }
+        if (!item)
+        {
+            return ui.notifications.error("ID " + uuid + " not found");
+        }
+        let itemTestData = item.getTestData();
+
+        options.context = options.context || {};
+        options.context.resist = options.context.resist ? options.context.resist.concat(item.type) : [item.type];
+
+        return this.setupTestFromData(itemTestData, options);
+    }
+
 
     /**
      * Setup a test from common data structure

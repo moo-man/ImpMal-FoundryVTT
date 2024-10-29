@@ -5,13 +5,6 @@ export class ImpMalItem extends ImpMalDocumentMixin(WarhammerItem)
 
     async _preCreate(data, options, user)
     {
-        let allowed = await super._preCreate(data, options, user);
-
-        if (!allowed)
-        {
-            return allowed
-        }
-
         if (this.isOwned)
         {
             await this._handleFactionChoice(data, options);
@@ -61,7 +54,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(WarhammerItem)
                 
                 let factionOptions = Object.keys(game.impmal.config.factions).filter(faction => faction.match(regex)).map(i => { return {name : game.impmal.config.factions[i], id : i};});
                 
-                let choices = await ItemDialog.create(factionOptions, (factions[key] || 0), {text : "Select a Faction"});
+                let choices = await ItemDialog.create(factionOptions, (factions[key] || 0), {text : "Select Faction(s)", title : this.name});
 
                 factions[key] = choices.map(i => i.id);
             }

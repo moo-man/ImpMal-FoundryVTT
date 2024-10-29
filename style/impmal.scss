@@ -168,7 +168,12 @@
             }
         }
     }
+}
 
+.impmal.form.item-management {
+    .window-content {
+        overflow-y: auto;
+    }
 }
 
 blockquote.foundry-note {

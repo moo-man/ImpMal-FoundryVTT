@@ -1754,7 +1754,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             let label = match[2];
             if (actor)
             {
-                return $(await ImpMalUtility.actorToHTML(actor, label, options))[0];
+                return $(await ImpMalUtility.actorToHTML(actor, label, optionArrayToObject(options)))[0];
             }
             else 
             {
@@ -1796,6 +1796,15 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         }
     }
 ]);
+
+function optionArrayToObject(options)
+{
+    return options.reduce((obj, option) => {
+        let split = option.split("=").map(i => i.trim())
+        obj[split[0]] = split[1] || true;
+        return obj
+    }, {})
+}
 
 foundry.utils.mergeObject(IMPMAL, defaultWarhammerConfig, {overwrite: false})
 export {IMPMAL, IM_CONFIG};
