@@ -27,7 +27,7 @@ let cost = XPModel.skillTotalCosts[advances];
 
 if (this.actor.system.xp.available >= cost * 2)
 {
-    this.actor.update({[`system.skills.${choice}.advances`] : advances, "system.xp.other.list" : this.actor.system.xp.other.add({description : `Wasted Frame (${game.impmal.config.skills[choice]})`, xp : cost})}, {wastedFrame : true});
+    this.actor.update({[`system.skills.${choice}.advances`] : advances, "system.xp" : this.actor.system.xp.other.add({description : `Wasted Frame (${game.impmal.config.skills[choice]})`, xp : cost})}, {wastedFrame : true});
     this.script.scriptNotification("Spent " + (cost * 2) + " XP");
 }
 else 

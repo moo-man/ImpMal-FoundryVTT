@@ -68,7 +68,7 @@ export class AdvancementForm extends FormApplication
         {
             let newOther = {[`${ev.target.name}`] : (Number.isNumeric(ev.target.value) ? Number(ev.target.value) : (ev.target.value || 0))};
 
-            this.actor.updateSource({"system.xp.other.list" : this.actor.system.xp.other.add(newOther)});
+            this.actor.updateSource({"system.xp" : this.actor.system.xp.other.add(newOther)});
             this.render(true);
         });
 
@@ -90,7 +90,7 @@ export class AdvancementForm extends FormApplication
                 newList = this.actor.system.xp.other.edit(index, other);
             }
 
-            this.actor.updateSource({"system.xp.other.list" : newList});
+            this.actor.updateSource({"system.xp" : newList});
             this.render(true);
         });
     }
