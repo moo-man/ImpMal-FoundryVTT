@@ -7,7 +7,7 @@ The **official** system for playing *Warhammer 40,000 Roleplay: Imperium Maledic
 
 ![](https://img.shields.io/github/downloads/moo-man/ImpMal-FoundryVTT/latest/impmal.zip?label=Downloads%20%28Latest%20Version%29)
 
-![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V11-orange)
+![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V12-orange)
 
 ## Install
 1. Go to the setup page and choose **Game Systems**.
@@ -17,7 +17,9 @@ The **official** system for playing *Warhammer 40,000 Roleplay: Imperium Maledic
 See **Environment Setup** for instructions on how to build the project for development purposes.
 
 ## Official Modules
-- [Warhammer 40,000: Imperium Maledictum Core Rulebook Module](https://foundryvtt.com/packages/impmal-core)
+- [Warhammer 40,000: Imperium Maledictum - Core Rulebook](https://foundryvtt.com/packages/impmal-core)
+
+- [Warhammer 40,000: Imperium Maledictum - Starter Set](https://foundryvtt.com/packages/impmal-starter-set)
 
 ## Special Thanks
 - Cubicle 7
