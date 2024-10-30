@@ -21,7 +21,14 @@ export default function ()
         {
             try 
             {
-                args[1].keepId = true;
+                if (args[1])
+                {
+                    args[1].keepId = true;
+                }
+                else 
+                {
+                    args[1] = {keepId : true};
+                }
             }
             catch(e)
             {

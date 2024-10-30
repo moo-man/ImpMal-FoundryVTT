@@ -315,9 +315,6 @@ export default class Migration {
         let migrated = {}
 
             await this._migrateReference(actor, "patron", migrated);
-            await this._migrateReference(actor, "faction", migrated);
-            await this._migrateReference(actor, "origin", migrated);
-            await this._migrateReference(actor, "role", migrated);
             await this._migrateReference(actor, "duty", migrated);
 
         if (actor.system.hands)

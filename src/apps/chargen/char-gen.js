@@ -382,6 +382,7 @@ export default class CharGenIM extends FormApplication {
       if (faction)
       {
         this.actor.system.characteristics[faction.system.character.characteristics.base].starting += 5;
+        this.actor.system.solars = faction.system.character.solars;
       }
   
       if (origin && origin.system.characteristics.base)
@@ -402,6 +403,8 @@ export default class CharGenIM extends FormApplication {
       this.actor.system.goal.short = this.data.details.short
       this.actor.system.goal.long = this.data.details.long
       this.actor.system.connections.list = this.data.details.connections
+
+      this.actor.system.notes.player = `<p>${this.data.details.connections.join("</p><p>")}</p>`
 
 
       let xp = XPModel.computeSpentFor(new Actor.implementation(foundry.utils.deepClone(this.actor)));
