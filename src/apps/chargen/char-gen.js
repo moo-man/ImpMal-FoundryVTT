@@ -128,7 +128,7 @@ export default class CharGenIM extends FormApplication {
 
     this.actor = {type: "character", system: foundry.utils.deepClone(game.model.Actor.character), items: [] }
 
-    // if (!game.user.isGM)
+    if (!game.user.isGM)
     {
       ChatMessage.create({content : game.i18n.format("IMPMAL.CHARGEN.Message.Start", {user : game.user.name})}).then(msg => this.message = msg)
     }

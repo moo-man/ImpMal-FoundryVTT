@@ -14,21 +14,21 @@ export class DutyModel extends DualItemModel
         schema.faction = new fields.EmbeddedDataField(DeferredReferenceModel);
         schema.category = new fields.StringField({initial : "character"});
         mergeObject(schema.patron.fields, {
-            boonTable : new fields.EmbeddedDataField(DeferredReferenceModel),
-            liabilityTable : new fields.EmbeddedDataField(DeferredReferenceModel),
-            boon : new fields.EmbeddedDataField(DeferredReferenceModel),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel),
+            boonTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {parent : schema.patron, name : "boonTable"}),
+            liabilityTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {parent : schema.patron, name : "liabilityTable"}),
+            boon : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {parent : schema.patron, name : "boon"}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {parent : schema.patron, name : "influence"}),
         });
 
 
         // Character Fields
         mergeObject(schema.character.fields, {
-            equipment : new fields.EmbeddedDataField(DeferredReferenceListModel),
-            characteristics : new fields.ObjectField({}),
-            skills : new fields.ObjectField({}),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel),
-            items : new fields.EmbeddedDataField(ChoiceModel),
-            solars : new fields.NumberField({min : 0}),
+            equipment : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {parent : schema.character, name : "equipment"}),
+            characteristics : new fields.ObjectField({}, {}, {parent : schema.character, name : "characteristics"}),
+            skills : new fields.ObjectField({}, {}, {parent : schema.character, name : "skills"}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {parent : schema.character, name : "influence"}),
+            items : new fields.EmbeddedDataField(ChoiceModel, {}, {parent : schema.character, name : "items"}),
+            solars : new fields.NumberField({min : 0}, {}, {parent : schema.character, name : "solars"}),
         });
         return schema;
     }

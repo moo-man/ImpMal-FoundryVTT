@@ -11,24 +11,8 @@ export default class FactionItemSheet extends BackgroundItemSheet
     async getData() 
     {
         let data = await super.getData();
+        data.patronDutyString = (await Promise.all(this.item.system.patron.duty.documents)).map((doc, index) => `<a data-uuid=${doc.uuid} data-id=${doc.id} data-index=${index}>${doc.name}</a>`).join(", ");
+        data.characterDutyString = (await Promise.all(this.item.system.character.duty.documents)).map((doc, index) => `<a data-uuid=${doc.uuid} data-id=${doc.id} data-index=${index}>${doc.name}</a>`).join(", ");
         return data;
-    }
-
-    _onListEdit(ev)
-    {
-        ev.stopPropagation();
-        let id = this._getId(ev);
-        let item = this.item.system.talents.documents.find(i => i.id == id);
-        item.sheet?.render(true, {editable : false});
-    }
-
-    _onListDelete(ev)
-    {
-        ev.stopPropagation();
-        let id = this._getId(ev);
-        if (id)
-        {
-            this.item.update({"system.talents.list" : this.item.system.talents.removeId(id)});
-        }
     }
 }

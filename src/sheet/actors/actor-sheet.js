@@ -476,7 +476,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         {
             value = Number(value);
         }
-        this.actor.update({"system.influence" : this.actor.system.influence.editSource(faction, index, {[property] : value})});
+        this.actor.update(this.actor.system.influence.editSource(faction, index, {[property] : value}));
     }
 
     _onInfluenceSourceDelete(ev)
@@ -484,14 +484,14 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         ev.stopPropagation();
         let index = this._getIndex(ev);
         let faction = this._getType(ev);
-        this.actor.update({"system.influence" : this.actor.system.influence.deleteSource(faction, index)});
+        this.actor.update(this.actor.system.influence.deleteSource(faction, index));
     }
 
     _onInfluenceSourceCreate(ev)
     {
         ev.stopPropagation();
         let faction = this._getType(ev);
-        this.actor.update({"system.influence" : this.actor.system.influence.addSource(faction)});
+        this.actor.update(this.actor.system.influence.addSource(faction));
     }
 
     _onListHoverIn(ev)

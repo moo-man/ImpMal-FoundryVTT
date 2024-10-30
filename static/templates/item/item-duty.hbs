@@ -34,8 +34,8 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.Faction"}}</label>
                     <div class="form-fields">
-                        <div class="compact-list">
-                            <a data-id="{{system.patron.faction.id}}">{{system.faction.name}}</a>
+                        <div class="compact-list" data-path="system.faction">
+                            <a data-id="{{system.faction.id}}">{{system.faction.name}}</a>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.TableBoon"}}</label>
                     <div class="form-fields">
-                        <div class="compact-list" data-path="system.patron.boonTable">
+                        <div class="compact-list table-drop" data-path="system.patron.boonTable">
                             <a data-id="{{system.patron.boonTable.id}}">{{system.patron.boonTable.name}}</a>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                 <div class="form-group">
                     <label>{{localize "IMPMAL.TableLiability"}}</label>
                     <div class="form-fields">
-                        <div class="compact-list" data-path="system.patron.liabilityTable">
+                        <div class="compact-list table-drop" data-path="system.patron.liabilityTable">
                             <a data-id="{{system.patron.liabilityTable.id}}">{{system.patron.liabilityTable.name}}</a>
                         </div>
                     </div>

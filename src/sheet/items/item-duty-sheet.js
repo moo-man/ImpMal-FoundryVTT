@@ -3,7 +3,7 @@ import BackgroundItemSheet from "./item-background-sheet";
 
 export default class DutyItemSheet extends BackgroundItemSheet
 {
-    async getData() 
+    async getData()
     {
         let data = await super.getData();
         return data;
@@ -11,19 +11,20 @@ export default class DutyItemSheet extends BackgroundItemSheet
 
     _onDropItemBoonLiability(ev, item)
     {
-        this.item.update({[`system.patron.boon`] : this.item.system.patron.boon.set(item)});
+        this.item.update(this.item.system.patron.boon.set(item));
     }
 
     _onDropItemFaction(ev, item)
     {
-        this.item.update({"system.faction" : this.item.system.faction.set(item)});
+        this.item.update(this.item.system.faction.set(item));
     }
 
     _onDropTable(ev, table)
     {
-        if (ev.target.dataset.path)
+        let path = this._getPath(ev);
+        if (path && (ev.target.classList.contains("table-drop") || $(ev.target).parents(".table-drop").length))
         {
-            this.item.update({[ev.target.dataset.path] : getProperty(this.item, ev.target.dataset.path).set(table)});
+            this.item.update(getProperty(this.item, path).set(table));
         }
         else 
         {

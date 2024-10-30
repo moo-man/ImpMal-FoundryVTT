@@ -9,21 +9,21 @@ export class ItemInfluenceModel extends foundry.abstract.DataModel
         return schema;
     }
 
-    createFaction(name, path) 
+    createFaction(name) 
     {
         let factions = duplicate(this.factions);
 
         // Only add if doesn't exist
-        if (!factions[name])
+        if (!factions[name.slugify()])
         {
             factions[name.slugify()] = {name, value : 0};
         }
         
-        return {[`${path}.factions`] : factions};
+        return {[`${this.schema.fieldPath}.factions`] : factions};
     }  
 
-    deleteFaction(name, path) 
+    deleteFaction(name) 
     {
-        return {[`${path}.factions.-=${name}`] : null};
+        return {[`${this.schema.fieldPath}.factions.-=${name}`] : null};
     }  
 }

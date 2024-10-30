@@ -13,37 +13,40 @@ export default class OriginItemSheet extends BackgroundItemSheet
 
     _onDropItem(ev, item)
     {
-        return this.item.update({"system.equipment.list" : this.item.system.equipment.add({id : item.id})});
+        return this.item.update(this.item.system.equipment.add({uuid : item.uuid}));
     }
 
     _onDropTable(ev, table)
     {
-        this.item.update({"system.factionTable" : this.item.system.factionTable.set(table)});
+        this.item.update(this.item.system.factionTable.set(table));
     }
 
     async _onListEdit(ev)
     {
-        let id = this._getId(ev);
+        let index = this._getIndex(ev);
         let collection = this._getCollection(ev);
         if (collection == "effects")
         {
             return super._onListEdit(ev);
         }
-        let item = (await Promise.all(this.item.system.equipment.documents)).find(i => i.id == id);
-        item.sheet?.render(true, {editable : false});
+        let document = await this.item.system.equipment.documents[index];
+        if (document)
+        {
+            document.sheet.render(true, {editable : false});
+        }
     }
 
     _onListDelete(ev)
     {
-        let id = this._getId(ev);
+        let index = this._getIndex(ev);
         let collection = this._getCollection(ev);
         if (collection == "effects")
         {
             return super._onListDelete(ev);
         }
-        if (id)
+        if (Number.isNumeric(index))
         {
-            this.item.update({"system.equipment.list" : this.item.system.equipment.removeId(id)});
+            this.item.update(this.item.system.equipment.remove(index));
         }
     }
 }

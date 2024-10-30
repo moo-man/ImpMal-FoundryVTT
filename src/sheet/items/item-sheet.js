@@ -159,11 +159,12 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet
     async _onCompactItemClick(ev)
     {
         let path = this._getPath(ev);
+        let index = this._getIndex(ev);
         let property = getProperty(this.item, path);
         let document;
         if (property.list)
         {
-            document = await property.get(ev.currentTarget.dataset.id);
+            document = await property.get(index)?.document;
         }
         else 
         {
@@ -174,14 +175,15 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet
     _onCompactItemRightClick(ev)
     {
         let path = this._getPath(ev);
+        let index = this._getIndex(ev);
         let model = getProperty(this.item, path);
         if (model.list)
         {
-            this.item.update({[path + ".list"] : model.removeId(ev.currentTarget.dataset.id)});
+            this.item.update(model.remove(index));
         }
         else 
         {
-            this.item.update({[path] : model.unset()});
+            this.item.update(model.unset());
         }
     }
 }

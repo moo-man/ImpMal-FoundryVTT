@@ -24,7 +24,7 @@
                     </header>
                     <div class="list-content">
                         {{#each item.system.talents.documents}}
-                            <div class="list-item" data-id="{{this.id}}" data-path="system.talents">
+                            <div class="list-item" data-uuid="{{this.uuid}}" data-index="{{@key}}" data-path="system.talents">
                                 <div class="list-row">
                                     <div class="list-name list-edit">
                                         <img src="{{this.img}}">
@@ -77,7 +77,7 @@
 
                     <div class="list-content">
                         {{#each item.system.specialisations.documents}}
-                            <div class="list-item" data-id="{{this.id}}" data-path="system.specialisations">
+                            <div class="list-item" data-uuid="{{this.uuid}}" data-index="{{@key}}" data-path="system.specialisations">
                                 <div class="list-row">
                                     <div class="list-name list-edit">
                                         <img src="{{this.img}}">

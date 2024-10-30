@@ -125,17 +125,17 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
     }
 
 
-    createFaction(name, path) 
+    createFaction(name) 
     {
         let factions = foundry.utils.deepClone(this.factions);
 
         // Only add if doesn't exist
-        if (!factions[name])
+        if (!factions[name.slugify()])
         {
             factions[name.slugify()] = {name, sources : [],  modifier : 0, notes : ""};
         }
         
-        return {[`${path}.factions`] : factions};
+        return {[`${this.schema.fieldPath}.factions`] : factions};
     }  
 
     toggleFactionVisibility(name, path) 
@@ -151,13 +151,13 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
             factions[name].hidden = !factions[name].hidden;
         }
         
-        return {[`${path}.factions`] : factions};
+        return {[`${this.schema.fieldPath}.factions`] : factions};
     }  
 
 
-    deleteFaction(name, path) 
+    deleteFaction(name) 
     {
-        return {[`${path}.factions.-=${name}`] : null};
+        return {[`${this.schema.fieldPath}.factions.-=${name}`] : null};
     }  
 
     
@@ -174,7 +174,7 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
 
         data.name = this.factions[faction].name; // Resave the name
 
-        return {[`factions.${faction}`] : data};
+        return {[`${this.schema.fieldPath}.factions.${faction}`] : data};
     }
 
     editSource(faction, index, data={})
@@ -186,7 +186,7 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
         }
         mergeObject(sources[index], data);
 
-        return {[`factions.${faction}.sources`] : sources};
+        return {[`${this.schema.fieldPath}.factions.${faction}.sources`] : sources};
     }
 
     deleteSource(faction, index)
@@ -198,7 +198,7 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
         }
         sources.splice(index, 1);
 
-        return {[`factions.${faction}.sources`] : sources};
+        return {[`${this.schema.fieldPath}.factions.${faction}.sources`] : sources};
     }
 
 

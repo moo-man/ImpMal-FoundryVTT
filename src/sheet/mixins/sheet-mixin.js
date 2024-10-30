@@ -295,7 +295,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         Dialog.confirm({
             title: game.i18n.localize(`IMPMAL.DeleteFaction`),
             content: `<p>${game.i18n.localize(`IMPMAL.DeleteFactionConfirmation`)}</p>`,
-            yes: () => {this.object.update(getProperty(this.object, path).deleteFaction(faction, path));},
+            yes: () => {this.object.update(getProperty(this.object, path).deleteFaction(faction));},
             no: () => {},
             defaultYes: true
         });
@@ -323,7 +323,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
                     callback: (dlg) =>
                     {
                         let faction = dlg.find("input")[0].value;
-                        this.object.update(getProperty(this.object, path).createFaction(faction, path));
+                        this.object.update(getProperty(this.object, path).createFaction(faction));
                     }
                 }
             },
