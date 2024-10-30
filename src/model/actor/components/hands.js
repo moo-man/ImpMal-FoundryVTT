@@ -5,8 +5,8 @@ export class HandsModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.left = new fields.EmbeddedDataField(DocumentReferenceModel);
-        schema.right = new fields.EmbeddedDataField(DocumentReferenceModel);
+        schema.left = new fields.EmbeddedDataField(DocumentReferenceModel, {relative: "items"});
+        schema.right = new fields.EmbeddedDataField(DocumentReferenceModel, {relative: "items"});
         return schema;
     }
 
@@ -26,7 +26,7 @@ export class HandsModel extends foundry.abstract.DataModel
     {
         let path = this.schema.fieldPath
         item = item || this[hand].document;
-        let uuid = item?.uuid;
+        let id = item?.id;
 
         // Other hand
         let other = hand == "left" ? "right" : "left";        
@@ -36,9 +36,9 @@ export class HandsModel extends foundry.abstract.DataModel
         {
             for(let hand in this)
             {
-                if(this[hand].uuid == uuid)
+                if(this[hand].id == id)
                 {
-                    update[`${path}.${hand}.uuid`] = "";
+                    update[`${path}.${hand}.id`] = "";
                 }
             }
         }
@@ -55,16 +55,16 @@ export class HandsModel extends foundry.abstract.DataModel
 
             if (item.system.traits.has("twohanded"))
             {
-                update[`${path}.left.uuid`] = uuid;
-                update[`${path}.right.uuid`] = uuid;
+                update[`${path}.left.id`] = id;
+                update[`${path}.right.id`] = id;
             }
             else 
             {
-                update[`${path}.${hand}.uuid`] = uuid;
+                update[`${path}.${hand}.id`] = id;
                 // If other hand is holding a two handed weapon, unequip it
                 if (this[hand].document?.system.traits.has("twohanded"))
                 {
-                    update[`${path}.${other}.uuid`] = "";   
+                    update[`${path}.${other}.id`] = "";   
                 }
             }
         }
@@ -72,12 +72,12 @@ export class HandsModel extends foundry.abstract.DataModel
         return update;
     }
 
-    isHolding(uuid)
+    isHolding(id)
     {
         let hands = {};
         for(let hand in this)
         {
-            if (this[hand].uuid == uuid)
+            if (this[hand].id == id)
             {
                 hands[hand] = true;
             }

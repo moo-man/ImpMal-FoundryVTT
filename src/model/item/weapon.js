@@ -11,7 +11,7 @@ export class WeaponModel extends EquippableItemModel
         let schema = super.defineSchema();
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.traits = new fields.EmbeddedDataField(TraitListModel);
-        schema.ammo = new fields.EmbeddedDataField(DocumentReferenceModel);
+        schema.ammo = new fields.EmbeddedDataField(DocumentReferenceModel, {relative : "actor.items"});
         schema.ammoCost = new fields.NumberField();
         schema.attackType = new fields.StringField();
         schema.category = new fields.StringField();
@@ -98,7 +98,7 @@ export class WeaponModel extends EquippableItemModel
         let actor = this.parent?.actor;
         if (actor?.type == "character")
         {
-            let hands = actor.system.hands.isHolding(this.parent.uuid);
+            let hands = actor.system.hands.isHolding(this.parent.id);
             this.equipped.value = isEmpty(hands) ? false : true;
             this.equipped.hands = hands;
             if (this.traits.has("twohanded"))

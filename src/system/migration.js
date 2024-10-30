@@ -332,11 +332,6 @@ export default class Migration {
     static async itemDataMigration(item)
     {
         let migrated = {}
-        let parent = item.actor;
-        if (item.system.ammo?.id && parent)
-        {
-            setProperty(migrated, "system.ammo", {uuid : parent.items.get(item.system.ammo.id)?.uuid, id : null});
-        }
 
         if (item.type == "duty")
         {
@@ -456,7 +451,7 @@ export default class Migration {
 
             if (referencedDocument)
             {
-                setProperty(migration, `system.${field}`, {uuid : referencedDocument.uuid, id : null});
+                setProperty(migration, `system.${field}`, {uuid : referencedDocument.uuid, id : property.id});
             }
         }
     }
