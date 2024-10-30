@@ -21,7 +21,6 @@ export class ChoiceConfig extends ImpMalSheetMixin(FormApplication)
     constructor(...args)
     {
         super(...args);
-        warhammer.utility.addSheetHelpers(this);
         this.choices = getProperty(this.object.system, this.options.path);
     }
 

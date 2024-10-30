@@ -1,6 +1,18 @@
 
 export default ImpMalSheetMixin = (cls) => class extends cls 
 {
+
+    get document()
+    {
+        return this.object;
+    }
+    
+    constructor(...args)
+    {
+        super(...args);
+        warhammer.utility.addSheetHelpers(this);
+    }
+
     // Shared listeners between different document sheets
 
     formatConditions()
