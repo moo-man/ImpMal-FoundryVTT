@@ -135,10 +135,10 @@
                         {{#unless this.system.selfAmmo}}
                             <select class="ammo-selector"
                                 data-tooltip="{{this.system.ammo.document.name}} ({{this.system.ammo.document.system.quantity}})">
-                                {{#select this.system.ammo.uuid}}
+                                {{#select this.system.ammo.id}}
                                     <option value=""></option>
                                     {{#each this.system.ammoList}}
-                                        <option value="{{this.uuid}}">{{this.name}} ({{this.system.quantity}})</option>
+                                        <option value="{{this.id}}">{{this.name}} ({{this.system.quantity}})</option>
                                     {{/each}}
                                 {{/select}}
                             </select>

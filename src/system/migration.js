@@ -97,7 +97,10 @@ export default class Migration {
         {
             ui.notifications.notify(`>>> Migration Complete — See Console for details <<<`)
         }
-        game.settings.set("impmal", "systemMigrationVersion", game.system.version)
+        if (updateVersion)
+        {
+            game.settings.set("impmal", "systemMigrationVersion", game.system.version)
+        }
     }
 
     static async migratePacks(update=false, {world=true, compendium=false}={})

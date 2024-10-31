@@ -8,13 +8,12 @@ export class PowerTestDialog extends SkillTestDialog
 
     computeFields() 
     {
-        super.computeFields();
 
         if (this.fields.push)
         {
-            this.advCount++;
+            this.advantage++;
         }
-    
+        super.computeFields();
     }
 
     get power() 

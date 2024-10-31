@@ -27,8 +27,6 @@ export class AttackDialog extends SkillTestDialog
 
     computeFields() 
     {
-        super.computeFields();
-
         if (this.fields.hitLocation != "roll")
         {
             this.disCount++;
@@ -64,6 +62,7 @@ export class AttackDialog extends SkillTestDialog
             this.disCount++;
             this.tooltips.add("disadvantage", 1, "Two Weapon Fighting");
         }
+        super.computeFields();
     }
 
     get showTraits() 

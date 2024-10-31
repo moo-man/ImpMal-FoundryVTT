@@ -94,12 +94,13 @@ export class TestDialog extends WarhammerRollDialog
         
         data.advantage = this.advantage;
         data.disadvantage = this.disadvantage;
+        this.fields.state = this.computeState();
         return data
     }
 
     async computeFields() 
     {
-        this.fields.state = this.computeState();
+            
     }
 
     /**
