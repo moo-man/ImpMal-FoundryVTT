@@ -17,6 +17,11 @@ export class NPCModel extends StandardActorModel
         return schema;
     }
 
+    _addModelProperties()
+    {
+        this.faction.relative = this.parent.items
+    }
+
     computeDerived()
     {
         super.computeDerived();

@@ -23,7 +23,7 @@ export class OriginModel extends StandardItemModel
     {
         let characteristics = actor.toObject().system.characteristics;
 
-        let characteristicChoice = await ItemDialog.create(this.characteristics.choices.map(c => {return {id : c, name : game.impmal.config.characteristics[c]};}), 1, {text : game.i18n.localize("IMPMAL.ApplyOriginPrompt"), title : "IMPMAL.ApplyOriginTitle"});
+        let characteristicChoice = await ItemDialog.create(this.characteristics.choices.map(c => {return {id : c, name : game.impmal.config.characteristics[c]};}), 1, {text : game.i18n.localize("IMPMAL.ApplyOriginPrompt"), title : game.i18n.localize("IMPMAL.ApplyOriginTitle")});
 
         if (characteristicChoice.length)
         {

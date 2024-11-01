@@ -37,5 +37,6 @@ export class BaseActorModel extends BaseWarhammerActorModel
     computeBase() 
     {
         this.initialize();
+        super.computeBase();
     }
 }

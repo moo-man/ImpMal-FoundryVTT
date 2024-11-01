@@ -22,13 +22,17 @@ export class PatronModel extends BaseActorModel
         return schema;
     }
 
+    _addModelProperties()
+    {
+        this.faction.relative = this.parent.items
+        this.duty.relative = this.parent.items
+    }
+
     computeBase()
     {
         super.computeBase();
         this.influence.initialize();
     }
-
-
 
     computeDerived()
     {

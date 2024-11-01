@@ -5,8 +5,8 @@ export class HandsModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.left = new fields.EmbeddedDataField(DocumentReferenceModel, {relative: "items"});
-        schema.right = new fields.EmbeddedDataField(DocumentReferenceModel, {relative: "items"});
+        schema.left = new fields.EmbeddedDataField(DocumentReferenceModel);
+        schema.right = new fields.EmbeddedDataField(DocumentReferenceModel);
         return schema;
     }
 

@@ -95,6 +95,16 @@ export class CharacterModel extends StandardActorModel
         this._checkEncumbranceEffects(this.parent);
     }
 
+    
+    _addModelProperties()
+    {
+        this.hands.left.relative = this.parent.items;
+        this.hands.right.relative = this.parent.items;
+        this.origin.relative = this.parent.items
+        this.faction.relative = this.parent.items
+        this.role.relative = this.parent.items
+    }
+
     computeBase()
     {
         super.computeBase();

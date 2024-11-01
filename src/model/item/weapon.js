@@ -11,7 +11,7 @@ export class WeaponModel extends EquippableItemModel
         let schema = super.defineSchema();
         schema.damage = new fields.EmbeddedDataField(DamageModel);
         schema.traits = new fields.EmbeddedDataField(TraitListModel);
-        schema.ammo = new fields.EmbeddedDataField(DocumentReferenceModel, {relative : "actor.items"});
+        schema.ammo = new fields.EmbeddedDataField(DocumentReferenceModel);
         schema.ammoCost = new fields.NumberField();
         schema.attackType = new fields.StringField();
         schema.category = new fields.StringField();
@@ -45,7 +45,7 @@ export class WeaponModel extends EquippableItemModel
         let updateData = {}
         // If ammo changed, also update current mag value
         // Can't be in _preUpdate because need to check ammo quantity, ammo.document would not ready 
-        if (foundry.utils.hasProperty(data, "system.ammo.uuid"))
+        if (foundry.utils.hasProperty(data, "system.ammo.id"))
         {
             if (this.ammo.document)
             {
@@ -59,6 +59,14 @@ export class WeaponModel extends EquippableItemModel
         if (!foundry.utils.isEmpty(updateData))
         {
             this.parent.update(updateData);
+        }
+    }
+
+    _addModelProperties()
+    {
+        if (this.parent.actor)
+        {
+            this.ammo.relative = this.parent.actor.items;
         }
     }
 
