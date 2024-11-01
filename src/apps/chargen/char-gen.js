@@ -402,9 +402,9 @@ export default class CharGenIM extends FormApplication {
       this.actor.system.details.feature = this.data.details.feature
       this.actor.system.goal.short = this.data.details.short
       this.actor.system.goal.long = this.data.details.long
-      this.actor.system.connections.list = this.data.details.connections
+      this.actor.system.connections.list = this.data.details.connections || []
 
-      this.actor.system.notes.player = `<p>${this.data.details.connections.join("</p><p>")}</p>`
+      this.actor.system.notes.player = `<p>${this.actor.system.connections.list.join("</p><p>")}</p>`
 
 
       let xp = XPModel.computeSpentFor(new Actor.implementation(foundry.utils.deepClone(this.actor)));

@@ -18,17 +18,17 @@ export default function () {
          */
         TokenHelpers.onClickOpposedImg = function(ev) {
             // Prevents execution when double clicking
-            if (this._onClickOpposedImg.clicked) {
-                clearTimeout(this._onClickOpposedImg.clicked);
-                delete this._onClickOpposedImg.clicked;
+            if (this.onClickOpposedImg.clicked) {
+                clearTimeout(this.onClickOpposedImg.clicked);
+                delete this.onClickOpposedImg.clicked;
                 return;
             }
             else {
-                this._onClickOpposedImg.clicked = setTimeout((ev) => {
+                this.onClickOpposedImg.clicked = setTimeout((ev) => {
                     let tokenId = ev.target.parentElement.dataset.id;
                     let token = canvas.scene.tokens.get(tokenId);
                     canvas.animatePan(token);
-                    delete this._onClickOpposedImg.clicked;
+                    delete this.onClickOpposedImg.clicked;
                 }, 200, ev);
             }
         },
