@@ -1627,6 +1627,7 @@ const IM_CONFIG = {
     statusEffects : [
         {
             img: "systems/impmal/assets/icons/conditions/ablaze.svg",
+            icon: "systems/impmal/assets/icons/conditions/ablaze.svg",
             id: "ablaze",
             statuses : ["ablaze"],
             name: "IMPMAL.ConditionAblaze",
@@ -1634,6 +1635,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/bleeding.svg",
+            icon: "systems/impmal/assets/icons/conditions/bleeding.svg",
             id: "bleeding",
             statuses : ["bleeding"],
             name: "IMPMAL.ConditionBleeding",
@@ -1641,6 +1643,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/blinded.svg",
+            icon: "systems/impmal/assets/icons/conditions/blinded.svg",
             id: "blinded",
             statuses : ["blinded"],
             name: "IMPMAL.ConditionBlinded",
@@ -1648,6 +1651,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/deafened.svg",
+            icon: "systems/impmal/assets/icons/conditions/deafened.svg",
             id: "deafened",
             statuses : ["deafened"],
             name: "IMPMAL.ConditionDeafened",
@@ -1655,6 +1659,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/fatigued.svg",
+            icon: "systems/impmal/assets/icons/conditions/fatigued.svg",
             id: "fatigued",
             statuses : ["fatigued"],
             name: "IMPMAL.ConditionFatigued",
@@ -1662,6 +1667,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/frightened.svg",
+            icon: "systems/impmal/assets/icons/conditions/frightened.svg",
             id: "frightened",
             statuses : ["frightened"],
             name: "IMPMAL.ConditionFrightened",
@@ -1669,6 +1675,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/incapacitated.svg",
+            icon: "systems/impmal/assets/icons/conditions/incapacitated.svg",
             id: "incapacitated",
             statuses : ["incapacitated"],
             name: "IMPMAL.ConditionIncapacitated",
@@ -1676,6 +1683,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/overburdened.svg",
+            icon: "systems/impmal/assets/icons/conditions/overburdened.svg",
             id: "overburdened",
             statuses : ["overburdened"],
             name: "IMPMAL.ConditionOverburdened",
@@ -1683,6 +1691,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/poisoned.svg",
+            icon: "systems/impmal/assets/icons/conditions/poisoned.svg",
             id: "poisoned",
             statuses : ["poisoned"],
             name: "IMPMAL.ConditionPoisoned",
@@ -1690,6 +1699,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/prone.svg",
+            icon: "systems/impmal/assets/icons/conditions/prone.svg",
             id: "prone",
             statuses : ["prone"],
             name: "IMPMAL.ConditionProne",
@@ -1697,6 +1707,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/restrained.svg",
+            icon: "systems/impmal/assets/icons/conditions/restrained.svg",
             id: "restrained",
             statuses : ["restrained"],
             name: "IMPMAL.ConditionRestrained",
@@ -1704,6 +1715,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/stunned.svg",
+            icon: "systems/impmal/assets/icons/conditions/stunned.svg",
             id: "stunned",
             statuses : ["stunned"],
             name: "IMPMAL.ConditionStunned",
@@ -1711,6 +1723,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/unconscious.svg",
+            icon: "systems/impmal/assets/icons/conditions/unconscious.svg",
             id: "unconscious",
             statuses : ["unconscious"],
             name: "IMPMAL.ConditionUnconscious",
@@ -1718,6 +1731,7 @@ const IM_CONFIG = {
         },
         {
             img: "systems/impmal/assets/icons/conditions/dead.svg",
+            icon: "systems/impmal/assets/icons/conditions/dead.svg",
             id: "dead",
             statuses : ["dead"],
             name: "IMPMAL.Dead",

@@ -50,7 +50,11 @@
                                 <a>{{this.name}}</a>
                             </div>
                             {{#unless this.system.visible}}
-                                <a><i class="fa-solid fa-eye-slash"></i></a>
+                                <a class="liability-visibility" style="color: var(--impmal-orange)" data-tooltip="Not visible to Players"><i class="fa-solid fa-eye-slash"></i></a>
+                            {{else}}
+                                {{#if (isGM)}}
+                                <a class="liability-visibility" data-tooltip="Visible to Players"><i class="fa-solid fa-eye"></i></a>
+                                {{/if}}
                             {{/unless}}
                             <div class="list-controls">
                                 <a class="list-post"><i class="fa-solid fa-comment"></i></a>

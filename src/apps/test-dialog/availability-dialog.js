@@ -42,6 +42,7 @@ export class AvailabilityDialog extends TestDialog
         dialogData.data.targets = [];
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (title?.replace || game.i18n.localize("IMPMAL.Availability")) + (title?.append || "");
+        dialogData.data.scripts = [];
         dialogData.data.item = item;
         dialogData.fields.world = world;
         dialogData.fields.availability = availability || item.system.availability;

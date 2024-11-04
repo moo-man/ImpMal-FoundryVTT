@@ -47,6 +47,7 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
     {
         super.activateListeners(html);
         html.find(".faction-visibility").on("click", this._onFactionToggle.bind(this));
+        html.find(".liability-visibility").on("click", this._onLiabilityToggle.bind(this));
         html.find(".summary").on("click", this._onSummaryToggle.bind(this));
         if (!this.isEditable)
         {
@@ -62,6 +63,12 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
 
         this.object.update(getProperty(this.object, path).toggleFactionVisibility(faction, path));
 
+    }
+
+    async _onLiabilityToggle(ev)
+    {
+        let document = await this._getDocument(ev)
+        document.update({"system.visible" : !document.system.visible});
     }
 
     _onSummaryToggle(ev)
