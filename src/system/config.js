@@ -988,10 +988,8 @@ const IMPMAL = {
             id: "frightened",
             statuses : ["frightened"],
             name: "IMPMAL.ConditionFrightenedMajor",
-            flags : {
-                impmal : {
-                    type : "major"
-                }
+            system : {
+                type : "major",
             }
         },
         {
@@ -1165,10 +1163,8 @@ const IMPMAL = {
             id: "stunned",
             statuses : ["stunned"],
             name: "IMPMAL.ConditionStunnedMinor",
-            flags : {
-                impmal : {
-                    type : "minor"
-                }
+            system : {
+                type : "minor"
             }
         },
         {
@@ -1238,18 +1234,18 @@ const IMPMAL = {
                     },
                     scriptData: [
                         {
-                            "label": "Light Cover",
-                            "string": `
+                            label: "Light Cover",
+                            script: `
                             if (args.opposed && args.opposed.attackerTest.item?.system.isRanged)
                             {
                                 args.modifiers.push({value : -2, label : this.effect.name, armour : true})
                             }`,
-                            "trigger": "preTakeDamage"
+                            trigger: "preTakeDamage"
                         },
                         {
-                            "label": "Start Turn",
-                            "string": `delete this.effect.conditionScript; this.effect.update({"system.transferData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
-                            "trigger": "startTurn"
+                            label: "Start Turn",
+                            script: `delete this.effect.conditionScript; this.effect.update({"system.transferData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            trigger: "startTurn"
                         }
                     ]
                 }
@@ -1266,18 +1262,18 @@ const IMPMAL = {
                     },
                     scriptData: [
                         {
-                            "label": "Medium Cover",
-                            "string": `
+                            label: "Medium Cover",
+                            script: `
                             if (args.opposed && args.opposed.attackerTest.item?.system.isRanged)
                             {
                                 args.modifiers.push({value : -4, label : this.effect.name, armour : true})
                             }`,
-                            "trigger": "preTakeDamage"
+                            trigger: "preTakeDamage"
                         },
                         {
-                            "label": "Start Turn",
-                            "string": `delete this.effect.conditionScript; this.effect.update({"system.transferData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
-                            "trigger": "startTurn"
+                            label: "Start Turn",
+                            script: `delete this.effect.conditionScript; this.effect.update({"system.transferData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            trigger: "startTurn"
                         }
                     ]
                 }
@@ -1294,18 +1290,18 @@ const IMPMAL = {
                     },
                     scriptData: [
                         {
-                            "label": "Heavy Cover",
-                            "string": `
+                            label: "Heavy Cover",
+                            script: `
                             if (args.opposed && args.opposed.attackerTest.item?.system.isRanged)
                             {
                                 args.modifiers.push({value : -6, label : this.effect.name, armour : true})
                             }`,
-                            "trigger": "preTakeDamage"
+                            trigger: "preTakeDamage"
                         },
                         {
-                            "label": "Start Turn",
-                            "string": `delete this.effect.conditionScript; this.effect.update({"system.transferData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
-                            "trigger": "startTurn"
+                            label: "Start Turn",
+                            script: `delete this.effect.conditionScript; this.effect.update({"system.transferData.enableConditionScript" : ""})`, // Start turn doesn't require action to benefit
+                            trigger: "startTurn"
                         }
                     ]
                 }

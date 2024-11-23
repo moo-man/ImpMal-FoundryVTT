@@ -28,30 +28,17 @@ export class ImpMalEffect extends WarhammerActiveEffect
 
     async resistEffect()
     {
-        let actor = this.actor;
-
-        // If no owning actor, no test can be done
-        if (!actor)
+        let result = await super.resistEffect();
+        if (result === false || result === true)
         {
-            return false;
+            return result;
         }
 
         let transferData = this.system.transferData;
 
-        // If no test, cannot be avoided
-        if (transferData.avoidTest.value == "none")
-        {
-            return false;
-        }
-
         let test;
         let options = {title : {append : " - " + this.name}, context: {resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest}};
-        if (transferData.avoidTest.value == "script")
-        {
-            let script = new WarhammerScript({label : this.effect + " Avoidance", script : transferData.avoidTest.script}, WarhammerSCript.createContext(this));
-            return await script.execute();
-        }
-        else if (transferData.avoidTest.value == "item")
+        if (transferData.avoidTest.value == "item")
         {
             test = await this.actor.setupTestFromItem(this.item.uuid, options);
         }
@@ -121,7 +108,7 @@ export class ImpMalEffect extends WarhammerActiveEffect
     {
         let effects = foundry.utils.deepClone(game.impmal.config.conditions).concat(foundry.utils.deepClone(Object.values(game.impmal.config.zoneEffects)));
 
-        let effect = effects.find(i => i.id == key && i.flags?.impmal?.type == type);
+        let effect = effects.find(i => i.id == key && i.system.type == type);
         if (!effect)
         {
             effect = effects.find(i => i.id == key);

@@ -165,7 +165,7 @@ export class CharacterModel extends StandardActorModel
         if (effect)
         {
             let data = ImpMalEffect.getCreateData(effect);
-            setProperty(data, "flags.impmal.computed", true);
+            setProperty(data, "system.computed", true);
             ImpMalEffect.create(data, {parent : actor});
         }
 
