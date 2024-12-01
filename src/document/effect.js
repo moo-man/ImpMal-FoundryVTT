@@ -108,7 +108,7 @@ export class ImpMalEffect extends WarhammerActiveEffect
     {
         let effects = foundry.utils.deepClone(game.impmal.config.conditions).concat(foundry.utils.deepClone(Object.values(game.impmal.config.zoneEffects)));
 
-        let effect = effects.find(i => i.id == key && i.system.type == type);
+        let effect = effects.find(i => i.id == key && i.system?.type == type);
         if (!effect)
         {
             effect = effects.find(i => i.id == key);

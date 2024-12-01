@@ -2,34 +2,35 @@
 
 export class TestDialog extends WarhammerRollDialog
 {
-
-
-    static tooltipConfig = {
-        modifier : {
-            label : "IMPMAL.Modifier",
-            type : 1,
-            path : "fields.modifier",
-            hideLabel : true
-        },
-        SL : {
-            label : "IMPMAL.SL",
-            type : 1,
-            path : "fields.SL"
-        },
-        difficulty : {
-            label : "IMPMAL.Difficulty",
-            type : 0,
-            path : "fields.difficulty"
-        },
-        advantage : {
-            label : "IMPMAL.Advantage",
-            type : 1,
-            path : "advantage"
-        },
-        disadvantage : {
-            label : "IMPMAL.Disadvantage",
-            type : 1,
-            path : "disadvantage"
+    get tooltipConfig() 
+    {
+        return {
+            modifier : {
+                label : "IMPMAL.Modifier",
+                type : 1,
+                path : "fields.modifier",
+                hideLabel : true
+            },
+            SL : {
+                label : "IMPMAL.SL",
+                type : 1,
+                path : "fields.SL"
+            },
+            difficulty : {
+                label : "IMPMAL.Difficulty",
+                type : 0,
+                path : "fields.difficulty"
+            },
+            advantage : {
+                label : "IMPMAL.Advantage",
+                type : 1,
+                path : "advantage"
+            },
+            disadvantage : {
+                label : "IMPMAL.Disadvantage",
+                type : 1,
+                path : "disadvantage"
+            }
         }
     }
 
