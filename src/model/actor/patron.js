@@ -46,7 +46,7 @@ export class PatronModel extends BaseActorModel
     {
         let grades = Object.keys(game.impmal.config.paymentGrade);
         let currentGradeIndex = grades.findIndex(i => i == this.payment.grade);
-        let modifiedGradeIndex = Math.clamped(0, grades.length, currentGradeIndex + this.payment.gradeModifier);
+        let modifiedGradeIndex = Math.clamp(0, grades.length, currentGradeIndex + this.payment.gradeModifier);
         this.payment.grade = grades[modifiedGradeIndex];
         this.payment.value = this.payment.payOverride || game.impmal.config.paymentAmount[this.payment.grade] || 0;
     }
