@@ -115,6 +115,11 @@ export class TalentModel extends StandardItemModel
         return !this.effectOptions.list.find(i => i.id == effect.id) || this.effectChoices[effect.id];
     }
 
+    _addModelProperties()
+    {
+        this.effectOptions.relative = this.parent.effects;
+    }
+
     async handleEffectSelection()
     {
         // Only relevant to owned items

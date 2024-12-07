@@ -160,18 +160,18 @@ export default class ImpMalUtility
     {
         let uuid;
 
-        if (r.type == 1)
+        if (r.type == "document")
         {
             uuid = `${r.documentCollection}.${r.documentId}`;
         }
-        else if (r.type == 2)
+        else if (r.type == "pack")
         {
             uuid = `Compendium.${r.documentCollection}.${r.documentId}`;
         }
 
         return `<tr>
             <td>${r.range[0] == r.range[1] ? r.range[0] : `${r.range[0]}–${r.range[1]}`}</td>
-            <td>${[1,2].includes(r.type) ? `@UUID[${uuid}]` : r.text}</td>
+            <td>${["pack","document"].includes(r.type) ? `@UUID[${uuid}]` : r.text}</td>
             </tr>`;
     }).join("")}
 
