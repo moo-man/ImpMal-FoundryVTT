@@ -1584,6 +1584,12 @@ const IMPMAL = {
         zone : "WH.TransferType.Zone",
         other : "WH.TransferType.Other"
     },
+
+    transferDocumentTypes : {
+        "Actor" : "Actor",
+        "Item" : "Item",
+        "character" : "Underling"
+    },
     
     // mergeObject(scriptTriggers, {
     

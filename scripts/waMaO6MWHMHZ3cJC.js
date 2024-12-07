@@ -1,9 +1,15 @@
-        let skills = args.actor.itemTypes.specialisation.filter(s => ["People", "High Gothic", "Theology", "Charm"].includes(s.name) || s.system.skill == "presence");
+let skills = args.actor.itemTypes.specialisation.filter(s => ["People", "High Gothic", "Theology", "Charm"].includes(s.name) || s.system.skill == "presence");
 
-        let chosen = (await ItemDialog.create(skills, 1))[0]
+if (!skills.length)
+{
+    return this.script.notification(`This Actor does not have any of the valid specialisations`, "error")
+}
 
-        if (chosen)
-        {
-            await chosen.update({"system.advances" : chosen.system.advances + 1});
-            await args.actor.update({"system.xp" : args.actor.system.xp.other.add({description : `${this.effect.name} (${chosen.name})`, xp: -20})})
-        }
+let chosen = (await ItemDialog.create(skills, 1, {text : "Select the Specialisation to train", title : this.effect.name}))[0]
+
+if (chosen)
+{
+    this.script.message(`Trained ${chosen.name} for ${(chosen.system.advances + 1) * 50 - 20} XP`)
+    await chosen.update({"system.advances" : chosen.system.advances + 1});
+    await args.actor.update({"system.xp" : args.actor.system.xp.other.add({description : `${this.effect.name} (${chosen.name})`, xp: -20})})
+}

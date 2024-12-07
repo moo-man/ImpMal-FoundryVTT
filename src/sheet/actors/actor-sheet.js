@@ -171,7 +171,6 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         html.find(".list-hover").on("mouseleave", this._onListHoverOut.bind(this));
         html.find("button.action").on("click", this._onActionClick.bind(this));
         html.find(".damage-armour").on("mousedown", this._onDamageArmour.bind(this));
-        html.find(".trigger-script").on("click", this._onTriggerScript.bind(this));
         html.find(".armour-config").on("click", this._onClickArmourConfig.bind(this));
         html.find(".clear-action").on("click", this._onClearAction.bind(this));
         html.on("click", ".use-item", this._onUseItem.bind(this));

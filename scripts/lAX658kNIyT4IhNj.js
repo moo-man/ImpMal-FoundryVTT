@@ -8,7 +8,7 @@
 	    i.id = i._id;
         });
 
-        let choice = await ItemDialog.create(skills, 1);
+        let choice = await ItemDialog.create(skills, 1, {text : "Select the Specialisation to train", title : this.effect.name});
 
 	choice[0].name = "Forbidden"
 
