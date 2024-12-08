@@ -17,8 +17,8 @@ export class SkillsModel extends foundry.abstract.DataModel
         schema.medicae = SkillModel.createModel("int");
         schema.melee = SkillModel.createModel("ws");
         schema.navigation = SkillModel.createModel("int");
-        schema.presence = SkillModel.createModel("ag");
-        schema.piloting = SkillModel.createModel("wil");
+        schema.presence = SkillModel.createModel("wil");
+        schema.piloting = SkillModel.createModel("ag");
         schema.psychic = SkillModel.createModel("wil");
         schema.ranged = SkillModel.createModel("bs");
         schema.rapport = SkillModel.createModel("fel");
@@ -54,6 +54,24 @@ export class SkillsModel extends foundry.abstract.DataModel
                 warhammer.utility.log("Error assigning skill specialisation:", {args: item});
             }
         }
+    }
+
+    /** @inheritdoc */
+    static migrateData(source) {
+        super.migrateData(source);
+
+        this.migrateFaultySkills(source)
+    }
+
+    static migrateFaultySkills(source) {
+        if(source.presence.characteristic != "wil") {
+            source.presence.characteristic = "wil";
+        }
+       
+        if(source.piloting.characteristic != "ag") {
+           source.piloting.characteristic = "ag";
+        }
+        
     }
 }
 

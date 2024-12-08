@@ -119,12 +119,12 @@
             "modifier" : 0
           },
           "piloting": {
-            "characteristic": "ag",
+            "characteristic": "wil",
             "advances": 0,
             "modifier" : 0
           },
           "presence": {
-            "characteristic": "wil",
+            "characteristic": "ag",
             "advances": 0,
             "modifier" : 0
           },

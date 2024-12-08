@@ -228,7 +228,7 @@ export class WeaponModel extends EquippableItemModel
         {
             let ranges = ["short","medium","long","extreme"];
             let index = ranges.findIndex(i => i == this.range);
-            index = Math.clamped(index + this.rangeModifier.value, 0, ranges.length - 1);
+            index = Math.clamp(index + this.rangeModifier.value, 0, ranges.length - 1);
             this.range = ranges[index];
         }
 

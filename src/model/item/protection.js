@@ -64,7 +64,7 @@ export class ProtectionModel extends EquippableItemModel
         {
             for(let key in damage)
             {
-                damage[key] = Math.clamped(damage[key], 0, this.armour);
+                damage[key] = Math.clamp(damage[key], 0, this.armour);
             }
         }
     }
