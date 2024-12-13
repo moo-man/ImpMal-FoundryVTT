@@ -67,7 +67,9 @@ export class TestContext
                 test : game.messages.get(this.responses[speaker.token])?.system.test,
                 unopposed : this.responses[speaker.token] == "unopposed",
                 actor : ChatMessage.getSpeakerActor(speaker),
-                damage : this.appliedDamage[speaker.token]
+                damage : this.appliedDamage[speaker.token],
+                token : speaker.token,
+                scene : speaker.scene
             };
         });
     }
@@ -239,7 +241,7 @@ export class TestContext
         let context = mergeObject({
             speaker : data.speaker,
             title : data.title,
-            targetSpeakers : data.targets.map(i => ChatMessage.getSpeaker({token : i.document})),
+            targetSpeakers : data.targets,
             rollMode : data.rollMode,
             uuid : data.uuid,
             breakdownData : data.context.breakdown
