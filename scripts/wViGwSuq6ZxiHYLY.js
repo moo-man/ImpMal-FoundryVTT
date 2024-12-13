@@ -2,7 +2,7 @@
 
         if (this.effect.sourceTest.result.SL > test.result.SL)
         {
-            let damage = (this.effect.sourceTest.actor.system.characteristics.wil.bonus + (this.effect.sourceTest.result.SL - test.result.SL));
+            let damage = (this.effect.sourceActor.system.characteristics.wil.bonus + (this.effect.sourceTest.result.SL - test.result.SL));
             if (this.actor.system.species == "Daemon" || this.actor.itemTypes.power.length > 0)
             {
                 damage *= 2;

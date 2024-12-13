@@ -6,4 +6,4 @@ args.options.keepId = true;
 effectData.flags.impmal.linkedEffect = this.effect.uuid;
 effectData.statuses = ["lifeLeech"];
 
-this.effect.sourceTest.actor.applyEffect({effectData : [effectData]});
+this.effect.sourceActor.applyEffect({effectData : [effectData]});

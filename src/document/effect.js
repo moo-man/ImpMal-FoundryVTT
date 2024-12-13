@@ -77,11 +77,11 @@ export class ImpMalEffect extends WarhammerActiveEffect
 
 
 
-    get sourceItem() 
+    // Need to override base getter because IM doesn't have a `data` property holding all the test data
+    get sourceTest() 
     {
-        return fromUuidSync(this.flags.impmal.sourceItem);
+        return this.system.sourceData.test;
     }
-
 
     get isCondition() 
     {
