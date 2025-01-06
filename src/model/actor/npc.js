@@ -34,11 +34,11 @@ export class NPCModel extends StandardActorModel
         {
             // Initialized already to 0
         }
-        else if (this.role == "elite")
+        else if (this.role == "elite" && this.autoCalc.criticals)
         {
             this.combat.criticals.max += 1;
         }
-        else 
+        else if (this.autoCalc.criticals)
         {
             this.combat.criticals.max += this.characteristics.tgh.bonus;
         }

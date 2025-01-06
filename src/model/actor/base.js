@@ -13,6 +13,8 @@ export class BaseActorModel extends BaseWarhammerActorModel
             gm : new fields.StringField()
         });
 
+        schema.autoCalc = new fields.SchemaField({});
+
         return schema;
     }
     

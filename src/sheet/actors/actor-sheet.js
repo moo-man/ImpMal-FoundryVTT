@@ -1,3 +1,4 @@
+import { ActorConfigForm } from "../../apps/actor-config";
 import ArmourConfig from "../../apps/armour-config";
 import ChatHelpers from "../../system/chat-helpers";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
@@ -28,6 +29,26 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         {
             return `systems/impmal/templates/actor/${this.actor.type}-sheet.hbs`;
         }
+    }
+
+    _getHeaderButtons() 
+    {
+        let buttons = super._getHeaderButtons();
+        if (this.actor.isOwner) 
+        {
+            buttons = [
+                {
+                    label: "",
+                    class: "configure",
+                    icon: "fa-solid fa-wrench",
+                    onclick: () => 
+                    {
+                        new ActorConfigForm(this.actor).render(true);
+                    }
+                }
+            ].concat(buttons);
+        }
+        return buttons;
     }
 
     async getData()

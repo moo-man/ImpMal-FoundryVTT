@@ -20,6 +20,12 @@ export class StandardActorModel extends BaseActorModel
             charge : new fields.NumberField({min: 0}),
             state : new fields.NumberField({initial: 0, min: 0})
         });
+
+        schema.autoCalc = new fields.SchemaField({
+            wounds: new fields.BooleanField({initial : true, label : "IMPMAL.ActorConfig.AutoCalc.Wounds"}),
+            criticals : new fields.BooleanField({initial : true, label : "IMPMAL.ActorConfig.AutoCalc.CriticalWounds"}),
+            initiative : new fields.BooleanField({initial : true, label : "IMPMAL.ActorConfig.AutoCalc.Initiative"}),
+        });
         return schema;
     }
 

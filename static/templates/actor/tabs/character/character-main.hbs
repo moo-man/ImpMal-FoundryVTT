@@ -52,7 +52,7 @@
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.Initiative"}}</label>
         <div class="property-value">
-            <input type="number" value="{{system.combat.initiative}}" disabled>
+            <input type="number" value="{{system.combat.initiative}}" name="system.combat.initiative" {{#if system.autoCalc.initiative}}disabled{{/if}}>
         </div>
     </div>
 
@@ -67,7 +67,8 @@
         <label class="property-label">{{localize "IMPMAL.Corruption"}}</label>
         <div class="property-value">
             <input type="number" name="system.corruption.value" value="{{system.corruption.value}}">
-            <input type="number" name="system.corruption.max" value="{{system.corruption.max}}" disabled>
+            {{log system.corruption}}
+            <input type="number" name="system.corruption.max" value="{{system.corruption.max}}" {{#if system.autoCalc.corruption}}disabled{{/if}}>
         </div>
     </div>
         <div class="actor-property">
@@ -88,7 +89,7 @@
         <label class="property-label">{{localize "IMPMAL.Wounds"}}</label>
         <div class="property-value">
             <input type="number" name="system.combat.wounds.value" value="{{system.combat.wounds.value}}">
-            <input type="number" value="{{system.combat.wounds.max}}" disabled>
+            <input type="number" name="system.combat.wounds.max" value="{{system.combat.wounds.max}}" {{#if system.autoCalc.wounds}}disabled{{/if}}>
         </div>
     </div>
 
@@ -96,7 +97,7 @@
         <label class="property-label">{{localize "IMPMAL.CriticalWounds"}}</label>
         <div class="property-value">
             <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}" disabled>
-            <input type="number" value="{{system.combat.criticals.max}}" disabled>
+            <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}" {{#if system.autoCalc.criticals}}disabled{{/if}}>
         </div>
     </div>
 

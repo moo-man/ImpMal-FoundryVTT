@@ -56,6 +56,8 @@ export class CharacterModel extends StandardActorModel
         schema.connections = ListModel.createListModel(new fields.StringField());
         schema.influence = new fields.EmbeddedDataField(ActorInfluenceModel);
         schema.hands = new fields.EmbeddedDataField(HandsModel);
+
+        schema.autoCalc.fields.corruption = new fields.BooleanField({initial : true, label : "IMPMAL.ActorConfig.AutoCalc.Corruption", parent : schema.autoCalc});
         return schema;
     }
 
@@ -109,6 +111,10 @@ export class CharacterModel extends StandardActorModel
     {
         super.computeBase();
         this.combat.superiority = game.impmal.superiority.value;
+        if (this.autoCalc.corruption)
+        {
+            this.corruption.max = 0;
+        }
         this.influence.initialize();
     }
 
@@ -118,7 +124,11 @@ export class CharacterModel extends StandardActorModel
         super.computeDerived();
         this.augmetics.max += this.characteristics.tgh.bonus;
         this.augmetics.value = this.parent.itemTypes.augmetic.length;
-        this.corruption.max += (this.characteristics.tgh.bonus + this.characteristics.wil.bonus);
+        if (this.autoCalc.corruption)
+        {
+            this.corruption.autoCalc = true;
+            this.corruption.max += (this.characteristics.tgh.bonus + this.characteristics.wil.bonus);
+        }
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
         this.influence.compute(Array.from(this.parent.allApplicableEffects()), this.parent.itemTypes, this.parent.type, this.patron.document?.system?.influence);

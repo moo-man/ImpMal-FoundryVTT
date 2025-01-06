@@ -208,6 +208,16 @@
         }
     },
 
+    "IMPMAL.ActorConfig" : {
+        "Title" : "Actor Configuration",
+        "AutoCalc" : {
+            "Wounds" : "Auto-Calculate Wounds",
+            "CriticalWounds" : "Auto-Calculate Critical Wounds",
+            "Initiative" : "Auto-Calculate Critical Initiative",
+            "Corruption" : "Auto-Calculate Critical Corruption"
+        }
+    },
+
     "IMPMAL.CountEveryBullet" : "Count Every Bullet",
     "IMPMAL.CountEveryBulletHint" : "Use 'Counting Every Bullet' optional rule defined on page 314.",
     "IMPMAL.Corruption" : "Corruption",

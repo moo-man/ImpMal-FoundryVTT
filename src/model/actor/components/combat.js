@@ -18,6 +18,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         });
         schema.hitLocations = new fields.ObjectField();
         schema.armourModifier = new fields.NumberField({initial : 0});
+        schema.initiative = new fields.NumberField()
         schema.wounds = new fields.SchemaField({
             value : new fields.NumberField({initial : 0, min : 0}),
             max : new fields.NumberField(),
@@ -33,8 +34,14 @@ export class StandardCombatModel extends foundry.abstract.DataModel
 
     initialize() 
     {
-        this.wounds.max = 0;
-        this.initiative = 0;
+        if (this.parent.autoCalc.wounds)
+        {
+            this.wounds.max = 0;
+        }
+        if (this.parent.autoCalc.initiative)
+        {
+            this.initiative = 0;
+        }
 
         for (let loc in this.hitLocations)
         {
@@ -62,22 +69,31 @@ export class StandardCombatModel extends foundry.abstract.DataModel
 
     computeWounds(characteristics) 
     {
-        this.wounds.max += 
+        if (this.parent.autoCalc.wounds)
+        {
+            this.wounds.autoCalc = true;
+            this.wounds.max += 
             characteristics.str.bonus + 
             (2 * characteristics.tgh.bonus) + 
             characteristics.wil.bonus;
+        }
     }
 
     computeCriticals(characteristics) 
     {
-        this.criticals.max += characteristics.tgh.bonus;
+        if (this.parent.autoCalc.criticals)
+        {
+            this.criticals.autoCalc = true;
+            this.criticals.max += characteristics.tgh.bonus;
+        }
     }
 
     computeInitiative(characteristics) 
     {
-        this.initiative += 
-            characteristics.per.bonus + 
-            characteristics.ag.bonus;
+        if (this.parent.autoCalc.initiative)
+        {
+            this.initiative += characteristics.per.bonus + characteristics.ag.bonus;
+        }
     }
 
     computeSpeed(speed)

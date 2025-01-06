@@ -104,7 +104,7 @@
             <label>{{localize "IMPMAL.Wounds"}}</label>
             <div>
                 <input type="number" name="system.combat.wounds.value" value="{{system.combat.wounds.value}}">
-                <input type="number" name="system.combat.wounds.max" value="{{system.combat.wounds.max}}" disabled>
+                <input type="number" name="system.combat.wounds.max" value="{{system.combat.wounds.max}}" {{#if system.autoCalc.wounds}}disabled{{/if}}>
             </div>
         </div>
         <div class="grid-property">
@@ -114,14 +114,14 @@
                     <span>-</span>
                 {{else}}
                     <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
-                    <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}" disabled>
+                    <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}" {{#if system.autoCalc.criticals}}disabled{{/if}}>
                 {{/if}}
             </div>
         </div>
         <div class="grid-property">
             <label>{{localize "IMPMAL.Initiative"}}</label>
             <div>
-                <input type="number" name="system.combat.initiative" value="{{system.combat.initiative}}" disabled>
+            <input type="number" value="{{system.combat.initiative}}" name="system.combat.initiative" {{#if system.autoCalc.initiative}}disabled{{/if}}>
             </div>
         </div>
         <div class="grid-property">
