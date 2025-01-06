@@ -1,13 +1,12 @@
 import { ImpMalActor } from "../../document/actor";
-import { ChoiceModel } from "../shared/choices";
 import { ItemInfluenceModel } from "./components/influence";
 import { DualItemModel } from "./dual";
-let fields = foundry.data.fields;
 
 export class DutyModel extends DualItemModel 
 {
     static defineSchema() 
     {
+        let fields = foundry.data.fields;
         // Patron Fields
         let schema = super.defineSchema();
 

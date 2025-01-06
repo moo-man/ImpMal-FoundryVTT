@@ -1,4 +1,3 @@
-import ChoiceTree from "../../apps/choice-tree";
 import ItemTraitsForm from "../../apps/item-traits";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
@@ -23,9 +22,10 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet
         return `systems/impmal/templates/item/item-${this.item.type}.hbs`;
     }
 
-    async _render(...args)
+    async _render(force, options={})
     {
-        await super._render(...args);
+        await super._render(force, options);
+
         if (!this.element[0].classList.contains(this.item.type))
         {
             this.element[0].classList.add(this.item.type);
@@ -137,6 +137,7 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet
         html.find(".choice-tree").click(this._onChoiceTree.bind(this));
         html.find(".compact-list a").click(this._onCompactItemClick.bind(this));
         html.find(".compact-list a").contextmenu(this._onCompactItemRightClick.bind(this));
+        html.find(".list-diff").click(this._onDiffEdit.bind(this));
     }
 
     _onEditTraits(ev) 
@@ -144,15 +145,36 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet
         let path = ev.currentTarget.dataset.path;
         new ItemTraitsForm(this.item, {path}).render(true);
     }
+    
+    async _onDiffEdit(ev)
+    {
+        let list = this._getList(ev, true);
+        let index = this._getIndex(ev);
+
+        let listObj = list.list[index].toObject();
+        let document = await list.list[index].document;
+
+        let newDiff = await WarhammerDiffEditor.wait(listObj.diff, {document : document.originalDocument});
+        listObj.diff = newDiff;
+        if (listObj.name)
+        {
+            listObj.name = newDiff.name;
+        }
+        else 
+        {
+            listObj.name = document.originalDocument.name;
+        }
+        this.item.update(list.edit(index, listObj));
+    }
 
     _onChoiceConfig(ev) 
     {
-        new game.impmal.apps.ChoiceConfig(this.item, {path : ev.currentTarget.dataset.path}).render(true);
+        new ChoiceConfigV2(this.item, {path : ev.currentTarget.dataset.path}).render(true);
     }
 
     _onChoiceTree(ev) 
     {
-        new ChoiceTree(foundry.utils.getProperty(this.item.system, ev.currentTarget.dataset.path)).render(true);
+        new ChoiceDecision(foundry.utils.getProperty(this.item.system, ev.currentTarget.dataset.path)).render(true);
     }
 
 

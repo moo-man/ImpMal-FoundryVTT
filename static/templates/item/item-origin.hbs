@@ -58,14 +58,15 @@
                         </div>
                     </header>
                     <div class="list-content">
-                        {{#each item.system.equipment.documents}}
-                            <div class="list-item" data-uuid="{{this.uuid}}" data-index="{{@key}}">
+                        {{#each equipment}}
+                            <div class="list-item" data-index="{{@key}}" data-path="system.equipment">
                                 <div class="list-row">
                                     <div class="list-name list-edit">
                                         <img src="{{this.img}}">
                                         <a>{{this.name}}</a>
                                     </div>
                                     <div class="list-controls">
+                                        <a class="list-control list-diff"><i class="fa-solid fa-file-plus-minus"></i></a>
                                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                                     </div>
                                 </div>

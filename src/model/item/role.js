@@ -1,11 +1,10 @@
-import { ChoiceModel } from "../shared/choices";
 import { StandardItemModel } from "./standard";
-let fields = foundry.data.fields;
 
 export class RoleModel extends StandardItemModel 
 {
     static defineSchema() 
     {
+        let fields = foundry.data.fields;
         let schema = super.defineSchema();
         schema.skills = new fields.SchemaField({
             value : new fields.NumberField({min: 0}),
@@ -27,6 +26,7 @@ class TalentListModel extends DocumentReferenceListModel
     
     static defineSchema() 
     {
+        let fields = foundry.data.fields;
         let schema = super.defineSchema();
         schema.number = new fields.NumberField({min : 0});
         return schema;
@@ -38,6 +38,7 @@ class RoleSpecialisationsModel extends DocumentReferenceListModel
 {
     static defineSchema() 
     {
+        let fields = foundry.data.fields;
         let schema = super.defineSchema();
         schema.value = new fields.NumberField();
         schema.keys = new fields.ArrayField(new fields.StringField());

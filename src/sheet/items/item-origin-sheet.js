@@ -6,7 +6,7 @@ export default class OriginItemSheet extends BackgroundItemSheet
     async getData()
     {
         let data = await super.getData();
-        await data.item.system.equipment.awaitDocuments();
+        data.equipment = await data.item.system.equipment.awaitDocuments();
         return data;
     }
 
@@ -29,11 +29,10 @@ export default class OriginItemSheet extends BackgroundItemSheet
         {
             return super._onListEdit(ev);
         }
-        let document = await this.item.system.equipment.documents[index];
-        if (document)
-        {
-            document.sheet.render(true, {editable : false});
-        }
+
+        let document = (await this.item.system.equipment.awaitDocuments())[index];
+        
+        document?.sheet.render(true, {editable : false})
     }
 
     _onListDelete(ev)

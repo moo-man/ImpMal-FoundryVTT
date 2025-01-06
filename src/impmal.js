@@ -43,7 +43,6 @@ import TraitItemSheet from "./sheet/items/item-trait-sheet";
 import WeaponItemSheet from "./sheet/items/item-weapon-sheet";
 import ModificationItemSheet from "./sheet/items/item-modification-sheet";
 import ImpMalUtility from "./system/utility";
-import { ChoiceConfig } from "./apps/choice-config";
 import OriginItemSheet from "./sheet/items/item-origin-sheet";
 import RoleItemSheet from "./sheet/items/item-role-sheet";
 import FoundryOverrides from "./system/overrides";
@@ -144,9 +143,6 @@ Hooks.once("init", () =>
             ItemUse,
             AvailabilityTest
         },
-        apps : {
-            ChoiceConfig,
-        }
     };
 
     registerSettings();

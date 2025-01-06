@@ -207,7 +207,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
             if (penetrating)
             {
                 armourValue = Math.max(0, armourValue - Number(penetrating.value || 0));
-                // modifiers.push({value : penetrating.value, label : game.i18n.localize("IMPMAL.Penetrating")});
+                modifiers.push({value : penetrating.value, label : game.i18n.localize("IMPMAL.Penetrating"), applied : true});
             }
             modifiers.push({value : -armourValue, label : game.i18n.localize("IMPMAL.Protection"), armour : true});
             if (traits?.has("ineffective"))
@@ -218,8 +218,8 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         
         for (let modifier of modifiers)
         {
-            // Skip modifier if it's from armour when ignoreAP is true
-            if (!modifier.armour || !ignoreAP)
+            // Skip modifier if it's from armour when ignoreAP is true, or if the modifier has already been applied
+            if (!modifier.applied && (!modifier.armour || !ignoreAP))
             {
                 woundsGained += Number(modifier.value || 0);
             }
