@@ -1,4 +1,3 @@
-import { ChoiceModel } from "../shared/choices";
 import { ItemInfluenceModel } from "./components/influence";
 import { DualItemModel } from "./dual";
 let fields = foundry.data.fields;

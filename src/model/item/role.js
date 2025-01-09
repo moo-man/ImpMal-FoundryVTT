@@ -1,4 +1,3 @@
-import { ChoiceModel } from "../shared/choices";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
 
