@@ -173,6 +173,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         html.find(".damage-armour").on("mousedown", this._onDamageArmour.bind(this));
         html.find(".armour-config").on("click", this._onClickArmourConfig.bind(this));
         html.find(".clear-action").on("click", this._onClearAction.bind(this));
+        html.find(".add-effect").on("change", this._onAddEffect.bind(this));
         html.on("click", ".use-item", this._onUseItem.bind(this));
     }
 
@@ -567,6 +568,29 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
             details.slideUp(200);
         }
         details.toggleClass("collapsed");
+    }
+
+    _onAddEffect(ev)
+    {
+        let id = ev.target.value;
+        let effectData = foundry.utils.deepClone(game.impmal.config.zoneEffects[id]);
+        if (id && effectData)
+        {
+            foundry.utils.setProperty(effectData, "system.transferData.enableConditionScript", "");
+
+            let token = this.actor.getActiveTokens()[0]?.document;
+            if (token)
+            {
+                let inRegion = canvas.scene.regions.find(r => r.tokens.has(token));
+                if (inRegion)
+                {
+                    foundry.utils.setProperty(effectData, "system.sourceData.zone", inRegion.uuid);
+                }
+            }
+
+            foundry.utils.setProperty(effectData, "system.transferData.enableConditionScript", "");
+            this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]);
+        }
     }
 
     //#endregion

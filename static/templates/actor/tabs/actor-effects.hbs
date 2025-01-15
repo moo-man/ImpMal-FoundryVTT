@@ -33,6 +33,12 @@
                     </div>
                 </div>
             {{/each}}
+            <select class="add-effect">
+                <option>Add Effect</option>
+                {{#each (config "zoneEffects")}}
+                <option value="{{@key}}">{{this.name}}</option>
+                {{/each}}
+            </select>
     </div>
 
     <div>
