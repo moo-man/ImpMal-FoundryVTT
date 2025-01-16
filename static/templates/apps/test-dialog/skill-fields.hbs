@@ -10,3 +10,12 @@
             </select>
         </div>
     </div>
+
+    {{#if data.context.purge}}
+    <div class="form-group" data-tooltip="IMPMAL.MaximumPurgedTT" data-tooltip-direction="LEFT">
+        <label>{{localize "IMPMAL.MaximumPurged"}}</label>
+        <div class="form-fields">
+            <input type="number" name="maxPurged" value="{{fields.maxPurged}}">
+        </div>
+    </div>
+    {{/if}}

@@ -423,6 +423,8 @@
     "IMPMAL.MaxAugmetics" : "Max Augmetics",
     "IMPMAL.MaxWounds" : "Max Wounds",
     "IMPMAL.MaxCriticalWounds" : "Max Critical Wounds",
+    "IMPMAL.MaximumPurged" : "Max Purge",
+    "IMPMAL.MaximumPurgedTT" : "Limits the amount purged if succeeded",
     "IMPMAL.Medicae" : "Medicae",
     "IMPMAL.Medium" : "Medium",
     "IMPMAL.Melee" : "Melee",
