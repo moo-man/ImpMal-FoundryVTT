@@ -86,7 +86,29 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         return effects;
     }
 
+    async _onDrop(ev)
+    {
+        let sustaining = $(ev.target).parents(".sustaining")?.length;
+        let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
+        if (dropData.type == "Item" && sustaining)
+        {
+            let item = await Item.fromDropData(dropData);
+            if (item.type == "power" && item.parent?.uuid == this.actor.uuid)
+            {
+                this.object.update(this.object.system.warp.sustaining.add(item));
+            }
+            else 
+            {
+                super._onDrop(ev);
+            }
+    
+        }
+        else 
+        {
+            super._onDrop(ev);
+        }
 
+    }
 
     formatHitLocations(data)
     {
@@ -148,7 +170,6 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         html.find(".reload").on("click", this._onReload.bind(this));
         html.find(".roll").on("click", this._onRollClick.bind(this));
         html.find(".trait-action").on("click", this._onTraitClick.bind(this));
-        html.find(".remove-singleton").on("click", this._onRemoveSingleton.bind(this));
         html.find(".remove-ref").on("click", this._onRemoveReference.bind(this));
         html.find(".trait-roll").on("click", this._onTraitRoll.bind(this));
         html.find(".target-test").on("click", this._onTargetTest.bind(this));
@@ -174,6 +195,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         html.find(".armour-config").on("click", this._onClickArmourConfig.bind(this));
         html.find(".clear-action").on("click", this._onClearAction.bind(this));
         html.find(".add-effect").on("change", this._onAddEffect.bind(this));
+        html.find(".remove-sustaining").on("click", this._onRemoveSustaining.bind(this))
         html.on("click", ".use-item", this._onUseItem.bind(this));
     }
 
@@ -292,13 +314,6 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         {
             this.actor.setupTraitTest(itemId);
         }
-    }
-
-    _onRemoveSingleton(ev)
-    {
-        let type = ev.currentTarget.dataset.type;
-
-        this.actor.update(this.actor.system[type]?.delete());
     }
 
     
@@ -591,6 +606,13 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
             foundry.utils.setProperty(effectData, "system.transferData.enableConditionScript", "");
             this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]);
         }
+    }
+
+    _onRemoveSustaining(ev)
+    {
+        let index = this._getIndex(ev);
+        this.actor.update(this.actor.system.warp.sustaining.remove(index));
+        // this.actor.update(foundry.utils.mergeObject(this.actor.system.warp.sustaining.remove(index), {"system.warp.charge" : this.actor.system.warp.charge - document.system.rating}));
     }
 
     //#endregion

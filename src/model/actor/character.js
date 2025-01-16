@@ -98,6 +98,7 @@ export class CharacterModel extends StandardActorModel
     
     _addModelProperties()
     {
+        super._addModelProperties();
         this.hands.left.relative = this.parent.items;
         this.hands.right.relative = this.parent.items;
         this.origin.relative = this.parent.items

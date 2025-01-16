@@ -1,3 +1,17 @@
+<div class="actor-property sustaining" data-tooltip="Drag and drop a Power to Sustain it">
+    <label>Sustained Powers</label>
+    <div class="sustained-list">
+        {{#each system.warp.sustaining.documents}}
+        <div class="power" data-index="{{@key}}">
+            <img src="{{this.img}}">
+            <label>{{this.name}} ({{this.system.rating}})</label>
+            <div class="controls">
+                <a class="remove-sustaining"><i class="fa-solid fa-xmark"></i></a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
 <div class="warp-charge">
     <div class="actor-property">
         <label class="property-label">{{localize "IMPMAL.WarpCharge"}}</label>

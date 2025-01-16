@@ -459,6 +459,39 @@
     }
 
     .powers {
+
+        .sustaining {
+
+            line-height: 2.5rem;
+            width: 100%;
+            padding: 5px;
+            > label {
+                text-align: center;
+                line-height: 1rem;
+                font-weight: bold;
+
+            }
+            .sustained-list {
+                .power {
+
+                    display:flex;
+                    flex-direction: row;
+                    align-items: center;
+                    label {
+                        flex: 1;
+                    }
+                    img {
+                    flex: 0 0 2.5rem;
+                    height: 2.5rem;
+                    width: 2.5rem;
+                }
+                .controls {
+                    flex: 0 0 40px;
+                }
+            }
+            }
+        }
+
         .warp-charge {
             white-space: nowrap;
             a {
