@@ -146,7 +146,7 @@ export class CharacterModel extends StandardActorModel
         {
             if (!overburdened)
             {   
-                effect = ImpMalEffect.findEffect("overburdened");
+                effect = "overburdened";
             }
 
             if (restrained?.isComputed)
@@ -158,15 +158,13 @@ export class CharacterModel extends StandardActorModel
         {
             if (!restrained)
             {   
-                effect = ImpMalEffect.findEffect("restrained");
+                effect = "restrained";
             }
         }
 
         if (effect)
         {
-            let data = ImpMalEffect.getCreateData(effect);
-            setProperty(data, "system.computed", true);
-            ImpMalEffect.create(data, {parent : actor});
+            actor.addCondition(effect, null, {"system.computed" : true})
         }
 
     }

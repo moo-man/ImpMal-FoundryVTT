@@ -21,7 +21,7 @@ export class ImpMalActiveEffectModel extends WarhammerActiveEffectModel {
     {
         let schema = super.defineSchema();
         schema.type = new fields.StringField({});
-        schema.computed = new fields.BooleanField({initial: false})
+        schema.computed = new fields.BooleanField()
         schema.zone.fields.traits = new fields.EmbeddedDataField(ImpMalZoneTraitsModel)
         return schema
     }

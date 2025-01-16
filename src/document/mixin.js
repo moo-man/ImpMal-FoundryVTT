@@ -4,7 +4,7 @@ import { ImpMalEffect } from "./effect";
 export default ImpMalDocumentMixin = (cls) => class extends cls 
 {
 
-    addCondition(key, {overlay=false, type, origin, duration={}, create=true, flags={}}={})
+    addCondition(key, type, mergeData={})
     {
 
         let existing = this.hasCondition(key);
@@ -25,10 +25,9 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
             effectData = ImpMalEffect.findEffect(key, type); // defaults to minor
         }
 
-        let createData = ImpMalEffect.getCreateData(effectData, overlay);
-        mergeObject(createData.flags || {}, flags, {overwrite : false});
-        createData.origin = origin;
-        mergeObject(createData.duration, duration);
+        let createData = ImpMalEffect.getCreateData(effectData);
+        
+        foundry.utils.mergeObject(createData, mergeData);
 
 
         // Replace minor with major if existing
@@ -47,17 +46,10 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
         else 
         {
             const cls = getDocumentClass("ActiveEffect");
-            if (create)
+            return cls.create(createData, {parent: this, condition: true}).then(e => // condition flag tells the creation flow that this has gone through addCondition
             {
-                return cls.create(createData, {parent: this, condition: true}).then(e => // condition flag tells the creation flow that this has gone through addCondition
-                {
-                    this.runScripts("createCondition", e);
-                }); 
-            }
-            else 
-            {
-                return createData;
-            }
+                this.runScripts("createCondition", e);
+            }); 
         }
     }
 

@@ -6,26 +6,6 @@ export class ImpMalEffect extends WarhammerActiveEffect
         exclude : {}
     };
 
-    /** 
-     * This function handles creation of new conditions on an actor
-     * If an Item adds a Condition, prevent that condition from being added, and instead call `addCondition` 
-     * This prevents the Condition from being removed when the item is removed, but more importantly
-     * `addCondition` handles Minor conditions turning into Major if a second Minor is added.
-     * 
-     * @param {ImpMalEffect} Effect being created
-     * @returns 
-     */
-    async _handleConditionCreation(data, options)
-    {
-        // options.condition tells us that it has already gone through addCondition, so this avoids a loop
-        if (this.isCondition && !options.condition) 
-        {
-            // If adding a condition, prevent it and go through `addCondition`
-            this.parent?.addCondition(this.key, {type : this.flags.impmal?.type, origin: this.origin, flags : this.flags});
-            return true;
-        }
-    }
-
     async resistEffect()
     {
         let result = await super.resistEffect();
