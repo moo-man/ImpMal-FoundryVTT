@@ -263,7 +263,7 @@ const IMPMAL = {
         },
         difficult : {
             modifier : -10,
-            name : "IMPMAL.DifficultTerrain"
+            name : "IMPMAL.Difficult"
         },
         hard: {
             modifier : -20,
