@@ -103,6 +103,10 @@ export class SkillTest extends CharacteristicTest
             if (this.succeeded) 
             {
                 this.context.purged = Math.min(this.actor.system.warp.charge, this.actor.system.characteristics.wil.bonus + this.result.SL); // If reroll, remove previous purge
+                if (this.context.maxPurged)
+                {
+                    this.context.purged = Math.min(this.context.purged, this.context.maxPurged);
+                }
                 this.actor.update({ "system.warp.charge": this.actor.system.warp.charge - this.context.purged });
             }
         }

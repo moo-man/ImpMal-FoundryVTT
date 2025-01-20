@@ -95,6 +95,11 @@ export class PowerTest extends SkillTest
             }
 
             this.actor.update({"system.warp.charge" : charge});
+
+            if (this.result.outcome == "success" && this.item.system.duration == "sustained")
+            {
+                this.actor.update(this.actor.system.warp.sustaining.add(this.item));
+            }
         }
     }
 

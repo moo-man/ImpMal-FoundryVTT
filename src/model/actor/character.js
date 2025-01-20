@@ -100,6 +100,7 @@ export class CharacterModel extends StandardActorModel
     
     _addModelProperties()
     {
+        super._addModelProperties();
         this.hands.left.relative = this.parent.items;
         this.hands.right.relative = this.parent.items;
         this.origin.relative = this.parent.items
@@ -132,53 +133,6 @@ export class CharacterModel extends StandardActorModel
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
         this.influence.compute(Array.from(this.parent.allApplicableEffects()), this.parent.itemTypes, this.parent.type, this.patron.document?.system?.influence);
-    }
-
-    _checkEncumbranceEffects(actor)
-    {
-        let overburdened = actor.hasCondition("overburdened");
-        let restrained = actor.hasCondition("restrained");
-        let effect;
-
-        if (actor.system.encumbrance.state == 0)
-        {
-            if (overburdened?.isComputed)
-            {
-                overburdened.delete();
-            }
-            if (restrained?.isComputed)
-            {
-                restrained.delete();
-            }
-        }
-
-        else if (actor.system.encumbrance.state == 1)
-        {
-            if (!overburdened)
-            {   
-                effect = ImpMalEffect.findEffect("overburdened");
-            }
-
-            if (restrained?.isComputed)
-            {
-                restrained.delete();
-            }
-        }
-        else if (actor.system.encumbrance.state == 2)
-        {
-            if (!restrained)
-            {   
-                effect = ImpMalEffect.findEffect("restrained");
-            }
-        }
-
-        if (effect)
-        {
-            let data = ImpMalEffect.getCreateData(effect);
-            setProperty(data, "system.computed", true);
-            ImpMalEffect.create(data, {parent : actor});
-        }
-
     }
 
 

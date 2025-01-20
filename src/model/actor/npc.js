@@ -19,6 +19,7 @@ export class NPCModel extends StandardActorModel
 
     _addModelProperties()
     {
+        super._addModelProperties();
         this.faction.relative = this.parent.items
     }
 

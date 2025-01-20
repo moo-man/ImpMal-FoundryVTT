@@ -15,7 +15,7 @@ let scriptLoader = `export default function()
 {
     Hooks.on("init", () => 
     {
-        mergeObject(game.impmal.config.effectScripts, ${JSON.stringify(scriptObj)});
+        foundry.utils.mergeObject(game.impmal.config.effectScripts, ${JSON.stringify(scriptObj)});
     });
 
 }`

@@ -12,7 +12,7 @@
                         <div class="singleton-item" data-id="{{system.origin.document.id}}">
                             <a class="list-edit">{{system.origin.name}}</a>
                         </div>
-                        <a class="remove-singleton" data-type="origin"><i class="fa-solid fa-xmark"></i></a>
+                        <a class="remove-singleton" data-path="system.origin"><i class="fa-solid fa-xmark"></i></a>
                         {{else}}
                         <input type="text" name="system.origin.name" value="{{system.origin.name}}" placeholder="{{localize 'IMPMAL.Origin'}}">
                         {{/if}}
@@ -25,7 +25,7 @@
                         <div class="singleton-item" data-id="{{system.faction.document.id}}">
                             <a class="list-edit">{{system.faction.name}}</a>
                         </div>
-                        <a class="remove-singleton" data-type="faction"><i class="fa-solid fa-xmark"></i></a>
+                        <a class="remove-singleton" data-path="system.faction"><i class="fa-solid fa-xmark"></i></a>
                         {{else}}
                         <input type="text" name="system.faction.name" value="{{system.faction.name}}" placeholder="{{localize 'IMPMAL.Faction'}}">
                         {{/if}}
@@ -40,7 +40,7 @@
                         <div class="singleton-item" data-id="{{system.role.document.id}}">
                             <a class="list-edit">{{system.role.name}}</a>
                         </div>
-                        <a class="remove-singleton" data-type="role"><i class="fa-solid fa-xmark"></i></a>
+                        <a class="remove-singleton" data-path="system.role"><i class="fa-solid fa-xmark"></i></a>
                         {{else}}
                         <input type="text" name="system.role.name" value="{{system.role.name}}" placeholder="{{localize 'IMPMAL.Role'}}">
                         {{/if}}

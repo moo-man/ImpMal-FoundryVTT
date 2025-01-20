@@ -24,7 +24,10 @@ export default class ImpMalPatronSheet extends ImpMalActorSheet
 
         data.enriched.items = await this.enrichItemDescriptions(data);
 
-        data.effects = this.actor.effects.contents.concat(this.actor.items.reduce((prev, current) => prev.concat(current.effects.contents), [])).filter(e => e.system.transferData.documentType != "character");
+        data.effects = this.actor.effects.contents.concat(this.actor.items
+            .reduce((prev, current) => prev.concat(current.effects.contents), [])
+            .filter(e => e.parent.type == "boonLiability" ? e.parent.system.visible : true))
+            .filter(e => e.system.transferData.documentType != "character");
         return data;
     }
 

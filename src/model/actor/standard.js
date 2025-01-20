@@ -18,7 +18,8 @@ export class StandardActorModel extends BaseActorModel
         schema.combat = new fields.EmbeddedDataField(StandardCombatModel);
         schema.warp = new fields.SchemaField({
             charge : new fields.NumberField({min: 0}),
-            state : new fields.NumberField({initial: 0, min: 0})
+            state : new fields.NumberField({initial: 0, min: 0}),
+            sustaining : new fields.EmbeddedDataField(DocumentReferenceListModel)
         });
 
         schema.autoCalc = new fields.SchemaField({
@@ -84,6 +85,14 @@ export class StandardActorModel extends BaseActorModel
         this.characteristics.computeBonuses();
         this.combat.criticals.value = this.parent.itemTypes.critical.length;
         this.warp.threshold = this.characteristics.wil.bonus; // Put this in base so it's modifiable by effects
+        if (this.warp.sustaining.list.length)
+        {
+            let minCharge = this.warp.sustaining.documents.reduce((sum, power) => sum + power?.system?.rating || 0, 0);
+            if (this.warp.charge < minCharge)
+            {
+                    this.warp.charge = minCharge;
+            }
+        }
 
     }
 
@@ -157,6 +166,57 @@ export class StandardActorModel extends BaseActorModel
         {
             this.warp.state = 0;
         }
+    }
+
+    _checkEncumbranceEffects(actor)
+    {
+        let overburdened = actor.hasCondition("overburdened");
+        let restrained = actor.hasCondition("restrained");
+        let effect;
+
+        if (actor.system.encumbrance.state == 0)
+        {
+            if (overburdened?.isComputed)
+            {
+                overburdened.delete();
+            }
+            if (restrained?.isComputed)
+            {
+                restrained.delete();
+            }
+        }
+
+        else if (actor.system.encumbrance.state == 1)
+        {
+            if (!overburdened)
+            {   
+                effect = "overburdened";
+            }
+
+            if (restrained?.isComputed)
+            {
+                restrained.delete();
+            }
+        }
+        else if (actor.system.encumbrance.state == 2)
+        {
+            if (!restrained)
+            {   
+                effect = "restrained";
+            }
+        }
+
+        if (effect)
+        {
+            actor.addCondition(effect, null, {"system.computed" : true})
+        }
+
+    }
+
+    _addModelProperties()
+    {
+        super._addModelProperties();
+        this.warp.sustaining.relative = this.parent.items;
     }
 }
 

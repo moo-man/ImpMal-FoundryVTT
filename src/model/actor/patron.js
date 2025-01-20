@@ -24,6 +24,7 @@ export class PatronModel extends BaseActorModel
 
     _addModelProperties()
     {
+        super._addModelProperties();
         this.faction.relative = this.parent.items
         this.duty.relative = this.parent.items
     }
