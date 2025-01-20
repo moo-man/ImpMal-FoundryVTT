@@ -1,4 +1,4 @@
-import { ImpMalItem } from "../../document/item";
+import { PostedItemMessageModel } from "../../model/message/item";
 import ChatHelpers from "../chat-helpers";
 import { ImpMalChatMessage } from "../chat-message";
 
@@ -21,7 +21,7 @@ export default function()
 
     Hooks.on("renderChatMessage", (app, html) => 
     {
-        ImpMalItem.itemPostListeners(html);
+        PostedItemMessageModel.itemPostListeners(html);
         ChatHelpers.removeGMOnlyElements(html);
         if (!app.isAuthor && !app.isOwner)
         {

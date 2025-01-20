@@ -1,3 +1,4 @@
+import { PostedItemMessageModel } from "../model/message/item";
 import ImpMalDocumentMixin from "./mixin";
 
 export class ImpMalItem extends ImpMalDocumentMixin(WarhammerItem)
@@ -127,31 +128,6 @@ export class ImpMalItem extends ImpMalDocumentMixin(WarhammerItem)
 
     async postItem()
     {
-        let summary = await renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", await this.system.summaryData());
-        let content = await renderTemplate("systems/impmal/templates/chat/item-post.hbs", {name : this.name, img : this.img, summary, item : this});
-        ChatMessage.create({
-            content,
-            flags: {
-                impmal: {
-                    itemData : this.toObject()
-                }
-            }
-        });
-    }
-
-    static itemPostListeners(html)
-    {
-        let id = html[0].dataset.messageId;
-        let message = game.messages.get(id);
-        let post = html.find(".item-post")[0];
-        if (post)
-        {
-            post.draggable = true; 
-            post.addEventListener("dragstart", ev => 
-            {
-                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "Item", data : message.getFlag("impmal", "itemData")}));
-            });
-
-        }
+        PostedItemMessageModel.postItem(this);
     }
 }

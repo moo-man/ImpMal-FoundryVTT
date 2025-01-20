@@ -1,4 +1,4 @@
-export class ImpMalMessageModel extends WarhammerTestMessageModel 
+export class ImpMalTestMessageModel extends WarhammerTestMessageModel 
 {
     static defineSchema() 
     {

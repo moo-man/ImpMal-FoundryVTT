@@ -63,8 +63,10 @@ import loadScripts from "../loadScripts.js";
 import tokenHelpers from "./system/token-helpers.js";
 import { ImpMalActiveEffectModel } from "./model/effect/effect.js";
 import Migration from "./system/migration.js";
-import { ImpMalMessageModel } from "./model/message.js";
+import { ImpMalTestMessageModel } from "./model/message/test.js";
 import ZoneConfig from "./apps/zone-config.js";
+import { RewardMessageModel } from "./model/message/reward.js";
+import { PostedItemMessageModel } from "./model/message/item.js";
 
 Hooks.once("init", () => 
 {
@@ -126,7 +128,9 @@ Hooks.once("init", () =>
     CONFIG.Item.dataModels["trait"] = TraitModel;
 
     CONFIG.ActiveEffect.dataModels["base"] = ImpMalActiveEffectModel
-    CONFIG.ChatMessage.dataModels["test"] = ImpMalMessageModel;
+    CONFIG.ChatMessage.dataModels["test"] = ImpMalTestMessageModel;
+    CONFIG.ChatMessage.dataModels["reward"] = RewardMessageModel;
+    CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
 
     game.impmal = {
         config : IMPMAL,

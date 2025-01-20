@@ -160,18 +160,7 @@ export class ImpMalChatMessage extends ChatMessage
         {
             let el = $(ev.target);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
-            let itemData = message.getFlag("impmal", "itemData");
-    
-            let dialogData = AvailabilityDialog.setupData({availability : itemData.system.availability},null, {title : {append : " - " + itemData.name}});
-    
-            let setupData = await AvailabilityDialog.awaitSubmit(dialogData);
-    
-            let test = AvailabilityTest.fromData(setupData);
-            await test.roll();
-            test.sendToChat();
-            return test;
-        
-
+            message.system.rollAvailability();
         });
     }
 

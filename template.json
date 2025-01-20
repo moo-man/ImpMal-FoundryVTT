@@ -775,7 +775,9 @@
   "ChatMessage" : {
     "types" : [
       "base",
-      "test"
+      "test",
+      "reward",
+      "item"
     ]
   }
 }
