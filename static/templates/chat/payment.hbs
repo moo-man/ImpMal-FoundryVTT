@@ -1,0 +1,8 @@
+<div class="impmal payment">
+    {{log this}}
+    {{#each receivers}}
+        <div>
+            <span>{{this.name}}: {{../amount}} {{localize "IMPMAL.Solars"}}</span>
+        </div>
+    {{/each}}
+</div>
