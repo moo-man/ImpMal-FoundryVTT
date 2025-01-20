@@ -162,6 +162,51 @@ export class StandardActorModel extends BaseActorModel
         }
     }
 
+    _checkEncumbranceEffects(actor)
+    {
+        let overburdened = actor.hasCondition("overburdened");
+        let restrained = actor.hasCondition("restrained");
+        let effect;
+
+        if (actor.system.encumbrance.state == 0)
+        {
+            if (overburdened?.isComputed)
+            {
+                overburdened.delete();
+            }
+            if (restrained?.isComputed)
+            {
+                restrained.delete();
+            }
+        }
+
+        else if (actor.system.encumbrance.state == 1)
+        {
+            if (!overburdened)
+            {   
+                effect = "overburdened";
+            }
+
+            if (restrained?.isComputed)
+            {
+                restrained.delete();
+            }
+        }
+        else if (actor.system.encumbrance.state == 2)
+        {
+            if (!restrained)
+            {   
+                effect = "restrained";
+            }
+        }
+
+        if (effect)
+        {
+            actor.addCondition(effect, null, {"system.computed" : true})
+        }
+
+    }
+
     _addModelProperties()
     {
         super._addModelProperties();

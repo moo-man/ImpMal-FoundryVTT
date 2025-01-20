@@ -125,51 +125,6 @@ export class CharacterModel extends StandardActorModel
         this.influence.compute(Array.from(this.parent.allApplicableEffects()), this.parent.itemTypes, this.parent.type, this.patron.document?.system?.influence);
     }
 
-    _checkEncumbranceEffects(actor)
-    {
-        let overburdened = actor.hasCondition("overburdened");
-        let restrained = actor.hasCondition("restrained");
-        let effect;
-
-        if (actor.system.encumbrance.state == 0)
-        {
-            if (overburdened?.isComputed)
-            {
-                overburdened.delete();
-            }
-            if (restrained?.isComputed)
-            {
-                restrained.delete();
-            }
-        }
-
-        else if (actor.system.encumbrance.state == 1)
-        {
-            if (!overburdened)
-            {   
-                effect = "overburdened";
-            }
-
-            if (restrained?.isComputed)
-            {
-                restrained.delete();
-            }
-        }
-        else if (actor.system.encumbrance.state == 2)
-        {
-            if (!restrained)
-            {   
-                effect = "restrained";
-            }
-        }
-
-        if (effect)
-        {
-            actor.addCondition(effect, null, {"system.computed" : true})
-        }
-
-    }
-
 
     static migrateData(data)
     {

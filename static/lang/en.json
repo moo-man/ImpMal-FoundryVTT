@@ -281,6 +281,7 @@
     "IMPMAL.EffectNewScript" : "New Script",
     "IMPMAL.EffectConditionScriptCannotChange" : "Cannot change enabled/disabled when managed by Condition Script",
     "IMPMAL.Elite" : "Elite",
+    "IMPMAL.Encumbrance" : "Encumbrance",
     "IMPMAL.Enc." : "Enc.",
     "IMPMAL.Engineering" : "Engineering",
     "IMPMAL.Enormous" : "Enormous",
