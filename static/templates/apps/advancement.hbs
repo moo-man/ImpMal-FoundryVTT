@@ -4,6 +4,7 @@
             <a class="item" data-tab="characteristics">{{localize "IMPMAL.Characteristics"}}</a>
             <a class="item" data-tab="skills">{{localize "IMPMAL.Skills"}}</a>
             <a class="item" data-tab="items">{{localize "Items"}}</a>
+            <a class="item" data-tab="log">{{localize "IMPMAL.Log"}}</a>
             <a class="item" data-tab="other">{{localize "IMPMAL.Other"}}</a>
         </nav>
         <div class="tab-content">
@@ -59,6 +60,7 @@
                 {{/each}}
             </div>
             <div class="tab advancement-list" data-tab="items">
+                <p>All Owned Items that have an associated XP Cost</p>
                 <div class="header">
                     <div class="name">{{localize "Name"}}</div>
                     <div class="xp">{{localize "IMPMAL.XP"}}</div>
@@ -70,7 +72,25 @@
                 </div>
                 {{/each}}
             </div>
+            <div class="tab advancement-list" data-tab="log">
+                <p>Record of all the changes in XP Total and the associated reason.</p>
+                <div class="header">
+                    <div class="name">{{localize "IMPMAL.Reason"}}</div>
+                    <div class="xp">{{localize "IMPMAL.XP"}}</div>
+                    <div class="xp">{{localize "IMPMAL.Total"}}</div>
+                    <a></a>
+                </div>
+                {{#each actor.system.xp.log.list}}
+                <div data-index="{{@key}}" class="log-entry">
+                    <input type="text" class="name log-edit" name="reason" value="{{this.reason}}">
+                    <input type="number" class="xp log" value="{{this.xp}}" disabled>
+                    <input type="number" class="xp log" value="{{this.total}}" disabled>
+                    <a class="log-remove"><i class="fa-solid fa-xmark"></i></a>
+                </div>
+                {{/each}}
+            </div>
             <div class="tab advancement-list" data-tab="other">
+                <p>Miscellaneous modifications to total spent XP</p>
                 <div class="header">
                     <div class="name">{{localize "IMPMAL.Description"}}</div>
                     <div class="xp">{{localize "IMPMAL.XP"}}</div>

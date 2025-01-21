@@ -1,4 +1,3 @@
-import ChoiceTree from "../choice-tree";
 import { ChargenStage } from "./stage";
 export class FactionStage extends ChargenStage {
     journalId = "JournalEntry.rwldURPIV6B6iNBT.JournalEntryPage.fznKbHtkiCXchcDg"
@@ -100,7 +99,7 @@ export class FactionStage extends ChargenStage {
 
         html.find(".choice-menu").click(async ev => {
             let path = ev.currentTarget.dataset.path;
-            let choices = await ChoiceTree.awaitSubmit(this.context.faction.system.character[path]);
+            let choices = await ChoiceDecision.awaitSubmit(this.context.faction.system.character[path]);
             if (choices.length)
             {
                 this.context[path] = choices;

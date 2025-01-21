@@ -28,4 +28,16 @@ export default function()
             ChatHelpers.removeNonOwnerElements(html);
         }
     });
+
+    Hooks.on("createChatMessage", (document, options, user) => {
+        let reward = document.getFlag("impmal", "rewardReceived")
+        if (reward && game.users.activeGM.id == game.user.id)
+        {
+            let source = game.messages.get(reward.source);
+            if (source)
+            {
+                source.update({"system.receivedBy" : source.system.receivedBy.concat(reward.actor)})
+            }
+        }
+    })
 }

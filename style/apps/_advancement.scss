@@ -20,6 +20,7 @@
         > * {
             display: flex;
             text-align: center;
+            align-items: center;
             > * {
                 flex: 1
             }
@@ -46,6 +47,20 @@
 
         input {
             margin: 5px;
+        }
+
+        &[data-tab="log"]
+        {
+            a {
+                flex : 0 0 10px;
+            }
+            .name {
+                flex: 3;
+            }
+            input {
+                margin-left: 0px;
+                margin-right: 0px;
+            }
         }
     }
 

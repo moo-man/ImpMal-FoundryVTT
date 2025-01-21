@@ -162,6 +162,43 @@ export class ImpMalChatMessage extends ChatMessage
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
             message.system.rollAvailability();
         });
+
+        html.on("click", ".receive-reward", async ev => 
+        {
+            let el = $(ev.target);
+            let message = game.messages.get(el.parents(".message").attr("data-message-id"));
+
+            let actors=[];
+
+            if (game.user.isGM)
+            {
+                if (game.user.targets.size)
+                {
+                    actors = game.user.targets.map(i => i.actor).filter(i => i);
+                }
+                else 
+                {
+                    return ui.notifications.error("IMPMAL.ErrorTargetActorsForReward", {localize : true})
+                }
+            }
+            else 
+            {
+                if (game.user.character)
+                {
+                    actors = [game.user.character]
+                }
+                else 
+                {
+                    return ui.notifications.error("IMPMAL.ErrorNoActorAssigned", {localize : true})
+                }
+            }
+
+            for(let a of actors)
+            {
+                message.system.applyRewardTo(a);
+            }
+
+        });
     }
 
     static addTestContextOptions(options)

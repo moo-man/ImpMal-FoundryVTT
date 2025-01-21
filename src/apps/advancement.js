@@ -30,7 +30,6 @@ export class AdvancementForm extends FormApplication
         return data;
     }
 
-
     async _updateObject()
     {
         this.object.update(this.actor.toObject());
@@ -90,6 +89,29 @@ export class AdvancementForm extends FormApplication
                 newList = this.actor.system.xp.other.edit(index, other);
             }
 
+            this.actor.updateSource({"system.xp" : newList});
+            this.render(true);
+        });
+
+        html.find(".log-edit").on("change", (ev) => 
+        {
+            let index = ev.currentTarget.parentElement.dataset.index;
+            let newList = this.actor.system.xp.log.edit(index, {reason : ev.target.value});
+            this.actor.updateSource({"system.xp" : newList});
+            this.render(true);
+        });
+
+        html.find(".log-remove").on("click", async (ev) => 
+        {
+            let index = ev.currentTarget.parentElement.dataset.index;
+            let entry = this.actor.system.xp.log.list[index];
+            let revert = await foundry.applications.api.DialogV2.confirm({content : `Revert ${entry.xp} XP?`})
+            let newList = this.actor.system.xp.log.remove(index);
+
+            if (revert)
+            {
+                this.actor.updateSource({"system.xp.total" : this.actor.system.xp.total - entry.xp});
+            }
             this.actor.updateSource({"system.xp" : newList});
             this.render(true);
         });

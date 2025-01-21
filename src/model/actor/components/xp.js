@@ -11,6 +11,11 @@ export class XPModel extends foundry.abstract.DataModel
             xp : new fields.NumberField({initial : 0}),
             description : new fields.StringField({})
         }));
+        schema.log = ListModel.createListModel(new fields.SchemaField({
+            xp : new fields.NumberField({initial : 0}),
+            total : new fields.NumberField({}),
+            reason : new fields.StringField({})
+        }));
         return schema;
     }
 
@@ -76,7 +81,6 @@ export class XPModel extends foundry.abstract.DataModel
     {
         return powers.reduce((prev, current) => prev += current.system.xp, 0);
     }
-    
     
     static _computeOtherXP(xp)
     {

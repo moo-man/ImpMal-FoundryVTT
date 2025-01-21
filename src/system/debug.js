@@ -1,6 +1,3 @@
-import CharGenIM from "../apps/chargen/char-gen";
-import ChoiceTree from "../apps/choice-tree";
-
 export default function() 
 {
     document.addEventListener("keydown", (ev) => 

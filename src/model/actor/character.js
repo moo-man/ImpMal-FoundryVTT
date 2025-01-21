@@ -84,6 +84,12 @@ export class CharacterModel extends StandardActorModel
         {
             data.system.warp.state = 0;
         }
+
+        if (options.changed.system?.xp?.total && !options.skipXPReason)
+        {
+            let reason = await ValueDialog.create({title : "XP Change", text : "Reason for XP Change?"});
+            foundry.utils.mergeObject(data.system.xp, this.xp.log.add({xp : options.changed.system?.xp?.total - this.xp.total, reason : reason || "Unspecified Reason", total : options.changed.system?.xp?.total}));
+        }
     }
 
     async _onUpdate(data, options, user)
@@ -133,6 +139,27 @@ export class CharacterModel extends StandardActorModel
         this.xp.spent = XPModel.computeSpentFor(this.parent);
         this.xp.available = this.xp.total - this.xp.spent;
         this.influence.compute(Array.from(this.parent.allApplicableEffects()), this.parent.itemTypes, this.parent.type, this.patron.document?.system?.influence);
+    }
+
+    applyReward({xp, solars, reason})
+    {
+        let update = { system : {}};
+
+        if (solars)
+        {
+            update.system.solars = this.solars + solars;
+        }
+
+        if (xp)
+        {
+            // Add to log
+            update.system.xp = this.xp.log.add({reason : reason || "Unspecified Reason", xp, total : this.xp.total + xp});
+
+            // Add to actual numerical total
+            update.system.xp.total = this.xp.total + xp;
+        }
+
+        return update;
     }
 
 
