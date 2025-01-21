@@ -4,6 +4,11 @@ export default function()
 {
     Hooks.on("ready", () => 
     {
+        if (game.settings.get("wfrp4e", "disableTheme"))
+        {
+            document.body.classList.add("no-theme")
+        }
+        
         SocketHandlers.register(socketHandlers);
         Object.defineProperty(User.prototype, "isPrimaryGM", {
             get : function isPrimaryGM() 

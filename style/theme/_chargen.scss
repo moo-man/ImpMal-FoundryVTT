@@ -1,0 +1,34 @@
+body:not(.no-theme) .impmal.chargen {
+    .chargen-content {
+
+        table {
+            tr {
+                border-bottom: 1px solid var(--impmal-lightblue);
+                
+                td {
+                    border-right: 1px solid var(--impmal-lightblue);
+                }
+            }
+        }
+    }
+}
+
+.impmal.chargen-stage {
+
+    .choices {
+        p {
+            color: var(--impmal-lightgreen);
+        }
+    }
+
+    .rolled-item div.item-image
+    {
+        border-color: var(--impmal-lightgreen);
+    }
+    
+    &.characteristics {
+        .ch-drag {
+            border-color: var(--impmal-lightgreen);
+        }
+    }
+}

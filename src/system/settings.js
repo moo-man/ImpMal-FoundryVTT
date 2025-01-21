@@ -73,4 +73,15 @@ export default function registerSettings()
             "origin" : "nyaEnNOrR8Sq8Wf4"
         }
     });
+
+    game.settings.register("impmal", "disableTheme", {
+        name: "IMPMAL.DisableTheme",
+        hint: "IMPMAL.DisableThemeHint",
+        scope: "user",
+        config: true,
+        default: false,
+        type: Boolean,
+        onChange : rule => rule ? document.body.classList.add("no-theme") : document.body.classList.remove("no-theme")
+      });
+  
 }

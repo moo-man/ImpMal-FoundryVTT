@@ -267,6 +267,8 @@
     "IMPMAL.Difficulty" : "Difficulty",
     "IMPMAL.DifficultTerrain" : "Difficult Terrain",
     "IMPMAL.DisabledEffects" : "Disabled Effects",
+    "IMPMAL.DisableTheme" : "Disable Theme",
+    "IMPMAL.DisableThemeHint" : "Disables the Warhammer theming of default Foundry UI (Document Sheet theme can be toggled via the sheet configuration at the top of the sheet).",
     "IMPMAL.Disadvantage" : "Disadvantage",
     "IMPMAL.Discipline" : "Discipline",
     "IMPMAL.Disengage" : "Disengage",

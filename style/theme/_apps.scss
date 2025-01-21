@@ -1,0 +1,34 @@
+@use "./var" as *;
+
+
+body:not(.no-theme) .impmal.advancement {
+    .total,
+    .value {
+        font-family: monospace;
+    }
+
+    .advancement-list {
+        .header {
+            border-bottom: 1px solid var(--impmal-lightblue);
+            margin-bottom: 3px;
+        }
+        .characteristic:nth-child(even),
+        .skill:nth-child(even)
+        {
+            background-color: rgba(6, 92, 99, 0.3)
+        }
+
+        > * {
+            padding: 3px;
+        }
+    }
+
+    .advancement-info {
+        background-color: var(--impmal-lightblue);
+    }
+
+    .overspent {
+        position: relative;
+        @include scan;
+    }
+}

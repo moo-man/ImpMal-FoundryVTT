@@ -1,0 +1,137 @@
+@use "./var" as *;
+
+body:not(.no-theme) #chat-log {
+  .chat-message {
+
+    h2, h3 {
+      border-color: var(--impmal-lightgreen)
+    }
+
+    &.highlight,
+    &.highlight-delayed {
+      box-shadow: 0px 0px 10px var(--impmal-lightgreen) inset;
+    }
+
+    border: 3px double var(--impmal-darkgreen);
+    // background: rgba(0, 0, 0, 0.5);
+    background: rgba(37, 100, 75, 0.5);
+    color: #DDD;
+
+    &.whisper {
+      background : rgba(6, 92, 99, 0.5);
+      border-color: var(--impmal-lightblue);
+
+    }
+
+    &.blind {
+      background : rgba(125, 66, 207, 0.5);
+      border-color: rgba(125, 66, 207, 1);
+    }
+
+    .message-header {
+      color: #DDD;
+    }
+
+    .item-post {
+      border-color: var(--impmal-lightgreen)
+    }
+
+    button {
+      background-color: var(--impmal-darkgreen);
+      border: 1px solid var(--impmal-lightgreen);
+      box-shadow: 0 0 5px var(--impmal-lightgreen) inset;
+
+      &:hover {
+        background-color: var(--impmal-lightgreen);
+      }
+    }
+
+    .dice-roll .dice-formula,
+    .dice-roll .dice-total {
+      border-color: var(--impmal-lightgreen);
+      box-shadow: 0 0 2px var(--impmal-lightgreen) inset;
+      font-family: monospace;
+    }
+
+    .dice-total {
+      
+      @include scan;
+      
+    }
+    
+
+    .dice-tooltip {
+      .dice-rolls .roll {
+        font-family: monospace;
+      }
+
+      .part-header {
+        border-color: var(--impmal-lightgreen);
+
+        .part-total {
+          border-color: var(--impmal-lightgreen);
+        }
+      }
+    }
+
+    img.result-image {
+      border-color: var(--impmal-lightgreen);
+    }
+
+
+
+    .impmal.test {
+      .sl {
+        div {
+          background-image: url(./assets/ui/grid.webp);
+          background-size: cover;
+          border: 1px solid var(--impmal-lightgreen);
+          position: relative;
+          @include scan;
+          font-family: monospace;
+        }
+      }
+
+      .tags {
+        >* {
+          border-color: var(--impmal-lightgreen);
+          border-radius: 0px;
+          background: var(--impmal-darkgreen);
+          box-shadow: 0 0 5px var(--impmal-lightgreen);
+        }
+      }
+
+      .comparison {
+        .roll {
+          .reverse-icon {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, var(--impmal-lightgreen) 50%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        }
+      }
+
+      .fumble a {
+        color: var(--impmal-orange);
+      }
+
+
+  
+      .color-positive{
+        color: var(--impmal-lightgreen);
+        i {
+          color: var(--impmal-lightgreen)
+        }
+      }
+      .color-negative{
+        color: var(--impmal-orange);
+        i {
+          color: var(--impmal-orange)
+        }
+
+      }
+    }
+
+  }
+}
