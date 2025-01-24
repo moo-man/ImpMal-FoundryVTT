@@ -85,7 +85,7 @@
                     <input type="text" class="name log-edit" name="reason" value="{{this.reason}}">
                     <input type="number" class="xp log" value="{{this.xp}}" disabled>
                     <input type="number" class="xp log" value="{{this.total}}" disabled>
-                    <a class="log-remove"><i class="fa-solid fa-xmark"></i></a>
+                    {{#if ../options.canEdit}} <a class="log-remove"><i class="fa-solid fa-xmark"></i></a>{{/if}}
                 </div>
                 {{/each}}
             </div>
@@ -97,13 +97,13 @@
                 </div>
                 {{#each actor.system.xp.other.list}}
                 <div data-index="{{@key}}">
-                    <input type="text" class="name other-edit" name="description" value="{{this.description}}">
-                    <input type="number" class="xp other-edit" name="xp" value="{{this.xp}}">
+                    <input type="text" class="name other-edit" name="description" value="{{this.description}}" {{#unless ../options.canEdit}} disabled {{/unless}}>
+                    <input type="number" class="xp other-edit" name="xp" value="{{this.xp}}" {{#unless ../options.canEdit}} disabled {{/unless}}>
                 </div>
                 {{/each}}
                 <div>
-                    <input type="text" class="name other-new" name="description">
-                    <input type="number" class="xp other-new" name="xp" >
+                    <input type="text" class="name other-new" name="description" {{#unless options.canEdit}} disabled {{/unless}}>
+                    <input type="number" class="xp other-new" name="xp" {{#unless options.canEdit}} disabled {{/unless}}>
                 </div>
             </div>
         </div>

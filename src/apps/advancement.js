@@ -11,6 +11,7 @@ export class AdvancementForm extends FormApplication
         options.template = "systems/impmal/templates/apps/advancement.hbs";
         options.scrollY = [".tab-content"];
         options.tabs = [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "characteristics" }];
+        options.canEdit = true;
         return options;
     }
 
@@ -19,6 +20,7 @@ export class AdvancementForm extends FormApplication
     {
         super(...args);
         this.actor = this.object.clone();
+        this.options.canEdit = game.user.isGM || game.settings.get("impmal", "playerExperienceEditing");
     }
 
     async getData()

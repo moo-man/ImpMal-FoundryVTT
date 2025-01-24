@@ -46,6 +46,7 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         {
             data.dodgeValue = dodge.system.total;
         }
+        data.system.xp.canEdit = game.user.isGM || game.settings.get("impmal", "playerExperienceEditing");
         return data;
     }
 
