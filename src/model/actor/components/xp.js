@@ -16,7 +16,6 @@ export class XPModel extends foundry.abstract.DataModel
             total : new fields.NumberField({}),
             reason : new fields.StringField({})
         }));
-        schema.canEdit = new fields.BooleanField({});
         return schema;
     }
 

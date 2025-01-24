@@ -115,7 +115,7 @@
             </div>
             <div>
                 <label>{{localize "IMPMAL.Total"}}</label>
-                <input type="number" value="{{system.xp.total}}" name="system.xp.total" {{#unless system.xp.canEdit}} disabled {{/unless}}>
+                <input type="number" value="{{system.xp.total}}" name="system.xp.total" {{#unless (or (isGM) (settings "playerExperienceEditing"))}} disabled {{/unless}}>
             </div>
         </div>
     </div>
