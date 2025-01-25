@@ -54,7 +54,7 @@
                             {{/select}}
                         </select>
                     </div>
-                    <label>{{localize "IMPMAL.PayGrade"}} <a class='post-reward'><i class="fa-solid fa-money-bill-wave"></i></a></label>
+                    <label>{{localize "IMPMAL.PayGrade"}} {{#if (or (isGM) (settings "playerExperienceEditing"))}}<a class='post-reward'><i class="fa-solid fa-money-bill-wave"></i></a>{{/if}}</label>
                 </div>
             </div>
             <div class="details-row">
