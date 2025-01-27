@@ -66,4 +66,14 @@ export class SkillTestDialog extends CharacteristicTestDialog
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;
     }
+
+    computeFields()
+    {
+        if (this.data.skill === "stealth" && this.data.actor.items.find(i => i.type == "protection" && i.system.equipped.value && i.system.traits.list.find(i => i.key == "loud")))
+        {
+            this.disCount++;
+            this.tooltips.add("disadvantage", 1, game.i18n.localize("IMPMAL.LoudArmourTooltip"));
+        }
+        super.computeFields();
+    }
 }
