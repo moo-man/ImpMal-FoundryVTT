@@ -31,7 +31,6 @@ import { SkillTest } from "./system/tests/skill/skill-test";
 import { WeaponTest } from "./system/tests/weapon/weapon-test";
 import { PowerTest } from "./system/tests/power/power-test";
 import { TraitTest } from "./system/tests/trait/trait-test";
-import SuperiorityManager from "./system/superiority";
 import { ImpMalEffect } from "./document/effect";
 import ImpMalPatronSheet from "./sheet/actors/patron-sheet";
 import ImpMalNPCSheet from "./sheet/actors/npc-sheet";
@@ -67,6 +66,7 @@ import { ImpMalTestMessageModel } from "./model/message/test.js";
 import ZoneConfig from "./apps/zone-config.js";
 import { RewardMessageModel } from "./model/message/reward.js";
 import { PostedItemMessageModel } from "./model/message/item.js";
+import ResourceManager from "./system/resources.js";
 
 Hooks.once("init", () => 
 {
@@ -150,8 +150,10 @@ Hooks.once("init", () =>
     };
 
     registerSettings();
-    game.impmal.superiority = new SuperiorityManager();
+    game.impmal.resources = new ResourceManager();
     registerHandlebars();
+
+    game.impmal.resources.registerResource("IMPMAL.Superiority", "impmal", "superiority");
     
     mergeObject(CONFIG, IM_CONFIG);
 

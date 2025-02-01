@@ -117,7 +117,7 @@ export class CharacterModel extends StandardActorModel
     computeBase()
     {
         super.computeBase();
-        this.combat.superiority = game.impmal.superiority.value;
+        this.combat.superiority = game.impmal.resources.get("superiority");
         if (this.autoCalc.corruption)
         {
             this.corruption.max = 0;

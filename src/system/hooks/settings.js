@@ -3,9 +3,9 @@ export default function()
 {
     Hooks.on("updateSetting", (setting) =>
     {
-        if (setting.key == "impmal.superiority")
+        if (game.impmal.resources.isResource(setting.key))
         {
-            game.impmal.superiority._onSuperiorityChanged();
+            game.impmal.resources.onResourceChanged(setting.key);
         }
     });
 }

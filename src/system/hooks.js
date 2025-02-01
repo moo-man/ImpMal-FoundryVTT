@@ -8,6 +8,7 @@ import i18n from "./hooks/i18n";
 import setup from "./hooks/setup";
 import journal from "./hooks/journal";
 import sidebar from "./hooks/sidebar";
+import superiority from "./hooks/superiority";
 
 export default function() 
 {
@@ -21,6 +22,7 @@ export default function()
     setup();
     journal();
     sidebar();
+    superiority();
 
     Hooks.on("hotbarDrop", (hotbar, data, pos) => 
     {

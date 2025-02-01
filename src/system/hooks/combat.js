@@ -3,7 +3,7 @@ export default function()
 {
     Hooks.on("renderCombatTracker", (app, html) =>
     {
-        game.impmal.superiority._addSuperiorityField(app, html);
+        game.impmal.resources.addResourceFields(app, html);
 
 
         // If no token resource is being tracked, display the action the actor took
