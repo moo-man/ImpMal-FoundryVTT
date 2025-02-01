@@ -24,7 +24,7 @@ export class ImpMalEffect extends WarhammerActiveEffect
         }
         else if (transferData.avoidTest.value == "custom")
         {
-            test = await this.actor.setupTestFromData(this.transferData.avoidTest, options);
+            test = await this.actor.setupTestFromData(transferData.avoidTest, options);
         }
 
         await test.roll();
