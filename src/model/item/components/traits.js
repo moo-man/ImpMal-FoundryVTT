@@ -174,4 +174,19 @@ export class TraitListModel extends ListModel
         return this.displayArray.join(", ");
     }
 
+    get effects()
+    {
+        return this.list.reduce((obj, t) => 
+        {
+            let effectData = game.impmal.config.traitEffects[t.key];
+            if (effectData)
+            {
+                let effect = new ActiveEffect.implementation(effectData, {parent: this.parent.parent});
+                effect.updateSource({"flags.impmal.path" : `${this.schema.fieldPath}.effects.${t.key}`})
+                obj[t.key] = effect
+            }
+            return obj;
+        }, {})
+    }
+
 }

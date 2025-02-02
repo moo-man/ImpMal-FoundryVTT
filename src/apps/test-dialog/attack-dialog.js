@@ -45,18 +45,6 @@ export class AttackDialog extends SkillTestDialog
             this.tooltips.add("SL", 1, "Burst");
         }
 
-        if (this.traits.has("shoddy"))
-        {
-            this.fields.SL--;
-            this.tooltips.add("SL", -1, "Shoddy");
-        }
-
-        if (this.traits.has("defensive") && this.actor.defendingAgainst)
-        {
-            this.advCount++;
-            this.tooltips.add("advantage", 1, "Defensive");
-        }
-
         if (this.data.context.twf)
         {
             this.disCount++;

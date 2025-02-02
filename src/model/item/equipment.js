@@ -27,6 +27,12 @@ export class EquipmentModel extends EquippableItemModel
         this.traits.compute();
     }
 
+    getOtherEffects()
+    {
+        return super.getOtherEffects().concat(Object.values(this.traits.effects));
+    }
+
+
     async summaryData()
     {
         let data = await super.summaryData();

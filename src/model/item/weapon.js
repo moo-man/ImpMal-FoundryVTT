@@ -361,11 +361,25 @@ export class WeaponModel extends EquippableItemModel
     getOtherEffects()
     {
         // A weapon has more effects than just its own, it should include modification and ammo effects
-        return super.getOtherEffects().concat(
+        return super.getOtherEffects()
+        .concat(this.categoryEffect || [])
+        .concat(Object.values(this.traits.effects))
+        .concat(
             (this.mods.documents || []).concat(
                 this.ammo.document || [])
                 .reduce((prev, current) => prev.concat(current.effects.contents), []));
         // .filter(e => e.applicationData.documentType == "Item"));
+    }
+
+    get categoryEffect()
+    {
+        let effectData = game.impmal.config.weaponCategoryEffects[this.category];
+        if (effectData)
+        {
+            let effect = new ActiveEffect.implementation(effectData, {parent: this.parent});
+            effect.updateSource({"flags.impmal.path" : `${this.schema.fieldPath}.categoryEffect`})
+            return effect;
+        }
     }
 
 

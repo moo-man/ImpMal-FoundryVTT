@@ -4,7 +4,7 @@ export default function()
 {
     Hooks.on("ready", () => 
     {
-        if (game.settings.get("wfrp4e", "disableTheme"))
+        if (game.settings.get("impmal", "disableTheme"))
         {
             document.body.classList.add("no-theme")
         }

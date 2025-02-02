@@ -795,6 +795,79 @@ const IMPMAL = {
         }
     },
 
+    weaponCategoryEffects : {
+        force : {
+            name : "IMPMAL.Force",
+            system : {
+                transferData : {
+                    documentType: "Item"
+                },
+                scriptData : [{
+                    label : "Add Warp Charge to Damage",
+                    trigger : "dialog",
+                    options : {
+                        hideScript : "return args.actor.system.warp.charge == 0;",
+                        activateScript : "return true;",
+                        submissionScript : "args.data.additionalDamage += args.actor.system.warp.charge; if (args.target?.system.species == 'Daemon') args.data.additionalDamage += args.actor.system.warp.charge;",
+                    }
+                }]
+            }
+        }
+    },
+
+    traitEffects : {
+       
+       defensive: {
+           name : "IMPMAL.Defensive",
+           system : {
+               transferData : {
+                   documentType: "Item"
+               },
+               scriptData : [{
+                   label : "Advantage when Defending against Melee",
+                   trigger : "dialog",
+                   script : "args.advantage++;",
+                   options : {
+                        hideScript : "return !args.actor.defendingAgainst || !args.actor.defendingAgainst.item?.system.isMelee",
+                        activateScript : "return args.actor.defendingAgainst.item?.system.isMelee"
+                   }
+               }]
+           }
+       },
+        burst: {
+            name : "IMPMAL.Shoddy",
+            system : {
+                transferData : {
+                    documentType: "Item"
+                },
+                scriptData : [{
+                    label : "Shoddy",
+                    trigger : "dialog",
+                    script : "args.fields.SL--;",
+                    options : {
+                        activateScript : "return true;"
+                    }
+                }]
+            }
+        },
+        mastercrafted : {
+            name : "IMPMAL.Mastercrafted",
+            system : {
+                transferData : {
+                    documentType: "Item"
+                },
+                scriptData : [{
+                    label : "Mastercrafted",
+                    trigger : "dialog",
+                    script : "args.fields.SL++;",
+                    options : {
+                        activateScript : "return true;"
+                    }
+                }]
+            }
+        }
+    },
+
 
     conditions : [
         {

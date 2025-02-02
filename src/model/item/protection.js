@@ -30,6 +30,11 @@ export class ProtectionModel extends EquippableItemModel
         this.traits.compute();
     }
 
+    getOtherEffects()
+    {
+        return super.getOtherEffects().concat(Object.values(this.traits.effects));
+    }
+
     computeOwned(actor) 
     {
         // Must put this in OwnerDerived, as normal preparation applies double
