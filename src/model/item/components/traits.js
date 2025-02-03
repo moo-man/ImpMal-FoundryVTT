@@ -43,7 +43,7 @@ export class TraitListModel extends ListModel
      * @param {Object} modify Whether to modify the data directly or return the modification to update   
      * @returns 
      */
-    add(trait, {modify=false}={})
+    add(trait, {value=1, modify=false}={})
     {
 
         if (modify)
@@ -62,7 +62,7 @@ export class TraitListModel extends ListModel
                 let newTrait = {key: trait};
                 if (game.impmal.config.traitHasValue[trait])
                 {
-                    newTrait.value = 1;
+                    newTrait.value = value;
                 }
                 this.list.push(newTrait);
             }

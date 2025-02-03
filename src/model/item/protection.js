@@ -1,4 +1,5 @@
 import { EquippableItemModel } from "./components/equippable";
+import { HitLocationsModel } from "./components/hit-locations";
 import { TraitListModel } from "./components/traits";
 let fields = foundry.data.fields;
 
@@ -10,7 +11,7 @@ export class ProtectionModel extends EquippableItemModel
         schema.traits = new fields.EmbeddedDataField(TraitListModel),
         schema.category = new fields.StringField();
         schema.armour = new fields.NumberField();
-        schema.locations = ListModel.createListModel(new fields.StringField({}));
+        schema.locations = new fields.EmbeddedDataField(HitLocationsModel);
         schema.damage = new fields.ObjectField({});
         schema.rended = new fields.ObjectField({});
         return schema;

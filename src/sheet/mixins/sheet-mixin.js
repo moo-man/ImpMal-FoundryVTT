@@ -176,7 +176,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         }
         else 
         {
-            return this.item.update({[target + ".list"] : arrayModel.add()});
+            return this.item.update(arrayModel.add());
         }
     }
 
@@ -213,7 +213,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         }
         else 
         {
-            return this.item.update({[target + ".list"] : arrayModel.edit(index, value)});
+            return this.item.update(arrayModel.edit(index, value));
         }
     }
 
@@ -231,7 +231,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
         }
         else 
         {
-            return this.item.update({[target + ".list"] : arrayModel.remove(index)});
+            return this.item.update(arrayModel.remove(index));
         }
     }
 
