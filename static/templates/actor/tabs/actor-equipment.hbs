@@ -34,6 +34,7 @@
                     </div>
                     <div class="small">
                         {{#if (eq ../actor.type "character")}}
+                        
                             {{#if this.system.equipped.hands.left}}
                                 <a class="equip {{#if this.system.equipped.offhand}}offhand{{/if}}" data-hand="left" data-target="system.equipped.value"><i class="fa-solid fa-hand"></i></a>
                             {{else}}
@@ -44,6 +45,16 @@
                                 <a class="equip {{#if this.system.equipped.offhand}}offhand{{/if}}" data-hand="right" data-target="system.equipped.value"><i class="fa-solid fa-hand"></i></a>
                             {{else}}
                                 <a class="equip" data-hand="right" data-target="system.equipped.value"><i class="fa-regular fa-hand"></i></a>
+                            {{/if}}
+
+                            {{#if (and ../system.hands.left.document ../system.hands.right)}}
+                            <a class="equip" data-id="{{this.id}}" data-hand="other">
+                                {{#if this.system.equipped.value}}
+                                    <i class="fa-regular fa-circle-check"></i>
+                                {{else}}
+                                    <i class="fa-regular fa-circle"></i>
+                                {{/if}}
+                            </a>
                             {{/if}}
 
                         {{else}}
@@ -62,6 +73,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
                 </div>
@@ -93,6 +105,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
                 </div>
@@ -124,6 +137,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
                 </div>
@@ -165,6 +179,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
                 </div>
@@ -206,6 +221,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
                 </div>
@@ -247,6 +263,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
                 </div>
@@ -288,6 +305,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
                 </div>

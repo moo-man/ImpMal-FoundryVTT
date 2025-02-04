@@ -17,16 +17,7 @@
                         <a class="list-edit">{{this.name}}</a>
                     </div>
                     <div>
-                    {{#if this.manualScripts.length}}
-                        <div class="manual-scripts">
-                            {{#each this.manualScripts}}
-                                <a class="trigger-script" data-index="{{this.index}}">
-                                    <i class="fa-solid fa-code"></i>
-                                    {{this.label}}
-                                </a>
-                            {{/each}}
-                        </div>
-                    {{/if}}
+                    {{> sheetButtonsV1 document=this}}
                     </div>
                     <div class="list-controls">
                         <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>

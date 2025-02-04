@@ -46,8 +46,7 @@ export default function registerHandlebars()
         "systems/impmal/templates/actor/partials/defendingAgainst.hbs",
         "systems/impmal/templates/actor/partials/influence.hbs",
         "systems/impmal/templates/actor/partials/actions.hbs",
-        "systems/impmal/templates/item/partials/influence.hbs",
-        "systems/impmal/templates/partials/manual-scripts.hbs",
+        "systems/impmal/templates/item/partials/influence.hbs"
     ]);
 
     loadTemplates({

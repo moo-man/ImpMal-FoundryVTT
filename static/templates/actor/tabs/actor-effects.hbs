@@ -84,9 +84,7 @@
                                     <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
                                     {{/if}}
                             </div>
-                            {{#if this.manualScripts.length}}
-                                {{> systems/impmal/templates/partials/manual-scripts.hbs scripts=this.manualScripts}}
-                            {{/if}}
+                            {{> sheetButtonsV1 document=this}}
                         </div>
                     </div>
                 {{/each}}
@@ -113,6 +111,7 @@
                                     <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
                                     <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                                 </div>
+                                {{> sheetButtonsV1 document=this}}
                             </div>
                         </div>
                     {{/each}}
@@ -159,9 +158,7 @@
                                 {{/if}}
                             </div>
                         </div>
-                        {{#if this.manualScripts.length}}
-                            {{> systems/impmal/templates/partials/manual-scripts.hbs scripts=this.manualScripts}}
-                        {{/if}}
+                        {{> sheetButtonsV1 document=this}}
                     </div>
                 {{/each}}
             </div>

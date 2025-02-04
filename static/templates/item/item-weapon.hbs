@@ -30,7 +30,6 @@
                         <select name="system.category">
                             {{#select system.category}}
                                 <option value=""></option>
-                                {{log system}}
                                 {{#if item.system.isMelee}}
                                     {{#each (config "meleeTypes")}}
                                         <option value="{{@key}}">{{this}}</option>

@@ -549,13 +549,6 @@
         }
     }
 
-
-    .trigger-script {
-        border : 1px solid black;
-        border-radius: 5px;
-        background:rgba(0, 0, 0, 0.05)
-    }
-
     .defending-against {
         cursor: pointer;
         width: 100%;
@@ -627,15 +620,18 @@
         }
     }
 
-    .manual-scripts {
+    .sheet-effect-buttons {
         display: flex;
         margin: 3px;
+        button {
+            display: flex;
+            align-items: center;
+            padding: 3px;
+            font-size: var(--font-size-12);
+            width: fit-content;
+            height: 1.5rem;
+        }
     }
-    .trigger-script {
-        display: flex;
-        align-items: center;
-        padding: 3px;
-        font-size: var(--font-size-12);
-    }
+
 
 }
