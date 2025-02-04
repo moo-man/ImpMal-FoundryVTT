@@ -7,6 +7,7 @@ export class OriginModel extends StandardItemModel
     {
         let schema = super.defineSchema();
         schema.equipment = new fields.EmbeddedDataField(DiffReferenceListModel);
+        schema.talents = new fields.EmbeddedDataField(DiffReferenceListModel);
         schema.factionTable = new fields.EmbeddedDataField(DeferredReferenceModel),
         schema.characteristics = new fields.SchemaField({
             base : new fields.StringField(),

@@ -77,6 +77,33 @@
                         {{/each}}
                     </div>
                 </section>
+
+                <section class="list">
+                    <header class="list-row">
+                        <div class="list-name">{{localize "IMPMAL.Talents"}}</div>
+                        <div class="list-controls">
+                        </div>
+                    </header>
+                    <div class="list-content">
+                        {{#each talents}}
+                            <div class="list-item" data-index="{{@key}}" data-path="system.talents">
+                                <div class="list-row">
+                                    <div class="list-name list-edit">
+                                        <img src="{{this.img}}">
+                                        <a>{{this.name}}</a>
+                                    </div>
+                                    <div class="list-controls">
+                                        <a class="list-control list-diff"><i class="fa-solid fa-file-plus-minus"></i></a>
+                                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </div>
+                                <div class="summary">
+
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </section>
             </div>
             <div class="tab effects" data-tab="effects">
                 {{> systems/impmal/templates/item/partials/item-effects.hbs}}

@@ -7,13 +7,21 @@ export default class OriginItemSheet extends BackgroundItemSheet
     {
         let data = await super.getData();
         data.equipment = await data.item.system.equipment.awaitDocuments();
+        data.talents = await data.item.system.talents.awaitDocuments();
         return data;
     }
 
 
     _onDropItem(ev, item)
     {
-        return this.item.update(this.item.system.equipment.add({uuid : item.uuid}));
+        if (item.system.isPhysical)
+        {
+            return this.item.update(this.item.system.equipment.add(item));
+        }
+        else if (item.type == "talent")
+        {
+            return this.item.update(this.item.system.talents.add(item));
+        }
     }
 
     _onDropTable(ev, table)
@@ -30,8 +38,10 @@ export default class OriginItemSheet extends BackgroundItemSheet
             return super._onListEdit(ev);
         }
 
-        let document = (await this.item.system.equipment.awaitDocuments())[index];
-        
+        let list = this._getList(ev);
+
+        let document = await list.list[index].document
+            
         document?.sheet.render(true, {editable : false})
     }
 
@@ -43,9 +53,10 @@ export default class OriginItemSheet extends BackgroundItemSheet
         {
             return super._onListDelete(ev);
         }
+        let list = this._getList(ev);
         if (Number.isNumeric(index))
         {
-            this.item.update(this.item.system.equipment.remove(index));
+            this.item.update(list.remove(index));
         }
     }
 }
