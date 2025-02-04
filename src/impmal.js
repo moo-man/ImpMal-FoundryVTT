@@ -82,21 +82,21 @@ Hooks.once("init", () =>
     CONFIG.ActiveEffect.legacyTransferral = false;
     CONFIG.ChatMessage.documentClass = ImpMalChatMessage;
 
-    Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true });
-    Actors.registerSheet("impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true });
-    Actors.registerSheet("impmal", ImpMalNPCSheet, { types: ["npc"], makeDefault: true });
-    Actors.registerSheet("impmal", ImpMalVehicleSheet, { types: ["vehicle"], makeDefault: true });
+    Actors.registerSheet("impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true, label : "Character Sheet" });
+    Actors.registerSheet("impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true, label : "Patron Sheet" });
+    Actors.registerSheet("impmal", ImpMalNPCSheet, { types: ["npc"], makeDefault: true, label : "NPC Sheet" });
+    Actors.registerSheet("impmal", ImpMalVehicleSheet, { types: ["vehicle"], makeDefault: true, label : "Vehicle Sheet" });
     Items.registerSheet("impmal", ImpMalItemSheet, { makeDefault: true });
-    Items.registerSheet("impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true });
-    Items.registerSheet("impmal", TraitItemSheet, { types: ["trait"], makeDefault: true });
-    Items.registerSheet("impmal", TalentItemSheet, { types: ["talent"], makeDefault: true });
-    Items.registerSheet("impmal", WeaponItemSheet, { types: ["weapon"], makeDefault: true });
-    Items.registerSheet("impmal", ModificationItemSheet, { types: ["modification"], makeDefault: true });
-    Items.registerSheet("impmal", DutyItemSheet, { types: ["duty"], makeDefault: true });
-    Items.registerSheet("impmal", FactionItemSheet, { types: ["faction",], makeDefault: true });
-    Items.registerSheet("impmal", OriginItemSheet, { types: ["origin"], makeDefault: true });
-    Items.registerSheet("impmal", RoleItemSheet, { types: ["role"], makeDefault: true });
-    Items.registerSheet("impmal", AmmoItemSheet, { types: ["ammo"], makeDefault: true });
+    Items.registerSheet("impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true, label : "Protection Sheet" });
+    Items.registerSheet("impmal", TraitItemSheet, { types: ["trait"], makeDefault: true, label : "Trait Sheet" });
+    Items.registerSheet("impmal", TalentItemSheet, { types: ["talent"], makeDefault: true, label : "Talent Sheet" });
+    Items.registerSheet("impmal", WeaponItemSheet, { types: ["weapon"], makeDefault: true, label : "Weapon Sheet" });
+    Items.registerSheet("impmal", ModificationItemSheet, { types: ["modification"], makeDefault: true, label : "Modification Sheet" });
+    Items.registerSheet("impmal", DutyItemSheet, { types: ["duty"], makeDefault: true, label : "Duty Sheet" });
+    Items.registerSheet("impmal", FactionItemSheet, { types: ["faction",], makeDefault: true, label : "Faction Sheet" });
+    Items.registerSheet("impmal", OriginItemSheet, { types: ["origin"], makeDefault: true, label : "Origin Sheet" });
+    Items.registerSheet("impmal", RoleItemSheet, { types: ["role"], makeDefault: true, label : "Role Sheet" });
+    Items.registerSheet("impmal", AmmoItemSheet, { types: ["ammo"], makeDefault: true, label : "Ammo Sheet" });
     DocumentSheetConfig.registerSheet(ActiveEffect, "impmal", ImpmalActiveEffectConfig, {makeDefault : true});
 
     // CONFIG.ActiveEffect.sheetClass = undefined;

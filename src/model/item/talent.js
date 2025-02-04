@@ -86,8 +86,15 @@ export class TalentModel extends StandardItemModel
         {
             existing.update({"system.taken" : existing.system.taken + 1}).then(async item => 
             {
+                // Rerun immediate scripts for any effect that isn't a choice
+                for(let e of item.effects.contents)
+                {
+                    if (!item.system.effectChoices[e.id])
+                    {
+                        await e.handleImmediateScripts();
+                    }
+                }
                 await item.system.handleEffectSelection();
-                await item.handleImmediateScripts();
             });
             allowed = false;
         }
@@ -139,11 +146,17 @@ export class TalentModel extends StandardItemModel
             let choice = await ItemDialog.create(effectOptions, 1);
             if (choice.length)
             {
-                return this.parent.update({["system.effectChoices." + choice[0].id] : this.taken}).then(() => 
+                // If repeatable effect chosen again, recreate that effect
+                if (this.effectRepeatable[choice[0]?.id] && this.parent.system.effectChoices[choice[0]?.id] >= 1) // for some reason this.effectChoices is different than this.parent.system.effectChoices???
                 {
-                    // Simulate the selected effect being created
+                    let newEffect = await this.parent.createEmbeddedDocuments("ActiveEffect", [choice[0].toObject()]);
+                    await this.parent.update({["system.effectChoices." + newEffect[0].id] : this.taken})
+                }
+                else // If non-repeatable or first time choosing repeatable effect, just run immediate scripts
+                {
+                    await this.parent.update({["system.effectChoices." + choice[0].id] : this.taken})
                     choice[0].handleImmediateScripts();
-                });
+                }
             }
         }
     }

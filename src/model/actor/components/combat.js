@@ -224,6 +224,7 @@ export class NPCCombatModel extends StandardCombatModel
         }
         else 
         {
+            this.armour.value += this.armourModifier
             for (let loc in this.hitLocations)
             {
                 if (this.hitLocations[loc])
