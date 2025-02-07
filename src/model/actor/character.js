@@ -161,7 +161,34 @@ export class CharacterModel extends StandardActorModel
 
         return update;
     }
+    
+    async applyCorruption({exposure, corruption, skill})
+    {
+        if (!skill)
+        {
 
+            skill = await foundry.applications.api.DialogV2.wait({
+                window: { title: game.i18n.localize("IMPMAL.CorruptionPrompt") },
+                content: game.i18n.localize("IMPMAL.CorruptionPromptContent"),
+                buttons:
+                    [{
+                        action: "fortitude",
+                        label: game.i18n.localize("IMPMAL.Fortitude"),
+                    },
+                    {
+                        action: "discipline",
+                        label: game.i18n.localize("IMPMAL.Discipline"),
+                    }
+                    ]
+            })
+        }
+        if (!corruption) 
+        {
+            corruption = game.impmal.config.corruptionValues[exposure]
+        }
+        await this.parent.setupSkillTest({ key: skill }, { title: { append: ` – ${game.i18n.localize("IMPMAL.Corruption")}` }, context: { corruption } });
+
+    }
 
     static migrateData(data)
     {

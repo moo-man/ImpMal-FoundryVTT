@@ -163,6 +163,11 @@ export class TestDialog extends WarhammerRollDialog
         return breakdown;
     }
    
+    get title()
+    {
+        return this.data.title;
+    }
+
     /**
      * 
      * @param {object} actor Actor performing the test

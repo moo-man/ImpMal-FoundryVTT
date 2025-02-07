@@ -1,4 +1,4 @@
         if (args.data.system?.fate?.value < this.actor.system.fate?.value)
         {	
-            ChatMessage.implementation.corruptionMessage("minor", {}, {speaker: {alias : this.effect.name}});
+            CorruptionMessageModel.postExposure("minor", {source : this.effect.name});
         }

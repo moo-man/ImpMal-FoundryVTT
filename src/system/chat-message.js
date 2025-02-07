@@ -17,36 +17,6 @@ export class ImpMalChatMessage extends ChatMessage
         this.system.test?.context?.handleOpposed(this, options);
     }
 
-    static corruptionMessage(value=1, options={}, chatData={})
-    {
-        if (Number.isNumeric(value))
-        {
-            value = Number(value);
-        }
-        value = typeof value == "string" ? game.impmal.config.corruptionValues[value] : value;
-        let label;
-        if (Number.isNumeric(value))
-        {
-            if (value == 1)
-            {
-                label = "IMPMAL.Minor";
-            }
-            else if (value < 4)
-            {
-                label = "IMPMAL.Moderate";
-            }
-            else if (value >= 4)
-            {
-                label = "IMPMAL.Major";
-            }
-        }
-        ChatMessage.create(mergeObject({content : `
-            <h3 style="text-align: center">${game.i18n.format("IMPMAL.ExposureToCorruption", {label : game.i18n.localize(label)})}</h3>
-            <button type="button" class="resist-corruption" data-value=${value} difficulty=${options.difficulty}>${game.i18n.localize("IMPMAL.Resist")}</button>
-        `}, chatData));
-    }
-
-
     static chatListeners(html)
     {
 
@@ -112,38 +82,13 @@ export class ImpMalChatMessage extends ChatMessage
 
         html.on("click", ".resist-corruption", ev => 
         {
-            let actors = game.user.targets.size ? Array.from(game.user.targets).map(i => i.actor) : [game.user.character];
-            actors = actors.filter(a => a);
-            let corruption = ev.target.dataset.value;
-            if (!actors.length)
+            let message = game.messages.get($(ev.currentTarget).parents(".message")[0].dataset.messageId);
+
+            let actors = warhammer.utility.targetedOrAssignedActors();
+
+            for(let a of actors)
             {
-                return ui.notifications.error(game.i18n.localize("IMPMAL.ErrorNoActorsOrTargets"));
-            }
-            else 
-            {
-                actors.forEach(async a => 
-                {
-                    new Dialog({
-                        title : game.i18n.localize("IMPMAL.CorruptionPrompt"),
-                        content : game.i18n.localize("IMPMAL.CorruptionPromptContent"),
-                        buttons : {
-                            fortitude : {
-                                label : game.i18n.localize("IMPMAL.Fortitude"),
-                                callback : () => 
-                                {
-                                    a.setupSkillTest({key : "fortitude"}, {title : {append : " – Corruption"}, context : {corruption}});
-                                }
-                            },
-                            discipline : {
-                                label : game.i18n.localize("IMPMAL.Discipline"),
-                                callback : () => 
-                                {
-                                    a.setupSkillTest({key : "discipline"}, {title : {append : " – Corruption"}, context : {corruption}});
-                                }
-                            },
-                        }
-                    }).render(true);
-                });
+                message.system.applyCorruptionTo(a);
             }
         });
 

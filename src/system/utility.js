@@ -1,3 +1,4 @@
+import { CorruptionMessageModel } from "../model/message/corruption";
 import { ImpMalChatMessage } from "./chat-message";
 
 export default class ImpMalUtility
@@ -299,7 +300,7 @@ export default class ImpMalUtility
         html.find(".corruption-link").on("click", ev => 
         {
             let corruptionValue = ev.currentTarget.dataset.value;
-            ImpMalChatMessage.corruptionMessage(corruptionValue);
+            CorruptionMessageModel.postExposure(corruptionValue);
         });
     }
 

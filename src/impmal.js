@@ -67,6 +67,7 @@ import ZoneConfig from "./apps/zone-config.js";
 import { RewardMessageModel } from "./model/message/reward.js";
 import { PostedItemMessageModel } from "./model/message/item.js";
 import ResourceManager from "./system/resources.js";
+import { CorruptionMessageModel } from "./model/message/corruption.js";
 
 Hooks.once("init", () => 
 {
@@ -131,6 +132,7 @@ Hooks.once("init", () =>
     CONFIG.ChatMessage.dataModels["test"] = ImpMalTestMessageModel;
     CONFIG.ChatMessage.dataModels["reward"] = RewardMessageModel;
     CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
+    CONFIG.ChatMessage.dataModels["corruption"] = CorruptionMessageModel;
 
     game.impmal = {
         config : IMPMAL,

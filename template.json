@@ -777,7 +777,8 @@
       "base",
       "test",
       "reward",
-      "item"
+      "item",
+      "corruption"
     ]
   }
 }

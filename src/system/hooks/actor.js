@@ -18,7 +18,7 @@ export default function()
                 {
                     if (!game.user.character)
                     {
-                        ui.notifications.error(game.i18n.localize("IMPMAL.NoAssignedCharacterError"));
+                        ui.notifications.error(game.i18n.localize("WH.Error.NoAssignedCharacter"));
                     }
 
                     if (game.user.character.type == "character")
