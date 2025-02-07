@@ -3,6 +3,7 @@
     <div class="form-fields">
         <select name="system.transferData.avoidTest.characteristic">
             {{#select system.transferData.avoidTest.characteristic}}
+                <option value=""></option>
                 {{#each (config "characteristics")}}
                     <option value="{{@key}}">{{this}}</option>
                 {{/each}}
@@ -15,6 +16,7 @@
     <div class="form-fields">
         <select type="text" name="system.transferData.avoidTest.skill.key" value="{{system.transferData.avoidTest.skill.key}}">
             {{#select system.transferData.avoidTest.skill.key}}
+                <option value=""></option>
                 {{#each (config "skills")}}
                     <option value="{{@key}}">{{this}}</option>
                 {{/each}}
@@ -31,7 +33,7 @@
         {{#select system.transferData.avoidTest.difficulty}}
             <option value=""></option>
             {{#each (config "difficulties")}}
-              <option value="{{@key}}">{{this.label}}</option>
+                <option value="{{@key}}">{{this.name}} ({{numberFormat this.modifier sign=true}})</option>
             {{/each}}
         {{/select}}
         </select>

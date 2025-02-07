@@ -209,7 +209,7 @@ export class BaseTest extends WarhammerTestBase
         if (this.item instanceof Item)
         {
             this.itemSummary = await renderTemplate(this.itemSummaryTemplate, mergeObject(this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
-            this.effectButtons = await renderTemplate("systems/impmal/templates/chat/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
+            this.effectButtons = await renderTemplate("modules/warhammer-lib/templates/partials/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
         }
         if (this.testDetailsTemplate)
         {

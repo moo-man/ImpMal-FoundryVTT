@@ -16,24 +16,29 @@ export class TestDataModel extends foundry.abstract.DataModel
 
     get label()
     {
+        return this.constructor.createLabelFromData(this)
+    }
+
+    static createLabelFromData(data)
+    {
         let config = game.impmal.config;
         
-        let label = config.characteristics[this.characteristic];
+        let label = config.characteristics[data.characteristic];
         
         // Replace name from characteristic to skill if test specifies
-        if (this.skill.key)
+        if (data.skill?.key)
         {
-            label = config.skills[this.skill.key];
+            label = config.skills[data.skill.key];
         }
         // Add specialisation if available
-        if (this.skill.specialisation)
+        if (data.skill?.specialisation)
         {
-            label += ` (${this.skill.specialisation})`;
+            label += ` (${data.skill.specialisation})`;
         }
 
-        if (this.difficulty)
+        if (data.difficulty)
         {
-            let difficulty = game.impmal.config.difficulties[this.difficulty];
+            let difficulty = game.impmal.config.difficulties[data.difficulty];
             label = `${difficulty.name} (${difficulty.modifier >= 0 ? "+" : ""}${difficulty.modifier}) ${label}`;
         }
 

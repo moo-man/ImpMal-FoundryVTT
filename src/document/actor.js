@@ -89,6 +89,10 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
 
         options.context = options.context || {};
         options.context.resist = options.context.resist ? options.context.resist.concat(item.type) : [item.type];
+        if (!options.title?.append)
+        {
+            foundry.utils.setProperty(options, "title.append", ` - ${item.name}`);
+        }
 
         return this.setupTestFromData(itemTestData, options);
     }

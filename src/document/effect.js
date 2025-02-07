@@ -1,3 +1,5 @@
+import { TestDataModel } from "../model/item/components/test";
+
 export class ImpMalEffect extends WarhammerActiveEffect
 {
 
@@ -55,7 +57,18 @@ export class ImpMalEffect extends WarhammerActiveEffect
         }
     }
 
+        
+    get testDisplay() {
 
+        if (this.system.transferData.avoidTest.value == "custom")
+        {
+            return TestDataModel.createLabelFromData(this.system.transferData.avoidTest);
+        }
+        else if (this.system.transferData.avoidTest.value == "item")
+        {
+            return TestDataModel.createLabelFromData(this.item.getTestData());
+        }
+    }
 
     // Need to override base getter because IM doesn't have a `data` property holding all the test data
     get sourceTest() 
