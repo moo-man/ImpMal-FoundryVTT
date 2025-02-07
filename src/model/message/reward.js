@@ -61,7 +61,7 @@ export class RewardMessageModel extends foundry.abstract.DataModel
                 patron : {id : patron?.id},
                 reason
             },
-            speaker : {alias : patron?.name, actor : patron.id},
+            speaker : {alias : patron?.name, actor : patron?.id},
             flavor : game.i18n.localize("IMPMAL.Reward")
         });
     }

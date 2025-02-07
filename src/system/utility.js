@@ -300,7 +300,7 @@ export default class ImpMalUtility
         html.find(".corruption-link").on("click", ev => 
         {
             let corruptionValue = ev.currentTarget.dataset.value;
-            CorruptionMessageModel.postExposure(corruptionValue);
+            CorruptionMessageModel.postCorruption(corruptionValue);
         });
     }
 

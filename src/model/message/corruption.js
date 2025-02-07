@@ -32,7 +32,7 @@ export class CorruptionMessageModel extends foundry.abstract.DataModel
      * @param {String} options.source descriptor of corruption source
      * @param {String} options.skill force "discipline" or "fortitude" instead of choosing
      */
-    static async postExposure(exposure, {corruption, source, skill}={})
+    static async postCorruption(exposure, {corruption, source, skill}={})
     {
 
         let title = exposure ? game.i18n.localize(`IMPMAL.Exposure${exposure.capitalize()}`) : `Corruption Exposure (${corruption})`
