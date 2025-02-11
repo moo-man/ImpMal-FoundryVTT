@@ -776,6 +776,7 @@
     "types" : [
       "base",
       "test",
+      "opposed",
       "reward",
       "item",
       "corruption"

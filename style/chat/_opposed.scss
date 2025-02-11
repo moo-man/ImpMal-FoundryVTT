@@ -1,0 +1,124 @@
+#chat-log .chat-message .opposed {
+    .opposed-message {
+        text-align: center;
+    }
+
+    .opposed-details {
+        padding: 5px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        >img {
+
+            width: 60px;
+            height: 60px;
+            border: none;
+            cursor: pointer;
+        }
+
+        &.attacker-winner {
+            .SL {
+              color: darkgreen
+            }
+          }
+          &.defender-winner {
+            .SL {
+              color: darkred
+            }
+          }
+    }
+
+    .SL {
+        font-size: 1.5rem;
+        font-weight: bold;
+        width: 20px;
+    }
+
+    .center {
+        display: flex;
+        justify-content: center;
+        flex: 1;
+        align-items: center;
+        text-align: center;
+        i {
+            font-size: 30px;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        .SL 
+        {
+            flex: 0 0 40px;
+        }
+        img {   
+            border: none;
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    .opposed-buttons {
+        display: flex;
+        align-items: center;
+        >* {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .applied-details {
+            flex: 1;
+            gap: 5px;
+            display: flex;
+            text-align: left;
+            flex-direction: column;
+            flex-wrap: wrap;
+        }
+        .apply-damage {
+            flex: 0 0 2.5rem;
+            height: 2rem;
+            padding: 0px;
+            line-height: 2rem;
+            &.applied {
+                    opacity: 0.5;
+                    &:hover {
+                        box-shadow: none;
+                    }
+            }
+        }
+
+        .critical .table-roll{
+                i {
+                    margin-right: 3px;
+                }
+                text-wrap: nowrap;
+                    border: 1px solid #555;
+                    border-radius: 10px;
+                    background: rgba(0, 0, 0, 0.05);
+                    padding: 1px 3px;
+                    margin: 0px 3px 3px 3px;
+        }
+
+    }
+
+    .response-buttons {
+        display: flex;
+        height: 2rem;
+        gap: 1rem;
+        justify-content: flex-end;
+        width: 100%;
+        margin-top: 1rem;
+        button {
+            flex: content;
+        }
+        .left {
+            transform: scaleX(-1);
+        }
+        .secondary {
+            color : darkred;
+        }
+        i {
+            margin: 0px;
+        }
+    }
+}

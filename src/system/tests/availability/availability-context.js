@@ -15,6 +15,9 @@ export class AvailabilityContext extends TestContext
     // None of these are needed for availability tests
     findAttackingMessage() 
     {}
+
+    findOpposedMessage() 
+    {}
   
     findDefendingMessage()
     {}
@@ -28,6 +31,4 @@ export class AvailabilityContext extends TestContext
     fillUnopposed()
     {}
   
-    setApplied()
-    {}
 }

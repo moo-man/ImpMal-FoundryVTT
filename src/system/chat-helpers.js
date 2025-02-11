@@ -41,10 +41,6 @@ export default class ChatHelpers
         }
     }
 
-    static removeNonOwnerElements(html)
-    {
-        html.find(".test-breakdown").remove();
-    }
 
     static addOpposedHighlightListeners(html)
     {

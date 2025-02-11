@@ -16,4 +16,12 @@ export class ImpMalTestMessageModel extends WarhammerTestMessageModel
         let test = new (game.impmal.testClasses[this.class])(this);
         return test;
     }
+
+    onRender(html)
+    {
+        if (!this.parent.isAuthor && !this.parent.isOwner)
+        {
+            html.find(".test-breakdown").remove();
+        }
+    }
 }

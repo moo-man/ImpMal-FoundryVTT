@@ -165,10 +165,9 @@ export class BaseTest extends WarhammerTestBase
      * Create a chat card represeting this test
      * 
      * @param {Boolean} newMessage Forcibly create a new message 
-     * @param {Boolean} updateOpposed Prevent updating opposing messages (needed to prevent infinite loops back and forth)
      * @returns 
      */
-    async sendToChat({newMessage = false, updateOpposed=true}={}) 
+    async sendToChat({newMessage = false}={}) 
     {
 
         let chatData = await this._chatData();
@@ -176,16 +175,18 @@ export class BaseTest extends WarhammerTestBase
         // If no message exists, or new message requested, create one
         if (!this.message || newMessage)
         {
-            let msg = await ChatMessage.create(chatData);   
-
+            
+            let id = randomID();
+            chatData._id = id;
+            chatData.system.context.messageId = id;
+            let msg = await ChatMessage.create(chatData, {keepId : true});   
             // Cannot assign message until after message is created, so save again
-            this.context.message = msg;
-            await this.save();
+            // await this.save();
             return msg;
         }
         else // If existing message, update it
         {
-            return this.message.update(chatData, {updateOpposed});
+            return this.message.update(chatData);
         }
     }
 

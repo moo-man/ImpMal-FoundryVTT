@@ -445,7 +445,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
         else
         {
-            return this._findAttackingMessage()?.system.test;
+            return this._findOpposedMessage()?.system.attackerMessage.system.test;
         }
     }
 
@@ -459,7 +459,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         return this.update({"system.combat.action" : ""});
     }
 
-    _findAttackingMessage()
+    _findOpposedMessage()
     {
         return game.messages.get(this.getFlag("impmal", "opposed"));
     }

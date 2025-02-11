@@ -1,0 +1,83 @@
+<div class="opposed">
+
+    <div class="opposed-message">
+        <p>{{attacker.name}} is targeting {{defender.name}}</p>
+    </div>
+
+    <div class="opposed-details {{#if result}}{{result.winner}}-winner{{/if}}">
+
+        <img class="token" src="{{attacker.texture.src}}">
+
+
+
+        <div class="center">
+
+            {{#if attackerTest.item}}
+                <img src="{{attackerTest.item.img}}">
+            {{else}}
+                <i class="fa-light fa-crosshairs"></i>
+            {{/if}}
+
+                    
+            {{#if result}}
+            <span class="SL">
+                {{numberFormat result.SL sign=true}}
+            </span>
+            {{/if}}
+        </div>
+
+{{!-- 
+        <span class="SL">
+            {{#if (eq result.winner "defender")}}
+                {{numberFormat result.SL sign=true}}
+            {{/if}}
+        </span> --}}
+
+        <img class="token" src="{{defender.texture.src}}">
+
+    </div>
+    {{log applied}}
+    <div class="opposed-buttons" {{#if applied}}data-tooltip-direction="LEFT" data-tooltip="{{applied.text}}
+                        {{#if (gt applied.multiple 1)}} 
+                            x{{applied.multiple}} 
+                        {{/if}}
+                        <ul>
+                            {{#each applied.modifiers}}
+                            <p>{{this.label}} ({{#if (gt this.value 0)}}+{{/if}}{{this.value}})</p>
+                            {{/each}}
+                        </ul>
+                            {{#if applied.armourRoll}}
+                            <p>{{localize "IMPMAL.ArmourRoll"}}: {{applied.armourRoll.total}}</p>
+                            {{/if}}"{{/if}}>
+        
+        {{#if (eq result.winner "attacker")}}
+
+            <div class="applied-details">
+
+            {{localize "IMPMAL.DamageDisplay" damage=result.damage}} {{#if applied}} (Applied){{/if}}
+            {{#if applied.rend}}
+            <span class="rend">{{localize "IMPMAL.Rend"}} {{applied.rend}}</span>
+            {{/if}}
+
+            {{#if applied.critical}}
+            <span class="critical">{{{applied.critical}}}</span>
+            {{/if}}
+
+            </div>
+            {{#if applied}}
+            <button type="button" class="apply-damage applied"><i class="fa-solid fa-check"></i></a>
+            {{else}}
+                <button class="apply-damage" data-tooltip="{{localize 'IMPMAL.ApplyDamage'}}"><i class="fa-solid fa-user-minus"></i></button>
+            {{/if}}
+        {{else}}
+            {{#unless result}}
+                <div class="response-buttons">
+                    <button type="button" class="unopposed" data-tooltip="{{localize 'IMPMAL.Unopposed'}}"><i class="fa-solid fa-arrow-down"></i></button>
+                    {{#each responseButtons}}
+                        <button type="button" class="{{this.class}}" data-tooltip="{{this.tooltip}}" data-uuid="{{this.uuid}}"><i class="{{this.icon}}"></i> {{this.label}}</button>
+                    {{/each}}
+                </div>
+            {{/unless}}
+        {{/if}}
+    </div>
+</div>

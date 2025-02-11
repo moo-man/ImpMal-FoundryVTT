@@ -68,6 +68,7 @@ import { RewardMessageModel } from "./model/message/reward.js";
 import { PostedItemMessageModel } from "./model/message/item.js";
 import ResourceManager from "./system/resources.js";
 import { CorruptionMessageModel } from "./model/message/corruption.js";
+import { OpposedTestMessageModel } from "./model/message/opposed.js";
 
 Hooks.once("init", () => 
 {
@@ -130,6 +131,7 @@ Hooks.once("init", () =>
 
     CONFIG.ActiveEffect.dataModels["base"] = ImpMalActiveEffectModel
     CONFIG.ChatMessage.dataModels["test"] = ImpMalTestMessageModel;
+    CONFIG.ChatMessage.dataModels["opposed"] = OpposedTestMessageModel;
     CONFIG.ChatMessage.dataModels["reward"] = RewardMessageModel;
     CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
     CONFIG.ChatMessage.dataModels["corruption"] = CorruptionMessageModel;

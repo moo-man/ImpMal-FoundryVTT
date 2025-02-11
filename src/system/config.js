@@ -806,7 +806,7 @@ const IMPMAL = {
                     label : "Add Warp Charge to Damage",
                     trigger : "dialog",
                     options : {
-                        hideScript : "return args.actor.system.warp.charge == 0;",
+                        hideScript : "return args.actor.system.warp.charge == 0 || args.actor.defendingAgainst;",
                         activateScript : "return true;",
                         submissionScript : "args.data.additionalDamage += args.actor.system.warp.charge; if (args.target?.system.species == 'Daemon') args.data.additionalDamage += args.actor.system.warp.charge;",
                     }

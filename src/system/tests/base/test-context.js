@@ -1,3 +1,4 @@
+import { OpposedTestMessageModel } from "../../../model/message/opposed";
 
 
 export class TestContext
@@ -12,10 +13,9 @@ export class TestContext
     // tags = {};
     // text = {};   
     targetSpeakers = [];
-    responses = {}; // map of tokenIds to response messages or "unopposed" string
+    responses = {}; // map of tokenIds to opposed messages
     appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}
-    defendingAgainst = undefined; // message ID of attacking test
-    opposedFlagsAdded = false;
+    opposed = undefined; // message ID of opposed test this is defending against, if any
     resist = [];
     // uuid = ""; // Generic UUID variable used in subclasses
 
@@ -58,6 +58,11 @@ export class TestContext
         return ChatMessage.getSpeakerActor(this.speaker);
     }
 
+    get token()
+    {
+        return this.actor.getActiveTokens()[0]?.document;
+    }
+
     get targets() 
     {
         return this.targetSpeakers.map(speaker => 
@@ -68,7 +73,7 @@ export class TestContext
                 unopposed : this.responses[speaker.token] == "unopposed",
                 actor : ChatMessage.getSpeakerActor(speaker),
                 damage : this.appliedDamage[speaker.token],
-                token : speaker.token,
+                token : game.scenes.get(speaker.scene)?.tokens.get(speaker.token),
                 scene : speaker.scene
             };
         });
@@ -93,63 +98,82 @@ export class TestContext
      * defender and vice versa, but should also prevent that update from causing an infinite loop of updating between attacker/defender
      * 
      * @param {Object} message Message for this context
-     * @param {Object} options.updateOpposed Prevent infinite update loop between attacking and defending tests
      */
-    async handleOpposed(message, {updateOpposed=true}={})
+    async handleOpposed(message)
     {
-        if (game.user.isPrimaryGM && updateOpposed)
+        if (game.user.isPrimaryGM)
         {
-            let attackingMessage = this.findAttackingMessage();
-            if (attackingMessage) // If defending
+            let opposedMessage = this.findOpposedMessage();
+            if (opposedMessage) // If defending
             {
                 // Save attacking message for easy retrieval
-                if (!this.defendingAgainst)
+                if (!this.opposed)
                 {
-                    this.defendingAgainst = attackingMessage.id;
+                    this.opposed = opposedMessage.id;
                     this.actor.setFlag("impmal", "opposed", null);
                     this.saveContext(message);
                 }
-                // await game.dice3d?.waitFor3DAnimationByMessageID(message.id);
 
-                let attackingTest = attackingMessage.system.test;
-                attackingTest.context.addOpposedResponse(message.id);
-                attackingTest.sendToChat();
+                opposedMessage.system.registerResponse(message)
+
+                // let attackingTest = opposedMessage.attackerMessage.system.test;
+                // attackingTest.context.addOpposedResponse(message.id);
+                // attackingTest.sendToChat();
             }
             else if (this.targetSpeakers.length) // If attacking
             {
-                if (!this.opposedFlagsAdded)
+                if (foundry.utils.isEmpty(this.responses))
                 {
+                    await game.dice3d?.waitFor3DAnimationByMessageID(message.id);
                     // Add Opposing flags to each actor
-                    this.targets.forEach(t => 
+                    for(let t of this.targets)
                     {
-                        t.actor?.setFlag("impmal", "opposed", message.id);
-                    });
-                    this.opposedFlagsAdded = true;
-                    this.saveContext();
+                        let opposed = await OpposedTestMessageModel.createOpposed(message, t.token);
+                        t.actor?.setFlag("impmal", "opposed", opposed.id);
+                        this.registerOpposed(opposed.id, t.id)
+                    }
+                    await this.saveContext();
                 }
                 else 
                 {
-                    // Update each defending test
-                    this.targets.forEach(t => 
+                    for(let id of Object.values(this.responses))
                     {
-                        t.test?.sendToChat({updateOpposed: false});
-                    });
+                        let opposed = game.messages.get(id);
+                        if (opposed && (opposed.system.unopposed || opposed.system.defenderMessageId))
+                        {
+                            game.messages.get(id).system.renderContent();
+                        }
+                    }
                 }
+                // else 
+                // {
+                //     // Update each defending test
+                //     this.targets.forEach(t => 
+                //     {
+                //         t.test?.sendToChat({updateOpposed: false});
+                //     });
+                // }
             }
         }
     }
 
-    /**
-     * Scan the previous messages and search for any message that is targeting the token of this test
-     */
     findAttackingMessage()
     {
-        // If attacking message was previously found, use that message
-        if (this.defendingAgainst)
+        let opposed = this.findOpposedMessage();
+        if (opposed)
         {
-            return game.messages.get(this.defendingAgainst);
+            return opposed.system.attackerMessage;
         }
-        else // Take the opposed flag from the actor to find the message
+    }
+
+    findOpposedMessage()
+    {
+        // If this test is already rolled, the opposed ID is saved, so just retrieve it
+        if (this.opposed)
+        {
+            return game.messages.get(this.opposed);
+        }
+        else // If new roll, take the opposed flag from the actor to find the message
         {
             let message = game.messages.get(this.actor.getFlag("impmal", "opposed"));
             return message;
@@ -158,15 +182,14 @@ export class TestContext
 
     findDefendingMessage(tokenId)
     {
-        return game.messages.get(test.context.responses[tokenId]);
+        return game.messages.get(test.context.responses[tokenId])?.system.defenderMessage;
     }
 
 
     // Called by a defending test to add target ID to context
-    addOpposedResponse(messageId, {save=false}={})
+    registerOpposed(opposedId, tokenId, {save=false}={})
     {
-        let token = game.messages.get(messageId).speaker.token;
-        this.responses[token] = messageId;
+        this.responses[tokenId] = opposedId;
         if(save)
         {
             return this.saveContext();
@@ -201,23 +224,6 @@ export class TestContext
         }
     }
 
-    // Set damage as applied for a given target ID
-    setApplied(id, data, {save=false}={})
-    {   
-        let multiple = 1; // How many times damage has been applied for a given id
-
-        if (this.appliedDamage[id])
-        {
-            multiple = (this.appliedDamage[id].multiple || 0) + 1;
-        }
-
-        this.appliedDamage[id] = mergeObject({applied : true, multiple}, data);
-        if (save)
-        {
-            return this.saveContext();
-        }
-    }
-
     saveContext(message)
     {
         let data = {
@@ -243,7 +249,7 @@ export class TestContext
             title : data.title,
             targetSpeakers : data.targets,
             rollMode : data.rollMode,
-            uuid : data.uuid,
+            usedItemUuid : data.usedItemUuid,
             breakdownData : data.context.breakdown
         }, data.context);
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});

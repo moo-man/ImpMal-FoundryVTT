@@ -8,13 +8,13 @@ export class ImpMalChatMessage extends ChatMessage
     async _onCreate(data, options, userId)
     {
         await super._onCreate(data, options, userId);
-        this.system.test?.context?.handleOpposed(this);
+        await this.system.test?.context?.handleOpposed(this);
     }
 
     async _onUpdate(data, options, userId)
     {
         await super._onUpdate(data, options, userId);
-        this.system.test?.context?.handleOpposed(this, options);
+        await this.system.test?.context?.handleOpposed(this, options);
     }
 
     static chatListeners(html)
@@ -26,27 +26,28 @@ export class ImpMalChatMessage extends ChatMessage
         html.on("click", ".apply-target", WarhammerChatListeners.onApplyTargetEffect)
         html.on("click", ".apply-zone", WarhammerChatListeners.onApplyZoneEffect)
 
+        html.on("click", ".response-buttons button", async ev => {
+            let el = $(ev.currentTarget);
+            let message = game.messages.get(el.parents(".message").attr("data-message-id"));
+            if (ev.target.classList.contains("unopposed"))
+            {
+                message.system.performResponse("unopposed");
+            }
+            else if (ev.target.classList.contains("dodge"))
+            {
+                message.system.performResponse("dodge");
+            }
+            else if (ev.target.dataset.uuid)
+            {
+                message.system.performResponse(ev.target.dataset.uuid);
+            }
+        })
+
         html.on("click", ".apply-damage", async ev => 
         {
             let el = $(ev.currentTarget);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
-            let test = message.system.test;
-            let targetId = el.parents(".target").attr("data-id");
-            let apply = true;
-            if (test.context.appliedDamage[targetId])
-            {
-                apply = await Dialog.confirm({
-                    title : game.i18n.localize("IMPMAL.ReapplyDamageTitle"),
-                    content : game.i18n.localize("IMPMAL.ReapplyDamagePrompt"),
-                    yes : () => {return true;},
-                    no : () => {return false;},
-                    close : () => {return false;},
-                });
-            }
-            if (apply)
-            {
-                test.applyDamageTo(targetId);
-            }
+            message.system.applyDamage();
         });
 
         html.on("click", ".roll", ev => 

@@ -484,6 +484,7 @@
     "IMPMAL.OneUse" : "One Use",
     "IMPMAL.OnlyAutomaticSuccess" : "Only succeeds with a roll of 01-05",
     "IMPMAL.Opposed" : "Opposed",
+    "IMPMAL.OpposedTest" : "Opposed Test",
     "IMPMAL.Operation" : "Operation",
     "IMPMAL.Ordnance" : "Ordnance",
     "IMPMAL.Origin" : "Origin",

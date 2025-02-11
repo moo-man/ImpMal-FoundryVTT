@@ -46,6 +46,22 @@ body:not(.no-theme) #chat-log {
       }
     }
 
+
+    .opposed {
+
+      
+      .applied.apply-damage:hover {
+        background-color: var(--impmal-darkgreen);
+      }
+
+      .critical .table-roll {
+          border-color: var(--impmal-lightgreen);
+          border-radius: 0px;
+          background: var(--impmal-darkgreen);
+          box-shadow: 0 0 5px var(--impmal-lightgreen);
+      }
+    }
+
     .dice-roll .dice-formula,
     .dice-roll .dice-total {
       border-color: var(--impmal-lightgreen);
@@ -133,5 +149,26 @@ body:not(.no-theme) #chat-log {
       }
     }
 
+    .opposed {
+
+    .opposed-details {
+      &.attacker-winner {
+        .SL {
+          color: var(--impmal-lightgreen);
+        }
+      }
+      &.defender-winner {
+        .SL {
+          color: var(--impmal-orange)
+        }
+      }
+    }
+
+      .response-buttons {
+        .secondary {
+          color: var(--impmal-orange)
+        }
+      }
+    }
   }
 }

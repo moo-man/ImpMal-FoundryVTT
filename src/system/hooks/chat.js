@@ -23,10 +23,6 @@ export default function()
     {
         PostedItemMessageModel.itemPostListeners(html);
         ChatHelpers.removeGMOnlyElements(html);
-        if (!app.isAuthor && !app.isOwner)
-        {
-            ChatHelpers.removeNonOwnerElements(html);
-        }
     });
 
     Hooks.on("createChatMessage", (document, options, user) => {
