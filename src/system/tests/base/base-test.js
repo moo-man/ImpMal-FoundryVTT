@@ -164,10 +164,10 @@ export class BaseTest extends WarhammerTestBase
     /**
      * Create a chat card represeting this test
      * 
-     * @param {Boolean} newMessage Forcibly create a new message 
+     * @param {Boolean} newMessage Forcibly create a new message
      * @returns 
      */
-    async sendToChat({newMessage = false}={}) 
+    async sendToChat({newMessage = false}={})
     {
 
         let chatData = await this._chatData();
@@ -175,11 +175,11 @@ export class BaseTest extends WarhammerTestBase
         // If no message exists, or new message requested, create one
         if (!this.message || newMessage)
         {
-            
+
             let id = randomID();
             chatData._id = id;
             chatData.system.context.messageId = id;
-            let msg = await ChatMessage.create(chatData, {keepId : true});   
+            let msg = await ChatMessage.create(chatData, {keepId : true});
             // Cannot assign message until after message is created, so save again
             // await this.save();
             return msg;
@@ -209,7 +209,7 @@ export class BaseTest extends WarhammerTestBase
     {
         if (this.item instanceof Item)
         {
-            this.itemSummary = await renderTemplate(this.itemSummaryTemplate, mergeObject(this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
+            this.itemSummary = await renderTemplate(this.itemSummaryTemplate, mergeObject(await this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
             this.effectButtons = await renderTemplate("modules/warhammer-lib/templates/partials/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
         }
         if (this.testDetailsTemplate)

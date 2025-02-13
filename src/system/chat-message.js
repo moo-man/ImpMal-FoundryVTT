@@ -102,7 +102,7 @@ export class ImpMalChatMessage extends ChatMessage
             ev.originalEvent.dataTransfer.setData("text/plain", JSON.stringify({type : "Item", uuid : test.context.uuid}));
         });
 
-        html.on("click", ".availability", async ev => 
+        html.on("click", "button.availability", async ev =>
         {
             let el = $(ev.target);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
