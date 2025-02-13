@@ -1,5 +1,6 @@
 import { AvailabilityDialog } from "../../../apps/test-dialog/availability-dialog";
 import { AvailabilityTest } from "../../../system/tests/availability/availability-test";
+import { PostedItemMessageModel } from "../../message/item";
 import { StandardItemModel } from "../standard";
 
 let fields = foundry.data.fields;
@@ -68,5 +69,10 @@ export class PhysicalItemModel extends StandardItemModel
         let data = await super.summaryData();
         data.details.physical = `<div>${game.i18n.format("IMPMAL.ItemDisplayXSolars", {solars : this.cost})}</div> <div>${game.impmal.config.availability[this.availability]}</div> <div>${game.i18n.format("IMPMAL.ItemDisplayXEnc", {enc : this.encumbrance.value})}</div>`;
         return data;
+    }
+
+    buy(actor)
+    {
+        PostedItemMessageModel.buy(actor, this.parent.toObject())
     }
 }

@@ -47,17 +47,6 @@
                             {{else}}
                                 <a class="equip" data-hand="right" data-target="system.equipped.value"><i class="fa-regular fa-hand"></i></a>
                             {{/if}}
-
-                            {{#if (and ../system.hands.left.document ../system.hands.right)}}
-                            <a class="equip" data-id="{{this.id}}" data-hand="other">
-                                {{#if this.system.equipped.value}}
-                                    <i class="fa-regular fa-circle-check"></i>
-                                {{else}}
-                                    <i class="fa-regular fa-circle"></i>
-                                {{/if}}
-                            </a>
-                            {{/if}}
-
                         {{else}}
                             <a class="property-toggle" data-id="{{this.id}}" data-target="system.equipped.value">
                                 {{#if this.system.equipped.value}}

@@ -44,6 +44,7 @@ export class AvailabilityDialog extends TestDialog
         dialogData.data.title = (title?.replace || game.i18n.localize("IMPMAL.Availability")) + (title?.append || "");
         dialogData.data.scripts = [];
         dialogData.data.item = item;
+        dialogData.fields.cost = item.system.cost;
         dialogData.fields.world = world;
         dialogData.fields.availability = availability || item.system.availability;
 

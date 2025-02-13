@@ -18,9 +18,9 @@
         </div>
     </div>
 
-    {{#if context.item.img}}
+    {{#if context.itemData.img}}
     <div class="item-image {{#unless this.succeeded}}inactive{{/unless}} ">
-        <img src="{{context.item.img}}" {{#if this.succeeded}}draggable="true"{{/if}}>
+        <img src="{{context.itemData.img}}" {{#if this.succeeded}}draggable="true"{{/if}}>
     </div>
     {{/if}}
     <p class="centered"><strong>{{result.outcomeDescription}}</strong></p>
@@ -36,4 +36,9 @@
         <p>{{this}}</p>
         {{/each}}
     </div>
+
+
+        {{#if this.succeeded}}
+            <button type="button" class="buy-item">{{localize "IMPMAL.Buy" cost=context.itemData.system.cost}}</button>
+        {{/if}}
 </div>

@@ -1,6 +1,7 @@
 import { AvailabilityEvaluator } from "./availability-evaluator";
 import { AvailabilityContext } from "./availability-context";
 import { BaseTest } from "../base/base-test";
+import { PostedItemMessageModel } from "../../../model/message/item";
 
 export class AvailabilityTest extends BaseTest
 {
@@ -36,12 +37,19 @@ export class AvailabilityTest extends BaseTest
         await Promise.all(this.actor?.runScripts("rollTest", this) || []);
     }
 
+    buyItem(actor)
+    {
+        let item = new Item.implementation(this.context.itemData)
+        item.system?.buy(actor);
+    }
+
 
     get tags() 
     {
         let tags = Object.values(this.context.tags);
         tags.push(game.i18n.format("IMPMAL.WorldType", {world : game.impmal.config.worlds[this.data.world]}));
         tags.push(game.impmal.config.availability[this.data.availability]);
+        tags.push(`${this.context.itemData.system.cost} Solars`)
         return tags;
     }
 

@@ -26,7 +26,7 @@ export class PostedItemMessageModel extends foundry.abstract.DataModel
 
     async rollAvailability()
     {
-        let dialogData = AvailabilityDialog.setupData({availability : this.itemData.system.availability},null, {title : {append : " - " + this.itemData.name}});
+        let dialogData = AvailabilityDialog.setupData({item: new Item.implementation(this.itemData), availability : this.itemData.system.availability},null, {title : {append : " - " + this.itemData.name}});
 
         let setupData = await AvailabilityDialog.awaitSubmit(dialogData);
 
@@ -34,6 +34,38 @@ export class PostedItemMessageModel extends foundry.abstract.DataModel
         await test.roll();
         test.sendToChat();
         return test;
+    }
+
+    buyItem(actor)
+    {
+        return this.constructor.buy(actor, this.itemData);
+    }
+
+    static async buy(actor, itemData)
+    {
+        if (!actor)
+        {
+            ui.notifications.error("IMPMAL.ErrorNoActorBuyItem", {localize: true});
+        }
+        if ((actor.system.solars) >= itemData.system.cost)
+        {
+            let confirm = await foundry.applications.api.DialogV2.confirm({
+                window : {title : `Buy ${itemData.name}`},
+                content : `<p>Buy <strong>${itemData.name}</strong> for <strong>${itemData.system.cost} Solars</strong>?</p>`
+            })
+
+            if (confirm)
+            {
+                let newSolars = actor.system.solars - itemData.system.cost;
+                ChatMessage.create({content : game.i18n.format("IMPMAL.BuySuccessful", {item : itemData.name, cost : itemData.system.cost}), speaker : {alias : actor.name}})
+                await actor.update({"system.solars" : newSolars});
+                await Item.implementation.create(itemData, {parent : actor});
+            }
+        }
+        else
+        {
+            ui.notifications.error(game.i18n.format("IMPMAL.ErrorNotEnoughSolars", {name : actor.name}));
+        }
     }
     
     static itemPostListeners(html)

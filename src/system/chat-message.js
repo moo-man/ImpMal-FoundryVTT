@@ -1,7 +1,5 @@
 import { EditTestForm } from "../apps/edit-test";
-import { AvailabilityDialog } from "../apps/test-dialog/availability-dialog";
 import ImpMalTables from "./tables";
-import { AvailabilityTest } from "./tests/availability/availability-test";
 
 export class ImpMalChatMessage extends ChatMessage 
 {
@@ -107,6 +105,20 @@ export class ImpMalChatMessage extends ChatMessage
             let el = $(ev.target);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
             message.system.rollAvailability();
+        });
+
+        html.on("click", "button.buy-item", async ev =>
+        {
+            let el = $(ev.target);
+            let message = game.messages.get(el.parents(".message").attr("data-message-id"));
+            if (message.type == "item")
+            {
+                message.system.buyItem(game.user.character);
+            }
+            else 
+            {
+                message.system.test?.buyItem(game.user.character);
+            }
         });
 
         html.on("click", ".receive-reward", async ev => 
