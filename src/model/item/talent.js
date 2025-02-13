@@ -1,3 +1,4 @@
+import { EquipSlots } from "./components/equip-slots";
 import { TestDataModel } from "./components/test";
 import { StandardItemModel } from "./standard";
 let fields = foundry.data.fields;
@@ -46,7 +47,17 @@ export class TalentModel extends StandardItemModel
         schema.effectTakenRequirement = new fields.ObjectField({}); // How many times must the talent be taken before each effect option can be selected, usually 2
         schema.effectRepeatable = new fields.ObjectField({}); // How many times must the talent be taken before each effect option can be selected, usually 2
         schema.effectChoices = new fields.ObjectField({}); // Choices selected
+        schema.slots = new fields.EmbeddedDataField(EquipSlots);
+
         return schema;
+    }
+
+    async _preUpdate(data, options, user)
+    {
+        if (foundry.utils.hasProperty(options.changed, "system.slots.value"))
+        {
+            data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
+        }
     }
 
     async _onCreate(data, options, user) 
@@ -125,6 +136,11 @@ export class TalentModel extends StandardItemModel
     _addModelProperties()
     {
         this.effectOptions.relative = this.parent.effects;
+        if (this.parent.actor)
+        {
+            this.slots.relative = this.parent.actor.items;
+            this.slots.list.forEach(i => i.relative = this.slots.relative);
+        }
     }
 
     async handleEffectSelection()

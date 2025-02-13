@@ -50,6 +50,7 @@ export default function registerHandlebars()
     ]);
 
     loadTemplates({
-        choiceTree : "systems/impmal/templates/partials/choice-tree.hbs"
+        slotsDisplay : "systems/impmal/templates/partials/slots.hbs",
+        slotsActorDisplay : "systems/impmal/templates/partials/slots-actor.hbs"
     })
 }

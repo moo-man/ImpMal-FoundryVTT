@@ -213,6 +213,11 @@ export class StandardActorModel extends BaseActorModel
 
     }
 
+    get slots()
+    {
+        return this.parent.items.filter(i => i.system.slots).reduce((slots, item) => slots.concat(item.system.slots.list.map(s => {s.source = item; return s;})), []);
+    }
+
     _addModelProperties()
     {
         super._addModelProperties();

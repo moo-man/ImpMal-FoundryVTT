@@ -194,6 +194,20 @@ body:not(.no-theme) .impmal.actor {
         }
     }
 
+    .slots {
+
+        .slot {
+            border-color: var(--impmal-lightgreen);
+            &.empty {
+                border-color: var(--impmal-lightgreen);
+            }
+            .slot-remove {  
+                background-color: var(--impmal-lightgreen);
+                color: var(--impmal-darkgreen);
+                border-radius: 50%;
+            }
+        }
+    }
 
     .shield-traits {
         .trait-list {

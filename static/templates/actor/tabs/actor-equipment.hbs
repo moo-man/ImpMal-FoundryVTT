@@ -26,6 +26,7 @@
     </header>
     <div class="list-content">
         {{#each items.weapon}}
+            {{#unless this.system.isSlotted}}
             <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row">
                     <div class="list-name">
@@ -73,11 +74,13 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> slotsActorDisplay}}
                 {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
                 </div>
             </div>
+            {{/unless}}
         {{/each}}
     </div>
 </section>
@@ -179,6 +182,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> slotsActorDisplay}}
                 {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
@@ -263,6 +267,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> slotsActorDisplay}}
                 {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 
@@ -305,6 +310,7 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{> slotsActorDisplay}}
                 {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 

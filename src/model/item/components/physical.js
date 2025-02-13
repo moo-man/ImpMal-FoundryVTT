@@ -24,6 +24,11 @@ export class PhysicalItemModel extends StandardItemModel
         return true;
     }
 
+    get isSlotted()
+    {
+        return this.parent.actor?.system.slots?.find(i => i.id == this.parent.id)?.source;
+    }
+
     computeBase() 
     {
         super.computeBase();

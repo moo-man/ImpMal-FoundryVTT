@@ -1,3 +1,4 @@
+import { EquipSlots } from "./components/equip-slots";
 import EnabledMixin from "./components/enabled";
 import { EquippableItemModel } from "./components/equippable";
 import { TestDataModel } from "./components/test";
@@ -18,7 +19,16 @@ export class EquipmentModel extends EquippableItemModel
             enabled : new fields.BooleanField({initial : false}),
         });
         schema.test = new fields.EmbeddedDataField(EnabledMixin(TestDataModel));
+        schema.slots = new fields.EmbeddedDataField(EquipSlots);
         return schema;
+    }
+
+    async _preUpdate(data, options, user)
+    {
+        if (foundry.utils.hasProperty(options.changed, "system.slots.value"))
+        {
+            data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
+        }
     }
 
     computeBase() 
@@ -30,6 +40,15 @@ export class EquipmentModel extends EquippableItemModel
     getOtherEffects()
     {
         return super.getOtherEffects().concat(Object.values(this.traits.effects));
+    }
+
+    _addModelProperties()
+    {
+        if (this.parent.actor)
+        {
+            this.slots.relative = this.parent.actor.items;
+            this.slots.list.forEach(i => i.relative = this.slots.relative);
+        }
     }
 
 

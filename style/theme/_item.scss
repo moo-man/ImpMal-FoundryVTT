@@ -22,4 +22,20 @@ body:not(.no-theme) .impmal.item {
     .green {
         color: var(--impmal-lightgreen);
     }
+
+    
+    .slot-display {
+
+        .slot {
+            border-color: var(--impmal-lightgreen);
+            &.empty {
+                border-color: var(--impmal-lightgreen);
+            }
+            .slot-remove {  
+                background-color: var(--impmal-lightgreen);
+                color: var(--impmal-darkgreen);
+                border-radius: 50%;
+            }
+        }
+    }
 }

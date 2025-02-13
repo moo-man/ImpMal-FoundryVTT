@@ -66,9 +66,19 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet
         }
     }
 
+
     _onDropItem(ev, item)
     {
-        return this[`_onDropItem${item.type[0].toUpperCase() + item.type.substring(1)}`]?.(ev, item);
+        let slot = $(ev.target).parents(".slot")[0]
+        if (slot && item.system.isPhysical)
+        {
+            let index = slot.dataset.index;
+            this.item.update(this.item.system.slots.slotItem(item, index));
+        }
+        else 
+        {
+            return this[`_onDropItem${item.type[0].toUpperCase() + item.type.substring(1)}`]?.(ev, item);
+        }
     }
 
     _canDragDrop()
@@ -138,6 +148,14 @@ export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet
         html.find(".compact-list a").click(this._onCompactItemClick.bind(this));
         html.find(".compact-list a").contextmenu(this._onCompactItemRightClick.bind(this));
         html.find(".list-diff").click(this._onDiffEdit.bind(this));
+        html.find(".slotted-item").click(ev => {
+            let id = this._getId(ev);
+            this.item.actor?.items.get(id).sheet?.render(true);
+        })
+        html.find(".slot-remove").click((ev) => {
+            let index = this._getIndex(ev);
+            this.item.update(this.item.system.slots.edit(index, {id : ""}));
+        })
     }
 
     _onEditTraits(ev) 

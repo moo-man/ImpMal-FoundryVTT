@@ -1,3 +1,4 @@
+import { EquipSlots } from "./components/equip-slots";
 import { EquippableItemModel } from "./components/equippable";
 import { HitLocationsModel } from "./components/hit-locations";
 import { TraitListModel } from "./components/traits";
@@ -14,6 +15,7 @@ export class ProtectionModel extends EquippableItemModel
         schema.locations = new fields.EmbeddedDataField(HitLocationsModel);
         schema.damage = new fields.ObjectField({});
         schema.rended = new fields.ObjectField({});
+        schema.slots = new fields.EmbeddedDataField(EquipSlots);
         return schema;
     }
 
@@ -49,6 +51,12 @@ export class ProtectionModel extends EquippableItemModel
     async _preUpdate(data, options, user)
     {
         await super._preUpdate(data, options, user);
+
+        if (foundry.utils.hasProperty(options.changed, "system.slots.value"))
+        {
+            data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
+        }
+            
         // If location label is modified, try to parse which location keys to use
         let locationLabel = foundry.utils.getProperty(options.changed, "system.locations.label");
         if (locationLabel)
@@ -95,5 +103,14 @@ export class ProtectionModel extends EquippableItemModel
             game.i18n.format("IMPMAL.ItemDisplayXArmour", {armour : this.armour}), 
             this.traits.htmlArray);
         return data;
+    }
+
+    _addModelProperties()
+    {
+        if (this.parent.actor)
+        {
+            this.slots.relative = this.parent.actor.items;
+            this.slots.list.forEach(i => i.relative = this.slots.relative);
+        }
     }
 }

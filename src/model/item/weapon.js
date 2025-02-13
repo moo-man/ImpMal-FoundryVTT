@@ -1,3 +1,4 @@
+import { EquipSlots } from "./components/equip-slots";
 import { DamageModel } from "./components/damage";
 import { EquippableItemModel } from "./components/equippable";
 import { TraitListModel } from "./components/traits";
@@ -26,6 +27,7 @@ export class WeaponModel extends EquippableItemModel
             current : new fields.NumberField({min: 0, integer : true, initial: 0})
         });
         schema.mods = new fields.EmbeddedDataField(ModListModel);
+        schema.slots = new fields.EmbeddedDataField(EquipSlots);
         return schema;
     }
 
@@ -36,6 +38,11 @@ export class WeaponModel extends EquippableItemModel
         if (foundry.utils.hasProperty(options.changed, "system.mag.value") && this.ammo.document)
         {
             foundry.utils.setProperty(data, "system.mag.current", data.system.mag.value);
+        }
+
+        if (foundry.utils.hasProperty(options.changed, "system.slots.value"))
+        {
+            data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
         }
     }
 
@@ -55,20 +62,14 @@ export class WeaponModel extends EquippableItemModel
             {
                 foundry.utils.setProperty(updateData, "system.mag.current", 0);
             }
-        }
+        }    
+
         if (!foundry.utils.isEmpty(updateData))
         {
             this.parent.update(updateData);
         }
     }
 
-    _addModelProperties()
-    {
-        if (this.parent.actor)
-        {
-            this.ammo.relative = this.parent.actor.items;
-        }
-    }
 
     computeBase() 
     {
@@ -104,7 +105,7 @@ export class WeaponModel extends EquippableItemModel
     computeEquipped()
     {
         let actor = this.parent?.actor;
-        if (actor?.type == "character")
+        if (actor?.type == "character" && !this.isSlotted)
         {
             let hands = actor.system.hands.isHolding(this.parent.id);
             this.equipped.value = isEmpty(hands) ? false : true;
@@ -128,6 +129,16 @@ export class WeaponModel extends EquippableItemModel
         let skillItem = skillObject.specialisations.find(i => i.name.slugify() == this.specialisation?.slugify());
 
         return skillItem ?? skill;
+    }
+
+    _addModelProperties()
+    {
+        if (this.parent.actor)
+        {
+            this.ammo.relative = this.parent.actor.items;
+            this.slots.relative = this.parent.actor.items;
+            this.slots.list.forEach(i => i.relative = this.slots.relative);
+        }
     }
 
     get attackData() 

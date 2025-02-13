@@ -1,0 +1,27 @@
+<fieldset>
+    <legend>{{localize "IMPMAL.EquipSlots"}}</legend>
+    <div class="form-group">
+        <label data-tooltip="IMPMAL.EquipSlotsTT" data-tooltip-direction="LEFT">{{localize "IMPMAL.Number"}}</label>
+        <div class="form-fields">
+            <input type="number" name="system.slots.value" value="{{system.slots.value}}">
+        </div>
+    </div>
+
+    <div class="slot-display">
+        {{#each item.system.slots.list}}
+            <div class="slot {{#unless this.document}}empty{{/unless}}" data-index="{{@key}}">
+                <div class="slot-details" data-id="{{this.id}}">
+                    {{#if this.document}}
+                        <img src="{{document.img}}"/>
+                        <a class="slotted-item">{{document.name}}</a>
+                    {{else}}
+                        <label>Empty</label>
+                    {{/if}}
+                </div>
+                    {{#if this.document}}
+                    <a class="slot-remove"><i class="fa-solid fa-xmark"></i></a>
+                    {{/if}}
+            </div>
+        {{/each}}
+    </div>
+</fieldset>

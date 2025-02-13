@@ -69,6 +69,7 @@ import { PostedItemMessageModel } from "./model/message/item.js";
 import ResourceManager from "./system/resources.js";
 import { CorruptionMessageModel } from "./model/message/corruption.js";
 import { OpposedTestMessageModel } from "./model/message/opposed.js";
+import AugmeticItemSheet from "./sheet/items/item-augmetic-sheet.js";
 
 Hooks.once("init", () => 
 {
@@ -99,6 +100,7 @@ Hooks.once("init", () =>
     Items.registerSheet("impmal", OriginItemSheet, { types: ["origin"], makeDefault: true, label : "Origin Sheet" });
     Items.registerSheet("impmal", RoleItemSheet, { types: ["role"], makeDefault: true, label : "Role Sheet" });
     Items.registerSheet("impmal", AmmoItemSheet, { types: ["ammo"], makeDefault: true, label : "Ammo Sheet" });
+    Items.registerSheet("impmal", AugmeticItemSheet, { types: ["augmetic"], makeDefault: true, label : "Augmetic Sheet" });
     DocumentSheetConfig.registerSheet(ActiveEffect, "impmal", ImpmalActiveEffectConfig, {makeDefault : true});
 
     // CONFIG.ActiveEffect.sheetClass = undefined;

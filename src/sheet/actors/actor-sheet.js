@@ -110,19 +110,28 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
     async _onDrop(ev)
     {
         let sustaining = $(ev.target).parents(".sustaining")?.length;
+        let slot = $(ev.target).parents(".slot")[0]
+
         let dropData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-        if (dropData.type == "Item" && sustaining)
+        if (dropData.type == "Item")
         {
             let item = await Item.fromDropData(dropData);
-            if (item.type == "power" && item.parent?.uuid == this.actor.uuid)
+
+            if (sustaining && item.type == "power" && item.parent?.uuid == this.actor.uuid)
             {
                 this.object.update(this.object.system.warp.sustaining.add(item));
             }
+            else if (slot && item.system.isPhysical)
+            {
+                let index = slot.dataset.index;
+                let dropItem = this.actor.items.get(this._getParent(ev.target, ".list-item")?.dataset.id);
+                dropItem.update(dropItem.system.slots.slotItem(item, index));
+            }
             else 
             {
-                super._onDrop(ev);
+                super._onDrop(ev)
             }
-    
+
         }
         else 
         {
@@ -217,7 +226,12 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         html.find(".clear-action").on("click", this._onClearAction.bind(this));
         html.find(".add-effect").on("change", this._onAddEffect.bind(this));
         html.find(".remove-sustaining").on("click", this._onRemoveSustaining.bind(this))
+        html.find(".slot-remove",).on("click", this._onSlotRemove.bind(this));
         html.on("click", ".use-item", this._onUseItem.bind(this));
+        html.find(".slotted-item").click(ev => {
+            let id = this._getId(ev);
+            this.actor.items.get(id).sheet?.render(true);
+        })
     }
 
 
@@ -562,6 +576,13 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
     _onActionClick(ev)
     {
         this.actor.useAction(ev.target.dataset.action);
+    }
+
+    _onSlotRemove(ev)
+    {
+        let document = this._getDocument(ev);
+        let index = this._getIndex(ev);
+        document.update(document.system.slots.edit(index, {id : ""}));
     }
 
     _onUseItem(ev)

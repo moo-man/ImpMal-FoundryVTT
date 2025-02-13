@@ -18,6 +18,11 @@ export class EquippableItemModel extends PhysicalItemModel
     computeBase() 
     {
         super.computeBase();
+
+        if (this.isSlotted?.system?.isEquipped)
+        {
+            this.equipped.value = true;
+        }
         
         // if equipped/worn, reduce encumbrance by 1
         if (this.equipped.value)
