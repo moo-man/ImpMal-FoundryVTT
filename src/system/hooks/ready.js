@@ -23,11 +23,13 @@ export default function()
             reward : {
                 description : "Post a Reward message to chat which can include XP and/or Solars",
                 args : ["xp", "solars", "reason"],
+                defaultArg : "xp",
                 callback : (xp, solars, reason) => RewardMessageModel.postReward({xp, solars, reason})
             }, 
             corruption : {
                 description : "Post a Corruption message to chat, providing a button to resist the corruption",
                 args : ["exposure", "corruption", "source"],
+                defaultArg : "exposure",
                 callback : (exposure, corruption, source) => CorruptionMessageModel.postCorruption(exposure, {corruption, source})
             },
         })
