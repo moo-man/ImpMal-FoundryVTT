@@ -738,6 +738,7 @@
     "IMPMAL.Uses" : "Uses",
     "IMPMAL.UseItems" : "Use Items",
     "IMPMAL.UseItemsHint" : "Use Owned Items to compute armour values instead of static values.",
+    "IMPMAL.UseSuperiority" : "Use Superiority",
     "IMPMAL.UpdateCombat" : "Update Combat",
     "IMPMAL.UpdaterTitle" : "Update {title} Content",
     "IMPMAL.UpdaterError" : "You can only update if you've initialized this module at least once.",

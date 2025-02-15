@@ -234,6 +234,10 @@ export class BaseTest extends WarhammerTestBase
     {
         // Tags from context are saved, tags from results are computed
         let tags = Object.values(mergeObject(foundry.utils.deepClone(this.context.tags), this.result.tags));
+        if (this.context.superiorityUsed)
+        {
+            tags.push(game.i18n.localize("IMPMAL.Superiority"));
+        }
         return tags;
     }
 

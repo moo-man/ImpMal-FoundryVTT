@@ -96,12 +96,17 @@ export class TestDialog extends WarhammerRollDialog
         data.advantage = this.advantage;
         data.disadvantage = this.disadvantage;
         this.fields.state = this.computeState();
+        data.showSuperiority = this.actor.inCombat && this.actor.hasPlayerOwner;
         return data
     }
 
     async computeFields() 
     {
-            
+        if (this.fields.useSuperiority)
+        {
+            this.fields.SL += game.impmal.resources.get("superiority")
+            this.tooltips.add("SL", game.impmal.resources.get("superiority"), game.i18n.localize("IMPMAL.Superiority"))
+        }
     }
 
     /**

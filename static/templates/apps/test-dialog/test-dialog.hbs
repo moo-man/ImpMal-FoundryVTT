@@ -12,6 +12,10 @@
                 <label>{{localize "IMPMAL.SL"}}</label>
                 <div class="form-fields">
                     <input type="number" value="{{fields.SL}}" name="SL">
+                        {{#if showSuperiority}}
+                            <input type="checkbox" name="useSuperiority" {{checked fields.useSuperiority}}>
+                            <label>+{{localize "IMPMAL.Superiority"}}</label>
+                        {{/if}}
                 </div>
             </div>
             <div class="form-group" {{#if tooltips.difficulty}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.difficulty}}"{{/if}}>
