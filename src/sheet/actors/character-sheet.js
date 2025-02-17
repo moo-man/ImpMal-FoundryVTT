@@ -91,6 +91,10 @@ export default class ImpMalCharacterSheet extends ImpMalActorSheet
         html.find(".roll-dodge").on("click", this._onRollDodge.bind(this));
         html.find(".roll-initiative").on("click", this._onRollInitiative.bind(this));
 
+        html.find(".roll-mutation").on("click", () => {
+            this.actor.system.rollMutation();
+        })
+
         html.find(".equip").click(ev => 
         {
             let itemId = $(ev.currentTarget).parents(".list-item").attr("data-id");

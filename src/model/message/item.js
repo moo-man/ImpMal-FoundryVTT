@@ -11,17 +11,17 @@ export class PostedItemMessageModel extends foundry.abstract.DataModel
         return schema;
     }
 
-    static async postItem(item)
+    static async postItem(item, chatData={})
     {
         let summary = await renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", await item.system.summaryData());
         let content = await renderTemplate("systems/impmal/templates/chat/item-post.hbs", {name : item.name, img : item.img, summary, item});
-        ChatMessage.create({
+        ChatMessage.create(foundry.utils.mergeObject({
             content,
             type : "item",
             system : {
                 itemData : item.toObject()
             }
-        });
+        }, chatData));
     }
 
     async rollAvailability()

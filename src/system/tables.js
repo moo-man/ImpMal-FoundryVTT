@@ -1,6 +1,6 @@
 export default class ImpMalTables 
 {
-    static async rollTable(key, formula, {showRoll=true, showResult=true}={})
+    static async rollTable(key, formula, {showRoll=true, showResult=true, chatData={}}={})
     {
         let id = game.settings.get("impmal", "tableSettings")[key];
         let table = game.tables.get(id);
@@ -13,18 +13,26 @@ export default class ImpMalTables
         }
 
         let dice = formula ? new Roll(formula) : new Roll(table?.formula);
-
+        let rollMode;
+        if (chatData.whisper)
+        {
+            rollMode = "gmroll";
+        }
+        if (chatData.blind)
+        {
+            rollMode = "blindroll"
+        }
         if (!table)
         {
             ui.notifications.error("No table found for " + key);
-            return dice.toMessage();
+            return dice.toMessage(chatData, {rollMode});
         }
 
         await dice.roll();
 
         if (showRoll)
         {
-            let msg = await dice.toMessage({flavor : table?.name, speaker : ChatMessage.getSpeaker()});
+            let msg = await dice.toMessage(foundry.utils.mergeObject({flavor : table?.name, speaker : ChatMessage.getSpeaker()}, chatData), {rollMode});
             if (game.dice3d)
             {
                 await game.dice3d.waitFor3DAnimationByMessageID(msg.id);
@@ -44,7 +52,7 @@ export default class ImpMalTables
                 let document = await game.impmal.utility.findId(result.documentId);
                 if (document) // Assumed item
                 {
-                    document.postItem();
+                    document.postItem(chatData);
                 }
                 else 
                 {

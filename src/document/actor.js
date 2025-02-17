@@ -236,7 +236,6 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         if ((woundsGained + this.system.combat.wounds.value) > this.system.combat.wounds.max)
         {
             excess = (woundsGained + this.system.combat.wounds.value) - this.system.combat.wounds.max;
-            woundsGained -= excess;
             critical = true;
         }
 
@@ -271,6 +270,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         let updateData = {"system.combat.wounds.value" : this.system.combat.wounds.value + woundsGained};
 
         let damageData = {
+            damage : value,
             text, 
             woundsGained, 
             message : message ? ChatMessage.create({content : (text + (critString ? critString : "")), speaker : ChatMessage.getSpeaker({actor : this})}) : null,

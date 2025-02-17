@@ -45,7 +45,7 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
 
         let attackerTest = attackerMessage.system.test;
         let templateData = {
-            attacker : attackerTest.context.token,
+            attacker : attackerTest.context.token || attackerTest.actor.prototypeToken,
             defender : defenderToken,
             attackerTest : attackerTest,
             responseButtons : this._getResponseButtons(defenderToken)

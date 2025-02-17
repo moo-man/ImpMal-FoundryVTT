@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="actor-property">
-        <label class="property-label">{{localize "IMPMAL.Corruption"}}</label>
+        <label class="property-label">{{#if (gt system.corruption.value system.corruption.max)}}<a class="roll-mutation"><i class="fa-regular fa-dice-d10"></i> {{localize "IMPMAL.Corruption"}}</a>{{else}}{{localize "IMPMAL.Corruption"}}{{/if}}</label>
         <div class="property-value">
             <input type="number" name="system.corruption.value" value="{{system.corruption.value}}">
             <input type="number" name="system.corruption.max" value="{{system.corruption.max}}" {{#if system.autoCalc.corruption}}disabled{{/if}}>

@@ -9,6 +9,7 @@ export class EquippableItemModel extends PhysicalItemModel
         let schema = super.defineSchema();
         schema.equipped = new fields.SchemaField({
             value : new fields.BooleanField(),
+            force : new fields.BooleanField()
         });
 
         return schema;
@@ -18,6 +19,11 @@ export class EquippableItemModel extends PhysicalItemModel
     computeBase() 
     {
         super.computeBase();
+
+        if (this.equipped.force)
+        {
+            this.equipped.value = true;
+        }
 
         if (this.isSlotted?.system?.isEquipped)
         {

@@ -345,7 +345,7 @@ export default ImpMalSheetMixin = (cls) => class extends cls
 
     _onScriptConfig(ev)
     {
-        new WarhammerScriptConfig(this.object, {path : this._getPath(ev)}).render(true);
+        new WarhammerScriptEditor(this.object, {path : this._getPath(ev)}).render(true);
     }
 
     

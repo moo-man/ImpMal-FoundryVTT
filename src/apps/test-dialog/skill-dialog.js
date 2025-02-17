@@ -11,6 +11,11 @@ export class SkillTestDialog extends CharacteristicTestDialog
         return this.actor.items.get(this.data.skillItemId);
     }
 
+    get skill()
+    {
+        return this.data.skill;
+    }
+
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"
@@ -39,6 +44,11 @@ export class SkillTestDialog extends CharacteristicTestDialog
         let characteristic = skillObject.characteristic;
 
         let dialogData = super.setupData(characteristic, actor, {title, fields, context});
+
+        if (name == "Dodge" || (actor.defendingAgainst && skillKey == "reflexes"))
+        {
+            dialogData.data.context.dodge = true;
+        }
 
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.SkillTest", {skill : game.impmal.config.skills[skillKey] + (skillItem?.name ? ` (${skillItem.name})` : "")})) + (title?.append || "");

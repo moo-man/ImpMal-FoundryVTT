@@ -70,7 +70,9 @@ export default function registerSettings()
             "perils" : "2YYlAUyaVIt4bZVa",
             "phenomena" : "9aSbu2mswOOI43J1",
             "talents" : "9SLhM8FOgluaUwvO",
-            "origin" : "nyaEnNOrR8Sq8Wf4"
+            "origin" : "nyaEnNOrR8Sq8Wf4",
+            "mutation" : "aHz4wSCM8ogTVOhT",
+            "malignancy" : "AJC7cYdzY3rIHZWm",
         }
     });
 

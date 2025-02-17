@@ -51,6 +51,7 @@ export class SkillTest extends CharacteristicTest
         this._computeWarp();
         this._computePurge();
         this._handleCorruption();
+        this._handleMutation();
     }
 
     _handleCorruption()
@@ -75,6 +76,24 @@ export class SkillTest extends CharacteristicTest
             }
 
             this.actor.update({"system.corruption.value" : this.context.baseCorruption + corruption});
+        }
+    }
+
+    _handleMutation()
+    {
+        if (this.context.mutation && this.actor.type == "character" && this.failed)
+        {
+            let corruptionLost = this.actor.system.characteristics.wil.bonus;
+            let typeRoll = Math.ceil(CONFIG.Dice.randomUniform() * 10);
+            let type = typeRoll % 2 == 0 ? "mutation" : "malignancy";
+            this.result.text.corruptionLost = `Removed ${corruptionLost} Corruption`;
+            this.result.text.type = `Type: ${game.i18n.localize("IMPMAL." + type.capitalize())} (${typeRoll})`;
+            let result = game.impmal.tables.rollTable(type, null, {chatData : ChatMessage.applyRollMode({}, "gmroll")});
+            if (!this.context.corruptionLost)
+            {
+                this.actor.update({"system.corruption.value" : this.actor.system.corruption.value - corruptionLost});
+                this.context.corruptionLost = corruptionLost;
+            }
         }
     }
 

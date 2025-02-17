@@ -105,7 +105,7 @@ export class WeaponModel extends EquippableItemModel
     computeEquipped()
     {
         let actor = this.parent?.actor;
-        if (actor?.type == "character" && !this.isSlotted)
+        if (actor?.type == "character" && !this.isSlotted && !this.equipped.force)
         {
             let hands = actor.system.hands.isHolding(this.parent.id);
             this.equipped.value = isEmpty(hands) ? false : true;

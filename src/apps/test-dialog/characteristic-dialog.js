@@ -3,6 +3,11 @@ import { TestDialog } from "./test-dialog";
 
 export class CharacteristicTestDialog extends TestDialog
 {
+
+    get characteristic()
+    {
+        return this.data.characteristic;
+    }
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"

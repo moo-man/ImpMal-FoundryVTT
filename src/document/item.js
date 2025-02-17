@@ -126,8 +126,8 @@ export class ImpMalItem extends ImpMalDocumentMixin(WarhammerItem)
         return game.i18n.localize(CONFIG.Item.typeLabels[this.type]);
     }
 
-    async postItem()
+    async postItem(chatData={})
     {
-        PostedItemMessageModel.postItem(this);
+        PostedItemMessageModel.postItem(this, chatData);
     }
 }

@@ -186,8 +186,30 @@ export class CharacterModel extends StandardActorModel
         {
             corruption = game.impmal.config.corruptionValues[exposure]
         }
-        await this.parent.setupSkillTest({ key: skill }, { title: { append: ` – ${game.i18n.localize("IMPMAL.Corruption")}` }, context: { corruption } });
+        await this.parent.setupSkillTest({ key: skill }, {fields : {rollMode : "gmroll"}, title: { append: ` – ${game.i18n.localize("IMPMAL.Corruption")}` }, context: { corruption } });
+    }
 
+    async rollMutation(skill)
+    {
+        if (!skill)
+        {
+
+            skill = await foundry.applications.api.DialogV2.wait({
+                window: { title: game.i18n.localize("IMPMAL.SuccumbingToCorruption") },
+                content: game.i18n.localize("IMPMAL.MutationPromptContent"),
+                buttons:
+                    [{
+                        action: "fortitude",
+                        label: game.i18n.localize("IMPMAL.Fortitude"),
+                    },
+                    {
+                        action: "discipline",
+                        label: game.i18n.localize("IMPMAL.Discipline"),
+                    }
+                    ]
+            })
+        }
+        await this.parent.setupSkillTest({ key: skill }, {fields : {rollMode : "gmroll"}, title: { append: ` – ${game.i18n.localize("IMPMAL.SuccumbingToCorruption")}` }, context: { mutation : true } });
     }
 
     static migrateData(data)

@@ -5,7 +5,8 @@ export class ImpMalEffect extends WarhammerActiveEffect
 
     static CONFIGURATION = {
         zones : true,
-        exclude : {}
+        exclude : {},
+        bracket : ["(", ")"]
     };
 
     async resistEffect()
