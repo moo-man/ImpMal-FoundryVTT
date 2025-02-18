@@ -19,6 +19,7 @@ export class AdvancementForm extends FormApplication
     {
         super(...args);
         this.actor = this.object.clone();
+        this.canEditXP = game.user.isGM || game.settings.get("impmal", "playerExperienceEditing");
     }
 
     async getData()
@@ -26,6 +27,7 @@ export class AdvancementForm extends FormApplication
         let data = await super.getData();
         this.actor.reset();
         data.actor = this.actor;
+        data.canEditXP = this.canEditXP;
         data.talentsAndPowers = this.actor.itemTypes.power.concat(this.actor.itemTypes.talent);
         return data;
     }

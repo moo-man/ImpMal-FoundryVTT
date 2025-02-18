@@ -85,7 +85,7 @@
                     <input type="text" class="name log-edit" name="reason" value="{{this.reason}}">
                     <input type="number" class="xp log" value="{{this.xp}}" disabled>
                     <input type="number" class="xp log" value="{{this.total}}" disabled>
-                    {{#if (or (isGM) (settings "playerExperienceEditing"))}} <a class="log-remove"><i class="fa-solid fa-xmark"></i></a>{{/if}}
+                    {{#if ../canEditXP}} <a class="log-remove"><i class="fa-solid fa-xmark"></i></a>{{/if}}
                 </div>
                 {{/each}}
             </div>
@@ -97,13 +97,13 @@
                 </div>
                 {{#each actor.system.xp.other.list}}
                 <div data-index="{{@key}}">
-                    <input type="text" class="name other-edit" name="description" value="{{this.description}}" {{#unless (or (isGM) (settings "playerExperienceEditing"))}} disabled {{/unless}}>
-                    <input type="number" class="xp other-edit" name="xp" value="{{this.xp}}" {{#unless (or (isGM) (settings "playerExperienceEditing"))}} disabled {{/unless}}>
+                    <input type="text" class="name other-edit" name="description" value="{{this.description}}" {{#unless ../canEditXP}} disabled {{/unless}}>
+                    <input type="number" class="xp other-edit" name="xp" value="{{this.xp}}" {{#unless ../canEditXP}} disabled {{/unless}}>
                 </div>
                 {{/each}}
                 <div>
-                    <input type="text" class="name other-new" name="description" {{#unless (or (isGM) (settings "playerExperienceEditing"))}} disabled {{/unless}}>
-                    <input type="number" class="xp other-new" name="xp" {{#unless (or (isGM) (settings "playerExperienceEditing"))}} disabled {{/unless}}>
+                    <input type="text" class="name other-new" name="description" {{#unless canEditXP}} disabled {{/unless}}>
+                    <input type="number" class="xp other-new" name="xp" {{#unless canEditXP}} disabled {{/unless}}>
                 </div>
             </div>
         </div>
