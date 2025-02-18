@@ -35,7 +35,7 @@ export class ProtectionModel extends EquippableItemModel
 
     getOtherEffects()
     {
-        return super.getOtherEffects().concat(Object.values(this.traits.effects));
+        return super.getOtherEffects().concat(Object.values(this.traits.traitEffects("protection")));
     }
 
     computeOwned(actor) 

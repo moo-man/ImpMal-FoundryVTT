@@ -31,7 +31,7 @@ export class EquipmentModel extends EquippableItemModel
 
     getOtherEffects()
     {
-        return super.getOtherEffects().concat(Object.values(this.traits.effects));
+        return super.getOtherEffects().concat(Object.values(this.traits.traitEffects("protection")));
     }
 
     _addModelProperties()

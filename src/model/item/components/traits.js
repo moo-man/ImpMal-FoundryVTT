@@ -174,11 +174,11 @@ export class TraitListModel extends ListModel
         return this.displayArray.join(", ");
     }
 
-    get effects()
+    traitEffects(type)
     {
         return this.list.reduce((obj, t) => 
         {
-            let effectData = game.impmal.config.traitEffects[t.key];
+            let effectData = type == "weapon" ? game.impmal.config.weaponTraitEffects[t.key] : game.impmal.config.protectionTraitEffects[t.key];
             if (effectData)
             {
                 let effect = new ActiveEffect.implementation(effectData, {parent: this.parent.parent});

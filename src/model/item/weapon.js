@@ -369,7 +369,7 @@ export class WeaponModel extends EquippableItemModel
         // A weapon has more effects than just its own, it should include modification and ammo effects
         return super.getOtherEffects()
         .concat(this.categoryEffect || [])
-        .concat(Object.values(this.traits.effects))
+        .concat(Object.values(this.traits.traitEffects("weapon")))
         .concat(
             (this.mods.documents || []).concat(
                 this.ammo.document || [])

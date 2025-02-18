@@ -819,7 +819,7 @@ const IMPMAL = {
         }
     },
 
-    traitEffects : {
+    weaponTraitEffects : {
        
        defensive: {
            name : "IMPMAL.Defensive",
@@ -870,6 +870,10 @@ const IMPMAL = {
                 }]
             }
         }
+    },
+
+    protectionTraitEffects : {
+
     },
 
 
