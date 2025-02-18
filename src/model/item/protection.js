@@ -51,11 +51,6 @@ export class ProtectionModel extends EquippableItemModel
     async _preUpdate(data, options, user)
     {
         await super._preUpdate(data, options, user);
-
-        if (foundry.utils.hasProperty(options.changed, "system.slots.value"))
-        {
-            data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
-        }
             
         // If location label is modified, try to parse which location keys to use
         let locationLabel = foundry.utils.getProperty(options.changed, "system.locations.label");

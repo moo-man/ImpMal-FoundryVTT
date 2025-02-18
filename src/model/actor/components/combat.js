@@ -8,12 +8,14 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         schema.size = new fields.StringField();
         schema.speed = new fields.SchemaField({
             land : new fields.SchemaField({
-                value : new fields.StringField(),
-                modifier : new fields.NumberField({default : 0})
+                value : new fields.StringField({initial : "normal"}),
+                modifier : new fields.NumberField({initial : 0}),
+                notes : new fields.StringField()
             }),
             fly : new fields.SchemaField({
-                value : new fields.StringField(),
-                modifier : new fields.NumberField({default: 0})
+                value : new fields.StringField({initial : "none"}),
+                modifier : new fields.NumberField({initial: 0}),
+                notes : new fields.StringField()
             })
         });
         schema.hitLocations = new fields.ObjectField();
@@ -98,10 +100,13 @@ export class StandardCombatModel extends foundry.abstract.DataModel
 
     computeSpeed(speed)
     {
-        const speeds = ["slow", "normal", "fast", "swift"];
-        let speedIndex = speeds.indexOf(speed.value) + (speed.modifier || 0);
-        speedIndex = Math.clamp(speedIndex, 0, 3);
-        speed.value = speeds[speedIndex];
+        if (speed.value != "none")
+        {
+            const speeds = ["slow", "normal", "fast", "swift"];
+            let speedIndex = speeds.indexOf(speed.value) + (speed.modifier || 0);
+            speedIndex = Math.clamp(speedIndex, 0, 3);
+            speed.value = speeds[speedIndex];
+        }
     }
 
 
@@ -187,6 +192,35 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     randomHitLoc()
     {
         return this.hitLocAt(Math.ceil(CONFIG.Dice.randomUniform() * 10));
+    }
+
+    get speedDisplay()
+    {
+        let text = []
+        let land = this.speed.land;
+        let fly = this.speed.fly;
+        let speeds = game.impmal.config.speeds;
+        let landText = speeds[land.value];
+        if (land.notes)
+        {
+            landText += "*"
+        }
+        text.push(landText);
+
+        if (fly.value != "none")
+        {
+            let flyText = game.i18n.localize("IMPMAL.Fly");
+            if (fly.value != land.value)
+            {
+                flyText += ` (${speeds[fly.value]})`;
+            }
+            if (fly.notes)
+            {
+                flyText += "*";
+            }
+            text.push(flyText);
+        }
+        return text.join(", ");
     }
 }
 

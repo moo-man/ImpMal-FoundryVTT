@@ -1,10 +1,10 @@
 export default class ImpMalTables 
 {
-    static async rollTable(key, formula, {showRoll=true, showResult=true, chatData={}}={})
+    static async rollTable(key, formula, {modifier=0, showRoll=true, showResult=true, chatData={}, actor}={})
     {
         let id = game.settings.get("impmal", "tableSettings")[key];
         let table = game.tables.get(id);
-
+        
         if (!table && !formula)
         {
             let error = "No table found for " + key + ". Check Table Settings within System Settings";
@@ -12,7 +12,25 @@ export default class ImpMalTables
             throw new Error(error);
         }
 
-        let dice = formula ? new Roll(formula) : new Roll(table?.formula);
+        if (actor)
+        {
+            let args = {key, table, formula, modifier, showRoll, showResult, chatData}
+            await Promise.all(actor.runScripts("rollTable", args));
+            table = args.table;
+            formula = args.formula;
+            modifier = args.modifier;
+            showRoll = args.showRoll;
+            showResult = args.showResult;
+            chatData = args.chatData;
+        }
+
+        formula = formula || table?.formula;
+
+        if (modifier)
+        {
+            formula += ` + ${modifier}`
+        }
+        let dice = new Roll(formula);
         let rollMode;
         if (chatData.whisper)
         {
@@ -69,8 +87,14 @@ export default class ImpMalTables
         {
             let key = ev.currentTarget.dataset.table;
             let formula = ev.currentTarget.dataset.formula;
+            let modifier = ev.currentTarget.dataset.modifier;
 
-            ImpMalTables.rollTable(key, formula);
+            let messageId = $(ev.currentTarget).parents(".message").attr("data-message-id");
+            let test = game.messages.get(messageId)?.system.test;
+        
+
+            // TODO: the test actor may not be the one we want to pass here
+            ImpMalTables.rollTable(key, formula, {modifier, actor : test?.actor});
         });
     }
 }

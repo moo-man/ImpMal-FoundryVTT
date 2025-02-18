@@ -58,6 +58,34 @@ export class ImpMalEffect extends WarhammerActiveEffect
         }
     }
 
+    async createAndEquipSlot(item)
+    {
+        if (this.item && this.item.system.slots && this.actor)
+        {
+            if (typeof item == "string")
+            {
+                item = await fromUuid(item);
+            }
+
+            let createdItem = (await this.actor.createEmbeddedDocuments("Item", [item], {fromEffect: this.id}))[0]
+            let slots = this.item.system?.toObject().slots.list
+            let slot = {}
+            slot.id = createdItem.id;
+            slot.name = createdItem.name;
+
+            let emptySlotIndex = slots.findIndex(i => !i.id);
+            if (emptySlotIndex == -1)
+            {
+                slots.push(slot);
+            }
+            else 
+            {
+                slots[emptySlotIndex] = slot;
+            }
+            return {"system.slots" : {list : slots, value : slots.length}};
+        }
+    }
+
         
     get testDisplay() {
 

@@ -1,5 +1,6 @@
 import { ActorConfigForm } from "../../apps/actor-config";
 import ArmourConfig from "../../apps/armour-config";
+import { SpeedConfigForm } from "../../apps/speed-config";
 import ChatHelpers from "../../system/chat-helpers";
 import ImpMalSheetMixin from "../mixins/sheet-mixin";
 
@@ -232,6 +233,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
             let id = this._getId(ev);
             this.actor.items.get(id).sheet?.render(true);
         })
+        html.find(".speed-config",).on("click", () => new SpeedConfigForm(this.actor).render(true));
     }
 
 

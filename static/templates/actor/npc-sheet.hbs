@@ -124,15 +124,9 @@
             </div>
         </div>
         <div class="grid-property">
-            <label>{{localize "IMPMAL.Speed"}}</label>
+            <label><a class="speed-config">{{localize "IMPMAL.Speed"}} <i class="fa-solid fa-gear"></i></a></label>
             <div>
-                <select name="system.combat.speed.land.value">
-                    {{#select system.combat.speed.land.value}}
-                        {{#each (config "speeds")}}
-                            <option value="{{@key}}">{{this}}</option>
-                        {{/each}}
-                    {{/select}}
-                </select>
+                <input type="text" disabled value="{{system.combat.speedDisplay}}" data-tooltip="{{#if system.combat.speed.land.notes}}<p>{{system.combat.speed.land.notes}}</p>{{/if}} {{#if system.combat.speed.fly.notes}}<p>{{system.combat.speed.fly.notes}}</p>{{/if}}">
             </div>
         </div>
         <div class="grid-property">

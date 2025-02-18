@@ -98,6 +98,7 @@ const IMPMAL = {
 
 
     speeds : {
+        none : "IMPMAL.None",
         slow : "IMPMAL.Slow",
         normal : "IMPMAL.Normal",
         fast : "IMPMAL.Fast",
@@ -528,6 +529,8 @@ const IMPMAL = {
         createCondition : "IMPMAL.TriggerCreateCondition",
         deleteEffect : "IMPMAL.TriggerDeleteEffect",
 
+        rollTable : "IMPMAL.TriggerRollTable",
+
         startRound : "IMPMAL.TriggerStartRound",
         endRound : "IMPMAL.TriggerEndRound",
         startTurn : "IMPMAL.TriggerStartTurn",
@@ -557,7 +560,8 @@ const IMPMAL = {
         "preTakeDamage" : true,
         "applyDamage" : true,
         "takeDamage" : true,
-        "createToken" : true
+        "createToken" : true,
+        "rollTable" : true
     },
 
     placeholderItemData : {

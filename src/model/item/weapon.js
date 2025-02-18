@@ -39,11 +39,6 @@ export class WeaponModel extends EquippableItemModel
         {
             foundry.utils.setProperty(data, "system.mag.current", data.system.mag.value);
         }
-
-        if (foundry.utils.hasProperty(options.changed, "system.slots.value"))
-        {
-            data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
-        }
     }
 
     async _onUpdate(data, options, user)
@@ -402,7 +397,7 @@ export class WeaponModel extends EquippableItemModel
             i.system.category == "shield" && 
             i.system.traits.has("shield"));
 
-        if (this.isEquipped && this.isMelee && shield)
+        if (this.isEquipped && this.isMelee && shield && !this.traits.has("defensive"))
         {
             this.traits.list.push({key : "defensive"});
         }

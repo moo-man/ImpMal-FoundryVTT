@@ -1,0 +1,22 @@
+<div>
+    <div class="form-group">
+        <label>{{localize "IMPMAL.Land"}}</label>
+        <div class="form-fields">
+            <select name="system.combat.speed.land.value">
+                {{log this}}
+                {{selectOptions (config "speeds") selected=system.combat.speed.land.value}}
+            </select>
+            <input type="text" value="{{system.combat.speed.land.notes}}" name="system.combat.speed.land.notes" placeholder="{{localize "IMPMAL.Notes"}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label>{{localize "IMPMAL.Fly"}}</label>
+        <div class="form-fields">
+            <select name="system.combat.speed.fly.value">
+                {{selectOptions (config "speeds") selected=system.combat.speed.fly.value}}
+            </select>
+            <input type="text" value="{{system.combat.speed.fly.notes}}" name="system.combat.speed.fly.notes" placeholder="{{localize "IMPMAL.Notes"}}">
+        </div>
+    </div>
+    <button type="submit">Submit</button>
+</div>

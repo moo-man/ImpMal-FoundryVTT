@@ -14,6 +14,14 @@ export class EquippableItemModel extends PhysicalItemModel
 
         return schema;
     }
+    
+    async _preUpdate(data, options, user)
+    {
+        if (foundry.utils.hasProperty(options.changed, "system.slots.value") && !foundry.utils.hasProperty(options.changed, "system.slots.list"))
+        {
+            data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
+        }
+    }   
 
     
     computeBase() 

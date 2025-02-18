@@ -11,14 +11,6 @@ export class AugmeticModel extends EquippableItemModel
         return schema;
     }
 
-    async _preUpdate(data, options, user)
-    {
-        if (foundry.utils.hasProperty(options.changed, "system.slots.value"))
-        {
-            data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
-        }
-    }
-
     _addModelProperties()
     {
         if (this.parent.actor)
