@@ -885,7 +885,7 @@ const IMPMAL = {
                     trigger : "dialog",
                     script : "args.disadvantage++;",
                     options : {
-                        hideScript : "return args.data.skill !== 'stealth' || !args.data.actor.itemTypes.equipped.protection.find(i => i.system.traits.list.find(i => i.key == 'loud'))",
+                        hideScript : "return args.data.skill !== 'stealth'",
                         activateScript : "return true;"
                     }
                 }]
