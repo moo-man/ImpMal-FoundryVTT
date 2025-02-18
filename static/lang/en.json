@@ -526,6 +526,8 @@
     "IMPMAL.Pistol" : "Pistols",
     "IMPMAL.Placeholder" : "Placeholder",
     "IMPMAL.Plasma" : "Plasma",
+    "IMPMAL.PlayerExperienceEditing" : "Player Experience Editing",
+    "IMPMAL.PlayerExperienceEditingHint" :  "Allows players to manually edit their experience point values.",
     "IMPMAL.PlayerVisible" : "Player Visible",
     "IMPMAL.Poor" : "Poor",
     "IMPMAL.PoorlyLit" : "Poorly Lit",

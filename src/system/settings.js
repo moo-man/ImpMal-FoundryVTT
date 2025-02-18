@@ -85,5 +85,14 @@ export default function registerSettings()
         type: Boolean,
         onChange : rule => rule ? document.body.classList.add("no-theme") : document.body.classList.remove("no-theme")
       });
+
+    game.settings.register("impmal", "playerExperienceEditing", {
+        name: "IMPMAL.PlayerExperienceEditing",
+        hint: "IMPMAL.PlayerExperienceEditingHint",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean
+    });
   
 }

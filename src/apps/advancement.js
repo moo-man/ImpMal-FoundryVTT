@@ -26,6 +26,7 @@ export class AdvancementForm extends FormApplication
         let data = await super.getData();
         this.actor.reset();
         data.actor = this.actor;
+        data.canEditXP = game.user.isGM || game.settings.get("impmal", "playerExperienceEditing");
         data.talentsAndPowers = this.actor.itemTypes.power.concat(this.actor.itemTypes.talent);
         return data;
     }
