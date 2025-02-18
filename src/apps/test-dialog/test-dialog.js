@@ -206,7 +206,13 @@ export class TestDialog extends WarhammerRollDialog
 
         dialogData.fields.difficulty = dialogData.fields.difficulty || "challenging";
 
-        dialogData.data.targets = (actor?.defendingAgainst || options.skipTargets) ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
+        let defendingAgainst = actor?.defendingAgainst
+
+        dialogData.data.targets = (defendingAgainst || options.skipTargets) ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
+
+        // Defending scripts are dialog scripts coming from the attacker and/or the weapon used in the attack.
+        // e.g. "Dodge tests to defend against this attack have disadvantage"
+        let defendingScripts = defendingAgainst ? ((defendingAgainst.item?.getScripts("dialog").concat(defendingAgainst.actor?.getScripts("dialog"))).filter(s => s.options?.defending)) : []
 
 
         if (!options.skipTargets) 
@@ -217,15 +223,15 @@ export class TestDialog extends WarhammerRollDialog
                 (dialogData.data.targets
                     .map(t => t.actor)
                     .filter(actor => actor)
-                    .reduce((prev, current) => prev.concat(current.getScripts("dialog", (s) => s.options.dialog?.targeter)), []) // Retrieve targets' targeter dialog effects
-                    .concat(actor?.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
+                    .reduce((prev, current) => prev.concat(current.getScripts("dialog", (s) => s.options?.targeter)), []) // Retrieve targets' targeter dialog effects
+                    .concat(actor?.getScripts("dialog", (s) => !s.options?.targeter && !s.options?.defending) // Don't use our own targeter dialog effects
+                    .concat(defendingScripts)
                     ))) || [];
         }
         else 
         {
-            dialogData.data.scripts = actor?.getScripts("dialog", (s) => !s.options.dialog?.targeter) // Don't use our own targeter dialog effects
+            dialogData.data.scripts = actor?.getScripts("dialog", (s) => !s.options?.targeter).concat(defendingScripts) // Don't use our own targeter dialog effects
         }
-
 
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

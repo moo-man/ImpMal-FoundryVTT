@@ -58,7 +58,7 @@ export class SkillTestDialog extends CharacteristicTestDialog
 
         if (skillItem)
         {
-            dialogData.data.scripts = dialogData.data.scripts.concat(skillItem.getScripts("dialog"));
+            dialogData.data.scripts = dialogData.data.scripts.concat(skillItem.getScripts("dialog").filter(i => !i.options.defending));
         }
 
         dialogData.fields.characteristic = fields.characteristic || skillObject.characteristic;

@@ -4,6 +4,13 @@
 body:not(.no-theme) {
 
 
+    .sheet.journal-entry .journal-entry-content,
+    .window-app:not(.sidebar-popout) .window-content {
+        background: url(./assets/ui/background.webp) repeat;
+        background-size: cover;
+    }
+
+
     ::-webkit-scrollbar-thumb {
         // Border uses color-border-highlight, background does not have a variable
         background: var(--impmal-lightblue);
@@ -221,8 +228,13 @@ body:not(.no-theme) {
         }
 
         &.broken {
-            color: unset;
-            font-weight: unset;
+            color: darkred;
+            background: rgba(255, 0, 0, 0.05);
+            border: 1px dashed red;
+            i {
+                color: darkred;
+            }
+            font-weight: bold;
         }
 
         img {
@@ -381,6 +393,17 @@ body:not(.no-theme) {
             i {
                 color: var(--impmal-lightblue);
             }
+
+            &.broken {
+                color: darkred;
+                background: rgba(255, 0, 0, 0.05);
+                border: 1px dashed red;
+                i {
+                    color: darkred;
+                }
+                font-weight: bold;
+            }
+    
 
             img {
                 filter: invert(26%) sepia(31%) saturate(2005%) hue-rotate(145deg) brightness(94%) contrast(95%);

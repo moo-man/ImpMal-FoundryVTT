@@ -58,7 +58,7 @@ export class WeaponTestDialog extends AttackDialog
         dialogData.data.item = weapon;
         dialogData.data.vehicle = weapon.actor?.type == "vehicle" ? weapon.actor : null;
 
-        dialogData.data.scripts = dialogData.data.scripts.concat(weapon.getScripts("dialog") || []);
+        dialogData.data.scripts = dialogData.data.scripts.concat(weapon.getScripts("dialog").filter(i => !i.options.defending));
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

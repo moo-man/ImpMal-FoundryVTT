@@ -49,7 +49,7 @@ export class PowerTestDialog extends SkillTestDialog
         dialogData.data.powerId = power.id;
         dialogData.data.power = power;
 
-        dialogData.data.scripts = dialogData.data.scripts.concat(power.getScripts("dialog"));
+        dialogData.data.scripts = dialogData.data.scripts.concat(power.getScripts("dialog").filter(i => !i.options.defending));
 
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
