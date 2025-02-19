@@ -359,4 +359,42 @@ export default class ImpMalUtility
 
         game.user.assignHotbarMacro(macro, position);
     }
+
+    static getControlledToken() {
+        const controlled = canvas.tokens.controlled;
+        switch (controlled.length) {
+            case 0:
+                // If no token is selected use the token of the users character
+                return canvas.tokens.placeables.find(
+                    token => token.actor.system._id === game.user.character?.system?._id,
+                );
+            case 1:
+                // If exactly one token is selected, take that
+                return controlled[0];
+            default:
+                // Do nothing if multiple tokens are selected
+                return undefined;
+        }
+    }
+
+    static getDistanceFromUserToTargetToken(token) {
+        const controlled = this.getControlledToken()
+        if (!controlled) return -1;
+        if (!token) return -1;
+        const ruler = new Ruler();
+        ruler.clear();
+        const startToken = {x: controlled.x + controlled.w / 2, y: controlled.y + controlled.h / 2};
+        const target = {x: token.x + token.w / 2, y: token.y + token.h / 2};
+        ruler.update({
+            state: Ruler.STATES.MEASURING,
+            token: controlled.id,
+            history: [],
+            waypoints: [startToken],
+            destination: target,
+        });
+        ruler.measure(target, {force: true});
+        const distance = ruler.totalDistance;
+        ruler.clear();
+        return distance;
+    }
 }

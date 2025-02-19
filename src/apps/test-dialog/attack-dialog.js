@@ -1,4 +1,5 @@
 import { SkillTestDialog } from "./skill-dialog";
+import ImpMalUtility from "../../system/utility";
 
 export class AttackDialog extends SkillTestDialog
 {  
@@ -61,6 +62,20 @@ export class AttackDialog extends SkillTestDialog
         {
             this.disCount++;
             this.tooltips.add("disadvantage", 1, "Two Weapon Fighting");
+        }
+
+        if (this.data.skill === "ranged" && this.data.targets.length > 0 && game.settings.get("impmal", "gridBasedCombat")) {
+            const distances = this.data.targets.map((target) => ImpMalUtility.getDistanceFromUserToTargetToken(target))
+            const maxTargetDistance = Math.max(...distances);
+            const weaponRange = this.data.item.system.rangeDistance;
+            if (maxTargetDistance > weaponRange) {
+                this.disCount++;
+                this.tooltips.add("disadvantage", 1, "Target further then weapon range");
+            }
+            if (maxTargetDistance > weaponRange*2) {
+                //There is an optional rule Guns at Range that allows to fire beyond double range so this is only a warning not a block
+                ui.notifications.warn("Target beyond double weapon range");
+            }
         }
         super.computeFields();
     }
