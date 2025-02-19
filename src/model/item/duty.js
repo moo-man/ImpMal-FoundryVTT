@@ -25,6 +25,11 @@ export class DutyModel extends DualItemModel
             equipment : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {parent : schema.character, name : "equipment"}),
             characteristics : new fields.ObjectField({}, {}, {parent : schema.character, name : "characteristics"}),
             skills : new fields.ObjectField({}, {}, {parent : schema.character, name : "skills"}),
+            specialisations : ListModel.createListModel(new fields.SchemaField({
+                skill : new fields.StringField(),
+                name : new fields.StringField(),
+                advances : new fields.NumberField()
+            }), {}, {parent : schema.character, name : "specialisations"}),
             influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {parent : schema.character, name : "influence"}),
             items : new fields.EmbeddedDataField(ChoiceModel, {}, {parent : schema.character, name : "items"}),
             solars : new fields.NumberField({min : 0}, {}, {parent : schema.character, name : "solars"}),
@@ -59,6 +64,26 @@ export class DutyModel extends DualItemModel
             }
         }
 
+        let specialisations = await game.impmal.utility.getAllItems("specialisation");
+        for(let spec of this.character.specialisations.list)
+        {
+            let found = specialisations.find(i => i.name == spec.name && i.system.skill == spec.skill);
+            let data;
+            if (found)
+            {
+                data = found.toObject();
+                data.system.advances = spec.advances;
+            }
+            else if (spec.skill && spec.name && spec.advances)
+            {
+                data = {type : "specialisation", img : "modules/impmal-core/assets/icons/generic.webp", name : spec.name, system : {skill : spec.skill, advances : spec.advances}};
+            }
+
+            if (data)
+            {
+                items.push(data);
+            }
+        }
 
         for(let option of this.character.items.options)
         {

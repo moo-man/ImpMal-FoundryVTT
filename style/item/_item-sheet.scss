@@ -247,4 +247,24 @@
         }
     }
 
+
+    &.duty {
+        .specialisations {
+            .list-row {
+                margin: 3px 0px;
+                div {
+                    &:first-of-type {
+                        flex: 0 0 10rem;
+                    }
+                    select {
+                        width: 100%;
+                    }
+                    &.advances {
+                        flex : 0 0 5rem;
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -103,6 +103,39 @@
                     </div>
                 </div>
 
+                <section class="list specialisations">
+                    <header class="list-row">
+                        <div>{{localize "IMPMAL.Skill"}}</div>
+                        <div>{{localize "IMPMAL.Specialisation"}}</div>
+                        <div class="advances">{{localize "IMPMAL.Adv"}}</div>
+                        <div class="list-controls">
+                            <a class="array-create" data-target="system.character.specialisations"><i class="fa-solid fa-plus"></i></a>
+                        </div>
+                    </header>
+                    <div class="list-content">
+                        {{#each item.system.character.specialisations.list}}
+                                <div class="list-item" data-index="{{@key}}" data-target="system.character.specialisations">
+                                    <div class="list-row">
+                                        <div data-index="{{@key}}" data-target="system.character.specialisations">
+                                            <select class="array-edit" data-property="skill"> 
+                                                {{selectOptions (config "skills") selected=this.skill}}
+                                            </select>
+                                        </div>
+                                        <div data-index="{{@key}}" data-target="system.character.specialisations">
+                                            <input type="text" class="array-edit" data-property="name" value="{{this.name}}"  >
+                                        </div>
+                                        <div class="advances" data-index="{{@key}}" data-target="system.character.specialisations">
+                                            <input type="number" class="array-edit" data-property="advances" value="{{this.advances}}"  >
+                                        </div>
+                                        <div class="list-controls" data-index="{{@key}}" data-target="system.character.specialisations">
+                                            <a class="array-delete" class="array-delete"><i class="fa-solid fa-xmark"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                        {{/each}}
+                    </div>
+                </section>
+
                 <hr>
                 {{> systems/impmal/templates/item/partials/influence.hbs factions=system.character.influence.factions path="system.character.influence" showNotes=false}}
                 <hr>
