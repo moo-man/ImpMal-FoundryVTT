@@ -93,6 +93,7 @@
     "IMPMAL.BuySuccessful" : "<p>Bought <strong>{item}</strong> for <strong>{cost} Solars</strong></p>",
     "IMPMAL.BuyAmmo" : "Buy Ammo",
     "IMPMAL.CalledShot" : "Called Shot",
+    "IMPMAL.CannotUseBurstAndRapidFire" : "Cannot use both Burst and Rapid Fire on a single attack",
     "IMPMAL.CannotEquipForceField" : "Cannot equip Collapsed Force Field",
     "IMPMAL.CannotEditWithDiffSheet" : "Cannot edit with a diff sheet",
     "IMPMAL.CannotEditPropertyWithEffect" : "This property cannot be edited because an Active Effect is being applied to it.",

@@ -97,8 +97,10 @@ export class AttackDialog extends SkillTestDialog
             {
                 ev.currentTarget.checked = false;
                 ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+            } else if (this.fields.rapidFire) {
+                ev.currentTarget.checked = false;
+                ui.notifications.warn(game.i18n.localize("IMPMAL.CannotUseBurstAndRapidFire"));
             }
-            delete this.fields.rapidFire;
         }
         else if (ev.currentTarget.name == "rapidFire")
         {
@@ -106,8 +108,10 @@ export class AttackDialog extends SkillTestDialog
             {
                 ev.currentTarget.checked = false;
                 ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+            } else if (this.fields.burst) {
+                ev.currentTarget.checked = false;
+                ui.notifications.warn(game.i18n.localize("IMPMAL.CannotUseBurstAndRapidFire"));
             }
-            delete this.fields.burst;
         }
         super._onFieldChange(ev);
     }
