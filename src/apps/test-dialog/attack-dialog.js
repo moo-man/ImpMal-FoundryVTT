@@ -4,6 +4,18 @@ export class AttackDialog extends SkillTestDialog
 {  
     subTemplate = `systems/impmal/templates/apps/test-dialog/attack-fields.hbs`;
 
+    get tooltipConfig() 
+    {
+        return foundry.utils.mergeObject(super.tooltipConfig, {
+            damage : {
+                label : "IMPMAL.Damage",
+                type : 1,
+                path : "fields.damage",
+            }
+        })
+    }
+
+
     constructor(...args)
     {
         super(...args)
@@ -71,6 +83,7 @@ export class AttackDialog extends SkillTestDialog
     {
         let fields = super._defaultFields();
         fields.hitLocation = "roll";
+        fields.damage = 0;
         return fields;
     }
 

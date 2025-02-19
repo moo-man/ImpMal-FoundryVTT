@@ -1,1 +1,1 @@
-args.data.additionalDamage++;
+args.fields.damage++;

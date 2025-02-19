@@ -49,7 +49,7 @@ export class AttackTest extends SkillTest
         testData.supercharge = data.supercharge;
         testData.burst = data.burst;
         testData.rapidFire = data.rapidFire;
-        testData.additionalDamage = data.additionalDamage;
+        testData.additionalDamage = data.damage;
         return testData;
     }
 

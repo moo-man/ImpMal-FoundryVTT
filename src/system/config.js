@@ -809,10 +809,10 @@ const IMPMAL = {
                 scriptData : [{
                     label : "Add Warp Charge to Damage",
                     trigger : "dialog",
+                    script : "args.fields.damage += args.actor.system.warp.charge; if (args.target?.system.species == 'Daemon') args.fields.damage += args.actor.system.warp.charge;",
                     options : {
                         hideScript : "return args.actor.system.warp.charge == 0 || args.actor.defendingAgainst;",
                         activateScript : "return true;",
-                        submissionScript : "args.data.additionalDamage += args.actor.system.warp.charge; if (args.target?.system.species == 'Daemon') args.data.additionalDamage += args.actor.system.warp.charge;",
                     }
                 }]
             }
