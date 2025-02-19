@@ -94,5 +94,14 @@ export default function registerSettings()
         default: true,
         type: Boolean
     });
+
+    game.settings.register("impmal", "gridBasedCombat", {
+        name: "IMPMAL.GridBasedCombat",
+        hint: "IMPMAL.GridBasedCombatHint",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
   
 }
