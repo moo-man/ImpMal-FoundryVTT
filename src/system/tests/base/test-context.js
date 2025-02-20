@@ -91,6 +91,17 @@ export class TestContext
         }
     }
 
+    get itemUsed()
+    {
+        if (this.itemUsedUuid)
+        {
+            return fromUuidSync(this.itemUsedUuid);
+        }
+        else 
+        {
+            return null;
+        }
+    }
 
     
     /**
@@ -249,7 +260,7 @@ export class TestContext
             title : data.title,
             targetSpeakers : data.targets,
             rollMode : data.rollMode,
-            usedItemUuid : data.usedItemUuid,
+            itemUsedUuid : data.itemUsed?.uuid,
             breakdownData : data.context.breakdown,
             superiorityUsed : data.useSuperiority
         }, data.context);

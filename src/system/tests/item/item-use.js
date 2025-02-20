@@ -3,7 +3,10 @@ import { ItemUseContext } from "./item-context";
 
 class ItemTestEvaluator
 {
-
+    static fromData()
+    {
+        return {};
+    }
 }
 
 /**
@@ -26,6 +29,11 @@ export class ItemUse extends BaseTest
     async roll() 
     {
         return this;
+    }
+
+    _formatBreakdown(breakdown)
+    {
+        return "";
     }
 
 
@@ -56,6 +64,7 @@ export class ItemUse extends BaseTest
         }
 
 
+        contextData.context = {};
         return new this({
             data:  {},
             context : this.contextClass.fromData(contextData),

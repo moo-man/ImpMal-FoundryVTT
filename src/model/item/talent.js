@@ -133,6 +133,12 @@ export class TalentModel extends StandardItemModel
         return !this.effectOptions.list.find(i => i.id == effect.id) || this.effectChoices[effect.id];
     }
 
+    // All the effects that come with purchasing the talent multiple times
+    get advancedEffects()
+    {
+        return Array.from(this.parent.allApplicableEffects()).filter(i => this.effectChoices[i.id])
+    }
+
     _addModelProperties()
     {
         this.effectOptions.relative = this.parent.effects;

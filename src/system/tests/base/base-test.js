@@ -63,11 +63,13 @@ export class BaseTest extends WarhammerTestBase
     async runPreScripts()
     {
         await Promise.all(this.actor.runScripts("preRollTest", this));
+        await Promise.all(this.context.itemUsed?.runScripts("preRollTest", this) || [])
     }
 
     async runPostScripts()
     {
         await Promise.all(this.actor.runScripts("rollTest", this));
+        await Promise.all(this.context.itemUsed?.runScripts("rollTest", this) || [])
     }
 
     // Evaluate test result
@@ -210,8 +212,8 @@ export class BaseTest extends WarhammerTestBase
         if (this.item instanceof Item)
         {
             this.itemSummary = await renderTemplate(this.itemSummaryTemplate, mergeObject(await this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
-            this.effectButtons = await renderTemplate("modules/warhammer-lib/templates/partials/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
         }
+        this.effectButtons = await renderTemplate("modules/warhammer-lib/templates/partials/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
         if (this.testDetailsTemplate)
         {
             this.testDetails = await renderTemplate(this.testDetailsTemplate, this);
@@ -271,6 +273,26 @@ export class BaseTest extends WarhammerTestBase
     get failed() 
     {
         return !this.succeeded;
+    }
+
+    get targetEffects() 
+    {
+        return super.targetEffects.concat(this.context.itemUsed?.targetEffects || []);
+    }
+
+    get damageEffects() 
+    {
+        return super.damageEffects.concat(this.context.itemUsed?.damageEffects || []);
+    }
+
+    get zoneEffects() 
+    {
+        return super.zoneEffects.concat(this.context.itemUsed?.zoneEffects || []);
+    }
+
+    get areaEffects() 
+    {
+        return super.areaEffects.concat(this.context.itemUsed?.areaEffects || []);
     }
 
 

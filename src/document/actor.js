@@ -70,8 +70,17 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
 
     useItem({id, uuid})
     {
-        let use = ItemUse.fromData({id, uuid, actor : this});
-        use.sendToChat();
+        let item = fromUuidSync(uuid) || this.items.get(id);
+
+        if (item?.system.test?.isValid)
+        {
+            return this.setupTestFromData(item.system.test, {context: {itemUsed : item}, title : {append: ` - ${item.name}`}})
+        }
+        else 
+        {
+            let use = ItemUse.fromData({id, uuid, actor : this});
+            use.sendToChat();
+        }
     }
 
     async setupTestFromItem(uuid, options={})

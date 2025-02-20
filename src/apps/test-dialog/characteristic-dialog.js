@@ -26,6 +26,12 @@ export class CharacteristicTestDialog extends TestDialog
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.CharacteristicTest", {characteristic : game.impmal.config.characteristics[characteristic]})) + (title?.append || "");
         dialogData.data.characteristic = characteristic;
+        dialogData.data.itemUsed = context.itemUsed;
+        delete context.itemUsed;
+        if (context.itemUsed)
+        {
+            dialogData.data.scripts = dialogData.data.scripts.concat(context.itemUsed.getScripts("dialog").filter(i => !i.options.definding));
+        }
 
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;
