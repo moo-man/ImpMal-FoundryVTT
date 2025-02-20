@@ -186,6 +186,7 @@ const IMPMAL = {
     },
 
     ranges : {
+        immediate : "IMPMAL.Immediate",
         short : "IMPMAL.Short",
         medium : "IMPMAL.Medium",
         long : "IMPMAL.Long",

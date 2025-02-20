@@ -362,6 +362,8 @@
     "IMPMAL.Good" : "Good",
     "IMPMAL.Grapple" : "Grapple",
     "IMPMAL.GrenadesExplosives" : "Grenades & Explosives",
+    "IMPMAL.GridBasedCombat": "Grid Based Combat",
+    "IMPMAL.GridBasedCombatHint": "Uses optional rules from page 313 of Core Book for running Grid Based Combat",
     "IMPMAL.Hair" : "Hair",
     "IMPMAL.HairColour" : "Hair Colour",
     "IMPMAL.HairStyle" : "Hair Style",

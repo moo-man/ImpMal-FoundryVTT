@@ -426,4 +426,20 @@ export class WeaponModel extends EquippableItemModel
         return data;
     }
 
+    get rangeDistance()
+    {
+        switch (this.range) {
+            case "immediate":
+                return 2;
+            case "short":
+                return 6;
+            case "medium":
+                return 12;
+            case "long":
+                return 36;
+            case "extreme":
+                return 72;
+        }
+    }
+
 }
