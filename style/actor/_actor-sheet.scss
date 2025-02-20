@@ -296,7 +296,41 @@
             position: absolute;
             top: 0px;
         }
-    }
+        }
+    
+        .tab.talents {
+            .advanced-effects {
+                display: flex;
+                gap: .5rem;
+    
+                >a {
+                    border: 1px solid black;
+                    text-align: center;
+                    padding: 5px;
+                    border-radius: 10px;
+    
+                    position: relative;
+    
+    
+                    &:first-of-type {
+                        margin-left: 48px;
+    
+                        &:before {
+                            content: "";
+                            margin-top: 3px;
+                            width: 28px;
+                            height: 17px;
+                            border: 2px solid #AAA;
+                            border-right: 0px;
+                            border-top: 0px;
+                            position: absolute;
+                            top: -8px;
+                            left: -35px;
+                        }
+                    }
+                }
+            }
+        }
 
 
     .hit-locations {

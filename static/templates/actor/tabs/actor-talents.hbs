@@ -10,9 +10,9 @@
         {{#each items.talent}}
             <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
                 <div class="list-row list-hover">
-                    <div class="list-name list-edit list-summary-context">
+                    <div class="list-name  list-summary-context">
                         <img src="{{this.img}}">
-                        <a>{{this.name}}</a>
+                        <a class="list-edit">{{this.name}}</a>
                     </div>
                     <div>{{this.system.taken}}</div>
                     <div class="list-controls">
@@ -20,6 +20,13 @@
                         <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 </div>
+                {{#if this.system.advancedEffects.length}}
+                <div class="advanced-effects">
+                    {{#each this.system.advancedEffects}}
+                    <a class="effect-edit" data-uuid="{{this.uuid}}">{{this.name}}</a>
+                    {{/each}}
+                </div>
+                {{/if}}
                 {{> sheetButtonsV1 document=this}}
                 <div class="summary">
 

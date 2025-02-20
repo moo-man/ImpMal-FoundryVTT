@@ -69,6 +69,7 @@ body:not(.no-theme) .impmal.actor {
             }
 
             &.spec {
+                border-top: none;
                 &:before {
                     border-color: var(--impmal-lightblue);
                 }
@@ -79,6 +80,27 @@ body:not(.no-theme) .impmal.actor {
             }
         }
     }
+
+        
+        .tab.talents .advanced-effects {
+
+            > a {
+                border-color: var(--impmal-lightblue);
+                text-align: center;
+                padding: 5px;
+                border-radius: 10px;
+
+                position: relative;
+
+
+                &:first-of-type {
+
+                    &:before {
+                        border-color: var(--impmal-lightblue);
+                    }
+                }
+            }
+        }
 
     .combat {
         .combat-values {
