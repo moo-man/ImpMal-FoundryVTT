@@ -52,8 +52,7 @@
         {{#if (eq result.winner "attacker")}}
 
             <div class="applied-details">
-
-            {{localize "IMPMAL.DamageDisplay" damage=result.damage}} {{#if applied}} (Applied){{/if}}
+            <span> <a class="damage-breakdown"  data-tooltip="{{result.tooltips.damage}}" data-tooltip-direction="LEFT"><i class="fa-regular fa-circle-info"></i></a> {{localize "IMPMAL.DamageDisplay" damage=result.damage}} {{#if applied}} (Applied){{/if}}</span>
             {{#if applied.rend}}
             <span class="rend">{{localize "IMPMAL.Rend"}} {{applied.rend}}</span>
             {{/if}}

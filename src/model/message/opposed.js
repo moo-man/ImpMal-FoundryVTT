@@ -149,6 +149,11 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
                 html.find(".response-buttons").remove();
             }
         }
+
+        if (!this.attackerTest?.actor?.isOwner)
+        {
+            html.find(".damage-breakdown").remove();
+        }
     }
 
     static _getResponseButtons(defenderToken)
