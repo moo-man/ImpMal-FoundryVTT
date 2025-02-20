@@ -423,22 +423,22 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
 
     _onHoverInAttacker() 
     {
-        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.system.test;
-        ChatHelpers.highlightMessage(test.context.messageId);
+        let test = this.actor.defendingAgainst
+        ChatHelpers.highlightMessage(test.message.id);
         TokenHelpers.highlightToken(test.context.speaker.token);
     }
 
     _onHoverOutAttacker() 
     {
-        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.system.test;
-        ChatHelpers.unhighlightMessage(test.context.messageId);
+        let test = this.actor.defendingAgainst
+        ChatHelpers.unhighlightMessage(test.message.id);
         TokenHelpers.unhighlightToken(test.context.speaker.token);
     }
 
     _onClickAttacker() 
     {
-        let test = game.messages.get(this.actor.getFlag("impmal", "opposed"))?.system.test;
-        ChatHelpers.scrollToMessage(test.context.messageId);
+        let test = this.actor.defendingAgainst
+        ChatHelpers.scrollToMessage(test.message.id);
     }
 
     _onRemoveOpposed()

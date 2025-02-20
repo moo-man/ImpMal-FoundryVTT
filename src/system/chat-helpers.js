@@ -44,64 +44,9 @@ export default class ChatHelpers
 
     static addOpposedHighlightListeners(html)
     {
-        html.on("mouseover", ".targets img", TokenHelpers.onHoverInOpposedImg.bind(TokenHelpers));
-        html.on("click", ".targets img", TokenHelpers.onClickOpposedImg.bind(TokenHelpers));
-        html.on("dblclick", ".targets img", TokenHelpers.onDoubleClickOpposedImg.bind(TokenHelpers));
-        html.on("mouseout", ".targets img", TokenHelpers.onHoverOutOpposedImg.bind(TokenHelpers));
-
-        html.on("mouseover", ".opposed-icon", this._onHoverOpposedIcon.bind(this));
-        html.on("mouseout", ".opposed-icon", this._onHoverOpposedIcon.bind(this));
-        html.on("click", ".opposed-icon", this._onClickOpposedIcon.bind(this));
-    }
-
-    /**
-     *  Hovering on an Opposed Icon (crosshair or shield) should highlight that message
-     */
-    static _onHoverOpposedIcon(ev)
-    {
-
-        let opposedMessageId = _findOpposedMessageId(ev);
-
-        if (!opposedMessageId)
-        {
-            return;
-        }
-
-        if (ev.type == "mouseover")
-        {
-            this.highlightMessage(opposedMessageId);
-        }
-        
-        else if (ev.type == "mouseout")
-        {
-            this.unhighlightMessage(opposedMessageId);
-        }
-    }
-
-    /**
-     *  Clicking on Opposed Icon (crosshair or shield) should scroll to that message and highlight it
-     */
-    static _onClickOpposedIcon(ev)
-    {
-        let opposedMessageId = _findOpposedMessageId(ev);
-        this.scrollToMessage(opposedMessageId);
-    }
-}
-
-/**
- * Helper that finds attacking/defending message when interacting with opposed sections;
- */
-function _findOpposedMessageId(ev)
-{
-    let el = $(ev.target);
-    let messageId = el.parents(".message").attr("data-message-id");
-
-    let opposed = el.parents("[data-id]");
-    let side = opposed.hasClass("targeter") ? "defending" : "attacking";
-    let tokenId = opposed.attr("data-id");
-    let test = game.messages.get(messageId)?.system.test;
-    if (test)
-    {
-        return side == "attacking" ? test.context.responses[tokenId] : test.context.defendingAgainst;
+        html.on("mouseover", ".opposed .token", TokenHelpers.onHoverInOpposedImg.bind(TokenHelpers));
+        html.on("click", ".opposed .token", TokenHelpers.onClickOpposedImg.bind(TokenHelpers));
+        html.on("dblclick", ".opposed .token", TokenHelpers.onDoubleClickOpposedImg.bind(TokenHelpers));
+        html.on("mouseout", ".opposed .token", TokenHelpers.onHoverOutOpposedImg.bind(TokenHelpers));
     }
 }

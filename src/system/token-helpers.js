@@ -4,12 +4,12 @@ export default function () {
          *  Hovering on an Opposed token image in chat should highlight the token on the canvas
          */
         TokenHelpers.onHoverInOpposedImg = function(ev) {
-            let tokenId = ev.target.parentElement.dataset.id;
+            let tokenId = ev.target.dataset.id;
             this.highlightToken(tokenId);
         };
 
         TokenHelpers.onHoverOutOpposedImg = function(ev) {
-            let tokenId = ev.target.parentElement.dataset.id;
+            let tokenId = ev.target.dataset.id;
             this.unhighlightToken(tokenId);
         };
 
@@ -25,7 +25,7 @@ export default function () {
             }
             else {
                 this.onClickOpposedImg.clicked = setTimeout((ev) => {
-                    let tokenId = ev.target.parentElement.dataset.id;
+                    let tokenId = ev.target.dataset.id;
                     let token = canvas.scene.tokens.get(tokenId);
                     canvas.animatePan(token);
                     delete this.onClickOpposedImg.clicked;
@@ -39,7 +39,7 @@ export default function () {
         TokenHelpers.onDoubleClickOpposedImg = function(ev) {
             ev.stopPropagation();
             ev.preventDefault();
-            let tokenId = ev.target.parentElement.dataset.id;
+            let tokenId = ev.target.dataset.id;
             let token = canvas.scene.tokens.get(tokenId);
             token.actor.sheet.render(true);
         }

@@ -1717,6 +1717,7 @@ const IMPMAL = {
         "impmal" : "Imperium Maledictum System",
         "impmal-core" : "Core Rulebook",
         "impmal-starter-set" : "Starter Set",
+        "impmal-inquisition" : "Inquisition Guide",
     }
     
 };

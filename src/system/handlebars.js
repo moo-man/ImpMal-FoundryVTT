@@ -42,7 +42,6 @@ export default function registerHandlebars()
         "systems/impmal/templates/item/partials/item-summary.hbs",
         "systems/impmal/templates/item/partials/item-test.hbs",
         "systems/impmal/templates/item/partials/item-locations.hbs",
-        "systems/impmal/templates/chat/rolls/opposedTest.hbs",
         "systems/impmal/templates/actor/partials/defendingAgainst.hbs",
         "systems/impmal/templates/actor/partials/influence.hbs",
         "systems/impmal/templates/actor/partials/actions.hbs",

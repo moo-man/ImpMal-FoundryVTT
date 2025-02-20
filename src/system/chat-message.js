@@ -167,30 +167,12 @@ export class ImpMalChatMessage extends ChatMessage
             return message.type == "test";
         };
 
-        let hasPendingOpposedTests = li => 
-        {
-            let message = game.messages.get(li.attr("data-message-id"));
-            return hasTest(li) && message.system.test.context.targets.some(t => !t.test && !t.unopposed); // If no response test, and not unopposed = pending opposed test
-        };
-
         let canEdit = li =>
         {
             return hasTest(li) && game.user.isGM;
         };
 
         options.unshift(
-            {
-                name: game.i18n.localize("IMPMAL.Unopposed"),
-                icon: '<i class="fa-solid fa-arrow-right"></i>',
-                condition: hasPendingOpposedTests && game.user.isGM,
-                callback: li =>
-                {
-                    let message = game.messages.get(li.attr("data-message-id"));
-                    let test = message.system.test;
-                    test.context.fillUnopposed();
-                    test.roll();
-                }
-            },
             {
                 name: game.i18n.localize("IMPMAL.EditTest"),
                 icon: '<i class="fa-solid fa-edit"></i>',

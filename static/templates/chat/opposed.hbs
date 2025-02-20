@@ -6,7 +6,7 @@
 
     <div class="opposed-details {{#if result}}{{result.winner}}-winner{{/if}}">
 
-        <img class="token" src="{{attacker.texture.src}}">
+        <img class="token" data-id="{{attacker.id}}" src="{{attacker.texture.src}}">
 
 
 
@@ -33,10 +33,9 @@
             {{/if}}
         </span> --}}
 
-        <img class="token" src="{{defender.texture.src}}">
+        <img class="token" data-id="{{defender.id}}" src="{{defender.texture.src}}">
 
     </div>
-    {{log applied}}
     <div class="opposed-buttons" {{#if applied}}data-tooltip-direction="LEFT" data-tooltip="{{applied.text}}
                         {{#if (gt applied.multiple 1)}} 
                             x{{applied.multiple}} 
@@ -72,10 +71,10 @@
         {{else}}
             {{#unless result}}
                 <div class="response-buttons">
-                    <button type="button" class="unopposed" data-tooltip="{{localize 'IMPMAL.Unopposed'}}"><i class="fa-solid fa-arrow-down"></i></button>
                     {{#each responseButtons}}
                         <button type="button" class="{{this.class}}" data-tooltip="{{this.tooltip}}" data-uuid="{{this.uuid}}"><i class="{{this.icon}}"></i> {{this.label}}</button>
                     {{/each}}
+                    <button type="button" class="unopposed" data-tooltip="{{localize 'IMPMAL.Unopposed'}}"><i class="fa-solid fa-arrow-down"></i></button>
                 </div>
             {{/unless}}
         {{/if}}
