@@ -85,6 +85,7 @@ export class TestDialog extends WarhammerRollDialog
             SL : 0,
             difficulty : "challenging",
             state : "none",
+            fateAdvantage : false
         });
     }
     async getData() 
@@ -106,6 +107,12 @@ export class TestDialog extends WarhammerRollDialog
         {
             this.fields.SL += game.impmal.resources.get("superiority")
             this.tooltips.add("SL", game.impmal.resources.get("superiority"), game.i18n.localize("IMPMAL.Superiority"))
+        }
+
+        if (this.fields.fateAdvantage)
+        {
+            this.advCount++;
+            this.tooltips.add("advantage", 1, "Using Fate");
         }
     }
 
@@ -140,6 +147,15 @@ export class TestDialog extends WarhammerRollDialog
         {
             return "none";
         }
+    }
+
+    submit(ev)
+    {
+        if (this.fields.fateAdvantage)
+        {
+            this.actor.spend("system.fate.value");
+        }
+        return super.submit(ev);
     }
 
     _onFieldChange(ev) 

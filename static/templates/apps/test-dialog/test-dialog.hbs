@@ -32,6 +32,14 @@
                 </div>
             </div>
             {{{subTemplate}}}
+            {{#if (gt data.actor.system.fate.value 0)}}
+                <div class="form-group">
+                    <label>{{localize "IMPMAL.FateAdvantage"}}</label>
+                    <div class="form-fields">
+                        <input type="checkbox" name="fateAdvantage" {{checked fields.fateAdvantage}}>
+                    </div>
+                </div>
+            {{/if}}
             <div class="adv-dis">
                 <div>
                     <input type="radio" name="state" value="adv" {{checked (eq fields.state "adv" )}}>
