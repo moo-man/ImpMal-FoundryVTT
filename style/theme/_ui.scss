@@ -4,8 +4,7 @@
 body:not(.no-theme) {
 
 
-    .sheet.journal-entry .journal-entry-content,
-    .window-app:not(.sidebar-popout) .window-content {
+    .sheet.journal-entry .journal-entry-content {
         background: url(./assets/ui/background.webp) repeat;
         background-size: cover;
     }
