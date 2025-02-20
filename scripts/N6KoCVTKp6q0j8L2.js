@@ -1,0 +1,1 @@
+this.actor.addEffectItems("Compendium.impmal-inquisition.items.Item.wp2OLGGLQJnFbUTa", this.effect);

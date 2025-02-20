@@ -1,0 +1,1 @@
+return !["awareness", "reflexes"].includes(args.skill);

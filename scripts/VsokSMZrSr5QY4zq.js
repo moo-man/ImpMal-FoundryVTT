@@ -1,0 +1,1 @@
+this.actor.system.characteristics.str.bonus += 1;

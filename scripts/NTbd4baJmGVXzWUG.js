@@ -1,0 +1,1 @@
+args.actor.update({"system.fate.value" : args.actor.system.fate.value - 1})

@@ -1,0 +1,1 @@
+args.data.additionalDamage += Math.min(args.actor.system.corruption.value, args.actor.system.characteristics.wil.bonus);

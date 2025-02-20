@@ -1,0 +1,1 @@
+return !["bs", "ws"].includes(args.characteristic);

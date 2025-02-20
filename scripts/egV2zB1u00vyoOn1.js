@@ -1,0 +1,1 @@
+return ["fortitude", "discipline"].includes(args.skill);

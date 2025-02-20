@@ -1,0 +1,1 @@
+return (args.skillItem?.name != "Deception" || args.actor.system.fate.value < 1)

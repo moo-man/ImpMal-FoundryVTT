@@ -1,0 +1,1 @@
+return !["tgh"].includes(args.data.characteristic)

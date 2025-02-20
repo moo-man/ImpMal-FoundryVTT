@@ -1,0 +1,1 @@
+return !["lore", "linguistics", "logic"].includes(args.data.skill)

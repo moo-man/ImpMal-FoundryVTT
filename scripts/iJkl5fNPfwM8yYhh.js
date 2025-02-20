@@ -1,0 +1,1 @@
+return args.weapon?.isRanged && (args.target.system.species == "Daemon" || args.target.itemTypes.power.length > 0)

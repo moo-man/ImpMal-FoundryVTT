@@ -1,0 +1,1 @@
+return !["wil", "fel"].includes(args.data.characteristic)

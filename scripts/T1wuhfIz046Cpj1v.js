@@ -1,0 +1,1 @@
+if (args.woundsGained >= 1) this.effect.delete

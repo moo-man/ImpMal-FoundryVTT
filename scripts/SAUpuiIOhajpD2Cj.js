@@ -1,0 +1,1 @@
+return args.skill != this.effect.getFlag("impmal", "skill")

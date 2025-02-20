@@ -1,0 +1,1 @@
+return (args.data.skill == "awareness" || args.data.skill == "intuition" || args.skillItem.name == "Cipher")
