@@ -27,7 +27,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
      */
     setupCharacteristicTest(characteristic, options={}, roll=true)
     {
-        return this._setupTest(CharacteristicTestDialog, CharacteristicTest, characteristic, options, roll);
+        return this._setupTest(CharacteristicTestDialog, CharacteristicTest, characteristic, options, roll, false);
     }
 
     setupSkillTest({itemId, name, key}={}, options={}, roll=true)
@@ -44,28 +44,28 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
         else 
         {
-            return this._setupTest(SkillTestDialog, SkillTest, {itemId, name, key}, options, roll);
+            return this._setupTest(SkillTestDialog, SkillTest, {itemId, name, key}, options, roll, false);
         }
     }
 
     setupWeaponTest(id, options={}, roll=true)
     {
-        return this._setupTest(WeaponTestDialog, WeaponTest, id, options, roll);
+        return this._setupTest(WeaponTestDialog, WeaponTest, id, options, roll, false);
     }
 
     setupGenericTest(target, options={}, roll=true)
     {
-        return this._setupTest(TestDialog, BaseTest, target, options, roll);
+        return this._setupTest(TestDialog, BaseTest, target, options, roll, false);
     }
 
     setupPowerTest(id, options={}, roll=true)
     {
-        return this._setupTest(PowerTestDialog, PowerTest, id, options, roll);
+        return this._setupTest(PowerTestDialog, PowerTest, id, options, roll, false);
     }
 
     setupTraitTest(id, options={}, roll=true)
     {
-        return this._setupTest(TraitTestDialog, TraitTest, id, options, roll);
+        return this._setupTest(TraitTestDialog, TraitTest, id, options, roll, false);
     }
 
     useItem({id, uuid})
