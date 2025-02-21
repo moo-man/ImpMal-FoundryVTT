@@ -22,7 +22,7 @@ export class ImpMalChatMessage extends ChatMessage
 
         
         html.on("click", ".apply-target", WarhammerChatListeners.onApplyTargetEffect)
-        html.on("click", ".apply-zone", WarhammerChatListeners.onApplyZoneEffect)
+        html.on("click", ".place-zone", WarhammerChatListeners.onApplyZoneEffect)
 
         html.on("click", ".response-buttons button", async ev => {
             let el = $(ev.currentTarget);
