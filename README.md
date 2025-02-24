@@ -21,6 +21,8 @@ See **Environment Setup** for instructions on how to build the project for devel
 
 - [Warhammer 40,000: Imperium Maledictum - Starter Set](https://foundryvtt.com/packages/impmal-starter-set)
 
+- [Warhammer 40,000: Imperium Maledictum - Inqusition Guide](https://foundryvtt.com/packages/impmal-inquisition)
+
 ## Special Thanks
 - Cubicle 7
 - Games Workshop
