@@ -1,3 +1,5 @@
+import RewardDialog from "../../apps/reward-dialog";
+
 export class RewardMessageModel extends foundry.abstract.DataModel 
 {
     static defineSchema() 
@@ -51,6 +53,14 @@ export class RewardMessageModel extends foundry.abstract.DataModel
 
     static async postReward({xp, solars, patron, reason})
     {
+        if (!xp && !solars && !reason)
+        {
+            let reward = await RewardDialog.prompt();
+            xp = reward.xp;
+            solars = reward.solars;
+            reason = reward.reason;
+        }
+
         let content = await renderTemplate("systems/impmal/templates/chat/reward.hbs", {xp, solars, patron, reason});
         ChatMessage.create({
             content,

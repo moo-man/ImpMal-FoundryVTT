@@ -130,7 +130,7 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
             }
             else 
             {
-                super._onDrop(ev)
+                super._onDropItem(ev, dropData);
             }
 
         }
