@@ -13,10 +13,10 @@
                 <div class="detail-group">
                     <div class="input-group">
                         {{#if system.faction.document}}
-                        <div class="singleton-item" data-id="{{system.faction.document.id}}">
+                        <div class="singleton-item faction" data-id="{{system.faction.document.id}}">
                             <a class="list-edit">{{system.faction.name}}</a>
                         </div>
-                        <a class="remove-singleton" data-type="faction"><i class="fa-solid fa-xmark"></i></a>
+                        <a class="remove-singleton" data-path="system.faction"><i class="fa-solid fa-xmark"></i></a>
                         {{else}}
                         <input type="text" name="system.faction.name" value="{{system.faction.name}}" placeholder="{{localize 'IMPMAL.Faction'}}">
                         {{/if}}
@@ -28,10 +28,10 @@
                 <div class="detail-group">
                     <div class="input-group">
                         {{#if system.duty.document}}
-                        <div class="singleton-item" data-id="{{system.duty.document.id}}">
+                        <div class="singleton-item duty" data-id="{{system.duty.document.id}}">
                             <a class="list-edit">{{system.duty.name}}</a>
                         </div>
-                        <a class="remove-singleton" data-type="duty"><i class="fa-solid fa-xmark"></i></a>
+                        <a class="remove-singleton" data-path="system.duty"><i class="fa-solid fa-xmark"></i></a>
                         {{else}}
                         <input type="text" name="system.duty.name" value="{{system.duty.name}}" placeholder="{{localize 'IMPMAL.Duty'}}">
                         {{/if}}
