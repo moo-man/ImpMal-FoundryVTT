@@ -178,11 +178,15 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
      */
     _getSubmitData(updateData = {})
     {
+        // Clear overrides before getting submit data
+        let overrides = this.actor.overrides;
         this.actor.overrides = {};
         const data = super._getSubmitData(updateData);
 
         // Diff the update with the derived actor data to unwanted constant incremental updates
         const diff = foundry.utils.diffObject(foundry.utils.flattenObject(this.object.toObject(false)), data);
+
+        this.actor.overrides = overrides;
         return diff;
     }
 
