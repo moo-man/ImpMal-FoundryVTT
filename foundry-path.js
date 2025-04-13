@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs-extra";
 
-export default function foundryConfig(systemId) 
+export default function foundryConfig(systemId, version) 
 {
     const configPath = path.resolve(process.cwd(), "foundryconfig.json");
     let config;
@@ -18,7 +18,7 @@ export default function foundryConfig(systemId)
     }
     else if (config?.path)
     {
-        foundryPath = path.join(config.path, "systems", systemId);
+        foundryPath = path.join(config.path, "systems", systemId).replace("{version}", version);
     }
 
     console.log("Foundry Path: " + foundryPath);
