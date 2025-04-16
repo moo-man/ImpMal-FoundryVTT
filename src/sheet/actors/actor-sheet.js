@@ -237,6 +237,16 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
             let id = this._getId(ev);
             this.actor.items.get(id).sheet?.render(true);
         })
+        html.find(".empty-slot").click(async ev => {
+            let choice = await ItemDialog.create(this.actor.items.contents.filter(i => i.system.isPhysical), 1, {text : "Select Item to place in slot", title : "Slot"});
+            let item = this.actor.items.get(this._getParent(ev.target, ".list-item")?.dataset.id);
+            let slot = this._getParent(ev.target, ".slot")
+            if (item)
+            {
+                item.update(item.system.slots.slotItem(choice[0], slot.dataset.index));
+            }
+
+        })
         html.find(".speed-config",).on("click", () => new SpeedConfigForm(this.actor).render(true));
     }
 
@@ -272,17 +282,15 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
     {
         let target = event.currentTarget.dataset.target;
         let document = this._getDocument(event) || this.actor;
-        let value = event.target.value;
-     
-        value = !getProperty(document, target);
+        let value = !foundry.utils.getProperty(document, target);
      
         return document.update({[target] : value}).then(updated => 
         {
-            if (this._isPatronDocument(updated))
-            {
-                warhammer.utility.log("Rerendering Sheet from Patron Update");
-                this.render(true);
-            }
+            // if (this._isPatronDocument(updated))
+            // {
+            //     warhammer.utility.log("Rerendering Sheet from Patron Update");
+            //     this.render(true);
+            // }
         });
     }
 

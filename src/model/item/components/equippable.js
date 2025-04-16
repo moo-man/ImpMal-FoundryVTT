@@ -17,13 +17,13 @@ export class EquippableItemModel extends PhysicalItemModel
     
     async _preUpdate(data, options, user)
     {
+        await super._preUpdate(data, options, user);
         if (foundry.utils.hasProperty(options.changed, "system.slots.value") && !foundry.utils.hasProperty(options.changed, "system.slots.list"))
         {
             data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
         }
     }   
 
-    
     computeBase() 
     {
         super.computeBase();
@@ -33,7 +33,8 @@ export class EquippableItemModel extends PhysicalItemModel
             this.equipped.value = true;
         }
 
-        if (this.isSlotted?.system?.isEquipped)
+        // A slotted item is equipped if the parent item is not equippable or if it is equippable, if it's equipped
+        if (this.isSlotted && (!(this.isSlotted?.system?.equippable) || this.isSlotted?.system?.isEquipped))
         {
             this.equipped.value = true;
         }
@@ -47,6 +48,11 @@ export class EquippableItemModel extends PhysicalItemModel
     get isEquipped() 
     {
         return this.equipped.value;
+    }
+
+    get equippable()
+    {
+        return true;
     }
 
     shouldTransferEffect(effect)
