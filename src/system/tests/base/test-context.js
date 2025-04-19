@@ -109,8 +109,9 @@ export class TestContext
      * defender and vice versa, but should also prevent that update from causing an infinite loop of updating between attacker/defender
      * 
      * @param {Object} message Message for this context
+     * @param {Object} fromUpdate Whether this call is from an message update, as opposed to create
      */
-    async handleOpposed(message)
+    async handleOpposed(message, fromUpdate=false)
     {
         if (game.user.isPrimaryGM)
         {
@@ -133,15 +134,21 @@ export class TestContext
             }
             else if (this.targetSpeakers.length) // If attacking
             {
-                if (foundry.utils.isEmpty(this.responses))
+                if (Object.keys(this.responses).length != this.targetSpeakers.length)
                 {
-                    await game.dice3d?.waitFor3DAnimationByMessageID(message.id);
+                    if (!fromUpdate)
+                    {
+                        await game.dice3d?.waitFor3DAnimationByMessageID(message.id);
+                    }
                     // Add Opposing flags to each actor
                     for(let t of this.targets)
                     {
-                        let opposed = await OpposedTestMessageModel.createOpposed(message, t.token);
-                        t.actor?.setFlag("impmal", "opposed", opposed.id);
-                        this.registerOpposed(opposed.id, t.id)
+                        if (!this.responses[t.id])
+                        {
+                            let opposed = await OpposedTestMessageModel.createOpposed(message, t.token);
+                            t.actor?.setFlag("impmal", "opposed", opposed.id);
+                            this.registerOpposed(opposed.id, t.id)
+                        }
                     }
                     await this.saveContext();
                 }

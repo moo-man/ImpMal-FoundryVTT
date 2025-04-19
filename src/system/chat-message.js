@@ -12,7 +12,7 @@ export class ImpMalChatMessage extends ChatMessage
     async _onUpdate(data, options, userId)
     {
         await super._onUpdate(data, options, userId);
-        await this.system.test?.context?.handleOpposed(this, options);
+        await this.system.test?.context?.handleOpposed(this, true);
     }
 
     static chatListeners(html)
@@ -27,17 +27,17 @@ export class ImpMalChatMessage extends ChatMessage
         html.on("click", ".response-buttons button", async ev => {
             let el = $(ev.currentTarget);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
-            if (ev.target.classList.contains("unopposed"))
+            if (ev.currentTarget.classList.contains("unopposed"))
             {
                 message.system.performResponse("unopposed");
             }
-            else if (ev.target.classList.contains("dodge"))
+            else if (ev.currentTarget.classList.contains("dodge"))
             {
                 message.system.performResponse("dodge");
             }
-            else if (ev.target.dataset.uuid)
+            else if (ev.currentTarget.dataset.uuid)
             {
-                message.system.performResponse(ev.target.dataset.uuid);
+                message.system.performResponse(ev.currentTarget.dataset.uuid);
             }
         })
 
