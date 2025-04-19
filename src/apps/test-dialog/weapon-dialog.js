@@ -21,6 +21,11 @@ export class WeaponTestDialog extends AttackDialog
         return this.data.weapon;
     } 
 
+    get item()
+    {
+        return this.data.weapon;
+    }
+
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"

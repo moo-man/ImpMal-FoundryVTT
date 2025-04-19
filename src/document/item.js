@@ -7,7 +7,7 @@ export class ImpMalItem extends ImpMalDocumentMixin(WarhammerItem)
     async _preCreate(data, options, user)
     {
         let allowed = await super._preCreate(data, options, user);
-        if (!allowed)
+        if (allowed == false)
         {
             return allowed;
         }

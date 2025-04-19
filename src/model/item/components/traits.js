@@ -54,7 +54,14 @@ export class TraitListModel extends ListModel
             {
                 if (existing.value)
                 {
-                    existing.value++;
+                    if (isNaN(existing.value))
+                    {
+                        existing.value += `, ${value}`
+                    }
+                    else 
+                    {
+                        existing.value = parseInt(existing.value) + value;
+                    }
                 }
             }
             else 

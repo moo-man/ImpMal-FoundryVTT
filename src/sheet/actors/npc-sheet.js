@@ -146,9 +146,9 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
                     buttons += `<button type="button" data-type="item" class="${testClass}">${testName} Test</button>`;
                 }
 
-                for(let script of item.manualScripts)
+                for(let script of item.sheetButtons)
                 {
-                    buttons += `<button class="trigger-script" data-index="${script.index}" data-uuid="${script.effect.uuid}"><i class="fa-solid fa-code"></i>${script.Label}</button>`;
+                    buttons += `<button type="button" class="${script.class}" data-index="${script.index}" data-uuid="${script.uuid}" data-type="${script.type}" data-path="${script.path}"><i class="${script.icon}"></i>${script.label}</button>`;
                 }
 
                 if (buttons)

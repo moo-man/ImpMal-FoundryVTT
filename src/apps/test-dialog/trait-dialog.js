@@ -4,6 +4,17 @@ import { AttackDialog } from "./attack-dialog";
 
 export class TraitTestDialog extends AttackDialog
 {
+
+    get item()
+    {
+        return this.data.item;
+    }
+
+    get trait()
+    {
+        return this.data.item;
+    }
+
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"

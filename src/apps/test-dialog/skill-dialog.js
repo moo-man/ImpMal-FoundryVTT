@@ -16,6 +16,11 @@ export class SkillTestDialog extends CharacteristicTestDialog
         return this.data.skill;
     }
 
+    get item()
+    {
+        return this.data.skill;
+    }
+
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"

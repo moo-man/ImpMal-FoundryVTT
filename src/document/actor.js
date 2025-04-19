@@ -250,7 +250,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
 
         let critModifier = opposed?.attackerTest?.result.critModifier;
         let text = "";
-        args = {actor : this, woundsGained, locationData, opposed, critModifier, excess, critical, text};
+        args = {actor : this, woundsGained, locationData, opposed, critModifier, excess, critical, text, modifiers};
         await Promise.all(opposed?.attackerTest?.actor.runScripts("applyDamage", args) || []);
         await Promise.all(opposed?.attackerTest?.item?.runScripts?.("applyDamage", args) || []);
         await Promise.all(this.runScripts("takeDamage", args)); 
