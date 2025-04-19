@@ -132,6 +132,7 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
             case "dodge":
                 return this.target?.actor?.setupSkillTest({key : "reflexes", name : "Dodge"});
             case "unopposed": 
+                this.target.actor.setFlag("impmal", "opposed", null); 
                 return this.renderContent({"system.unopposed" : true})
             default:
                 if (type)
