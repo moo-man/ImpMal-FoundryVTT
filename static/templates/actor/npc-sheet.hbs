@@ -109,11 +109,17 @@
         <div class="grid-property">
             <label>{{localize "IMPMAL.CriticalWounds"}}</label>
             <div>
-                {{#if (eq system.combat.criticals.max 0)}}
-                    <span>-</span>
+
+                {{#if system.autoCalc.criticals}}
+                    {{#if (eq system.combat.criticals.max 0)}}
+                        <span>-</span>
+                    {{else}}
+                        <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
+                        <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}" disabled>
+                    {{/if}}
                 {{else}}
-                    <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
-                    <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}" {{#if system.autoCalc.criticals}}disabled{{/if}}>
+                        <input type="number" name="system.combat.criticals.value" value="{{system.combat.criticals.value}}">
+                        <input type="number" name="system.combat.criticals.max" value="{{system.combat.criticals.max}}">
                 {{/if}}
             </div>
         </div>

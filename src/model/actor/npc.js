@@ -31,17 +31,18 @@ export class NPCModel extends StandardActorModel
 
     computeRole()
     {
-        if (this.role == "troop")
+        if (this.autoCalc.criticals)
         {
-            // Initialized already to 0
-        }
-        else if (this.role == "elite" && this.autoCalc.criticals)
-        {
-            this.combat.criticals.max += 1;
-        }
-        else if (this.autoCalc.criticals)
-        {
-            this.combat.criticals.max += this.characteristics.tgh.bonus;
+
+            if (this.role == "troop") {
+                this.combat.criticals.max = 0;
+            }
+            else if (this.role == "elite" && this.autoCalc.criticals) {
+                this.combat.criticals.max += 1;
+            }
+            else if (this.autoCalc.criticals) {
+                this.combat.criticals.max += this.characteristics.tgh.bonus;
+            }
         }
     }
 
