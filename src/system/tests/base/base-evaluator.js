@@ -132,9 +132,16 @@ export class BaseTestEvaluator
     {
         if (data.computeDoubles && this.roll % 11 == 0)
         {
-            // Prefer pre-defined results
-            this.critical = this.critical || this.outcome == "success";
-            this.fumble = this.fumble || this.outcome == "failure";
+            if (this.roll == 100)
+            {
+                this.fumble = this.fumble || true;
+            }
+            else 
+            {
+                // Prefer pre-defined results
+                this.critical = this.critical || this.outcome == "success";
+                this.fumble = this.fumble || this.outcome == "failure";
+            }
         }
     }
 
