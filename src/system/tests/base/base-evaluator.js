@@ -130,7 +130,7 @@ export class BaseTestEvaluator
      */
     computeOther(data) 
     {
-        if (data.computeDoubles && this.roll % 11 == 0)
+        if (data.computeDoubles && (this.roll % 11 == 0 || this.roll == 100))
         {
             if (this.roll == 100)
             {

@@ -214,7 +214,7 @@
         "AutoCalc" : {
             "Wounds" : "Auto-Calculate Wounds",
             "CriticalWounds" : "Auto-Calculate Critical Wounds",
-            "Initiative" : "Auto-Calculate Critical Initiative",
+            "Initiative" : "Auto-Calculate Initiative",
             "Corruption" : "Auto-Calculate Critical Corruption"
         }
     },

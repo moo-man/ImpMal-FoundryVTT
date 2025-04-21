@@ -60,7 +60,7 @@ export class TestContext
 
     get token()
     {
-        return this.actor.getActiveTokens()[0]?.document;
+        return this.actor.getActiveTokens()[0]?.document || this.actor.prototypeToken;
     }
 
     get targets() 

@@ -26,6 +26,11 @@
 @use "./apps/choice-tree";
 @use "./theme/theme";
 
+@font-face {
+    font-family: "OnlySkulls";
+    src: url("./fonts/only-skulls.ttf");
+}
+
 // Shared properties
 .impmal {
     a {
@@ -97,6 +102,7 @@
             .list-image {
                 flex: 0 0 30px;
                 height: 30px;
+                object-fit: contain;
             }
 
             .use-item {

@@ -320,6 +320,16 @@ body:not(.no-theme) {
 
         font-family: "MinionPro";
 
+        
+        ul li::marker{
+            font-family: OnlySkulls;
+            content: "0";
+            font-style: normal;
+        }
+
+        ul li > * {
+            margin-left: 5px;
+        }
 
         .like-h1,
         h1 {
@@ -466,6 +476,14 @@ body:not(.no-theme) {
                 border: 20px solid transparent;
                 border-image: url(./assets/ui/box-corners-light.webp);
                 border-image-slice: 10% 10%;
+
+                &.blue {
+                    border-image: none;
+                    border: 3px solid var(--impmal-lightblue);
+                    border-right: none;
+                    border-left: none;
+                    color: var(--impmal-lightblue)
+                }
 
                 .box-header {
                     color: black;
@@ -742,7 +760,7 @@ body:not(.no-theme) {
                         background-color: #e9ecec;
                     }
 
-                    td:first-of-type {
+                    td:first-of-type:not(:only-child) {
                         font-weight: bold;
                         width: 20%
                     }
@@ -759,7 +777,7 @@ body:not(.no-theme) {
                         padding-left: 5px;
                     }
 
-                    td:first-of-type {
+                    td:first-of-type:not(:only-child) {
                         text-align: center;
                     }
                 }

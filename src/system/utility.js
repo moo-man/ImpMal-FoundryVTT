@@ -176,6 +176,8 @@ export default class ImpMalUtility
             </tr>`;
     }).join("")}
 
+        ${(options.includes("description") && table.description) ? '<td colspan="2">' + table.description + "</td>" : ""}
+
         </tbody>
     </table>`, {relativeTo : table, async: true});
     }
@@ -183,6 +185,14 @@ export default class ImpMalUtility
     static async actorToHTML(actor, label, options=[]) 
     {
         let html = "";
+
+        if (options.description)
+        {
+            html += actor.system.notes.player;
+            if (game.user.isGM)
+                html += actor.system.notes.gm;
+        }
+        
 
         if (options.table)
         {
@@ -218,7 +228,7 @@ export default class ImpMalUtility
                 return i.system.notes.player.replace("<p>", `<p><strong>${i.name}</strong>: `)
             });
         
-            return await TextEditor.enrichHTML(`<table border="1" style="${options.style || ""}" class="impmal-actor">
+            return await TextEditor.enrichHTML(`<div>${options.description != "bottom" ? html : ""}<table border="1" style="${options.style || ""}" class="impmal-actor">
             <thead>
             <tr class="title">
                 <td colspan="9"><p class="name">@UUID[${actor.uuid}]{${label || actor.name}}</p><p class="subtitle">${game.impmal.config.sizes[actor.system.combat.size]} ${actor.system.species} (${actor.system.faction.name}), ${game.impmal.config.npcRoles[actor.system.role]}</p></td>
@@ -272,7 +282,7 @@ export default class ImpMalUtility
                     <td colspan="9"><strong>${game.i18n.localize("IMPMAL.Possessions")}</strong>: ${possessions.map(i => `@UUID[${i.uuid}]`).join(", ")}</td>
                 </tr>   
             </tbody>
-        </table>`, {relativeTo : actor, async: true});
+        </table>${options.description == "bottom" ? html : ""}</div>`, {relativeTo : actor, async: true});
         }
         else 
         {
