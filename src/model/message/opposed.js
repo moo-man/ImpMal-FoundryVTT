@@ -125,7 +125,7 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
         })
     }
 
-    performResponse(type)
+    performResponse(type,id)
     {
         switch(type)
         {
@@ -134,9 +134,10 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
             case "unopposed": 
                 this.target.actor.setFlag("impmal", "opposed", null); 
                 return this.renderContent({"system.unopposed" : true})
-            default:
-                if (type)
-                    this.target?.actor?.setupWeaponTest(type);
+            case "weapon":
+                this.target?.actor?.setupWeaponTest(id);
+            case "trait":
+                this.target?.actor?.setupTraitTest(id);
         
         }
     }
@@ -164,30 +165,34 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
         if (defenderToken?.actor)
         {
             let actor = defenderToken.actor;
-            buttons.push({icon : "fa-solid fa-reply", class: "dodge", tooltip : game.i18n.localize("Dodge")});
+            buttons.push({icon : "fa-solid fa-reply", type: "dodge", tooltip : game.i18n.localize("Dodge")});
             if (actor.system.hands)
             {
                 if (actor.system.hands.left.id == actor.system.hands.right.id && actor.system.hands.left.document)
                 {
-                    buttons.push({tooltip : actor.system.hands.left.document.name, uuid : actor.system.hands.left.document.uuid, icon: "fa-solid fa-shield"})
+                    buttons.push({type: "weapon", tooltip : actor.system.hands.left.document.name, uuid : actor.system.hands.left.document.uuid, icon: "fa-solid fa-shield"})
                 }
                 else 
                 {
                     if (actor.system.hands.left.document)
                     {
-                        buttons.push({tooltip : actor.system.hands.left.document.name, uuid : actor.system.hands.left.document.uuid, icon : "fa-solid fa-hand", class : `left ${actor.system.handed == "left" ? "primary" : "secondary"}`})
+                        buttons.push({type: "weapon", tooltip : actor.system.hands.left.document.name, uuid : actor.system.hands.left.document.uuid, icon : "fa-solid fa-hand", class : `left ${actor.system.handed == "left" ? "primary" : "secondary"}`})
                     }
                     if (actor.system.hands.right.document)
                     {
-                        buttons.push({tooltip : actor.system.hands.right.document.name, uuid : actor.system.hands.right.document.uuid, icon : "fa-solid fa-hand", class : `right ${actor.system.handed == "right" ? "primary" : "secondary"}`})
+                        buttons.push({type: "weapon", tooltip : actor.system.hands.right.document.name, uuid : actor.system.hands.right.document.uuid, icon : "fa-solid fa-hand", class : `right ${actor.system.handed == "right" ? "primary" : "secondary"}`})
                     }
+                }
+                for(let trait of actor.itemTypes.trait.filter(i => i.system.isMelee))
+                {
+                    buttons.push({tooltip : trait.name, uuid : trait.uuid, icon: "fa-solid fa-sword", type : "trait"})
                 }
             }
             else 
             {
-                for(let weapon of actor.itemTypes.weapon.filter(i => i.system.isEquipped && i.system.isMelee))
+                for(let weapon of actor.itemTypes.weapon.filter(i => i.system.isEquipped && i.system.isMelee).concat(actor.itemTypes.trait.filter(i => i.system.isMelee)))
                 {
-                    buttons.push({tooltip : weapon.name, uuid : weapon.uuid, icon: "fa-solid fa-sword"})
+                    buttons.push({type: weapon.type, tooltip : weapon.name, uuid : weapon.uuid, icon: "fa-solid fa-sword"})
                 }
             }
 

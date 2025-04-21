@@ -71,9 +71,9 @@
             {{#unless result}}
                 <div class="response-buttons">
                     {{#each responseButtons}}
-                        <button type="button" class="{{this.class}}" data-tooltip="{{this.tooltip}}" data-uuid="{{this.uuid}}"><i class="{{this.icon}}"></i> {{this.label}}</button>
+                        <button type="button" class="{{this.class}}" data-tooltip="{{this.tooltip}}" data-uuid="{{this.uuid}}" data-type="{{this.type}}"><i class="{{this.icon}}"></i> {{this.label}}</button>
                     {{/each}}
-                    <button type="button" class="unopposed" data-tooltip="{{localize 'IMPMAL.Unopposed'}}"><i class="fa-solid fa-arrow-down"></i></button>
+                    <button type="button" data-type="unopposed" data-tooltip="{{localize 'IMPMAL.Unopposed'}}"><i class="fa-solid fa-arrow-down"></i></button>
                 </div>
             {{/unless}}
         {{/if}}

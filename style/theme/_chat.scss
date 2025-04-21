@@ -3,6 +3,10 @@
 body:not(.no-theme) #chat-log {
   .chat-message {
 
+    .table-description {
+      color: white;
+    }
+
     h2, h3 {
       border-color: var(--impmal-lightgreen)
     }
@@ -93,7 +97,6 @@ body:not(.no-theme) #chat-log {
     img.result-image {
       border-color: var(--impmal-lightgreen);
     }
-
 
 
     .impmal.test {

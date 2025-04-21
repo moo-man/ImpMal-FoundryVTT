@@ -27,17 +27,9 @@ export class ImpMalChatMessage extends ChatMessage
         html.on("click", ".response-buttons button", async ev => {
             let el = $(ev.currentTarget);
             let message = game.messages.get(el.parents(".message").attr("data-message-id"));
-            if (ev.currentTarget.classList.contains("unopposed"))
+            if (ev.currentTarget.dataset.type)
             {
-                message.system.performResponse("unopposed");
-            }
-            else if (ev.currentTarget.classList.contains("dodge"))
-            {
-                message.system.performResponse("dodge");
-            }
-            else if (ev.currentTarget.dataset.uuid)
-            {
-                message.system.performResponse(ev.currentTarget.dataset.uuid);
+                message.system.performResponse(ev.currentTarget.dataset.type, ev.currentTarget.dataset.uuid);
             }
         })
 

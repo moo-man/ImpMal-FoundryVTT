@@ -57,12 +57,12 @@ export class TraitModel extends StandardItemModel
 
     get isMelee()
     {
-        return this.attack.type == "melee";
+        return this.attack.enabled && this.attack.type == "melee";
     }
 
     get isRanged()
     {
-        return this.attack.type == "ranged";
+        return this.attack.enabled && this.attack.type == "ranged";
     }
 
     async summaryData()
