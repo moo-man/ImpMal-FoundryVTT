@@ -1,0 +1,1 @@
+return args.fields.characteristic != "ag" && args.data.skill != "medicae" && args.data.skill != "Melee" && args.data.skill != "ranged" && args.data.skill != "tech"

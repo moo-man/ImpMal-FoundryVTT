@@ -1,0 +1,1 @@
+return this.actor.defendingAgainst && (args.weapon || args.data.skill == 'reflexes')

@@ -1,0 +1,1 @@
+return !args.isAttack || !args.item.system.isMelee

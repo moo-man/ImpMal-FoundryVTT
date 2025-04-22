@@ -1,0 +1,1 @@
+this.actor.system.combat.wounds.max += this.actor.system.characteristics.tgh.bonus

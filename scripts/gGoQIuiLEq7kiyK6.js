@@ -1,0 +1,1 @@
+return args.data.skill != "rapport" && args.data.skill != "presence"

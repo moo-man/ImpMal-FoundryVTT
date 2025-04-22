@@ -1,0 +1,1 @@
+if (args.type == "weapon" && args.system.isRanged) args.system.rangeModifier.value+= 0.5; //gross workaround for double preparation bug

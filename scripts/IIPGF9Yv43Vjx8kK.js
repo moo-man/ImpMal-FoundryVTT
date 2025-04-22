@@ -1,0 +1,1 @@
+return args.characteristic == "str" || args.weapon?.system.isMelee;
