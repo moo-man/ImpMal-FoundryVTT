@@ -11,6 +11,48 @@ export class ImpMalTestMessageModel extends WarhammerTestMessageModel
         return schema;
     }
 
+    static get actions() 
+    { 
+        foundry.utils.mergeObject(super.actions, {
+            resistPower : this._onResistPower,
+            buyItem  :  this._onBuyItem
+        });
+    }
+
+    static _onResistPower(ev, target)
+    {
+        let test = this.test;
+        let uuid = target.dataset.uuid;
+        let actors = [];
+        if (game.user.character)
+        {
+            actors.push(game.user.character);
+        }
+        else 
+        {
+            actors = canvas.tokens.controlled.map(t => t.actor);
+        }
+
+        let effects = (test.item?.targetEffects || []).filter(e => e.system.transferData.avoidTest?.opposed);
+
+        actors.forEach(async a => 
+        {
+            if (effects.length)
+            {
+                await a.applyEffect({effectUuids: effects.map(e => e.uuid), messageId : test.message.id});
+            }
+            else 
+            {
+                a.setupTestFromItem(uuid);
+            }
+        });
+    }
+
+    static _onBuyItem(ev, target)
+    {
+        this.test?.buyItem(game.user.character);
+    }
+
     get test() 
     {
         let test = new (game.impmal.testClasses[this.class])(this);
@@ -21,7 +63,11 @@ export class ImpMalTestMessageModel extends WarhammerTestMessageModel
     {
         if (!this.parent.isAuthor && !this.parent.isOwner)
         {
-            html.find(".test-breakdown").remove();
+            html.querySelectorAll(".test-breakdown").forEach(e => e.remove());
         }
+
+        html.querySelector(".item-image")?.addEventListener("dragstart", ev => {
+            ev.originalEvent.dataTransfer.setData("text/plain", JSON.stringify({type : "Item", uuid : this.test.context.uuid}));
+        })
     }
 }
