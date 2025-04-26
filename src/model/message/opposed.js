@@ -15,6 +15,15 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
         return schema;
     }
 
+    static get actions() 
+    { 
+        foundry.utils.mergeObject(super.actions, {
+            clickResponse : this._onClickResponse,
+            applyDamage : this._onApplyDamage,
+            applyZoneEffect : this.onApplyZoneEffect
+        });
+    }
+
     get attackerTest()
     {
         return this.attackerMessage.system.test;
@@ -106,6 +115,19 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
         }});
     }
 
+    static _onClickResponse(ev, target)
+    {
+        if (target.dataset.type)
+        {
+            this.system.performResponse(target.dataset.type, target.dataset.uuid);
+        }
+    }
+
+    static _onApplyDamage(ev, target)
+    {
+        this.applyDamage();
+    }
+
     computeResult()
     {
         return new OpposedTestResult(this.attackerTest, this.defenderTest);
@@ -148,13 +170,13 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
         {
             if (!this.target?.actor.isOwner)
             {
-                html.find(".response-buttons").remove();
+                html.querySelector(".response-buttons").remove();
             }
         }
 
         if (!this.attackerTest?.actor?.isOwner)
         {
-            html.find(".damage-breakdown").remove();
+            html.querySelector(".damage-breakdown").remove();
         }
     }
 

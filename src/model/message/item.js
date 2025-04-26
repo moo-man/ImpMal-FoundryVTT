@@ -24,6 +24,25 @@ export class PostedItemMessageModel extends foundry.abstract.DataModel
         }, chatData));
     }
 
+    static get actions() 
+    { 
+        foundry.utils.mergeObject(super.actions, {
+            rollAvailability : this._onRollAvailability,
+            buyItem :  this._onBuyItem
+        });
+    }
+
+    static _onRollAvailability(ev, target)
+    {
+        this.rollAvailability();
+    }
+
+    static _onBuyItem(ev, target)
+    {
+        this.buyItem(game.user.character);
+    }
+
+
     async rollAvailability()
     {
         let dialogData = AvailabilityDialog.setupData({item: new Item.implementation(this.itemData), availability : this.itemData.system.availability},null, {title : {append : " - " + this.itemData.name}});
