@@ -16,7 +16,7 @@ export default function registerHandlebars()
     });
 
 
-    loadTemplates([
+    foundry.applications.handlebars.loadTemplates([
         "systems/impmal/templates/actor/tabs/npc/npc-main.hbs",
         "systems/impmal/templates/actor/tabs/patron/patron-effects.hbs",
         "systems/impmal/templates/actor/tabs/patron/patron-main.hbs",
@@ -48,7 +48,7 @@ export default function registerHandlebars()
         "systems/impmal/templates/item/partials/influence.hbs"
     ]);
 
-    loadTemplates({
+    foundry.applications.handlebars.loadTemplates({
         slotsDisplay : "systems/impmal/templates/partials/slots.hbs",
         slotsActorDisplay : "systems/impmal/templates/partials/slots-actor.hbs"
     })

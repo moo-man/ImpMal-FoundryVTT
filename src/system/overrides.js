@@ -1,5 +1,11 @@
 export default function () 
 {
+    //shorten names
+    let Actors = foundry.documents.collections.Actors
+    let Items = foundry.documents.collections.Items
+    let Journal = foundry.documents.collections.Journal
+    let Scenes = foundry.documents.collections.Scenes
+    let RollTables = foundry.documents.collections.RollTables
     // Convert functions that move data between world and compendium to retain ID
     Actors.prototype.fromCompendium = keepID(Actors.prototype.fromCompendium);
     Items.prototype.fromCompendium = keepID(Items.prototype.fromCompendium);
@@ -45,7 +51,7 @@ export default function ()
     /**
      * @override Draw token bars in reverse
      */
-    Token.prototype._drawBar = function (number, bar, data) 
+    foundry.canvas.placeables.Token.prototype._drawBar = function (number, bar, data) 
     {
         const val = Number(data.value);
         const pct = 1 - Math.clamp(val, 0, data.max) / data.max;

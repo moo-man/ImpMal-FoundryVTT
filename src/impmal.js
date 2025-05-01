@@ -74,6 +74,10 @@ import AugmeticItemSheet from "./sheet/items/item-augmetic-sheet.js";
 Hooks.once("init", () => 
 {
 
+    //shorten names
+    let Actors = foundry.documents.collections.Actors
+    let Items = foundry.documents.collections.Items
+
     // #if _ENV == "development"
     CONFIG.debug.impmal = true;
     debug();
@@ -101,7 +105,7 @@ Hooks.once("init", () =>
     Items.registerSheet("impmal", RoleItemSheet, { types: ["role"], makeDefault: true, label : "Role Sheet" });
     Items.registerSheet("impmal", AmmoItemSheet, { types: ["ammo"], makeDefault: true, label : "Ammo Sheet" });
     Items.registerSheet("impmal", AugmeticItemSheet, { types: ["augmetic"], makeDefault: true, label : "Augmetic Sheet" });
-    DocumentSheetConfig.registerSheet(ActiveEffect, "impmal", ImpmalActiveEffectConfig, {makeDefault : true});
+    foundry.applications.apps.DocumentSheetConfig.registerSheet(ActiveEffect, "impmal", ImpmalActiveEffectConfig, {makeDefault : true});
 
     // CONFIG.ActiveEffect.sheetClass = undefined;
     // DocumentSheetConfig.registerSheet(JournalEntryPage, "impmal", Level4TextPageSheet, { makeDefault: true, label: "Imperium Maledictum Journal Sheet" });
@@ -161,7 +165,7 @@ Hooks.once("init", () =>
 
     game.impmal.resources.registerResource("IMPMAL.Superiority", "impmal", "superiority");
     
-    mergeObject(CONFIG, IM_CONFIG);
+    foundry.utils.mergeObject(CONFIG, IM_CONFIG);
 
 });
 
