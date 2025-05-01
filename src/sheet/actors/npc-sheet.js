@@ -105,10 +105,10 @@ export default class ImpMalNPCSheet extends ImpMalActorSheet
 
         for (let item of items)
         {
-            description = await TextEditor.enrichHTML(item.system.notes.player, {async: true}) || `<p></p>`;
+            description = await foundry.applications.ux.TextEditor.enrichHTML(item.system.notes.player, {async: true}) || `<p></p>`;
             if (game.user.isGM)
             {
-                description += await TextEditor.enrichHTML(item.system.notes.gm, {async: true});
+                description += await foundry.applications.ux.TextEditor.enrichHTML(item.system.notes.gm, {async: true});
             }
             name = item.name;
 
