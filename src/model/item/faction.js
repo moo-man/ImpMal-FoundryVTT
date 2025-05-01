@@ -8,14 +8,14 @@ export class FactionModel extends DualItemModel
         let fields = foundry.data.fields;
         // Patron Fields
         let schema = super.defineSchema();
-        mergeObject(schema.patron.fields, {
-            duty : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {parent : schema.patron, name : "duty"}),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {parent: schema.patron, name : "influence"}),
+        foundry.utils.mergeObject(schema.patron.fields, {
+            duty : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {name : "duty"}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence"}),
         });
 
 
         // Character Fields
-        mergeObject(schema.character.fields, {
+        foundry.utils.mergeObject(schema.character.fields, {
             characteristics : new fields.SchemaField({
                 base : new fields.StringField(),
                 choices : new fields.ArrayField(new fields.StringField())
@@ -24,11 +24,11 @@ export class FactionModel extends DualItemModel
                 value : new fields.NumberField({min: 0, initial: 5}),
                 skills : new fields.ArrayField(new fields.StringField())
             }),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {parent: schema.character, name : "influence"}),
-            talents : new fields.EmbeddedDataField(ChoiceModel, {}, {parent : schema.character, name : "talents"}),
-            equipment : new fields.EmbeddedDataField(ChoiceModel, {}, {parent : schema.character, name : "equipment"}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence"}),
+            talents : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "talents"}),
+            equipment : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "equipment"}),
             solars : new fields.NumberField(),
-            duty : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {parent : schema.character, name : "duty"}),
+            duty : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {name : "duty"}),
         });
         return schema;
     }

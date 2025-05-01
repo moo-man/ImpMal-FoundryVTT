@@ -97,7 +97,7 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
     async renderContent(update={})
     {
         await this.parent.update(update);
-        // mergeObject(this.parent, update);
+        // foundry.utils.mergeObject(this.parent, update);
         this.result = this.computeResult()
 
         let content = await this.getContent();

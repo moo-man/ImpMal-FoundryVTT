@@ -10,7 +10,7 @@ export class SkillTestContext extends CharacteristicTestContext
     static fromData(data) 
     {
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
-        let context = mergeObject(super.fromData(data), {
+        let context = foundry.utils.mergeObject(super.fromData(data), {
             skill : data.skill, 
             skillItemId : data.skillItemId,
             maxPurged : data.maxPurged

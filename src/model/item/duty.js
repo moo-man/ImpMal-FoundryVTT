@@ -12,27 +12,27 @@ export class DutyModel extends DualItemModel
 
         schema.faction = new fields.EmbeddedDataField(DeferredReferenceModel);
         schema.category = new fields.StringField({initial : "character"});
-        mergeObject(schema.patron.fields, {
-            boonTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {parent : schema.patron, name : "boonTable"}),
-            liabilityTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {parent : schema.patron, name : "liabilityTable"}),
-            boon : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {parent : schema.patron, name : "boon"}),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {parent : schema.patron, name : "influence"}),
+        foundry.utils.mergeObject(schema.patron.fields, {
+            boonTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "boonTable"}),
+            liabilityTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "liabilityTable"}),
+            boon : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "boon"}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence"}),
         });
 
 
         // Character Fields
-        mergeObject(schema.character.fields, {
-            equipment : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {parent : schema.character, name : "equipment"}),
-            characteristics : new fields.ObjectField({}, {}, {parent : schema.character, name : "characteristics"}),
-            skills : new fields.ObjectField({}, {}, {parent : schema.character, name : "skills"}),
+        foundry.utils.mergeObject(schema.character.fields, {
+            equipment : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {name : "equipment"}),
+            characteristics : new fields.ObjectField({}, {}, {name : "characteristics"}),
+            skills : new fields.ObjectField({}, {}, {name : "skills"}),
             specialisations : ListModel.createListModel(new fields.SchemaField({
                 skill : new fields.StringField(),
                 name : new fields.StringField(),
                 advances : new fields.NumberField()
-            }), {}, {parent : schema.character, name : "specialisations"}),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {parent : schema.character, name : "influence"}),
-            items : new fields.EmbeddedDataField(ChoiceModel, {}, {parent : schema.character, name : "items"}),
-            solars : new fields.NumberField({min : 0}, {}, {parent : schema.character, name : "solars"}),
+            }), {}, {name : "specialisations"}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence"}),
+            items : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "items"}),
+            solars : new fields.NumberField({min : 0}, {}, {name : "solars"}),
         });
         return schema;
     }
@@ -105,7 +105,7 @@ export class DutyModel extends DualItemModel
 
                 let data = item?.toObject() || {};
 
-                mergeObject(data, option.diff);
+                foundry.utils.mergeObject(data, option.diff);
                 data.name = option.name;
                 items.push(data);
             }

@@ -1689,7 +1689,7 @@ const IMPMAL = {
         "character" : "Underling"
     },
     
-    // mergeObject(scriptTriggers, {
+    // foundry.utils.mergeObject(scriptTriggers, {
     
     //     equipToggle : "WH.Trigger.EquipToggle",
     
