@@ -184,7 +184,7 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
         {
             return {};
         }
-        mergeObject(sources[index], data);
+        foundry.utils.mergeObject(sources[index], data);
 
         return {[`${this.schema.fieldPath}.factions.${faction}.sources`] : sources};
     }

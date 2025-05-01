@@ -12,7 +12,7 @@ export class DutyModel extends DualItemModel
 
         schema.faction = new fields.EmbeddedDataField(DeferredReferenceModel);
         schema.category = new fields.StringField({initial : "character"});
-        mergeObject(schema.patron.fields, {
+        foundry.utils.mergeObject(schema.patron.fields, {
             boonTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "boonTable"}),
             liabilityTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "liabilityTable"}),
             boon : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "boon"}),
@@ -21,7 +21,7 @@ export class DutyModel extends DualItemModel
 
 
         // Character Fields
-        mergeObject(schema.character.fields, {
+        foundry.utils.mergeObject(schema.character.fields, {
             equipment : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {name : "equipment"}),
             characteristics : new fields.ObjectField({}, {}, {name : "characteristics"}),
             skills : new fields.ObjectField({}, {}, {name : "skills"}),
@@ -105,7 +105,7 @@ export class DutyModel extends DualItemModel
 
                 let data = item?.toObject() || {};
 
-                mergeObject(data, option.diff);
+                foundry.utils.mergeObject(data, option.diff);
                 data.name = option.name;
                 items.push(data);
             }
