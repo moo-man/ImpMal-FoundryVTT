@@ -7,7 +7,6 @@ export class BaseTest extends WarhammerTestBase
 
     static contextClass = TestContext;
     static evaluatorClass = BaseTestEvaluator;
-    static chatType = CONST.CHAT_MESSAGE_TYPES.ROLL;
     rollTemplate = "systems/impmal/templates/chat/rolls/roll.hbs";
     testDetailsTemplate = "";
     itemSummaryTemplate = "systems/impmal/templates/item/partials/item-summary.hbs";
@@ -227,7 +226,7 @@ export class BaseTest extends WarhammerTestBase
             flavor: this.context.title,
             type : "test",     
             rollMode : this.context.rollMode,                                         // Trigger DSN
-            rolls : this.constructor.chatType == CONST.CHAT_MESSAGE_TYPES.ROLL ? ([this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject]) : [], 
+            rolls : this.result.rollObject ? ([this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject]) : [], 
             system : this._saveData()
         });
     }
