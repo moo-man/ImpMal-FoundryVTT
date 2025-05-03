@@ -11,7 +11,7 @@ export class WeaponTestContext extends SkillTestContext
     static fromData(data) 
     {
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
-        let context = mergeObject(super.fromData(data), {weaponId : data.weapon.id, vehicleId : data.vehicle?.id });
+        let context = foundry.utils.mergeObject(super.fromData(data), {weaponId : data.weapon.id, vehicleId : data.vehicle?.id });
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;
     }

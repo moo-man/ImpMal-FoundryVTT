@@ -8,7 +8,7 @@ export class TraitTestContext extends SkillTestContext
     static fromData(data) 
     {
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
-        let context = mergeObject(super.fromData(data), {itemId : data.itemId});
+        let context = foundry.utils.mergeObject(super.fromData(data), {itemId : data.itemId});
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;
     }

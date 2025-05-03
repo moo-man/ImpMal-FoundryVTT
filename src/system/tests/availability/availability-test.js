@@ -1,14 +1,12 @@
 import { AvailabilityEvaluator } from "./availability-evaluator";
 import { AvailabilityContext } from "./availability-context";
 import { BaseTest } from "../base/base-test";
-import { PostedItemMessageModel } from "../../../model/message/item";
 
 export class AvailabilityTest extends BaseTest
 {
 
     static contextClass = AvailabilityContext;
     static evaluatorClass = AvailabilityEvaluator;
-    static chatType = CONST.CHAT_MESSAGE_TYPES.ROLL;
     rollTemplate = "systems/impmal/templates/chat/rolls/availability.hbs";
     testDetailsTemplate = "";
     itemSummaryTemplate = "systems/impmal/templates/item/partials/item-summary.hbs";

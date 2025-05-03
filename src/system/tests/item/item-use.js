@@ -19,7 +19,6 @@ export class ItemUse extends BaseTest
     static evaluatorClass = ItemTestEvaluator;
     static contextClass = ItemUseContext;
     rollTemplate = "systems/impmal/templates/chat/rolls/item-use.hbs";
-    static chatType = CONST.CHAT_MESSAGE_TYPES.NONE;
 
     computeTarget() 
     {

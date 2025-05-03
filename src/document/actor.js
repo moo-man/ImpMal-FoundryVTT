@@ -148,7 +148,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         {
             return ui.notifications.error("Item does not provide sufficient data to perform a Test. It must specify at least a Skill or Characteristic");
         }
-        return testFunction(testData, mergeObject(testOptions, options));
+        return testFunction(testData, foundry.utils.mergeObject(testOptions, options));
     }
 
     async purge(roll=false)

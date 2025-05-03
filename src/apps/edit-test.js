@@ -21,7 +21,7 @@ export class EditTestForm extends FormApplication
 
     _updateObject(ev, formData)
     {
-        mergeObject(this.object.data.result, formData);
+        foundry.utils.mergeObject(this.object.data.result, formData);
         this.object.roll();
     }
 

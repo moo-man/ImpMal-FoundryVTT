@@ -9,7 +9,7 @@ export class BaseTestEvaluator
     static fromData(data)
     {
         let result = new this();
-        mergeObject(result, data);
+        foundry.utils.mergeObject(result, data);
         return result;
     }
 

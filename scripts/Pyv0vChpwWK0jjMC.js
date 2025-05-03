@@ -4,4 +4,4 @@
         });
         
         let location = (await ItemDialog.create(locations, 1))[0].id;
-        mergeObject(args.locationData, args.actor.system.combat.hitLocations[location]);
+        foundry.utils.mergeObject(args.locationData, args.actor.system.combat.hitLocations[location]);

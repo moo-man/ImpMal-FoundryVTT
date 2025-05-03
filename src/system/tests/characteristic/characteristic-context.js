@@ -9,7 +9,7 @@ export class CharacteristicTestContext extends TestContext
     static fromData(data) 
     {
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
-        let context = mergeObject(super.fromData(data), {characteristic : data.characteristic});
+        let context = foundry.utils.mergeObject(super.fromData(data), {characteristic : data.characteristic});
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;
     }
