@@ -28,6 +28,22 @@ export  default socketHandlers = {
                 return actor.setupTestFromItem(itemUuid);
             });
         }
+    },
+
+    createActor(data) 
+    {
+        if (game.user.id == game.users.activeGM?.id)
+        {
+            let id = data.fromId;
+            let actorData = data.actor;
+            // Give ownership to requesting actor
+            actorData.ownership = {
+                default: 0,
+                [id]: 3
+            };
+            // We want the user to add items, not the GM (for prompting scripts)
+            return Actor.implementation.create(actorData, {keepId : true, itemsToAdd : data.items});
+        }
     }
     
 }

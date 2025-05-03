@@ -124,6 +124,11 @@ export default class CharGenIM extends FormApplication {
           stage.complete = existingStage.complete;
         }
       }
+
+      if (this.data.items.origin?.item)
+      {
+        this.data.items.origin.item = new Item.implementation(this.data.items.origin.item);
+      }
     }
 
     this.actor = {type: "character", system: foundry.utils.deepClone(game.model.Actor.character), items: [] }
@@ -138,7 +143,6 @@ export default class CharGenIM extends FormApplication {
     {
       ui.notifications.warn(game.i18n.localize("IMPMAL.CHARGEN.Warn.NoGM"), {permanent : true})
     }
-
 
     Hooks.call("impmal:chargen", this)
   }
@@ -414,30 +418,23 @@ export default class CharGenIM extends FormApplication {
 
       foundry.utils.mergeObject(this.actor, expandObject(this.data.misc), {overwrite : true})
 
+      // Create items separately
+      let items = this.actor.items;
+      delete this.actor.items;
+      
+
       if (game.user.isGM || game.settings.get("core", "permissions").ACTOR_CREATE.includes(game.user.role))
       {
-        // Create items separately
-        let items = this.actor.items;
-        delete this.actor.items;
-
         let document = await Actor.implementation.create(this.actor);
-        document.createEmbeddedDocuments("Item", items, {skipRequirement : true, skipOrigin : true, skipFaction : true});
         document.sheet.render(true);
+        document.createEmbeddedDocuments("Item", items, {skipRequirement : true, skipOrigin : true, skipFaction : true});
         localStorage.removeItem("impmal-chargen")
       }
       else {
-        // Create temp actor to handle any immediate scripts
-        let tempActor = await Actor.implementation.create(this.actor, {temporary: true})
 
-        for(let i of tempActor.items.contents)
-        {
-          await i._preCreate(i._source, {skipRequirement : true, skipOrigin : true, skipFaction : true}, game.user.id);
-        }
-
-        let actorData = tempActor.toObject();
-        actorData._id = randomID();
-        game.user.flags.waitingForCreatedActor = actorData._id;
-        const payload =  {fromId : game.user.id, actor : actorData}
+        this.actor._id = randomID();
+        game.user.flags.waitingForCreatedActor = this.actor._id;
+        const payload =  {fromId : game.user.id, actor : this.actor, items}
         SocketHandlers.call("createActor", payload);
       }
     }
@@ -509,19 +506,15 @@ export default class CharGenIM extends FormApplication {
 
 // Complete character creation for a user who has sent their actor data to a GM to create
 // If the ID matches the locally stored ID, render actor and complete process
-Hooks.on("createActor", async (document) => {
+Hooks.on("createActor", async (document, operation) => {
   if (document.id == game.user.flags.waitingForCreatedActor)
   {
     if (document && document.isOwner) 
     {
-      for(let i of document.items.contents)
-        {
-          // Run onCreate scripts
-          await i._onCreate(i._source, {skipRequirement : true, skipOrigin : true, skipFaction : true}, game.user.id);
-        }
-        document.sheet.render(true)
-        localStorage.removeItem("impmal-chargen")
-      }
+      document.sheet.render(true);
+      document.createEmbeddedDocuments("Item", (operation.itemsToAdd || []), {skipRequirement : true, skipOrigin : true, skipFaction : true})
+      localStorage.removeItem("impmal-chargen")
+    }
     delete game.user.flags.waitingForCreatedActor;
   }
 })

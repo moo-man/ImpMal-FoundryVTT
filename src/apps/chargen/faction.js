@@ -28,7 +28,10 @@ export class FactionStage extends ChargenStage {
             "Imperial Fleet" : "0DNYdNKKglMlFOko",
             "Infractionist" : "oa5nKvqMjOoHsBcK",
             "The Inquisition" : "I8BJ1QcLwzC85KTF",
-            "Rogue Trader Dynasty" : "N3xtZGybYbWZlAhS"
+            "Rogue Trader Dynasty" : "N3xtZGybYbWZlAhS",
+            "Ordo Xenos" : "cY8QqkSqrdfk9Dyp",
+            "Ordo Hereticus" : "CDCRywl9EgXMoTdr",
+            "Ordo Malleus" : "xb6SwipCKT9Vrvjt",
         }
 
     }
