@@ -30,7 +30,7 @@ export class PowerTestDialog extends SkillTestDialog
      * @param {string} title.append Append to dialog title
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(id, actor, {title={}, fields={}, context={}}={})
+    static setupData(id, actor, context={}, options)
     {   
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
@@ -41,10 +41,10 @@ export class PowerTestDialog extends SkillTestDialog
         // Prioritize specified difficulty, fallback on power's difficulty
         fields.difficulty = fields.difficulty || power.system.difficulty;
 
-        let dialogData = super.setupData({key : "psychic", itemId : skill?.id}, actor, {title, fields, context});
+        let dialogData = super.setupData({key : "psychic", itemId : skill?.id}, actor, context, options);
 
         // TODO find a way to avoid duplicating this code from the parent class
-        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.PowerTest", {name : power.name})) + (title?.append || "");
+        dialogData.data.title = (context.title?.replace || game.i18n.format("IMPMAL.PowerTest", {name : power.name})) + (context.title?.append || "");
 
         dialogData.data.powerId = power.id;
         dialogData.data.power = power;

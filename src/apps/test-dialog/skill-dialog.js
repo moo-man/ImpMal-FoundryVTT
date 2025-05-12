@@ -30,7 +30,7 @@ export class SkillTestDialog extends CharacteristicTestDialog
      * @param {string} title.append Append to dialog title
      * @param {object} fields Predefine dialog fields
      */
-    static setupData({itemId, name, key}, actor, {title={}, fields={}, context={}}={})
+    static setupData({itemId, name, key}, actor, context={}, options)
     {   
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
@@ -48,15 +48,15 @@ export class SkillTestDialog extends CharacteristicTestDialog
         let skillObject = actor.system.skills[skillKey];
         let characteristic = skillObject.characteristic;
 
-        let dialogData = super.setupData(characteristic, actor, {title, fields, context});
+        let dialogData = super.setupData(characteristic, actor, context, options);
 
         if (name == "Dodge" || (actor.defendingAgainst && skillKey == "reflexes"))
         {
-            dialogData.data.context.dodge = true;
+            dialogData.context.dodge = true;
         }
 
         // TODO find a way to avoid duplicating this code from the parent class
-        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.SkillTest", {skill : game.impmal.config.skills[skillKey] + (skillItem?.name ? ` (${skillItem.name})` : "")})) + (title?.append || "");
+        dialogData.data.title = (context.title?.replace || game.i18n.format("IMPMAL.SkillTest", {skill : game.impmal.config.skills[skillKey] + (skillItem?.name ? ` (${skillItem.name})` : "")})) + (context.title?.append || "");
 
         dialogData.data.skillItemId = skillItem?.id;
         dialogData.data.skill = skillKey;
@@ -66,7 +66,7 @@ export class SkillTestDialog extends CharacteristicTestDialog
             dialogData.data.scripts = dialogData.data.scripts.concat(skillItem.getScripts("dialog").filter(i => !i.options.defending));
         }
 
-        dialogData.fields.characteristic = fields.characteristic || skillObject.characteristic;
+        dialogData.fields.characteristic = context.fields?.characteristic || skillObject.characteristic;
         
         log(`${this.prototype.constructor.name} - Dialog Data`, {args : dialogData});
         return dialogData;

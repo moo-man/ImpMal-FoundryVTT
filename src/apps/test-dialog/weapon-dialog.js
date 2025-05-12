@@ -3,9 +3,6 @@ import { AttackDialog } from "./attack-dialog";
 
 export class WeaponTestDialog extends AttackDialog
 {  
-
-
-
     computeFields() 
     {
         if (this.data.weapon.system.equipped.offhand)
@@ -35,7 +32,7 @@ export class WeaponTestDialog extends AttackDialog
      * @param {string} title.append Append to dialog title
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(id, actor, {title={}, fields={}, context={}}={})
+    static setupData(id, actor, context={}, options)
     {   
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
@@ -53,10 +50,10 @@ export class WeaponTestDialog extends AttackDialog
         }
         
         // If skill is a SkillSpec Item, provide the id, if not, provide the skill key
-        let dialogData = super.setupData({itemId : skill.id, key : weapon.system.attackType}, actor, {title, fields, context});
+        let dialogData = super.setupData({itemId : skill.id, key : weapon.system.attackType}, actor, context, options);
 
         // TODO find a way to avoid duplicating this code from the parent class
-        dialogData.data.title = (title?.replace || game.i18n.format("IMPMAL.WeaponTest", {name : weapon.name})) + (title?.append || "");
+        dialogData.data.title = (context.title?.replace || game.i18n.format("IMPMAL.WeaponTest", {name : weapon.name})) + (context.title?.append || "");
 
         dialogData.data.weapon = weapon;
         dialogData.data.item = weapon;
