@@ -8,14 +8,14 @@ export class FactionModel extends DualItemModel
         let fields = foundry.data.fields;
         // Patron Fields
         let schema = super.defineSchema();
-        mergeObject(schema.patron.fields, {
+        foundry.utils.mergeObject(schema.patron.fields, {
             duty : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {name : "duty"}),
             influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence"}),
         });
 
 
         // Character Fields
-        mergeObject(schema.character.fields, {
+        foundry.utils.mergeObject(schema.character.fields, {
             characteristics : new fields.SchemaField({
                 base : new fields.StringField(),
                 choices : new fields.ArrayField(new fields.StringField())

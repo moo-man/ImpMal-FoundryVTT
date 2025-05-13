@@ -21,7 +21,7 @@ export class TestContext
 
     constructor(context)
     {
-        mergeObject(this, context);
+        foundry.utils.mergeObject(this, context);
         // Add a push function to tags and text so they work sorta like an array but handles duplicates
         let push = function(value)
         {
@@ -262,7 +262,7 @@ export class TestContext
     static fromData(data) 
     {
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
-        let context = mergeObject({
+        let context = foundry.utils.mergeObject({
             speaker : data.speaker,
             title : data.title,
             targetSpeakers : data.targets,

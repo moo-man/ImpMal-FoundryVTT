@@ -2,7 +2,7 @@ let heavyBolter = await fromUuid("Compendium.impmal-core.items.Item.rMIaVi1gx3wU
 let multimelta = heavyBolter.toObject();
 let plasmaCannon = heavyBolter.toObject();
 
-mergeObject(multimelta, {name : "Multi-melta", system : {
+foundry.utils.mergeObject(multimelta, {name : "Multi-melta", system : {
         category : "melta",
         damage : {
             base : "16",
@@ -14,7 +14,7 @@ mergeObject(multimelta, {name : "Multi-melta", system : {
     id : randomID()
 })
 
-mergeObject(plasmaCannon, {name : "Plasma Cannon", system : {
+foundry.utils.mergeObject(plasmaCannon, {name : "Plasma Cannon", system : {
         category : "plasma",
         damage : {
             base : "12",

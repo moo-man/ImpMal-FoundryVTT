@@ -64,8 +64,8 @@ export default class ImpMalActorSheet extends ImpMalSheetMixin(WarhammerActorShe
         data.defendingAgainst = this.actor.defendingAgainst;
         data.factionsExpanded = this.factionsExpanded;
         data.enriched = foundry.utils.expandObject({
-            "system.notes.player" : await TextEditor.enrichHTML(data.actor.system.notes.player, {async: true}),
-            "system.notes.gm" : await TextEditor.enrichHTML(data.actor.system.notes.gm, {async: true}),
+            "system.notes.player" : await foundry.applications.ux.TextEditor.enrichHTML(data.actor.system.notes.player, {async: true}),
+            "system.notes.gm" : await foundry.applications.ux.TextEditor.enrichHTML(data.actor.system.notes.gm, {async: true}),
         });
 
         return data;
