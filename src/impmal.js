@@ -70,6 +70,7 @@ import ResourceManager from "./system/resources.js";
 import { CorruptionMessageModel } from "./model/message/corruption.js";
 import { OpposedTestMessageModel } from "./model/message/opposed.js";
 import AugmeticItemSheet from "./sheet/items/item-augmetic-sheet.js";
+import IMCharacterSheetV2 from "./sheet/v2/actor/character.js";
 
 Hooks.once("init", () => 
 {
@@ -85,10 +86,9 @@ Hooks.once("init", () =>
     CONFIG.Actor.documentClass = ImpMalActor;
     CONFIG.Item.documentClass = ImpMalItem;
     CONFIG.ActiveEffect.documentClass = ImpMalEffect;
-    CONFIG.ActiveEffect.legacyTransferral = false;
     CONFIG.ChatMessage.documentClass = ImpMalChatMessage;
 
-    DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true, label : "Character Sheet" });
+    DocumentSheetConfig.registerSheet(Actor, "impmal", IMCharacterSheetV2, { types: ["character"], makeDefault: true, label : "Character Sheet" });
     DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true, label : "Patron Sheet" });
     DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalNPCSheet, { types: ["npc"], makeDefault: true, label : "NPC Sheet" });
     DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalVehicleSheet, { types: ["vehicle"], makeDefault: true, label : "Vehicle Sheet" });

@@ -1,0 +1,399 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="flexrow">
+
+        <div class="attribute-box single">
+            <div class="label" style="grid-column: 1 / span 9"><a data-action="rollInitiative"><label
+                        class="centered">{{localize "IMPMAL.Initiative"}}</label> <i
+                        class="fa-regular fa-dice-d10"></i></a></div>
+            <div class="field" style="grid-column: 10 / span 3"><input type="number"
+                    value="{{system.combat.initiative}}" disabled></div>
+        </div>
+        <div class="attribute-box single">
+            <div class="label" style="grid-column: 1 / span 9"><label
+                    class="centered">{{localize "IMPMAL.Dodge"}}</label></div>
+            <div class="field" style="grid-column: 10 / span 3"> <input type="number" value="{{dodgeValue}}" disabled>
+            </div>
+        </div>
+        <div class="attribute-box single">
+            {{#if (eq actor.type "character")}}
+                <div class="label" style="grid-column: 1 / span 9"><label
+                        class="centered">{{localize "IMPMAL.Superiority"}}</label></div>
+                <div class="field" style="grid-column: 10 / span 3"> <input type="number"
+                        value="{{system.combat.superiority}}" disabled></div>
+            {{else if (eq actor.type "npc")}}
+                <div class="label" style="grid-column: 1 / span 9"><label
+                        class="centered">{{localize "IMPMAL.Resolve"}}</label></div>
+                <div class="field" style="grid-column: 10 / span 3"> <input type="number"
+                        value="{{system.combat.resolve}}" disabled></div>
+            {{/if}}
+        </div>
+        <div class="attribute-box single">
+            <div class="label" style="grid-column: 1 / span 6"><a data-action="speedConfig"><label
+                        class="centered">{{localize "IMPMAL.Speed"}}</label> <i class="fa-solid fa-gear"></i></a></div>
+            <div class="field" style="grid-column: 7 / span 6">
+                {{system.combat.speedDisplay}}
+            </div>
+        </div>
+    </div>
+
+    {{> actions}}
+
+
+    <div class="sheet-list {{#unless items.equipped.melee.length}}inactive{{/unless}}">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.MeleeWeapons"}}</div>
+            <div>{{localize "IMPMAL.Specialisation"}}</div>
+            <div>{{localize "IMPMAL.Damage"}}</div>
+        </div>
+        <div class="list-content">
+            {{#each items.equipped.melee}}
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="label rollable" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                            {{#if (eq ../actor.type "character")}}
+                                <div class="grip">
+                                    {{#if this.system.equipped.hands.left}}
+                                        <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                            data-hand="left"><i class="fa-solid fa-hand"></i></span>
+                                    {{/if}}
+                                    {{#if this.system.equipped.hands.right}}
+                                        <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                            data-hand="right"><i class="fa-solid fa-hand"></i></span>
+                                    {{/if}}
+                                </div>
+                            {{/if}}
+                        </div>
+
+                        <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
+                        <div>{{this.system.damage.value}}</div>
+
+                    </div>
+                    {{#if this.system.traits.list.length}}
+                        <div class="row-content">
+                            <div class="weapon-traits">
+
+                                <label>{{localize 'IMPMAL.TraitsT'}}</label>
+                                <div class="trait-list">
+                                    {{this.system.traits.displayString}}
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+
+    <div class="sheet-list {{#unless items.equipped.ranged.length}}inactive{{/unless}}">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.RangedWeapons"}}</div>
+            <div>{{localize "IMPMAL.Specialisation"}}</div>
+            <div>{{localize "IMPMAL.Damage"}}</div>
+            <div>{{localize "IMPMAL.Range"}}</div>
+            <div>{{localize "IMPMAL.Ammo"}}</div>
+        </div>
+        <div class="list-content">
+            {{#each items.equipped.ranged}}
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="label rollable" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                            {{#if (eq ../actor.type "character")}}
+                                <div class="grip">
+                                    {{#if this.system.equipped.hands.left}}
+                                        <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                            data-hand="left"><i class="fa-solid fa-hand"></i></span>
+                                    {{/if}}
+                                    {{#if this.system.equipped.hands.right}}
+                                        <span {{#if this.system.equipped.offhand}}class="offhand" {{/if}}
+                                            data-hand="right"><i class="fa-solid fa-hand"></i></span>
+                                    {{/if}}
+                                </div>
+                            {{/if}}
+                        </div>
+
+                        <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
+                        <div>{{this.system.damage.value}}</div>
+                        <div>{{configLookup "ranges" this.system.range}}</div>
+
+                        <div>
+                            {{#unless this.system.selfAmmo}}
+                                <select class="ammo-selector"
+                                    data-tooltip="{{this.system.ammo.document.name}} ({{this.system.ammo.document.system.quantity}})">
+                                    {{#select this.system.ammo.id}}
+                                        {{selectOptions this.system.ammoList selected=this.system.ammo.id keyAttr="_id" nameAttr="name" blank=""}}
+                                    {{/select}}
+                                </select>
+                            {{/unless}}
+                        </div>
+
+                    </div>
+                    <div class="row-content">
+                        {{#if this.system.traits.list.length}}
+                            <div class="weapon-traits">
+
+                                <label>{{localize 'IMPMAL.TraitsT'}}</label>
+                                <div class="trait-list">
+                                    {{this.system.traits.displayString}}
+                                </div>
+                            </div>
+                        {{/if}}
+                        {{#unless this.system.selfAmmo}}
+                            <div class="mag">
+                                <label>{{localize "IMPMAL.Mag"}}</label>
+                                <div class="values">
+                                    <div class="current">{{this.system.mag.current}}</div>
+                                    <div>/</div>
+                                    <div class="value">{{this.system.mag.value}}</div>
+                                </div>
+                            </div>
+                            {{#if (lt this.system.mag.current this.system.mag.value)}}
+                                <a class="reload">{{localize "Reload"}}</a>
+                            {{/if}}
+                        {{else}}
+                            <div class="qty">
+                                <label>{{localize "IMPMAL.Qty."}}</label>
+                                <div>{{this.system.quantity}}</div>
+                            </div>
+                        {{/unless}}
+                    </div>
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+
+    {{#if items.equipped.vehicle.length}}
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "IMPMAL.VehicleWeapons"}}</div>
+                <div>{{localize "IMPMAL.Specialisation"}}</div>
+                <div>{{localize "IMPMAL.Damage"}}</div>
+                <div>{{localize "IMPMAL.Range"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each items.equipped.vehicle}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label rollable" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                            </div>
+
+                            <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
+                            <div>{{this.system.damage.value}} {{localize "IMPMAL.Damage"}}</div>
+                            {{#if this.system.isRanged}}
+                                <div>{{configLookup "ranges" this.system.range}} {{localize "IMPMAL.Range"}}</div>
+                            {{/if}}
+
+                            <div>
+                            </div>
+
+                        </div>
+                        <div class="row-content">
+                            {{#if this.system.traits.list.length}}
+                                <div class="weapon-traits">
+
+                                    <label>{{localize 'IMPMAL.TraitsT'}}</label>
+                                    <div class="trait-list">
+                                        {{this.system.traits.displayString}}
+                                    </div>
+                                </div>
+                            {{/if}}
+                            {{#unless this.system.selfAmmo}}
+                                {{#if this.system.isRanged}}
+                                    <div class="mag">
+                                        <label>{{localize "IMPMAL.Mag"}}</label>
+                                        <div class="values">
+                                            <div class="current">{{this.system.mag.current}}</div>
+                                            <div>/</div>
+                                            <div class="value">{{this.system.mag.value}}</div>
+                                        </div>
+                                    </div>
+                                    <a class="ammo-used">
+                                        {{#if this.system.ammo.document}}
+                                            {{this.system.ammo.document.name}}
+                                            ({{this.system.ammo.document.system.quantity}})
+                                        {{else}}
+                                            {{localize "IMPMAL.NoAmmoLoaded"}}
+                                        {{/if}}
+                                    </a>
+                                {{/if}}
+                            {{else}}
+                                <div class="qty">
+                                    <label>{{localize "IMPMAL.Qty."}}</label>
+                                    <div>{{this.system.quantity}}</div>
+                                </div>
+                            {{/unless}}
+                        </div>
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+    {{/if}}
+
+
+        <div class="sheet-list {{#unless items.equipped.shield.length}}inactive{{/unless}}">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "IMPMAL.Shield"}}</div>
+                <div class="flex">{{localize "IMPMAL.Traits"}}</div>
+            </div>
+            <div class="list-content">
+                {{#each items.equipped.shield}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label">{{this.name}}</a>
+                            </div>
+
+                            <div class="flex">
+                                <div class="trait-list">
+                                    {{this.system.traits.displayString}}
+                                </div>
+                            </div>
+
+                        </div>
+                        {{> sheetButtons document=this}}
+                        <div class="dropdown-content collapsed">
+
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="flexrow">
+            <div class="hit-locations">
+                <label>Protection</label>
+                {{#each hitLocations}}
+                    <div class="location" data-key="{{this.key}}">
+                        <div class="location-values">
+                            <label>{{localize this.label}}</label>
+                            {{#if this.damage}}
+                                <div class="armour-damage">
+                                    -{{this.damage}}
+                                </div>
+                            {{/if}}
+                            <a class="damage-armour armour-value">
+                                {{this.armour}}
+                            </a>
+                        </div>
+                        <div class="location-details collapsed">
+                            {{#each this.items}}
+                                <div class="protection-item" data-id="{{this.id}}">
+                                    <label>– {{this.name}} </label>
+                                    <a
+                                        class="damage-armour {{#if (lookup this.system.damage ../this.key)}}damaged{{/if}}">{{calc this.system.armour "-" (lookup this.system.damage ../this.key)}}{{#if (lookup this.system.rended ../this.key)}}R{{/if}}</a>
+                                    {{!-- <div class="traits">{{this.system.traits.displayString}}</div> --}}
+                                </div>
+                                {{#if this.system.traits.displayString}}
+                                    <div class="armour-traits">
+                                        <div class="trait-list">
+                                            {{this.system.traits.displayString}}
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                            {{#if this.field}}
+                                <div class="protection-item">
+                                    <label>– {{this.field.name}}</label><span> {{this.field.system.protection}}</span>
+                                </div>
+                            {{/if}}
+                            {{#each this.sources}}
+                                <div class="protection-item">
+                                    <label>– {{this.name}} </label>
+                                    <span>{{this.value}}</span>
+                                </div>
+                            {{/each}}
+                            {{!-- <div class="range">
+                            {{this.displayRange}}
+                        </div> --}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+
+            <div class="flexcol">
+                <div class="sheet-list">
+                    <div class="list-header row-content">
+                        <div class="list-name">{{localize "IMPMAL.CriticalWounds"}}</div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="createItem" data-type="critical"><i
+                                    class="fa-solid fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <div class="list-content">
+                        {{#each items.critical}}
+                            <div class="list-row" data-uuid="{{this.uuid}}">
+                                <div class="row-content">
+                                    <div class="list-name">
+                                        <img src="{{this.img}}">
+                                        <a class="label" data-action="">{{this.name}}</a>
+                                    </div>
+
+                                    <div class="list-controls">
+                                        <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                                    </div>
+
+                                </div>
+                                {{> sheetButtons document=this}}
+                                <div class="dropdown-content collapsed">
+
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="sheet-list">
+                    <div class="list-header row-content">
+                        <div class="list-name">{{localize "IMPMAL.Injury"}}</div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="createItem" data-type="injury"><i
+                                    class="fa-solid fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <div class="list-content">
+                        {{#each items.injury}}
+                            <div class="list-row" data-uuid="{{this.uuid}}">
+                                <div class="row-content">
+                                    <div class="list-name">
+                                        <img src="{{this.img}}">
+                                        <a class="label" data-action="">{{this.name}}</a>
+                                    </div>
+
+                                    <div class="list-controls">
+                                        <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                                    </div>
+
+                                </div>
+                                {{> sheetButtons document=this}}
+                                <div class="dropdown-content collapsed">
+
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">

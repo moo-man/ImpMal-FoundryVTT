@@ -1,0 +1,57 @@
+ <header class="sheet-header">
+        <img class="profile" src="{{source.img}}" data-edit="img">
+        <div class="header-details">
+            <div class="details-row name">
+                <input type="text" name="name" value="{{source.name}}" placeholder="{{localize 'Name'}}">
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        {{#if system.origin.document}}
+                        <div class="singleton-item" data-id="{{system.origin.document.id}}">
+                            <a data-action="editEmbedded">{{system.origin.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.origin"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="system.origin.name" value="{{system.origin.name}}" placeholder="{{localize 'IMPMAL.Origin'}}">
+                        {{/if}}
+                    </div>
+                    <label>{{localize "IMPMAL.Origin"}}</label>
+                </div>
+                <div class="detail-group">
+                    <div class="input-group">
+                        {{#if system.faction.document}}
+                        <div class="singleton-item" data-id="{{system.faction.document.id}}">
+                            <a data-action="editEmbedded">{{system.faction.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.faction"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="system.faction.name" value="{{system.faction.name}}" placeholder="{{localize 'IMPMAL.Faction'}}">
+                        {{/if}}
+                    </div>
+                    <label>{{localize "IMPMAL.Faction"}}</label>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        {{#if system.role.document}}
+                        <div class="singleton-item" data-id="{{system.role.document.id}}">
+                            <a data-action="editEmbedded">{{system.role.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.role"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="system.role.name" value="{{system.role.name}}" placeholder="{{localize 'IMPMAL.Role'}}">
+                        {{/if}}
+                    </div>
+                    <label>{{localize "IMPMAL.Role"}}</label>
+                </div>
+                <div class="detail-group">
+                    <div class="input-group">
+                        <input type="text"  name="system.details.species" value="{{system.details.species}}" placeholder="{{localize 'IMPMAL.Species'}}">
+                    </div>
+                    <label>{{localize "IMPMAL.Species"}}</label>
+                </div>
+            </div>
+        </div>
+    </header>

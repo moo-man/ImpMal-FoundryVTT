@@ -1,0 +1,169 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <table class="characteristic-table">
+        <tr>
+            <th></th>
+            {{#each system.characteristics}}
+                <th>
+                    {{configLookup "characteristicAbbrev" @key}}
+                </th>
+            {{/each}}
+        </tr>
+        <tr>
+            <td>{{localize "IMPMAL.Starting"}}</td>
+            {{#each system.characteristics}}
+                <td>
+                    <input type="number" name="system.characteristics.{{@key}}.starting" value="{{this.starting}}">
+                </td>
+            {{/each}}
+        </tr>
+        <tr>
+            <td>{{localize "IMPMAL.Advances"}}</td>
+            {{#each system.characteristics}}
+                <td>
+                    <input type="number" name="system.characteristics.{{@key}}.advances" value="{{this.advances}}">
+                </td>
+            {{/each}}
+        </tr>
+        <tr>
+            <td>{{localize "IMPMAL.Modifier"}}</td>
+            {{#each system.characteristics}}
+                <td>
+                    <input type="number" name="system.characteristics.{{@key}}.modifier" value="{{this.modifier}}">
+                </td>
+            {{/each}}
+        </tr>
+        <tr>
+            <td>{{localize "IMPMAL.Total"}}</td>
+            {{#each system.characteristics}}
+                <td>
+                    <a class="roll" data-type="characteristic" data-key="{{@key}}">{{this.total}}</a>
+                </td>
+            {{/each}}
+        </tr>
+    </table>
+
+    <div class="attribute-row flexrow">
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label
+                    class="centered">{{localize "IMPMAL.Augmetics"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.augmetics.value"
+                    value="{{system.augmetics.value}}" disabled></div>
+            <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.augmetics.max"
+                    value="{{system.augmetics.max}}" disabled></div>
+        </div>
+
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label
+                    class="centered">{{localize "IMPMAL.Initiative"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 12"><input type="number"
+                    value="{{system.combat.initiative}}" name="system.combat.initiative" {{#if
+                    system.autoCalc.initiative}}disabled{{/if}}></div>
+        </div>
+
+
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label
+                    class="centered">{{localize "IMPMAL.Fate"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.fate.value"
+                    value="{{system.fate.value}}"></div>
+            <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.fate.max"
+                    value="{{system.fate.max}}"></div>
+        </div>
+        
+                
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label
+                    class="centered">{{localize "IMPMAL.CriticalWounds"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.combat.criticals.value"
+                    value="{{system.combat.criticals.value}}" disabled></div>
+            <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.combat.criticals.max"
+                    value="{{system.combat.criticals.max}}" {{#if system.autoCalc.criticals}}disabled{{/if}}></div>
+        </div>
+
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label
+                    class="centered">{{localize "IMPMAL.Handed"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 12">
+                <select name="system.handed">
+                    {{#select system.handed}}
+                        <option value="right">{{localize "IMPMAL.Right"}}</option>
+                        <option value="left">{{localize "IMPMAL.Left"}}</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="attribute-row flexrow">
+
+
+
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label
+                    class="centered">{{#if (gt system.corruption.value system.corruption.max)}}<a
+                            data-action="rollMutation"><i class="fa-regular fa-dice-d10"></i>
+                            {{localize "IMPMAL.Corruption"}}</a>
+                    {{else}}{{localize "IMPMAL.Corruption"}}{{/if}}</label></div>
+            <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.corruption.value"
+                    value="{{system.corruption.value}}"></div>
+            <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.corruption.max"
+                    value="{{system.corruption.max}}" {{#if system.autoCalc.corruption}}disabled{{/if}}></div>
+        </div>
+
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label
+                    class="centered">{{localize "IMPMAL.Wounds"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.combat.wounds.value"
+                    value="{{system.combat.wounds.value}}"></div>
+            <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.combat.wounds.max"
+                    value="{{system.combat.wounds.max}}" {{#if system.autoCalc.wounds}}disabled{{/if}}></div>
+        </div>
+
+        <div class="attribute-box top-label experience">
+            <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "Experience"}}</label></div>
+            <div class="label" style="grid-column: 1 / span 2"><label class="centered">{{localize "Current"}}</label></div>
+            <div class="field" style="grid-column: 3 / span 2"><input type="number" value="{{system.xp.available}}" readonly></div>
+            <div class="label" style="grid-column: 5 / span 2"><label class="centered">{{localize "Spent"}}</label></div>
+            <div class="field" style="grid-column: 7 / span 2"><input type="number" value="{{system.xp.spent}}" readonly></div>
+            <div class="label" style="grid-column: 9 / span 2"><label class="centered">{{localize "Total"}}</label></div>
+            <div class="field" style="grid-column: 11 / span 2"><input type="number" value="{{system.xp.total}}"
+                    name="system.xp.total" {{#unless (or (isGM) (settings "playerExperienceEditing" ))}} readonly {{/unless}}></div>
+        </div>
+    </div>
+
+    
+<div class="patron">
+    {{#if system.patron.document}}
+        <a class="remove-ref" data-path="system.patron"><i class="fa-solid fa-xmark"></i></a>
+        <img src="{{tokenImg system.patron.document}}">
+        <div class="details">
+            {{#with system.patron.document as |patron|}}
+                <label class="name">{{patron.name}}</label>
+                <div>
+                    <div class="group">
+                        <label>{{localize "IMPMAL.Faction"}}</label>
+                        <div>{{patron.system.faction.name}}</div>
+                    </div>
+                    <div class="group">
+                        <label>{{localize "IMPMAL.Duty"}}</label>
+                        <div>{{patron.system.duty.name}}</div>
+                    </div>
+                    <div class="group">
+                        <label>{{localize "IMPMAL.Motivation"}}</label>
+                        <div>{{patron.system.motivation}}</div>
+                    </div>
+                    <div class="group">
+                        <label>{{localize "IMPMAL.Demeanor"}}</label>
+                        <div>{{patron.system.demeanor}}</div>
+                    </div>
+                </div>
+            {{/with}}
+        </div>
+    {{else}}
+        <label class="missing">{{localize "IMPMAL.NoPatron"}}</label>
+    {{/if}}
+</div>
+
+{{> actorInfluence factions=system.influence.factions path="system.influence" showNotes=true isCharacter=true}}
+
+</section>

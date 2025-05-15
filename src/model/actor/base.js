@@ -9,8 +9,8 @@ export class BaseActorModel extends BaseWarhammerActorModel
     {
         let schema = {};
         schema.notes = new fields.SchemaField({
-            player : new fields.StringField(),
-            gm : new fields.StringField()
+            player : new fields.HTMLField(),
+            gm : new fields.HTMLField()
         });
 
         schema.autoCalc = new fields.SchemaField({});

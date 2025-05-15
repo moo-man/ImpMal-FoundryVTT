@@ -1,0 +1,59 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+   <div class="flexrow">
+    <div class="attribute-box top-label">
+        <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Age"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 12"><input type="number" value="{{system.details.age}}" name="system.details.age"></div>
+    </div>
+    <div class="attribute-box top-label">
+        <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Eyes"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{system.details.eyes}}" name="system.details.eyes"></div>
+    </div>
+    <div class="attribute-box top-label">
+        <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Hair"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{system.details.hair}}" name="system.details.hair"></div>
+    </div>
+    <div class="attribute-box top-label">
+        <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Height"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{system.details.height}}" name="system.details.height"></div>
+    </div>
+    <div class="attribute-box top-label">
+        <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Weight"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{system.details.weight}}" name="system.details.weight"></div>
+    </div>
+</div>
+
+<div class="flexrow">
+    <div class="attribute-box top-label">
+        <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.DistinguishingFeatures"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{system.details.feature}}" name="system.details.feature"></div>
+    </div>
+    <div class="attribute-box top-label">
+        <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Divination"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{system.details.divination}}" name="system.details.divination"></div>
+    </div>
+</div>
+
+<div class="flexrow">
+    <div class="attribute-box top-label">
+        <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.ShortTermGoal"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{system.goal.short}}" name="system.goal.short"></div>
+    </div>
+    <div class="attribute-box top-label">
+        <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.LongTermGoal"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{system.goal.long}}" name="system.goal.long"></div>
+    </div>
+</div>
+{{log this}}
+
+    {{#if (isGM)}}
+        <div class="editor-section">
+            <div class="header">{{localize "GM Notes"}}</div>
+            {{formInput fields.notes.fields.gm value=source.system.notes.gm enriched=enriched.system.notes.gm toggled=true}}
+        </div>
+    {{/if}}
+
+    <div class="editor-section">
+        <div class="header">{{localize "Biography"}}</div>
+        {{formInput fields.notes.fields.player value=source.system.notes.player enriched=enriched.system.notes.player toggled=true}}
+    </div>
+</section>

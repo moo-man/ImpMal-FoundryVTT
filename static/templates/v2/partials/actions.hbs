@@ -1,0 +1,15 @@
+<div class="action-list">
+    {{#if system.combat.action}}
+    <div class="current-action">
+        <label><strong>{{localize "IMPMAL.CurrentAction"}}</strong>: {{localize (lookup (configLookup "actions" system.combat.action) "label")}}</label>
+        <a data-action="clearAction"><i class="fa-solid fa-xmark"></i></a>
+    </div> 
+    {{else}}
+        {{#each (config "actions")}}
+            <button type="button" class="action" data-action="useAction" data-action-key="{{@key}}">{{localize this.label}}</button>
+        {{/each}}
+        {{#if canUseTWF}}
+            <button type="button" class="action" data-action="useAction" data-action-key="twf">{{localize "IMPMAL.TwoWeaponFighting"}}</button>
+        {{/if}}
+    {{/if}}
+</div>
