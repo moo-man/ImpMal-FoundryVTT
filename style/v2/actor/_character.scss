@@ -1,0 +1,166 @@
+body.theme-light .application.actor.impmal.character {
+    --characteristic-border: var(--color-dark-6);
+    --patron-border: var(--color-dark-6);
+}
+
+.application.actor.impmal.character
+{
+    --patron-border: var(--color-cool-3);
+    --characteristic-border: var(--color-cool-3);
+    .attribute-box.experience {
+        flex: 3;
+    }
+    .characteristic-table {
+        margin: 0px;
+        text-align: center;
+        background: none;
+        border: 0px;
+        tr {
+            background: none;
+            border-bottom: 1px solid var(--characteristic-border);
+            td {
+                border-right: 1px solid var(--characteristic-border);
+                padding: 0px;
+                height: 2rem;
+            }
+            td:last-of-type {
+                border-right: 0px;
+            }
+            td:first-of-type {
+                text-align: left;
+                width: 100px;
+            }
+        }
+        tr:last-of-type {
+            border-bottom: 0px;
+        }
+
+        input {
+            border: 0px;
+            background: none;
+
+            width: 100%; 
+            height: 100%;
+        }
+
+        input:focus {
+            box-shadow: none;
+        }
+    }
+
+    .patron {
+        &.hover {
+            box-shadow: 0 0 10px inset var(--patron-border);    
+        }
+        border: 1px solid var(--patron-border); 
+        height: 120px;
+        display: flex;
+        align-items: center;
+        margin: 0.5rem 0px;
+        cursor: pointer;
+        img {
+            height: 100px;
+            width: 100px;
+        }
+
+        .missing {
+            text-align: center;
+            font-size: 30px;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            align-items: center;
+            text-align: center;
+            .name {
+                width: 100%;
+                font-size: var(--font-size-20);
+                margin-bottom: 5px;
+            }
+            > div {
+                flex: 1;
+                display: flex;
+                width: 100%;
+                > .group {
+                    margin: 0px 5px;
+                    display:flex;
+                    flex-direction: column;
+                    flex: 1;
+                    border : 1px solid transparent;
+                    label {
+                        color: #CCC;
+                        background: var(--patron-border);
+                    }
+                    border: 1px solid var(--patron-border);
+                    height: 90%;
+                    div {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 70%
+                    }
+                }
+            }
+        }
+
+        position: relative;
+        a[data-action="unset"] {
+            position: absolute;
+            right: 5px;
+            top: 3px;
+        }
+    }
+
+    .influence {
+        .list-header {
+            .list-controls {
+                flex: 0 0 3rem;
+                margin-left: -3rem;
+                justify-content: space-around;
+            }
+        }
+
+        .influence-sources {
+                .source {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 5px;
+                    input {
+                        height: unset;
+                    }
+                }
+                button {
+                    margin: auto;
+                }
+        }
+
+        input {
+            text-align: center;
+        }
+    }
+
+    .tab[data-tab="equipment"] {
+        [data-hand="left"] i 
+        {
+            transform: scaleX(-1);
+        }
+    }
+
+    .grip {
+        opacity: 0.5;
+        margin: 0px 5px;
+        white-space: nowrap;
+    }
+
+    .equip.offhand,
+    .grip .offhand {
+        color: darkred
+    }
+
+
+}

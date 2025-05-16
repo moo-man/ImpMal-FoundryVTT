@@ -53,6 +53,7 @@ export default function registerHandlebars()
         slotsActorDisplay : "systems/impmal/templates/partials/slots-actor.hbs",
         actorInfluence : "systems/impmal/templates/v2/partials/influence.hbs",
         actions : "systems/impmal/templates/v2/partials/actions.hbs",
-        listEffect : "systems/impmal/templates/v2/partials/list-effect.hbs"
+        listEffect : "systems/impmal/templates/v2/partials/list-effect.hbs",
+        actorSlots : "systems/impmal/templates/v2/partials/actor-slots.hbs"
     })
 }

@@ -36,7 +36,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         // Not sure I like this here but it will do for now
         // Warp State = 2 means you just roll on the Perils table
         // Warp State = 1 is handled in postRoll() of a skill test
-        if (options?.context?.warp == 2)
+        if (options.warp == 2)
         {
             let formula = `1d100 + ${10 * (this.system.warp.charge - this.system.warp.threshold)}`;
             ImpMalTables.rollTable("perils", formula);
@@ -74,7 +74,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
 
         if (item?.system.test?.isValid)
         {
-            return this.setupTestFromData(item.system.test, {context: {itemUsed : item}, title : {append: ` - ${item.name}`}})
+            return this.setupTestFromData(item.system.test, {itemUsed : item, appendTitle: ` - ${item.name}`})
         }
         else 
         {
@@ -155,7 +155,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
     {
         if (roll || this.inCombat || (await Dialog.confirm({title : game.i18n.localize("IMPMAL.Purge"), content : game.i18n.localize("IMPMAL.PurgeDialog")})))
         {
-            this.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {context : {purge: true},  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
+            this.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {purge: true,  appendTitle  : ` - ${game.i18n.localize("IMPMAL.Purge")}`});
         }
         else 
         {

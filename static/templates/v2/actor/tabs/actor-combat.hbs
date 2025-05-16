@@ -9,8 +9,9 @@
                     value="{{system.combat.initiative}}" disabled></div>
         </div>
         <div class="attribute-box single">
-            <div class="label" style="grid-column: 1 / span 9"><label
-                    class="centered">{{localize "IMPMAL.Dodge"}}</label></div>
+            <div class="label" style="grid-column: 1 / span 9"><a data-action="rollDodge"><label
+                        class="centered">{{localize "IMPMAL.Dodge"}}</label> <i
+                        class="fa-regular fa-dice-d10"></i></a></div>
             <div class="field" style="grid-column: 10 / span 3"> <input type="number" value="{{dodgeValue}}" disabled>
             </div>
         </div>
@@ -42,16 +43,16 @@
     <div class="sheet-list {{#unless items.equipped.melee.length}}inactive{{/unless}}">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.MeleeWeapons"}}</div>
-            <div>{{localize "IMPMAL.Specialisation"}}</div>
+            <div class="flex">{{localize "IMPMAL.Specialisation"}}</div>
             <div>{{localize "IMPMAL.Damage"}}</div>
         </div>
         <div class="list-content">
             {{#each items.equipped.melee}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-id="{{this.id}}">
                     <div class="row-content">
-                        <div class="list-name">
+                        <div class="list-name rollable" data-action="rollTest" data-type="weapon">
                             <img src="{{this.img}}">
-                            <a class="label rollable" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                            <a class="label" >{{this.name}}</a>
                             {{#if (eq ../actor.type "character")}}
                                 <div class="grip">
                                     {{#if this.system.equipped.hands.left}}
@@ -66,18 +67,14 @@
                             {{/if}}
                         </div>
 
-                        <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
+                        <div class="flex">{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
                         <div>{{this.system.damage.value}}</div>
 
                     </div>
                     {{#if this.system.traits.list.length}}
-                        <div class="row-content">
+                        <div class="row-content weapon-aux">
                             <div class="weapon-traits">
-
-                                <label>{{localize 'IMPMAL.TraitsT'}}</label>
-                                <div class="trait-list">
                                     {{this.system.traits.displayString}}
-                                </div>
                             </div>
                         </div>
                     {{/if}}
@@ -94,18 +91,18 @@
     <div class="sheet-list {{#unless items.equipped.ranged.length}}inactive{{/unless}}">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.RangedWeapons"}}</div>
-            <div>{{localize "IMPMAL.Specialisation"}}</div>
+            <div class="flex">{{localize "IMPMAL.Specialisation"}}</div>
             <div>{{localize "IMPMAL.Damage"}}</div>
             <div>{{localize "IMPMAL.Range"}}</div>
-            <div>{{localize "IMPMAL.Ammo"}}</div>
-        </div>
+            <div class="flex">{{localize "IMPMAL.Ammo"}}</div>
+        </div>  
         <div class="list-content">
             {{#each items.equipped.ranged}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-id="{{this.id}}">
                     <div class="row-content">
-                        <div class="list-name">
+                        <div class="list-name rollable" data-action="rollTest" data-type="weapon">
                             <img src="{{this.img}}">
-                            <a class="label rollable" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                            <a class="label">{{this.name}}</a>
                             {{#if (eq ../actor.type "character")}}
                                 <div class="grip">
                                     {{#if this.system.equipped.hands.left}}
@@ -120,44 +117,42 @@
                             {{/if}}
                         </div>
 
-                        <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
+                        <div class="flex">{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
                         <div>{{this.system.damage.value}}</div>
                         <div>{{configLookup "ranges" this.system.range}}</div>
 
-                        <div>
+                        <div class="flex">
                             {{#unless this.system.selfAmmo}}
-                                <select class="ammo-selector"
+                                <select class="ammo-selector" data-action="editProperty" data-path="system.ammo.id"
                                     data-tooltip="{{this.system.ammo.document.name}} ({{this.system.ammo.document.system.quantity}})">
                                     {{#select this.system.ammo.id}}
-                                        {{selectOptions this.system.ammoList selected=this.system.ammo.id keyAttr="_id" nameAttr="name" blank=""}}
+                                        {{selectOptions this.system.ammoList selected=this.system.ammo.id nameAttr="_id" labelAttr="name" blank=""}}
                                     {{/select}}
                                 </select>
                             {{/unless}}
                         </div>
 
                     </div>
-                    <div class="row-content">
+                    <div class="row-content weapon-aux">
                         {{#if this.system.traits.list.length}}
                             <div class="weapon-traits">
-
-                                <label>{{localize 'IMPMAL.TraitsT'}}</label>
                                 <div class="trait-list">
                                     {{this.system.traits.displayString}}
                                 </div>
                             </div>
                         {{/if}}
                         {{#unless this.system.selfAmmo}}
-                            <div class="mag">
+                            {{#if (lt this.system.mag.current this.system.mag.value)}}
+                                <button data-action="reload">{{localize "Reload"}}</button>
+                            {{/if}}
+                            <button type="button" class="mag" data-action="stepProperty" data-path="system.mag.current" data-reversed="true">
                                 <label>{{localize "IMPMAL.Mag"}}</label>
                                 <div class="values">
                                     <div class="current">{{this.system.mag.current}}</div>
                                     <div>/</div>
                                     <div class="value">{{this.system.mag.value}}</div>
                                 </div>
-                            </div>
-                            {{#if (lt this.system.mag.current this.system.mag.value)}}
-                                <a class="reload">{{localize "Reload"}}</a>
-                            {{/if}}
+                            </button>
                         {{else}}
                             <div class="qty">
                                 <label>{{localize "IMPMAL.Qty."}}</label>
@@ -187,9 +182,9 @@
                 {{#each items.equipped.vehicle}}
                     <div class="list-row" data-uuid="{{this.uuid}}">
                         <div class="row-content">
-                            <div class="list-name">
+                            <div class="list-name rollable" data-action="rollTest" data-type="weapon">
                                 <img src="{{this.img}}">
-                                <a class="label rollable" data-action="rollTest" data-type="weapon">{{this.name}}</a>
+                                <a class="label">{{this.name}}</a>
                             </div>
 
                             <div>{{localize this.system.specialisation}} ({{this.system.skillTotal}})</div>
@@ -281,12 +276,13 @@
         </div>
 
         <div class="flexrow">
-            <div class="hit-locations">
-                <label>Protection</label>
+            <div class="hit-locations sheet-list">
+                <div class="list-header">Protection</div>
+                <div class="list-content">
                 {{#each hitLocations}}
-                    <div class="location" data-key="{{this.key}}">
-                        <div class="location-values">
-                            <label>{{localize this.label}}</label>
+                    <div class="location list-row" data-key="{{this.key}}">
+                        <div class="location-values row-content">
+                            <label><a data-action="expandRow">{{localize this.label}}</a></label>
                             {{#if this.damage}}
                                 <div class="armour-damage">
                                     -{{this.damage}}
@@ -296,12 +292,11 @@
                                 {{this.armour}}
                             </a>
                         </div>
-                        <div class="location-details collapsed">
+                        <div class="location-details dropdown-content collapsed">
                             {{#each this.items}}
                                 <div class="protection-item" data-id="{{this.id}}">
                                     <label>– {{this.name}} </label>
-                                    <a
-                                        class="damage-armour {{#if (lookup this.system.damage ../this.key)}}damaged{{/if}}">{{calc this.system.armour "-" (lookup this.system.damage ../this.key)}}{{#if (lookup this.system.rended ../this.key)}}R{{/if}}</a>
+                                    <a data-action="damageArmour" class="damage-armour {{#if (lookup this.system.damage ../this.key)}}damaged{{/if}}">{{calc this.system.armour "-" (lookup this.system.damage ../this.key)}}{{#if (lookup this.system.rended ../this.key)}}R{{/if}}</a>
                                     {{!-- <div class="traits">{{this.system.traits.displayString}}</div> --}}
                                 </div>
                                 {{#if this.system.traits.displayString}}
@@ -329,10 +324,11 @@
                         </div>
                     </div>
                 {{/each}}
+                </div>
             </div>
 
-            <div class="flexcol">
-                <div class="sheet-list">
+            <div class="flexcol" style="height: 100%">
+                <div class="sheet-list" style="flex: 1">
                     <div class="list-header row-content">
                         <div class="list-name">{{localize "IMPMAL.CriticalWounds"}}</div>
                         <div class="list-controls">
@@ -362,7 +358,7 @@
                         {{/each}}
                     </div>
                 </div>
-                <div class="sheet-list">
+                <div class="sheet-list" style="flex: 1">
                     <div class="list-header row-content">
                         <div class="list-name">{{localize "IMPMAL.Injury"}}</div>
                         <div class="list-controls">

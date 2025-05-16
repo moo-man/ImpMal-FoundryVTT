@@ -28,7 +28,7 @@
         </div>
         <div class="list-content">
             {{#each items.weapon}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
                             <img src="{{this.img}}">
@@ -60,14 +60,14 @@
                             {{/if}}
                         </div>
 
-                        <a class="small" data-action="stepProperty">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
                             <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
-                    {{> slotsActorDisplay}}
+                    {{> actorSlots}}
                     {{> sheetButtons document=this}}
                     <div class="dropdown-content collapsed">
 
@@ -88,21 +88,21 @@
         </div>
         <div class="list-content">
             {{#each items.ammo}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
                             <img src="{{this.img}}">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
-                        <a class="small" data-action="stepProperty">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
                             <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
-                    {{> slotsActorDisplay}}
+                    {{> actorSlots}}
                     {{> sheetButtons document=this}}
                     <div class="dropdown-content collapsed">
 
@@ -123,21 +123,21 @@
         </div>
         <div class="list-content">
             {{#each items.modification}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
                             <img src="{{this.img}}">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
-                        <a class="small" data-action="stepProperty">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
                             <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
-                    {{> slotsActorDisplay}}
+                    {{> actorSlots}}
                     {{> sheetButtons document=this}}
                     <div class="dropdown-content collapsed">
 
@@ -159,7 +159,7 @@
         </div>
         <div class="list-content">
             {{#each items.protection}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
                             <img src="{{this.img}}">
@@ -176,14 +176,14 @@
                         </a>
                         </div>
 
-                        <a class="small" data-action="stepProperty">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
                             <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
-                    {{> slotsActorDisplay}}
+                    {{> actorSlots}}
                     {{> sheetButtons document=this}}
                     <div class="dropdown-content collapsed">
 
@@ -205,7 +205,7 @@
         </div>
         <div class="list-content">
             {{#each items.forceField}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name" {{#if this.system.overload.collapsed}}style="color: darkred"{{/if}}>
                             <img src="{{this.img}}">
@@ -222,14 +222,14 @@
                         </a>
                         </div>
 
-                        <a class="small" data-action="stepProperty">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
                             <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
-                    {{> slotsActorDisplay}}
+                    {{> actorSlots}}
                     {{> sheetButtons document=this}}
                     <div class="dropdown-content collapsed">
 
@@ -252,7 +252,7 @@
         </div>
         <div class="list-content">
             {{#each items.equipment}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
                             <img src="{{this.img}}">
@@ -269,14 +269,14 @@
                         </a>
                         </div>
 
-                        <a class="small" data-action="stepProperty">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
                             <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
-                    {{> slotsActorDisplay}}
+                    {{> actorSlots}}
                     {{> sheetButtons document=this}}
                     <div class="dropdown-content collapsed">
 
@@ -298,7 +298,7 @@
         </div>
         <div class="list-content">
             {{#each items.augmetic}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
                             <img src="{{this.img}}">
@@ -315,14 +315,14 @@
                         </a>
                         </div>
 
-                        <a class="small" data-action="stepProperty">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
                             <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
-                    {{> slotsActorDisplay}}
+                    {{> actorSlots}}
                     {{> sheetButtons document=this}}
                     <div class="dropdown-content collapsed">
 

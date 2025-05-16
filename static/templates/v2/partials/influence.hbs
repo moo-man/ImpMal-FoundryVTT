@@ -1,46 +1,46 @@
  <div class="sheet-list influence">
         <div class="list-header row-content">
-            <div>{{localize "Faction"}}</div>
-            <div class="small">{{localize "Infl."}}</div>
+            <div class="flex">{{localize "Faction"}}</div>
+            <div class="flex">{{localize "Infl."}}</div>
             {{#if showNotes}}
-                <div class="flex">{{localize "Notes/Contacts"}}</div>
+                <div class="flex large">{{localize "Notes/Contacts"}}</div>
             {{/if}}
             <div class="list-controls">
                 {{#if isCharacter}}
                     {{#if system.influence.usePatron}}
-                        <a class="list-control" data-action="toggleProperty" data-tooltip="{{localize 'IMPMAL.UsePatronInfluence'}}" data-target="system.influence.usePatron"><i class="fas fa-handshake-angle"></i></a>
+                        <a class="list-control" data-action="toggleProperty" data-tooltip="{{localize 'IMPMAL.UsePatronInfluence'}}" data-path="system.influence.usePatron"><i class="fas fa-handshake-angle"></i></a>
                     {{else}}
-                        <a class="list-control inactive" data-action="toggleProperty" data-tooltip="{{localize 'IMPMAL.UsePatronInfluence'}}" data-target="system.influence.usePatron"><i class="fas fa-handshake-angle"></i></a>
+                        <a class="list-control inactive" data-action="toggleProperty" data-tooltip="{{localize 'IMPMAL.UsePatronInfluence'}}" data-path="system.influence.usePatron"><i class="fas fa-handshake-angle"></i></a>
                     {{/if}}
                 {{/if}}
-                <a data-action=""><i class="fa-solid fa-plus"></i></a>
+                <a class="list-control" data-action="createFaction" data-path="system.influence"><i class="fa-solid fa-plus"></i></a>
             </div>
         </div>
         <div class="list-content">
             {{#each factions}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-key="{{@key}}">
                     <div class="row-content">
-                        <div>
-                            {{this.name}}
+                        <div class="flex">
+                            <a data-action="expandFaction">{{this.name}}</a>
                         </div>
                         <div class="small">
                             <input type="number" value="{{this.total}}" disabled>
                         </div>
 
                         {{#if ../showNotes}}
-                            <div class="flex">
+                            <div class="flex large">
                                 <input type="text" name="{{../path}}.factions.{{@key}}.notes" {{#if this.patron}}disabled{{/if}} value="{{this.notes}}">
                             </div>
                         {{/if}}
                     </div>
-                    <div class="{{#if (lookup ../factionsExpanded @key)}}expanded{{else}}collapsed{{/if}} influence-source dropdown-content">
+                    <div class="{{#if (lookup ../factionsExpanded @key)}}expanded{{else}}collapsed{{/if}} influence-sources dropdown-content">
                     {{#each this.items}}
-                        <div class="list-row">
-                            <div></div>
+                        <div class="source row-content">
+                            <div class="flex"></div>
                             <div class="small">
                                 <input type="number" disabled data-property="value" value="{{this.value}}">
                             </div>
-                            <div class="wide">
+                            <div class="flex large">
                                 <input type="text" disabled data-property="reason" value="{{this.reason}}">
                             </div>
                             <div class="list-controls single">
@@ -48,12 +48,12 @@
                         </div>
                     {{/each}}
                     {{#each this.effects}}
-                        <div class="list-row">
-                            <div></div>
+                        <div class="source row-content">
+                            <div class="flex"></div>
                             <div class="small">
                                 <input type="number" disabled data-property="value" value="{{this.value}}">
                             </div>
-                            <div class="wide">
+                            <div class="flex large">
                                 <input type="text" disabled data-property="reason" value="{{this.reason}}">
                             </div>
                             <div class="list-controls single">
@@ -61,21 +61,18 @@
                         </div>
                     {{/each}}
                     {{#each this.sources}}
-                        <div class="list-row {{#if ../this.patron}}disabled inactive{{/if}}" data-index="{{@key}}">
-                            <div></div>
+                        <div class="source row-content {{#if ../this.patron}}disabled inactive{{/if}}" data-index="{{@key}}">
+                            <a class="flex" data-action="deleteSource"><i class="fa-solid fa-xmark"></i></a>
                             <div class="small">
-                                <input type="number" data-property="value" value="{{this.value}}">
+                                <input type="number" data-saction="editSource" data-property="value" value="{{this.value}}">
                             </div>
-                            <div class="wide">
-                                <input type="text" data-property="reason" value="{{this.reason}}">
-                            </div>
-                            <div class="list-controls single">
-                                <a class="source-delete"><i class="fa-solid fa-xmark"></i></a>
+                            <div class="flex large">
+                                <input type="text" data-saction="editSource" data-property="reason" value="{{this.reason}}">
                             </div>
                         </div>
                     {{/each}}
                     {{#unless this.patron}}
-                    <button type="button"><i class="fa-solid fa-plus"></i></button>
+                    <button type="button" data-action="createSource"><i class="fa-solid fa-plus"></i> Add Source</button>
                     {{/unless}}
                     </div>
                 </div>

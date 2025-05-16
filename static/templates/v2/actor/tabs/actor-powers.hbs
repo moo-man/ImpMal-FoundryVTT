@@ -7,7 +7,7 @@
             <img src="{{this.img}}">
             <label>{{this.name}} ({{this.system.rating}})</label>
             <div class="controls">
-                <a class="remove-sustaining"><i class="fa-solid fa-xmark"></i></a>
+                <a data-action="listDelete" data-path="system.warp.sustaining"><i class="fa-solid fa-xmark"></i></a>
             </div>
         </div>
         {{/each}}
@@ -18,7 +18,7 @@
 
     <div class="attribute-box top-label">
         <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "IMPMAL.WarpCharge"}}</label></div>
-        <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.warp.value" value="{{system.warp.value}}"></div>
+        <div class="field" style="grid-column: 1 / span 6"><input type="number" name="system.warp.charge" value="{{system.warp.charge}}"></div>
         <div class="field" style="grid-column: 7 / span 6"><input type="number" name="system.warp.threshold" value="{{system.warp.threshold}}"></div>
     </div>
     <div class="bar-section">
@@ -26,13 +26,13 @@
             <div class="bar" style="width : {{pct system.warp.charge system.warp.threshold}}%"></div>
             <div class="perils">
                 {{#if (eq system.warp.state 1)}}
-                    <a class="warp"><i class="fa-solid fa-dice-d10"></i> {{localize "IMPMAL.PsychicMastery"}}</a>
+                    <a class="warp" data-action="rollWarp"><i class="fa-solid fa-dice-d10"></i> {{localize "IMPMAL.PsychicMastery"}}</a>
                 {{else if (eq system.warp.state 2)}}
-                    <a class="warp"><i class="fa-solid fa-dice-d10"></i> {{localize "IMPMAL.PerilsOfTheWarp"}}</a>
+                    <a class="warp" data-action="rollWarp"><i class="fa-solid fa-dice-d10"></i> {{localize "IMPMAL.PerilsOfTheWarp"}}</a>
                 {{/if}}
             </div>
         </div>
-        <a class="purge {{#if (eq system.warp.charge 0)}}inactive disabled{{/if}}"><i class="fa-solid fa-burst"></i>{{localize "IMPMAL.Purge"}}</a>
+        <a data-action="purge" class="purge {{#if (eq system.warp.charge 0)}}inactive disabled{{/if}}"><i class="fa-solid fa-burst"></i>{{localize "IMPMAL.Purge"}}</a>
     </div>
 </div>
 

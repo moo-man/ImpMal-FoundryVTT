@@ -132,9 +132,9 @@
     </div>
 
     
-<div class="patron">
+<div class="patron" data-action="showPatron">
     {{#if system.patron.document}}
-        <a class="remove-ref" data-path="system.patron"><i class="fa-solid fa-xmark"></i></a>
+        <a data-action="unset" data-path="system.patron"><i class="fa-solid fa-xmark"></i></a>
         <img src="{{tokenImg system.patron.document}}">
         <div class="details">
             {{#with system.patron.document as |patron|}}

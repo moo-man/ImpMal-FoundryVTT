@@ -44,7 +44,7 @@ export class ModificationModel extends PhysicalItemModel
 
 export class ModListModel extends ListModel 
 {
-    static listSchema = new fields.ObjectField({})
+    static get listSchema() {return new foundry.data.fields.ObjectField()};
 
     prepareMods(weapon)
     {

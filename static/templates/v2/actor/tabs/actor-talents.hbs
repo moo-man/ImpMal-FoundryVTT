@@ -16,8 +16,8 @@
             {{#each items.talent}}
                 <div class="list-row" data-uuid="{{this.uuid}}">
                     <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="useItem">
                             <a class="label collapsed" data-action="toggleSummary">{{this.name}}</a>
                         </div>
                         <div>{{this.system.taken}}</div>

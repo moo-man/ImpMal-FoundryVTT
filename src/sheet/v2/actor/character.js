@@ -1,3 +1,4 @@
+import { AdvancementForm } from "../../../apps/advancement";
 import IMActorSheetV2 from "./actor";
 
 export default class IMCharacterSheetV2 extends IMActorSheetV2
@@ -12,12 +13,17 @@ export default class IMCharacterSheetV2 extends IMActorSheetV2
             {
               icon : 'fa-solid fa-chevron-up',
               label : "Advancement",
-              action : "onAdvancement"
+              action : "advancement"
             }
           ]
         },
         actions : {
-
+          showPatron : this._onShowPatron,
+          equip : this._onEquipHand,
+          advancement : this._onAdvancement,
+          rollDodge : this._onRollDodge,
+          rollInitiative : this._onRollInitiative,
+          rollMutation : this._onRollMutation
         },
         defaultTab : "main"
       }
@@ -29,10 +35,90 @@ export default class IMCharacterSheetV2 extends IMActorSheetV2
         skills: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-skills.hbs' },
         talents: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-talents.hbs' },
         combat: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-combat.hbs' },
-        effects: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-effects.hbs' },
         powers: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-powers.hbs' },
+        effects: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-effects.hbs' },
         equipment: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-equipment.hbs' },
         notes: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/character/character-notes.hbs' },
       }
+
+      async _prepareContext(options)
+      {
+        let context = await super._prepareContext(options)
+        let hands = this.actor.system.hands;
+        // If holding two different weapons, can use TWF
+        context.canUseTWF = (hands.left.document && hands.right.document && hands.left.id != hands.right.id);
+        context.dodgeValue = this.actor.system.skills.reflexes.total;
+        let dodge = this.actor.itemTypes.specialisation.find(i => i.name == "Dodge" && i.system.skill == "reflexes");
+        if (dodge)
+        {
+            context.dodgeValue = dodge.system.total;
+        }
+        return context
+      }
+
+
+      _addEventListeners()
+      {
+          super._addEventListeners();  
+
+          this.element.querySelector(".patron").addEventListener("dragenter", ev => {
+            ev.target.classList.add("hover")
+          })
+          this.element.querySelector(".patron").addEventListener("dragleave", ev => {
+            ev.target.classList.remove("hover")
+          })
+      }
+
+      async _onDropActor(data, ev)
+      {
+        let actor = await Actor.implementation.fromDropData(data);
+
+        if (actor.type == "patron")
+        {
+          return this.document.update(this.document.system.patron.set(actor));
+        }
+      }
+    
+      static _onShowPatron(ev, target)
+      {
+        if (this.document.system.patron.document)
+        {
+            this.document.system.patron.document.sheet.render(true);
+        }
+        else 
+        {
+            ui.notifications.info("IMPMAL.AddPatron", {localize : true});
+        }
+      }
+
+      static _onEquipHand(ev, target)
+      {
+        let itemId = this._getId(ev);
+        let hand = target.dataset.hand;
+        let item = this.actor.items.get(itemId);
+
+        this.actor.update(this.actor.system.hands.toggle(hand, item));
+      }
+
+      static _onAdvancement(ev, target)
+      {
+        new AdvancementForm(this.actor).render(true);
+      }
+
+      static _onRollDodge()
+      {
+          this.actor.setupSkillTest({key : "reflexes", name : "Dodge"});
+      }
+  
+      static _onRollInitiative()
+      {
+          this.actor.rollInitiative({createCombatants : true});
+      }
+
+      static _onRollMutation()
+      {
+        this.actor.system.rollMutation();
+      }
+  
       
 }

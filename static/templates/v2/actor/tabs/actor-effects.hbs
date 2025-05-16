@@ -7,7 +7,7 @@
                     <label>{{this.name}}</label>
                     <div class="pips">
                         {{#each this.pips}}
-                            <div class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}" data-key="{{../this.id}}"></div>
+                            <div data-action="toggleConditionPip" class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}" data-key="{{../this.id}}"></div>
                         {{/each}}
                     </div>
                 </div>
