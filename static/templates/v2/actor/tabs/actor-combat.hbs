@@ -154,10 +154,10 @@
                                 </div>
                             </button>
                         {{else}}
-                            <div class="qty">
+                 <a data-action="stepProperty" data-path="system.quantity" class="prevent-context">
                                 <label>{{localize "IMPMAL.Qty."}}</label>
-                                <div>{{this.system.quantity}}</div>
-                            </div>
+                                {{this.system.quantity}}
+                            </a>
                         {{/unless}}
                     </div>
                     {{> sheetButtons document=this}}
@@ -207,31 +207,26 @@
                                     </div>
                                 </div>
                             {{/if}}
-                            {{#unless this.system.selfAmmo}}
-                                {{#if this.system.isRanged}}
-                                    <div class="mag">
+                            {{#if this.system.isRanged}}
+                                {{#unless this.system.selfAmmo}}
+                                    {{#if (lt this.system.mag.current this.system.mag.value)}}
+                                        <button data-action="reload">{{localize "Reload"}}</button>
+                                    {{/if}}
+                                    <button type="button" class="mag" data-action="stepProperty" data-path="system.mag.current" data-reversed="true">
                                         <label>{{localize "IMPMAL.Mag"}}</label>
                                         <div class="values">
                                             <div class="current">{{this.system.mag.current}}</div>
                                             <div>/</div>
                                             <div class="value">{{this.system.mag.value}}</div>
                                         </div>
-                                    </div>
-                                    <a class="ammo-used">
-                                        {{#if this.system.ammo.document}}
-                                            {{this.system.ammo.document.name}}
-                                            ({{this.system.ammo.document.system.quantity}})
-                                        {{else}}
-                                            {{localize "IMPMAL.NoAmmoLoaded"}}
-                                        {{/if}}
-                                    </a>
-                                {{/if}}
-                            {{else}}
-                                <div class="qty">
-                                    <label>{{localize "IMPMAL.Qty."}}</label>
-                                    <div>{{this.system.quantity}}</div>
-                                </div>
-                            {{/unless}}
+                                    </button>
+                                {{else}}
+                 <a data-action="stepProperty" data-path="system.quantity" class="prevent-context">
+                                <label>{{localize "IMPMAL.Qty."}}</label>
+                                {{this.system.quantity}}
+                            </a>
+                                {{/unless}}
+                            {{/if}}
                         </div>
                         {{> sheetButtons document=this}}
                         <div class="dropdown-content collapsed">

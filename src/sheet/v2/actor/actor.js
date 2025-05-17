@@ -1,5 +1,4 @@
 import { ActorConfigForm } from "../../../apps/actor-config";
-import ArmourConfig from "../../../apps/armour-config";
 import { SpeedConfigForm } from "../../../apps/speed-config";
 import ChatHelpers from "../../../system/chat-helpers";
 import IMSheetMixinV2 from "../mixin";
@@ -43,7 +42,6 @@ export default class IMActorSheetV2 extends IMSheetMixinV2(WarhammerActorSheetV2
             toggleInfluence: this._onToggleInfluence,
             slotRemove: this._onSlotRemove,
             useItem: this._onUseItem,
-            clickArmourConfig: this._onClickArmourConfig,
             clearAction: this._onClearAction,
             damageArmour: {buttons: [0, 2], handler : this._onDamageArmour},
             useAction: this._onActionClick,
@@ -52,53 +50,11 @@ export default class IMActorSheetV2 extends IMSheetMixinV2(WarhammerActorSheetV2
             createSource : this._onInfluenceSourceCreate,
             deleteSource : this._onInfluenceSourceDelete,
             editSource : this._onInfluenceSourceEdit,
+            clickMag : this._onClickMag
+
         },
         defaultTab : "main"
-      }
-
-      static TABS = {
-        main: {
-          id: "main",
-          group: "primary",
-          label: "Main",
-        },
-        skills: {
-          id: "skills",
-          group: "primary",
-          label: "Skills",
-        },
-        talents: {
-          id: "talents",
-          group: "primary",
-          label: "Talents",
-        },
-        combat: {
-          id: "combat",
-          group: "primary",
-          label: "Combat",
-        },
-        powers: {
-          id: "powers",
-          group: "primary",
-          label: "Powers",
-        },
-        effects: {
-          id: "effects",
-          group: "primary",
-          label: "Effects",
-        },
-        equipment: {
-          id: "equipment",
-          group: "primary",
-          label: "Equipment",
-        },
-        notes: {
-          id: "notes",
-          group: "primary",
-          label: "Notes",
-        }
-      }
-    
+      }    
 
     static _onConfigureActor(ev) 
     {

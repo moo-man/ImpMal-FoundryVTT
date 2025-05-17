@@ -41,6 +41,50 @@ export default class IMCharacterSheetV2 extends IMActorSheetV2
         notes: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/character/character-notes.hbs' },
       }
 
+      
+      static TABS = {
+        main: {
+          id: "main",
+          group: "primary",
+          label: "Main",
+        },
+        skills: {
+          id: "skills",
+          group: "primary",
+          label: "Skills",
+        },
+        talents: {
+          id: "talents",
+          group: "primary",
+          label: "Talents",
+        },
+        combat: {
+          id: "combat",
+          group: "primary",
+          label: "Combat",
+        },
+        powers: {
+          id: "powers",
+          group: "primary",
+          label: "Powers",
+        },
+        effects: {
+          id: "effects",
+          group: "primary",
+          label: "Effects",
+        },
+        equipment: {
+          id: "equipment",
+          group: "primary",
+          label: "Equipment",
+        },
+        notes: {
+          id: "notes",
+          group: "primary",
+          label: "Notes",
+        }
+      }
+
       async _prepareContext(options)
       {
         let context = await super._prepareContext(options)

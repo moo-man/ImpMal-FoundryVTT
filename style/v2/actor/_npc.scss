@@ -8,53 +8,51 @@ body.theme-light .application.actor.impmal.npc {
     --section-border: var(--color-cool-3);
     --characteristic-border: var(--color-cool-3);
 
-    .npc-grid {
-        display: grid;
-        grid-template-columns: repeat(9, 11.1%);
-        grid-template-rows: repeat(6, 16.6%);//16.6% 16.6% 33% 33%;
-        height: 200px;
-        > * {
-            line-height: 25px;
-        }
+    .characteristic-table {
+        tr {
+            i {
+                margin-right: calc(-1 * var(--font-size-14));
+            }
 
-        .attribute-box {
-            margin: 0px;
-            margin-top: 0.5rem;
-        }
+            .hover-icon {
+                i {
+                    visibility: hidden;
+                }
 
-    }
-
-    .characteristic {
-        border-top: 1px solid var(--characteristic-border);
-        border-left: 1px solid var(--characteristic-border);
-        border-bottom: 1px solid var(--characteristic-border);
-        &:nth-of-type(9) {
-            border-right: 1px solid var(--characteristic-border)
-        }
-        text-align: center;
-        > a {
-            display: flex;
-            > * {
-                flex: 1
+                &:hover {
+                    i {
+                        visibility: visible;
+                    }
+                }
+            }
+            td:first-of-type {
+                text-align: unset;
+                width: unset;
+            }
+            td {
+                > * {
+                    width: 100%;
+                }
             }
         }
-    }
-
-
-    .characteristic-value {
-        border-bottom: 1px solid var(--characteristic-border);
-        border-left: 1px solid var(--characteristic-border);
-        input {
-            border-radius: 0px; 
-        }
-        &:nth-of-type(9) {
-            border-right: 1px solid var(--characteristic-border)
+        tr:last-of-type {
+            border-bottom: 0px;
         }
     }
 
-    .grid-property {
-        grid-column  : span 3;
-        grid-row : span 2;
+    .npc-header {
+        .attribute-box {
+            height: 4rem;
+            .label {
+                height: unset;
+            }
+            .field {
+                height: unset;
+            }
+            input {
+                height: 100%;
+            }
+        }
     }
 
     .armour-properties {
@@ -67,8 +65,9 @@ body.theme-light .application.actor.impmal.npc {
             width: 100%;
             display: flex;
             flex-wrap: nowrap;
+            align-items: center;
             justify-content: space-around;
-            height: 30px;
+            background: var(--color-cool-4);
             .location {
                 height: 30px;
                 .location-values {
@@ -76,6 +75,8 @@ body.theme-light .application.actor.impmal.npc {
                     display: flex;
                     flex-direction: column;
                     line-height: 15px;
+                    font-size: var(--font-size-12);
+                    align-items: center;
                 }
             }
         }
