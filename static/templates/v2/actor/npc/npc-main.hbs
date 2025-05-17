@@ -1,0 +1,167 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+{{#if defendingAgainst}}
+    {{> defendingAgainst}}
+{{/if}}
+
+{{> actions}}
+
+
+{{#if sections.skills.show}}
+    <div class="item-section skills">
+        {{{sections.skills.html}}}
+    </div>
+{{/if}}
+
+
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Attacks"}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="weapon"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each attackItems}}
+            <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="row-content">
+                    <div class="list-name rollable" data-action="rollTest" data-type="weapon">
+                        <img src="{{this.img}}">
+                        <a class="label">{{this.name}}</a>
+                    </div>
+
+
+
+                        <div class="flex">{{localize this.system.attackData.specialisation}}
+                            ({{this.system.attackData.skillTotal}})</div>
+                        <div>{{this.system.attackData.damage.value}} {{localize "IMPMAL.Damage"}}</div>
+                        {{#if this.system.isRanged}}
+                        <div>{{configLookup "ranges" this.system.range}}</div>
+                        {{/if}}
+                        {{#if this.system.isRanged}}
+                            <div>{{configLookup "ranges" this.system.attackData.range}} {{localize "IMPMAL.Range"}}</div>
+                        {{/if}}
+                    </div>
+                    {{#if (or this.system.traits.list.length this.system.isRanged)}}
+                    <div class="row-content weapon-aux">
+                        {{#if this.system.traits.list.length}}
+                            <div class="weapon-traits">
+                                <div class="trait-list">
+                                    {{this.system.traits.displayString}}
+                                </div>
+                            </div>
+                        {{/if}}
+                        {{#unless this.system.selfAmmo}}
+                            {{#if this.system.isRanged}}
+                                <div class="mag">
+                                    <label>{{localize "IMPMAL.Mag"}}</label>
+                                    <div class="values">
+                                        <div class="current">{{this.system.mag.current}}</div>
+                                        <div>/</div>
+                                        <div class="value">{{this.system.mag.value}}</div>
+                                    </div>
+                                </div>
+                                <a class="ammo-used large">
+                                    {{#if this.system.ammo.document}}
+                                        {{this.system.ammo.document.name}}
+                                        ({{this.system.ammo.document.system.quantity}})
+                                    {{else}}
+                                        {{localize "IMPMAL.NoAmmoLoaded"}}
+                                    {{/if}}
+                                </a>
+                            {{/if}}
+                        {{else}}
+                            <div class="qty">
+                                <label>{{localize "IMPMAL.Qty."}}</label>
+                                <a class="inc-dec">{{this.system.quantity}}</a>
+                            </div>
+                        {{/unless}}
+                    </div>
+                    {{/if}}
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+        {{/each}}
+    </div>
+</div>
+
+
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Traits"}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="trait"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each traits}}
+            <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="row-content">
+                    <div class="list-name rollable" data-action="rollTest" data-type="weapon">
+                        <img src="{{this.img}}">
+                        <a class="label">{{this.name}}</a>
+                    </div>
+                </div>
+                {{#if (lookup ../enriched.traits this.id)}}
+                <div class="trait-description">
+                    {{{lookup ../enriched.traits this.id}}}
+                </div>
+                {{/if}}
+                <div>
+
+                </div>
+                {{> sheetButtons document=this}}
+                <div class="dropdown-content collapsed">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Possessions"}}</div>
+        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="protection,equipment,augmetic,weapon"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each possessions}}
+            <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="row-content">
+                    <div class="list-name rollable" data-action="rollTest" data-type="weapon">
+                        <img src="{{this.img}}">
+                        <a class="label">{{this.name}}</a>
+                    </div>
+
+                        <div class="small">
+                        <a data-action="toggleProperty" data-path="system.equipped.value">
+                            {{#if this.system.equipped.value}}
+                                <i class="fa-regular fa-circle-check"></i>
+                            {{else}}
+                                <i class="fa-regular fa-circle"></i>
+                            {{/if}}
+                        </a>
+                        </div>
+
+                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+        {{/each}}
+    </div>
+</div>
+</section>

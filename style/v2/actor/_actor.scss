@@ -1,3 +1,5 @@
+@use "../mixins/border" as *;
+
 body.theme-light .warhammer.application.impmal.actor {
     --input-border: var(--color-dark-6);
     --skill-branch: var(--color-dark-6);
@@ -6,6 +8,7 @@ body.theme-light .warhammer.application.impmal.actor {
     --slot-border: var(--color-dark-6);
     --slot-bg: var(--color-dark-6);
     --sustaining: var(--color-dark-6);
+    --defend-border: var(--color-dark-6);
 }
 
 
@@ -17,6 +20,7 @@ body.theme-light .warhammer.application.impmal.actor {
     --slot-border: var(--color-cool-3);
     --slot-bg: var(--color-cool-3);
     --sustaining: var(--color-cool-3);
+    --defend-border: var(--color-cool-3);
 
     section.tab {
         overflow-y: auto;
@@ -33,8 +37,6 @@ body.theme-light .warhammer.application.impmal.actor {
             object-fit: contain;
         }
     }
-
-
 
     .header-details {
         display: flex;
@@ -414,6 +416,42 @@ body.theme-light .warhammer.application.impmal.actor {
             display: flex;
             justify-content: left;
             align-items: center;
+        }
+    }
+
+    .defending-against {
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        border: 1px dashed var(--defend-border);
+        border-radius: 5px;
+        height: 50px;
+        padding: 5px;
+        img {
+            object-fit: contain;
+            flex: 0 0 40px;
+        }
+        .attack-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            label {
+                font-weight: bold;
+            }
+            > * {
+                width : 100%;
+                display: flex;
+                justify-content: space-around;
+            }
+        }
+        .gradient-border {
+            @include gradient-border
+        }
+
+        .remove-opposed {
+            margin: 5px;
+            line-height: 30px;
         }
     }
 

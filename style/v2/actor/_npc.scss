@@ -1,0 +1,107 @@
+body.theme-light .application.actor.impmal.npc {
+    --characteristic-border: var(--color-dark-6);
+    --section-border: var(--color-dark-6);
+}
+
+.application.actor.impmal.npc
+{
+    --section-border: var(--color-cool-3);
+    --characteristic-border: var(--color-cool-3);
+
+    .npc-grid {
+        display: grid;
+        grid-template-columns: repeat(9, 11.1%);
+        grid-template-rows: repeat(6, 16.6%);//16.6% 16.6% 33% 33%;
+        height: 200px;
+        > * {
+            line-height: 25px;
+        }
+
+        .attribute-box {
+            margin: 0px;
+            margin-top: 0.5rem;
+        }
+
+    }
+
+    .characteristic {
+        border-top: 1px solid var(--characteristic-border);
+        border-left: 1px solid var(--characteristic-border);
+        border-bottom: 1px solid var(--characteristic-border);
+        &:nth-of-type(9) {
+            border-right: 1px solid var(--characteristic-border)
+        }
+        text-align: center;
+        > a {
+            display: flex;
+            > * {
+                flex: 1
+            }
+        }
+    }
+
+
+    .characteristic-value {
+        border-bottom: 1px solid var(--characteristic-border);
+        border-left: 1px solid var(--characteristic-border);
+        input {
+            border-radius: 0px; 
+        }
+        &:nth-of-type(9) {
+            border-right: 1px solid var(--characteristic-border)
+        }
+    }
+
+    .grid-property {
+        grid-column  : span 3;
+        grid-row : span 2;
+    }
+
+    .armour-properties {
+        .plus {
+            width: unset;
+            margin: 0px 5px;
+        }
+
+        .locations {
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            height: 30px;
+            .location {
+                height: 30px;
+                .location-values {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    line-height: 15px;
+                }
+            }
+        }
+
+    }
+
+    .sheet-list {
+        .list-name {
+            .label {
+
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+        .trait-description {
+            line-height: 1rem;
+        }
+    }
+
+    .item-section.skills {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap : 0.5rem;
+        > a {
+            margin-left: 5px;
+        }
+    }
+}

@@ -54,6 +54,7 @@ export default function registerHandlebars()
         actorInfluence : "systems/impmal/templates/v2/partials/influence.hbs",
         actions : "systems/impmal/templates/v2/partials/actions.hbs",
         listEffect : "systems/impmal/templates/v2/partials/list-effect.hbs",
-        actorSlots : "systems/impmal/templates/v2/partials/actor-slots.hbs"
+        actorSlots : "systems/impmal/templates/v2/partials/actor-slots.hbs",
+        defendingAgainst : "systems/impmal/templates/v2/partials/defending-against.hbs"
     })
 }

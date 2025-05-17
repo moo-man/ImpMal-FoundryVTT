@@ -8,6 +8,12 @@ body.theme-light .application.impmal.sheet {
     --condition : var(--color-cool-3);
     --pip : var(--color-light-2);
 
+    select {
+        option {
+            color: black;
+        }
+    }
+    
     .tab[data-tab="effects"] {
         > .flexrow {
             gap: 0.5rem;
