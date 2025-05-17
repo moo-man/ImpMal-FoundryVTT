@@ -1,0 +1,24 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Effects"}}</div>
+            <div>{{localize "IMPMAL.Source"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createEffect" data-category="passive">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{log effects}}
+            {{#each effects}}
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        {{> listEffect effect=this}}
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</section>

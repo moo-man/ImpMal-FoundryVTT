@@ -1,0 +1,71 @@
+<header>
+        <div class="header-details">
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'Name'}}">
+                    </div>
+                    <label>{{localize "Name"}}</label>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        {{#if system.faction.document}}
+                        <div class="singleton-item faction" data-id="{{system.faction.document.id}}">
+                            <a class="list-edit">{{system.faction.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.faction"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="system.faction.name" value="{{system.faction.name}}" placeholder="{{localize 'IMPMAL.Faction'}}">
+                        {{/if}}
+                    </div>
+                    <label>{{localize "IMPMAL.Faction"}}</label>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        {{#if system.duty.document}}
+                        <div class="singleton-item duty" data-id="{{system.duty.document.id}}">
+                            <a class="list-edit">{{system.duty.name}}</a>
+                        </div>
+                        <a data-action="unset" data-path="system.duty"><i class="fa-solid fa-xmark"></i></a>
+                        {{else}}
+                        <input type="text" name="system.duty.name" value="{{system.duty.name}}" placeholder="{{localize 'IMPMAL.Duty'}}">
+                        {{/if}}
+                    </div>
+                    <label>{{localize "IMPMAL.Duty"}}</label>
+                </div>
+            </div>
+        </div>
+        <img class="profile" data-action="editImage" src="{{actor.img}}" data-edit="img">
+        <div class="header-details">
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        <select name="system.payment.grade" {{#if actor.overrides.system.payment.gradeModifier}}disabled data-tooltip="{{localize 'IMPMAL.CannotEditPropertyWithEffect'}}"{{/if}}>
+                            {{selectOptions (config "paymentGrade") selected=system.payment.grade blank=""}}
+                        </select>
+                    </div>
+                    <label>{{localize "IMPMAL.PayGrade"}} {{#if (or (isGM) (settings "playerExperienceEditing"))}}<a data-action="postReward"><i class="fa-solid fa-money-bill-wave"></i></a>{{/if}}</label>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        <input type="text" name="system.motivation" value="{{system.motivation}}" placeholder="{{localize 'IMPMAL.Motivation'}}">
+                    </div>
+                    <label>{{localize "IMPMAL.Motivation"}}</label>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="detail-group">
+                    <div class="input-group">
+                        <input type="text" name="system.demeanor" value="{{system.demeanor}}" placeholder="{{localize 'IMPMAL.Demeanor'}}">
+                    </div>
+                    <label>{{localize "IMPMAL.Demeanor"}}</label>
+                </div>
+            </div>
+        </div>
+    </header>

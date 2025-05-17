@@ -79,34 +79,6 @@ body.theme-light .application.actor.impmal.character {
         }
     }
 
-    .influence {
-        .list-header {
-            .list-controls {
-                flex: 0 0 3rem;
-                margin-left: -3rem;
-                justify-content: space-around;
-            }
-        }
-
-        .influence-sources {
-                .source {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 5px;
-                    input {
-                        height: unset;
-                    }
-                }
-                button {
-                    margin: auto;
-                }
-        }
-
-        input {
-            text-align: center;
-        }
-    }
-
     .tab[data-tab="equipment"] {
         [data-hand="left"] i 
         {

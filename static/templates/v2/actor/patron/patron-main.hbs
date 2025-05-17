@@ -1,0 +1,73 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "IMPMAL.Boons"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="boonLiability" data-category="boon"><i
+                            class="fa-solid fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each items.boonLiability}}
+                    {{#if (eq this.system.category "boon")}}
+                        <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}" data-collection="items"
+                            data-item-id="{{this.id}}">
+                            <div class="row-content">
+                                <div class="list-name rollable">
+                                    <img src="{{this.img}}">
+                                    <a class="label">{{this.name}}</a>
+                                </div>
+                                {{#unless this.system.visible}}
+                                    <a><i class="fa-solid fa-eye-slash"></i></a>
+                                {{/unless}}
+                            </div>
+                            {{> sheetButtons document=this}}
+                <div class="description">
+                                {{{lookup ../enriched this.id}}}
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "IMPMAL.Liabilities"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="boonLiability"
+                        data-category="liability"><i class="fa-solid fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each items.boonLiability}}
+                    {{#if (eq this.system.category "liability")}}
+                        <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}" data-collection="items" data-item-id="{{this.id}}">
+                            <div class="row-content">
+                                <div class="list-name rollable">
+                                    <img src="{{this.img}}">
+                                    <a class="label">{{this.name}}</a>
+                                </div>
+                                {{#unless this.system.visible}}
+                                    <a data-action="toggleProperty" data-path="system.visible"
+                                        style="color: var(--impmal-orange)" data-tooltip="Not visible to Players"><i
+                                            class="fa-solid fa-eye-slash"></i></a>
+                                {{else}}
+                                    {{#if (isGM)}}
+                                        <a data-action="toggleProperty" data-path="system.visible"
+                                            data-tooltip="Visible to Players"><i class="fa-solid fa-eye"></i></a>
+                                    {{/if}}
+                                {{/unless}}
+                            </div>
+                            {{> sheetButtons document=this}}
+                <div class="description">
+                                {{{lookup ../enriched this.id}}}
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+    </div>
+
+    {{> actorInfluence factions=system.influence.factions path="system.influence" showNotes=true}}
+
+</section>

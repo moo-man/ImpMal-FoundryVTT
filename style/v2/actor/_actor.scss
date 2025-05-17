@@ -29,6 +29,7 @@ body.theme-light .warhammer.application.impmal.actor {
     .sheet-header {
         display: flex;
         width: 100%;
+        align-items: center;
 
         img {
             flex: 0 0 100px;
@@ -101,6 +102,34 @@ body.theme-light .warhammer.application.impmal.actor {
             input {
                 text-align: center;
             }
+        }
+    }
+
+    .influence {
+        .list-header {
+            .list-controls {
+                flex: 0 0 3rem;
+                margin-left: -3rem;
+                justify-content: space-around;
+            }
+        }
+
+        .influence-sources {
+                .source {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 5px;
+                    input {
+                        height: unset;
+                    }
+                }
+                button {
+                    margin: auto;
+                }
+        }
+
+        input {
+            text-align: center;
         }
     }
 

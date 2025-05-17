@@ -72,6 +72,7 @@ import { OpposedTestMessageModel } from "./model/message/opposed.js";
 import AugmeticItemSheet from "./sheet/items/item-augmetic-sheet.js";
 import IMCharacterSheetV2 from "./sheet/v2/actor/character.js";
 import NPCSheetV2 from "./sheet/v2/actor/npc.js";
+import PatronSheetV2 from "./sheet/v2/actor/patron.js";
 
 Hooks.once("init", () => 
 {
@@ -90,7 +91,7 @@ Hooks.once("init", () =>
     CONFIG.ChatMessage.documentClass = ImpMalChatMessage;
 
     DocumentSheetConfig.registerSheet(Actor, "impmal", IMCharacterSheetV2, { types: ["character"], makeDefault: true, label : "Character Sheet" });
-    DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true, label : "Patron Sheet" });
+    DocumentSheetConfig.registerSheet(Actor, "impmal", PatronSheetV2, { types: ["patron"], makeDefault: true, label : "Patron Sheet" });
     DocumentSheetConfig.registerSheet(Actor, "impmal", NPCSheetV2, { types: ["npc"], makeDefault: true, label : "NPC Sheet" });
     DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalVehicleSheet, { types: ["vehicle"], makeDefault: true, label : "Vehicle Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", ImpMalItemSheet, { makeDefault: true });
