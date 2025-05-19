@@ -1,16 +1,24 @@
 body.theme-light .application.impmal.sheet {
     --condition : rgba(0, 0, 0, 0.1);
     --pip : var(--color-warm-3);
+    --dropshadow : var(--color-light-6);
 }
 
 .warhammer.impmal.sheet {
 
     --condition : var(--color-cool-3);
+    --dropshadow : var(--color-cool-3);
     --pip : var(--color-light-2);
 
     select {
         option {
             color: black;
+        }
+    }
+
+    .droppable {
+        &.hover {
+            box-shadow: 0 0 10px inset var(--dropshadow);    
         }
     }
     

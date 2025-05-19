@@ -269,6 +269,13 @@ export default class IMActorSheetV2 extends IMSheetMixinV2(WarhammerActorSheetV2
             }
             })
         });
+
+        this.element.querySelectorAll(".droppable").forEach(e => e.addEventListener("dragenter", ev => {
+            ev.target.classList.add("hover")
+        }))
+        this.element.querySelectorAll(".droppable").forEach(e => e.addEventListener("dragleave", ev => {
+            ev.target.classList.remove("hover")
+        }))
     }
   
 

@@ -1,0 +1,225 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Weapon"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="weapon"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each items.weapon}}
+            <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                <div class="row-content">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                    </div>
+                    <a class="small" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                {{> sheetButtons document=this}}
+                <div class="dropdown-content collapsed">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Ammo"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="ammo"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each items.ammo}}
+            <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                <div class="row-content">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                    </div>
+                    <a class="small" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                {{> sheetButtons document=this}}
+                <div class="dropdown-content collapsed">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Modification"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="modification"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each items.modification}}
+            <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                <div class="row-content">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                    </div>
+                    <a class="small" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                {{> sheetButtons document=this}}
+                <div class="dropdown-content collapsed">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Protection"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="protection"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each items.protection}}
+            <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                <div class="row-content">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                    </div>
+                    <a class="small" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                {{> sheetButtons document=this}}
+                <div class="dropdown-content collapsed">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Forcefield"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="forceField"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each items.forceField}}
+            <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                <div class="row-content">
+                    <div class="list-name" {{#if this.system.overload.collapsed}}style="color: darkred"{{/if}}>
+                        <img src="{{this.img}}">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                    </div>
+                    <a class="small" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                {{> sheetButtons document=this}}
+                <div class="dropdown-content collapsed">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Equipment"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="equipment"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each items.equipment}}
+            <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                <div class="row-content">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                    </div>
+                    <a class="small" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                {{> sheetButtons document=this}}
+                <div class="dropdown-content collapsed">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Augmetic"}}</div>
+        <div class="small">{{localize "IMPMAL.Qty."}}</div>
+        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="augmetic"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each items.augmetic}}
+            <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                <div class="row-content">
+                    <div class="list-name">
+                        <img src="{{this.img}}">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                    </div>
+                    <a class="small" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                    <div class="small">{{this.system.encumbrance.total}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                {{> sheetButtons document=this}}
+                <div class="dropdown-content collapsed">
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+</section>

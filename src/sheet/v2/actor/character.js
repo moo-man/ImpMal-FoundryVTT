@@ -100,19 +100,6 @@ export default class IMCharacterSheetV2 extends IMActorSheetV2
         return context
       }
 
-
-      _addEventListeners()
-      {
-          super._addEventListeners();  
-
-          this.element.querySelector(".patron").addEventListener("dragenter", ev => {
-            ev.target.classList.add("hover")
-          })
-          this.element.querySelector(".patron").addEventListener("dragleave", ev => {
-            ev.target.classList.remove("hover")
-          })
-      }
-
       async _onDropActor(data, ev)
       {
         let actor = await Actor.implementation.fromDropData(data);
