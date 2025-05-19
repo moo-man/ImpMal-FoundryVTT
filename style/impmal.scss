@@ -34,30 +34,8 @@
 
 // Shared properties
 .impmal {
-    a {
-        cursor: pointer
-    }
 
-    img {
-        border: none;
-    }
-
-    .inactive {
-        opacity: 0.5;
-    }
-
-    .disabled {
-        pointer-events: none;
-    }
-
-    .centered {
-        text-align: center;
-    }
-
-    input[type="number"] {
-        text-align: center;
-    }
-
+   
     nav.sheet-tabs .item {
         padding: 8px 12px; // Foundry defines this but only in .sheet class applications
     }

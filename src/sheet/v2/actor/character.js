@@ -1,7 +1,7 @@
 import { AdvancementForm } from "../../../apps/advancement";
 import IMActorSheetV2 from "./actor";
 
-export default class IMCharacterSheetV2 extends IMActorSheetV2
+export default class CharacterSheet extends IMActorSheetV2
 {
 
     factionsExpanded={}; // Retain expanded influence sections on rerender;

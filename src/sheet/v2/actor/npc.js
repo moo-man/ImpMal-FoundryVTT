@@ -1,7 +1,7 @@
 import ArmourConfig from "../../../apps/armour-config";
 import IMActorSheetV2 from "./actor";
 
-export default class NPCSheetV2 extends IMActorSheetV2
+export default class NPCSheet extends IMActorSheetV2
 {
 
     factionsExpanded={}; // Retain expanded influence sections on rerender;

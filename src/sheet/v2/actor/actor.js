@@ -93,6 +93,16 @@ export default class IMActorSheetV2 extends IMSheetMixinV2(WarhammerActorSheetV2
         };
     }
 
+    _prepareTabs(options) 
+    {
+        let tabs = super._prepareTabs(options);
+        if (this.actor.itemTypes.power.length == 0)
+        {
+            delete tabs.powers;
+        }
+        return tabs;
+    }
+
     async _onDropItem(data, ev)
     {
         let document = await Item.fromDropData(data);
@@ -258,7 +268,7 @@ export default class IMActorSheetV2 extends IMSheetMixinV2(WarhammerActorSheetV2
             if (img)
             {
                 this._icon = img.src;
-                img.src = "systems/wfrp4e/ui/buttons/d10.webp";
+                img.src = "systems/impmal/assets/icons/d10.webp";
             }
             })
             element.addEventListener("mouseleave", ev => {
