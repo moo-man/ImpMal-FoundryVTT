@@ -3,7 +3,7 @@ let fields = foundry.data.fields;
 export class HitLocationsModel extends ListModel
 {
 
-    static listSchema = new foundry.data.fields.StringField();
+    static get listSchema() {return new foundry.data.fields.StringField()};
 
     static defineSchema() 
     {

@@ -1,6 +1,3 @@
-@use "./actor/actor-sheet";
-@use "./actor/character-sheet";
-@use "./actor/vehicle-sheet";
 @use "./item/item-sheet";
 @use "./apps/item-traits";
 @use "./apps/script-config";
@@ -19,12 +16,12 @@
 @use "./foundry/combat-tracker";
 @use "./foundry/token-hud";
 @use "./foundry/editor";
-@use "./actor/patron-sheet";
-@use "./actor/npc-sheet";
 @use "./foundry/general";
 @use "./apps/chargen";
 @use "./apps/choice-tree";
 @use "./theme/theme";
+@use "./actor/index";
+@use "./sheet";
 
 @font-face {
     font-family: "OnlySkulls";
@@ -33,30 +30,8 @@
 
 // Shared properties
 .impmal {
-    a {
-        cursor: pointer
-    }
 
-    img {
-        border: none;
-    }
-
-    .inactive {
-        opacity: 0.5;
-    }
-
-    .disabled {
-        pointer-events: none;
-    }
-
-    .centered {
-        text-align: center;
-    }
-
-    input[type="number"] {
-        text-align: center;
-    }
-
+   
     nav.sheet-tabs .item {
         padding: 8px 12px; // Foundry defines this but only in .sheet class applications
     }
@@ -141,41 +116,6 @@
         }
     }
 
-    .conditions {
-        flex: 0 0 130px;
-        margin-right: 10px;
-
-        .condition {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            text-align: center;
-            align-items: center;
-
-            border: 1px solid black;
-            margin: 3px;
-            padding: 3px;
-
-            .pips {
-                display: flex;
-                width: 100%;
-                justify-content: right;
-                height: 10px;
-                .pip {
-                    // border-radius: 10px;
-                    border:  1px solid black;
-                    cursor: pointer;
-                    width: 10px;
-                    margin: 0px 3px;
-                }
-
-                .pip.filled {
-                    background: black;
-                }
-            }
-        }
-    }
 }
 
 .impmal.form.item-management {

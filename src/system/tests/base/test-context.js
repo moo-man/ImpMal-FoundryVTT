@@ -10,8 +10,8 @@ export class TestContext
     // title = "";
     // fateReroll = false;
     // fateAddSL = false;
-    // tags = {};
-    // text = {};   
+    tags = {};
+    text = {};   
     targetSpeakers = [];
     responses = {}; // map of tokenIds to opposed messages
     appliedDamage = {}; // map of takenIds to {applied : boolean, msg : string}

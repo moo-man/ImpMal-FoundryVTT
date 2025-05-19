@@ -50,6 +50,10 @@ export default function registerHandlebars()
 
     foundry.applications.handlebars.loadTemplates({
         slotsDisplay : "systems/impmal/templates/partials/slots.hbs",
-        slotsActorDisplay : "systems/impmal/templates/partials/slots-actor.hbs"
+        actorInfluence : "systems/impmal/templates/partials/influence.hbs",
+        actions : "systems/impmal/templates/partials/actions.hbs",
+        listEffect : "systems/impmal/templates/partials/list-effect.hbs",
+        actorSlots : "systems/impmal/templates/partials/actor-slots.hbs",
+        defendingAgainst : "systems/impmal/templates/partials/defending-against.hbs"
     })
 }

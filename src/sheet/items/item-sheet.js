@@ -1,8 +1,8 @@
 import ItemTraitsForm from "../../apps/item-traits";
-import ImpMalSheetMixin from "../mixins/sheet-mixin";
+import SheetMixin from "../mixin";
 
 
-export default class ImpMalItemSheet extends ImpMalSheetMixin(WarhammerItemSheet)
+export default class ImpMalItemSheet extends SheetMixin(WarhammerItemSheet)
 {
     static get defaultOptions() 
     {

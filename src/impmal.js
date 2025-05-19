@@ -22,7 +22,6 @@ import { WeaponModel } from "./model/item/weapon";
 import {IMPMAL, IM_CONFIG} from "./system/config";
 import registerHandlebars from "./system/handlebars";
 import registerSettings from "./system/settings";
-import ImpMalCharacterSheet from "./sheet/actors/character-sheet";
 import ImpMalItemSheet from "./sheet/items/item-sheet";
 import ProtectionItemSheet from "./sheet/items/item-protection-sheet";
 import registerHooks from "./system/hooks";
@@ -32,8 +31,6 @@ import { WeaponTest } from "./system/tests/weapon/weapon-test";
 import { PowerTest } from "./system/tests/power/power-test";
 import { TraitTest } from "./system/tests/trait/trait-test";
 import { ImpMalEffect } from "./document/effect";
-import ImpMalPatronSheet from "./sheet/actors/patron-sheet";
-import ImpMalNPCSheet from "./sheet/actors/npc-sheet";
 import { CorruptionModel } from "./model/item/corruption";
 import { InjuryModel } from "./model/item/injury";
 import { CriticalModel } from "./model/item/critical";
@@ -51,7 +48,6 @@ import DutyItemSheet from "./sheet/items/item-duty-sheet";
 import debug from "./system/debug";
 import ImpmalActiveEffectConfig from "./apps/effect-config";
 import { VehicleModel } from "./model/actor/vehicle";
-import ImpMalVehicleSheet from "./sheet/actors/vehicle-sheet";
 import TagManager from "./system/tag-manager";
 import { ItemUse } from "./system/tests/item/item-use";
 import { ImpMalChatMessage } from "./system/chat-message";
@@ -70,6 +66,10 @@ import ResourceManager from "./system/resources.js";
 import { CorruptionMessageModel } from "./model/message/corruption.js";
 import { OpposedTestMessageModel } from "./model/message/opposed.js";
 import AugmeticItemSheet from "./sheet/items/item-augmetic-sheet.js";
+import CharacterSheet from "./sheet/actors/character.js";
+import PatronSheet from "./sheet/actors/patron.js";
+import NPCSheet from "./sheet/actors/npc.js";
+import VehicleSheet from "./sheet/actors/vehicle.js";
 
 Hooks.once("init", () => 
 {
@@ -85,13 +85,12 @@ Hooks.once("init", () =>
     CONFIG.Actor.documentClass = ImpMalActor;
     CONFIG.Item.documentClass = ImpMalItem;
     CONFIG.ActiveEffect.documentClass = ImpMalEffect;
-    CONFIG.ActiveEffect.legacyTransferral = false;
     CONFIG.ChatMessage.documentClass = ImpMalChatMessage;
 
-    DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalCharacterSheet, { types: ["character"], makeDefault: true, label : "Character Sheet" });
-    DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalPatronSheet, { types: ["patron"], makeDefault: true, label : "Patron Sheet" });
-    DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalNPCSheet, { types: ["npc"], makeDefault: true, label : "NPC Sheet" });
-    DocumentSheetConfig.registerSheet(Actor, "impmal", ImpMalVehicleSheet, { types: ["vehicle"], makeDefault: true, label : "Vehicle Sheet" });
+    DocumentSheetConfig.registerSheet(Actor, "impmal", CharacterSheet, { types: ["character"], makeDefault: true, label : "Character Sheet" });
+    DocumentSheetConfig.registerSheet(Actor, "impmal", PatronSheet, { types: ["patron"], makeDefault: true, label : "Patron Sheet" });
+    DocumentSheetConfig.registerSheet(Actor, "impmal", NPCSheet, { types: ["npc"], makeDefault: true, label : "NPC Sheet" });
+    DocumentSheetConfig.registerSheet(Actor, "impmal", VehicleSheet, { types: ["vehicle"], makeDefault: true, label : "Vehicle Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", ImpMalItemSheet, { makeDefault: true });
     DocumentSheetConfig.registerSheet(Item, "impmal", ProtectionItemSheet, { types: ["protection"], makeDefault: true, label : "Protection Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", TraitItemSheet, { types: ["trait"], makeDefault: true, label : "Trait Sheet" });
