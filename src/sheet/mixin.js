@@ -1,6 +1,4 @@
-import IMActorSheetV2 from "./actor/actor";
-
-export default IMSheetMixinV2 = (cls) => class extends cls 
+export default SheetMixin = (cls) => class extends cls 
 {
     static DEFAULT_OPTIONS = {
         actions : {

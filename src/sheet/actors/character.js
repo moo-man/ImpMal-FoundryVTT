@@ -1,7 +1,7 @@
-import { AdvancementForm } from "../../../apps/advancement";
-import IMActorSheetV2 from "./actor";
+import { AdvancementForm } from "../../apps/advancement";
+import IMActorSheet from "./actor";
 
-export default class CharacterSheet extends IMActorSheetV2
+export default class CharacterSheet extends IMActorSheet
 {
 
     factionsExpanded={}; // Retain expanded influence sections on rerender;
@@ -29,16 +29,16 @@ export default class CharacterSheet extends IMActorSheetV2
       }
 
       static PARTS = {
-        header : {scrollable: [""], template : 'systems/impmal/templates/v2/actor/character/character-header.hbs', classes: ["sheet-header"] },
+        header : {scrollable: [""], template : 'systems/impmal/templates/actor/character/character-header.hbs', classes: ["sheet-header"] },
         tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
-        main: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/character/character-main.hbs' },
-        skills: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-skills.hbs' },
-        talents: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-talents.hbs' },
-        combat: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-combat.hbs' },
-        powers: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-powers.hbs' },
-        effects: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-effects.hbs' },
-        equipment: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-equipment.hbs' },
-        notes: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/character/character-notes.hbs' },
+        main: { scrollable: [""], template: 'systems/impmal/templates/actor/character/character-main.hbs' },
+        skills: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-skills.hbs' },
+        talents: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-talents.hbs' },
+        combat: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-combat.hbs' },
+        powers: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-powers.hbs' },
+        effects: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-effects.hbs' },
+        equipment: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-equipment.hbs' },
+        notes: { scrollable: [""], template: 'systems/impmal/templates/actor/character/character-notes.hbs' },
       }
 
       

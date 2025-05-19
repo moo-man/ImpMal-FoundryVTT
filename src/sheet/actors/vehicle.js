@@ -1,7 +1,7 @@
-import ArmourConfig from "../../../apps/armour-config";
-import IMActorSheetV2 from "./actor";
+import ArmourConfig from "../../apps/armour-config";
+import IMActorSheet from "./actor";
 
-export default class VehicleSheet extends IMActorSheetV2
+export default class VehicleSheet extends IMActorSheet
 {
 
     factionsExpanded={}; // Retain expanded influence sections on rerender;
@@ -16,11 +16,11 @@ export default class VehicleSheet extends IMActorSheetV2
       }
 
       static PARTS = {
-        header : {scrollable: [""], classes : ["vehicle-header"], template : 'systems/impmal/templates/v2/actor/vehicle/vehicle-header.hbs' },
+        header : {scrollable: [""], classes : ["vehicle-header"], template : 'systems/impmal/templates/actor/vehicle/vehicle-header.hbs' },
         tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
-        main: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/vehicle/vehicle-main.hbs' },
-        cargo: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/vehicle/vehicle-cargo.hbs' },
-        notes: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/vehicle/vehicle-notes.hbs' },
+        main: { scrollable: [""], template: 'systems/impmal/templates/actor/vehicle/vehicle-main.hbs' },
+        cargo: { scrollable: [""], template: 'systems/impmal/templates/actor/vehicle/vehicle-cargo.hbs' },
+        notes: { scrollable: [""], template: 'systems/impmal/templates/actor/vehicle/vehicle-notes.hbs' },
       }
 
       

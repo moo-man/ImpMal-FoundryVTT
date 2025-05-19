@@ -1,7 +1,7 @@
-import ArmourConfig from "../../../apps/armour-config";
-import IMActorSheetV2 from "./actor";
+import ArmourConfig from "../../apps/armour-config";
+import IMActorSheet from "./actor";
 
-export default class NPCSheet extends IMActorSheetV2
+export default class NPCSheet extends IMActorSheet
 {
 
     factionsExpanded={}; // Retain expanded influence sections on rerender;
@@ -18,13 +18,13 @@ export default class NPCSheet extends IMActorSheetV2
       }
 
       static PARTS = {
-        header : {scrollable: [""], classes : ["npc-header"], template : 'systems/impmal/templates/v2/actor/npc/npc-header.hbs' },
+        header : {scrollable: [""], classes : ["npc-header"], template : 'systems/impmal/templates/actor/npc/npc-header.hbs' },
         tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
-        main: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/npc/npc-main.hbs' },
-        skills: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-skills.hbs' },
-        powers: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-powers.hbs' },
-        effects: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/tabs/actor-effects.hbs' },
-        notes: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/npc/npc-notes.hbs' },
+        main: { scrollable: [""], template: 'systems/impmal/templates/actor/npc/npc-main.hbs' },
+        skills: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-skills.hbs' },
+        powers: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-powers.hbs' },
+        effects: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-effects.hbs' },
+        notes: { scrollable: [""], template: 'systems/impmal/templates/actor/npc/npc-notes.hbs' },
       }
 
       

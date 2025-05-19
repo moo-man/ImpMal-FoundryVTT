@@ -1,4 +1,4 @@
-import ImpMalActorSheet from "../../sheet/actors/actor-sheet";
+import IMActorSheet from "../../sheet/actors/actor";
 
 export default function () {
 
@@ -18,7 +18,7 @@ export default function () {
         }
 
         // Change the superiority field of any open sheets manually to avoid losing data being submitted
-        for (let sheet of Object.values(ui.windows).filter(i => i instanceof ImpMalActorSheet)) {
+        for (let sheet of Object.values(ui.windows).filter(i => i instanceof IMActorSheet)) {
             sheet.element.find(".superiority-update")[0].value = superiority;
         }
 

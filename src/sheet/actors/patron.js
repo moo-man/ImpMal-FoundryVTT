@@ -1,6 +1,6 @@
-import IMActorSheetV2 from "./actor";
+import IMActorSheet from "./actor";
 
-export default class PatronSheet extends IMActorSheetV2
+export default class PatronSheet extends IMActorSheet
 {
 
     factionsExpanded={}; // Retain expanded influence sections on rerender;
@@ -14,11 +14,11 @@ export default class PatronSheet extends IMActorSheetV2
       }
 
       static PARTS = {
-        header : {scrollable: [""], classes : ["sheet-header"], template : 'systems/impmal/templates/v2/actor/patron/patron-header.hbs' },
+        header : {scrollable: [""], classes : ["sheet-header"], template : 'systems/impmal/templates/actor/patron/patron-header.hbs' },
         tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
-        main: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/patron/patron-main.hbs' },
-        effects: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/patron/patron-effects.hbs' },
-        notes: { scrollable: [""], template: 'systems/impmal/templates/v2/actor/patron/patron-notes.hbs' },
+        main: { scrollable: [""], template: 'systems/impmal/templates/actor/patron/patron-main.hbs' },
+        effects: { scrollable: [""], template: 'systems/impmal/templates/actor/patron/patron-effects.hbs' },
+        notes: { scrollable: [""], template: 'systems/impmal/templates/actor/patron/patron-notes.hbs' },
       }
 
       

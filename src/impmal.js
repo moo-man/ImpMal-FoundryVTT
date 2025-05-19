@@ -66,10 +66,10 @@ import ResourceManager from "./system/resources.js";
 import { CorruptionMessageModel } from "./model/message/corruption.js";
 import { OpposedTestMessageModel } from "./model/message/opposed.js";
 import AugmeticItemSheet from "./sheet/items/item-augmetic-sheet.js";
-import CharacterSheet from "./sheet/v2/actor/character.js";
-import PatronSheet from "./sheet/v2/actor/patron.js";
-import NPCSheet from "./sheet/v2/actor/npc.js";
-import VehicleSheet from "./sheet/v2/actor/vehicle.js";
+import CharacterSheet from "./sheet/actors/character.js";
+import PatronSheet from "./sheet/actors/patron.js";
+import NPCSheet from "./sheet/actors/npc.js";
+import VehicleSheet from "./sheet/actors/vehicle.js";
 
 Hooks.once("init", () => 
 {

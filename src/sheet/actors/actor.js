@@ -1,9 +1,9 @@
-import { ActorConfigForm } from "../../../apps/actor-config";
-import { SpeedConfigForm } from "../../../apps/speed-config";
-import ChatHelpers from "../../../system/chat-helpers";
-import IMSheetMixinV2 from "../mixin";
+import { ActorConfigForm } from "../../apps/actor-config";
+import { SpeedConfigForm } from "../../apps/speed-config";
+import ChatHelpers from "../../system/chat-helpers";
+import IMSheetMixin from "../mixin";
 
-export default class IMActorSheetV2 extends IMSheetMixinV2(WarhammerActorSheetV2)
+export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
 {
 
     factionsExpanded={}; // Retain expanded influence sections on rerender;
@@ -25,8 +25,6 @@ export default class IMActorSheetV2 extends IMSheetMixinV2(WarhammerActorSheetV2
         actions : {
           rollTest : this._onRollTest,
           toggleSummary : this._toggleSummary,
-        //   removeAttacker : this._onRemoveAttacker,
-          itemPropertyDropdown : this._onItemPropertyDropdown,
           
             configureActor : this._onConfigureActor,
             slotItem : this._onSlotItem,

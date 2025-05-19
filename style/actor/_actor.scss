@@ -492,11 +492,12 @@ body.theme-light .warhammer.application.impmal.actor {
         display: flex;
         border: 1px dashed var(--defend-border);
         border-radius: 5px;
-        height: 50px;
         padding: 5px;
+        align-items: center;
         img {
             object-fit: contain;
             flex: 0 0 40px;
+            height: 40px;
         }
         .attack-details {
             flex: 1;
@@ -513,7 +514,8 @@ body.theme-light .warhammer.application.impmal.actor {
             }
         }
         .gradient-border {
-            @include gradient-border
+            @include gradient-border(var(--color-cool-3));
+            margin: 0.5rem 0px;
         }
 
         .remove-opposed {

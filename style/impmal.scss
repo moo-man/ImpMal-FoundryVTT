@@ -1,6 +1,3 @@
-@use "./actor/actor-sheet";
-@use "./actor/character-sheet";
-@use "./actor/vehicle-sheet";
 @use "./item/item-sheet";
 @use "./apps/item-traits";
 @use "./apps/script-config";
@@ -19,13 +16,12 @@
 @use "./foundry/combat-tracker";
 @use "./foundry/token-hud";
 @use "./foundry/editor";
-@use "./actor/patron-sheet";
-@use "./actor/npc-sheet";
 @use "./foundry/general";
 @use "./apps/chargen";
 @use "./apps/choice-tree";
 @use "./theme/theme";
-@use "./v2/index";
+@use "./actor/index";
+@use "./sheet";
 
 @font-face {
     font-family: "OnlySkulls";
