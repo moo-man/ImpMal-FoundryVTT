@@ -4,6 +4,7 @@ let fields = foundry.data.fields;
 
 export class AugmeticModel extends EquippableItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.augmetic"];
     static defineSchema() 
     {
         let schema = super.defineSchema();

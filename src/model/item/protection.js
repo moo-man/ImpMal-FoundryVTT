@@ -6,6 +6,7 @@ let fields = foundry.data.fields;
 
 export class ProtectionModel extends EquippableItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.protection"];
     static defineSchema() 
     {
         let schema = super.defineSchema();

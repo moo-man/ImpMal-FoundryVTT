@@ -253,25 +253,25 @@ body:not(.no-theme) {
     .impmal.sheet {
 
         .details-row.name {
-            background-image: url(./assets/ui/name-bg.webp);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            padding: 0px 10px;
+            // background-image: url(./assets/ui/name-bg.webp);
+            // background-size: 100% 100%;
+            // background-repeat: no-repeat;
+            // padding: 0px 10px;
 
             input {
-                border: none;
-                box-shadow: none;
-                background: none;
-                font-weight: bold;
-                color: var(--impmal-darkblue);
-                font-size: 1.3rem;
-                height: 2rem;
-                font-family: "Novarese";
+                // border: none;
+                // box-shadow: none;
+                // background: none;
+                // font-weight: bold;
+                // color: var(--impmal-darkblue);
+                // font-size: 1.3rem;
+                // height: 2rem;
+                // font-family: "Novarese";
 
-                &:focus {
-                    border: unset;
-                    background: unset;
-                }
+                // &:focus {
+                //     border: unset;
+                //     background: unset;
+                // }
             }
         }
 

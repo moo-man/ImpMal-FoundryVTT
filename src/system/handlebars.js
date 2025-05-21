@@ -54,6 +54,9 @@ export default function registerHandlebars()
         actions : "systems/impmal/templates/partials/actions.hbs",
         listEffect : "systems/impmal/templates/partials/list-effect.hbs",
         actorSlots : "systems/impmal/templates/partials/actor-slots.hbs",
-        defendingAgainst : "systems/impmal/templates/partials/defending-against.hbs"
+        defendingAgainst : "systems/impmal/templates/partials/defending-against.hbs",
+        itemTraits : "systems/impmal/templates/item/v2/partials/item-traits.hbs",
+        itemTest : "systems/impmal/templates/item/v2/partials/item-test.hbs",
+        itemDamage : "systems/impmal/templates/item/v2/partials/item-damage.hbs",
     })
 }

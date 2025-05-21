@@ -1,0 +1,19 @@
+.application.impmal.item {
+    .sheet-header {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        gap: 0.5rem;
+        .header-fields {
+            flex: 1;
+        }
+        img {
+            display: flex;
+            align-items: center;
+            flex: 0 0 100px;
+            width: 100px;
+        }
+
+    }
+
+}

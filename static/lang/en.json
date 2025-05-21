@@ -800,5 +800,176 @@
     "IMPMAL.WorldShrine" : "Shrine",
     "IMPMAL.WorldHive" : "Hive",
     "IMPMAL.WorldForge" : "Forge",
-    "IMPMAL.XP" : "XP"
+    "IMPMAL.XP" : "XP",
+
+    "WH" : {
+        "Models" : {
+            "ammo"  : {
+                "FIELDS" : {
+                    "custom" : {
+                        "label" : "Custom",
+                        "hint" : "Drag and Drop Custom Ammo onto non-Custom ammo to apply the modifiers"
+                    },
+                    "priceMultiplier" : {
+                        "label" : "Price Multiplier"
+                    },
+                    "damage" : {
+                        "label" : "Damage"
+                    },
+                    "usedWith" : {
+                        "label" : "Used With"
+                    }
+                }
+            },
+            "boonLiability"  : {
+                "FIELDS" : {
+                    "category" : {
+                        "label" : "Category"
+                    },
+                    "oneUse" : {
+                        "label" : "One Use"
+                    }
+                }
+            },
+            "corruption"  : {
+                "FIELDS" : {
+                    "category" : {
+                        "label" : "Category"
+                    }
+                }
+            },
+            "equipment" : {
+                "FIELDS" : {
+                    
+                }
+            },
+            "forceField" : {
+                "FIELDS" : {
+                    "protection" : {
+                        "label" : "Protection"
+                    },
+                    "overload" : {
+                        "value" : {
+                            "label" : "Overload"
+                        },
+                        "collapsed" : {
+                            "label" : "Collapsed"
+                        }   
+                    }
+                }
+            },
+            "modification" : {
+                "FIELDS" : {
+                    "category" : {
+                        "label" : "Category"
+                    },
+                    "usedWith" : {
+                        "label" : "Used With"
+                    }
+                }
+            },
+            "power" : {
+                "FIELDS" : {
+                    "discipline" : {
+                        "label" : "Discipline"
+                    },
+                    "minorSpecialisation" : {
+                        "label" : "Specialisation"
+                    },
+                    "difficulty" : {
+                        "label" : "Difficulty"
+                    },
+                    "rating" : {
+                        "label" : "Warp Rating"
+                    },
+                    "range" : {
+                        "label" : "Range"
+                    },
+                    "target" : {
+                        "label" : "Target"
+                    },
+                    "duration" : {
+                        "label" : "Duration"
+                    },
+                    "overt" : {
+                        "label" : "Overt"
+                    }
+                }
+            },
+            "protection" : {
+                "FIELDS" : {
+                    "category" : {
+                        "label" : "Category"
+                    },
+                    "armour" : {
+                        "label" : "Armour"
+                    },
+                    "locations" : {
+                        "label" : {
+                            "label" : "Locations"
+                        }
+                    }
+                }
+            },
+            "specialisation" : {
+                "FIELDS" : {
+                    "restricted" : {
+                        "label" : "Restricted"
+                    },
+                    "skill" : {
+                        "label" : "Skill"
+                    }
+                }
+            },
+            "talent"  : {
+                "FIELDS" : {
+                    "requirement" : {
+                        "value" : {
+                            "label" : "Requirement"
+                        },
+                        "script" : {
+                            "label" : "Requirement Script"
+                        }
+                    }
+                }
+            },
+            "weapon"  : {
+                "FIELDS" : {
+                    "attackType" : {
+                        "label" : "Attack Type"
+                    },
+                    "category" : {
+                        "label" : "Category"
+                    },
+                    "spec" : {
+                        "label" : "Specialisation"
+                    },
+                    "range" : {
+                        "label" : "Range"
+                    },
+                    "mag" : {
+                        "value" : {
+                            "label" : "Mag"
+                        }
+                    },
+                    "ammoCost" : {
+                        "label" : "Ammo Cost"
+                    }
+                }
+            }
+        },
+        "Components" : {
+            "Locational" : {
+                "FIELDS" : {
+                    "prompt" : {
+                        "label" : "Prompt Location",
+                        "hint" : "Prompt for a location when added to an Actor."
+                    },
+                    "location.value" : {
+                        "label" : "Location"
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,111 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="flexrow">
+
+        <div class="conditions">
+            {{#each conditions}}
+                <div class="condition">
+                    <label>{{this.name}}</label>
+                    <div class="pips">
+                        {{#each this.pips}}
+                            <div class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}"
+                                data-key="{{../this.id}}">
+
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+
+        <div class="sheet-list">
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "IMPMAL.Effects"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createEffect" data-type="effect"><i
+                            class="fa-solid fa-plus"></i></a>
+                </div>
+            </div>
+            {{#each item.effects}}
+                    <div class="list-row {{#if this.disabled}}inactive{{/if}}" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                                {{#if this.disabled}}
+                                    <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="fa-regular fa-circle"></i></a>
+                                {{else}}
+                                    <a class="list-control" data-action="toggleProperty" data-path="disabled"><i class="fa-regular fa-circle-check"></i></a>
+                                {{/if}}
+                                <a data-action="deleteEmbedded" class="list-control"><i class="fa-solid fa-xmark"></i></a>
+                            </div>
+                        </div>
+                    </div>
+            {{/each}}
+        </div>
+
+{{#if item.system.ammo.document.effects.contents.length}}
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.AmmoEffects"}}</div>
+        </div>
+            <div class="list-content">
+                {{#each item.system.ammo.document.effects.contents}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <div>{{this.name}}</div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+{{/if}}
+
+{{#if modificationEffects.length}}
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.ModificationEffects"}}</div>
+        </div>
+            <div class="list-content">
+                {{#each modificationEffects}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <div>{{this.name}}</div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            </div>
+{{/if}}
+
+{{#if effectsFromActor.length}}
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.EffectsFromActor"}}</div>
+        </div>
+            <div class="list-content">
+                {{#each effectsFromActor}}
+                    <div class="list-row" data-uuid="{{this.uuid}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <div>{{this.name}}</div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            </div>
+{{/if}}
+</div>
+
+
+
+</section>

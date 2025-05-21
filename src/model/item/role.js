@@ -2,6 +2,7 @@ import { StandardItemModel } from "./standard";
 
 export class RoleModel extends StandardItemModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.role"];
     static defineSchema() 
     {
         let fields = foundry.data.fields;

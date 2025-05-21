@@ -3,6 +3,7 @@ import { DualItemModel } from "./dual";
 
 export class FactionModel extends DualItemModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.faction"];
     static defineSchema() 
     {
         let fields = foundry.data.fields;

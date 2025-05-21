@@ -22,6 +22,7 @@
 @use "./theme/theme";
 @use "./actor/index";
 @use "./sheet";
+@use "./item/v2/index" as items;
 
 @font-face {
     font-family: "OnlySkulls";

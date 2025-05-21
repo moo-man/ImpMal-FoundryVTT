@@ -1,0 +1,27 @@
+<div class="form-group">
+    <label>{{localize "IMPMAL.Damage"}}</label>
+    <div class="form-fields">
+        <input type="text" value="{{system.damage.base}}" name="system.damage.base">
+        +
+        <select name="system.damage.characteristic">
+            {{#select system.damage.characteristic}}
+                <option value=""></option>
+                {{#each (config "characteristicAbbrev")}}
+                    <option value="{{@key}}">{{this}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+        {{#unless hideSL}}
+            <input type="checkbox" name="system.damage.SL" {{checked system.damage.SL}}>
+            <label class="{{#unless system.damage.SL}}inactive{{/unless}}">+SL</label>
+        {{/unless}}
+    </div>
+
+</div>
+
+<div class="form-group">
+    <label>{{localize "IMPMAL.IgnoreAP"}}</label>
+    <div class="form-fields">
+        <input type="checkbox" name="system.damage.ignoreAP" {{checked system.damage.ignoreAP}}>
+    </div>
+</div>

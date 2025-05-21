@@ -6,6 +6,7 @@ let fields = foundry.data.fields;
 
 export class TraitModel extends StandardItemModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.trait"];
     static defineSchema() 
     {
         let schema = super.defineSchema();

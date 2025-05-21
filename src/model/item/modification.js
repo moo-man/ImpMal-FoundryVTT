@@ -5,6 +5,7 @@ let fields = foundry.data.fields;
 
 export class ModificationModel extends PhysicalItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.modification"];
     static defineSchema() 
     {
         let schema = super.defineSchema();

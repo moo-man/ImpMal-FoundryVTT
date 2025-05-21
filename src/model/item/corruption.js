@@ -4,6 +4,8 @@ let fields = foundry.data.fields;
 
 export class CorruptionModel extends StandardItemModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.corruption"];
+
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -11,6 +13,15 @@ export class CorruptionModel extends StandardItemModel
         schema.category = new fields.StringField();
         return schema;
     }
+
+    async _preUpdate(data, options, user)
+    {
+        await super._preUpdate(data, options, user);
+        if (foundry.utils.hasProperty(options.changed, "system.slots.value") && !foundry.utils.hasProperty(options.changed, "system.slots.list"))
+        {
+            data.system.slots.list = this.slots.updateSlotsValue(foundry.utils.getProperty(options.changed, "system.slots.value"))
+        }
+    }   
 
     _addModelProperties()
     {

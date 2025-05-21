@@ -6,6 +6,7 @@ export class InjuryModel extends StandardItemModel
 {
     allowedConditions = ["bleeding", "stunned", "blinded", "deafened", "incapacitated", "prone", "stunned"];
 
+    static LOCALIZATION_PREFIXES = ["WH.Models.injury"];
     static defineSchema() 
     {
         let schema = super.defineSchema();

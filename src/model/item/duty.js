@@ -4,6 +4,7 @@ import { DualItemModel } from "./dual";
 
 export class DutyModel extends DualItemModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.duty"];
     static defineSchema() 
     {
         let fields = foundry.data.fields;
