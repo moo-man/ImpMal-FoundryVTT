@@ -1,4 +1,3 @@
-import EnabledMixin from "./components/enabled";
 import { AttackDataModel } from "./components/attack";
 import { TestDataModel } from "./components/test";
 import { StandardItemModel } from "./standard";
@@ -10,8 +9,8 @@ export class TraitModel extends StandardItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.attack = new fields.EmbeddedDataField(EnabledMixin(AttackDataModel));
-        schema.test = new fields.EmbeddedDataField(EnabledMixin(TestDataModel));
+        schema.attack = new fields.EmbeddedDataField(AttackDataModel);
+        schema.test = new fields.EmbeddedDataField(TestDataModel);
         schema.roll = new fields.SchemaField({
             enabled : new fields.BooleanField(),
             formula :  new fields.StringField(),

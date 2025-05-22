@@ -1,3 +1,12 @@
+{{#unless hideSelf}}
+<div class="form-group">
+    <label data-tooltip="IMPMAL.SelfTestTT" data-tooltip-direction="LEFT">{{localize "IMPMAL.SelfTest"}}</label>
+    <div class="form-fields">
+        <input type="checkbox" name="{{path}}.self" {{checked data.self}}></input>
+    </div>
+</div>
+{{/unless}}
+
 <div class="form-group">
     <label>{{localize "IMPMAL.Difficulty"}}</label>
     <div class="form-fields">

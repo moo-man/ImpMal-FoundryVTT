@@ -86,6 +86,7 @@ import DutySheet from "./sheet/items/types/duty.js";
 import FactionSheet from "./sheet/items/types/faction.js";
 import OriginSheet from "./sheet/items/types/origin.js";
 import RoleSheet from "./sheet/items/types/role.js";
+import TraitSheet from "./sheet/items/types/trait.js";
 
 Hooks.once("init", () => 
 {
@@ -126,6 +127,7 @@ Hooks.once("init", () =>
     DocumentSheetConfig.registerSheet(Item, "impmal", FactionSheet, { types: ["faction"], makeDefault: true, label : "Faction Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", OriginSheet, { types: ["origin"], makeDefault: true, label : "Origin Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", RoleSheet, { types: ["role"], makeDefault: true, label : "Role Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "impmal", TraitSheet, { types: ["trait"], makeDefault: true, label : "Trait Sheet" });
     DocumentSheetConfig.registerSheet(ActiveEffect, "impmal", ImpmalActiveEffectConfig, {makeDefault : true});
 
     // CONFIG.ActiveEffect.sheetClass = undefined;

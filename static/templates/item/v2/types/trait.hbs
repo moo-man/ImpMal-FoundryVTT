@@ -1,0 +1,39 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <fieldset>
+        <legend>Test</legend>
+        {{> itemTest data=system.test path="system.test"}}
+    </fieldset>
+    <fieldset>
+        <legend>Attack</legend>
+        {{formGroup fields.attack.fields.characteristic value=source.attack.characteristic choices=(config "characteristics")}}
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Skill"}}</label>
+            <div class="form-fields">
+                <select name="system.attack.skill.key">
+                    {{selectOptions (config "skills") selected=system.attack.skill.key}}
+                </select>
+                <input type="text" name="system.attack.skill.specialisation" value="{{system.attack.skill.specialisation}}"  placeholder="{{localize 'IMPMAL.Specialisation'}}">
+            </div>
+        </div>
+        {{formGroup fields.attack.fields.damage.fields.characteristic value=source.attack.damage.characteristic choices=(config "characteristics")}}
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Damage"}}</label>
+            <div class="form-fields">
+                <select name="system.attack.damage.characteristic">
+                    {{#select system.attack.damage.characteristic}}
+                        <option value=""></option>
+                        {{#each (config "characteristics")}}
+                            <option value="{{@key}}">{{this}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+                <input type="text" name="system.attack.damage.base" value="{{system.attack.damage.base}}">
+                <input type="checkbox" name="system.attack.damage.SL" {{checked system.attack.damage.SL}}>
+                <label class="{{#unless system.attack.damage.SL}}inactive{{/unless}}">+SL</label>
+            </div>
+        </div>
+        {{formGroup fields.attack.fields.damage.fields.ignoreAP value=source.attack.damage.ignoreAP}}
+        {{formGroup fields.attack.fields.range value=source.attack.range choices=(config "ranges")}}
+        {{> itemTraits traits=document.system.attack.traits path="system.attack.traits" label="IMPMAL.Traits"}}
+    </fieldset>
+</section>

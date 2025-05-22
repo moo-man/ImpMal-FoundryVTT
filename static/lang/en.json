@@ -610,6 +610,8 @@
     "IMPMAL.SendingSocketRequest" : "Sending Socket Request to {name}",
     "IMPMAL.SeizeTheInitiative" : "Seize The Initiative",
     "IMPMAL.SetPatron" : "Set as Patron",
+    "IMPMAL.SelfTest" : "Self Test",
+    "IMPMAL.SelfTestTT" : "The Owner of this Trait should roll this Test.",
     "IMPMAL.Shield" : "Shield",
     "IMPMAL.Shock" : "Shock",
     "IMPMAL.Shoddy" : "Shoddy",
@@ -982,6 +984,26 @@
                             "base" : {
                                 "label" : "Characteristic"
                             }
+                        }
+                    }
+                }
+            },
+            "trait" : {
+                "FIELDS" : {
+                    "attack": {
+                        "characteristic": {
+                            "label": "Characteristic"
+                        },
+                        "damage": {
+                            "characteristic": {
+                                "label": "Characteristic"
+                            },
+                            "ignoreAP" : {
+                                "label" : "Ignore AP"
+                            }
+                        },
+                        "range" : {
+                            "label" : "Range"
                         }
                     }
                 }
