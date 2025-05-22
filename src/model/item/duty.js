@@ -14,10 +14,10 @@ export class DutyModel extends DualItemModel
         schema.faction = new fields.EmbeddedDataField(DeferredReferenceModel);
         schema.category = new fields.StringField({initial : "character"});
         foundry.utils.mergeObject(schema.patron.fields, {
-            boonTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "boonTable"}),
-            liabilityTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "liabilityTable"}),
-            boon : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "boon"}),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence"}),
+            boonTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "boonTable", parent : schema.patron}),
+            liabilityTable : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "liabilityTable", parent : schema.patron}),
+            boon : new fields.EmbeddedDataField(DeferredReferenceModel, {}, {name : "boon", parent : schema.patron}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence", parent : schema.patron}),
         });
 
 

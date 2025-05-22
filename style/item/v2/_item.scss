@@ -1,4 +1,26 @@
+
+body.theme-light .application.impmal.item {
+    --label : rgba(0, 0, 0, 0.1);
+}
+
 .application.impmal.item {
+    --label : var(--color-cool-4);
+
+    
+    section.tab {
+        overflow-y: auto;
+    }
+
+    .tab.effects {
+        > div {
+            align-items: start;
+            .sheet-list {
+                margin: 0px;
+            }
+        }
+    }
+
+
     .sheet-header {
         display: flex;
         width: 100%;
@@ -16,4 +38,34 @@
 
     }
 
+
+    .input-list {
+        label {
+            background: var(--label);
+            input {
+                width: 2rem;
+                margin: 0px 1rem;
+                margin-left: -3rem;
+            }
+        }
+        .fields {
+            border-top: 1px solid var(--form-group-border);
+            display: flex;
+            flex-wrap: wrap;
+            > *
+            {
+                flex: 0 0 120px;
+                display: flex;
+                align-items: center;
+                flex-wrap: nowrap;
+                gap: 0.5rem;
+                margin: 0.5rem;
+                input {
+                    border-radius: 4px;
+                    flex: 0 0 2rem;
+                    margin-right: 3px;
+                }
+            }
+        }
+    }
 }

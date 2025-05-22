@@ -82,6 +82,10 @@ import ProtectionSheet from "./sheet/items/types/protection.js";
 import SpecialisationSheet from "./sheet/items/types/specialisation.js";
 import TalentSheet from "./sheet/items/types/talent.js";
 import WeaponSheet from "./sheet/items/types/weapon.js";
+import DutySheet from "./sheet/items/types/duty.js";
+import FactionSheet from "./sheet/items/types/faction.js";
+import OriginSheet from "./sheet/items/types/origin.js";
+import RoleSheet from "./sheet/items/types/role.js";
 
 Hooks.once("init", () => 
 {
@@ -105,10 +109,6 @@ Hooks.once("init", () =>
     DocumentSheetConfig.registerSheet(Actor, "impmal", VehicleSheet, { types: ["vehicle"], makeDefault: true, label : "Vehicle Sheet" });
     
     DocumentSheetConfig.registerSheet(Item, "impmal", TraitItemSheet, { types: ["trait"], makeDefault: true, label : "Trait Sheet" });
-    DocumentSheetConfig.registerSheet(Item, "impmal", DutyItemSheet, { types: ["duty"], makeDefault: true, label : "Duty Sheet" });
-    DocumentSheetConfig.registerSheet(Item, "impmal", FactionItemSheet, { types: ["faction",], makeDefault: true, label : "Faction Sheet" });
-    DocumentSheetConfig.registerSheet(Item, "impmal", OriginItemSheet, { types: ["origin"], makeDefault: true, label : "Origin Sheet" });
-    DocumentSheetConfig.registerSheet(Item, "impmal", RoleItemSheet, { types: ["role"], makeDefault: true, label : "Role Sheet" });
 
     DocumentSheetConfig.registerSheet(Item, "impmal", AmmoSheet, { types: ["ammo"], makeDefault: true, label : "Ammo Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", AugmeticSheet, { types: ["augmetic"], makeDefault: true, label : "Augmetic Sheet" });
@@ -122,6 +122,10 @@ Hooks.once("init", () =>
     DocumentSheetConfig.registerSheet(Item, "impmal", SpecialisationSheet, { types: ["specialisation"], makeDefault: true, label : "Specialisation Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", TalentSheet, { types: ["talent"], makeDefault: true, label : "Talent Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", WeaponSheet, { types: ["weapon"], makeDefault: true, label : "Weapon Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "impmal", DutySheet, { types: ["duty"], makeDefault: true, label : "Duty Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "impmal", FactionSheet, { types: ["faction"], makeDefault: true, label : "Faction Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "impmal", OriginSheet, { types: ["origin"], makeDefault: true, label : "Origin Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "impmal", RoleSheet, { types: ["role"], makeDefault: true, label : "Role Sheet" });
     DocumentSheetConfig.registerSheet(ActiveEffect, "impmal", ImpmalActiveEffectConfig, {makeDefault : true});
 
     // CONFIG.ActiveEffect.sheetClass = undefined;

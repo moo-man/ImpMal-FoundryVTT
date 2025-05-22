@@ -34,7 +34,7 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
         postToChat : function() {this.item.postItem()},
         rollAvailability : this._onRollAvailability,
         editTraits : this._onEditTraits,
-        diffEdit : this._onEditDiff,
+        editDiff : this._onEditDiff,
         
       }
     }
@@ -155,8 +155,8 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
     
     static async _onEditDiff(ev, target)
     {
-        let list = this._getList(ev, true);
-        let index = this._getIndex(ev);
+        let list = this._getList(ev, target);
+        let index = this._getIndex(ev, target);
 
         let listObj = list.list[index].toObject();
         let document = await list.list[index].document;

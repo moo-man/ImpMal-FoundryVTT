@@ -12,11 +12,11 @@ export class DualItemModel extends  BaseItemModel
     {
         let schema = {};
         schema.patron = new fields.SchemaField({
-            notes : new fields.StringField()
+            notes : new fields.HTMLField()
         });
 
         schema.character = new fields.SchemaField({
-            notes : new fields.StringField()
+            notes : new fields.HTMLField()
         });
 
         return schema;

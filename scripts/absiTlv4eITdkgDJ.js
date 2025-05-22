@@ -1,1 +1,1 @@
-this.actor.addCondition("frightened", {"system.type" : "major"});
+this.actor.addCondition("frightened", "major");

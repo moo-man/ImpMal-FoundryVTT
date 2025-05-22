@@ -631,6 +631,7 @@
     "IMPMAL.Source" : "Source",
     "IMPMAL.Special" : "Special",
     "IMPMAL.Specialisation" : "Specialisation",
+    "IMPMAL.Specialisations" : "Specialisations",
     "IMPMAL.SpecialisationAdvances" : "Specialisation Advances",
     "IMPMAL.Specialised" : "Specialised",
     "IMPMAL.Species" : "Species",
@@ -831,6 +832,16 @@
                     }
                 }
             },
+            "duty"  : {
+                "FIELDS" : {
+                    "category" : {
+                        "label" : "Category"
+                    },
+                    "character.solars" : {
+                        "label" : "Solars"
+                    }
+                }
+            },
             "corruption"  : {
                 "FIELDS" : {
                     "category" : {
@@ -933,6 +944,13 @@
                     }
                 }
             },
+            "origin"  : {
+                "FIELDS" : {
+                    "characteristics.base" : {
+                        "label" : "Characteristic"
+                    }
+                }
+            },
             "weapon"  : {
                 "FIELDS" : {
                     "attackType" : {
@@ -954,6 +972,17 @@
                     },
                     "ammoCost" : {
                         "label" : "Ammo Cost"
+                    }
+                }
+            },
+            "faction" : {
+                "FIELDS" : {
+                    "character" : {
+                        "characterisics" : {
+                            "base" : {
+                                "label" : "Characteristic"
+                            }
+                        }
                     }
                 }
             }
