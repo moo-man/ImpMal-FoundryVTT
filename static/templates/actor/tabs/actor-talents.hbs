@@ -40,6 +40,38 @@
             {{/each}}
         </div>
     </div>
+    <div class="sheet-list talent">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Trait"}} <a class="sort-items" data-action="sortItems"
+                    data-tooltip="{{localize 'SHEET.SortItems'}}" data-type="trait"><i
+                        class="fas fa-sort-alpha-down"></i></a></div>
+            <div class="list-controls">
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="trait"><i
+                            class="fa-solid fa-plus"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.trait}}
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="useItem">
+                            <a class="label collapsed" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Corruption"}}</div>

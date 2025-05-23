@@ -1,0 +1,42 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    {{formGroup fields.character.fields.characteristics.fields.base value=source.system.character.characteristics.base choices=(config "characteristics") label="IMPMAL.Characteristic" localize=true}}
+    <div class="form-group stacked input-list characteristics">
+        <label>{{localize "IMPMAL.Characteristics"}}</label>
+        <div class="fields" data-path="system.character.characteristics.choices">
+            {{#each (config "characteristics")}}
+                <div>
+                    <input type="checkbox" data-value="{{@key}}" {{checked (includes
+                        ../system.character.characteristics.choices @key)}}>
+                    {{this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="form-group stacked input-list skills">
+        <label><input type="number" name="system.character.advances.value" value="{{system.character.advances.value}}"> {{localize 'IMPMAL.SkillAdvances'}} </label>
+        <div class="fields" data-path="system.character.advances.skills">
+            {{#each (config "skills")}}
+                <div>
+                    <input type="checkbox" data-value="{{@key}}" {{checked (includes ../system.character.advances.skills
+                        @key)}}>
+                    {{this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    {{> nameList label="IMPMAL.Duty" list=system.character.duty.list path="system.character.duty"}}
+
+    {{> itemInfluence factions=system.character.influence.factions path="system.character.influence" showNotes=false}}
+
+
+<div class="flexrow">
+    {{> choiceDisplay system.character.talents label='IMPMAL.Talents' display=item.system.character.talents.textDisplay path='character.talents'}}
+    {{> choiceDisplay system.character.equipment label='IMPMAL.Equipment' display=item.system.character.equipment.textDisplay path='character.equipment'}}
+</div>
+
+    {{formGroup fields.character.fields.solars value=source.system.character.solars label="IMPMAL.Solars" localize=true}}
+
+
+</section>

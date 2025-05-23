@@ -47,7 +47,7 @@ export default SheetMixin = (cls) => class extends cls
   
           if (!existing || (existing?.isMinor && type == "major"))
           {
-              this.document.addCondition(key, {type});
+              this.document.addCondition(key, type);
           }
           else 
           {

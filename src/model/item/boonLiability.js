@@ -4,6 +4,7 @@ let fields = foundry.data.fields;
 
 export class BoonLiabilityModel extends StandardItemModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.boonLiability"];
     static defineSchema() 
     {
         let schema = super.defineSchema();

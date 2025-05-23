@@ -4,6 +4,7 @@ let fields = foundry.data.fields;
 
 export class ForceFieldModel extends EquippableItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.forceField"];
     static defineSchema() 
     {
         let schema = super.defineSchema();

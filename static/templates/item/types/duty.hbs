@@ -1,0 +1,51 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+        {{#if (eq system.category "character")}}
+
+                <div class="form-group stacked input-list">
+                    <label>{{localize "IMPMAL.Characteristics"}}</label>
+                    <div class="fields">
+                        {{#each (config "characteristics")}}
+                            <div class="property-group">
+                                <input type="number" name="system.character.characteristics.{{@key}}"
+                                    value="{{lookup ../system.character.characteristics @key}}">
+                                {{this}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="form-group stacked input-list">
+                    <label>{{localize 'IMPMAL.SkillAdvances'}} </label>
+                    <div class="fields" data-path="system.character.skills">
+                        {{#each (config "skills")}}
+                            <div class="property-group">
+                                <input type="number" name="system.character.skills.{{@key}}"
+                                    value="{{lookup ../system.character.skills @key}}">
+                                {{this}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+
+                {{> itemInfluence factions=system.character.influence.factions path="system.character.influence" showNotes=false}}
+
+<hr> 
+
+                {{> choiceDisplay system.character.items label='Items' display=item.system.character.items.textDisplay path='character.items'}}
+
+                {{formGroup fields.character.fields.solars value=source.system.character.solars label="IMPMAL.Solars" localize=true}}
+
+        
+        {{else if (eq system.category "patron")}}
+        
+        
+            {{> documentReference label="IMPMAL.Faction" path="system.faction" document=system.faction}}
+            {{> documentReference label="IMPMAL.Boon" path="system.patron.boon" document=system.patron.boon}}
+            {{> documentReference label="IMPMAL.TableBoon" path="system.patron.boonTable" document=system.patron.boonTable classes="boonTable"}}
+            {{> documentReference label="IMPMAL.TableLiability" path="system.patron.liabilityTable" document=system.patron.liabilityTable classes="liabilityTable"}}
+        
+            {{> itemInfluence factions=system.patron.influence.factions path="system.patron.influence" showNotes=false}}
+        
+        
+        {{/if}}
+</section>

@@ -1,0 +1,19 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    {{formGroup fields.category value=source.system.category choices=(config  "protectionTypes")}}
+    {{formGroup fields.armour value=source.system.armour}}
+    {{formGroup fields.locations.fields.label value=source.system.locations.label}}
+    {{> itemTraits traits=document.system.traits path="system.traits" label="IMPMAL.Traits"}}
+    {{> slotsDisplay}}
+
+    <!--TODO-->
+    <div class="item-actions">
+
+        {{#if item.system.isRended}}
+            <button type="button" class="fix-rended">{{localize "IMPMAL.ClearRended"}}</button>
+        {{/if}}
+        {{#if item.system.isDamaged}}
+            <button type="button" class="fix-damage">{{localize "IMPMAL.ClearDamage"}}</button>
+        {{/if}}
+    </div>
+
+</section>

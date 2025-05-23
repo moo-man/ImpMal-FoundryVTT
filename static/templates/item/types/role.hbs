@@ -1,0 +1,82 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+
+
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Talents"}}</div>
+            <div class="small">
+                <input type="number"  name="system.talents.number" value="{{system.talents.number}}" placeholder="#">
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each talents}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-index="{{@key}}" data-path="system.talents">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="listDelete" data-document="this"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+
+    <div class="form-group stacked input-list skills">
+        <label><input type="number" name="system.skills.value" value="{{system.skills.value}}">
+            {{localize 'IMPMAL.SkillAdvances'}} </label>
+        <div class="fields" data-path="system.skills.list">
+            {{#each (config "skills")}}
+                <div>
+                    <input type="checkbox" data-value="{{@key}}" {{checked (includes ../system.skills.list @key)}}>
+                    {{this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group stacked input-list skills">
+        <label><input type="number" name="system.specialisations.value" value="{{system.specialisations.value}}">
+            {{localize 'IMPMAL.SpecialisationAdvances'}} </label>
+        <div class="fields" data-path="system.specialisations.keys">
+            {{#each (config "skills")}}
+                <div>
+                    <input type="checkbox" data-value="{{@key}}" {{checked (includes ../system.specialisations.keys @key)}}>
+                    {{this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+        <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Specialisations"}}</div>
+        </div>
+        <div class="list-content">
+            {{#each specialisations}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-index="{{@key}}" data-path="system.specialisations">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="listDelete" data-document="this"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+
+
+
+</section>

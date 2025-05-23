@@ -5,6 +5,7 @@ export class TestDataModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
+        schema.self = new fields.BooleanField({})
         schema.difficulty =  new fields.StringField(),
         schema.characteristic =  new fields.StringField(),
         schema.skill = new fields.SchemaField({

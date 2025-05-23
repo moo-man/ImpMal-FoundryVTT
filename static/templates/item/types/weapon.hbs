@@ -1,0 +1,61 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+
+    {{formGroup fields.attackType value=system.attackType choices=attackTypes localize=true}}
+
+    {{#if item.system.isMelee}}
+        {{formGroup fields.category value=source.system.category choices=(config "meleeTypes")}}
+        {{formGroup fields.spec value=source.system.spec choices=(config "meleeSpecs")}}
+    {{/if}}
+
+    {{#if item.system.isRanged}}
+        {{formGroup fields.category value=source.system.category choices=(config "rangedTypes")}}
+        {{formGroup fields.spec value=source.system.spec choices=(config "rangedSpecs")}}
+        {{formGroup fields.range value=source.system.range choices=(config "ranges")}}
+        {{formGroup fields.mag.fields.value value=source.system.mag.value}}
+        {{!-- {{formGroup fields.ammoCost value=source.system.ammoCost}} --}}
+                    <div class="form-group">
+                        <label>{{localize "IMPMAL.AmmoCost"}}</label>
+                        <div class="form-fields">
+                            <input type="number" name="system.ammoCost" value="{{system.ammoCost}}">
+                            <button type="button" class="buy-ammo">{{localize 'IMPMAL.BuyAmmo'}}</button>
+                        </div>
+                    </div>
+    {{/if}}
+
+    {{> itemDamage hideSL=true}}
+    {{> itemTraits traits=document.system.traits path="system.traits" label="IMPMAL.Traits"}}
+
+
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name" data-tooltip="{{localize "IMPMAL.DragModifications"}}">{{localize "IMPMAL.Modifications"}} <i class="fa-regular fa-circle-question"></i></div>
+        </div>
+        <div class="list-content">
+            {{#each item.system.mods.documents}}
+                <div class="list-row {{#if this.system.disabled}}inactive{{/if}}" data-index="{{@key}}" data-target="system.mods">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <div>{{this.name}}</div>
+                        </div>
+                       <div class="list-controls">
+                            {{#if this.system.disabled}}
+                                <a class="mod-toggle"><i class="fa-regular fa-circle"></i></a>
+                            {{else}}
+                                <a class="mod-toggle"><i class="fa-regular fa-circle-check"></i></a>
+                            {{/if}}
+                            <a class="mod-delete"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <fieldset>
+        <legend>{{localize "IMPMAL.Test"}}</legend>
+        {{> itemTest data=system.test path="system.test" hideSelf=true}}
+    </fieldset>
+
+    {{> slotsDisplay}}
+</section>

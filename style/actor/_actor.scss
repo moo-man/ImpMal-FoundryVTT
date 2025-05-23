@@ -1,6 +1,6 @@
 @use "../mixins/border" as *;
 
-body.theme-light .warhammer.application.impmal.actor {
+body.theme-light .application.impmal.actor {
     --input-border: var(--color-dark-6);
     --skill-branch: var(--color-dark-6);
     --bar-border: var(--color-dark-6);
@@ -12,7 +12,7 @@ body.theme-light .warhammer.application.impmal.actor {
 }
 
 
-.warhammer.impmal.actor {
+.application.impmal.actor {
     --input-border: var(--color-cool-3);
     --skill-branch: var(--color-cool-3);
     --bar-border: var(--color-cool-3);

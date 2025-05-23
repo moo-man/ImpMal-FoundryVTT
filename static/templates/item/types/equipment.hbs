@@ -1,0 +1,9 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    {{> itemTraits traits=document.system.traits path="system.traits" label="IMPMAL.Traits"}}
+    {{> slotsDisplay}}
+        <fieldset>
+
+        <legend>{{localize "IMPMAL.Test"}}</legend>
+    {{> itemTest data=system.test path="system.test"}}
+        </fieldset>
+</section>

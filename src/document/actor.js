@@ -72,7 +72,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
     {
         let item = fromUuidSync(uuid) || this.items.get(id);
 
-        if (item?.system.test?.isValid)
+        if (item?.system.test?.isValid && item.system.test?.self)
         {
             return this.setupTestFromData(item.system.test, {itemUsed : item, appendTitle: ` - ${item.name}`})
         }

@@ -1,6 +1,6 @@
 @use "./var" as *;
 
-body:not(.no-theme) .impmal.actor {
+body:not(.no-theme) .impmal.actor:not(.application) {
     .header-details .details-row .detail-group {
         .input-group {
             border-bottom: unset;

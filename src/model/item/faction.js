@@ -3,14 +3,15 @@ import { DualItemModel } from "./dual";
 
 export class FactionModel extends DualItemModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.faction"];
     static defineSchema() 
     {
         let fields = foundry.data.fields;
         // Patron Fields
         let schema = super.defineSchema();
         foundry.utils.mergeObject(schema.patron.fields, {
-            duty : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {name : "duty"}),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence"}),
+            duty : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {name : "duty", parent : schema.patron}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence", parent : schema.patron}),
         });
 
 
@@ -24,11 +25,11 @@ export class FactionModel extends DualItemModel
                 value : new fields.NumberField({min: 0, initial: 5}),
                 skills : new fields.ArrayField(new fields.StringField())
             }),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence"}),
-            talents : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "talents"}),
-            equipment : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "equipment"}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence", parent : schema.character}),
+            talents : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "talents", parent : schema.character}),
+            equipment : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "equipment", parent : schema.character}),
             solars : new fields.NumberField(),
-            duty : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {name : "duty"}),
+            duty : new fields.EmbeddedDataField(DeferredReferenceListModel, {}, {name : "duty", parent : schema.character}),
         });
         return schema;
     }

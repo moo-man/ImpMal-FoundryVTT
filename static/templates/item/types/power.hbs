@@ -1,0 +1,19 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    {{formGroup fields.discipline value=source.system.discipline choices=(config "disciplines")}}
+    {{#if (eq document.system.discipline "minor")}}
+        {{formGroup fields.minorSpecialisation value=source.system.minorSpecialisation choices=(config "disciplines")}}
+    {{/if}}
+    {{formGroup fields.rating value=source.system.rating}}
+    {{formGroup fields.difficulty value=source.system.difficulty choices=difficulties labelAttr="name"}}
+    {{formGroup fields.range value=source.system.range choices=(config "powerRanges")}}
+    {{formGroup fields.target value=source.system.target}}
+    {{formGroup fields.duration value=source.system.duration choices=(config "powerDurations")}}
+    {{formGroup fields.overt value=source.system.overt}}
+
+    {{> itemDamage }}
+    <fieldset>
+            <legend>{{localize "IMPMAL.Opposed"}}</legend>
+            {{> itemTest data=system.opposed data=system.opposed path="system.opposed" hideSelf=true}}
+    </fieldset>
+
+</section>
