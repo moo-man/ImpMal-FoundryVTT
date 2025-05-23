@@ -1,8 +1,8 @@
 import IMItemSheet from "../item.js";
 
-export default class CorruptionSheet extends IMItemSheet
+export default class CriticalSheet extends IMItemSheet
 {
-    static type="corruption"
+    static type="critical"
 
     static DEFAULT_OPTIONS = {
       classes: [this.type],

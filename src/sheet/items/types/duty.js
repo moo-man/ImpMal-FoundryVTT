@@ -9,10 +9,10 @@ export default class DutySheet extends BackgroundSheet
     }
     
     static PARTS = {
-      header : {scrollable: [""], template : 'systems/impmal/templates/item/v2/duty-header.hbs', classes: ["sheet-header"] },
+      header : {scrollable: [""], template : 'systems/impmal/templates/item/duty-header.hbs', classes: ["sheet-header"] },
       tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
-      description: { scrollable: [""], template: 'systems/impmal/templates/item/v2/duty-description.hbs' },
-      details: { scrollable: [""], template: `systems/impmal/templates/item/v2/types/${this.type}.hbs` },
+      description: { scrollable: [""], template: 'systems/impmal/templates/item/duty-description.hbs' },
+      details: { scrollable: [""], template: `systems/impmal/templates/item/types/${this.type}.hbs` },
     }
 
     

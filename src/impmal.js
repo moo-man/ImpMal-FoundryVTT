@@ -22,8 +22,6 @@ import { WeaponModel } from "./model/item/weapon";
 import {IMPMAL, IM_CONFIG} from "./system/config";
 import registerHandlebars from "./system/handlebars";
 import registerSettings from "./system/settings";
-import ImpMalItemSheet from "./sheet/items/item-sheet";
-import ProtectionItemSheet from "./sheet/items/item-protection-sheet";
 import registerHooks from "./system/hooks";
 import { CharacteristicTest } from "./system/tests/characteristic/characteristic-test";
 import { SkillTest } from "./system/tests/skill/skill-test";
@@ -35,23 +33,14 @@ import { CorruptionModel } from "./model/item/corruption";
 import { InjuryModel } from "./model/item/injury";
 import { CriticalModel } from "./model/item/critical";
 import { TraitModel } from "./model/item/trait";
-import TraitItemSheet from "./sheet/items/item-trait-sheet";
-import WeaponItemSheet from "./sheet/items/item-weapon-sheet";
-import ModificationItemSheet from "./sheet/items/item-modification-sheet";
 import ImpMalUtility from "./system/utility";
-import OriginItemSheet from "./sheet/items/item-origin-sheet";
-import RoleItemSheet from "./sheet/items/item-role-sheet";
 import FoundryOverrides from "./system/overrides";
-import AmmoItemSheet from "./sheet/items/item-ammo-sheet";
-import FactionItemSheet from "./sheet/items/item-faction-sheet";
-import DutyItemSheet from "./sheet/items/item-duty-sheet";
 import debug from "./system/debug";
 import ImpmalActiveEffectConfig from "./apps/effect-config";
 import { VehicleModel } from "./model/actor/vehicle";
 import TagManager from "./system/tag-manager";
 import { ItemUse } from "./system/tests/item/item-use";
 import { ImpMalChatMessage } from "./system/chat-message";
-import TalentItemSheet from "./sheet/items/item-talent-sheet";
 import { AvailabilityTest } from "./system/tests/availability/availability-test";
 import ImpMalTables from "./system/tables";
 import loadScripts from "../loadScripts.js";
@@ -65,7 +54,6 @@ import { PostedItemMessageModel } from "./model/message/item.js";
 import ResourceManager from "./system/resources.js";
 import { CorruptionMessageModel } from "./model/message/corruption.js";
 import { OpposedTestMessageModel } from "./model/message/opposed.js";
-import AugmeticItemSheet from "./sheet/items/item-augmetic-sheet.js";
 import CharacterSheet from "./sheet/actors/character.js";
 import PatronSheet from "./sheet/actors/patron.js";
 import NPCSheet from "./sheet/actors/npc.js";
@@ -87,6 +75,8 @@ import FactionSheet from "./sheet/items/types/faction.js";
 import OriginSheet from "./sheet/items/types/origin.js";
 import RoleSheet from "./sheet/items/types/role.js";
 import TraitSheet from "./sheet/items/types/trait.js";
+import CriticalSheet from "./sheet/items/types/critical.js";
+import InjurySheet from "./sheet/items/types/injury.js";
 
 Hooks.once("init", () => 
 {
@@ -109,8 +99,6 @@ Hooks.once("init", () =>
     DocumentSheetConfig.registerSheet(Actor, "impmal", NPCSheet, { types: ["npc"], makeDefault: true, label : "NPC Sheet" });
     DocumentSheetConfig.registerSheet(Actor, "impmal", VehicleSheet, { types: ["vehicle"], makeDefault: true, label : "Vehicle Sheet" });
     
-    DocumentSheetConfig.registerSheet(Item, "impmal", TraitItemSheet, { types: ["trait"], makeDefault: true, label : "Trait Sheet" });
-
     DocumentSheetConfig.registerSheet(Item, "impmal", AmmoSheet, { types: ["ammo"], makeDefault: true, label : "Ammo Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", AugmeticSheet, { types: ["augmetic"], makeDefault: true, label : "Augmetic Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", BoonLiabilitySheet, { types: ["boonLiability"], makeDefault: true, label : "Boon / Liability Sheet" });
@@ -128,6 +116,8 @@ Hooks.once("init", () =>
     DocumentSheetConfig.registerSheet(Item, "impmal", OriginSheet, { types: ["origin"], makeDefault: true, label : "Origin Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", RoleSheet, { types: ["role"], makeDefault: true, label : "Role Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", TraitSheet, { types: ["trait"], makeDefault: true, label : "Trait Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "impmal", CriticalSheet, { types: ["critical"], makeDefault: true, label : "Critical Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "impmal", InjurySheet, { types: ["injury"], makeDefault: true, label : "Injury Sheet" });
     DocumentSheetConfig.registerSheet(ActiveEffect, "impmal", ImpmalActiveEffectConfig, {makeDefault : true});
 
     // CONFIG.ActiveEffect.sheetClass = undefined;

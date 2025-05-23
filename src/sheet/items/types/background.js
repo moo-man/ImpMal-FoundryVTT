@@ -1,4 +1,4 @@
-import IMItemSheet from "../item-sheet-v2.js";
+import IMItemSheet from "../item.js";
 
 export default class BackgroundSheet extends IMItemSheet
 {

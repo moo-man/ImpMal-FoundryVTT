@@ -1,10 +1,12 @@
 
 body.theme-light .application.impmal.item {
     --label : rgba(0, 0, 0, 0.1);
+    --slot : black;
 }
 
 .application.impmal.item {
     --label : var(--color-cool-4);
+    --slot : var(--color-cool-3);
 
     
     section.tab {
@@ -36,6 +38,55 @@ body.theme-light .application.impmal.item {
             width: 100px;
         }
 
+    }
+
+    .slot-display {
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        margin: 5px 0px;
+
+        .slot {
+            min-height: 3rem;
+            line-height: 3rem;
+            min-width: 5rem;
+            padding: 0px 5px;
+            text-align: center;
+            border: 1px solid var(--slot);
+            border-radius: 10px;
+            position: relative;
+            .slot-details {
+                display: flex;
+                align-items: center;
+                gap: 3px;
+                justify-content: center;
+                img {
+                    height: 30px;
+                    width: 30px;
+                }
+            }
+            &.empty {
+                border: 1px dashed var(--slot);
+            }
+
+            .slot-remove {  
+                position: absolute;
+                right: 0px;
+                top: -5px;
+                height: 16px;
+                width: 16px;
+                line-height: 1rem;
+                background-color: var(--slot);
+                color: white;
+                border-radius: 50%;
+                i {
+                    padding-top: 1px;
+                    font-size: 1rem;
+                }
+            }
+        }
     }
 
 

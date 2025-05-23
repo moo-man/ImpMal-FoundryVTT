@@ -1,4 +1,3 @@
-@use "./item/item-sheet";
 @use "./apps/item-traits";
 @use "./apps/script-config";
 @use "./apps/document-choice";
@@ -22,7 +21,7 @@
 @use "./theme/theme";
 @use "./actor/index";
 @use "./sheet";
-@use "./item/v2/index" as items;
+@use "./item/item";
 
 @font-face {
     font-family: "OnlySkulls";

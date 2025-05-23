@@ -10,12 +10,12 @@ export default class FactionSheet extends BackgroundSheet
     }
     
     static PARTS = {
-      header : {scrollable: [""], template : 'systems/impmal/templates/item/v2/item-header.hbs', classes: ["sheet-header"] },
+      header : {scrollable: [""], template : 'systems/impmal/templates/item/item-header.hbs', classes: ["sheet-header"] },
       tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
-      "notes-patron": { scrollable: [""], template: 'systems/impmal/templates/item/v2/patron-description.hbs' },
-      "details-patron": { scrollable: [""], template: `systems/impmal/templates/item/v2/types/${this.type}-patron.hbs` },
-      "notes-character": { scrollable: [""], template: 'systems/impmal/templates/item/v2/character-description.hbs' },
-      "details-character": { scrollable: [""], template: `systems/impmal/templates/item/v2/types/${this.type}-character.hbs` },
+      "notes-patron": { scrollable: [""], template: 'systems/impmal/templates/item/patron-description.hbs' },
+      "details-patron": { scrollable: [""], template: `systems/impmal/templates/item/types/${this.type}-patron.hbs` },
+      "notes-character": { scrollable: [""], template: 'systems/impmal/templates/item/character-description.hbs' },
+      "details-character": { scrollable: [""], template: `systems/impmal/templates/item/types/${this.type}-character.hbs` },
     }
 
     static TABS = {

@@ -1,4 +1,4 @@
-import IMItemSheet from "../item-sheet-v2.js";
+import IMItemSheet from "../item.js";
 
 export default class AugmeticSheet extends IMItemSheet
 {
@@ -9,10 +9,10 @@ export default class AugmeticSheet extends IMItemSheet
     }
     
     static PARTS = {
-      header : {scrollable: [""], template : 'systems/impmal/templates/item/v2/item-header.hbs', classes: ["sheet-header"] },
+      header : {scrollable: [""], template : 'systems/impmal/templates/item/item-header.hbs', classes: ["sheet-header"] },
       tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
-      description: { scrollable: [""], template: 'systems/impmal/templates/item/v2/item-description.hbs' },
-      details: { scrollable: [""], template: `systems/impmal/templates/item/v2/types/${this.type}.hbs` },
-      effects: { scrollable: [""], template: 'systems/impmal/templates/item/v2/item-effects.hbs' },
+      description: { scrollable: [""], template: 'systems/impmal/templates/item/item-description.hbs' },
+      details: { scrollable: [""], template: `systems/impmal/templates/item/types/${this.type}.hbs` },
+      effects: { scrollable: [""], template: 'systems/impmal/templates/item/item-effects.hbs' },
     }
 }
