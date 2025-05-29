@@ -1,4 +1,5 @@
 import IMActorSheet from "../../sheet/actors/actor";
+import CharacterSheet from "../../sheet/actors/character";
 
 export default function () {
 
@@ -18,8 +19,8 @@ export default function () {
         }
 
         // Change the superiority field of any open sheets manually to avoid losing data being submitted
-        for (let sheet of Object.values(ui.windows).filter(i => i instanceof IMActorSheet)) {
-            sheet.element.find(".superiority-update")[0].value = superiority;
+        for (let sheet of Array.from(foundry.applications.instances.values()).filter(i => i instanceof CharacterSheet)) {
+            sheet.element.querySelector(".superiority-update").value = superiority;
         }
 
     })

@@ -77,6 +77,36 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         });
     }
 
+    async _onFirstRender(context, options)
+    {
+        await super._onFirstRender(context, options);
+  
+        this.setTheme();
+    }
+  
+    setTheme(theme = game.settings.get("impmal", "theme"))
+    {
+      if (!theme.actor.enabled)
+      {
+        this.element.classList.add("no-theme");
+        this.element.classList.remove("classic-font");
+      }
+      else 
+      {
+        this.element.classList.remove("no-theme");
+  
+        if (theme.actor.font == "classic")
+        {
+          this.element.classList.add("classic-font");
+        }
+        else
+        {
+          this.element.classList.remove("classic-font");
+        }
+      }
+    }
+
+
 
     getEquippedItems()
     {

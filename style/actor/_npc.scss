@@ -9,6 +9,10 @@ body.theme-light .application.actor.impmal.npc {
     --characteristic-border: var(--color-cool-3);
 
     .characteristic-table {
+        input:not([type=chekcbox], [type=range]) {
+            border: 0px;
+            border-radius: 0px;
+        }
         tr {
             i {
                 margin-right: calc(-1 * var(--font-size-14));

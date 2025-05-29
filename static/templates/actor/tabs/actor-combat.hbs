@@ -23,7 +23,7 @@
             {{#if (eq actor.type "character")}}
                 <div class="label" style="grid-column: 1 / span 9"><label
                         class="centered">{{localize "IMPMAL.Superiority"}}</label></div>
-                <div class="field" style="grid-column: 10 / span 3"> <input type="number"
+                <div class="field" style="grid-column: 10 / span 3"> <input type="number" class="superiority-update"
                         value="{{system.combat.superiority}}" disabled></div>
             {{else if (eq actor.type "npc")}}
                 <div class="label" style="grid-column: 1 / span 9"><label

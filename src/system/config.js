@@ -1718,6 +1718,14 @@ const IMPMAL = {
         "impmal-core" : "Core Rulebook",
         "impmal-starter-set" : "Starter Set",
         "impmal-inquisition" : "Inquisition Guide",
+    },
+
+    
+    badgeInfo : {
+        img : "systems/impmal/assets/ui/badge.webp",
+        notes : "https://github.com/moo-man/ImpMal-FoundryVTT/releases",
+        issues : "https://github.com/moo-man/ImpMal-FoundryVTT/issues",
+        wiki : "https://moo-man.github.io/ImpMal-FoundryVTT/pages/home.html",
     }
     
 };
@@ -1838,7 +1846,7 @@ const IM_CONFIG = {
             name: "IMPMAL.Dead",
             title: "IMPMAL.Dead",
         },
-    ]
+    ],
 };
 
 

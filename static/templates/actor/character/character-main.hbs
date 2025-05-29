@@ -117,14 +117,15 @@
         </div>
 
         <div class="attribute-box top-label experience">
-            <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "Experience"}}</label></div>
-            <div class="label" style="grid-column: 1 / span 2"><label class="centered">{{localize "Current"}}</label></div>
-            <div class="field" style="grid-column: 3 / span 2"><input type="number" value="{{system.xp.available}}" readonly></div>
-            <div class="label" style="grid-column: 5 / span 2"><label class="centered">{{localize "Spent"}}</label></div>
-            <div class="field" style="grid-column: 7 / span 2"><input type="number" value="{{system.xp.spent}}" readonly></div>
-            <div class="label" style="grid-column: 9 / span 2"><label class="centered">{{localize "Total"}}</label></div>
-            <div class="field" style="grid-column: 11 / span 2"><input type="number" value="{{system.xp.total}}"
-                    name="system.xp.total" {{#unless (or (isGM) (settings "playerExperienceEditing" ))}} readonly {{/unless}}></div>
+            <div class="label" style="grid-column: 1 / span 3"><label class="centered">{{localize "IMPMAL.XP"}}</label></div>
+            <div class="label" style="grid-column: 4 / span 3"><label class="centered">{{localize "IMPMAL.Available"}}</label></div>
+            <div class="label" style="grid-column: 7 / span 3"><label class="centered">{{localize "IMPMAL.Spent"}}</label></div>
+            <div class="label" style="grid-column: 10 / span 3"><label class="centered">{{localize "IMPMAL.Total"}}</label></div>
+            <div class="label" style="grid-column: 1 / span 3"></div>
+            <div class="field" style="grid-column: 4 / span 3"><input type="number" value="{{system.xp.available}}" disabled></div>
+            <div class="field" style="grid-column: 7 / span 3"><input type="number" value="{{system.xp.spent}}" disabled></div>
+            <div class="field" style="grid-column: 10 / span 3"><input type="number" value="{{system.xp.total}}"
+                    name="system.xp.total" {{#unless (or (isGM) (settings "playerExperienceEditing" ))}} disabled {{/unless}}></div>
         </div>
     </div>
 

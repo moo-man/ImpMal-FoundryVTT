@@ -114,6 +114,10 @@ body.theme-light .application.impmal.actor {
             }
         }
 
+        .dropdown-content {
+            padding: 0px;
+        }
+
         .influence-sources {
                 .source {
                     display: flex;
@@ -226,6 +230,12 @@ body.theme-light .application.impmal.actor {
 
         .skills {
             height: 100%;
+
+            // Ensures list content lines up with  header
+            .list-header {
+                scrollbar-gutter: stable;
+                overflow-y: auto;
+            }
 
             .list-name {
                 padding-left: 5px;

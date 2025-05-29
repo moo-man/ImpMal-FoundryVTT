@@ -1,0 +1,28 @@
+<section class="standard-form scrollable">
+    <fieldset>
+        <legend>Actor Sheet</legend>
+        {{formGroup fields.actor.fields.enabled value=setting.actor.enabled localize=true}}
+        {{!-- {{formGroup fields.actor.fields.font value=setting.actor.font localize=true disabled=(not setting.actor.enabled)}}--}}
+    </fieldset>
+    <fieldset>
+        <legend>Item Sheet</legend>
+        {{formGroup fields.item.fields.enabled value=setting.item.enabled localize=true}}
+        {{!-- {{!-- {{formGroup fields.item.fields.font value=setting.item.font localize=true disabled=(not setting.item.enabled)}} --}}
+    </fieldset>
+    <fieldset>
+        <legend>Journal Sheet</legend>
+        {{formGroup fields.journal.fields.enabled value=setting.journal.enabled localize=true}}
+        {{!-- {{!-- {{formGroup fields.journal.fields.font value=setting.journal.font localize=true disabled=(not setting.journal.enabled)}} --}}
+    </fieldset>
+    <p class="hint"><strong>Note</strong>: Light theme takes precedence over the settings below. If the themes below are enabled, dark theme must be used. See <strong>Configure Interface</strong> in the Core settings.</p>
+    <fieldset>
+        <legend>Sidebar</legend>
+        {{formGroup fields.sidebar.fields.enabled value=setting.sidebar.enabled localize=true}}
+        {{!-- {{!-- {{formGroup fields.sidebar.fields.font value=setting.sidebar.font localize=true disabled=(not setting.sidebar.enabled)}} --}}
+    </fieldset>
+    <fieldset>
+        <legend>Applications</legend>
+        {{formGroup fields.apps.fields.enabled value=setting.apps.enabled localize=true}}
+        {{!-- {{!-- {{formGroup fields.apps.fields.font value=setting.apps.font localize=true disabled=(not setting.apps.enabled)}} --}}
+    </fieldset>
+</section>

@@ -1,4 +1,5 @@
 import TableSettings from "../apps/table-settings";
+import IMThemeConfig from "../apps/theme";
 
 export default function registerSettings() 
 {
@@ -9,6 +10,17 @@ export default function registerSettings()
         type: String,
         default: "0.0.0"
     });
+
+    game.settings.registerMenu("impmal", "themeConfig", {
+        name: "WH.Theme.Config",
+        label : "WH.Theme.ConfigButton",
+        hint : "WH.Theme.ConfigHint",
+        icon: "fa-solid fa-table-layout",
+        scope: "user",
+        config: true,
+        type: IMThemeConfig
+      });
+  
 
     game.settings.register("impmal", "superiority", {
         name: "IMPMAL.Superiority",
@@ -94,5 +106,13 @@ export default function registerSettings()
         default: true,
         type: Boolean
     });
+
+    game.settings.register("impmal", "theme", {
+        name: "Theme",
+        scope: "client",
+        config: false,
+        type: IMThemeConfig.schema
+    });
+  
   
 }

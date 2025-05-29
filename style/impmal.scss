@@ -1,27 +1,19 @@
 @use "./apps/item-traits";
-@use "./apps/script-config";
-@use "./apps/document-choice";
-@use "./apps/form";
-@use "./apps/choice-config";
-@use "./apps/effect-config";
-@use "./apps/document-resolver";
 @use "./apps/dialogs/test-dialog";
 @use "./chat/roll";
 @use "./chat/opposed";
 @use "./chat/item-post";
 @use "./chat/chat";
-@use "./chat//effect-buttons";
+@use "./chat/effect-buttons";
 @use "./apps/advancement";
 @use "./foundry/combat-tracker";
 @use "./foundry/token-hud";
-@use "./foundry/editor";
 @use "./foundry/general";
 @use "./apps/chargen";
-@use "./apps/choice-tree";
-@use "./theme/theme";
 @use "./actor/index";
 @use "./sheet";
 @use "./item/item";
+@use "./theme/index" as theme;
 
 @font-face {
     font-family: "OnlySkulls";
@@ -31,116 +23,4 @@
 // Shared properties
 .impmal {
 
-   
-    nav.sheet-tabs .item {
-        padding: 8px 12px; // Foundry defines this but only in .sheet class applications
-    }
-
-    section.list {
-        display: flex;
-        flex-direction: column;
-
-        .list-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        i {
-            margin-right: 5px;
-        }
-        
-        .list-row {
-            display: flex;
-            align-items: center;
-
-            >* {
-                flex: 1;
-                text-align: center;
-            }
-
-            .list-name,
-            .wide {
-                flex: 2;
-            }
-
-            .list-name {
-                display: flex;
-                align-items: center;
-                text-align: unset;
-                > *:not(img,.use-item) {
-                    margin: 0px 5px;
-                }
-            }
-
-            .use-item,
-            .list-name img,
-            .list-image {
-                flex: 0 0 30px;
-                height: 30px;
-                object-fit: contain;
-            }
-
-            .use-item {
-                font-size: 18px;
-                color: black;
-                text-align: center;
-                line-height : 30px;
-                i {
-                    margin: 0px;
-                }
-            }
-
-            .small {
-                flex: 0 0 50px;
-            }
-
-            .list-controls {
-                flex: 0 0 50px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-around;
-            }
-
-            .list-controls.single {
-                flex: 0 0 20px;
-            }
-        }
-        .summary {}
-    }
-
-    .list-columns {
-        display: flex;
-        section.list {
-            flex: 1
-        }
-    }
-
 }
-
-.impmal.form.item-management {
-    .window-content {
-        overflow-y: auto;
-    }
-}
-
-blockquote.foundry-note {
-    border-left: none;
-    font-style: normal;
-    border-radius: 20px;
-    padding: 5px;
-    background: linear-gradient(rgba(255, 143, 32, 0.76) 0%, rgba(255, 77, 30, 0.75) 100%);
-    box-shadow: 0 0 7px black;
-    font-style: normal;
-    color: black;
-
-    a.content-link {
-        color: #1c3132;
-    }
-
-    &::before {
-        content: url(../../../icons/vtt.png);
-        float: left;
-        margin-right: 5px;
-      }
-  }

@@ -147,6 +147,36 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
         });
     }
 
+    async _onFirstRender(context, options)
+    {
+        await super._onFirstRender(context, options);
+  
+        this.setTheme();
+    }
+  
+    setTheme(theme = game.settings.get("impmal", "theme"))
+    {
+      if (!theme.item.enabled)
+      {
+        this.element.classList.add("no-theme");
+        this.element.classList.remove("classic-font");
+      }
+      else 
+      {
+        this.element.classList.remove("no-theme");
+  
+        if (theme.item.font == "classic")
+        {
+          this.element.classList.add("classic-font");
+        }
+        else
+        {
+          this.element.classList.remove("classic-font");
+        }
+      }
+    }
+
+
     static _onEditTraits(ev, target) 
     {
         let path = target.dataset.path;

@@ -1,0 +1,94 @@
+@use "./var" as *;
+
+.journal-sheet:not(.journal-entry-page,.no-theme) .journal-header {
+
+    .title {
+        font-family: "Novarese";
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 2.5rem;
+        color: white;
+        background: none;
+        border: none;
+    }
+
+    background-image: url(./assets/ui/title-bg.webp);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding: 0px 10px;
+    input {
+        outline: none;
+    }
+}
+
+.journal-entry:not(.no-theme)
+{
+
+}
+
+// Page editor isn't styled, so exclude it
+.journal-entry.sheet:not(.no-theme) {
+
+    --color-text-emphatic: var(--color-dark-1);
+    --color-text-primary: var(--color-dark-2);
+
+    --color-scrollbar:  var(--impmal-lightblue);
+
+    .window-header {
+        @include window-header;
+    }
+          
+    .journal-entry-content {
+        
+        background: url(./assets/ui/background.webp) repeat;
+        background-size: cover;
+    }
+
+    .journal-entry-page {
+            @include editor-content;
+    }
+
+        .edit-container {
+            button {
+                background-color: var(--impmal-darkgreen);
+                border-color: var(--impmal-darkgreen);
+                color: var(--color-light-2);
+                &:hover {
+                    background: var(--impmal-lightgreen);
+                }
+            }
+        }
+
+        .journal-sidebar 
+        {
+
+    --color-scrollbar:  var(--impmal-lightgreen);
+
+        .toc {
+            
+                li.page {
+                    border-top: 1px solid var(--impmal-darkblue);
+                    border-bottom: 1px solid var(--impmal-darkblue);
+
+                    &:first-child {
+                        border-top-color: transparent;
+                    }
+                    &.last-child {
+                        border-bottom-color: transparent;
+                    }
+                }
+
+                li.page.active{
+                    border-color: var(--impmal-lightblue);
+                }
+            }
+        }
+
+        input[type=search] {
+            @include terminal-input;
+        }
+
+        footer button {
+            @include impmal-button;
+        }
+}

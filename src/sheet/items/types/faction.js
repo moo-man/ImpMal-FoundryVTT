@@ -6,7 +6,12 @@ export default class FactionSheet extends BackgroundSheet
 
     static DEFAULT_OPTIONS = {
       classes: [this.type],
-      defaultTab : "details-character"
+      defaultTab : "details-character",
+
+      position : {
+        width: 700,
+        height: 500,
+      },
     }
     
     static PARTS = {
