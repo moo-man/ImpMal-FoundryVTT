@@ -71,21 +71,7 @@ export default function registerSettings()
         name: "IMPMAL.TableSettings",
         scope: "world",
         config: false,
-        type: Object,
-        default: {
-            "critarm" : "7PZdfk0TRBPDr0QR",
-            "critleg" : "2GOSTiyV8FH51YD2",
-            "crithead" : "dvsiB3K8ezHI8F7M",
-            "critbody" : "kCP63j7ZWPVquLqW",
-            "critvehicle" : "wyIDvsnkkI18FbJy",
-            "fumble" : "HL6DtTGWIUQy5NZ9",
-            "perils" : "2YYlAUyaVIt4bZVa",
-            "phenomena" : "9aSbu2mswOOI43J1",
-            "talents" : "9SLhM8FOgluaUwvO",
-            "origin" : "nyaEnNOrR8Sq8Wf4",
-            "mutation" : "aHz4wSCM8ogTVOhT",
-            "malignancy" : "AJC7cYdzY3rIHZWm",
-        }
+        type: TableSettings.schema
     });
 
     game.settings.register("impmal", "disableTheme", {

@@ -407,7 +407,7 @@ export default class Migration {
                 zone : {
                     type : applicationData.zoneType,
                     keep : applicationData.keep,
-                    tarits : applicationData.traits
+                    traits : applicationData.traits
                 }
             };
             setProperty(migrated, "system.transferData", transferData);

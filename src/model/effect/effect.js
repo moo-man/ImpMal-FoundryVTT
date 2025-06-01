@@ -22,7 +22,7 @@ export class ImpMalActiveEffectModel extends WarhammerActiveEffectModel {
         let schema = super.defineSchema();
         schema.type = new fields.StringField({});
         schema.computed = new fields.BooleanField()
-        schema.zone.fields.traits = new fields.EmbeddedDataField(ImpMalZoneTraitsModel)
+        schema.transferData.fields.zone.fields.traits = new fields.EmbeddedDataField(ImpMalZoneTraitsModel)
         return schema
     }
 }   
@@ -39,5 +39,25 @@ export class ImpMalZoneTraitsModel extends foundry.abstract.DataModel {
         schema.light = new fields.StringField({label : "IMPMAL.Light", choices : game.impmal.config.lightTypes});
         schema.warpTouched = new fields.BooleanField({label : "IMPMAL.WarpTouched"});
         return schema;
+    }
+
+    get text() 
+    {
+        let text = [];
+        for(let key in this)
+        {
+            if (this[key])
+            {
+                if (typeof this[key] == "boolean")
+                {
+                    text.push(game.i18n.localize(this.schema.fields[key].options.label))
+                }
+                else 
+                {
+                    text.push(this.schema.fields[key].options.choices[this[key]])
+                }
+            }
+        }
+        return text.join(", ")
     }
 }

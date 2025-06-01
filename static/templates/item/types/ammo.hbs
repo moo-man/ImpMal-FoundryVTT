@@ -1,7 +1,7 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
     {{formGroup fields.custom value=source.system.custom}}
 
-    <div {{#unless source.system.custom}}class="disabled inactive"{{/unless}}>
+    <div {{#unless source.system.custom}}class="disabled inactive"{{/unless}} style="display: flex; flex-direction: column; gap: 1rem">
         {{formGroup fields.priceMultiplier value=source.system.priceMultiplier}}
         {{formGroup fields.damage value=source.system.damage}}
         {{formGroup fields.usedWith value=source.system.usedWith}}

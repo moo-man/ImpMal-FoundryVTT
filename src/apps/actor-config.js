@@ -1,31 +1,23 @@
-export class ActorConfigForm extends HandlebarsApplicationMixin(ApplicationV2)
+export class ActorConfigForm extends WHFormApplication
 {
     static DEFAULT_OPTIONS = {
-        tag : "form",
+        classes : ["impmal"],
         window : {
             title : "IMPMAL.ActorConfig.Title"
         },
         position : {
             width: 600
-        },
-        form: {
-            handler: this.submit,
-            submitOnChange: false,
-            closeOnSubmit: true
         }
     };
 
     static PARTS = {
         form: {
             template: "modules/warhammer-lib/templates/apps/generic-form.hbs"
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
         }
     };
-
-    constructor(document, options)
-    {
-        super(options);
-        this.document = document;
-    }
 
     async _prepareContext(options)
     {
@@ -33,10 +25,5 @@ export class ActorConfigForm extends HandlebarsApplicationMixin(ApplicationV2)
         context.values = this.document.system.autoCalc;
         context.fields = this.document.system.schema.fields.autoCalc.fields;
         return context;
-    }
-
-    static async submit(event, form, formData)
-    {
-        this.document.update(formData.object);
     }
 }

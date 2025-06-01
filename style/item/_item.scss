@@ -9,6 +9,13 @@ body.theme-light .application.impmal.item {
     --slot : var(--color-cool-3);
 
     
+    nav.sheet-tabs {
+        
+        gap: unset;
+        margin: 0px;
+  }
+
+
     section.tab {
         overflow-y: auto;
     }

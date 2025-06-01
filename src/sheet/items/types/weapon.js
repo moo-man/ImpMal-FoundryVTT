@@ -1,3 +1,4 @@
+import BuyAmmoForm from "../../../apps/buy-ammo.js";
 import IMItemSheet from "../item.js";
 
 export default class WeaponSheet extends IMItemSheet
@@ -6,6 +7,9 @@ export default class WeaponSheet extends IMItemSheet
 
     static DEFAULT_OPTIONS = {
       classes: [this.type],
+      actions : {
+        buyAmmo : this._onBuyAmmo
+      }
     }
     
     static PARTS = {
@@ -24,5 +28,20 @@ export default class WeaponSheet extends IMItemSheet
        ranged :  "IMPMAL.Ranged"
       }
       return context;
+    }
+
+    static _onBuyAmmo(ev, target)
+    {
+      if (this.item.isOwned)
+        {
+            new BuyAmmoForm(this.item).render(true);
+        }
+        else 
+        {
+            Item.create({name : this.item.name  + " Ammo", type : "ammo", "system.quantity" : this.item.system.mag.value, "system.cost" : this.item.system.ammoCost}).then(item => 
+            {
+                ui.notifications.notify(`Created ${item.name}`);
+            });
+        }
     }
 }

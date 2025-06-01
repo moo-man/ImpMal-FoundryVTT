@@ -6,19 +6,15 @@ export default class ImpMalActiveEffectConfig extends WarhammerActiveEffectConfi
 
     systemTemplate="systems/impmal/templates/partials/effect-zones.hbs"
 
-    static get defaultOptions() 
-    {
-        const options = super.defaultOptions;
-        options.classes = options.classes.concat(["impmal"]);
-        return options;
-    }
+    static DEFAULT_OPTIONS = {
+        advancedActions : {
+            zoneConfig : this._onZoneConfig
+        }
+    };
 
-    async _render(...args)
-    {
-        await super._render(...args);
 
-        this.element.find(".zone-traits").click(ev => {
-            new ZoneConfig(this.document).render(true);
-        })
+    static _onZoneConfig(ev, target)
+    {
+        new ZoneConfig(this.document).render({force : true});
     }
 }

@@ -7,7 +7,7 @@ export default SheetMixin = (cls) => class extends cls
             toggleConditionPip : this._onPipToggle
         },
       }
-
+      
       formatConditions()
       {
           let conditions = foundry.utils.deepClone(CONFIG.statusEffects);

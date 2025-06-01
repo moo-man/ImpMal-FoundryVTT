@@ -1,20 +1,30 @@
-export class BuyAmmoForm extends FormApplication
+export default class BuyAmmoForm extends WHFormApplication
 {
-    static get defaultOptions() 
-    {
-        const options = super.defaultOptions;
-        options.classes = options.classes.concat(["impmal", "buy-ammo"]);
-        options.title = game.i18n.localize("IMPMAL.BuyAmmo");
-        options.resizable = true;
-        options.template = "systems/impmal/templates/apps/buy-ammo.hbs";
-        return options;
+    static DEFAULT_OPTIONS = {
+        tag : "form",
+        classes : ["impmal", "buy-ammo"],
+        window : {
+            title : "IMPMAL.BuyAmmo",
+        },
+        form: {
+            handler: this.submit,
+        }
     }
 
-    constructor(object, options)
-    {
-        super(object, options);
+    static PARTS = {
 
-        if (this.object.system.category == "launcher" || this.object.system.category == "grenadesExplosives")
+        form: {
+            template: "systems/impmal/templates/apps/buy-ammo.hbs",
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    }
+    constructor(document, options)
+    {
+        super(document, options);
+
+        if (this.document.system.category == "launcher" || this.document.system.category == "grenadesExplosives")
         {
             ui.notifications.error(game.i18n.localize("IMPMAL.ErrorTypeAmmo"));
             throw new Error(game.i18n.localize("IMPMAL.ErrorTypeAmmo"));
@@ -24,30 +34,31 @@ export class BuyAmmoForm extends FormApplication
     }
 
 
-    getData() 
+    async _prepareContext() 
     {
-        let data = super.getData();
-        data.count = this.count;
-        data.total = this.count * this.object.system.ammoCost;
-        return data;
+        let context = await super._prepareContext();
+        context.count = this.count;
+        context.total = this.count * this.document.system.ammoCost;
+        context.buttons = [{ type: "submit", label: "IMPMAL.Buy", cssClass: "buy" }, {type: "submit", label : "IMPMAL.Free"}];
+        return context;
     }
 
 
-    async _updateObject(ev, formData)
+    static async submit(ev, form, formData)
     {
-        let cost = ev.submitter.classList.contains("buy") ? this.object.system.ammoCost * formData.count : 0;
-        let quantity = formData.count * this.object.system.mag.value;
-        let name = this.object.name  + " Ammo";
-        let existing = this.object.actor.itemTypes["ammo"].find(i => i.name == name); // Ammo with the same name already owned by Actor (don't create duplicates)
+        let cost = ev.submitter.classList.contains("buy") ? this.document.system.ammoCost * formData.object.count : 0;
+        let quantity = formData.object.count * this.document.system.mag.value;
+        let name = this.document.name  + " Ammo";
+        let existing = this.document.actor.itemTypes["ammo"].find(i => i.name == name); // Ammo with the same name already owned by Actor (don't create duplicates)
         // Check if Actor can afford ammo
-        if (this.object.actor)
+        if (this.document.actor)
         {
-            if (cost > this.object.actor.system.solars)
+            if (cost > this.document.actor.system.solars)
             {
                 ui.notifications.error(game.i18n.localize("IMPMAL.NotEnoughSolars"));
                 throw Error(game.i18n.localize("IMPMAL.NotEnoughSolars"));
             }
-            await this.object.actor.update({"system.solars" : this.object.actor.system.solars - cost});
+            await this.document.actor.update({"system.solars" : this.document.actor.system.solars - cost});
         }
 
         if (existing)
@@ -61,14 +72,14 @@ export class BuyAmmoForm extends FormApplication
                 name,
                 type : "ammo", 
                 "system.quantity" : quantity,
-                "system.cost" : this.object.system.ammoCost * formData.count, // Cost might be 0 (if free) so recalculate it here
-                "system.availability" : this.findAmmoAvailability(this.object.system.availability)
-            }, {parent : this.object.actor});
+                "system.cost" : this.document.system.ammoCost * formData.object.count, // Cost might be 0 (if free) so recalculate it here
+                "system.availability" : this.findAmmoAvailability(this.document.system.availability)
+            }, {parent : this.document.actor});
 
         }
 
         ChatMessage.create({
-            speaker : ChatMessage.getSpeaker({actor : this.object.actor}),
+            speaker : ChatMessage.getSpeaker({actor : this.document.actor}),
             content : `<p>Bought ${quantity} ${name} Ammo</p><p><strong>Cost</strong>: ${cost}</p>`
         });
     }
@@ -83,15 +94,14 @@ export class BuyAmmoForm extends FormApplication
         }[key] || "";
     }
 
-    activateListeners(html)
+    async _onRender(options)
     {
-        super.activateListeners(html);
+        await super._onRender(options);
 
-        html.find("input").change(ev => 
-        {
-            this[ev.currentTarget.name] = Number(ev.target.value);
-            this.render(true);
-        });
+        this.element.querySelectorAll("input").forEach(e => e.addEventListener("change", ev => {
+            this[ev.target.name] = Number(ev.target.value);
+            this.render({force : true});
+        }))
 
     }
 }

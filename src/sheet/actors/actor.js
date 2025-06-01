@@ -1,4 +1,5 @@
 import { ActorConfigForm } from "../../apps/actor-config";
+import BuyAmmoForm from "../../apps/buy-ammo";
 import { SpeedConfigForm } from "../../apps/speed-config";
 import ChatHelpers from "../../system/chat-helpers";
 import IMSheetMixin from "../mixin";
@@ -236,6 +237,28 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
             const document = await fromUuid(uuid);
             document.sheet.render(true);
           }
+        },
+        {
+            name: "Buy Ammo",
+            icon: '<i class="fa-solid fa-spinner"></i>',
+            condition: li => {
+              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid
+              if (uuid)
+              {
+                let parsed = foundry.utils.parseUuid(uuid);
+                if (parsed.type == "Item")
+                {
+                    let item = this.document.items.get(parsed.id);
+                    return item && item.type == "weapon" && item.system.isRanged
+                }
+            }
+            },
+            callback: async li => 
+            {
+              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+              const document = await fromUuid(uuid);
+              new BuyAmmoForm(document).render(true);
+            }
         },
         {
           name: "Remove",
