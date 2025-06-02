@@ -1,6 +1,8 @@
 @use "./var" as *;
 
-  #interface:not(.no-theme)
+body.impmal-theme {
+
+  #interface
   {
     --sidebar-separator : 1px solid var(--impmal-lightblue);
 
@@ -20,7 +22,7 @@
     }
 
     .divider {
-      font-family: "Novarese";
+      font-family: var(--header-font);
       font-size: 1.2rem;
       &::after,
       &::before {
@@ -95,8 +97,6 @@
   }
   }
 
-  body:not(.no-theme) 
-  {
     #context-menu {
 
       --background-color: var(--color-dark-6);
@@ -109,4 +109,4 @@
       border: 3px double var(--impmal-lightgreen);
       border-radius: 2px;
     }
-  }
+}

@@ -1,3 +1,4 @@
+import IMThemeConfig from "../../apps/theme";
 import { CorruptionMessageModel } from "../../model/message/corruption";
 import { RewardMessageModel } from "../../model/message/reward";
 import socketHandlers from "../socket-handlers";
@@ -6,10 +7,8 @@ export default function()
 {
     Hooks.on("ready", () => 
     {
-        if (game.settings.get("impmal", "disableTheme"))
-        {
-            document.body.classList.add("no-theme")
-        }
+
+        IMThemeConfig.setTheme();
         
         SocketHandlers.register(socketHandlers);
         Object.defineProperty(User.prototype, "isPrimaryGM", {

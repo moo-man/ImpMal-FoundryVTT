@@ -36,26 +36,30 @@ export default class IMThemeConfig extends HandlebarsApplicationMixin(Applicatio
 
   static #schema = new foundry.data.fields.SchemaField({
 
-    actor: new foundry.data.fields.SchemaField({
-      enabled: new foundry.data.fields.BooleanField({ initial: true }),
-      font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
-    }),
-    item: new foundry.data.fields.SchemaField({
-      enabled: new foundry.data.fields.BooleanField({ initial: true }),
-      font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
-    }),
-    journal: new foundry.data.fields.SchemaField({
-      enabled: new foundry.data.fields.BooleanField({ initial: true }),
-      font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
-    }),
-    sidebar: new foundry.data.fields.SchemaField({
-      enabled: new foundry.data.fields.BooleanField({ initial: true }),
-      font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
-    }),
-    apps: new foundry.data.fields.SchemaField({
-      enabled: new foundry.data.fields.BooleanField({ initial: true }),
-      font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
-    }),
+    enabled: new foundry.data.fields.BooleanField({ initial: true },  {label : "Enabled"}),
+    font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" }},  {label : "Font"})
+
+
+    // actor: new foundry.data.fields.SchemaField({
+    //   enabled: new foundry.data.fields.BooleanField({ initial: true }),
+    //   font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
+    // }),
+    // item: new foundry.data.fields.SchemaField({
+    //   enabled: new foundry.data.fields.BooleanField({ initial: true }),
+    //   font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
+    // }),
+    // journal: new foundry.data.fields.SchemaField({
+    //   enabled: new foundry.data.fields.BooleanField({ initial: true }),
+    //   font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
+    // }),
+    // sidebar: new foundry.data.fields.SchemaField({
+    //   enabled: new foundry.data.fields.BooleanField({ initial: true }),
+    //   font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
+    // }),
+    // apps: new foundry.data.fields.SchemaField({
+    //   enabled: new foundry.data.fields.BooleanField({ initial: true }),
+    //   font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" } })
+    // }),
 
   });
 
@@ -103,7 +107,7 @@ export default class IMThemeConfig extends HandlebarsApplicationMixin(Applicatio
   _onChangeForm(_formConfig, _event) {
     const formData = new foundry.applications.ux.FormDataExtended(this.form);
     this.#setting = IMThemeConfig.#cleanFormData(formData);
-    this.setThemeOnActiveSheets();
+    this._setTheme();
     this.render();
   }
 
@@ -113,21 +117,66 @@ export default class IMThemeConfig extends HandlebarsApplicationMixin(Applicatio
     if (!options.submitted) game.configureUI(this.#setting);
   }
 
-  setThemeOnActiveSheets()
+  _setTheme()
   {
-    Array.from(foundry.applications.instances).map(i => i[1]).filter(i => i instanceof WarhammerActorSheetV2 || i instanceof WarhammerItemSheetV2).forEach(sheet => {
-      sheet.setTheme(this.#setting);
-    })
+    this.constructor.setTheme(this.#setting);
+  }
 
-    Array.from(foundry.applications.instances).map(i => i[1]).filter(i => i.element.classList.contains("journal-sheet")).forEach(sheet => {
-      this.setThemeOnElement(sheet.element, this.#setting.journal);
-    })
+  static setTheme(setting=game.settings.get("impmal", "theme"))
+  {
+    if (setting.enabled)
+    {
+      document.body.classList.add("impmal-theme");
+      if (setting.font == "classic")
+      {
+        document.body.classList.add("impmal-font");
+      }
+      else 
+      {
+        document.body.classList.remove("impmal-font");
+      }
+    }
+    else document.body.classList.remove("impmal-theme", "impmal-font")
 
-    this.setThemeOnElement(ui.sidebar.element, this.#setting.sidebar);
-    // Consider chat notifications to be part of sidebar
-    this.setThemeOnElement(document.body.querySelector("#chat-notifications"), this.#setting.sidebar);
-    
-    this.setThemeOnElement(document.body, this.#setting.apps);
+    // if (setting.actor.enabled)
+    // {
+    //   document.body.classList.add("theme-actor");
+    //   if (setting.actor.font == "classic")
+    //   {
+    //     document.body.classList.add("actor-font");
+    //   }
+    // }
+    // else document.body.classList.remove("theme-actor", "actor-font")
+
+    // if (setting.item.enabled)
+    // {
+    //   document.body.classList.add("theme-item");
+    //   if (setting.actor.font == "classic")
+    //   {
+    //     document.body.classList.add("item-font");
+    //   }
+    // }
+    // else document.body.classList.remove("theme-item", "item-font")
+
+    // if (setting.journal.enabled)
+    //   {
+    //     document.body.classList.add("theme-journal");
+    //     if (setting.actor.font == "classic")
+    //     {
+    //       document.body.classList.add("journal-font");
+    //     }
+    //   }
+    //   else document.body.classList.remove("theme-journal", "journal-font")
+
+    // if (setting.sidebar.enabled)
+    // {
+    //   document.body.classList.add("theme-sidebar");
+    //   if (setting.actor.font == "classic")
+    //   {
+    //     document.body.classList.add("sidebar-font");
+    //   }
+    // }
+    // else document.body.classList.remove("theme-sidebar", "sidebar-font")
   }
 
   setThemeOnElement(element, theme)

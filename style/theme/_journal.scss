@@ -1,71 +1,73 @@
 @use "./var" as *;
 
-.journal-sheet:not(.journal-entry-page,.no-theme) .journal-header {
 
-    .title {
-        font-family: "Novarese";
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 2.5rem;
-        color: white;
-        background: none;
-        border: none;
+body.impmal-theme {
+
+
+    .journal-sheet:not(.journal-entry-page) .journal-header {
+
+        .title {
+            font-family: var(--header-font);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 2.5rem;
+            color: white;
+            background: none;
+            border: none;
+        }
+
+        background-image: url(./assets/ui/title-bg.webp);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        padding: 0px 10px;
+
+        input {
+            outline: none;
+        }
     }
 
-    background-image: url(./assets/ui/title-bg.webp);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    padding: 0px 10px;
-    input {
-        outline: none;
-    }
-}
+    .journal-entry {}
 
-.journal-entry:not(.no-theme)
-{
+    // Page editor isn't styled, so exclude it
+    .journal-entry.sheet {
 
-}
+        --color-text-emphatic: var(--color-dark-1);
+        --color-text-primary: var(--color-dark-2);
 
-// Page editor isn't styled, so exclude it
-.journal-entry.sheet:not(.no-theme) {
+        --color-scrollbar: var(--impmal-lightblue);
 
-    --color-text-emphatic: var(--color-dark-1);
-    --color-text-primary: var(--color-dark-2);
+        .window-header {
+            @include window-header;
+        }
 
-    --color-scrollbar:  var(--impmal-lightblue);
+        .journal-entry-content {
 
-    .window-header {
-        @include window-header;
-    }
-          
-    .journal-entry-content {
-        
-        background: url(./assets/ui/background.webp) repeat;
-        background-size: cover;
-    }
+            background: url(./assets/ui/background.webp) repeat;
+            background-size: cover;
+        }
 
-    .journal-entry-page {
+        .journal-entry-page {
             @include editor-content;
-    }
+        }
 
         .edit-container {
             button {
                 background-color: var(--impmal-darkgreen);
                 border-color: var(--impmal-darkgreen);
                 color: var(--color-light-2);
+
                 &:hover {
                     background: var(--impmal-lightgreen);
                 }
             }
         }
 
-        .journal-sidebar 
-        {
+        .journal-sidebar {
 
-    --color-scrollbar:  var(--impmal-lightgreen);
+            --color-scrollbar: var(--impmal-lightgreen);
 
-        .toc {
-            
+            .toc {
+
                 li.page {
                     border-top: 1px solid var(--impmal-darkblue);
                     border-bottom: 1px solid var(--impmal-darkblue);
@@ -73,12 +75,13 @@
                     &:first-child {
                         border-top-color: transparent;
                     }
+
                     &.last-child {
                         border-bottom-color: transparent;
                     }
                 }
 
-                li.page.active{
+                li.page.active {
                     border-color: var(--impmal-lightblue);
                 }
             }
@@ -91,4 +94,5 @@
         footer button {
             @include impmal-button;
         }
+    }
 }

@@ -149,6 +149,9 @@ body.theme-light .application.impmal.actor {
                 border-right: 1px solid var(--characteristic-border);
                 padding: 0px;
                 height: 2rem;
+                a {
+                    font-weight: bold;
+                }
             }
             td:last-of-type {
                 border-right: 0px;

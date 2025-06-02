@@ -1,151 +1,163 @@
 @use "./var" as *;
 
-.application.impmal.sheet:not(.no-theme) {
-    --color-text-primary: #DDD;
-
-    --color-scrollbar:  var(--impmal-lightgreen);
-    --slot-border: var(--impmal-lightgreen);
-    --slot-bg: var(--impmal-lightgreen);
-    --slot: var(--impmal-lightgreen);
-    --form-group-border : var(--impmal-lightblue);
-
-    --name-bg: var(--impmal-lightblue);
-    --name-border: var(--impmal-lightblue);
-    --name-label: var(--impmal-darkblue);
-    --attribute-border: var(--impmal-lightblue);
-
-    .description,
-    .editor-section {
-        @include editor-content-alt;
-    }
+body.impmal-theme {
 
 
-    hr {
-        color: var(--impmal-lightgreen);
-        background-image: linear-gradient(90deg, transparent 0%, var(--impmal-lightgreen) 50%, transparent 100%);
-    }
+    .application.impmal.sheet {
+        --color-text-primary: #DDD;
 
-    .input-list .fields > * input:not([type=checkbox], [type=range], [type=radio]) {
-        border: 1px solid var(--impmal-lightblue);
-        border-radius: 4px;
-        flex: 0 0 2rem;
-        margin-right: 3px;
-    }
+        --color-scrollbar: var(--impmal-lightgreen);
+        --slot-border: var(--impmal-lightgreen);
+        --slot-bg: var(--impmal-lightgreen);
+        --slot: var(--impmal-lightgreen);
+        --form-group-border: var(--impmal-lightblue);
 
-    .details-row.name {
-        background-image: url(./assets/ui/name-bg.webp);
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        padding: 0px 10px;
+        --name-bg: var(--impmal-lightblue);
+        --name-border: var(--impmal-lightblue);
+        --name-label: var(--impmal-darkblue);
+        --attribute-border: var(--impmal-lightblue);
 
-        input {
-            border: none;
-            box-shadow: none;
-            background: none;
-            font-weight: bold;
-            color: var(--impmal-darkblue);
-            font-size: 1.3rem;
-            height: 2rem;
-            font-family: "Novarese";
-            text-align: center;
-
-            &:focus {
-                border: unset;
-                background: unset;
-            }
+        .description,
+        .editor-section {
+            @include editor-content-alt;
         }
-    }
 
-    .form-group {
-        label {
-            background: var(--impmal-darkblue);
+
+        font-family: var(--header-font);
+
+        hr {
+            color: var(--impmal-lightgreen);
+            background-image: linear-gradient(90deg, transparent 0%, var(--impmal-lightgreen) 50%, transparent 100%);
         }
-        input:not([type=checkbox], [type=range], [type=radio]) {
-            border: none;
+
+        .input-list .fields>* input:not([type=checkbox], [type=range], [type=radio]) {
+            border: 1px solid var(--impmal-lightblue);
+            border-radius: 4px;
+            flex: 0 0 2rem;
+            margin-right: 3px;
         }
-    }
 
-    .attribute-box {
-        @include reticule (2px, 7px, var(--impmal-lightblue));
+        .details-row.name {
+            background-image: url(./assets/ui/name-bg.webp);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            padding: 0px 10px;
 
-        height: unset;
-        .label,
-        .field {
-            border: none;
-
-            select,
             input {
-                background: rgba(0, 0, 0, 0.05);
-                border-radius: 3px;
-                margin: 0.2rem;
-                border: 1px solid var(--impmal-lightblue);
+                border: none;
+                box-shadow: none;
+                background: none;
+                font-weight: bold;
+                color: var(--impmal-darkblue);
+                font-size: 1.3rem;
+                height: 2rem;
+                font-family: var(--header-font);
+                text-align: center;
 
-                &:disabled {
-                    border: none;
+                &:focus {
+                    border: unset;
+                    background: unset;
                 }
             }
         }
 
-        .field {
-            margin-bottom: 0.2rem;
-        }
+        .form-group {
+            label {
+                background: var(--impmal-darkblue);
+            }
 
-        &.top-label {
-
-            .label,
-            .field {
+            input:not([type=checkbox], [type=range], [type=radio]) {
                 border: none;
             }
         }
 
-        &:hover {
-            transition: 0.5s;
-            background-color: rgba(6, 92, 99, 0.2)
-        }
-    }
+        .attribute-box {
+            @include reticule (2px, 7px, var(--impmal-lightblue));
 
-    .editor-section div.header {
-        background: var(--impmal-lightblue);
-    }
+            height: unset;
 
-    .sheet-header {
-        .attribute-box.single
-        {
-            background: none;
-            .label {
-                background: var(--impmal-lightblue);
-            }
+            .label,
             .field {
-                background: var(--impmal-darkblue);
+                border: none;
+
                 select,
                 input {
-                    border-radius: 0px;
-                    margin: 0px;
-                    &:focus {
-                        border: 1px solid var(--impmal-lightblue);
-                        background: none;
+                    background: rgba(0, 0, 0, 0.05);
+                    border-radius: 3px;
+                    margin: 0.2rem;
+                    border: 1px solid var(--impmal-lightblue);
+
+                    &:disabled {
+                        border: none;
                     }
-                    border: 0px;
                 }
             }
 
+            .field {
+                margin-bottom: 0.2rem;
+            }
+
+            &.top-label {
+
+                .label,
+                .field {
+                    border: none;
+                }
+            }
+
+            &:hover {
+                transition: 0.5s;
+                background-color: rgba(6, 92, 99, 0.2)
+            }
         }
-    }
 
-    .tab[data-tab="effects"] {
+        .editor-section div.header {
+            background: var(--impmal-lightblue);
+        }
 
-        --condition: var(--impmal-lightblue);
-        --pip: var(--impmal-lightgreen);
+        .sheet-header {
+            .attribute-box.single {
+                background: none;
 
-        .conditions {
-            .condition {
+                .label {
+                    background: var(--impmal-lightblue);
+                }
 
-                .pips {
+                .field {
+                    background: var(--impmal-darkblue);
 
-                    .pip {
+                    select,
+                    input {
+                        border-radius: 0px;
+                        margin: 0px;
 
-                        &.filled {
-                            box-shadow: 0px 0px 5px var(--pip);
+                        &:focus {
+                            border: 1px solid var(--impmal-lightblue);
+                            background: none;
+                        }
+
+                        border: 0px;
+                    }
+                }
+
+            }
+        }
+
+        .tab[data-tab="effects"] {
+
+            --condition: var(--impmal-lightblue);
+            --pip: var(--impmal-lightgreen);
+
+            .conditions {
+                .condition {
+
+                    .pips {
+
+                        .pip {
+
+                            &.filled {
+                                box-shadow: 0px 0px 5px var(--pip);
+                            }
                         }
                     }
                 }

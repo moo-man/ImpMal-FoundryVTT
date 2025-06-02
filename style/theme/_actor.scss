@@ -1,228 +1,233 @@
 @use "./var" as *;
 
-.application.impmal.actor:not(.no-theme)  {
-    --color-text-secondary: #DDD;
-    --color-text-primary: #EEE;
-  
-    --actors: transparent;
+body.impmal-theme {
 
-    --characteristic-border: var(--impmal-lightblue);
-    --patron-border: var(--impmal-lightblue);
 
-    input {
-        --input-placeholder-color: var(--impmal-grey);
-    }
+    .application.impmal.actor {
+        --color-text-secondary: #DDD;
+        --color-text-primary: #EEE;
 
-    .header-details .details-row .detail-group {
-        .input-group {
-            border-bottom: unset;
+        --actors: transparent;
 
-            >* {
-                border-radius: 0px;
-                @include terminal-input;
-            }
+        --characteristic-border: var(--impmal-lightblue);
+        --patron-border: var(--impmal-lightblue);
+
+        input {
+            --input-placeholder-color: var(--impmal-grey);
         }
 
-        label {
-            border-top: 1px solid var(--impmal-lightblue);
-        }
+        .header-details .details-row .detail-group {
+            .input-group {
+                border-bottom: unset;
 
-    }
-
-    .characteristic-table {
-        input:not([type=chekcbox], [type=range]) {
-            border: 0px;
-            border-radius: 0px;
-        }
-    }
-
-    .defending-against {
-        border-color: var(--impmal-lightgreen);
-        position: relative;
-        @include scan;
-
-        .gradient-border {
-            height: 1px;
-            background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, var(--impmal-lightgreen) 50%, rgba(255, 255, 255, 0) 100%);
-        }
-    }
-
-    .sheet-list.influence {
-        .list-row:hover {
-            background: none;
-        }
-        .row-content {
-            &:hover {
-                position: relative;
-                background: var(--impmal-lightblue);
-                @include scan(false);
-            }
-        }
-    }
-
-    .sheet-list.skills {
-        font-family: monospace;
-        margin: 0px;
-        --skill-branch: var(--impmal-lightblue);
-
-        .list-name {
-            font-family: "Novarese";
-        }
-
-        .list-row:hover {
-            background: unset;
-        }
-
-        .list-row {
-        }
-
-        .list-header {
-            height:2rem;
-            > * {
-                line-height:1.5rem;
-            }
-        }
-
-        .row-content {
-
-            &:not(.list-header):hover {
-                border-top: 1px solid var(--impmal-lightblue);
-                background: var(--impmal-lightblue);
-                position: relative;
-                @include scan(false);
+                >* {
+                    border-radius: 0px;
+                    @include terminal-input;
+                }
             }
 
-            &.specialisation {
-                border-top: none;
-            }
-        }
-    }
-
-    .hit-locations {
-
-        .list-row {
-            margin: 0px;
-            height: 1.5rem;
-            padding: 0px;
-            margin-bottom: 0.5rem;
             label {
+                border-top: 1px solid var(--impmal-lightblue);
+            }
+
+        }
+
+        .characteristic-table {
+            input:not([type=checkbox], [type=range]) {
+                border: 0px;
+                border-radius: 0px;
+            }
+        }
+
+        .defending-against {
+            border-color: var(--impmal-lightgreen);
+            position: relative;
+            @include scan;
+
+            .gradient-border {
+                height: 1px;
+                background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, var(--impmal-lightgreen) 50%, rgba(255, 255, 255, 0) 100%);
+            }
+        }
+
+        .sheet-list.influence {
+            .list-row:hover {
+                background: none;
+            }
+
+            .row-content {
+                &:hover {
+                    position: relative;
+                    background: var(--impmal-lightblue);
+                    @include scan(false);
+                }
+            }
+        }
+
+        .sheet-list.skills {
+            font-family: monospace;
+            margin: 0px;
+            --skill-branch: var(--impmal-lightblue);
+
+            .list-name {
+                font-family: var(--header-font);
+            }
+
+            .list-row:hover {
+                background: unset;
+            }
+
+            .list-row {}
+
+            .list-header {
+                height: 2rem;
+
+                >* {
+                    line-height: 1.5rem;
+                }
+            }
+
+            .row-content {
+
+                &:not(.list-header):hover {
+                    border-top: 1px solid var(--impmal-lightblue);
+                    background: var(--impmal-lightblue);
+                    position: relative;
+                    @include scan(false);
+                }
+
+                &.specialisation {
+                    border-top: none;
+                }
+            }
+        }
+
+        .hit-locations {
+
+            .list-row {
+                margin: 0px;
+                height: 1.5rem;
                 padding: 0px;
+                margin-bottom: 0.5rem;
+
+                label {
+                    padding: 0px;
+                }
+
+                &:hover {}
             }
 
-            &:hover {
+            .location-values {
+                width: 100%;
+                @include value-box-noborder(80px, 25px);
+                justify-content: start;
+
+            }
+
+            //     label {
+            //         margin-left: 5px;
+            //         text-align: left;
+            //         width: 100%;
+            //     }
+
+            //     .armour-damage {
+            //         flex: 0 0 25px;
+            //         background: darkred;
+            //         color: #DDD;
+            //         height: 100%;
+            //         display: flex;
+            //         align-items: center;
+            //         justify-content: center;
+            //         font-family: monospace;
+            //     }
+            // }
+
+            // .protection-item {
+            //     // background: var(--impmal-lightblue);
+            //     // label {
+            //     //     span {background: var(--impmal-darkblue);}
+            //     // }
+            //     @include value-box-noborder(80px, 25px);
+            //     justify-content: space-between;
+            //     padding: 0px;
+
+            //     label {
+            //         margin-left: 10px;
+            //         text-align: left;
+            //         width: 100%;
+            //         white-space: nowrap;
+            //         overflow: hidden;
+            //         text-overflow: ellipsis;
+            //     }
+
+            //     .damage-armour.damaged {
+            //         background: darkred;
+            //         color: #DDD;
+            //     }
+
+            //     // margin: 3px 0px;
+            //     // padding: 3px 0px;
+            // }
+        }
+
+        @keyframes sliding-bg {
+            from {
+                background-position: 0px 0px;
+            }
+
+            to {
+                background-position: -1500px, 900px;
             }
         }
 
-        .location-values {
-            width: 100%;
-            @include value-box-noborder(80px, 25px);
-            justify-content: start;
+        .bar-section {
+            .bar-container {
+                border: 1px solid var(--impmal-lightblue);
 
-        }
-
-        //     label {
-        //         margin-left: 5px;
-        //         text-align: left;
-        //         width: 100%;
-        //     }
-
-        //     .armour-damage {
-        //         flex: 0 0 25px;
-        //         background: darkred;
-        //         color: #DDD;
-        //         height: 100%;
-        //         display: flex;
-        //         align-items: center;
-        //         justify-content: center;
-        //         font-family: monospace;
-        //     }
-        // }
-
-        // .protection-item {
-        //     // background: var(--impmal-lightblue);
-        //     // label {
-        //     //     span {background: var(--impmal-darkblue);}
-        //     // }
-        //     @include value-box-noborder(80px, 25px);
-        //     justify-content: space-between;
-        //     padding: 0px;
-
-        //     label {
-        //         margin-left: 10px;
-        //         text-align: left;
-        //         width: 100%;
-        //         white-space: nowrap;
-        //         overflow: hidden;
-        //         text-overflow: ellipsis;
-        //     }
-
-        //     .damage-armour.damaged {
-        //         background: darkred;
-        //         color: #DDD;
-        //     }
-
-        //     // margin: 3px 0px;
-        //     // padding: 3px 0px;
-        // }
-    }
-
-    @keyframes sliding-bg {
-        from {
-            background-position: 0px 0px;
-        }
-
-        to {
-            background-position: -1500px, 900px;
-        }
-    }
-
-    .bar-section {
-        .bar-container {
-            border: 1px solid var(--impmal-lightblue);
-
-            .bar {
-                background-color: var(--impmal-lightblue);
-            }
-
-            .threshold {
-                border-top: 5px solid #DDD;
-            }
-        }
-    }
-
-    
-    .tab[data-tab='powers'].active {
-
-        --state0 : var(--impmal-lightblue);
-        --state1 : var(--impmal-lightgreen);
-        --state2 : var(--impmal-orange);
-
-        --sustaining: var(--impmal-lightblue);
-        --dropshadow : var(--impmal-lightblue);
-
-        .bar-container {
-            border: 1px solid var(--state0);
-
-            .bar {
-                background-color: var(--state0);
-            }
-
-            &.state1 {
                 .bar {
-                    background-color: var(--state1)
+                    background-color: var(--impmal-lightblue);
+                }
+
+                .threshold {
+                    border-top: 5px solid #DDD;
+                }
+            }
+        }
+
+
+        .tab[data-tab='powers'].active {
+
+            --state0: var(--impmal-lightblue);
+            --state1: var(--impmal-lightgreen);
+            --state2: var(--impmal-orange);
+
+            --sustaining: var(--impmal-lightblue);
+            --dropshadow: var(--impmal-lightblue);
+
+            .bar-container {
+                border: 1px solid var(--state0);
+
+                .bar {
+                    background-color: var(--state0);
+                }
+
+                &.state1 {
+                    .bar {
+                        background-color: var(--state1)
+                    }
+                }
+
+                &.state2 {
+                    .bar {
+                        background-color: var(--state2)
+                    }
+                }
+
+                .threshold {
+                    border-top: 5px solid #DDD;
                 }
             }
 
-            &.state2 {
-                .bar {
-                    background-color: var(--state2)
-                }
-            }
-
-            .threshold {
-                border-top: 5px solid #DDD;
-            }
-        }
             .warp,
             .purge {
                 &:hover {
@@ -230,25 +235,26 @@
                     @include scan;
                 }
             }
-    }
+        }
 
-    .tab[data-tab='equipment'].active {
-        .bar-container {
-            .state1 {
-                background-color: var(--impmal-lightgreen)
+        .tab[data-tab='equipment'].active {
+            .bar-container {
+                .state1 {
+                    background-color: var(--impmal-lightgreen)
+                }
+
+                .state2 {
+                    background-color: var(--impmal-orange)
+                }
             }
 
-            .state2 {
-                background-color: var(--impmal-orange)
+            .solars {
+                flex: 1.5;
+                padding: 0.2rem;
+                height: unset;
             }
         }
 
-        .solars {
-            flex: 1.5;
-            padding: 0.2rem;
-            height: unset;
-        }
+
     }
-
-
 }

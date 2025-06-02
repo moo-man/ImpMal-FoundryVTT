@@ -22,6 +22,11 @@
   scrollbar-width: initial;
 }
 
+body.impmal-font {
+  --header-font: "Novarese";
+  --type-font : "MinionPro"
+}
+
 @mixin terminal-input {
   font-family: monospace;
   color: #DDD;
@@ -394,7 +399,7 @@
 
 @mixin editor-content() {
 
-  font-family: "MinionPro";
+  font-family: var(--type-font);
 
   @include link-styles();
 
@@ -846,7 +851,7 @@
 
   @include link-styles(var(--impmal-lightgreen));
 
-  font-family: "MinionPro";
+  font-family: var(--type-font);
 
   ul li::marker {
     font-family: OnlySkulls;

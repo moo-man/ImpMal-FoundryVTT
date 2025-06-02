@@ -1,208 +1,226 @@
 @use "./var" as *;
 
+body.impmal-theme {
 
-body:not(.no-theme) #chat-popout,
-#interface #chat-notifications:not(.no-theme),
-#interface #sidebar:not(.no-theme) {
+  body #chat-popout,
+  #interface #chat-notifications,
+  #interface #sidebar {
 
-    --color-scrollbar:  var(--impmal-lightgreen);
+    --color-scrollbar: var(--impmal-lightgreen);
 
     @include link-styles(var(--impmal-lightgreen));
 
     textarea {
-        background: rgba(28, 49, 50, 0.7);
-        color: #DDD;
-        border-color: var(--impmal-lightblue);
-        border: var(--impmal-lightblue);
+      background: rgba(28, 49, 50, 0.7);
+      color: #DDD;
+      border-color: var(--impmal-lightblue);
+      border: var(--impmal-lightblue);
 
-        &:focus {
-            box-shadow: inset 0 0 5px var(--impmal-lightblue);
-        }
+      &:focus {
+        box-shadow: inset 0 0 5px var(--impmal-lightblue);
+      }
     }
 
     button {
-        @include impmal-button;
+      @include impmal-button;
 
-        &[aria-pressed='true'],
-        &.active {
-            background: var(--impmal-lightgreen);
-        }
+      &[aria-pressed='true'],
+      &.active {
+        background: var(--impmal-lightgreen);
+      }
     }
 
     #chat-message:focus {
-      outline-color:  var(--impmal-lightgreen);
+      outline-color: var(--impmal-lightgreen);
     }
 
 
-.chat-message {
+    .chat-message {
 
-    .table-description {
-      color: white;
-    }
+      .message-content {
+        @include editor-content-alt;
+      }
 
-    h2, h3 {
-      border-color: var(--impmal-lightgreen)
-    }
+      .table-description {
+        color: white;
+      }
 
-    &.highlight,
-    &.highlight-delayed {
-      box-shadow: 0px 0px 10px var(--impmal-lightgreen) inset;
-    }
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: var(--impmal-grey2)
+      }
 
-    border: 3px double var(--impmal-darkgreen);
-    // background: rgba(0, 0, 0, 0.5);
-    background: rgba(37, 100, 75, 0.5);
-    color: #DDD;
+      h2,
+      h3 {
+        border-color: var(--impmal-lightgreen)
+      }
 
-    &.whisper {
-      background : rgba(6, 92, 99, 0.5);
-      border-color: var(--impmal-lightblue);
+      &.highlight,
+      &.highlight-delayed {
+        box-shadow: 0px 0px 10px var(--impmal-lightgreen) inset;
+      }
 
-    }
-
-    &.blind {
-      background : rgba(125, 66, 207, 0.5);
-      border-color: rgba(125, 66, 207, 1);
-    }
-
-    .message-header {
+      border: 3px double var(--impmal-darkgreen);
+      // background: rgba(0, 0, 0, 0.5);
+      background: rgba(37, 100, 75, 0.5);
       color: #DDD;
-    }
 
-    .item-post {
-      border-color: var(--impmal-lightgreen)
-    }
+      &.whisper {
+        background: rgba(6, 92, 99, 0.5);
+        border-color: var(--impmal-lightblue);
 
-    button {
-      background-color: var(--impmal-darkgreen);
-      border: 1px solid var(--impmal-lightgreen);
-      box-shadow: 0 0 5px var(--impmal-lightgreen) inset;
-
-      &:hover {
-        background-color: var(--impmal-lightgreen);
       }
-    }
 
+      &.blind {
+        background: rgba(125, 66, 207, 0.5);
+        border-color: rgba(125, 66, 207, 1);
+      }
 
-    .opposed {
+      .message-header {
+        color: #DDD;
+      }
 
-      
-      .applied.apply-damage:hover {
+      .item-post {
+        border-color: var(--impmal-lightgreen)
+      }
+
+      button {
         background-color: var(--impmal-darkgreen);
+        border: 1px solid var(--impmal-lightgreen);
+        box-shadow: 0 0 5px var(--impmal-lightgreen) inset;
+
+        &:hover {
+          background-color: var(--impmal-lightgreen);
+        }
       }
 
-      .critical .table-roll {
+
+      .opposed {
+
+
+        .applied.apply-damage:hover {
+          background-color: var(--impmal-darkgreen);
+        }
+
+        .critical .table-roll {
           border-color: var(--impmal-lightgreen);
           border-radius: 0px;
           background: var(--impmal-darkgreen);
           box-shadow: 0 0 5px var(--impmal-lightgreen);
+        }
       }
-    }
 
-    .dice-roll .dice-formula,
-    .dice-roll .dice-total {
-      border-color: var(--impmal-lightgreen);
-      box-shadow: 0 0 2px var(--impmal-lightgreen) inset;
-      font-family: monospace;
-    }
-
-    .dice-total {
-      
-      @include scan;
-      
-    }
-    
-
-    .dice-tooltip {
-      .dice-rolls .roll {
+      .dice-roll .dice-formula,
+      .dice-roll .dice-total {
+        border-color: var(--impmal-lightgreen);
+        box-shadow: 0 0 2px var(--impmal-lightgreen) inset;
         font-family: monospace;
       }
 
-      .part-header {
-        border-color: var(--impmal-lightgreen);
+      .dice-total {
 
-        .part-total {
-          border-color: var(--impmal-lightgreen);
-        }
+        @include scan;
+
       }
-    }
-
-    img.result-image {
-      border-color: var(--impmal-lightgreen);
-    }
 
 
-    .impmal.test {
-      .sl {
-        div {
-          background-image: url(./assets/ui/grid.webp);
-          background-size: cover;
-          border: 1px solid var(--impmal-lightgreen);
-          position: relative;
-          @include scan;
+      .dice-tooltip {
+        .dice-rolls .roll {
           font-family: monospace;
         }
-      }
 
-      .tags {
-        >* {
+        .part-header {
           border-color: var(--impmal-lightgreen);
-          border-radius: 0px;
-          background: var(--impmal-darkgreen);
-          box-shadow: 0 0 5px var(--impmal-lightgreen);
-        }
-      }
 
-      .comparison {
-        .roll {
-          .reverse-icon {
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, var(--impmal-lightgreen) 50%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+          .part-total {
+            border-color: var(--impmal-lightgreen);
           }
         }
       }
 
-      .fumble a {
-        color: var(--impmal-orange);
+      img.result-image {
+        border-color: var(--impmal-lightgreen);
       }
 
 
-  
-      .color-positive{
-        color: var(--impmal-lightgreen);
-        i {
-          color: var(--impmal-lightgreen)
+      .impmal.test {
+        .sl {
+          div {
+            background-image: url(./assets/ui/grid.webp);
+            background-size: cover;
+            border: 1px solid var(--impmal-lightgreen);
+            position: relative;
+            @include scan;
+            font-family: monospace;
+          }
         }
-      }
-      .color-negative{
-        color: var(--impmal-orange);
-        i {
-          color: var(--impmal-orange)
+
+        .tags {
+          >* {
+            border-color: var(--impmal-lightgreen);
+            border-radius: 0px;
+            background: var(--impmal-darkgreen);
+            box-shadow: 0 0 5px var(--impmal-lightgreen);
+          }
         }
 
-      }
-    }
+        .comparison {
+          .roll {
+            .reverse-icon {
+              background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, var(--impmal-lightgreen) 50%);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+            }
+          }
+        }
 
-    .opposed {
+        .fumble a {
+          color: var(--impmal-orange);
+        }
 
-    .opposed-details {
-      &.attacker-winner {
-        .SL {
+
+
+        .color-positive {
           color: var(--impmal-lightgreen);
-        }
-      }
-      &.defender-winner {
-        .SL {
-          color: var(--impmal-orange)
-        }
-      }
-    }
 
-      .response-buttons {
-        .secondary {
-          color: var(--impmal-orange)
+          i {
+            color: var(--impmal-lightgreen)
+          }
+        }
+
+        .color-negative {
+          color: var(--impmal-orange);
+
+          i {
+            color: var(--impmal-orange)
+          }
+
+        }
+      }
+
+      .opposed {
+
+        .opposed-details {
+          &.attacker-winner {
+            .SL {
+              color: var(--impmal-lightgreen);
+            }
+          }
+
+          &.defender-winner {
+            .SL {
+              color: var(--impmal-orange)
+            }
+          }
+        }
+
+        .response-buttons {
+          .secondary {
+            color: var(--impmal-orange)
+          }
         }
       }
     }
