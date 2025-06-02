@@ -65,15 +65,15 @@
             {{#if applied}}
             <button type="button" class="apply-damage applied"><i class="fa-solid fa-check"></i></a>
             {{else}}
-                <button class="apply-damage" data-tooltip="{{localize 'IMPMAL.ApplyDamage'}}"><i class="fa-solid fa-user-minus"></i></button>
+                <button data-action="applyDamage" class="apply-damage" data-tooltip="{{localize 'IMPMAL.ApplyDamage'}}"><i class="fa-solid fa-user-minus"></i></button>
             {{/if}}
         {{else}}
             {{#unless result}}
                 <div class="response-buttons">
                     {{#each responseButtons}}
-                        <button type="button" class="{{this.class}}" data-tooltip="{{this.tooltip}}" data-uuid="{{this.uuid}}" data-type="{{this.type}}"><i class="{{this.icon}}"></i> {{this.label}}</button>
+                        <button data-action="clickResponse" type="button" class="{{this.class}}" data-tooltip="{{this.tooltip}}" data-uuid="{{this.uuid}}" data-type="{{this.type}}"><i class="{{this.icon}}"></i> {{this.label}}</button>
                     {{/each}}
-                    <button type="button" data-type="unopposed" data-tooltip="{{localize 'IMPMAL.Unopposed'}}"><i class="fa-solid fa-arrow-down"></i></button>
+                    <button data-action="clickResponse" type="button" data-type="unopposed" data-tooltip="{{localize 'IMPMAL.Unopposed'}}"><i class="fa-solid fa-arrow-down"></i></button>
                 </div>
             {{/unless}}
         {{/if}}

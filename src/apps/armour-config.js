@@ -1,46 +1,35 @@
-export default class ArmourConfig extends FormApplication 
+export default class ArmourConfig extends WHFormApplication
 {
-    static get defaultOptions() 
+    static DEFAULT_OPTIONS = {
+        tag : "form",
+        classes : ["impmal", "warhammer"],
+        window : {
+            title : "IMPMAL.ArmourConfig",
+        },
+        form: {
+            handler: this.submit,
+            submitOnChange: true,
+            closeOnSubmit: false
+        }
+    };
+
+    static PARTS = {
+        form: {
+            template: "systems/impmal/templates/apps/armour-config.hbs",
+        }
+    };
+    
+    async _prepareContext(options)
     {
-        const options = super.defaultOptions;
-        options.title = game.i18n.localize("IMPMAL.ArmourConfig");
-        options.classes = options.classes.concat(["impmal", "armour-config"]);
-        options.resizable = true;
-        return options;
+        let context = await super._prepareContext(options);
+        context.values = this.document.system.combat.armour;
+        context.fields = this.document.system.schema.fields.combat.fields.armour.fields;
+        return context;
     }
 
-    get template() 
+    static async submit(ev, form, formData)
     {
-        return `systems/impmal/templates/apps/armour-config.hbs`;
-    }
-
-    async getData() 
-    {
-        let data = await super.getData();
-        return data;
-    }
-
-    _updateObject(ev, formData) 
-    {
-        this.object.update(formData);
-    }
-
-    activateListeners(html)
-    {
-        super.activateListeners(html);
-
-        let armourFields = html.find(".armour-fields")[0];
-
-        html.find(".use-items").click(ev => 
-        {
-            if (ev.currentTarget.checked)
-            {
-                armourFields.classList.add("disabled", "inactive");
-            }
-            else 
-            {
-                armourFields.classList.remove("disabled", "inactive");
-            }
-        });
+        await super.submit(ev, form, formData)
+        this.render(true);
     }
 }

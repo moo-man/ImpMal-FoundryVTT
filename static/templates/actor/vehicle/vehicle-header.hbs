@@ -1,0 +1,79 @@
+<div>
+    <header class="sheet-header">
+        <img class="profile" data-action="editImage" src="{{actor.img}}" data-edit="img">
+        <div class="header-details">
+            <div class="details-row name">
+                <input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'Name'}}">
+            </div>
+        </div>
+    </header>
+
+    <div class="attribute-row flexrow">
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Category"}} <a
+                        data-action="armourConfig"><i class="fa-solid fa-gear"></i></a></label></div>
+            <div class="field" style="grid-column: 1 / span 12">
+                <select name="system.category">
+                    {{#select system.category}}
+                        <option value="wheeled">{{localize "IMPMAL.Wheeled"}}</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 6">
+                <label>{{localize "IMPMAL.FrontArmour"}}</label>
+            </div>
+            <div class="label" style="grid-column: 7 / span 6">
+                <label>{{localize "IMPMAL.BackArmour"}} </label>
+            </div>
+            <div class="field" style="grid-column: 1 / span 6">
+                    <input type="number" name="system.combat.armour.front" value="{{system.combat.armour.front}}">
+            </div>
+            <div class="field" style="grid-column: 7 / span 6">
+                    <input type="number" name="system.combat.armour.back" value="{{system.combat.armour.back}}">
+            </div>
+        </div>
+
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Speed"}} </label></div>
+            <div class="field" style="grid-column: 1 / span 12">
+                    <select name="system.combat.speed.land.value">
+                        {{#select system.combat.speed.land.value}}
+                            {{#each (config "speeds")}}
+                                <option value="{{@key}}">{{this}}</option>
+                            {{/each}}
+                                <option value="swift">Swift</option>
+                        {{/select}}
+                    </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="attribute-row flexrow">
+
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Crew"}} </label></div>
+            <div class="field" style="grid-column: 1 / span 12">
+                <input type="number" name="system.crew.number" value="{{system.crew.number}}">
+            </div>
+        </div>
+
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Passengers"}} </label></div>
+            <div class="field" style="grid-column: 1 / span 12">
+                <input type="number" name="system.passengers.number" value="{{system.passengers.number}}">
+            </div>
+        </div>
+
+        <div class="attribute-box top-label">
+            <div class="label" style="grid-column: 1 / span 12"><label>{{localize "IMPMAL.Size"}} </label></div>
+            <div class="field" style="grid-column: 1 / span 12">
+                <select name="system.combat.size">
+                {{selectOptions (config "sizes") selected=system.combat.size}}
+                    </select>
+            </div>
+        </div>
+
+    </div>
+</div>

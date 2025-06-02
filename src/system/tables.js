@@ -83,18 +83,19 @@ export default class ImpMalTables
 
     static listeners(html)
     {
-        html.on("click", ".table-roll", ev => 
-        {
-            let key = ev.currentTarget.dataset.table;
-            let formula = ev.currentTarget.dataset.formula;
-            let modifier = ev.currentTarget.dataset.modifier;
-
-            let messageId = $(ev.currentTarget).parents(".message").attr("data-message-id");
-            let test = game.messages.get(messageId)?.system.test;
-        
-
-            // TODO: the test actor may not be the one we want to pass here
-            ImpMalTables.rollTable(key, formula, {modifier, actor : test?.actor});
-        });
+        html.querySelectorAll(".table-roll").forEach(e => {
+            e.addEventListener("click", ev => {
+                let key = ev.target.dataset.table;
+                let formula = ev.target.dataset.formula;
+                let modifier = ev.target.dataset.modifier;
+    
+                let messageId = ev.target.closest(".message").dataset.messageId
+                let test = game.messages.get(messageId)?.system.test;
+            
+    
+                // TODO: the test actor may not be the one we want to pass here
+                ImpMalTables.rollTable(key, formula, {modifier, actor : test?.actor});
+            });
+        })
     }
 }

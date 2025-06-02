@@ -1,5 +1,6 @@
 {{#if (and (eq system.transferData.type "zone") (ne system.zone.type "tokens"))}}
 <div class="form-group">
-    <label><a class="zone-traits">Zone Traits<i class="fa-solid fa-gear"></i></a></label>
+    <label><a data-action="zoneConfig">Zone Traits<i class="fa-solid fa-gear"></i></a></label>
+    <input type="text" disabled value="{{system.transferData.zone.traits.text}}">
 </div>
 {{/if}}

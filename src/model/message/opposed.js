@@ -1,6 +1,6 @@
 import { OpposedTestResult } from "../../system/tests/opposed-result";
 
-export class OpposedTestMessageModel extends foundry.abstract.DataModel 
+export class OpposedTestMessageModel extends WarhammerMessageModel 
 {
     static defineSchema() 
     {
@@ -13,6 +13,15 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
         schema.result = new fields.ObjectField();
         schema.applied = new fields.ObjectField();
         return schema;
+    }
+
+    static get actions() 
+    { 
+        return foundry.utils.mergeObject(super.actions, {
+            clickResponse : this._onClickResponse,
+            applyDamage : this._onApplyDamage,
+            applyZoneEffect : this.onApplyZoneEffect
+        });
     }
 
     get attackerTest()
@@ -97,13 +106,26 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
     async renderContent(update={})
     {
         await this.parent.update(update);
-        // mergeObject(this.parent, update);
+        // foundry.utils.mergeObject(this.parent, update);
         this.result = this.computeResult()
 
         let content = await this.getContent();
         return this.parent.update({content, system : {
             result : this.result
         }});
+    }
+
+    static _onClickResponse(ev, target)
+    {
+        if (target.dataset.type)
+        {
+            this.performResponse(target.dataset.type, target.dataset.uuid);
+        }
+    }
+
+    static _onApplyDamage(ev, target)
+    {
+        this.applyDamage();
     }
 
     computeResult()
@@ -148,13 +170,13 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
         {
             if (!this.target?.actor.isOwner)
             {
-                html.find(".response-buttons").remove();
+                html.querySelector(".response-buttons").remove();
             }
         }
 
         if (!this.attackerTest?.actor?.isOwner)
         {
-            html.find(".damage-breakdown").remove();
+            html.querySelector(".damage-breakdown").remove();
         }
     }
 

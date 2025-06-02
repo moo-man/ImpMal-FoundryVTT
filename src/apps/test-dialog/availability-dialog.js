@@ -34,14 +34,14 @@ export class AvailabilityDialog extends TestDialog
     /**
      * 
      */
-    static setupData({item, world, availability}, actor, {title={}, fields={}, context={}}={})
+    static setupData({item, world, availability}, actor, context, options)
     {
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
-        let dialogData = super.setupData(actor || game.user.character, undefined, {title, fields, context});
+        let dialogData = super.setupData(actor || game.user.character, undefined, context, options);
         dialogData.data.targets = [];
         // TODO find a way to avoid duplicating this code from the parent class
-        dialogData.data.title = (title?.replace || game.i18n.localize("IMPMAL.Availability")) + (title?.append || "");
+        dialogData.data.title = (context.title?.replace || game.i18n.localize("IMPMAL.Availability")) + (context.title?.append || "");
         dialogData.data.scripts = [];
         dialogData.data.item = item;
         dialogData.fields.cost = item.system.cost;

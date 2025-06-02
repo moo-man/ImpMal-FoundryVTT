@@ -3,6 +3,7 @@ let fields = foundry.data.fields;
 
 export class SpecialisationModel extends StandardItemModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.specialisation"];
     static defineSchema() 
     {
         let schema = super.defineSchema();

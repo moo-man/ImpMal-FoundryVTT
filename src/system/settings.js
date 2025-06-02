@@ -1,4 +1,5 @@
 import TableSettings from "../apps/table-settings";
+import IMThemeConfig from "../apps/theme";
 
 export default function registerSettings() 
 {
@@ -9,6 +10,17 @@ export default function registerSettings()
         type: String,
         default: "0.0.0"
     });
+
+    game.settings.registerMenu("impmal", "themeConfig", {
+        name: "WH.Theme.Config",
+        label : "WH.Theme.ConfigButton",
+        hint : "WH.Theme.ConfigHint",
+        icon: "fa-solid fa-table-layout",
+        scope: "user",
+        config: true,
+        type: IMThemeConfig
+      });
+  
 
     game.settings.register("impmal", "superiority", {
         name: "IMPMAL.Superiority",
@@ -59,21 +71,7 @@ export default function registerSettings()
         name: "IMPMAL.TableSettings",
         scope: "world",
         config: false,
-        type: Object,
-        default: {
-            "critarm" : "7PZdfk0TRBPDr0QR",
-            "critleg" : "2GOSTiyV8FH51YD2",
-            "crithead" : "dvsiB3K8ezHI8F7M",
-            "critbody" : "kCP63j7ZWPVquLqW",
-            "critvehicle" : "wyIDvsnkkI18FbJy",
-            "fumble" : "HL6DtTGWIUQy5NZ9",
-            "perils" : "2YYlAUyaVIt4bZVa",
-            "phenomena" : "9aSbu2mswOOI43J1",
-            "talents" : "9SLhM8FOgluaUwvO",
-            "origin" : "nyaEnNOrR8Sq8Wf4",
-            "mutation" : "aHz4wSCM8ogTVOhT",
-            "malignancy" : "AJC7cYdzY3rIHZWm",
-        }
+        type: TableSettings.schema
     });
 
     game.settings.register("impmal", "disableTheme", {
@@ -94,5 +92,13 @@ export default function registerSettings()
         default: true,
         type: Boolean
     });
+
+    game.settings.register("impmal", "theme", {
+        name: "Theme",
+        scope: "client",
+        config: false,
+        type: IMThemeConfig.schema
+    });
+  
   
 }

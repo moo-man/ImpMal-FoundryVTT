@@ -1,109 +1,105 @@
-<section class="list">
-    <header class="list-row">
-        <div class="list-name">{{localize "IMPMAL.Talent"}}</div>
-        <div>{{localize "IMPMAL.TimesTaken"}}</div>
-        <div class="list-controls">
-            <a class="list-create" data-type="talent"><i class="fa-solid fa-plus"></i></a>
-        </div>
-    </header>
-    <div class="list-content">
-        {{#each items.talent}}
-            <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
-                <div class="list-row list-hover">
-                    <div class="list-name  list-summary-context">
-                        <img src="{{this.img}}">
-                        <a class="list-edit">{{this.name}}</a>
-                    </div>
-                    <div>{{this.system.taken}}</div>
-                    <div class="list-controls">
-                        <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                        <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
-                    </div>
-                </div>
-                {{#if this.system.advancedEffects.length}}
-                <div class="advanced-effects">
-                    {{#each this.system.advancedEffects}}
-                    <a class="effect-edit" data-uuid="{{this.uuid}}">{{this.name}}</a>
-                    {{/each}}
-                </div>
-                {{/if}}
-                {{> sheetButtonsV1 document=this}}
-                <div class="summary">
-
-                </div>
-            </div>
-        {{/each}}
-    </div>
-</section>
-
-{{#if items.trait.length}}
-    <section class="list">
-        <header class="list-row">
-            <div class="list-name">{{localize "IMPMAL.Traits"}}</div>
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="sheet-list talent">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Talent"}} <a class="sort-items" data-action="sortItems"
+                    data-tooltip="{{localize 'SHEET.SortItems'}}" data-type="talent"><i
+                        class="fas fa-sort-alpha-down"></i></a></div>
+            <div>{{localize "IMPMAL.TimesTaken"}}</div>
             <div class="list-controls">
-                <a class="list-create" data-type="trait"><i class="fa-solid fa-plus"></i></a>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="talent"><i
+                            class="fa-solid fa-plus"></i></a>
+                </div>
             </div>
-        </header>
+        </div>
+        <div class="list-content">
+            {{#each items.talent}}
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="useItem">
+                            <a class="label collapsed" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+                        <div>{{this.system.taken}}</div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{#if this.system.advancedEffects.length}}
+                        <div class="advanced-effects">
+                            {{#each this.system.advancedEffects}}
+                                <a class="editEmbedded" data-uuid="{{this.uuid}}">{{this.name}}</a>
+                            {{/each}}
+                        </div>
+                    {{/if}}
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="sheet-list talent">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Trait"}} <a class="sort-items" data-action="sortItems"
+                    data-tooltip="{{localize 'SHEET.SortItems'}}" data-type="trait"><i
+                        class="fas fa-sort-alpha-down"></i></a></div>
+            <div class="list-controls">
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="trait"><i
+                            class="fa-solid fa-plus"></i></a>
+                </div>
+            </div>
+        </div>
         <div class="list-content">
             {{#each items.trait}}
-                <div class="list-item" data-id="{{this.id}}" data-item-id="{{this.id}}">
-                    <div class="list-row">
-                        <div class="list-name list-edit list-summary-context">
-                            <img src="{{this.img}}">
-                            <a>{{this.name}}</a>
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="useItem">
+                            <a class="label collapsed" data-action="toggleSummary">{{this.name}}</a>
                         </div>
                         <div class="list-controls">
-                            <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                            <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
-                    {{> sheetButtonsV1 document=this}}
-                    <div class="summary">
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
 
                     </div>
                 </div>
             {{/each}}
         </div>
-    </section>
-{{/if}}
-
-{{#if actor.system.patron.document}}
-    <section class="list">
-        <header class="list-row">
-            <div class="list-name"><i class="fas fa-handshake-angle"></i> {{localize "IMPMAL.Boons"}} / {{localize "IMPMAL.Liabilities"}} - {{actor.system.patron.document.name}}
-            </div>
+    </div>
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Corruption"}}</div>
             <div class="list-controls">
-                {{localize "IMPMAL.Used"}}
+                {{!-- <a class="list-control" data-action="sortItems" data-tooltip="{{localize 'SHEET.SortItems'}}" data-type="injury"><i class="fas fa-sort-alpha-down"></i></a> --}}
+                <a class="list-control" data-action="createItem" data-type="corruption"><i class="fas fa-plus"></i></a>
             </div>
-        </header>
+        </div>
         <div class="list-content">
-            {{#each actor.system.patron.document.itemTypes.boonLiability}}
-                {{#if this.system.visible}}
-                    <div class="list-item {{#if this.system.used}}inactive{{/if}}" data-uuid="{{this.uuid}}">
-                        <div class="list-row list-hover">
-                            <div class="list-name list-edit list-summary-context">
-                                <img src="{{this.img}}">
-                                <a>{{this.name}}</a>
-                            </div>
-                            <div class="list-controls">
-                                {{#if this.system.oneUse}}
-                                    <a class="property-toggle" data-uuid="{{this.uuid}}" data-target="system.used">
-                                        {{#if this.system.used}}
-                                            <i class="fa-regular fa-circle-check"></i>
-                                        {{else}}
-                                            <i class="fa-regular fa-circle"></i>
-                                        {{/if}}
-                                    </a>
-                                {{/if}}
-                            </div>
+            {{#each items.corruption}}
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
-                        {{> sheetButtonsV1 document=this}}
-                        <div class="summary">
 
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
                         </div>
                     </div>
-                {{/if}}
+                    {{> actorSlots}}
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
             {{/each}}
         </div>
-    </section>
-{{/if}}
+    </div>
+    <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">

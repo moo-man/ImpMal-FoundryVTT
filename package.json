@@ -28,9 +28,9 @@
     "eslint-plugin-react": "^7.37.4",
     "globals": "^15.15.0",
     "rollup": "^3.3.0",
+    "rollup-plugin-baked-env": "^1.0.1",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-copy-watch": "^0.0.1",
-    "rollup-plugin-jscc": "^2.0.0",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.83.4",
     "scss": "^0.2.4"

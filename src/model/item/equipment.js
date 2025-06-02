@@ -1,5 +1,4 @@
 import { EquipSlots } from "./components/equip-slots";
-import EnabledMixin from "./components/enabled";
 import { EquippableItemModel } from "./components/equippable";
 import { TestDataModel } from "./components/test";
 import { TraitListModel } from "./components/traits";
@@ -8,6 +7,7 @@ let fields = foundry.data.fields;
 
 export class EquipmentModel extends EquippableItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.equipment"];
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -18,7 +18,7 @@ export class EquipmentModel extends EquippableItemModel
             max : new fields.NumberField({initial : 0, nullable : true}),
             enabled : new fields.BooleanField({initial : false}),
         });
-        schema.test = new fields.EmbeddedDataField(EnabledMixin(TestDataModel));
+        schema.test = new fields.EmbeddedDataField(TestDataModel);
         schema.slots = new fields.EmbeddedDataField(EquipSlots);
         return schema;
     }

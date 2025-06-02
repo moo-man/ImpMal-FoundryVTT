@@ -36,7 +36,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         // Not sure I like this here but it will do for now
         // Warp State = 2 means you just roll on the Perils table
         // Warp State = 1 is handled in postRoll() of a skill test
-        if (options?.context?.warp == 2)
+        if (options.warp == 2)
         {
             let formula = `1d100 + ${10 * (this.system.warp.charge - this.system.warp.threshold)}`;
             ImpMalTables.rollTable("perils", formula);
@@ -72,9 +72,9 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
     {
         let item = fromUuidSync(uuid) || this.items.get(id);
 
-        if (item?.system.test?.isValid)
+        if (item?.system.test?.isValid && item.system.test?.self)
         {
-            return this.setupTestFromData(item.system.test, {context: {itemUsed : item}, title : {append: ` - ${item.name}`}})
+            return this.setupTestFromData(item.system.test, {itemUsed : item, appendTitle: ` - ${item.name}`})
         }
         else 
         {
@@ -148,14 +148,14 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         {
             return ui.notifications.error("Item does not provide sufficient data to perform a Test. It must specify at least a Skill or Characteristic");
         }
-        return testFunction(testData, mergeObject(testOptions, options));
+        return testFunction(testData, foundry.utils.mergeObject(testOptions, options));
     }
 
     async purge(roll=false)
     {
         if (roll || this.inCombat || (await Dialog.confirm({title : game.i18n.localize("IMPMAL.Purge"), content : game.i18n.localize("IMPMAL.PurgeDialog")})))
         {
-            this.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {context : {purge: true},  title : {append : ` - ${game.i18n.localize("IMPMAL.Purge")}`}});
+            this.setupSkillTest({key: "discipline", name: game.i18n.localize("IMPMAL.Psychic")}, {purge: true,  appendTitle  : ` - ${game.i18n.localize("IMPMAL.Purge")}`});
         }
         else 
         {
@@ -318,7 +318,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
 
         if (!item && prompt && protectionItems.length)
         {
-            item = (await ItemDialog.create(protectionItems, 1))[0];
+            item = (await ItemDialog.create(protectionItems, 1, {title : "Rend", text: "Choose Item to apply Rend"}))[0];
         }
         // If no item provided, find the first protection item that is suitable to being damage or repaired
         item = item || protectionItems.find(i => 

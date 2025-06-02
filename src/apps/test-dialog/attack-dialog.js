@@ -57,7 +57,7 @@ export class AttackDialog extends SkillTestDialog
             this.tooltips.add("SL", 1, "Burst");
         }
 
-        if (this.data.context.twf)
+        if (this.context.twf)
         {
             this.disCount++;
             this.tooltips.add("disadvantage", 1, "Two Weapon Fighting");

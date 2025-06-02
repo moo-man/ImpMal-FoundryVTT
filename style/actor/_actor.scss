@@ -1,0 +1,537 @@
+@use "../mixins/border" as *;
+
+body.theme-light .application.impmal.actor {
+    --input-border: var(--color-dark-6);
+    --skill-branch: var(--color-dark-6);
+    --bar-border: var(--color-dark-6);
+    --bar-fill: var(--color-dark-6);
+    --slot-border: var(--color-dark-6);
+    --slot-bg: var(--color-dark-6);
+    --sustaining: var(--color-dark-6);
+    --defend-border: var(--color-dark-6);
+}
+
+
+.application.impmal.actor {
+    --input-border: var(--color-cool-3);
+    --skill-branch: var(--color-cool-3);
+    --bar-border: var(--color-cool-3);
+    --bar-fill: var(--color-cool-3);
+    --slot-border: var(--color-cool-3);
+    --slot-bg: var(--color-cool-3);
+    --sustaining: var(--color-cool-3);
+    --defend-border: var(--color-cool-3);
+
+    section.tab {
+        overflow-y: auto;
+    }
+
+    .sheet-header {
+        display: flex;
+        width: 100%;
+        align-items: center;
+
+        img {
+            flex: 0 0 100px;
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+    }
+
+    .header-details {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        .details-row {
+            display: flex;
+
+            .detail-group {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                margin: 0px 5px;
+
+                label {
+                    padding: 3px 3px;
+                }
+
+                .input-group {
+                    border-bottom: 1px solid var(--input-border);
+                    display: flex;
+                    align-items: center;
+
+                    .singleton-item {
+                        width: calc(100% - 2px);
+                        height: var(--input-height);
+                        line-height: var(--input-height);
+                        padding: 0px 3px;
+                        white-space: nowrap;
+                    }
+
+                    input {
+                        border: none;
+                        background: none;
+                        padding: 3px;
+                        outline: none;
+                    }
+
+                    input:focus {
+                        outline: none;
+                        box-shadow: none;
+                    }
+
+                    select {
+                        border: none;
+                        background: none;
+                        width: 100%;
+                        padding: 0px;
+                    }
+
+                    select:focus {
+                        box-shadow: none;
+                    }
+
+                    input.singleton-present {}
+                }
+            }
+        }
+
+        .details-row.name {
+            input {
+                text-align: center;
+            }
+        }
+    }
+
+    .influence {
+        .list-header {
+            .list-controls {
+                flex: 0 0 3rem;
+                margin-left: -3rem;
+                justify-content: space-around;
+            }
+        }
+
+        .dropdown-content {
+            padding: 0px;
+        }
+
+        .influence-sources {
+                .source {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 5px;
+                    input {
+                        height: unset;
+                    }
+                }
+                button {
+                    margin: auto;
+                }
+        }
+
+        input {
+            text-align: center;
+        }
+    }
+
+    .characteristic-table {
+        margin: 0px;
+        text-align: center;
+        background: none;
+        border: 0px;
+        tr {
+            background: none;
+            border-bottom: 1px solid var(--characteristic-border);
+            td {
+                border-right: 1px solid var(--characteristic-border);
+                padding: 0px;
+                height: 2rem;
+            }
+            td:last-of-type {
+                border-right: 0px;
+            }
+            td:first-of-type {
+                text-align: left;
+                width: 100px;
+            }
+        }
+        tr:last-of-type {
+            border-bottom: 0px;
+        }
+
+        input {
+            border: 0px;
+            background: none;
+
+            width: 100%; 
+            height: 100%;
+        }
+
+        input:focus {
+            box-shadow: none;
+        }
+    }
+
+    .action-list {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0.5rem 0px;
+        gap: 0.5rem;
+    }
+
+    .bar-section
+    {
+        flex: 5;
+        display: flex;
+        align-items: center;
+
+        .bar-container {
+            margin: 0px 5px;
+            width: 100%;
+            border: 1px solid var(--bar-border);
+            height: 15px;
+            border-radius: 10px;
+
+            &.state2 {
+                border-color: var(--color-warm-2);
+                .bar {
+                    background-color: var(--color-warm-2);
+                }
+            }
+
+            .bar {
+                height: 100%;
+                border-radius: 15px;
+                background-color: var(--bar-fill);
+            }
+
+            .threshold {
+                width: 0px;
+                height: 0px;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid var(--color-warm-1);
+                position: relative;
+                margin-bottom: -5px;
+            }
+        }
+    }
+
+    .tab[data-tab="skills"] {
+        overflow: hidden;
+
+
+        .list-content {
+            overflow-y: auto;
+        }
+
+        .skills {
+            height: 100%;
+
+            // Ensures list content lines up with  header
+            .list-header {
+                scrollbar-gutter: stable;
+                overflow-y: auto;
+            }
+
+            .list-name {
+                padding-left: 5px;
+            }
+
+            .specialisation {
+                border-top: none;
+                position: relative;
+
+                &:before {
+                    content: "";
+                    width: 15px;
+                    height: 15px;
+                    border: 2px solid var(--skill-branch);
+                    border-bottom-left-radius: 5px;
+                    border-right: 0px;
+                    border-top: 0px;
+                    position: absolute;
+                    top: 0px;
+                    left: 10px
+                }
+
+                &:not(.first) {
+                    &:after {
+                        content: "";
+                        width: 20px;
+                        height: 20px;
+                        border: 2px solid var(--skill-branch);
+                        border-right: 0px;
+                        border-top: 0px;
+                        border-bottom: 0px;
+                        position: absolute;
+                        top: -19px;
+                        left: 10px;
+                    }
+                }
+
+                .list-name {
+                    position: relative;
+                    margin-left: 24px;
+                    margin-right: -24px;
+                }
+            }
+        }
+    }
+
+    .sheet-list {
+        .slots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 5px 0px;
+    
+            .slot {
+                min-height: 2rem;
+                line-height: 2rem;
+                min-width: 3rem;
+                padding: 0px 5px;
+                text-align: center;
+                border: 1px solid var(--slot-border);
+                border-radius: 10px;
+                position: relative;
+    
+                .slot-details {
+                    display: flex;
+                    align-items: center;
+                    gap: 3px;
+                    justify-content: center;
+                    img {
+                        height: 20px;
+                        width: 20px;
+                    }
+                }
+                &.empty {
+                    border: 1px dashed var(--slot-border);
+                }
+    
+                .slot-remove {  
+                    position: absolute;
+                    right: 0px;
+                    top: -5px;
+                    height: 10px;
+                    width: 10px;
+                    line-height: 0.5rem;
+                    text-align: center;
+                    background-color: var(--slot-bg);
+                    color: white;
+                    border-radius: 50%;
+                    i {
+                        font-size: 0.5rem;
+                        margin: 0px;
+                    }
+                }
+            }
+        }
+    }
+
+    .sheet-list .weapon-aux {
+        gap : 0.5rem;
+        align-items: center;
+        margin-top: 3px;
+        .weapon-traits {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        .mag {
+            display: flex;
+            gap: 0.5rem;
+            .values {
+                display: flex;
+            }
+        }
+    }
+
+    .hit-locations {
+        margin: 1rem 1rem 0 0;
+        .list-header {
+            text-align: center;
+        }
+
+        .location.list-row {
+
+            display: flex;
+            flex-direction: column;
+            padding: 5px 3px;
+        }
+
+        
+        .location-values.row-content {
+            > * {
+                flex: 0 0 25px;
+            }
+            label {
+                text-align: left;
+                flex: 1;
+                padding-left: 0.5rem;
+            }
+        }
+        
+        .location {
+            .location-details {
+                padding: 0px;
+                &.collapsed {
+                    display: none;
+                }
+            }
+
+            .armour-damage {
+                color: darkred;
+            }
+
+            .range {
+                text-align: right;
+                opacity: 0.5;
+            }
+        }
+
+        .protection-item {
+            
+            display: flex;
+            justify-content: space-between;
+            label {
+                width: 100%;
+                white-space: nowrap;
+                padding-left: 0.5rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .damage-armour {
+                text-align: center;
+                &.damaged {
+                    color: darkred;
+                }
+                flex: 0 0 25px;
+            }
+        }
+        .armour-traits {
+            width: 100%;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            .trait-list {
+                font-size: var(--font-size-12);
+                padding-left: 1.5rem;
+            }
+        }
+
+    }
+
+    .tab[data-tab="powers"]
+    {
+        .sustaining {
+
+            border: 1px solid var(--sustaining);
+            
+            text-align: center;
+            line-height: 2.5rem;
+            width: 100%;
+            padding: 5px;
+            &:hover {
+                box-shadow: 0 0 10px inset var(--sustaining);
+            }
+            > label {
+                text-align: center;
+                line-height: 1rem;
+                font-weight: bold;
+
+            }
+            .sustained-list {
+                .power {
+
+                    display:flex;
+                    flex-direction: row;
+                    align-items: center;
+                    label {
+                        flex: 1;
+                    }
+                    img {
+                    flex: 0 0 2.5rem;
+                    height: 2.5rem;
+                    width: 2.5rem;
+                }
+                .controls {
+                    flex: 0 0 40px;
+                }
+            }
+            }
+        }
+
+        .warp-charge {
+            white-space: nowrap;
+            a {
+            }
+
+            .attribute-box {
+                flex: 0 0 8rem;
+            }
+            
+            .bar-container {
+                flex: 1;
+                height: 25px;
+                position: relative;
+                border-radius: 25px;
+                    .perils {
+                        position: absolute;
+                        top: 3px;
+                        width: 100%;
+                        text-align: center;
+                        a {
+                            color: white;
+                        }
+                    }
+                }
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
+    }
+
+    .defending-against {
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        border: 1px dashed var(--defend-border);
+        border-radius: 5px;
+        padding: 5px;
+        align-items: center;
+        img {
+            object-fit: contain;
+            flex: 0 0 40px;
+            height: 40px;
+        }
+        .attack-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            label {
+                font-weight: bold;
+            }
+            > * {
+                width : 100%;
+                display: flex;
+                justify-content: space-around;
+            }
+        }
+        .gradient-border {
+            @include gradient-border(var(--color-cool-3));
+            margin: 0.5rem 0px;
+        }
+
+        .remove-opposed {
+            margin: 5px;
+            line-height: 30px;
+        }
+    }
+
+}

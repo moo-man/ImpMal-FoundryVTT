@@ -370,7 +370,7 @@ export default class CharGenIM extends FormApplication {
         this.actor.items.push(specData);
       }
 
-      mergeObject(this.actor.system.characteristics, this.data.characteristics);
+      foundry.utils.mergeObject(this.actor.system.characteristics, this.data.characteristics);
 
       for(let characteristic of Object.values(this.data.choices))
       {
@@ -416,7 +416,7 @@ export default class CharGenIM extends FormApplication {
       this.actor.system.xp.other = {list : [{xp : -xp, description : "Character Creation"}]};
 
 
-      mergeObject(this.actor, expandObject(this.data.misc), {overwrite : true})
+      foundry.utils.mergeObject(this.actor, expandObject(this.data.misc), {overwrite : true})
 
       // Create items separately
       let items = this.actor.items;

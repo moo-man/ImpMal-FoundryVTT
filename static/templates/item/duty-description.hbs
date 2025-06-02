@@ -1,0 +1,10 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="editor-section">
+        <div class="header">{{localize "IMPMAL.Notes"}}</div>
+        {{#if (eq system.category "character")}}
+            {{formInput fields.character.fields.notes value=source.system.character.notes enriched=enriched.system.character.notes toggled=true}}
+        {{else if (eq system.category "patron")}}
+            {{formInput fields.patron.fields.notes value=source.system.patron.notes enriched=enriched.system.patron.notes toggled=true}}
+        {{/if}}
+    </div>
+</section>

@@ -1,13 +1,13 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
         <div class="form-group">
-            <label>{{localize "IMPMAL.Barrier"}}</label>
+            <label for="{{rootId}}-{{basePath}}.barrier">{{localize "IMPMAL.Barrier"}}</label>
             <div class="form-fields">
                 <input type="checkbox" name="{{basePath}}.barrier" {{checked traits.barrier}}>
             </div>
         </div>
 
         <div class="form-group">
-            <label>{{localize "IMPMAL.Cover"}}</label>
+            <label for="{{rootId}}-{{basePath}}.cover">{{localize "IMPMAL.Cover"}}</label>
             <div class="form-fields">
                 <select name="{{basePath}}.cover">
                     {{selectOptions (config "coverTypes") selected=traits.cover}}
@@ -16,14 +16,14 @@
         </div>
 
         <div class="form-group">
-            <label>{{localize "IMPMAL.DifficultTerrain"}}</label>
+            <label for="{{rootId}}-{{basePath}}.difficultTerrain">{{localize "IMPMAL.DifficultTerrain"}}</label>
             <div class="form-fields">
                 <input type="checkbox" name="{{basePath}}.difficultTerrain" {{checked traits.difficultTerrain}}>
             </div>
         </div>
 
         <div class="form-group">
-            <label>{{localize "IMPMAL.Obscured"}}</label>
+            <label for="{{rootId}}-{{basePath}}.obscured">{{localize "IMPMAL.Obscured"}}</label>
             <div class="form-fields">
                 <select name="{{basePath}}.obscured">
                     {{selectOptions (config "obscuredTypes") selected=traits.obscured}}
@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-group">
-            <label>{{localize "IMPMAL.Hazard"}}</label>
+            <label for="{{rootId}}-{{basePath}}.hazard">{{localize "IMPMAL.Hazard"}}</label>
             <div class="form-fields">
                 <select name="{{basePath}}.hazard">
                         {{selectOptions (config "hazardTypes") selected=traits.hazard}}
@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-group">
-            <label>{{localize "IMPMAL.Light"}}</label>
+            <label for="{{rootId}}-{{basePath}}.light">{{localize "IMPMAL.Light"}}</label>
             <div class="form-fields">
                 <select name="{{basePath}}.light">
                         {{selectOptions (config "lightTypes") selected=traits.light}}
@@ -50,10 +50,9 @@
         </div>
 
         <div class="form-group">
-            <label>{{localize "IMPMAL.WarpTouched"}}</label>
+            <label for="{{rootId}}-{{basePath}}.warpTouched">{{localize "IMPMAL.WarpTouched"}}</label>
             <div class="form-fields">
                 <input type="checkbox" name="{{basePath}}.warpTouched" {{checked traits.warpTouched}}>
             </div>
         </div>
-    <button type="submit">{{localize "Submit"}}</button>
 </section>

@@ -8,8 +8,8 @@ export class StandardItemModel extends BaseItemModel
     {
         let schema = super.defineSchema();
         schema.notes = new fields.SchemaField({
-            player : new fields.StringField(),
-            gm : new fields.StringField()
+            player : new fields.HTMLField(),
+            gm : new fields.HTMLField()
         });
 
         return schema;

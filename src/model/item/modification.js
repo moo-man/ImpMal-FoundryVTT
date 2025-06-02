@@ -5,6 +5,7 @@ let fields = foundry.data.fields;
 
 export class ModificationModel extends PhysicalItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.modification"];
     static defineSchema() 
     {
         let schema = super.defineSchema();
@@ -44,7 +45,7 @@ export class ModificationModel extends PhysicalItemModel
 
 export class ModListModel extends ListModel 
 {
-    static listSchema = new fields.ObjectField({})
+    static get listSchema() {return new foundry.data.fields.ObjectField()};
 
     prepareMods(weapon)
     {

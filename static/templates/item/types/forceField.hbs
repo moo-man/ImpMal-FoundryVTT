@@ -1,0 +1,6 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    {{formGroup fields.protection value=source.system.protection}}
+    {{formGroup fields.overload.fields.value value=source.system.overload.value}}
+    {{formGroup fields.overload.fields.collapsed value=source.system.overload.collapsed}}
+    {{> itemTraits traits=document.system.traits path="system.traits" label="IMPMAL.Traits"}}
+</section>

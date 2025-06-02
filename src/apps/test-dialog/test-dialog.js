@@ -1,6 +1,6 @@
 
 
-export class TestDialog extends WarhammerRollDialog
+export class TestDialog extends WarhammerRollDialogV2
 {
     get tooltipConfig() 
     {
@@ -34,24 +34,19 @@ export class TestDialog extends WarhammerRollDialog
         }
     }
 
-    static get defaultOptions() 
-    {
-        const options = super.defaultOptions;
-        options.classes = options.classes.concat(["impmal", "test-dialog", "form"]);
-        options.width = 500;
-        options.resizable = true;
-        return options;
-    }
-
-    get template() 
-    {
-        return `systems/impmal/templates/apps/test-dialog/test-dialog.hbs`;
-    }
-
-    get context() 
-    {
-        return this.data.context;
-    }
+    static PARTS = {
+        fields : {
+            template : "systems/impmal/templates/apps/test-dialog/test-dialog.hbs",
+            container : {id : "base", classes : ["dialog-base"]}
+        },
+        modifiers : {
+            template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+            container : {id : "base", classes : ["dialog-base"]}
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    };
 
     // Backwards compatibility for scripts referencing adv/disCount
     get advCount()
@@ -88,17 +83,17 @@ export class TestDialog extends WarhammerRollDialog
             fateAdvantage : false
         });
     }
-    async getData() 
+    async _prepareContext(options) 
     {
         this.advantage = 0;
         this.disadvantage = 0;
-        let data = await super.getData();
+        let context = await super._prepareContext(options);
         
-        data.advantage = this.advantage;
-        data.disadvantage = this.disadvantage;
+        context.advantage = this.advantage;
+        context.disadvantage = this.disadvantage;
         this.fields.state = this.computeState();
-        data.showSuperiority = this.actor.inCombat && this.actor.hasPlayerOwner;
-        return data
+        context.showSuperiority = this.actor?.inCombat && this.actor?.hasPlayerOwner;
+        return context
     }
 
     async computeFields() 
@@ -195,7 +190,7 @@ export class TestDialog extends WarhammerRollDialog
      * @param {object} data Dialog data, such as title and actor
      * @param {object} fields Predefine dialog fields
      */
-    static setupData(actor, target, options={})
+    static setupData(actor, target, context={}, options={})
     {
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
@@ -205,16 +200,16 @@ export class TestDialog extends WarhammerRollDialog
             dialogData.data.speaker = ChatMessage.getSpeaker({actor});
         }
         dialogData.data.actor = actor;
-        dialogData.data.context = options.context || {}; // Arbitrary values - used with scripts
-        dialogData.data.context.tags = options.context?.tags || {}; // Tags shown below test results - used with scripts
-        dialogData.data.context.text = options.context?.text || {}; // Longer text shown below test results - used with scripts
-        dialogData.data.context.skipTargets = options.skipTargets
+        dialogData.context = context || {}; // Arbitrary values - used with scripts
+        dialogData.context.tags = context?.tags || {}; // Tags shown below test results - used with scripts
+        dialogData.context.text = context?.text || {}; // Longer text shown below test results - used with scripts
+        dialogData.context.skipTargets = context.skipTargets
         if (actor && !actor?.token)
         {
             // getSpeaker retrieves tokens even if this sheet isn't a token's sheet
             delete dialogData.data.speaker.scene;
         }
-        dialogData.data.title = (options.title?.replace || game.i18n.localize("IMPMAL.Test")) + (options.title?.append || "");
+        dialogData.data.title = (context.title?.replace || game.i18n.localize("IMPMAL.Test")) + (context.title?.append || "");
         if (target)
         {
             dialogData.data.target = target;
@@ -224,14 +219,14 @@ export class TestDialog extends WarhammerRollDialog
 
         let defendingAgainst = actor?.defendingAgainst
 
-        dialogData.data.targets = (defendingAgainst || options.skipTargets) ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
+        dialogData.data.targets = (defendingAgainst || context.skipTargets) ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
 
         // Defending scripts are dialog scripts coming from the attacker and/or the weapon used in the attack.
         // e.g. "Dodge tests to defend against this attack have disadvantage"
         let defendingScripts = defendingAgainst ? ((defendingAgainst.item?.getScripts("dialog").concat(defendingAgainst.actor?.getScripts("dialog"))).filter(s => s.options?.defending)) : []
 
 
-        if (!options.skipTargets) 
+        if (!context.skipTargets) 
         {
             // Collect Dialog effects 
             //   - Don't use our own targeter dialog effects, DO use targets' targeter dialog effects

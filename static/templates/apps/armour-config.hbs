@@ -1,20 +1,7 @@
-<form>
-    <div class="flexcol">
-        <div class="form-group">
-            <label>{{localize "IMPMAL.UseItems"}}</label>
-            <input class="use-items" type="checkbox" name="system.combat.armour.useItems" {{checked object.system.combat.armour.useItems}}>
-            <p class="notes">{{localize "IMPMAL.UseItemsHint"}}</p>
-        </div>
-        <div class="armour-fields">
-            <div class="form-group">
-                <label>{{localize "IMPMAL.Armour"}}</label>
-                <input type="number" name="system.combat.armour.value" value="{{object.system.combat.armour.value}}">
-            </div>
-            <div class="form-group">
-                <label>{{localize "IMPMAL.Formula"}}</label>
-                <input type="text" class="centered" name="system.combat.armour.formula" value="{{object.system.combat.armour.formula}}">
-            </div>
-        </div>
+<div>
+    {{formGroup fields.useItems value=values.useItems rootId=rootId label="IMPMAL.UseItems" hint="IMPMAL.UseItemsHint" localize=true}}
+    <div class="armour-fields {{#if values.useItems}}disabled inactive{{/if}}">
+        {{formGroup fields.value value=values.value label="IMPMAL.Armour" localize=true}}
+        {{formGroup fields.formula value=values.formula label="IMPMAL.Formula" localize=true}}
     </div>
-    <button type="submit">{{localize "Submit"}}</button>
-</form>
+</div>

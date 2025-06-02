@@ -57,7 +57,7 @@ export class CharacterModel extends StandardActorModel
         schema.influence = new fields.EmbeddedDataField(ActorInfluenceModel);
         schema.hands = new fields.EmbeddedDataField(HandsModel);
 
-        schema.autoCalc.fields.corruption = new fields.BooleanField({initial : true, label : "IMPMAL.ActorConfig.AutoCalc.Corruption", parent : schema.autoCalc});
+        schema.autoCalc.fields.corruption = new fields.BooleanField({initial : true, label : "IMPMAL.ActorConfig.AutoCalc.Corruption"}, {name : "corruption", parent : schema.autoCalc});
         return schema;
     }
 

@@ -5,9 +5,9 @@
   "description": "In the grim darkness of the 41st millennium, players take on the role of citizens of the Imperium in service to a powerful patron, drawing them into tales focused on intrigue, betrayal, and conspiracy",
   "version": "2.2.1",
   "compatibility" : {
-    "minimum" : 12,
-    "verified" : 12,
-    "maximum" : 12    
+    "minimum" : 13,
+    "verified" : 13,
+    "maximum" : 13    
   },
   "templateVersion": 2,
   "authors" : [

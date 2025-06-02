@@ -54,8 +54,8 @@ export default class ResourceManager
     updateResourceFields()
     {
         // Make sure all combat trackers (popped out and embedded) have the correct value
-        [ui.combat].concat(Object.values(ui.windows).filter(w => w instanceof CombatTracker)).forEach(tracker => {
-            tracker.element.find(".resource input").each((index, input) => {
+        [ui.combat].concat(foundry.applications.instances.get("combat-popout") || []).forEach(tracker => {
+            tracker.element.querySelectorAll(".resource input").forEach((input) => {
                 input.value = this.get(input.dataset.key);
             });
         })
@@ -64,7 +64,7 @@ export default class ResourceManager
     // Add resource input to combat tracker
     addResourceFields(app, html)
     {
-        let header = html.find(".combat-tracker-header");
+        let header = html.querySelector(".combat-tracker-header");
         let fieldsHTML = Object.values(this.resources).map(i => {
             if (!game.user.isGM && i.hidden)
             {
@@ -76,21 +76,24 @@ export default class ResourceManager
                     <input data-key=${i.key} type=number ${game.user.isGM ? "" : "disabled"} value='${i.value}'>
                 </div>`
         }).join("");
-        let resources = $(`<div class="resources">
-            ${fieldsHTML}
-        </div>`);
+        let resources = document.createElement("div");
+        resources.classList.add("resources");
+        resources.innerHTML = fieldsHTML;
+        
+        resources.querySelectorAll(".resource input").forEach(e => {
+            
+            e.addEventListener("focusin", (ev) => 
+            {
+                ev.target.select();
+            });
 
-        resources.find(".resource input").on("change", (ev) => 
-        {   
-            this.set(ev.target.dataset.key, ev.target.value);
+            e.addEventListener("change", (ev) => 
+            {   
+                this.set(ev.target.dataset.key, ev.target.value);
+            });
         });
 
-        resources.find(".resource input").on("focusin", (ev) => 
-        {
-            ev.target.select();
-        });
 
-
-        resources.insertAfter(header);
+        header.insertAdjacentElement("beforeend", resources);
     }
 }

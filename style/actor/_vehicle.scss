@@ -1,0 +1,17 @@
+body.theme-light .application.actor.impmal.vehicle {
+    --actors: var(--color-dark-6);
+}
+
+.application.actor.impmal.vehicle
+{   
+    --actors: var(--color-cool-3);
+
+    .sheet-list.vehicle-actors {
+        min-height: 10rem;
+        border: 1px solid var(--actors);
+        border-top: none;
+        &.hover {
+            box-shadow: 0 0 10px inset var(--actors);    
+        }
+    }
+}

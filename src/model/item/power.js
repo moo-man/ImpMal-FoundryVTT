@@ -5,6 +5,7 @@ let fields = foundry.data.fields;
 
 export class PowerModel extends StandardItemModel
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.power"];
     static defineSchema()
     {
         let schema = super.defineSchema();

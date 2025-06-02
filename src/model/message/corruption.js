@@ -1,4 +1,4 @@
-export class CorruptionMessageModel extends foundry.abstract.DataModel 
+export class CorruptionMessageModel extends WarhammerMessageModel 
 {
     static defineSchema() 
     {
@@ -13,6 +13,13 @@ export class CorruptionMessageModel extends foundry.abstract.DataModel
         return schema;
     }
 
+    static get actions() 
+    { 
+        return foundry.utils.mergeObject(super.actions, {
+            resistCorruption : this._onResistCorruption
+        });
+    }
+
     async applyCorruptionTo(actor)
     {
         if (actor.type != "character")
@@ -22,6 +29,17 @@ export class CorruptionMessageModel extends foundry.abstract.DataModel
         else 
         {
             actor.system.applyCorruption({exposure : this.exposure, corruption : this.corruption, skill : this.skill})
+        }
+    }
+
+    static resistCorruption(ev, target)
+    {
+
+        let actors = warhammer.utility.targetedOrAssignedActors();
+
+        for(let a of actors)
+        {
+            this.applyCorruptionTo(a);
         }
     }
 
@@ -39,7 +57,7 @@ export class CorruptionMessageModel extends foundry.abstract.DataModel
 
         let content = `
         <h3 style="text-align: center">${title}</h3>
-        <button type="button" class="resist-corruption">${game.i18n.localize("IMPMAL.Resist")}${skill ? (" (" + game.i18n.localize("IMPMAL." + skill.capitalize()) + ")") : ""}</button>`
+        <button type="button" data-action="resistCorruption">${game.i18n.localize("IMPMAL.Resist")}${skill ? (" (" + game.i18n.localize("IMPMAL." + skill.capitalize()) + ")") : ""}</button>`
 
         ChatMessage.create({
             content,

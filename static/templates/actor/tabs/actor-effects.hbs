@@ -1,34 +1,12 @@
-{{!-- <div class="conditions">
-    <div class="flexrow">
-        {{#each conditions}}
-            <div class="condition">
-                <img style="opacity : {{this.opacity}}%" class="{{this.existing.flags.impmal.type}}" src="{{this.icon}}"
-                    width="50" height="50">
-                <div class="pips">
-                    {{#each this.pips}}
-                        <div class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}"
-                            data-key="{{../this.id}}">
-
-                        </div>
-                    {{/each}}
-                </div>
-            </div>
-        {{/each}}
-    </div>
-</div> --}}
-
-<div class="flexrow">
-
-    <div class="conditions">
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="flexrow" style="align-items: flex-start">
+        <div class="conditions">
             {{#each conditions}}
                 <div class="condition">
                     <label>{{this.name}}</label>
                     <div class="pips">
                         {{#each this.pips}}
-                            <div class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}"
-                                data-key="{{../this.id}}">
-
-                            </div>
+                            <div data-action="toggleConditionPip" class="pip {{#if this.filled}}filled{{/if}}" data-type="{{this.type}}" data-key="{{../this.id}}"></div>
                         {{/each}}
                     </div>
                 </div>
@@ -36,177 +14,76 @@
             <select class="add-effect">
                 <option>Add Effect</option>
                 {{#each (config "zoneEffects")}}
-                <option value="{{@key}}">{{this.name}}</option>
+                    <option value="{{@key}}">{{this.name}}</option>
                 {{/each}}
             </select>
-    </div>
-
-    <div>
-
-        <section class="list">
-            <header class="list-row">
-                <div class="list-name">{{localize "IMPMAL.TemporaryEffects"}}</div>
-                <div>{{localize "IMPMAL.Source"}}</div>
-                <div class="list-controls">
-                    <a class="list-create" data-type="effect" data-category="temporary"><i
-                            class="fa-solid fa-plus"></i></a>
-                </div>
-            </header>
-            <div class="list-content">
-                {{#each effects.active}}
-                    <div class="list-item" data-uuid="{{this.uuid}}">
-                        <div class="list-row">
-                            <div class="list-name">
-                                <img src="{{this.icon}}">
-                                <a class="list-edit">{{this.name}}</a>
-                            </div>
-                            {{#if this.applicationData.avoidTest.manual}}
-                                <button class="resist-effect">Resist</button>
-                            {{/if}}
-                            <div>
-                                {{#if (eq this.actor.type "patron")}}
-                                    <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
-                                            class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
-                                {{else if this.item}}
-                                    <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
-                                            class="fas fa-suitcase"></i>{{this.source}}</a>
-                                {{else if this.flags.impmal.fromZone}}
-                                    <i class="fa-solid fa-game-board-simple"></i>{{this.source}}
-                                {{else}}
-                                    {{this.source}}
-                                {{/if}}
-                            </div>
-                            <div class="list-controls">
-                                <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
-                                    {{#if this.item}}
-                                    <a class="inactive" data-tooltip="{{localize 'IMPMAL.CannotDeleteItemEffect'}}"><i class="fa-solid fa-xmark"></i></a>
-                                    {{else}}
-                                    <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
-                                    {{/if}}
-                            </div>
-                            {{> sheetButtonsV1 document=this}}
-                        </div>
-                    </div>
-                {{/each}}
-            </div>
-        </section>
-
-        {{#if items.corruption.length}}
-            <section class="list">
-                <header class="list-row">
-                    <div class="list-name">{{localize "IMPMAL.Corruption"}}</div>
+        </div>
+        <div class="effect-lists">
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "IMPMAL.TemporaryEffects"}}</div>
+                    <div>{{localize "IMPMAL.Source"}}</div>
                     <div class="list-controls">
-                        <a class="list-create" data-type="corruption"><i class="fa-solid fa-plus"></i></a>
+                        <a class="list-control" data-action="createEffect" data-category="temporary">
+                            <i class="fas fa-plus"></i>
+                        </a>
                     </div>
-                </header>
+                </div>
                 <div class="list-content">
-                    {{#each items.corruption}}
-                        <div class="list-item" data-id="{{this.id}}" data-collection="items">
-                            <div class="list-row">
-                                <div class="list-name list-edit">
-                                    <img src="{{this.img}}">
-                                    <a>{{this.name}}</a>
-                                </div>
-                                <div class="list-controls">
-                                    <a class="list-edit"><i class="fa-solid fa-edit"></i></a>
-                                    <a class="list-delete"><i class="fa-solid fa-trash"></i></a>
-                                </div>
+                    {{#each effects.temporary}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                {{> listEffect effect=this}}
                             </div>
-                            {{> slotsActorDisplay}} 
-                            {{> sheetButtonsV1 document=this}}
+                            {{> sheetButtons document=this}}
+                            <div class="dropdown-content collapsed">
+
+                            </div>
                         </div>
                     {{/each}}
                 </div>
-            </section>
-        {{/if}}
+            </div>
 
-        <section class="list">
-            <header class="list-row">
-                <div class="list-name">{{localize "IMPMAL.PassiveEffects"}}</div>
-                <div>{{localize "IMPMAL.Source"}}</div>
-                <div class="list-controls">
-                    <a class="list-create" data-type="effect" data-category="passive"><i
-                            class="fa-solid fa-plus"></i></a>
+
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "IMPMAL.PassiveEffects"}}</div>
+                    <div>{{localize "IMPMAL.Source"}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="createEffect" data-category="passive">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
                 </div>
-            </header>
-            <div class="list-content">
-                {{#each effects.passive}}
-                    <div class="list-item" data-uuid="{{this.uuid}}">
-                        <div class="list-row">
-                            <div class="list-name">
-                                <img src="{{this.icon}}">
-                                <a class="list-edit">{{this.name}}</a>
+                <div class="list-content">
+                    {{#each effects.passive}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                {{> listEffect effect=this}}
                             </div>
-                            <div>
-                                {{#if (eq this.actor.type "patron")}}
-                                    <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
-                                            class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
-                                {{else if this.item}}
-                                    <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
-                                            class="fas fa-suitcase"></i>{{this.source}}</a>
-                                {{else if this.flags.impmal.fromZone}}
-                                    {{this.source}}
-                                {{else}}
-                                    {{this.source}}
-                                {{/if}}
-                            </div>
-                            <div class="list-controls">
-                                <a class="list-toggle"><i class="fa-regular fa-circle-check"></i></a>
-                                {{#if this.item}}
-                                    <a class="inactive" data-tooltip="{{localize 'IMPMAL.CannotDeleteItemEffect'}}"><i class="fa-solid fa-xmark"></i></a>
-                                {{else}}
-                                    <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
-                                {{/if}}
+                            {{> sheetButtons document=this}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "IMPMAL.DisabledEffects"}}</div>
+                    <div>{{localize "IMPMAL.Source"}}</div>
+                    <div class="list-controls"></div>
+                </div>
+                <div class="list-content">
+                    {{#each effects.disabled}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content inactive">
+                                {{> listEffect effect=this}}
                             </div>
                         </div>
-                        {{> sheetButtonsV1 document=this}}
-                    </div>
-                {{/each}}
-            </div>
-        </section>
-
-        <section class="list">
-            <header class="list-row">
-                <div class="list-name">{{localize "IMPMAL.DisabledEffects"}}</div>
-                <div>{{localize "IMPMAL.Source"}}</div>
-                <div class="list-controls">
-                    <a class="list-create" data-type="effect" data-category="disabled"><i
-                            class="fa-solid fa-plus"></i></a>
+                    {{/each}}
                 </div>
-            </header>
-            <div class="list-content inactive">
-                {{#each effects.disabled}}
-                    <div class="list-item" data-uuid="{{this.uuid}}">
-                        <div class="list-row">
-                            <div class="list-name">
-                                <img src="{{this.icon}}">
-                                <a class="list-edit">{{this.name}}</a>
-                            </div>
-                            <div>
-                                {{#if (eq this.actor.type "patron")}}
-                                    <a class="list-edit" data-uuid="{{this.actor.uuid}}"><i
-                                            class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
-                                {{else if this.item}}
-                                    <a class="list-edit" data-uuid="{{this.item.uuid}}"><i
-                                            class="fas fa-suitcase"></i>{{this.source}}</a>
-                                {{else if this.flags.impmal.fromZone}}
-                                    {{this.source}}
-                                {{else}}
-                                    {{this.source}}
-                                {{/if}}
-                            </div>
-                            <div class="list-controls">
-                                <a class="list-toggle"><i class="fa-regular fa-circle"></i></a>
-                                {{#if this.item}}
-                                    <a class="inactive" data-tooltip="{{localize 'IMPMAL.CannotDeleteItemEffect'}}"><i class="fa-solid fa-xmark"></i></a>
-                                {{else}}
-                                    <a class="list-delete"><i class="fa-solid fa-xmark"></i></a>
-                                {{/if}}
-                            </div>
-                        </div>
-                    </div>
-                {{/each}}
             </div>
-        </section>
+        </div>
     </div>
-</div>
+
+</section>

@@ -1,6 +1,6 @@
 import RewardDialog from "../../apps/reward-dialog";
 
-export class RewardMessageModel extends foundry.abstract.DataModel 
+export class RewardMessageModel extends WarhammerMessageModel 
 {
     static defineSchema() 
     {
@@ -14,6 +14,47 @@ export class RewardMessageModel extends foundry.abstract.DataModel
 
         schema.receivedBy = new fields.ArrayField(new fields.StringField());
         return schema;
+    }
+
+    static get actions() 
+    { 
+        return foundry.utils.mergeObject(super.actions, {
+            receiveReward :  this._onReceiveReward
+        });
+    }
+
+    static _onReceiveReward(ev, target)
+    {
+        let actors=[];
+
+        if (game.user.isGM)
+        {
+            if (game.user.targets.size)
+            {
+                actors = game.user.targets.map(i => i.actor).filter(i => i);
+            }
+            else 
+            {
+                return ui.notifications.error("IMPMAL.ErrorTargetActorsForReward", {localize : true})
+            }
+        }
+        else 
+        {
+            if (game.user.character)
+            {
+                actors = [game.user.character]
+            }
+            else 
+            {
+                return ui.notifications.error("IMPMAL.ErrorNoActorAssigned", {localize : true})
+            }
+        }
+
+        for(let a of actors)
+        {
+            this.applyRewardTo(a);
+        }
+    
     }
 
     async applyRewardTo(actor)

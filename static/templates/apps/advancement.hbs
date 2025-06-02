@@ -1,121 +1,123 @@
-<form>
-    <div>
-        <nav class="sheet-tabs tabs">
-            <a class="item" data-tab="characteristics">{{localize "IMPMAL.Characteristics"}}</a>
-            <a class="item" data-tab="skills">{{localize "IMPMAL.Skills"}}</a>
-            <a class="item" data-tab="items">{{localize "Items"}}</a>
-            <a class="item" data-tab="log">{{localize "IMPMAL.Log"}}</a>
-            <a class="item" data-tab="other">{{localize "IMPMAL.Other"}}</a>
-        </nav>
-        <div class="tab-content">
-            <div class="tab advancement-list" data-tab="characteristics">
-                <div class="header">
-                    <div class="name">{{localize "IMPMAL.Characteristic"}}</div>
-                    <div class="advances">{{localize "IMPMAL.Advances"}}</div>
-                    <div class="total">{{localize "IMPMAL.Total"}}</div>
-                </div>
-                {{#each actor.system.characteristics}}
-                    <div class="characteristic">
-                        <div class="name">
-                            {{configLookup "characteristics" @key}}
-                        </div>
-                        <div class="advances">
-                            <a class="decrease" data-characteristic="{{@key}}"><i class="fa-regular fa-square-minus"></i></a>
-                            <span class="value">{{this.advances}}</span>
-                            <a class="increase" data-characteristic="{{@key}}"><i class="fa-regular fa-square-plus"></i></a>
-                        </div>
-                        <div class="total">
-                            {{this.total}}
-                        </div>
-                    </div>
-                {{/each}}
-            </div>
-            <div class="tab advancement-list" data-tab="skills">
-                <div class="header">
-                    <div class="name">{{localize "IMPMAL.Skill"}}</div>
-                    <div class="advances">{{localize "IMPMAL.Advances"}}</div>
-                    <div class="total">{{localize "IMPMAL.Total"}}</div>
-                </div>
-                {{#each actor.system.skills}}
-                    <div class="skill">
-                        <div class="name">{{configLookup "skills" @key}}</div>
-                        <div class="advances">
-                            <a class="decrease" data-skill="{{@key}}"><i class="fa-regular fa-square-minus"></i></a>
-                            <span class="value">{{this.advances}}</span>
-                            <a class="increase" data-skill="{{@key}}"><i class="fa-regular fa-square-plus"></i></a>
-                        </div>
-                        <div class="total">{{this.total}}</div>
-                    </div>
-                    {{#each this.specialisations}}
-                        <div class="skill">
-                            <div class="name">{{configLookup "skills" this.system.skill}} ({{this.name}})</div>
-                            <div class="advances">
-                                <a class="decrease" data-item="{{this.id}}"><i class="fa-regular fa-square-minus"></i></a>
-                                <span class="value">{{this.system.advances}}</span>
-                                <a class="increase" data-item="{{this.id}}"><i class="fa-regular fa-square-plus"></i></a>
-                            </div>
-                            <div>{{this.system.total}}</div>
-                        </div>
-                    {{/each}}
-                {{/each}}
-            </div>
-            <div class="tab advancement-list" data-tab="items">
-                <p>All Owned Items that have an associated XP Cost</p>
-                <div class="header">
-                    <div class="name">{{localize "Name"}}</div>
-                    <div class="xp">{{localize "IMPMAL.XP"}}</div>
-                </div>
-                {{#each talentsAndPowers}}
-                <div data-id="{{this.id}}">
-                    <input type="text" class="name" disabled value="{{this.name}}">
-                    <input type="number" disabled class="xp" value="{{this.system.xp}}">
-                </div>
-                {{/each}}
-            </div>
-            <div class="tab advancement-list" data-tab="log">
-                <p>Record of all the changes in XP Total and the associated reason.</p>
-                <div class="header">
-                    <div class="name">{{localize "IMPMAL.Reason"}}</div>
-                    <div class="xp">{{localize "IMPMAL.XP"}}</div>
-                    <div class="xp">{{localize "IMPMAL.Total"}}</div>
-                    <a></a>
-                </div>
-                {{#each actor.system.xp.log.list}}
-                <div data-index="{{@key}}" class="log-entry">
-                    <input type="text" class="name log-edit" name="reason" value="{{this.reason}}">
-                    <input type="number" class="xp log" value="{{this.xp}}" disabled>
-                    <input type="number" class="xp log" value="{{this.total}}" disabled>
-                    {{#if ../canEditXP}} <a class="log-remove"><i class="fa-solid fa-xmark"></i></a>{{/if}}
-                </div>
-                {{/each}}
-            </div>
-            <div class="tab advancement-list" data-tab="other">
-                <p>Miscellaneous modifications to total spent XP</p>
-                <div class="header">
-                    <div class="name">{{localize "IMPMAL.Description"}}</div>
-                    <div class="xp">{{localize "IMPMAL.XP"}}</div>
-                </div>
-                {{#each actor.system.xp.other.list}}
-                <div data-index="{{@key}}">
-                    <input type="text" class="name other-edit" name="description" value="{{this.description}}" {{#unless ../canEditXP}} disabled {{/unless}}>
-                    <input type="number" class="xp other-edit" name="xp" value="{{this.xp}}" {{#unless ../canEditXP}} disabled {{/unless}}>
-                </div>
-                {{/each}}
-                <div>
-                    <input type="text" class="name other-new" name="description" {{#unless canEditXP}} disabled {{/unless}}>
-                    <input type="number" class="xp other-new" name="xp" {{#unless canEditXP}} disabled {{/unless}}>
-                </div>
-            </div>
+<div>
+<section class="tab {{tabs.characteristics.cssClass}}" data-group="sheet" data-tab="characteristics">
+    <div class="advancement-list">
+        <div class="header">
+            <div class="name">{{localize "IMPMAL.Characteristic"}}</div>
+            <div class="advances">{{localize "IMPMAL.Advances"}}</div>
+            <div class="total">{{localize "IMPMAL.Total"}}</div>
         </div>
-        <div class="advancement-info">
-                <div class="value">
-                    {{object.system.xp.spent}}
+        {{#each actor.system.characteristics}}
+            <div class="characteristic">
+                <div class="name">
+                    {{configLookup "characteristics" @key}}
                 </div>
-                 <i class="fa-solid fa-arrow-right"></i>
-                 <div class="value {{#if (gt 0 actor.system.xp.available)}}overspent{{/if}}">
-                    {{actor.system.xp.spent}}
-                 </div>
+                <div class="advances">
+                    <a data-action="stepValue" data-type="decrease" data-characteristic="{{@key}}"><i class="fa-regular fa-square-minus"></i></a>
+                    <span class="value">{{this.advances}}</span>
+                    <a data-action="stepValue" data-type="increase" data-characteristic="{{@key}}"><i class="fa-regular fa-square-plus"></i></a>
+                </div>
+                <div class="total">
+                    {{this.total}}
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
+<section class="tab {{tabs.skills.cssClass}}" data-group="sheet" data-tab="skills">
+    <div class="advancement-list">
+        <div class="header">
+            <div class="name">{{localize "IMPMAL.Skill"}}</div>
+            <div class="advances">{{localize "IMPMAL.Advances"}}</div>
+            <div class="total">{{localize "IMPMAL.Total"}}</div>
+        </div>
+        {{#each actor.system.skills}}
+            <div class="skill">
+                <div class="name">{{configLookup "skills" @key}}</div>
+                <div class="advances">
+                    <a data-action="stepValue" data-type="decrease" data-skill="{{@key}}"><i class="fa-regular fa-square-minus"></i></a>
+                    <span class="value">{{this.advances}}</span>
+                    <a data-action="stepValue" data-type="increase" data-skill="{{@key}}"><i class="fa-regular fa-square-plus"></i></a>
+                </div>
+                <div class="total">{{this.total}}</div>
+            </div>
+            {{#each this.specialisations}}
+                <div class="skill">
+                    <div class="name">{{configLookup "skills" this.system.skill}} ({{this.name}})</div>
+                    <div class="advances">
+                        <a data-action="stepValue" data-type="decrease" data-item="{{this.id}}"><i class="fa-regular fa-square-minus"></i></a>
+                        <span class="value">{{this.system.advances}}</span>
+                        <a data-action="stepValue" data-type="increase" data-item="{{this.id}}"><i class="fa-regular fa-square-plus"></i></a>
+                    </div>
+                    <div>{{this.system.total}}</div>
+                </div>
+            {{/each}}
+        {{/each}}
+    </div>
+</section>
+<section class="tab {{tabs.items.cssClass}}" data-group="sheet" data-tab="items">
+    <div class="advancement-list">
+        <p>All Owned Items that have an associated XP Cost</p>
+        <div class="header">
+            <div class="name">{{localize "Name"}}</div>
+            <div class="xp">{{localize "IMPMAL.XP"}}</div>
+        </div>
+        {{#each talentsAndPowers}}
+            <div data-id="{{this.id}}">
+                <input type="text" class="name" disabled value="{{this.name}}">
+                <input type="number" disabled class="xp" value="{{this.system.xp}}">
+            </div>
+        {{/each}}
+    </div>
+</section>
+<section class="tab {{tabs.log.cssClass}}" data-group="sheet" data-tab="log">
+    <div class="advancement-list">
+        <p>Record of all the changes in XP Total and the associated reason.</p>
+        <div class="header">
+            <div class="name">{{localize "IMPMAL.Reason"}}</div>
+            <div class="xp">{{localize "IMPMAL.XP"}}</div>
+            <div class="xp">{{localize "IMPMAL.Total"}}</div>
+            <a></a>
+        </div>
+        {{#each actor.system.xp.log.list}}
+            <div data-index="{{@key}}" class="log-entry">
+                <input type="text" class="name" data-action="editType" data-type="log" name="reason" value="{{this.reason}}">
+                <input type="number" class="xp log" value="{{this.xp}}" disabled>
+                <input type="number" class="xp log" value="{{this.total}}" disabled>
+                {{#if ../canEditXP}} <a class="log-remove" data-action="removeType" data-type="log"><i class="fa-solid fa-xmark"></i></a>{{/if}}
+            </div>
+        {{/each}}
+    </div>
+</section>
+<section class="tab {{tabs.other.cssClass}}" data-group="sheet" data-tab="other">
+    <div class="advancement-list">
+        <p>Miscellaneous modifications to total spent XP</p>
+        <div class="header">
+            <div class="name">{{localize "IMPMAL.Description"}}</div>
+            <div class="xp">{{localize "IMPMAL.XP"}}</div>
+        </div>
+        {{#each actor.system.xp.other.list}}
+            <div data-index="{{@key}}">
+                <input type="text" class="name" data-action="editType" data-type="other" name="description" value="{{this.description}}" {{#unless
+                    ../canEditXP}} disabled {{/unless}}>
+                <input type="number" class="xp" data-action="editType" data-type="other" name="xp" value="{{this.xp}}" {{#unless ../canEditXP}}
+                    disabled {{/unless}}>
+            </div>
+        {{/each}}
+        <div>
+            <input type="text" class="name" data-action="addType" data-type="other" name="description" {{#unless canEditXP}} disabled {{/unless}}>
+            <input type="number" class="xp" data-action="addType" data-type="other" name="xp" {{#unless canEditXP}} disabled {{/unless}}>
         </div>
     </div>
-    <button type="submit">{{localize "Submit"}}</button>
-</form>
+</section>
+
+
+<div class="advancement-info">
+    <div class="value">
+        {{document.system.xp.spent}}
+    </div>
+    <i class="fa-solid fa-arrow-right"></i>
+    <div class="value {{#if (gt 0 actor.system.xp.available)}}overspent{{/if}}">
+        {{actor.system.xp.spent}}
+    </div>
+</div>
+</div>

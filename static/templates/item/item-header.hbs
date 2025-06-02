@@ -1,0 +1,43 @@
+<div class="sheet-header">
+    <img data-action="editImage" data-edit="img" src="{{item.img}}" {{#if (eq item.img "modules/warhammer-lib.assets/blank.png")}}class="img-border"{{/if}}>
+    <div class="header-fields">
+        <div class="details-row name">
+            <input  type="text" name="name" value="{{source.name}}">
+        </div>
+            {{#if item.system.isPhysical}}
+            <div class="flexrow attribute-row">
+
+                <div class="attribute-box single">
+                    <div class="label" style="grid-column: 1 / span 4"><label class="centered">{{localize "IMPMAL.Qty."}}</label></div>
+                    <div class="field" style="grid-column: 5 / span 8"><input type="number" name="system.quantity" value="{{system.quantity}}"></div>
+                </div>
+
+                <div class="attribute-box single">
+                    <div class="label" style="grid-column: 1 / span 4"><label class="centered">{{localize "IMPMAL.Cost"}}</label></div>
+                    <div class="field" style="grid-column: 5 / span 8"><input type="number" name="system.cost" value="{{system.cost}}"></div>
+                </div>
+            </div>
+            <div class="flexrow attribute-row">
+                <div class="attribute-box single">
+                    <div class="label" style="grid-column: 1 / span 4"><label class="centered">{{localize "IMPMAL.Enc."}}</label></div>
+                    <div class="field" style="grid-column: 5 / span 8"><input type="number" name="system.encumrbance.value" value="{{system.encumbrance.value}}"></div>
+                </div>
+
+                <div class="attribute-box single">
+                    <div class="label" style="grid-column: 1 / span 4"><label class="centered">{{localize "IMPMAL.Avail."}}</label></div>
+                    <div class="field" style="grid-column: 5 / span 8">
+                        <select name="system.availability">
+                        {{#select system.availability}}
+                            <option value=""></option>
+                            {{#each (config "availability")}}
+                                <option value="{{@key}}">{{this}}</option>
+                            {{/each}}
+                            <option value="other">{{localize "IMPMAL.Other"}}</option>
+                        {{/select}}
+                    </select>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+</div>

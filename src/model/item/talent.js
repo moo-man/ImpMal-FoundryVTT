@@ -33,12 +33,13 @@ let fields = foundry.data.fields;
 
 export class TalentModel extends StandardItemModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.talent"];
     static defineSchema() 
     {
         let schema = super.defineSchema();
         schema.requirement = new fields.SchemaField({
             value : new fields.StringField(),
-            script : new fields.StringField()
+            script : new fields.JavaScriptField()
         });
         schema.taken = new fields.NumberField({initial : 1});
         schema.xpCost = new fields.NumberField({initial : 100, min: 0});

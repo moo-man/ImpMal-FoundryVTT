@@ -7,7 +7,6 @@ export class BaseTest extends WarhammerTestBase
 
     static contextClass = TestContext;
     static evaluatorClass = BaseTestEvaluator;
-    static chatType = CONST.CHAT_MESSAGE_TYPES.ROLL;
     rollTemplate = "systems/impmal/templates/chat/rolls/roll.hbs";
     testDetailsTemplate = "";
     itemSummaryTemplate = "systems/impmal/templates/item/partials/item-summary.hbs";
@@ -16,9 +15,12 @@ export class BaseTest extends WarhammerTestBase
     {
         super();
 
-        this.data = mergeObject(data, this._defaultData(), {overwrite : false, recursive : true});
+        this.data = foundry.utils.mergeObject(data, this._defaultData(), {overwrite : false, recursive : true});
         this.context = new this.constructor.contextClass(context);
-        this.context.breakdown = this._formatBreakdown(this.context.breakdownData);
+        if (this.context.breakdownData)
+        {
+            this.context.breakdown = this._formatBreakdown(this.context.breakdownData);
+        }
         this.data.target = this.computeTarget();
         if (!result)
         {
@@ -78,7 +80,7 @@ export class BaseTest extends WarhammerTestBase
     {
         await this.result.evaluate(this.data, this.context.rollMode);
         // Save roll
-        mergeObject(this.data.result, this.result.getPersistentData());
+        foundry.utils.mergeObject(this.data.result, this.result.getPersistentData());
         if (render)
         {
             this.sendToChat();
@@ -100,13 +102,13 @@ export class BaseTest extends WarhammerTestBase
         {
             if (this.context.fateReroll)
             {
-                ui.notifications.error("IMPMAL.ErrorFateRerollUsed");
+                ui.notifications.error("IMPMAL.ErrorFateRerollUsed", {localize : true});
                 throw game.i18n.localize("IMPMAL.ErrorFateRerollUsed");
             }
 
             if(this.actor.system.fate.value <= 0)
             {
-                ui.notifications.error("IMPMAL.ErrorNoFateLeft");
+                ui.notifications.error("IMPMAL.ErrorNoFateLeft", {localize : true});
                 throw game.i18n.localize("IMPMAL.ErrorNoFateLeft");
             }
 
@@ -124,13 +126,13 @@ export class BaseTest extends WarhammerTestBase
         {
             if (this.context.fateAddSL)
             {
-                ui.notifications.error("IMPMAL.ErrorFateSLUsed");
+                ui.notifications.error("IMPMAL.ErrorFateSLUsed", {localize : true});
                 throw game.i18n.localize("IMPMAL.ErrorFateSLUsed");
             }
 
             if(this.actor.system.fate.value <= 0)
             {
-                ui.notifications.error("IMPMAL.ErrorNoFateLeft");
+                ui.notifications.error("IMPMAL.ErrorNoFateLeft", {localize : true});
                 throw game.i18n.localize("IMPMAL.ErrorNoFateLeft");
             }
 
@@ -144,7 +146,7 @@ export class BaseTest extends WarhammerTestBase
 
     modify(data)
     {
-        mergeObject(this, data);
+        foundry.utils.mergeObject(this, data);
         this.roll();
     }
 
@@ -201,8 +203,8 @@ export class BaseTest extends WarhammerTestBase
     {
         return {
             data : this.data,
-            context : this.context,
-            result : this.result,
+            context : {...this.context},
+            result : {...this.result},
             class : this.constructor.name
         };
     }
@@ -211,7 +213,7 @@ export class BaseTest extends WarhammerTestBase
     {
         if (this.item instanceof Item)
         {
-            this.itemSummary = await renderTemplate(this.itemSummaryTemplate, mergeObject(await this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
+            this.itemSummary = await renderTemplate(this.itemSummaryTemplate, foundry.utils.mergeObject(await this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
         }
         this.effectButtons = await renderTemplate("modules/warhammer-lib/templates/partials/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
         if (this.testDetailsTemplate)
@@ -220,14 +222,14 @@ export class BaseTest extends WarhammerTestBase
         }
         let chatData = ChatMessage.applyRollMode({}, this.context.rollMode);
         let content = await renderTemplate(this.rollTemplate, this);
-        return mergeObject( chatData, {
+        return foundry.utils.mergeObject( chatData, {
             content,
             title : this.context.title,
             speaker : this.context.speaker,
             flavor: this.context.title,
             type : "test",     
             rollMode : this.context.rollMode,                                         // Trigger DSN
-            rolls : this.constructor.chatType == CONST.CHAT_MESSAGE_TYPES.ROLL ? ([this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject]) : [], 
+            rolls : this.result.rollObject ? ([this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject]) : [], 
             system : this._saveData()
         });
     }
@@ -235,7 +237,7 @@ export class BaseTest extends WarhammerTestBase
     get tags() 
     {
         // Tags from context are saved, tags from results are computed
-        let tags = Object.values(mergeObject(foundry.utils.deepClone(this.context.tags), this.result.tags));
+        let tags = Object.values(foundry.utils.mergeObject(foundry.utils.deepClone(this.context.tags), this.result.tags));
         if (this.context.superiorityUsed)
         {
             tags.push(game.i18n.localize("IMPMAL.Superiority"));
@@ -246,7 +248,7 @@ export class BaseTest extends WarhammerTestBase
     get text() 
     {
         // Tags from context are saved, tags from results are computed
-        let text = Object.values(mergeObject(foundry.utils.deepClone(this.context.text), this.result.text));
+        let text = Object.values(foundry.utils.mergeObject(foundry.utils.deepClone(this.context.text), this.result.text));
         return text;
     }
 

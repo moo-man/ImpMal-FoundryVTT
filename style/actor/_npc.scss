@@ -1,0 +1,112 @@
+body.theme-light .application.actor.impmal.npc {
+    --characteristic-border: var(--color-dark-6);
+    --section-border: var(--color-dark-6);
+}
+
+.application.actor.impmal.npc
+{
+    --section-border: var(--color-cool-3);
+    --characteristic-border: var(--color-cool-3);
+
+    .characteristic-table {
+        input:not([type=chekcbox], [type=range]) {
+            border: 0px;
+            border-radius: 0px;
+        }
+        tr {
+            i {
+                margin-right: calc(-1 * var(--font-size-14));
+            }
+
+            .hover-icon {
+                i {
+                    visibility: hidden;
+                }
+
+                &:hover {
+                    i {
+                        visibility: visible;
+                    }
+                }
+            }
+            td:first-of-type {
+                text-align: unset;
+                width: unset;
+            }
+            td {
+                > * {
+                    width: 100%;
+                }
+            }
+        }
+        tr:last-of-type {
+            border-bottom: 0px;
+        }
+    }
+
+    .npc-header {
+        .attribute-box {
+            height: 4rem;
+            .label {
+                height: unset;
+            }
+            .field {
+                height: unset;
+            }
+            input {
+                height: 100%;
+            }
+        }
+    }
+
+    .armour-properties {
+        .plus {
+            width: unset;
+            margin: 0px 5px;
+        }
+
+        .locations {
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-around;
+            background: var(--color-cool-4);
+            .location {
+                height: 30px;
+                .location-values {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    line-height: 15px;
+                    font-size: var(--font-size-12);
+                    align-items: center;
+                }
+            }
+        }
+
+    }
+
+    .sheet-list {
+        .list-name {
+            .label {
+
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+        .trait-description {
+            line-height: 1rem;
+        }
+    }
+
+    .item-section.skills {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap : 0.5rem;
+        > a {
+            margin-left: 5px;
+        }
+    }
+}

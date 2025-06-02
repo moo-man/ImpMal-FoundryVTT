@@ -2,7 +2,7 @@ import fs from "fs";
 import foundryPath from "./foundry-path.js";
 import copy from "rollup-plugin-copy-watch";
 import postcss from "rollup-plugin-postcss";
-import jscc from "rollup-plugin-jscc";
+import bakedEnv from "rollup-plugin-baked-env";
 
 let manifest = JSON.parse(fs.readFileSync("./system.json"));
 
@@ -19,9 +19,7 @@ export default {
         clearScreen: true
     },
     plugins: [
-        jscc({      
-            values : {_ENV :  process.env.NODE_ENV}
-        }),
+        bakedEnv(),
         copy({
             targets : [
                 {src : "./template.json", dest : systemPath},

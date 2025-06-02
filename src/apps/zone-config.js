@@ -4,12 +4,14 @@ export default class ZoneConfig extends WarhammerZoneConfig
     static PARTS = {
         tabs : {template : "modules/warhammer-lib/templates/partials/sheet-tabs.hbs"},
         config: { template: this.configTemplate },
-        effects : { template : "modules/warhammer-lib/templates/apps/zone-effects.hbs" }
+        effects : { template : "modules/warhammer-lib/templates/apps/zone-effects.hbs" },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
     };
 
 
-    static DEFAULT_OPTIONS = 
-    {
-        //classes : ["impmal"], 
+    static DEFAULT_OPTIONS = {
+        classes : ["impmal"], 
     };
 }
