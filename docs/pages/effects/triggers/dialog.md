@@ -145,30 +145,28 @@ if (args.fields.hitLocation != "roll" && this.item.system.taken >= 2)
 ---
 
 
-### Argumentative Talent
+### Submission Script Example
 
-**Usage**: Argumentative has a normal Talent bonus: `Charm Tests when arguing and debating`, but also an additional effect of using the ones value of the roll as the SL of the test.  
+**Usage**: Disables an effect after it's been "used" in the dialog
 
 #### Hide
 ```js
-return args.skill?.name != "Charm";
+// No Hide script
 ```
 
 #### Activate
 ```js
-// No Activation script, there's no way to tell if the character is "arguing or debating"
+// No Activate script, this should be manually activated
 ```
 
 #### Submission
 ```js
-args.options.useOnesArgumentative = true;
+this.effect.update({disabled : true})
 ```
 
 #### Script
 ```js
-args.fields.successBonus++;
+    args.advantage++;
 ```
 
-**Notes** As mentioned above, there's two things this talent does, add success SL like normal talents, but also using the ones value of the roll as the SL, both of these fall under the same condition of "arguing or debating" so we can handle them together, however, we can't do everything with one script.
-
-The **Submission Script** is `args.options.useOnesArgumentative = true;`, this adds a property to the `options` of the dialog, which is merged into the `options` property of the test itself. We can use this in conjunction with another script, see the [Roll Test](./rollTest#argumentative-talent) trigger to see how we can complete the Argumentative effect.
+**Notes** This disables the effect when the user clicks on the modifier in the dialog, granting them advantage. The effect can then be re-enabled manually whenever it can be used again.

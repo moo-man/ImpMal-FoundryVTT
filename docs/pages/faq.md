@@ -23,46 +23,40 @@ See the page on [Buying, Registering, Installing, and Activating Premium Content
 
 ## Usage
 
-### How do I create new Careers?
+### How doees Opposed Test / Attacking work?
 
 {: .question}
-There is nothing more special about creating a Career than any other Item. See the [Foundry Knowledge Base Article](https://foundryvtt.com/article/items/). Additionally, see [Careers](./basics/careers.md) for more information on how Careers work.
+See [the Flow of Combat](./basics/combat.md)
 
-### Why can't I see pins on the map? Like on the Reikland Scene, or the Ubersreik Scene
+### How do I configure Zones?
+See [Using Zones](./basics/zones.md)
+
+### How do I advance characteristics and skillS?
+
+{: .question}
+See the [Advancement](./basics/advancement.md) window.
+
+### How do I advance skills and add talents without spending experience during character creation?
+
+{: .question}
+The amount of XP spent is re-calculated every time the Actor is updated, and it doesn't know what advancement or Item may have come from character creation, resulting in some amount of XP spent. This can be fixed by adding an "Offset" in the [Advancement](./basics/advancement.md) window. If using the automated character creator, it will automatically add this offset.
+
+### Why can't I see pins on the map? Like on the Macharian Sector Scene?
 
 {: .question}
 Journal Pins / Notes on a Scene are only visible whe on the Notes layer  (the dovetail flag on the left side controls). For more details, see the [Knowledge Base](https://foundryvtt.com/article/map-notes/)
 
-### I'm trying to change the Token size for an Actor, but it keeps reverting!
+### The Macharian Sector map has Journal pins that don't do anything when I click them!
 
 {: .question}
-See the [Actor Settings](./basics/basics.md#actor-settings) menu for how to disable certain automatic behaviors.
+There are many more icons/labels/locations on the map than are detailed in the book. Everything not detailed still has a journal pin, but with no journal reference, these merely serve as labels. If a future book adds detail to them, I will try to add the reference to the pin in the sector map
 
-### Why can't Players see the rolled number and target number when I (the GM) roll Tests?
-
-{: .question}
-By default these are hidden. This can be toggled via **Configure Settings** → **System Settings** → **Hide Test Data**
-
-## Character Creation
-
-### How can I include Gnomes or Ogres in character creation?
+### How do I use/add Psychic Powers?
 
 {: .question}
-You need to tell the system what Table to use during character generation. This can be done via **Configure Settings** → **System Settings** → **Table settings**.
+The Powers tab appears on a character sheet only if they have a Psychic Power to begin with, so you'll need to add one to the Actor, either from the world or a Compendium.
 
-### Why aren't both Gnomes and Ogres showing up in Character Creation when I have both modules that add them? How can I get them both available?
-
-{: .question}
-Well, the simple answer is that no book/module has ever defined a table that has both Gnomes and Ogres on it, but you can always make your own or modify the existing one. Either duplicate or create a new Rollable Table (make sure it has the `key` of `species`, at the top of the table sheet), add the Species you want, and select the table to be used for Character Creation, as described above.
-
-### How can I create a new Species for Character Creation?
+###  What Chat Commands are available?
 
 {: .question}
-See [Creating a new Species]() (WIP)
-
-## Modules
-
-### How can I print the WFRP character sheets for my players?
-
-{: .question}
-[This module](https://foundryvtt.com/packages/wfrp4e-actor-sheet-print) is built specifially for converting WFRP sheets to PDF. Whether or not it is currently updated and usable, I cannot confirm. 
+See [Chat Commands](./basics/commands.md), also enter in `/help` within Foundry.
