@@ -1,4 +1,4 @@
-export class CorruptionMessageModel extends foundry.abstract.DataModel 
+export class CorruptionMessageModel extends WarhammerMessageModel 
 {
     static defineSchema() 
     {

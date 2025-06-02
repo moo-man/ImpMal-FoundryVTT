@@ -1,6 +1,6 @@
 import RewardDialog from "../../apps/reward-dialog";
 
-export class RewardMessageModel extends foundry.abstract.DataModel 
+export class RewardMessageModel extends WarhammerMessageModel 
 {
     static defineSchema() 
     {
@@ -18,15 +18,13 @@ export class RewardMessageModel extends foundry.abstract.DataModel
 
     static get actions() 
     { 
-        foundry.utils.mergeObject(super.actions, {
+        return foundry.utils.mergeObject(super.actions, {
             receiveReward :  this._onReceiveReward
         });
     }
 
     static _onReceiveReward(ev, target)
     {
-        let el = $(ev.target);
-
         let actors=[];
 
         if (game.user.isGM)

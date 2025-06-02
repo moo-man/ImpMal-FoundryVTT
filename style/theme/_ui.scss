@@ -70,6 +70,15 @@
         }
     }
 
+    #menu {
+      background-image: url(./assets/ui/grid.webp);
+      background-size: cover;
+      border: 3px double var(--impmal-lightgreen);
+      border-radius: 2px;
+  }
+
+
+
     
     #players-inactive,
       #players-active {
@@ -84,4 +93,20 @@
           color: var(--impmal-lightgreen);
       }
   }
+  }
+
+  body:not(.no-theme) 
+  {
+    #context-menu {
+
+      --background-color: var(--color-dark-6);
+      --text-color: var(--impmal-grey2);
+      --hover-text-color: var(--color-text-emphatic);
+      --hover-entry-background: var(--impmal-darkgreen);
+
+      background-image: url(./assets/ui/grid.webp);
+      background-size: cover;
+      border: 3px double var(--impmal-lightgreen);
+      border-radius: 2px;
+    }
   }

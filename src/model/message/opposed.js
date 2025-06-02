@@ -1,6 +1,6 @@
 import { OpposedTestResult } from "../../system/tests/opposed-result";
 
-export class OpposedTestMessageModel extends foundry.abstract.DataModel 
+export class OpposedTestMessageModel extends WarhammerMessageModel 
 {
     static defineSchema() 
     {
@@ -17,7 +17,7 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
 
     static get actions() 
     { 
-        foundry.utils.mergeObject(super.actions, {
+        return foundry.utils.mergeObject(super.actions, {
             clickResponse : this._onClickResponse,
             applyDamage : this._onApplyDamage,
             applyZoneEffect : this.onApplyZoneEffect
@@ -119,7 +119,7 @@ export class OpposedTestMessageModel extends foundry.abstract.DataModel
     {
         if (target.dataset.type)
         {
-            this.system.performResponse(target.dataset.type, target.dataset.uuid);
+            this.performResponse(target.dataset.type, target.dataset.uuid);
         }
     }
 

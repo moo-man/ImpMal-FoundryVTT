@@ -1,7 +1,7 @@
 import { AvailabilityDialog } from "../../apps/test-dialog/availability-dialog";
 import { AvailabilityTest } from "../../system/tests/availability/availability-test";
 
-export class PostedItemMessageModel extends foundry.abstract.DataModel 
+export class PostedItemMessageModel extends WarhammerMessageModel
 {
     static defineSchema() 
     {
@@ -26,7 +26,7 @@ export class PostedItemMessageModel extends foundry.abstract.DataModel
 
     static get actions() 
     { 
-        foundry.utils.mergeObject(super.actions, {
+        return foundry.utils.mergeObject(super.actions, {
             rollAvailability : this._onRollAvailability,
             buyItem :  this._onBuyItem
         });
@@ -41,7 +41,6 @@ export class PostedItemMessageModel extends foundry.abstract.DataModel
     {
         this.buyItem(game.user.character);
     }
-
 
     async rollAvailability()
     {
@@ -86,22 +85,7 @@ export class PostedItemMessageModel extends foundry.abstract.DataModel
             ui.notifications.error(game.i18n.format("IMPMAL.ErrorNotEnoughSolars", {name : actor.name}));
         }
     }
-    
-    static itemPostListeners(html)
-    {
-        let id = html[0].dataset.messageId;
-        let message = game.messages.get(id);
-        if (message.type == "item")
-        {
-            let post = html.find(".item-post")[0]
-            post.draggable = true; 
-            post.addEventListener("dragstart", ev => 
-            {
-                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "Item", data : message.system.itemData}));
-            });
 
-        }
-    }
 
     get item()
     {

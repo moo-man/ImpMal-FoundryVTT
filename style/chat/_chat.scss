@@ -1,6 +1,25 @@
-#chat-log {
+.chat-log {
     .chat-message {
         transition: box-shadow 200ms;
+        .message-metadata {
+            flex-direction: column;
+        }
+
+        .message-header {
+            align-items: center;
+            
+            .message-token {
+                margin: -5px;
+                margin-right: 0.5rem;
+                display: flex;
+                flex: 0 0 50px;
+
+                img {
+                    height: 50px;
+                    width: 50px;
+                }
+            }
+        }
     }
     .chat-message.highlight-delayed,
         .chat-message.highlight {

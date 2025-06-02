@@ -7,6 +7,8 @@ body:not(.no-theme) #chat-popout,
 
     --color-scrollbar:  var(--impmal-lightgreen);
 
+    @include link-styles(var(--impmal-lightgreen));
+
     textarea {
         background: rgba(28, 49, 50, 0.7);
         color: #DDD;

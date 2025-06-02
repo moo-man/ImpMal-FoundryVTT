@@ -1040,7 +1040,7 @@ const IMPMAL = {
                     scriptData: [
                         {
                             label: "All Tests are Very Hard (-30)",
-                            script: "args.fields.difficultTerrainy = 'veryHard';",
+                            script: "args.fields.difficulty = 'veryHard';",
                             trigger: "dialog",
                             options: {
                                     hideScript: ``,

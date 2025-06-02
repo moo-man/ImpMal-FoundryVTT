@@ -1,4 +1,6 @@
-import { EditTestForm } from "../apps/edit-test";
+import EditTestForm from "../apps/edit-test";
+import { PostedItemMessageModel } from "../model/message/item";
+import ChatHelpers from "./chat-helpers";
 import ImpMalTables from "./tables";
 
 export class ImpMalChatMessage extends WarhammerChatMessage 
@@ -7,6 +9,16 @@ export class ImpMalChatMessage extends WarhammerChatMessage
     {
         await super._onCreate(data, options, userId);
         await this.system.test?.context?.handleOpposed(this);
+
+        let reward = this.getFlag("impmal", "rewardReceived")
+        if (reward && game.users.activeGM.id == game.user.id)
+        {
+            let source = game.messages.get(reward.source);
+            if (source)
+            {
+                source.update({"system.receivedBy" : source.system.receivedBy.concat(reward.actor)})
+            }
+        }
     }
 
     async _onUpdate(data, options, userId)
@@ -15,9 +27,14 @@ export class ImpMalChatMessage extends WarhammerChatMessage
         await this.system.test?.context?.handleOpposed(this, true);
     }
 
-    static chatListeners(html)
+
+    /** @inheritDoc */
+    async renderHTML(options)
     {
+        let html = await super.renderHTML(options);
+        ChatHelpers.removeGMOnlyElements(html);
         ImpMalTables.listeners(html);
+        return html;
     }
 
     static addTestContextOptions(options)

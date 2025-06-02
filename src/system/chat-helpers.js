@@ -44,9 +44,9 @@ export default class ChatHelpers
 
     static addOpposedHighlightListeners(html)
     {
-        html.on("mouseover", ".opposed .token", TokenHelpers.onHoverInOpposedImg.bind(TokenHelpers));
-        html.on("click", ".opposed .token", TokenHelpers.onClickOpposedImg.bind(TokenHelpers));
-        html.on("dblclick", ".opposed .token", TokenHelpers.onDoubleClickOpposedImg.bind(TokenHelpers));
-        html.on("mouseout", ".opposed .token", TokenHelpers.onHoverOutOpposedImg.bind(TokenHelpers));
+        html.querySelector(".opposed .token")?.addEventListener("mouseover", TokenHelpers.onHoverInOpposedImg.bind(TokenHelpers));
+        html.querySelector(".opposed .token")?.addEventListener("click", TokenHelpers.onClickOpposedImg.bind(TokenHelpers));
+        html.querySelector(".opposed .token")?.addEventListener("dblclick", TokenHelpers.onDoubleClickOpposedImg.bind(TokenHelpers));
+        html.querySelector(".opposed .token")?.addEventListener("mouseout", TokenHelpers.onHoverOutOpposedImg.bind(TokenHelpers));
     }
 }

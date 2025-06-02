@@ -63,6 +63,7 @@
     .sheet-list.skills {
         font-family: monospace;
         margin: 0px;
+        --skill-branch: var(--impmal-lightblue);
 
         .list-name {
             font-family: "Novarese";
@@ -93,13 +94,6 @@
 
             &.specialisation {
                 border-top: none;
-                &:before {
-                    border-color: var(--impmal-lightblue);
-                }
-
-                .skill-name:before {
-                    border-color: var(--impmal-lightblue);
-                }
             }
         }
     }

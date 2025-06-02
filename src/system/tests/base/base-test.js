@@ -102,13 +102,13 @@ export class BaseTest extends WarhammerTestBase
         {
             if (this.context.fateReroll)
             {
-                ui.notifications.error("IMPMAL.ErrorFateRerollUsed");
+                ui.notifications.error("IMPMAL.ErrorFateRerollUsed", {localize : true});
                 throw game.i18n.localize("IMPMAL.ErrorFateRerollUsed");
             }
 
             if(this.actor.system.fate.value <= 0)
             {
-                ui.notifications.error("IMPMAL.ErrorNoFateLeft");
+                ui.notifications.error("IMPMAL.ErrorNoFateLeft", {localize : true});
                 throw game.i18n.localize("IMPMAL.ErrorNoFateLeft");
             }
 
@@ -126,13 +126,13 @@ export class BaseTest extends WarhammerTestBase
         {
             if (this.context.fateAddSL)
             {
-                ui.notifications.error("IMPMAL.ErrorFateSLUsed");
+                ui.notifications.error("IMPMAL.ErrorFateSLUsed", {localize : true});
                 throw game.i18n.localize("IMPMAL.ErrorFateSLUsed");
             }
 
             if(this.actor.system.fate.value <= 0)
             {
-                ui.notifications.error("IMPMAL.ErrorNoFateLeft");
+                ui.notifications.error("IMPMAL.ErrorNoFateLeft", {localize : true});
                 throw game.i18n.localize("IMPMAL.ErrorNoFateLeft");
             }
 
@@ -203,8 +203,8 @@ export class BaseTest extends WarhammerTestBase
     {
         return {
             data : this.data,
-            context : this.context,
-            result : this.result,
+            context : {...this.context},
+            result : {...this.result},
             class : this.constructor.name
         };
     }

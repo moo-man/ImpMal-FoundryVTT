@@ -85,11 +85,11 @@ export default class ImpMalTables
     {
         html.querySelectorAll(".table-roll").forEach(e => {
             e.addEventListener("click", ev => {
-                let key = ev.currentTarget.dataset.table;
-                let formula = ev.currentTarget.dataset.formula;
-                let modifier = ev.currentTarget.dataset.modifier;
+                let key = ev.target.dataset.table;
+                let formula = ev.target.dataset.formula;
+                let modifier = ev.target.dataset.modifier;
     
-                let messageId = $(ev.currentTarget).parents(".message").attr("data-message-id");
+                let messageId = ev.target.closest(".message").dataset.messageId
                 let test = game.messages.get(messageId)?.system.test;
             
     

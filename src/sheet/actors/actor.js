@@ -646,20 +646,6 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         this.actor.damageArmour(key, value, this.actor.items.get(id));
     }
 
-    static _toggleLocationDropdown(ev)
-    {
-        let details = $(ev.currentTarget).find(".location-details");
-        if (details.hasClass("collapsed"))
-        {
-            details.slideDown(200);
-        }
-        else 
-        {
-            details.slideUp(200);
-        }
-        details.toggleClass("collapsed");
-    }
-
     _onAddEffect(ev)
     {
         let id = ev.target.value;

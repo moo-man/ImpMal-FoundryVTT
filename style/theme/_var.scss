@@ -358,9 +358,45 @@
   }
 }
 
+
+@mixin link-styles($color: var(--impmal-lightblue))
+{
+  a.custom-link,
+  a.inline-roll,
+  a.content-link {
+    color: $color;
+    background: none;
+    border: none;
+    font-weight: bold;
+
+    i {
+      color: $color;
+    }
+
+    &.broken {
+      color: darkred;
+      background: rgba(255, 0, 0, 0.05);
+      border: 1px dashed red;
+
+      i {
+        color: darkred;
+      }
+
+      font-weight: bold;
+    }
+
+
+    img {
+      filter: invert(26%) sepia(31%) saturate(2005%) hue-rotate(145deg) brightness(94%) contrast(95%);
+    }
+  }
+}
+
 @mixin editor-content() {
 
   font-family: "MinionPro";
+
+  @include link-styles();
 
   ul li::marker {
     font-family: OnlySkulls;
@@ -435,35 +471,6 @@
     color: var(--impmal-lightblue);
   }
 
-  a.custom-link,
-  a.inline-roll,
-  a.content-link {
-    color: var(--impmal-lightblue);
-    background: none;
-    border: none;
-    font-weight: bold;
-
-    i {
-      color: var(--impmal-lightblue);
-    }
-
-    &.broken {
-      color: darkred;
-      background: rgba(255, 0, 0, 0.05);
-      border: 1px dashed red;
-
-      i {
-        color: darkred;
-      }
-
-      font-weight: bold;
-    }
-
-
-    img {
-      filter: invert(26%) sepia(31%) saturate(2005%) hue-rotate(145deg) brightness(94%) contrast(95%);
-    }
-  }
 
   section.hook {
     background-clip: padding-box;
@@ -495,6 +502,8 @@
     margin: 10px;
     margin-left: 3px;
 
+    a.custom-link,
+    a.inline-roll,
     a.content-link {
       color: var(--impmal-lightgreen);
 
@@ -540,6 +549,8 @@
         font-weight: unset;
       }
 
+      a.custom-link,
+      a.inline-roll,
       a.content-link {
         color: var(--impmal-lightblue);
 
@@ -833,6 +844,8 @@
 
 @mixin editor-content-alt() {
 
+  @include link-styles(var(--impmal-lightgreen));
+
   font-family: "MinionPro";
 
   ul li::marker {
@@ -912,33 +925,4 @@
     color: var(--impmal-lightgreen);
   }
 
-
-
-  a.content-link {
-    padding: 0px;
-    border: none;
-    background: none;
-    color: var(--impmal-lightgreen);
-    font-weight: bold;
-
-    i {
-      color: var(--impmal-lightgreen);
-    }
-
-    &.broken {
-      color: darkred;
-      background: rgba(255, 0, 0, 0.05);
-      border: 1px dashed red;
-
-      i {
-        color: darkred;
-      }
-
-      font-weight: bold;
-    }
-
-    img {
-      filter: invert(74%) sepia(24%) saturate(1030%) hue-rotate(91deg) brightness(89%) contrast(93%);
-    }
-  }
 }

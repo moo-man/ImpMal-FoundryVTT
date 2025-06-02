@@ -1,28 +1,48 @@
-export class EditTestForm extends FormApplication
-{
-    static get defaultOptions() 
+export default class EditTestForm extends WHFormApplication {
+    static DEFAULT_OPTIONS = {
+        tag : "form",
+        classes : ["impmal", "edit-test"],
+        window : {
+            title: "IMPMAL.EditTest",
+            contentClasses: ["standard-form"],
+        },
+        form: {
+            handler: this.submit,
+        }
+    }
+
+    static PARTS = {
+
+        form: {
+            template: "systems/impmal/templates/apps/edit-test.hbs",
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    }
+    
+    constructor(test, options)
     {
-        const options = super.defaultOptions;
-        options.classes = options.classes.concat(["impmal", "edit-test"]);
-        options.title = game.i18n.localize("IMPMAL.EditTest");
-        options.resizable = true;
-        options.template = "systems/impmal/templates/apps/edit-test.hbs";
-        return options;
+        super(options);
+        this.test = test;
     }
 
 
-    getData() 
+    async _prepareContext() 
     {
-        let data = super.getData();
-        data.result = this.object.data.result;
-        return data;
+        let context = await super._prepareContext();
+        context.result = this.test.data.result;
+        return context;
     }
 
 
-    _updateObject(ev, formData)
+    static async submit(ev, form, formData)
     {
-        foundry.utils.mergeObject(this.object.data.result, formData);
-        this.object.roll();
-    }
+        // `data.result` allows us to set a value instead of determining it. i.e. `data.result.roll` is used instead of `data.roll` if it exists
+        foundry.utils.mergeObject(this.test.data.result, formData.object);
 
+        // State needs to be added directly to the test data
+        this.test.data.state = formData.object.state;
+        this.test.roll();
+    }
 }

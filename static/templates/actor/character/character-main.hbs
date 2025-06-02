@@ -36,7 +36,7 @@
             <td>{{localize "IMPMAL.Total"}}</td>
             {{#each system.characteristics}}
                 <td>
-                    <a class="roll" data-type="characteristic" data-key="{{@key}}">{{this.total}}</a>
+                    <a data-action="rollTest" data-type="characteristic" data-key="{{@key}}">{{this.total}}</a>
                 </td>
             {{/each}}
         </tr>
