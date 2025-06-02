@@ -1,6 +1,6 @@
 export default class Migration {
     static stats = {};
-    static MIGRATION_VERSION = "2.0.0"
+    static MIGRATION_VERSION = "3.0.0"
 
     // #region High Level Migration Handling
     static async migrateWorld(update=false, updateVersion=false) {
