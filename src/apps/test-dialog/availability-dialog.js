@@ -3,22 +3,29 @@ import { TestDialog } from "./test-dialog";
 
 export class AvailabilityDialog extends TestDialog
 {
-    subTemplate = `systems/impmal/templates/apps/test-dialog/availability-fields.hbs`;
+    static DEFAULT_OPTIONS = {
+        form : {
+            handler : this.submit,
+            submitOnChange : false,
+            closeOnSubmit : true,
+        }
+    };
 
-    activateListeners(html)
+
+    async _onRender(options)
     {
-        super.activateListeners(html);
-        html.find(".form-group:has([name='SL']")?.remove();
-        html.find(".form-group:has([name='difficulty']")?.remove();
+        await super._onRender(options);
+        this.element.querySelector(".form-group:has([name='SL']")?.remove();
+        this.element.querySelector(".form-group:has([name='difficulty']")?.remove();
     }
 
-    submit(ev) 
+    static submit(ev) 
     {
         ev.preventDefault();
         ev.stopPropagation();
         if (!this.fields.world)
         {
-            return ui.notifications.error(game.i18n.localize("IMPMAL.ErrorSelectWorld"));
+            throw new Error(game.i18n.localize("IMPMAL.ErrorSelectWorld"))
         }
         else 
         {
@@ -31,10 +38,36 @@ export class AvailabilityDialog extends TestDialog
         return true;
     }
 
+    static PARTS = {
+        fields : {
+            template : "systems/impmal/templates/apps/test-dialog/test-dialog.hbs",
+            fields: true
+        },
+        availability : {
+            template : "systems/impmal/templates/apps/test-dialog/availability-fields.hbs",
+            fields: true
+        },
+        state : {
+            template : "systems/impmal/templates/apps/test-dialog/dialog-state.hbs",
+            fields: true
+        },
+        mode : {
+            template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+            fields: true
+        },
+        modifiers : {
+            template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+            modifiers: true
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    }
+
     /**
      * 
      */
-    static setupData({item, world, availability}, actor, context, options)
+    static setupData({item, world, availability}, actor, context={}, options)
     {
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 

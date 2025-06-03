@@ -1,35 +1,37 @@
-<div class="form-group">
-    <label>{{localize "IMPMAL.World"}}</label>
-    <div class="form-fields">
-        <select name="world">
-            {{#select fields.world}}
-            <option value=""></option>
-                {{#each (config "worlds")}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            {{/select}}
-        </select>
-    </div>
-</div>
-
-<div class="form-group">
-    <label>{{localize "IMPMAL.Availability"}}</label>
-    <div class="form-fields">
-        <select name="availability">
-            {{#select fields.availability}}
-                {{#each (config "availability")}}
-                    {{#if @key}}
+<div class="availability-fields">
+    <div class="form-group">
+        <label>{{localize "IMPMAL.World"}}</label>
+        <div class="form-fields">
+            <select name="world">
+                {{#select fields.world}}
+                    <option value=""></option>
+                    {{#each (config "worlds")}}
                         <option value="{{@key}}">{{this}}</option>
-                    {{/if}}
-                {{/each}}
-            {{/select}}
-        </select>
+                    {{/each}}
+                {{/select}}
+            </select>
+        </div>
     </div>
-</div>
 
-<div class="form-group">
-    <label>{{localize "IMPMAL.Cost"}}</label>
-    <div class="form-fields">
-        <input type="number" name="cost" value="{{fields.cost}}">
+    <div class="form-group">
+        <label>{{localize "IMPMAL.Availability"}}</label>
+        <div class="form-fields">
+            <select name="availability">
+                {{#select fields.availability}}
+                    {{#each (config "availability")}}
+                        {{#if @key}}
+                            <option value="{{@key}}">{{this}}</option>
+                        {{/if}}
+                    {{/each}}
+                {{/select}}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>{{localize "IMPMAL.Cost"}}</label>
+        <div class="form-fields">
+            <input type="number" name="cost" value="{{fields.cost}}">
+        </div>
     </div>
 </div>

@@ -90,7 +90,7 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
         {
             let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
             const document = await fromUuid(uuid);
-            this.actor.createEmbeddedDocuments("ActiveEffect", [document.toObject()]);
+            this.item.createEmbeddedDocuments("ActiveEffect", [document.toObject()]);
         }
       },
     ];
@@ -126,7 +126,7 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
 
     static _onRollAvailability(ev, target)
     {
-        this.item.system.setupAvailabilityTest().then(test => test.sendToChat())
+        this.item.system.setupAvailabilityTest();
     }
 
     async _prepareContext(options) 

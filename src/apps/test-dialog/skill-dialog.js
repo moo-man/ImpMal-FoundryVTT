@@ -3,8 +3,6 @@ import { CharacteristicTestDialog } from "./characteristic-dialog";
 
 export class SkillTestDialog extends CharacteristicTestDialog
 {
-    subTemplate = `systems/impmal/templates/apps/test-dialog/skill-fields.hbs`;
-
 
     get skillItem() 
     {
@@ -20,6 +18,35 @@ export class SkillTestDialog extends CharacteristicTestDialog
     {
         return this.data.skill;
     }
+
+
+    static PARTS = {
+        fields : {
+            template : "systems/impmal/templates/apps/test-dialog/test-dialog.hbs",
+            fields: true
+        },
+        skill : {
+            template : "systems/impmal/templates/apps/test-dialog/skill-fields.hbs",
+            fields: true
+        },
+        state : {
+            template : "systems/impmal/templates/apps/test-dialog/dialog-state.hbs",
+            fields: true
+        },
+        mode : {
+            template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+            fields: true
+        },
+        modifiers : {
+            template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+            modifiers: true
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    }
+
+    
 
     /**
      * 

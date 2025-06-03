@@ -1,0 +1,27 @@
+<div class="state-fields">
+
+<div class="adv-dis">
+    <div>
+        <input type="radio" name="state" value="adv" {{checked (eq fields.state "adv" )}}>
+        <div class="state-label" {{#if tooltips.advantage}}data-tooltip-direction="LEFT"
+            data-tooltip="{{tooltips.advantage}}" {{/if}}>
+            <label>{{localize "IMPMAL.Advantage"}}</label>
+            <span class="state-value">{{advantage}}</span>
+        </div>
+    </div>
+    <div>
+        <input type="radio" name="state" value="none" {{checked (eq fields.state "none" )}}>
+        <div class="state-label">
+            <label class="state-label">{{localize "IMPMAL.Normal"}}</label>
+        </div>
+    </div>
+    <div>
+        <input type="radio" name="state" value="dis" {{checked (eq fields.state "dis" )}}>
+        <div class="state-label" {{#if tooltips.disadvantage}}data-tooltip-direction="LEFT"
+            data-tooltip="{{tooltips.disadvantage}}" {{/if}}>
+            <label>{{localize "IMPMAL.Disadvantage"}}</label>
+            <span class="state-value">{{disadvantage}}</span>
+        </div>
+    </div>
+</div>
+</div>

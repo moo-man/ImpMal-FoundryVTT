@@ -1,4 +1,4 @@
-<div class="dialog-fields">
+<div class="basic-fields">
 <div class="form-group" {{#if tooltips.modifier}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.modifier}}"
     {{/if}}>
     <label>{{localize "IMPMAL.Modifier"}}</label>
@@ -30,7 +30,6 @@
         </select>
     </div>
 </div>
-{{{subTemplate}}}
 {{#if (gt data.actor.system.fate.value 0)}}
     <div class="form-group">
         <label>{{localize "IMPMAL.FateAdvantage"}}</label>
@@ -39,42 +38,4 @@
         </div>
     </div>
 {{/if}}
-<div class="adv-dis">
-    <div>
-        <input type="radio" name="state" value="adv" {{checked (eq fields.state "adv" )}}>
-        <div class="state-label" {{#if tooltips.advantage}}data-tooltip-direction="LEFT"
-            data-tooltip="{{tooltips.advantage}}" {{/if}}>
-            <label>{{localize "IMPMAL.Advantage"}}</label>
-            <span class="state-value">{{advantage}}</span>
-        </div>
-    </div>
-    <div>
-        <input type="radio" name="state" value="none" {{checked (eq fields.state "none" )}}>
-        <div class="state-label">
-            <label class="state-label">{{localize "IMPMAL.Normal"}}</label>
-        </div>
-    </div>
-    <div>
-        <input type="radio" name="state" value="dis" {{checked (eq fields.state "dis" )}}>
-        <div class="state-label" {{#if tooltips.disadvantage}}data-tooltip-direction="LEFT"
-            data-tooltip="{{tooltips.disadvantage}}" {{/if}}>
-            <label>{{localize "IMPMAL.Disadvantage"}}</label>
-            <span class="state-value">{{disadvantage}}</span>
-        </div>
-    </div>
-</div>
-
-<div class="form-group">
-    <label>{{localize "IMPMAL.RollMode"}}</label>
-    <div class="form-fields">
-        <select name="rollMode">
-            {{#select fields.rollMode}}
-                <option value="publicroll">{{localize "CHAT.RollPublic"}}</option>
-                <option value="gmroll">{{localize "CHAT.RollPrivate"}}</option>
-                <option value="blindroll">{{localize "CHAT.RollBlind"}}</option>
-                <option value="selfroll">{{localize "CHAT.RollSelf"}}</option>
-            {{/select}}
-        </select>
-    </div>
-</div>
 </div>

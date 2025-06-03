@@ -1,27 +1,31 @@
 .warhammer.roll-dialog-v2 {
 
-    .dialog-fields {
-        display: flex;
-        flex-direction: column;
-    }
+    .dialog-fields {}
 
-    .adv-dis {
-        display: flex;
-        align-items: center;
-        > * {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;            
-        }
+    .dialog-base .dialog-fields {
 
-        .state-label {
-            margin: 10px;
+        .adv-dis {
+            margin: 1rem 0px;
             display: flex;
+            flex-direction: row;
             align-items: center;
-            // padding: 3px;
-            label {
-                margin: 5px 5px;
+
+            >* {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .state-label {
+                margin: 10px;
+                display: flex;
+                align-items: center;
+
+                // padding: 3px;
+                label {
+                    margin: 5px 5px;
+                }
             }
         }
     }

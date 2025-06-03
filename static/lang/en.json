@@ -91,7 +91,7 @@
     "IMPMAL.BugReporter" : "Bug Reporter",
     "IMPMAL.Burst" : "Burst",
     "IMPMAL.Buy" : "Buy",
-    "IMPMAL.BuyCost" : "Buy {cost}",
+    "IMPMAL.BuyCost" : "Buy ({cost})",
     "IMPMAL.BuySuccessful" : "<p>Bought <strong>{item}</strong> for <strong>{cost} Solars</strong></p>",
     "IMPMAL.BuyAmmo" : "Buy Ammo",
     "IMPMAL.CalledShot" : "Called Shot",

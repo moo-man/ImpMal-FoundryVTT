@@ -1,46 +1,50 @@
-<div class="form-group">
-    <label>{{localize "IMPMAL.HitLocation"}}</label>
-    <div class="form-fields">
-        <select name="hitLocation">
-            {{#select fields.hitLocation}}
-                {{#each data.hitLocations}}
-                    <option value="{{@key}}">{{localize this}}</option>
-                {{/each}}
-            {{/select}}
-        </select>
+<div class="attack-fields">
+    <div class="form-group">
+        <label>{{localize "IMPMAL.HitLocation"}}</label>
+        <div class="form-fields">
+            <select name="hitLocation">
+                {{#select fields.hitLocation}}
+                    {{#each data.hitLocations}}
+                        <option value="{{@key}}">{{localize this}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
+        </div>
     </div>
+
+    <div class="form-group" {{#if tooltips.damage}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.damage}}"
+        {{/if}}>
+        <label>{{localize "IMPMAL.Damage"}} +/-</label>
+        <div class="form-fields">
+            <input type="number" name="damage" value="{{fields.damage}}">
+        </div>
+    </div>
+
+    {{#if data.showTraits.burst}}
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Burst"}}</label>
+            <div class="form-fields">
+                <input type="checkbox" name="burst" {{checked fields.burst}}>
+            </div>
+        </div>
+    {{/if}}
+
+    {{#if data.showTraits.rapidFire}}
+        <div class="form-group">
+            <label>{{localize "IMPMAL.RapidFire"}}</label>
+            <div class="form-fields">
+                <input type="checkbox" name="rapidFire" {{checked fields.rapidFire}}>
+            </div>
+        </div>
+    {{/if}}
+
+    {{#if data.showTraits.supercharge}}
+        <div class="form-group">
+            <label>{{localize "IMPMAL.Supercharge"}}</label>
+            <div class="form-fields">
+                <input type="checkbox" name="supercharge" {{checked fields.supercharge}}>
+            </div>
+        </div>
+    {{/if}}
+
 </div>
-
-<div class="form-group" {{#if tooltips.damage}}data-tooltip-direction="LEFT" data-tooltip="{{tooltips.damage}}"{{/if}}>
-    <label>{{localize "IMPMAL.Damage"}} +/-</label>
-    <div class="form-fields">
-        <input type="number" name="damage" value="{{fields.damage}}">
-    </div>
-</div>
-
-{{#if data.showTraits.burst}}
-    <div class="form-group">
-        <label>{{localize "IMPMAL.Burst"}}</label>
-        <div class="form-fields">
-            <input type="checkbox" name="burst" {{checked fields.burst}}>
-        </div>
-    </div>
-{{/if}}
-
-{{#if data.showTraits.rapidFire}}
-    <div class="form-group">
-        <label>{{localize "IMPMAL.RapidFire"}}</label>
-        <div class="form-fields">
-            <input type="checkbox" name="rapidFire" {{checked fields.rapidFire}}>
-        </div>
-    </div>
-{{/if}}
-
-{{#if data.showTraits.supercharge}}
-    <div class="form-group">
-        <label>{{localize "IMPMAL.Supercharge"}}</label>
-        <div class="form-fields">
-            <input type="checkbox" name="supercharge" {{checked fields.supercharge}}>
-        </div>
-    </div>
-{{/if}}

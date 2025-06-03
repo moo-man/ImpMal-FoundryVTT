@@ -50,10 +50,10 @@
         </div>
         <div class="list-content">
             {{#each items.power}}
-                <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name rollable">
-                            <img src="{{this.img}}">
+                            <img src="{{this.img}}"  data-action="rollTest" data-type="power">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 

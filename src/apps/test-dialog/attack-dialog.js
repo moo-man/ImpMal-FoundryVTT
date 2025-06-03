@@ -2,8 +2,6 @@ import { SkillTestDialog } from "./skill-dialog";
 
 export class AttackDialog extends SkillTestDialog
 {  
-    subTemplate = `systems/impmal/templates/apps/test-dialog/attack-fields.hbs`;
-
     get tooltipConfig() 
     {
         return foundry.utils.mergeObject(super.tooltipConfig, {

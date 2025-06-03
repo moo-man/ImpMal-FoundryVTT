@@ -32,6 +32,18 @@ export class PostedItemMessageModel extends WarhammerMessageModel
         });
     }
 
+    async onRender(html) {
+
+        let post = html.querySelector(".item-post")
+        if (post)
+        {
+            post.draggable = true;
+            post.addEventListener("dragstart", ev => {
+                ev.dataTransfer.setData("text/plain", JSON.stringify({ type: "Item", data: this.itemData }));
+            })
+        }
+    }
+
     static _onRollAvailability(ev, target)
     {
         this.rollAvailability();
@@ -39,7 +51,10 @@ export class PostedItemMessageModel extends WarhammerMessageModel
 
     static _onBuyItem(ev, target)
     {
-        this.buyItem(game.user.character);
+        for(let actor of selectedWithFallback())
+        {
+            this.buyItem(actor);
+        }
     }
 
     async rollAvailability()
@@ -50,7 +65,6 @@ export class PostedItemMessageModel extends WarhammerMessageModel
 
         let test = AvailabilityTest.fromData(setupData);
         await test.roll();
-        test.sendToChat();
         return test;
     }
 
@@ -68,7 +82,7 @@ export class PostedItemMessageModel extends WarhammerMessageModel
         if ((actor.system.solars) >= itemData.system.cost)
         {
             let confirm = await foundry.applications.api.DialogV2.confirm({
-                window : {title : `Buy ${itemData.name}`},
+                window : {title : `${actor.name}`},
                 content : `<p>Buy <strong>${itemData.name}</strong> for <strong>${itemData.system.cost} Solars</strong>?</p>`
             })
 

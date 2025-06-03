@@ -2,6 +2,13 @@
 
 export class TestDialog extends WarhammerRollDialogV2
 {
+
+    static DEFAULT_OPTIONS = {
+        position: {
+            width: 600
+        }
+    };
+
     get tooltipConfig() 
     {
         return {
@@ -37,11 +44,19 @@ export class TestDialog extends WarhammerRollDialogV2
     static PARTS = {
         fields : {
             template : "systems/impmal/templates/apps/test-dialog/test-dialog.hbs",
-            container : {id : "base", classes : ["dialog-base"]}
+            fields: true
+        },
+        state : {
+            template : "systems/impmal/templates/apps/test-dialog/dialog-state.hbs",
+            fields: true
+        },
+        mode : {
+            template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+            fields: true
         },
         modifiers : {
             template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
-            container : {id : "base", classes : ["dialog-base"]}
+            modifiers: true
         },
         footer : {
             template : "templates/generic/form-footer.hbs"

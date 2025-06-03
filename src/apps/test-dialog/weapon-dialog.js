@@ -23,6 +23,32 @@ export class WeaponTestDialog extends AttackDialog
         return this.data.weapon;
     }
 
+    static PARTS = {
+        fields : {
+            template : "systems/impmal/templates/apps/test-dialog/test-dialog.hbs",
+            fields: true
+        },
+        attack : {
+            template : "systems/impmal/templates/apps/test-dialog/attack-fields.hbs",
+            fields: true
+        },
+        state : {
+            template : "systems/impmal/templates/apps/test-dialog/dialog-state.hbs",
+            fields: true
+        },
+        mode : {
+            template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+            fields: true
+        },
+        modifiers : {
+            template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+            modifiers: true
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    }
+
     /**
      * 
      * @param {string} characteristic Characteristic key, such as "ws" or "str"

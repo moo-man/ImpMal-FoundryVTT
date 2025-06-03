@@ -3,8 +3,6 @@ import { SkillTestDialog } from "./skill-dialog";
 
 export class PowerTestDialog extends SkillTestDialog
 {
-    subTemplate = `systems/impmal/templates/apps/test-dialog/power-fields.hbs`;
-    
 
     computeFields() 
     {
@@ -20,6 +18,32 @@ export class PowerTestDialog extends SkillTestDialog
     {
         return this.actor.items.get(this.data.powerId);
     } 
+
+    static PARTS = {
+        fields : {
+            template : "systems/impmal/templates/apps/test-dialog/test-dialog.hbs",
+            fields: true
+        },
+        power : {
+            template : "systems/impmal/templates/apps/test-dialog/power-fields.hbs",
+            fields: true
+        },
+        state : {
+            template : "systems/impmal/templates/apps/test-dialog/dialog-state.hbs",
+            fields: true
+        },
+        mode : {
+            template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+            fields: true
+        },
+        modifiers : {
+            template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+            modifiers: true
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    }
 
     /**
      * 
@@ -39,9 +63,10 @@ export class PowerTestDialog extends SkillTestDialog
         let skill = actor.system.skills.psychic.specialisations.find(i => i.name == game.impmal.config.disciplines[discipline]);
 
         // Prioritize specified difficulty, fallback on power's difficulty
-        fields.difficulty = fields.difficulty || power.system.difficulty;
-
+        foundry.utils.setProperty(context, "fields.difficulty", context.fields?.difficulty || power.system.difficulty);
+        
         let dialogData = super.setupData({key : "psychic", itemId : skill?.id}, actor, context, options);
+
 
         // TODO find a way to avoid duplicating this code from the parent class
         dialogData.data.title = (context.title?.replace || game.i18n.format("IMPMAL.PowerTest", {name : power.name})) + (context.title?.append || "");
