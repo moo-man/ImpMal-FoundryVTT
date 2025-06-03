@@ -1,25 +1,10 @@
 <div class="impmal test">
-    {{!-- {{{itemSummary}}} --}}
-
-    {{{item.system.notes.player}}}
-    {{#if item.system.notes.gm}}
-    <div class="gm-only">
-        {{{item.system.notes.gm}}}
-    </div>
+    {{#if itemSummary}}
+    {{{itemSummary}}}
     {{/if}}
 
-    {{#if opposedTests.length}}
-        <div class="targets">
-            <div class="target-list">
-                {{#each opposedTests}}
-                    <div class="target" data-id="{{this.id}}">
-                        <a class="opposed-icon"><i class="fa-solid fa-crosshairs"></i></a>
-                        <img data-tooltip="{{tokenName this.actor}}" src="{{tokenImg this.actor}}">
-                    </div>
-                {{/each}}
-            </div>
-        </div>
+    {{#if showChatTest}}
+        <button data-action="chatTest" data-uuid="{{item.uuid}}">{{context.itemTest.label}}</button>
     {{/if}}
-
-    {{> effectButtons}}
+    {{{effectButtons}}}
 </div>

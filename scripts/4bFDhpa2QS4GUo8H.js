@@ -1,1 +1,1 @@
-this.actor.setupSkillTest({key : "presence"}, {title : {append: ` - ${this.effect.name}`}})
+this.actor.setupSkillTest({key : "presence"}, {appendTitle: ` - ${this.effect.name}`})

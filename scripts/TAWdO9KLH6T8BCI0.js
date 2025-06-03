@@ -25,7 +25,7 @@
 
         if (applyRestrained)
         {
-            args.actor.setupSkillTest({key : "discipline", name : "Fear"}, {title : {append : " - " + this.effect.name}}).then(test => 
+            args.actor.setupSkillTest({key : "discipline", name : "Fear"}, {appendTitle : " - " + this.effect.name}).then(test => 
             {
                 if (test.result.SL < args.opposed.attackerTest.result.SL)
                 {

@@ -1,5 +1,1 @@
 <p><strong>{{localize "IMPMAL.WarpChargeGained"}}</strong>: {{context.warpAdded}} {{#if context.pushRoll}} + {{context.pushRoll}} {{/if}}
-
-{{#if showOpposed}}
-    <button data-action="resistPower" data-type="item" data-uuid="{{item.uuid}}">{{item.system.opposed.label}}</button>
-{{/if}}

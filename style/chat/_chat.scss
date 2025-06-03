@@ -20,6 +20,23 @@
                 }
             }
         }
+
+        .item-use {
+            margin: 1rem 0px;
+            padding: 1rem;
+            .item-header {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                img {
+                    height: 50px;
+                }
+                p {
+                    font-size: var(--font-size-18);
+                    font-weight: bold;
+                }
+            }
+        }
     }
     .chat-message.highlight-delayed,
         .chat-message.highlight {

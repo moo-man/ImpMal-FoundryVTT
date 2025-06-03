@@ -1,0 +1,14 @@
+<div class="item-use">
+   <div class="item-header">
+    {{#unless noImage}}
+        <img src="{{item.img}}">
+    {{/unless}}
+        <p>{{item.name}}</p>
+   </div>
+   <div class="description">
+        {{{enriched.player}}}
+        <div class="gm-only">
+            {{{enriched.gm}}}
+        </div>
+   </div> 
+</div>

@@ -66,6 +66,7 @@ body.impmal-theme {
                 background: var(--impmal-darkblue);
             }
 
+            select,
             input:not([type=checkbox], [type=range], [type=radio]) {
                 border: none;
             }

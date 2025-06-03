@@ -26,5 +26,6 @@ export default function registerHandlebars()
         itemTraits : "systems/impmal/templates/item/partials/item-traits.hbs",
         itemTest : "systems/impmal/templates/item/partials/item-test.hbs",
         itemDamage : "systems/impmal/templates/item/partials/item-damage.hbs",
+        itemUse : "systems/impmal/templates/item/partials/item-use.hbs",
     })
 }

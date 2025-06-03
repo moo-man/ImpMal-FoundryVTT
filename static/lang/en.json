@@ -993,6 +993,9 @@
             "trait" : {
                 "FIELDS" : {
                     "attack": {
+                        "type" : {
+                            "label" : "Attack Type"
+                        },
                         "characteristic": {
                             "label": "Characteristic"
                         },

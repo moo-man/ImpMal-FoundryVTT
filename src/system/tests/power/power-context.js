@@ -22,6 +22,12 @@ export class PowerTestContext extends SkillTestContext
         return this.actor.items.get(this.powerId);
     }
 
+    
+    get item() 
+    {
+        return this.power;
+    }
+
     get targets() 
     {
         let targets = super.targets;

@@ -8,20 +8,15 @@ export class ItemUseContext extends TestContext
     static fromData(data) 
     {
         log(`${this.prototype.constructor.name} - Retrieving Context Data`, {args : data});
-        let context = foundry.utils.mergeObject(super.fromData(data), {itemId : data.item.id, tags : {}, text : {}});
+        let context = foundry.utils.mergeObject(super.fromData(data), {itemUsed : data.itemUsed, tags : {}, text : {}});
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;
     }
-
-    get item() 
-    {
-        let item = super.item;
-
-        if (!item)
-        {
-            item = this.actor.items.get(this.itemId);
-        }
-        return item;
-    }
  
+
+    async handleOpposed()
+    {
+        // Do nothing
+    }
+
 }

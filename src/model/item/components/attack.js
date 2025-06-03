@@ -42,4 +42,9 @@ export class AttackDataModel extends TestDataModel
         }
     }
 
+    get enabled()
+    {
+        return this.type;
+    }
+
 }

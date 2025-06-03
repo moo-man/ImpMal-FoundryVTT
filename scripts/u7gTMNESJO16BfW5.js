@@ -1,4 +1,4 @@
-    let test = await this.actor.setupSkillTest({key : "fortitude", name : "Pain"}, {title : {append : " - " + this.effect.name}});
+    let test = await this.actor.setupSkillTest({key : "fortitude", name : "Pain"}, {appendTitle : " - " + this.effect.name});
 
     if (test.succeeded)
     {

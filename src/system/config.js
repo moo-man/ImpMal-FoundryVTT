@@ -1663,7 +1663,7 @@ const IMPMAL = {
                         {
                             label: "Minor Source of Corruption",
                             script: `
-                                this.actor.setupSkillTest({key : "fortitude"}, {title : {append : " - Warp Touched"}, fields: {difficulty : "routine"}, context : {corruption : 1}})
+                                this.actor.setupSkillTest({key : "fortitude"}, {appendTitle : " - Warp Touched", fields: {difficulty : "routine"}, corruption : 1})
                             `,
                             trigger: "endTurn",
                         }

@@ -103,21 +103,6 @@ export class PowerTest extends SkillTest
         }
     }
 
-    get showOpposed() {
-        let effects = this.targetEffects.concat(this.damageEffects).concat(this.zoneEffects)
-    
-        // Effects already prompt a test
-        if (effects.some(e => e.system.transferData.avoidTest.value == "item"))
-        {
-          return false;
-        }
-        else
-        {
-          return this.succeeded && this.item.system.opposed.isValid
-        }
-      }
-    
-
     get item() 
     {
         return this.context.power;

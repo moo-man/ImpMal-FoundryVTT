@@ -2,9 +2,9 @@
     <div class="sheet-list skills">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Skill"}}</div>
-            <div>{{localize "IMPMAL.Characteristic"}}</div>
-            <div>{{localize "IMPMAL.Adv"}}</div>
-            <div>{{localize "IMPMAL.Total"}}</div>
+            <div class="flex">{{localize "IMPMAL.Characteristic"}}</div>
+            <div class="small">{{localize "IMPMAL.Adv"}}</div>
+            <div class="small">{{localize "IMPMAL.Total"}}</div>
             <div class="list-controls"></div>
         </div>
         <div class="list-content">
@@ -14,7 +14,7 @@
                         <div class="list-name">
                             <a data-action="rollTest" data-type="skill">{{configLookup "skills" @key}}</a>
                         </div>
-                        <div class="flexrow">
+                        <div class="flexrow flex">
                             <div>
                                 {{configLookup "characteristicAbbrev" this.characteristic}}
                             </div>
@@ -23,11 +23,11 @@
                             </div>
                         </div>
                         {{#if (eq ../actor.type "character")}}
-                            <div>{{this.advances}}</div>
+                            <div class="small">{{this.advances}}</div>
                         {{else}}
-                            <div><input name="system.skills.{{@key}}.advances" type="number" value="{{this.advances}}"></div>
+                            <div class="small"><input name="system.skills.{{@key}}.advances" type="number" value="{{this.advances}}"></div>
                         {{/if}}
-                        <div><a data-action="rollTest" data-type="skill">{{this.total}}</a></div>
+                        <div class="small"><a data-action="rollTest" data-type="skill">{{this.total}}</a></div>
                         <div class="list-controls">
                                 <a class="list-control" data-action="createSpecialisation" data-tooltip="IMPMAL.CreateSpecialisation"><i class="fa-solid fa-plus"></i></a>
                         </div>
@@ -37,11 +37,11 @@
                         <a class="list-name" data-action="rollTest" data-type="skill">{{this.name}}</a>
                         <div></div>
                         {{#if (eq ../../actor.type "character")}}
-                            <div>{{this.system.advances}}</div>
+                            <div class="small">{{this.system.advances}}</div>
                         {{else}}
-                            <div><input data-action="editProperty" data-path="system.advances" type="number" value="{{this.system.advances}}"></div>
+                            <div class="small"><input data-action="editProperty" data-path="system.advances" type="number" value="{{this.system.advances}}"></div>
                         {{/if}}
-                        <div><a class="roll" data-type="skill">{{this.system.total}}</a></div>
+                        <div class="small"><a class="roll" data-type="skill">{{this.system.total}}</a></div>
                         <div class="list-controls">
                             <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-xmark"></i></a>
                         </div>
@@ -50,4 +50,4 @@
                 </div>
             {{/each}}
         </div>
-<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+</section>

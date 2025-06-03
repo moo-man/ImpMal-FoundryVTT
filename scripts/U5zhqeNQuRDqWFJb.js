@@ -3,7 +3,7 @@
         let num = blinded?.getFlag("impmal", "sunburst");
         if (blinded && num)
         {
-            this.actor.setupSkillTest({key : "fortitude", name : "Endurance"}, {title : {append : ` – ${this.effect.label}`}}).then(test => {
+            this.actor.setupSkillTest({key : "fortitude", name : "Endurance"}, {appendTitle : ` – ${this.effect.label}`}).then(test => {
                 if (test.result.SL < this.effect.sourceTest.result.SL)
                 {
                     num++;

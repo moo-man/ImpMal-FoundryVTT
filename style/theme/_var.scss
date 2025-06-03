@@ -28,6 +28,7 @@ body.impmal-font {
 }
 
 @mixin terminal-input {
+  background: none;
   font-family: monospace;
   color: #DDD;
   outline: none;

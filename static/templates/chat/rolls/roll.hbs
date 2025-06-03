@@ -1,5 +1,10 @@
 <div class="impmal test">
+    {{#if itemSummary}}
     {{{itemSummary}}}
+    {{/if}}
+    <div class="title">
+        <p>{{context.title}}</p>
+    </div>
     <div class="comparison">
         <div class="roll">
             {{#if result.reversed}}
@@ -37,5 +42,9 @@
         <p>{{{this}}}</p>
         {{/each}}
     </div>
+    
+    {{#if showChatTest}}
+        <button data-action="chatTest" data-uuid="{{item.uuid}}">{{context.itemTest.label}}</button>
+    {{/if}}
     {{{effectButtons}}}
 </div>

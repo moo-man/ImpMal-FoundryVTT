@@ -1,4 +1,4 @@
-        let test = await this.actor.setupSkillTest({key : "discipline", name : "Psychic"}, {fields : {difficulty : "difficult"}, title : {append : " - " + this.effect.name}});
+        let test = await this.actor.setupSkillTest({key : "discipline", name : "Psychic"}, {fields : {difficulty : "difficult"}, appendTitle : " - " + this.effect.name});
 
         if (this.effect.sourceTest.result.SL > test.result.SL)
         {

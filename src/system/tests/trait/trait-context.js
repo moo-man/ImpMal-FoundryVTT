@@ -17,4 +17,9 @@ export class TraitTestContext extends SkillTestContext
     {
         return this.actor.items.get(this.itemId);
     }
+
+    get item()
+    {
+        return this.trait;
+    }
 }

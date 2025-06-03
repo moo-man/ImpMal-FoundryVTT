@@ -65,13 +65,13 @@ export class BaseTest extends WarhammerTestBase
     async runPreScripts()
     {
         await Promise.all(this.actor.runScripts("preRollTest", this));
-        await Promise.all(this.context.itemUsed?.runScripts("preRollTest", this) || [])
+        await Promise.all(this.context.item?.runScripts("preRollTest", this) || [])
     }
 
     async runPostScripts()
     {
         await Promise.all(this.actor.runScripts("rollTest", this));
-        await Promise.all(this.context.itemUsed?.runScripts("rollTest", this) || [])
+        await Promise.all(this.context.item?.runScripts("rollTest", this) || [])
     }
 
     // Evaluate test result
@@ -211,11 +211,12 @@ export class BaseTest extends WarhammerTestBase
 
     async _chatData() 
     {
-        if (this.item instanceof Item)
+        if (this.item)
         {
-            this.itemSummary = await renderTemplate(this.itemSummaryTemplate, foundry.utils.mergeObject(await this.item?.system?.summaryData(), {summaryLabel : this.item.name, hideNotes : true}));
+            this.itemSummary = await this.context.formatItemSummary()
         }
         this.effectButtons = await renderTemplate("modules/warhammer-lib/templates/partials/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
+
         if (this.testDetailsTemplate)
         {
             this.testDetails = await renderTemplate(this.testDetailsTemplate, this);
@@ -224,15 +225,28 @@ export class BaseTest extends WarhammerTestBase
         let content = await renderTemplate(this.rollTemplate, this);
         return foundry.utils.mergeObject( chatData, {
             content,
-            title : this.context.title,
             speaker : this.context.speaker,
-            flavor: this.context.title,
             type : "test",     
             rollMode : this.context.rollMode,                                         // Trigger DSN
             rolls : this.result.rollObject ? ([this.result.rollObject instanceof Roll ? this.result.rollObject.toJSON() : this.result.rollObject]) : [], 
             system : this._saveData()
         });
     }
+
+    get showChatTest() {
+        let effects = this.targetEffects.concat(this.damageEffects).concat(this.zoneEffects)
+    
+        // Effects already prompt a test
+        if (effects.some(e => e.system.transferData.avoidTest.value == "item"))
+        {
+          return false;
+        }
+        else
+        {
+          return this.succeeded && this.context.itemTest.isValid
+        }
+      }
+    
 
     get tags() 
     {
@@ -277,25 +291,30 @@ export class BaseTest extends WarhammerTestBase
         return !this.succeeded;
     }
 
-    get targetEffects() 
+    get targetTokens()
     {
-        return super.targetEffects.concat(this.context.itemUsed?.targetEffects || []);
+        return this.context.targetSpeakers.map(i => game.scenes.get(i.scene)?.tokens.get(i.token));
     }
 
-    get damageEffects() 
-    {
-        return super.damageEffects.concat(this.context.itemUsed?.damageEffects || []);
-    }
+    // get targetEffects() 
+    // {
+    //     return super.targetEffects.concat(this.context.item?.targetEffects || []);
+    // }
 
-    get zoneEffects() 
-    {
-        return super.zoneEffects.concat(this.context.itemUsed?.zoneEffects || []);
-    }
+    // get damageEffects() 
+    // {
+    //     return super.damageEffects.concat(this.context.item?.damageEffects || []);
+    // }
 
-    get areaEffects() 
-    {
-        return super.areaEffects.concat(this.context.itemUsed?.areaEffects || []);
-    }
+    // get zoneEffects() 
+    // {
+    //     return super.zoneEffects.concat(this.context.item?.zoneEffects || []);
+    // }
+
+    // get areaEffects() 
+    // {
+    //     return super.areaEffects.concat(this.context.item?.areaEffects || []);
+    // }
 
 
     // Attacker test details

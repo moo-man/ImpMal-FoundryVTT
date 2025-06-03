@@ -10,7 +10,7 @@ if (args.actor.system.species == "Daemon")
 
 if ((this.effect.getFlag("impmal", "trueNames") || []).includes(args.actor.name)) 
 {
-    let test = await args.actor.setupSkillTest({ key: "discipline" }, { title: { append: ` – ${this.effect.label}` } });
+    let test = await args.actor.setupSkillTest({ key: "discipline" }, { appendTitle: ` – ${this.effect.label}` });
 
     if (test.failed) 
         {

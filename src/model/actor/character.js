@@ -186,7 +186,7 @@ export class CharacterModel extends StandardActorModel
         {
             corruption = game.impmal.config.corruptionValues[exposure]
         }
-        await this.parent.setupSkillTest({ key: skill }, {fields : {rollMode : "gmroll"}, title: { append: ` – ${game.i18n.localize("IMPMAL.Corruption")}` }, context: { corruption } });
+        await this.parent.setupSkillTest({ key: skill }, {fields : {rollMode : "gmroll"}, appendTitle: ` – ${game.i18n.localize("IMPMAL.Corruption")}`, corruption});
     }
 
     async rollMutation(skill)
@@ -209,7 +209,7 @@ export class CharacterModel extends StandardActorModel
                     ]
             })
         }
-        await this.parent.setupSkillTest({ key: skill }, {fields : {rollMode : "gmroll"}, title: { append: ` – ${game.i18n.localize("IMPMAL.SuccumbingToCorruption")}` }, context: { mutation : true } });
+        await this.parent.setupSkillTest({ key: skill }, {fields : {rollMode : "gmroll"}, appendTitle: ` – ${game.i18n.localize("IMPMAL.SuccumbingToCorruption")}`, mutation : true });
     }
 
     static migrateData(data)

@@ -5,6 +5,7 @@
     </fieldset>
     <fieldset>
         <legend>Attack</legend>
+        {{formGroup fields.attack.fields.type value=system.attack.type choices=attackTypes localize=true}}
         {{formGroup fields.attack.fields.characteristic value=source.attack.characteristic choices=(config "characteristics")}}
         <div class="form-group">
             <label>{{localize "IMPMAL.Skill"}}</label>

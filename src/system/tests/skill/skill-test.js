@@ -18,7 +18,7 @@ export class SkillTest extends CharacteristicTest
         let targetData = {
             actor : this.actor, 
             type : "skill", 
-            data : {skill : this.item || this.skill, characteristic : this.context.characteristic}, 
+            data : {skill : this.specialisation || this.skill, characteristic : this.context.characteristic}, 
         };
 
         if (!base)
@@ -34,6 +34,7 @@ export class SkillTest extends CharacteristicTest
     {
         await super.runPreScripts();
         await Promise.all(this.actor.runScripts("preRollSkillTest", this));
+        await Promise.all(this.specialisation?.runScripts?.("preRollSkillTest", this) || []);
         await Promise.all(this.item?.runScripts?.("preRollSkillTest", this) || []);
     }
 
@@ -41,6 +42,7 @@ export class SkillTest extends CharacteristicTest
     {
         await super.runPostScripts();
         await Promise.all(this.actor.runScripts("rollSkillTest", this));
+        await Promise.all(this.specialisation?.runScripts?.("rollSkillTest", this) || []);
         await Promise.all(this.item?.runScripts?.("rollSkillTest", this) || []);
     }
 
@@ -159,7 +161,7 @@ export class SkillTest extends CharacteristicTest
         return tags;
     }
 
-    get item() 
+    get specialisation() 
     {
         // Only return if SkillSpec item is used
         return this.context.actorSkill instanceof Item ? this.context.actorSkill : undefined;

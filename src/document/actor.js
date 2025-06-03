@@ -72,14 +72,15 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
     {
         let item = fromUuidSync(uuid) || this.items.get(id);
 
-        if (item?.system.test?.isValid && item.system.test?.self)
+        let test = item.system.test
+
+        if (test && test.isValid && test.self)
         {
-            return this.setupTestFromData(item.system.test, {itemUsed : item, appendTitle: ` - ${item.name}`})
+            return this.setupTestFromData(test, {itemUsed : item, appendTitle: ` - ${item.name}`})
         }
         else 
         {
-            let use = ItemUse.fromData({id, uuid, actor : this});
-            use.sendToChat();
+            item.system.use()
         }
     }
 
@@ -96,12 +97,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
         let itemTestData = item.getTestData();
 
-        options.context = options.context || {};
-        options.context.resist = options.context.resist ? options.context.resist.concat(item.type) : [item.type];
-        if (!options.title?.append)
-        {
-            foundry.utils.setProperty(options, "title.append", ` - ${item.name}`);
-        }
+        options.resist = options.resist ? options.resist.concat(item.type) : [item.type];
 
         return this.setupTestFromData(itemTestData, options);
     }
@@ -392,7 +388,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
         else if (actionData.test)
         {
-            this.setupTestFromData(actionData.test, {title :{ append : ` – ${actionData.label}`}});
+            this.setupTestFromData(actionData.test, {appendTitle : ` – ${actionData.label}`});
         }
         this.update({"system.combat.action" : action}, {showActionText : !effectAdded});
     }

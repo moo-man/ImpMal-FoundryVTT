@@ -8,7 +8,7 @@ if (this.actor.hasCondition("blinded"))
   return;
 }
 
-let test = await this.actor.setupSkillTest({key : "fortitude", name : "Endurance"}, {fields : {difficulty : "hard"}, title : {append : ` – ${this.effect.label}`}})
+let test = await this.actor.setupSkillTest({key : "fortitude", name : "Endurance"}, {fields : {difficulty : "hard"}, appendTitle : ` – ${this.effect.label}`})
 
 if (test.result.SL > this.effect.sourceTest?.result?.SL)
 {

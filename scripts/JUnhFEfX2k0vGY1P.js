@@ -1,5 +1,5 @@
 
-            this.actor.setupSkillTest({key : "discipline"}, {title : {append : " - " + this.effect.name}}).then(test => 
+            this.actor.setupSkillTest({key : "discipline"}, {appendTitle : " - " + this.effect.name}).then(test => 
             {
                 if (test.failed)
                 {

@@ -59,7 +59,7 @@ export class PostedItemMessageModel extends WarhammerMessageModel
 
     async rollAvailability()
     {
-        let dialogData = AvailabilityDialog.setupData({item: new Item.implementation(this.itemData), availability : this.itemData.system.availability},null, {title : {append : " - " + this.itemData.name}});
+        let dialogData = AvailabilityDialog.setupData({item: new Item.implementation(this.itemData), availability : this.itemData.system.availability},null, {appendTitle : " - " + this.itemData.name});
 
         let setupData = await AvailabilityDialog.awaitSubmit(dialogData);
 

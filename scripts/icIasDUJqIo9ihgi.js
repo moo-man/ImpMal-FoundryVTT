@@ -1,1 +1,1 @@
-this.actor.setupSkillTest({key : "rapport"}, {title : {append: ` - ${this.effect.name}`}})
+this.actor.setupSkillTest({key : "rapport"}, {appendTitle: ` - ${this.effect.name}`})

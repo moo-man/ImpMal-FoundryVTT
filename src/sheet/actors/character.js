@@ -32,7 +32,7 @@ export default class CharacterSheet extends IMActorSheet
         header : {scrollable: [""], template : 'systems/impmal/templates/actor/character/character-header.hbs', classes: ["sheet-header"] },
         tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
         main: { scrollable: [""], template: 'systems/impmal/templates/actor/character/character-main.hbs' },
-        skills: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-skills.hbs' },
+        skills: { scrollable: [".sheet-list.skills .list-content"], template: 'systems/impmal/templates/actor/tabs/actor-skills.hbs' },
         talents: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-talents.hbs' },
         combat: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-combat.hbs' },
         powers: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-powers.hbs' },

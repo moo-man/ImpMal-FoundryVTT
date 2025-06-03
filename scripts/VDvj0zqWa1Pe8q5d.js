@@ -1,7 +1,7 @@
         if (!args.context.blackouts && args.result.fumble)
         {
             args.context.blackouts = true;
-            this.actor.setupSkillTest({key : "fortitude", name : "Endurance"}, {title : {append : " - " + this.effect.name}}).then(test => 
+            this.actor.setupSkillTest({key : "fortitude", name : "Endurance"}, {appendTitle : " - " + this.effect.name}).then(test => 
             {
                 if (test.failed)
                 {

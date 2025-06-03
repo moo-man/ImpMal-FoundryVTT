@@ -19,6 +19,10 @@ export default class TraitSheet extends IMItemSheet
     async _prepareContext(options)
     {
       let context = await super._prepareContext(options);
+      context.attackTypes = {
+        melee :  "IMPMAL.Melee",
+        ranged :  "IMPMAL.Ranged"
+       }
       return context;
     }
 }

@@ -10,7 +10,7 @@ if (this.actor.hasCondition("blinded"))
 }
 
 
-        this.actor.setupSkillTest({key : "reflexes", name : "Dodge"}, {fields : {difficulty : "hard"}, title : {append : ` – ${this.effect.label}`}}).then(test => {
+        this.actor.setupSkillTest({key : "reflexes", name : "Dodge"}, {fields : {difficulty : "hard"}, appendTitle : ` – ${this.effect.label}`}).then(test => {
 
 if (test.result.SL > this.effect.sourceTest?.result?.SL)
 {

@@ -79,11 +79,12 @@ export class TestContext
         });
     }
 
+
     get item() 
     {
-        if (this.uuid)
+        if (this.itemUsed)
         {
-            return fromUuidSync(this.uuid);
+            return fromUuidSync(this.itemUsed);
         }
         else 
         {
@@ -91,18 +92,28 @@ export class TestContext
         }
     }
 
-    get itemUsed()
+    get itemTest()
     {
-        if (this.itemUsedUuid)
+        let item = this.item;
+        if (item?.type == "power")
         {
-            return fromUuidSync(this.itemUsedUuid);
+            return item.system.opposed;
         }
         else 
         {
-            return null;
+            return item?.system.test || {};
         }
     }
 
+    async formatItemSummary()
+    {
+        let item = this.item;
+        let enriched = {
+            player : await foundry.applications.ux.TextEditor.enrichHTML(item.system.notes.player, {async: true, relativeTo: item, secrets : false}),
+            gm : await foundry.applications.ux.TextEditor.enrichHTML(item.system.notes.gm, {async: true, relativeTo: item, secrets : false})
+        }
+        return await renderTemplate("systems/impmal/templates/partials/item-use.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item });
+    }
     
     /**
      * Handle rerendering of opposed tests to ensure values are in sync (updating an attacker test should update the opposed result of the 
@@ -267,7 +278,7 @@ export class TestContext
             title : data.title,
             targetSpeakers : data.targets,
             rollMode : data.rollMode,
-            itemUsedUuid : data.itemUsed?.uuid,
+            itemUsed : data.itemUsed?.uuid,
             breakdownData : data.context.breakdown,
             superiorityUsed : data.useSuperiority
         }, data.context);

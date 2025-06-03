@@ -20,7 +20,7 @@ export class ImpMalEffect extends WarhammerActiveEffect
         let transferData = this.system.transferData;
 
         let test;
-        let options = {title : {append : " - " + this.name}, context: {resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest}};
+        let options = {appendTitle : " - " + this.name, resist : [this.key].concat(this.sourceTest?.item?.type || []), resistingTest : this.sourceTest};
         if (transferData.avoidTest.value == "item")
         {
             test = await this.actor.setupTestFromItem(this.item.uuid, options);
@@ -29,8 +29,6 @@ export class ImpMalEffect extends WarhammerActiveEffect
         {
             test = await this.actor.setupTestFromData(transferData.avoidTest, options);
         }
-
-        await test.roll();
 
         if (!transferData.avoidTest.reversed)
         {

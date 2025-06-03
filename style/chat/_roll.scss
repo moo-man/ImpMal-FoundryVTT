@@ -1,5 +1,11 @@
 .message .opposed-message,
 .message .impmal.test {
+
+    .title {
+        text-align: center;
+        font-weight: bold;
+        font-size: var(--font-size-16);
+    }
     .comparison {
 
         font-size: var(--font-size-16);
@@ -124,6 +130,12 @@
         i {
             color: darkblue;
         }
+    }
+
+
+    button {
+        width: 100%;
+        margin-bottom: 0.5rem;
     }
 
 

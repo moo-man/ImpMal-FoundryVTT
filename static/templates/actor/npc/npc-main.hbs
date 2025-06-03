@@ -24,7 +24,7 @@
         {{#each attackItems}}
             <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                 <div class="row-content">
-                    <div class="list-name rollable" data-action="rollTest" data-type="weapon">
+                    <div class="list-name rollable" data-action="rollTest" data-type="{{this.type}}">
                         <img src="{{this.img}}">
                         <a class="label">{{this.name}}</a>
                     </div>

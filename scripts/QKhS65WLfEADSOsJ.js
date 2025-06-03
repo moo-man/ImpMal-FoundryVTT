@@ -1,1 +1,1 @@
-this.actor.setupSkillTest({key : "discipline"}, {fields: {difficulty : "difficult"}, title : {append : " - " + this.effect.name}})
+this.actor.setupSkillTest({key : "discipline"}, {fields: {difficulty : "difficult"}, appendTitle : " - " + this.effect.name})

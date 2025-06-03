@@ -35,11 +35,24 @@ export class ItemUse extends BaseTest
         return "";
     }
 
+    get showChatTest() {
+        let effects = this.targetEffects.concat(this.damageEffects).concat(this.zoneEffects);
+    
+        // Effects already prompt a test
+        if (effects.some(e => e.system.transferData.avoidTest.value == "item"))
+        {
+          return false;
+        }
+        else
+        {
+          return this.context.itemTest.isValid
+        }
+      }
+    
 
-    static fromData({id, uuid, actor}) 
+
+    static fromData({uuid, actor}) 
     {
-        let item = fromUuidSync(uuid) || actor.items.get(id);
-
         let speaker = ChatMessage.getSpeaker({actor});
         if (!actor.token)
         {
@@ -50,10 +63,8 @@ export class ItemUse extends BaseTest
         // Much is copied from test-dialog setupData
         let contextData = {
             speaker,
-            title : item.name,
-            targets : Array.from(game.user.targets).filter(t => t.document.id != speaker.token),
-            uuid, 
-            item
+            targets : Array.from(game.user.targets).filter(t => t.document.id != speaker.token).map(t => t.actor.speakerData(t.document)),
+            itemUsed : uuid
         };
 
         if (!actor.token)

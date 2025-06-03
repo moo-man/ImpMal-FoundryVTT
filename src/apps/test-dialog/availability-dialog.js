@@ -74,7 +74,7 @@ export class AvailabilityDialog extends TestDialog
         let dialogData = super.setupData(actor || game.user.character, undefined, context, options);
         dialogData.data.targets = [];
         // TODO find a way to avoid duplicating this code from the parent class
-        dialogData.data.title = (context.title?.replace || game.i18n.localize("IMPMAL.Availability")) + (context.title?.append || "");
+        dialogData.data.title = (context.title || game.i18n.localize("IMPMAL.Availability")) + (context.appendTitle || "");
         dialogData.data.scripts = [];
         dialogData.data.item = item;
         dialogData.fields.cost = item.system.cost;

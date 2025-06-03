@@ -224,7 +224,7 @@ export class TestDialog extends WarhammerRollDialogV2
             // getSpeaker retrieves tokens even if this sheet isn't a token's sheet
             delete dialogData.data.speaker.scene;
         }
-        dialogData.data.title = (context.title?.replace || game.i18n.localize("IMPMAL.Test")) + (context.title?.append || "");
+        dialogData.data.title = (context.title || game.i18n.localize("IMPMAL.Test")) + (context.appendTitle || "");
         if (target)
         {
             dialogData.data.target = target;

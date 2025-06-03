@@ -28,6 +28,10 @@ body.impmal-theme {
         }
 
 
+        .form-group {
+            gap: 0px;
+        }
+
 
         input[type="range"] {
             border: none;
@@ -189,6 +193,8 @@ body.impmal-theme .application:not(.journal-sheet) {
         }
     }
 
+    .form-group select,
+    .form-group input:not([type="checkbox"],[type="range"],[type="radio"]),
     select,
     input:not([type="checkbox"],[type="range"],[type="radio"]) {
         background: none;

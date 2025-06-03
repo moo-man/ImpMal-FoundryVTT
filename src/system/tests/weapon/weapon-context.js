@@ -26,4 +26,9 @@ export class WeaponTestContext extends SkillTestContext
         }
         return this.actor.items.get(this.weaponId);
     }
+
+    get item()
+    {
+        return this.weapon;
+    }
 }
