@@ -1,18 +1,16 @@
 import CharGenIM from "../../apps/chargen/char-gen";
 
 export default function() {
-  Hooks.on("renderSidebarTab", async (app, html) => 
-  {
-    if (app instanceof ActorDirectory)
+  Hooks.on("renderActorDirectory", async (app, html) =>
     {
-      let button = $(`<button>${game.i18n.localize("IMPMAL.CharacterCreation")}</button>`)
+        let button = document.createElement("button");
+        button.textContent = game.i18n.localize("IMPMAL.CharacterCreation");
+        button.classList.add("character-creation");
   
-      button.click(ev => {
-        CharGenIM.start();
-      })
-  
-      button.insertAfter(html.find(".header-actions"))
-      
-    }
-  })
+        button.onclick = () => {CharGenIM.start();}
+        let div = document.createElement("div");
+        div.classList.add("action-buttons", "flexrow")
+        div.appendChild(button);
+        html.querySelector(".header-actions").insertAdjacentElement("afterend", div)
+    })
 }

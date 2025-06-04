@@ -2,6 +2,8 @@
 
 body.impmal-theme {
 
+    .impmal.chargen-stage, // temporary
+    .impmal.chargen, // temporary
     .warhammer.application {
 
         --color-scrollbar: var(--impmal-lightgreen);
@@ -146,6 +148,8 @@ body.impmal-theme {
 }
 
 
+body.impmal-theme .impmal.chargen-stage, // temporary
+body.impmal-theme .impmal.chargen, // temporary
 body.impmal-theme .application:not(.journal-sheet) {
 
     --color-text-primary: #DDD;
@@ -409,6 +413,18 @@ body.impmal-theme .application:not(.journal-sheet) {
         }
         .dialog-item {
             border-color: var(--impmal-lightblue);
+        }
+    }
+
+    &.choice-decision {
+        .choice {
+            border-color: var(--impmal-lightgreen);
+        }
+        .choice.chosen {
+            background-color: var(--impmal-lightgreen)
+        }
+        .choice.or {
+            border-color: var(--impmal-lightblue)
         }
     }
 
