@@ -111,7 +111,7 @@ export class OpposedTestMessageModel extends WarhammerMessageModel
 
         let content = await this.getContent();
         return this.parent.update({content, system : {
-            result : this.result
+            result : {...this.result}
         }});
     }
 

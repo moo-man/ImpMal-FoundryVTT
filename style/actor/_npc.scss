@@ -92,17 +92,30 @@ body.theme-light .application.actor.impmal.npc {
 
     }
 
-    .sheet-list {
-        .list-name {
-            .label {
+    section[data-tab=main]
+    {
+        .sheet-list {
+            padding: 0px;
+            background: none;
+            .list-header {
+                .list-name {
 
-                text-overflow: ellipsis;
-                overflow: hidden;
+                    font-size: var(--font-size-18);
+                    font-weight: bold;
+                }
+            }
+
+            .list-name {
+                .label {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
+            .trait-description {
+                line-height: 1rem;
             }
         }
-        .trait-description {
-            line-height: 1rem;
-        }
+
     }
 
     .sheet-list.skills {
@@ -112,14 +125,12 @@ body.theme-light .application.actor.impmal.npc {
         }
     }
 
-    .item-section.skills {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        gap : 0.5rem;
-        > a {
-            margin-left: 5px;
+    .sheet-list.traits {
+        .label {
+            font-weight: bold;
+            font-size: var(--font-size-16)
         }
-
     }
+
+
 }
