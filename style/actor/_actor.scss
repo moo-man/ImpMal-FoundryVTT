@@ -43,6 +43,7 @@ body.theme-light .application.impmal.actor {
         display: flex;
         flex-direction: column;
         flex: 1;
+        align-self: flex-start;
 
         .details-row {
             display: flex;

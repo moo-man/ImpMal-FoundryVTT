@@ -61,8 +61,9 @@ export default function registerSettings()
 
     game.settings.registerMenu("impmal", "tableSettingsMenu", {
         name : game.i18n.localize("IMPMAL.TableSettings"),
-        label : game.i18n.localize("IMPMAL.TableSettings"),
+        label : game.i18n.localize("IMPMAL.TableConfigure"),
         hint : game.i18n.localize("IMPMAL.TableSettingsHint"),
+        icon : "fa-solid fa-list",
         type : TableSettings,
         restricted : true
     })  ;
@@ -73,6 +74,7 @@ export default function registerSettings()
         config: false,
         type: TableSettings.schema
     });
+    
 
     game.settings.register("impmal", "disableTheme", {
         name: "IMPMAL.DisableTheme",
@@ -100,5 +102,6 @@ export default function registerSettings()
         type: IMThemeConfig.schema
     });
   
+    warhammer.utility.registerPremiumModuleInitialization()
   
 }

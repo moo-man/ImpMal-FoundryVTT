@@ -4,7 +4,7 @@ export default class TableSettings extends HandlebarsApplicationMixin(Applicatio
         tag: "form",
         classes: ["impmal","warhammer", "table-settings"],
         window: {
-            title: "IMPMAL.TableSetting",
+            title: "IMPMAL.TableSettings",
             contentClasses : ["standard-form"],
             resizable : true,
         },

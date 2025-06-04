@@ -660,6 +660,7 @@
     "IMPMAL.SupportAttachment" : "Support Attachment",
     "IMPMAL.Sustained" : "Sustained",
     "IMPMAL.TableSettings" : "Table Settings",
+    "IMPMAL.TableConfigure" : "Configure Tables",
     "IMPMAL.TableSettingsHint" : "Configure which tables the system uses in contextual links.",
     "IMPMAL.TableSetting.critarm" : "Critical Hits - Arm",
     "IMPMAL.TableSetting.critleg" : "Critical Hits - Leg",

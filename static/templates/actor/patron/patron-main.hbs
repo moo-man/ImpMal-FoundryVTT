@@ -14,7 +14,7 @@
                             data-item-id="{{this.id}}">
                             <div class="row-content">
                                 <div class="list-name rollable">
-                                    <img src="{{this.img}}">
+                                    <img data-action="useItem" src="{{this.img}}">
                                     <a class="label">{{this.name}}</a>
                                 </div>
                                 {{#unless this.system.visible}}
@@ -44,7 +44,7 @@
                         <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}" data-collection="items" data-item-id="{{this.id}}">
                             <div class="row-content">
                                 <div class="list-name rollable">
-                                    <img src="{{this.img}}">
+                                    <img data-action="useItem" src="{{this.img}}">
                                     <a class="label">{{this.name}}</a>
                                 </div>
                                 {{#unless this.system.visible}}

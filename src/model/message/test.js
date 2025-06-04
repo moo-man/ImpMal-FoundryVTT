@@ -15,7 +15,8 @@ export class ImpMalTestMessageModel extends WarhammerTestMessageModel {
         return foundry.utils.mergeObject(super.actions, {
             resistPower: this._onResistPower,
             buyItem: this._onBuyItem, // Availability Tests,
-            expandItem : this._onExpandItem
+            expandItem : this._onExpandItem,
+            chatTest : this._onChatTest
         });
     }
 
@@ -91,6 +92,13 @@ export class ImpMalTestMessageModel extends WarhammerTestMessageModel {
         {
             this.test?.buyItem(actor);
         }
+    }
+
+    static _onChatTest(ev, target) 
+    {
+        selectedWithFallback().forEach(a => {
+            a.setupTestFromItem(this.test.item);
+        })
     }
 
     static _onExpandItem(ev, target) {

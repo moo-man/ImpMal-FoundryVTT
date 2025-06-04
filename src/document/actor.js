@@ -84,20 +84,29 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
     }
 
-    async setupTestFromItem(uuid, options={})
+    async setupTestFromItem(item, options={})
     {
-        let item = await fromUuid(uuid);
-        if (!item)
+        if (typeof item == "string")
         {
-            item = this.items.get(uuid); // Maybe uuid is actually simple id
+
+            if (item.includes("."))
+            {
+                item = await fromUuid(item);
+            }
+            else
+            {
+                item = this.items.get(item); // Maybe uuid is actually simple id
+            }
         }
         if (!item)
         {
-            return ui.notifications.error("ID " + uuid + " not found");
+            return ui.notifications.error("No Item found!");
         }
         let itemTestData = item.getTestData();
 
         options.resist = options.resist ? options.resist.concat(item.type) : [item.type];
+
+        options.appendTitle = ` - ${item.name}`;
 
         return this.setupTestFromData(itemTestData, options);
     }
