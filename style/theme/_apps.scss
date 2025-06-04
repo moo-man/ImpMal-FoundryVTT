@@ -4,7 +4,16 @@ body.impmal-theme {
 
     .warhammer.application {
 
-        --color-scrollbar:  var(--impmal-lightgreen);
+        --color-scrollbar: var(--impmal-lightgreen);
+
+        
+        button {
+
+            --button-text-color: var(--impmal-grey2);
+            --button-focus-outline-color: var(--impmal-lightgreen);
+            --button-hover-background-color: var(--impmal-lightgreen);
+            --button-hover-text-color: var(--color-light-1);
+        }
 
         form {
             span.units {
@@ -16,15 +25,18 @@ body.impmal-theme {
             }
         }
 
-       
+
         .notes,
         .hint,
         .units {
             color: #BBB;
         }
 
-        button {
-            @include impmal-button;
+        .window-content {
+
+            button {
+                @include impmal-button;
+            }
         }
 
 
@@ -83,7 +95,7 @@ body.impmal-theme {
 
         div.sheet-list {
 
-            --list-row-alternate : transparent;
+            --list-row-alternate: transparent;
             @include reticule(2px, 15px);
             margin: 5px;
             padding: 5px;
@@ -95,7 +107,7 @@ body.impmal-theme {
                 margin-bottom: 5px;
             }
 
-            .list-row:not(.list-header,.no-scan):hover {
+            .list-row:not(.list-header, .no-scan):hover {
                 position: relative;
                 background: var(--impmal-lightblue);
                 @include scan(false);
@@ -138,14 +150,35 @@ body.impmal-theme .application:not(.journal-sheet) {
 
     --color-text-primary: #DDD;
     --color-text-secondary: #BBB;
-    --color-text-subtle : var(--impmal-grey);
+    --color-text-subtle: var(--impmal-grey);
     --color-form-label: var(--impmal-grey2);
     --color-form-label-hover: var(--color-white-2);
     --color-form-hint: var(--impmal-grey);
     --color-form-hint-hover: var(--color-white-2);
 
     button {
-        @include impmal-button()
+
+        --button-text-color: var(--impmal-grey2);
+        --button-focus-outline-color: var(--impmal-lightgreen);
+        --button-hover-background-color: var(--impmal-lightgreen);
+        --button-hover-text-color: var(--color-light-1);
+    }
+
+    .sheet-header,
+    .form-footer,
+    .form-group {
+
+        button {
+            @include impmal-button()
+        }
+    }
+
+    button[data-tab] {
+        box-shadow: none;
+        border-color: var(--impmal-lightgreen);
+        &:hover {
+            background: none;
+        }
     }
 
     .window-header {
@@ -169,7 +202,7 @@ body.impmal-theme .application:not(.journal-sheet) {
         margin-bottom: 3px;
     }
 
-    
+
     textarea {
         color: #DDD;
         border-color: var(--impmal-lightblue)
@@ -180,7 +213,7 @@ body.impmal-theme .application:not(.journal-sheet) {
         border-right: none;
         border-left: none;
 
-        > a[data-tab] {
+        >a[data-tab] {
             position: relative; // needed for scanlines
             flex: 1;
             font-family: var(--header-font);
@@ -194,9 +227,9 @@ body.impmal-theme .application:not(.journal-sheet) {
     }
 
     .form-group select,
-    .form-group input:not([type="checkbox"],[type="range"],[type="radio"]),
+    .form-group input:not([type="checkbox"], [type="range"], [type="radio"]),
     select,
-    input:not([type="checkbox"],[type="range"],[type="radio"]) {
+    input:not([type="checkbox"], [type="range"], [type="radio"]) {
         background: none;
         outline: none;
         border: 1px solid var(--impmal-lightblue);
@@ -210,62 +243,61 @@ body.impmal-theme .application:not(.journal-sheet) {
         optgroup {
             background: var(--impmal-lightblue)
         }
-        
+
         option {
+            color: var(--impmal-grey2);
             background: var(--impmal-darkblue);
         }
     }
 
     input[type="radio"],
-    input[type="checkbox"]
-    {
+    input[type="checkbox"] {
         --checkbox-checked-color: var(--impmal-lightgreen);
         --checkbox-disabled-color: var(--color-cool-3);
         --checkbox-background-color: var(--impmal-darkgreen);
     }
 
-    input[type="range"]
-    {
+    input[type="range"] {
         --range-track-color: var(--impmal-darkgreen);
         --range-thumb-background-color: var(--impmal-lightgreen);
         --range-thumb-border-color: var(--impmal-lightgreen);
     }
 
-            // // Green glowy checkboxes and radio buttons
-            // input[type="checkbox"] {
-            //     -webkit-appearance: none;
-            //     appearance: none;
-            //     background: none;
-            //     border: none;
-    
-            //     border: 1px solid var(--impmal-lightgreen);
-    
-            //     &:focus {
-            //         background: none;
-            //         border: 1px solid var(--impmal-lightgreen);
-            //     }
-    
-            //     &::before {
-            //         content: "";
-            //     }
-    
-            //     &:checked {
-            //         background: none;
-            //         box-shadow: 0px 0px 10px var(--impmal-lightgreen);
-    
-            //         &::before {
-            //             content: "";
-            //             background: var(--impmal-lightgreen);
-            //             display: block;
-            //             height: 12px;
-            //             width: 12px;
-            //             position: relative;
-            //             left: 3px;
-            //             top: 3px;
-            //         }
-            //     }
-            // }
-            
+    // // Green glowy checkboxes and radio buttons
+    // input[type="checkbox"] {
+    //     -webkit-appearance: none;
+    //     appearance: none;
+    //     background: none;
+    //     border: none;
+
+    //     border: 1px solid var(--impmal-lightgreen);
+
+    //     &:focus {
+    //         background: none;
+    //         border: 1px solid var(--impmal-lightgreen);
+    //     }
+
+    //     &::before {
+    //         content: "";
+    //     }
+
+    //     &:checked {
+    //         background: none;
+    //         box-shadow: 0px 0px 10px var(--impmal-lightgreen);
+
+    //         &::before {
+    //             content: "";
+    //             background: var(--impmal-lightgreen);
+    //             display: block;
+    //             height: 12px;
+    //             width: 12px;
+    //             position: relative;
+    //             left: 3px;
+    //             top: 3px;
+    //         }
+    //     }
+    // }
+
     // // Some checkboxes in foundry sheets are a bit smaller, which screws up the special styling
     // label.checkbox>input[type="checkbox"]:checked::before {
     //     height: 10px;
@@ -277,74 +309,107 @@ body.impmal-theme .application:not(.journal-sheet) {
 
 
 
-&.advancement {
-    .total,
-    .value {
-        font-family: monospace;
-    }
+    &.advancement {
 
-    .window-content {
-        gap: 0px;
-    }
-
-    .advancement-list {
-        .header {
-            border-bottom: 1px solid var(--impmal-lightblue);
-            margin-bottom: 3px;
-        }
-        .characteristic:nth-child(even),
-        .skill:nth-child(even)
-        {
-            background-color: rgba(6, 92, 99, 0.3)
+        .total,
+        .value {
+            font-family: monospace;
         }
 
-        > * {
-            padding: 3px;
+        .window-content {
+            gap: 0px;
         }
-    }
 
-    .advancement-info {
-        background-color: var(--impmal-lightblue);
-    }
+        .advancement-list {
+            .header {
+                border-bottom: 1px solid var(--impmal-lightblue);
+                margin-bottom: 3px;
+            }
 
-    .overspent {
-        position: relative;
-        @include scan;
-    }
-}
-&.active-effect-config {
-    .script {
-        background-color: var(--impmal-lightblue);
-    }
-}
+            .characteristic:nth-child(even),
+            .skill:nth-child(even) {
+                background-color: rgba(6, 92, 99, 0.3)
+            }
 
+            >* {
+                padding: 3px;
+            }
+        }
 
-&.roll-dialog-v2 {
-    .state-label {
-        background: var(--impmal-lightblue);
-        padding: 0px;
-        height: 1.5rem;
-        span {
-            background: var(--impmal-darkblue);
-            width: 1rem;
-            height: 1.5rem;
-            line-height: 1.5rem;
-            text-align: center;
+        .advancement-info {
+            background-color: var(--impmal-lightblue);
+        }
+
+        .overspent {
+            position: relative;
+            @include scan;
         }
     }
 
-    .dialog-modifiers {
+    &.active-effect-config {
+        .script {
+            background-color: var(--impmal-lightblue);
+        }
+    }
 
-        label {
+
+    &.roll-dialog-v2 {
+        .state-label {
             background: var(--impmal-lightblue);
-            padding: 0.5rem;
+            padding: 0px;
+            height: 1.5rem;
+
+            span {
+                background: var(--impmal-darkblue);
+                width: 1rem;
+                height: 1.5rem;
+                line-height: 1.5rem;
+                text-align: center;
+            }
         }
 
-        .modifier.active {
-            --modifier-bg: var(--impmal-lightgreen);
-            color: black;
+        .dialog-modifiers {
+
+            label {
+                background: var(--impmal-lightblue);
+                padding: 0.5rem;
+            }
+
+            .modifier.active {
+                --modifier-bg: var(--impmal-lightgreen);
+                color: black;
+            }
         }
     }
-}
+
+    &.roll-table-sheet {
+        --table-header-bg-color: var(--impmal-lightblue);
+        --table-header-border-color: var(--impmal-lightblue);
+        --table-row-color-even: var(--impmal-lightblue);
+        --table-row-color-odd: var(--impmal-darkblue);
+        --table-row-color-highlight: var(--impmal-lightgreen);
+
+        button {
+
+            --button-text-color: var(--impmal-grey2);
+            --button-focus-outline-color: var(--impmal-lightgreen);
+            --button-hover-background-color: var(--impmal-lightgreen);
+            --button-hover-text-color: var(--color-light-1);
+        }
+
+        .details {
+            @include editor-content-alt;
+        }
+
+    }
+
+    &.item-dialog {
+        .selected {
+            background: var(--impmal-lightgreen);
+        }
+        .dialog-item {
+            border-color: var(--impmal-lightblue);
+        }
+    }
 
 }

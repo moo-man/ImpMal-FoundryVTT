@@ -307,11 +307,11 @@ export default class ImpMalUtility
 
     static listeners(html) 
     {
-        html.find(".corruption-link").on("click", ev => 
+        html.querySelectorAll(".corruption-link").forEach(e => e.addEventListener("click", ev => 
         {
-            let corruptionValue = ev.target.dataset.value;
+            let corruptionValue = ev.currentTarget.dataset.value;
             CorruptionMessageModel.postCorruption(corruptionValue);
-        });
+        }));
     }
 
     static async rollItemMacro(uuid, actor)

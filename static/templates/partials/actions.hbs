@@ -1,7 +1,7 @@
 <div class="action-list">
     {{#if system.combat.action}}
     <div class="current-action">
-        <label><strong>{{localize "IMPMAL.CurrentAction"}}</strong>: {{localize (lookup (configLookup "actions" system.combat.action) "label")}}</label>
+        <div><strong>{{localize "IMPMAL.CurrentAction"}}:</strong> {{localize (lookup (configLookup "actions" system.combat.action) "label")}}</div>
         <a data-action="clearAction"><i class="fa-solid fa-xmark"></i></a>
     </div> 
     {{else}}

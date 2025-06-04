@@ -237,7 +237,7 @@ body.theme-light .application.impmal.actor {
             // Ensures list content lines up with  header
             .list-header {
                 scrollbar-gutter: stable;
-                overflow-y: auto;
+
             }
 
             .list-name {
@@ -355,16 +355,15 @@ body.theme-light .application.impmal.actor {
     }
 
     .hit-locations {
+        flex: 0.7;
         margin: 1rem 1rem 0 0;
         .list-header {
             text-align: center;
         }
 
         .location.list-row {
-
             display: flex;
             flex-direction: column;
-            padding: 5px 3px;
         }
 
         

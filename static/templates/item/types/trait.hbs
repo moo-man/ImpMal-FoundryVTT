@@ -11,7 +11,7 @@
             <label>{{localize "IMPMAL.Skill"}}</label>
             <div class="form-fields">
                 <select name="system.attack.skill.key">
-                    {{selectOptions (config "skills") selected=system.attack.skill.key}}
+                    {{selectOptions (config "skills") selected=system.attack.skill.key blank=""}}
                 </select>
                 <input type="text" name="system.attack.skill.specialisation" value="{{system.attack.skill.specialisation}}"  placeholder="{{localize 'IMPMAL.Specialisation'}}">
             </div>

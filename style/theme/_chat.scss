@@ -3,7 +3,7 @@
 body.impmal-theme {
 
   body #chat-popout,
-  #interface #chat-notifications,
+  #interface,
   #interface #sidebar {
 
     --color-scrollbar: var(--impmal-lightgreen);
@@ -21,6 +21,24 @@ body.impmal-theme {
       }
     }
 
+    #chat-message:focus {
+      outline-color: var(--impmal-lightgreen);
+    }
+
+    button.ui-control {
+        @include impmal-button;
+  
+        &[aria-pressed='true'],
+        &.active {
+          background: var(--impmal-lightgreen);
+        }
+    }
+
+
+    .chat-message {
+
+
+      
     button {
       @include impmal-button;
 
@@ -29,14 +47,7 @@ body.impmal-theme {
         background: var(--impmal-lightgreen);
       }
     }
-
-    #chat-message:focus {
-      outline-color: var(--impmal-lightgreen);
-    }
-
-
-    .chat-message {
-
+    
       .message-content {
         @include editor-content-alt;
       }

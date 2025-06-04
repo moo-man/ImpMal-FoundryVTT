@@ -273,14 +273,14 @@
             </div>
         </div>
 
-        <div class="flexrow">
+        <div class="flexrow" style="align-items: start">
             <div class="hit-locations sheet-list">
                 <div class="list-header">Protection</div>
                 <div class="list-content">
                 {{#each hitLocations}}
-                    <div class="location list-row" data-key="{{this.key}}">
-                        <div class="location-values row-content">
-                            <label><a data-action="expandRow">{{localize this.label}}</a></label>
+                    <div class="location list-row no-scan" data-key="{{this.key}}">
+                        <div class="location-values row-content" data-action="expandRow">
+                            <label>{{localize this.label}}</label>
                             {{#if this.damage}}
                                 <div class="armour-damage">
                                     -{{this.damage}}

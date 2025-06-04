@@ -44,7 +44,7 @@ export class AttackDataModel extends TestDataModel
 
     get enabled()
     {
-        return this.type;
+        return this.type && (this.characteristic || this.skill.key || this.skill.specialisation);
     }
 
 }

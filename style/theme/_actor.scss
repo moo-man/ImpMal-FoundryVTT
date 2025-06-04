@@ -16,6 +16,15 @@ body.impmal-theme {
             --input-placeholder-color: var(--impmal-grey);
         }
 
+        .locations {
+            .location {
+                label {
+
+                    background: var(--impmal-lightblue);
+                }
+            }
+        }
+
         .header-details .details-row .detail-group {
             .input-group {
                 border-bottom: unset;
@@ -102,26 +111,47 @@ body.impmal-theme {
             }
         }
 
+        .current-action {
+            height: 1.5rem;
+            line-height: 1.5rem;
+            background: var(--impmal-darkblue);
+            padding: 0px;
+            display: flex;
+            align-items: center;
+            div {
+                height: 100%;
+                margin: 0px 0.5rem;
+                strong {
+                    display: inline-block;
+                    height: 100%;
+                    background: var(--impmal-lightblue)
+                }
+            }
+            a {
+                background: var(--impmal-lightblue);
+                flex: 0 0 1rem;
+                text-align: center
+            }
+        }
+
         .hit-locations {
 
-            .list-row {
-                margin: 0px;
-                height: 1.5rem;
-                padding: 0px;
-                margin-bottom: 0.5rem;
-
-                label {
-                    padding: 0px;
-                }
-
-                &:hover {}
-            }
 
             .location-values {
-                width: 100%;
                 @include value-box-noborder(80px, 25px);
-                justify-content: start;
+                label {
+                    text-align: left;
+                }
+            }
 
+            .location.list-row {
+                margin-bottom: 0.5rem;
+            }
+
+            .armour-damage {
+                flex: 0 0 1.5rem;
+                background: darkred;
+                color: var(--impmal-darkgrey)
             }
 
             //     label {

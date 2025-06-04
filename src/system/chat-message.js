@@ -33,6 +33,7 @@ export class ImpMalChatMessage extends WarhammerChatMessage
     {
         let html = await super.renderHTML(options);
         ChatHelpers.removeGMOnlyElements(html);
+        game.impmal.utility.listeners(html);
         ImpMalTables.listeners(html);
         return html;
     }

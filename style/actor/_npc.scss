@@ -74,6 +74,11 @@ body.theme-light .application.actor.impmal.npc {
             background: var(--color-cool-4);
             .location {
                 height: 30px;
+                width: 100%;
+                label {
+                    width: 100%;
+                    text-align: center;
+                }
                 .location-values {
                     height: 100%;
                     display: flex;
@@ -100,6 +105,13 @@ body.theme-light .application.actor.impmal.npc {
         }
     }
 
+    .sheet-list.skills {
+        
+        .list-header {
+            padding-right: 0.5rem;  
+        }
+    }
+
     .item-section.skills {
         flex-direction: row;
         flex-wrap: wrap;
@@ -108,5 +120,6 @@ body.theme-light .application.actor.impmal.npc {
         > a {
             margin-left: 5px;
         }
+
     }
 }

@@ -49,8 +49,12 @@ export class TestDataModel extends foundry.abstract.DataModel
     
     get isValid()
     {
-        return this.difficulty && (this.characteristic || this.skill);
+        return this.difficulty && (this.characteristic || this.skill.key || this.skill.specialisation);
     }
-
+    
+    get enabled()
+    {
+        return this.isValid;
+    }
 
 }

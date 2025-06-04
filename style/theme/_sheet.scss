@@ -18,6 +18,7 @@ body.impmal-theme {
         --attribute-border: var(--impmal-lightblue);
 
         .description,
+        .dropdown-content,
         .editor-section {
             @include editor-content-alt;
         }

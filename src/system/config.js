@@ -570,6 +570,7 @@ const IMPMAL = {
     },
 
 
+
     actions : {
         aim : {
             label : "IMPMAL.Aim",
@@ -1726,8 +1727,9 @@ const IMPMAL = {
         notes : "https://github.com/moo-man/ImpMal-FoundryVTT/releases",
         issues : "https://github.com/moo-man/ImpMal-FoundryVTT/issues",
         wiki : "https://moo-man.github.io/ImpMal-FoundryVTT/pages/home.html",
-    }
-    
+    },
+
+    copyrightText : "",
 };
 
 

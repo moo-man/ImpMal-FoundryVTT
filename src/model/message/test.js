@@ -14,7 +14,8 @@ export class ImpMalTestMessageModel extends WarhammerTestMessageModel {
     static get actions() {
         return foundry.utils.mergeObject(super.actions, {
             resistPower: this._onResistPower,
-            buyItem: this._onBuyItem // Availability Tests
+            buyItem: this._onBuyItem, // Availability Tests,
+            expandItem : this._onExpandItem
         });
     }
 
@@ -90,6 +91,10 @@ export class ImpMalTestMessageModel extends WarhammerTestMessageModel {
         {
             this.test?.buyItem(actor);
         }
+    }
+
+    static _onExpandItem(ev, target) {
+        target.parentElement.querySelector(".description").classList.toggle("expanded");
     }
 
     get test() {

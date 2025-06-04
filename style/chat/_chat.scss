@@ -1,6 +1,11 @@
 .chat-log {
     .chat-message {
         transition: box-shadow 200ms;
+
+        button {
+            margin: auto;
+        }
+
         .message-metadata {
             flex-direction: column;
         }
@@ -23,8 +28,9 @@
 
         .item-use {
             margin: 1rem 0px;
-            padding: 1rem;
+            padding: 0.5rem;
             .item-header {
+                cursor: pointer;
                 display: flex;
                 align-items: center;
                 gap: 1rem;
@@ -34,6 +40,16 @@
                 p {
                     font-size: var(--font-size-18);
                     font-weight: bold;
+                }
+            }
+
+            .description {
+                display: grid;
+                grid-template-rows: 0fr;
+                transition: grid-template-rows 250ms;
+                > * {overflow:hidden};
+                &.expanded {
+                    grid-template-rows:  1fr;
                 }
             }
         }

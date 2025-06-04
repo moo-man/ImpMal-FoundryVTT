@@ -70,6 +70,12 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         return context;
     }
 
+    async _onRender(options)
+    {
+        await super._onRender(options)
+        game.impmal.utility.listeners(this.element);
+    }
+
     async _handleEnrichment() 
     {
         return foundry.utils.expandObject({

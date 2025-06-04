@@ -2,23 +2,60 @@
 
 body.impmal-theme {
 
+  #pause
+  {
+    @include scan
+  }
+  .compendium-directory.sidebar-tab {
+    .window-header {
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+    .compendium-name {
+      color: var(--impmal-grey2);
+      strong::after {
+        background: linear-gradient(to right, transparent, var(--impmal-lightgreen), transparent);
+      }
+    }
+  }
+
+  .sidebar-tab,
   #interface
   {
+    --color-scrollbar: var(--impmal-lightgreen);
     --sidebar-separator : 1px solid var(--impmal-lightblue);
 
     --sidebar-entry-hover-bg: linear-gradient(90deg, var(--impmal-lightblue) 0%, rgba(0, 0, 0, 0) 100%);
 
-    
+    font-family: var(--header-font);
 
-    a.button,
+
     button {
-      outline: none;
+
+      --button-text-color: var(--impmal-grey2);
+      --button-focus-outline-color: var(--impmal-lightgreen);
+      --button-hover-background-color: var(--impmal-lightgreen);
+      --button-hover-text-color: var(--color-light-1);
+  }
+
+    #settings,
+    .action-buttons {
+
+      a.button,
+      button {
+        outline: none;
         @include impmal-button;
-        
+      }
+
         &[aria-pressed='true'],
         &.active {
             background: var(--impmal-lightgreen);
         }
+    }
+
+     .compendium {
+      color: var(--impmal-grey2);
     }
 
     .divider {
@@ -81,7 +118,7 @@ body.impmal-theme {
 
 
 
-    
+
     #players-inactive,
       #players-active {
       border: 2px solid var(--impmal-lightblue);
