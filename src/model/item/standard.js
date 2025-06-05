@@ -21,7 +21,7 @@ export class StandardItemModel extends BaseItemModel
             player : await foundry.applications.ux.TextEditor.enrichHTML(this.notes.player, {async: true, relativeTo: this.parent, secrets : false}),
             gm : await foundry.applications.ux.TextEditor.enrichHTML(this.notes.gm, {async: true, relativeTo: this.parent, secrets : false})
         }
-        return await renderTemplate("systems/impmal/templates/partials/item-use.hbs", {noImage : this.parent.img == "icons/svg/item-bag.svg", enriched, item : this.parent, includeEffectButtons });
+        return await renderTemplate("systems/impmal/templates/chat/rolls/item-use.hbs", {noImage : this.parent.img == "icons/svg/item-bag.svg", enriched, item : this.parent, includeEffectButtons });
     }
 
     async summaryData()

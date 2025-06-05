@@ -26,7 +26,7 @@ export class OpposedTestMessageModel extends WarhammerMessageModel
 
     get attackerTest()
     {
-        return this.attackerMessage.system.test;
+        return this.attackerMessage?.system.test;
     }
 
     get defenderTest()

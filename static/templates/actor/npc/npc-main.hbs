@@ -120,6 +120,67 @@
     </div>
 </div>
 
+{{#if items.injury.length}}
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Injuries"}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="injury"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each items.injury}}
+            <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="row-content">
+                    <div class="list-name rollable">
+                        <img src="{{this.img}}" data-action="useItem">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                    </div>
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+        {{/each}}
+    </div>
+</div>
+{{/if}}
+
+{{#if items.critical.length}}
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.CriticalWounds"}}</div>
+        <div class="list-controls">
+            <a class="list-control" data-action="createItem" data-type="critical"><i class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="list-content">
+        {{#each items.critical}}
+            <div class="list-row" data-uuid="{{this.uuid}}">
+                <div class="row-content">
+                    <div class="list-name rollable">
+                        <img src="{{this.img}}" data-action="useItem">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                    </div>
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
+                </div>
+        {{/each}}
+    </div>
+</div>
+{{/if}}
 
 <div class="sheet-list">
     <div class="list-header row-content">
@@ -164,4 +225,6 @@
         {{/each}}
     </div>
 </div>
+
+
 </section>

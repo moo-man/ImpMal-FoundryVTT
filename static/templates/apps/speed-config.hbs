@@ -3,7 +3,6 @@
         <label>{{localize "IMPMAL.Land"}}</label>
         <div class="form-fields">
             <select name="system.combat.speed.land.value">
-                {{log this}}
                 {{selectOptions (config "speeds") selected=system.combat.speed.land.value}}
             </select>
             <input type="text" value="{{system.combat.speed.land.notes}}" name="system.combat.speed.land.notes" placeholder="{{localize "IMPMAL.Notes"}}">

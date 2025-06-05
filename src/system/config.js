@@ -1916,7 +1916,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             a.classList.add("corruption-link");
             a.classList.add("custom-link");
             a.dataset.value = value;
-            a.innerHTML = `<img src="systems/impmal/assets/icons/chsvg"><span>${match[2] || value}</span>`;
+            a.innerHTML = `<img src="systems/impmal/assets/icons/chaos.svg"><span>${match[2] || value}</span>`;
             return a;
         }
     }

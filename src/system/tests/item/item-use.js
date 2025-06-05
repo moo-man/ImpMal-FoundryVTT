@@ -18,7 +18,7 @@ export class ItemUse extends BaseTest
 {
     static evaluatorClass = ItemTestEvaluator;
     static contextClass = ItemUseContext;
-    rollTemplate = "systems/impmal/templates/chat/rolls/item-use.hbs";
+    rollTemplate = "";
 
     computeTarget() 
     {

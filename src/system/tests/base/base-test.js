@@ -222,7 +222,7 @@ export class BaseTest extends WarhammerTestBase
             this.testDetails = await renderTemplate(this.testDetailsTemplate, this);
         }
         let chatData = ChatMessage.applyRollMode({}, this.context.rollMode);
-        let content = await renderTemplate(this.rollTemplate, this);
+        let content = this.rollTemplate ? await renderTemplate(this.rollTemplate, this) : this.itemSummary;
         return foundry.utils.mergeObject( chatData, {
             content,
             speaker : this.context.speaker,

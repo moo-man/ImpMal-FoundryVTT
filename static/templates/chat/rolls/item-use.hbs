@@ -1,10 +1,16 @@
-<div class="impmal test">
-    {{#if itemSummary}}
-    {{{itemSummary}}}
-    {{/if}}
-
-    {{#if showChatTest}}
-        <button data-action="chatTest" data-uuid="{{item.uuid}}">{{context.itemTest.label}}</button>
-    {{/if}}
-    {{{effectButtons}}}
+<div class="item-use" >
+   <div class="item-header" data-action="expandItem" >
+    {{#unless noImage}}
+        <img src="{{item.img}}">
+    {{/unless}}
+        <p>{{item.name}}</p>
+   </div>
+   <div class="description">
+        <div class="player">
+        {{{enriched.player}}}
+        </div>
+        <div class="gm-only">
+            {{{enriched.gm}}}
+        </div>
+   </div> 
 </div>
