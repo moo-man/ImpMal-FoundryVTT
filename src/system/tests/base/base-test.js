@@ -243,7 +243,7 @@ export class BaseTest extends WarhammerTestBase
         }
         else
         {
-          return this.succeeded && this.context.itemTest.isValid
+          return this.succeeded && this.context.itemTest.isValid && !this.context.itemTest.self
         }
       }
     

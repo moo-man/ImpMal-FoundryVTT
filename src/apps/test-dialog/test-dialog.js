@@ -209,7 +209,7 @@ export class TestDialog extends WarhammerRollDialogV2
     {
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
-        let dialogData = {data : {}, fields : options.fields || {}};
+        let dialogData = {data : {}, fields : context.fields || {}};
         if (actor)
         {
             dialogData.data.speaker = ChatMessage.getSpeaker({actor});

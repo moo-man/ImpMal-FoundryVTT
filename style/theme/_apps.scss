@@ -109,7 +109,7 @@ body.impmal-theme {
                 margin-bottom: 5px;
             }
 
-            .list-row:not(.list-header, .no-scan):hover {
+            .list-row:not(.list-header, .no-scan) .row-content:hover {
                 position: relative;
                 background: var(--impmal-lightblue);
                 @include scan(false);
@@ -121,7 +121,7 @@ body.impmal-theme {
             }
 
             .row-content {
-                input {
+                input:not([type=checkbox]) {
                     background: rgba(0, 0, 0, 0.05);
                     border-radius: 3px;
                     height: unset;

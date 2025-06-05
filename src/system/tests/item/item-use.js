@@ -45,7 +45,7 @@ export class ItemUse extends BaseTest
         }
         else
         {
-          return this.context.itemTest.isValid
+          return this.context.itemTest.isValid && !this.context.itemTest.self
         }
       }
     
@@ -63,6 +63,7 @@ export class ItemUse extends BaseTest
         // Much is copied from test-dialog setupData
         let contextData = {
             speaker,
+            rollMode : game.settings.get("core", "rollMode"),
             targets : Array.from(game.user.targets).filter(t => t.document.id != speaker.token).map(t => t.actor.speakerData(t.document)),
             itemUsed : uuid
         };

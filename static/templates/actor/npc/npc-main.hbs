@@ -134,9 +134,9 @@
         {{#each possessions}}
             <div class="list-row" data-uuid="{{this.uuid}}">
                 <div class="row-content">
-                    <div class="list-name rollable" data-action="useItem">
-                        <img src="{{this.img}}">
-                        <a class="label">{{this.name}}</a>
+                    <div class="list-name rollable">
+                        <img src="{{this.img}}" data-action="useItem">
+                        <a class="label" data-action="toggleSummary">{{this.name}}</a>
                     </div>
 
                         <div class="small">

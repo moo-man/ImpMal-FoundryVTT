@@ -1,4 +1,12 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="form-group">
+        <label>{{localize "IMPMAL.Uses"}}</label>
+        <div class="form-fields">
+            <input type="number" name="system.uses.value"  value="{{system.uses.value}}">
+            /
+            <input type="number" name="system.uses.max"  value="{{system.uses.max}}">
+        </div>
+    </div>
     {{> itemTraits traits=document.system.traits path="system.traits" label="IMPMAL.Traits"}}
     {{> slotsDisplay}}
         <fieldset>

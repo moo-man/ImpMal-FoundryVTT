@@ -14,8 +14,8 @@ export class EquipmentModel extends EquippableItemModel
         schema.traits = new fields.EmbeddedDataField(TraitListModel);
         schema.test = new fields.EmbeddedDataField(TestDataModel);
         schema.uses = new fields.SchemaField({
-            value : new fields.NumberField({initial : 0, nullable : true}),
-            max : new fields.NumberField({initial : 0, nullable : true}),
+            value : new fields.NumberField({initial : null, nullable : true}),
+            max : new fields.NumberField({initial : null, nullable : true}),
             enabled : new fields.BooleanField({initial : false}),
         });
         schema.test = new fields.EmbeddedDataField(TestDataModel);

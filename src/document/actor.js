@@ -68,11 +68,25 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         return this._setupTest(TraitTestDialog, TraitTest, id, options, roll, false);
     }
 
-    useItem({id, uuid})
+    async useItem({id, uuid})
     {
         let item = fromUuidSync(uuid) || this.items.get(id);
 
         let test = item.system.test
+
+        if (item.system.uses && item.system.uses.value != null  && !(await item.spend("system.uses.value")))
+        {
+            return ui.notifications.error("No uses left!")
+        }
+
+        // If uses reaches 0, decrease quantity and reset uses to max
+        if (item.system.uses?.value == 0 && item.system.uses?.max && item.system.quantity > 1)
+        {
+            await item.update({"system" : {
+                "quantity" : item.system.quantity - 1,
+                "uses.value" : item.system.uses.max
+            }})
+        }
 
         if (test && test.isValid && test.self)
         {
@@ -126,7 +140,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
     {
         let testData = {};
         let testOptions;
-        let testFunction;
+        let testFunction;q
 
         // Most specific - provide a specialisation name
         if (data.skill.specialisation)

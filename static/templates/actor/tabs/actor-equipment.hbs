@@ -31,7 +31,7 @@
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
-                            <img src="{{this.img}}">
+                            <img src="{{this.img}}" class="rollable" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
@@ -91,7 +91,7 @@
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
-                            <img src="{{this.img}}">
+                            <img src="{{this.img}}" class="rollable" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
@@ -126,7 +126,7 @@
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
-                            <img src="{{this.img}}">
+                            <img src="{{this.img}}" class="rollable" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
@@ -150,6 +150,7 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Protection"}}</div>
+        <div class="small"></div>
         <div class="small">{{localize "IMPMAL.Eqp."}}</div>
         <div class="small">{{localize "IMPMAL.Qty."}}</div>
         <div class="small">{{localize "IMPMAL.Enc."}}</div>
@@ -162,10 +163,18 @@
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
-                            <img src="{{this.img}}">
+                            <img src="{{this.img}}" class="rollable" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
+                        {{#if this.system.uses}}
+                        <div class="small">
+                            {{this.system.uses.value}}
+                            {{#if this.system.uses.max}}
+                            / {{this.system.uses.max}}
+                            {{/if}}
+                        </div>
+                        {{/if}}
                         <div class="small">
                         <a data-action="toggleProperty" data-path="system.equipped.value">
                             {{#if this.system.equipped.value}}
@@ -196,11 +205,12 @@
         <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Forcefield"}}</div>
+        <div class="small"></div>
         <div class="small">{{localize "IMPMAL.Eqp."}}</div>
         <div class="small">{{localize "IMPMAL.Qty."}}</div>
         <div class="small">{{localize "IMPMAL.Enc."}}</div>
             <div class="list-controls">
-                <a class="list-control" data-action="createItem" data-type="protection"><i class="fas fa-plus"></i></a>
+                <a class="list-control" data-action="createItem" data-type="forceField"><i class="fas fa-plus"></i></a>
             </div>
         </div>
         <div class="list-content">
@@ -208,10 +218,18 @@
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name" {{#if this.system.overload.collapsed}}style="color: darkred"{{/if}}>
-                            <img src="{{this.img}}">
+                            <img src="{{this.img}}" class="rollable" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
+                        {{#if this.system.uses}}
+                        <div class="small">
+                            {{this.system.uses.value}}
+                            {{#if this.system.uses.max}}
+                            / {{this.system.uses.max}}
+                            {{/if}}
+                        </div>
+                        {{/if}}
                         <div class="small">
                         <a data-action="toggleProperty" data-path="system.equipped.value">
                             {{#if this.system.equipped.value}}
@@ -243,6 +261,7 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Equipment"}}</div>
+        <div class="small"></div>
         <div class="small">{{localize "IMPMAL.Eqp."}}</div>
         <div class="small">{{localize "IMPMAL.Qty."}}</div>
         <div class="small">{{localize "IMPMAL.Enc."}}</div>
@@ -255,10 +274,18 @@
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
-                            <img src="{{this.img}}">
+                            <img src="{{this.img}}" class="rollable" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
+                        {{#if this.system.uses}}
+                        <div class="small">
+                            {{this.system.uses.value}}
+                            {{#if this.system.uses.max}}
+                            / {{this.system.uses.max}}
+                            {{/if}}
+                        </div>
+                        {{/if}}
                         <div class="small">
                         <a data-action="toggleProperty" data-path="system.equipped.value">
                             {{#if this.system.equipped.value}}
@@ -289,6 +316,7 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Augmetic"}}</div>
+        <div class="small"></div>
         <div class="small">{{localize "IMPMAL.Eqp."}}</div>
         <div class="small">{{localize "IMPMAL.Qty."}}</div>
         <div class="small">{{localize "IMPMAL.Enc."}}</div>
@@ -301,10 +329,18 @@
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
-                            <img src="{{this.img}}">
+                            <img src="{{this.img}}" class="rollable" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
+                        {{#if this.system.uses}}
+                        <div class="small">
+                            {{this.system.uses.value}}
+                            {{#if this.system.uses.max}}
+                            / {{this.system.uses.max}}
+                            {{/if}}
+                        </div>
+                        {{/if}}
                         <div class="small">
                         <a data-action="toggleProperty" data-path="system.equipped.value">
                             {{#if this.system.equipped.value}}

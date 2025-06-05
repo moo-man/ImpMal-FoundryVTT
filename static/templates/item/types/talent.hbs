@@ -21,12 +21,10 @@
                             <div>{{this.name}}</div>
                         </div>
                     <div>
-                        <input class="taken-req" type="number"
-                            value="{{lookup ../item.system.effectTakenRequirement this.id}}">
+                        <input name="system.effectTakenRequirement.{{this.id}}" class="taken-req" type="number" value="{{lookup ../item.system.effectTakenRequirement this.id}}">
                     </div>
                     <div>
-                        <input class="repeat" type="checkbox" {{checked (lookup ../item.system.effectRepeatable
-                            this.id)}}>
+                        <input name="system.effectRepeatable.{{this.id}}" class="repeat" type="checkbox" {{checked (lookup ../item.system.effectRepeatable this.id)}}>
                     </div>
                     <div class="list-controls">
                     </div>
