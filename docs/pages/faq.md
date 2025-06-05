@@ -34,12 +34,12 @@ See [Using Zones](./basics/zones.md)
 ### How do I advance characteristics and skillS?
 
 {: .question}
-See the [Advancement](./basics/advancement.md) window.
+See the [Advancement](./basics/basics#advancement) window.
 
 ### How do I advance skills and add talents without spending experience during character creation?
 
 {: .question}
-The amount of XP spent is re-calculated every time the Actor is updated, and it doesn't know what advancement or Item may have come from character creation, resulting in some amount of XP spent. This can be fixed by adding an "Offset" in the [Advancement](./basics/advancement.md) window. If using the automated character creator, it will automatically add this offset.
+The amount of XP spent is re-calculated every time the Actor is updated, and it doesn't know what advancement or Item may have come from character creation, resulting in some amount of XP spent. This can be fixed by adding an "Offset" in the [Advancement](./basics/basics#advancement) window. If using the automated character creator, it will automatically add this offset.
 
 ### Why can't I see pins on the map? Like on the Macharian Sector Scene?
 
