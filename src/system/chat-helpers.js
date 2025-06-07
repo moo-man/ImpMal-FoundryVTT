@@ -37,7 +37,7 @@ export default class ChatHelpers
     {
         if (!game.user.isGM)
         {
-            html.find(".gm-only").remove();
+            html.querySelectorAll(".gm-only").forEach(e => e.remove());
         }
     }
 

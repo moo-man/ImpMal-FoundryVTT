@@ -1729,7 +1729,19 @@ const IMPMAL = {
         wiki : "https://moo-man.github.io/ImpMal-FoundryVTT/pages/home.html",
     },
 
-    copyrightText : "",
+    copyrightText : `Warhammer 40,000 Roleplay: Imperium Maledictum © Copyright Games Workshop Limited 2025. Warhammer 40,000 Roleplay, the Warhammer 40,000 Roleplay logo, Imperium Maledictum, the Imperium Maledictum logo, GW, Games Workshop, Space Marine, 40k, Warhammer, Warhammer 40,000, 40,000, the ‘Aquila’ Doubleheaded Eagle logo, and all associated logos, illustrations, images, names, creatures, races, vehicles, locations, weapons, characters, and the distinctive likeness thereof, are either ® or ™, and/or © Games Workshop Limited, variably registered around the world, and used under licence. Cubicle 7 Entertainment and the Cubicle 7 Entertainment logo are trademarks of Cubicle 7 Entertainment Limited. All rights reserved. 
+    
+    <div style="display: flex; justify-content: space-around;">
+        <img src="modules/warhammer-lib/assets/c7.png" height=50 width=50/>   
+        <img src="modules/warhammer-lib/assets/warhammer.png" height=50 width=50/>
+    </div>
+
+    <ul>
+        <li>Published by: <strong>Cubicle 7 Entertainment Ltd</strong></li>
+        <li>Foundry Edition by <strong>@AUTHORS@</strong></li>
+        <li>Special thanks to: <strong>Games Workshop, Fatshark</strong></li>
+    </ul>
+    `,
 };
 
 
