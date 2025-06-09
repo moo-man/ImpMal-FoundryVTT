@@ -16,6 +16,10 @@ body.theme-light .application.impmal.sheet {
         }
     }
 
+    .window-content {
+        gap: 0.5rem;
+    }
+
     .droppable {
         &.hover {
             box-shadow: 0 0 10px inset var(--dropshadow);    

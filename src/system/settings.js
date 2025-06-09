@@ -75,17 +75,6 @@ export default function registerSettings()
         type: TableSettings.schema
     });
     
-
-    game.settings.register("impmal", "disableTheme", {
-        name: "IMPMAL.DisableTheme",
-        hint: "IMPMAL.DisableThemeHint",
-        scope: "user",
-        config: true,
-        default: false,
-        type: Boolean,
-        onChange : rule => rule ? document.body.classList.add("no-theme") : document.body.classList.remove("no-theme")
-      });
-
     game.settings.register("impmal", "playerExperienceEditing", {
         name: "IMPMAL.PlayerExperienceEditing",
         hint: "IMPMAL.PlayerExperienceEditingHint",

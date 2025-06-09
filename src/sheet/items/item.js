@@ -112,14 +112,6 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
                 let dropItem = this.document.actor.items.get(ev.target.closest(".list-row")?.dataset.id);
                 dropItem?.update(dropItem.system.slots.slotItem(document, index));
             }
-            else 
-            {
-                super._onDropItem(data, ev);
-            }
-        }
-        else 
-        {
-            super._onDropItem(data, ev);
         }
     }
 

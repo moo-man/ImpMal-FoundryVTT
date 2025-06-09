@@ -18,7 +18,6 @@ export class ItemUse extends BaseTest
 {
     static evaluatorClass = ItemTestEvaluator;
     static contextClass = ItemUseContext;
-    rollTemplate = "";
 
     computeTarget() 
     {

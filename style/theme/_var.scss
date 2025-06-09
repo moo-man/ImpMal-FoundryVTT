@@ -640,9 +640,13 @@ body.impmal-font {
   .sidebar {
 
     font-style: normal;
-    border-color: var(--impmal-lightblue);
+    border-left: 3px solid var(--impmal-lightblue);
+    margin-left: 0.5rem;
     float: right;
     width: 250px;
+    font-family: var(--type-font);
+
+
 
     .sidebar-title {
       font-family: "Novarese";
@@ -658,8 +662,8 @@ body.impmal-font {
       width: 50px;
       height: 50px;
       position: relative;
-      top: -10px;
-      left: -20px;
+      top: -19px;
+      left: -16px;
       margin-bottom: -35px;
       background-size: contain;
       background-image: url(./assets/ui/eagle-top.webp);

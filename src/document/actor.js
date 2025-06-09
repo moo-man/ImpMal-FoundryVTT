@@ -140,7 +140,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
     {
         let testData = {};
         let testOptions;
-        let testFunction;q
+        let testFunction;
 
         // Most specific - provide a specialisation name
         if (data.skill.specialisation)

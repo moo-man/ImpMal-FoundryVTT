@@ -1,48 +1,51 @@
 <div class="impmal test">
     {{#if itemSummary}}
-    {{{itemSummary}}}
+        {{{itemSummary}}}
     {{/if}}
-    <div class="title">
-        <p>{{context.title}}</p>
-    </div>
-    <div class="comparison">
-        <div class="roll">
-            {{#if result.reversed}}
-                <span class="inactive">{{result.originalRoll}}</span>
-                <span class="reverse-icon"><i class="fa-solid fa-shuffle"></i></span>
-                <span>{{result.roll}}</span>
-            {{else}}
-                {{result.roll}}
-            {{/if}}
+    {{#if result.roll}}
+        <div class="title">
+            <p>{{context.title}}</p>
         </div>
-        <div class="vs">
-            vs
+        <div class="comparison">
+            <div class="roll">
+                {{#if result.reversed}}
+                    <span class="inactive">{{result.originalRoll}}</span>
+                    <span class="reverse-icon"><i class="fa-solid fa-shuffle"></i></span>
+                    <span>{{result.roll}}</span>
+                {{else}}
+                    {{result.roll}}
+                {{/if}}
+            </div>
+            <div class="vs">
+                vs
+            </div>
+            <div class="target">
+                {{result.target}}
+                <a class="test-breakdown" data-tooltip="{{context.breakdown}}" data-tooltip-direction="LEFT"><i
+                        class="fa-regular fa-circle-info"></i></a>
+            </div>
         </div>
-        <div class="target">
-            {{result.target}}
-            <a class="test-breakdown" data-tooltip="{{context.breakdown}}" data-tooltip-direction="LEFT"><i class="fa-regular fa-circle-info"></i></a>
-        </div>
-    </div>
 
-    <div class="sl">
-        <div>
-            {{result.signedSL}}
+        <div class="sl">
+            <div>
+                {{result.signedSL}}
+            </div>
         </div>
-    </div>
-    <p class="outcome"><strong>{{result.outcomeDescription}}</strong></p>
-    <div class="test-details">
-        <div class="tags">
-            {{#each tags}}
-                <div>{{{this}}}</div>
+        <p class="outcome"><strong>{{result.outcomeDescription}}</strong></p>
+        <div class="test-details">
+            <div class="tags">
+                {{#each tags}}
+                    <div>{{{this}}}</div>
+                {{/each}}
+            </div>
+            {{{testDetails}}}
+
+            {{#each text}}
+                <p>{{{this}}}</p>
             {{/each}}
         </div>
-        {{{testDetails}}}
+    {{/if}}
 
-        {{#each text}}
-        <p>{{{this}}}</p>
-        {{/each}}
-    </div>
-    
     {{#if showChatTest}}
         <button data-action="chatTest" data-uuid="{{item.uuid}}">{{context.itemTest.label}}</button>
     {{/if}}

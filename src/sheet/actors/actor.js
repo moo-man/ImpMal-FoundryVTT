@@ -271,7 +271,7 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
             {
                 let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
                 const document = await fromUuid(uuid);
-                this.actor.createEmbeddedDocuments("ActiveEffect", [document.toObject()]);
+                this.actor.createEmbeddedDocuments("Item", [document.toObject()]);
             }
           },
       ];
