@@ -4,7 +4,7 @@
   </div>
   <div class="chargen-content">
     <div class="buttons">
-      <a class='chargen-button' data-button='rollCareers'>{{localize "Roll"}}</a>
+      <a class='chargen-button' data-button='rollCareers'>{{localize "IMPMAL.Roll"}}</a>
     </div>
     <div class="chargen-items">
       {{#each context.careers as |career index|}}
@@ -48,16 +48,16 @@
     {{#if (gte context.step 2)}}
     <p class="centered">{{localize "CHARGEN.Career.KeepRolling"}}</p>
     <div class="buttons">
-      <a class='chargen-button' data-button='rollCareers'>{{localize "Roll"}}</a>
+      <a class='chargen-button' data-button='rollCareers'>{{localize "IMPMAL.Roll"}}</a>
     </div>
     {{/if }}
   </div>
   <p>{{localize "CHARGEN.Career.DragDrop"}}</p>
   <div class="result">
-    <span><b>{{localize "Career"}}</b>: {{context.career.name}}</span>
-    <span class="xp">{{localize "XP"}}: {{context.exp}}</span>
+    <span><b>{{localize "IMPMAL.Career"}}</b>: {{context.career.name}}</span>
+    <span class="xp">{{localize "IMPMAL.XP"}}: {{context.exp}}</span>
   </div>
   <div class="controls">
-    <button type="submit">{{localize "Submit"}}</button>
+    <button type="submit">{{localize "IMPMAL.Submit"}}</button>
   </div>
 </form>
