@@ -403,6 +403,7 @@
     "IMPMAL.Int" : "Int",
     "IMPMAL.Intelligence" : "Intelligence",
     "IMPMAL.Intuition" : "Intuition",
+    "IMPMAL.Items" : "Items",
     "IMPMAL.ItemsNotAllowed" : "This Item is not allowed on this Actor type",
     "IMPMAL.ItemTraits" : "Item Traits",
     "IMPMAL.ItemDisplayXSolars" : "{solars} Solars",

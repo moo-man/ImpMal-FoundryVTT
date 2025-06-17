@@ -46,42 +46,42 @@ export default class CharacterSheet extends IMActorSheet
         main: {
           id: "main",
           group: "primary",
-          label: "Main",
+          label: "IMPMAL.Main",
         },
         skills: {
           id: "skills",
           group: "primary",
-          label: "Skills",
+          label: "IMPMAL.Skills",
         },
         talents: {
           id: "talents",
           group: "primary",
-          label: "Talents",
+          label: "IMPMAL.Talents",
         },
         combat: {
           id: "combat",
           group: "primary",
-          label: "Combat",
+          label: "IMPMAL.Combat",
         },
         powers: {
           id: "powers",
           group: "primary",
-          label: "Powers",
+          label: "IMPMAL.Powers",
         },
         effects: {
           id: "effects",
           group: "primary",
-          label: "Effects",
+          label: "IMPMAL.Effects",
         },
         equipment: {
           id: "equipment",
           group: "primary",
-          label: "Equipment",
+          label: "IMPMAL.Equipment",
         },
         notes: {
           id: "notes",
           group: "primary",
-          label: "Notes",
+          label: "IMPMAL.Notes",
         }
       }
 
