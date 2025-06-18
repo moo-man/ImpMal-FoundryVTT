@@ -28,17 +28,17 @@ export default class VehicleSheet extends IMActorSheet
         main: {
           id: "main",
           group: "primary",
-          label: "Main",
+          label: "IMPMAL.Main",
         },
         cargo: {
           id: "cargo",
           group: "primary",
-          label: "Cargo",
+          label: "IMPMAL.Cargo",
         },
         notes: {
           id: "notes",
           group: "primary",
-          label: "Notes",
+          label: "IMPMAL.Notes",
         }
       }
 

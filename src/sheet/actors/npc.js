@@ -32,27 +32,27 @@ export default class NPCSheet extends IMActorSheet
         main: {
           id: "main",
           group: "primary",
-          label: "Main",
+          label: "IMPMAL.Main",
         },
         skills: {
           id: "skills",
           group: "primary",
-          label: "Skills",
+          label: "IMPMAL.Skills",
         },
         powers: {
           id: "powers",
           group: "primary",
-          label: "Powers",
+          label: "IMPMAL.Powers",
         },
         effects: {
           id: "effects",
           group: "primary",
-          label: "Effects",
+          label: "IMPMAL.Effects",
         },
         notes: {
           id: "notes",
           group: "primary",
-          label: "Notes",
+          label: "IMPMAL.Notes",
         }
       }
 
