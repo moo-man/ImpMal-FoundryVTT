@@ -43,17 +43,17 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
         description: {
           id: "description",
           group: "primary",
-          label: "Description",
+          label: "IMPMAL.Description",
         },
         details: {
           id: "details",
           group: "primary",
-          label: "Details",
+          label: "IMPMAL.Details",
         },
         effects: {
           id: "effects",
           group: "primary",
-          label: "Effects",
+          label: "IMPMAL.Effects",
         }
       }
 

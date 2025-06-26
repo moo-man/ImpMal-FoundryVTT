@@ -30,7 +30,7 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
             tabs: [
                 { id: "characteristics", label: "IMPMAL.Characteristics" },
                 { id: "skills", label: "IMPMAL.Skills" },
-                { id: "items", label: "Items" },
+                { id: "items", label: "IMPMAL.Items" },
                 { id: "log", label: "IMPMAL.Log" },
                 { id: "other", label: "IMPMAL.Offsets" }
             ],

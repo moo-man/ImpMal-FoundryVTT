@@ -146,7 +146,7 @@
                         {{/if}}
                         {{#unless this.system.selfAmmo}}
                             {{#if (lt this.system.mag.current this.system.mag.value)}}
-                                <button data-action="reload">{{localize "Reload"}}</button>
+                                <button data-action="reload">{{localize "IMPMAL.Reload"}}</button>
                             {{/if}}
                             <button type="button" class="mag" data-action="stepProperty" data-path="system.mag.current" data-reversed="true">
                                 <label>{{localize "IMPMAL.Mag"}}</label>
@@ -213,7 +213,7 @@
                             {{#if this.system.isRanged}}
                                 {{#unless this.system.selfAmmo}}
                                     {{#if (lt this.system.mag.current this.system.mag.value)}}
-                                        <button data-action="reload">{{localize "Reload"}}</button>
+                                        <button data-action="reload">{{localize "IMPMAL.Reload"}}</button>
                                     {{/if}}
                                     <button type="button" class="mag" data-action="stepProperty" data-path="system.mag.current" data-reversed="true">
                                         <label>{{localize "IMPMAL.Mag"}}</label>

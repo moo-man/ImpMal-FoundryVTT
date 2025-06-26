@@ -20,12 +20,12 @@ export default class DutySheet extends BackgroundSheet
       description: {
         id: "description",
         group: "primary",
-        label: "Description",
+        label: "IMPMAL.Description",
       },
       details: {
         id: "details",
         group: "primary",
-        label: "Details",
+        label: "IMPMAL.Details",
       }
     }
 

@@ -40,7 +40,7 @@
         </div>
 
         {{#if context.role.system.equipment.options.length}}
-        <h4 class="centered">{{localize "Equipment"}} {{#if equipmentList}}<a class="choice-reset" data-path="equipment"><i class="fas fa-rotate-left"></i></a>{{/if}}</h4>
+        <h4 class="centered">{{localize "IMPMAL.Equipment"}} {{#if equipmentList}}<a class="choice-reset" data-path="equipment"><i class="fas fa-rotate-left"></i></a>{{/if}}</h4>
         <div class="choices">
             {{#if equipmentList}}
               <p class="centered">{{equipmentList}}</p>
@@ -51,7 +51,7 @@
         {{/if}}
 
         {{#if context.role.system.talents.options.length}}
-        <h4 class="centered">{{localize "Talents"}} {{#if talentList}}<a class="choice-reset" data-path="talents"><i class="fas fa-rotate-left"></i></a>{{/if}}</h4>
+        <h4 class="centered">{{localize "IMPMAL.Talents"}} {{#if talentList}}<a class="choice-reset" data-path="talents"><i class="fas fa-rotate-left"></i></a>{{/if}}</h4>
         <div class="choices">
                       {{#if talentList}}
               <p class="centered">{{talentList}}</p>
@@ -65,11 +65,11 @@
     <div class="result">
       <p><b>{{localize "IMPMAL.CHARGEN.StageTitle.Role"}}</b>: {{context.role.name}}</p>
       <div class="xp">
-        {{localize "XP"}}: 
+        {{localize "IMPMAL.XP"}}: 
         <input type="number" class="xp"/>
       </div>
     </div>
     <div class="controls">
-      <button type="submit">{{localize "Submit"}}</button>
+      <button type="submit">{{localize "IMPMAL.Submit"}}</button>
     </div>
 </form>

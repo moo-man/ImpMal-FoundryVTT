@@ -29,17 +29,17 @@ export default class PatronSheet extends IMActorSheet
         main: {
           id: "main",
           group: "primary",
-          label: "Main",
+          label: "IMPMAL.Main",
         },
         effects: {
           id: "effects",
           group: "primary",
-          label: "Effects",
+          label: "IMPMAL.Effects",
         },
         notes: {
           id: "notes",
           group: "primary",
-          label: "Notes",
+          label: "IMPMAL.Notes",
         }
       }
 

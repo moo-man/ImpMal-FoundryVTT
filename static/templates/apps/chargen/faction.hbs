@@ -47,7 +47,7 @@
 
 
         {{#if context.faction.system.character.equipment.options.length}}
-        <p class="centered">{{localize "Equipment"}} {{#if equipmentList}}<a class="choice-reset" data-path="equipment"><i class="fas fa-rotate-left"></i></a>{{/if}}</p>
+        <p class="centered">{{localize "IMPMAL.Equipment"}} {{#if equipmentList}}<a class="choice-reset" data-path="equipment"><i class="fas fa-rotate-left"></i></a>{{/if}}</p>
         <div class="choices">
             {{#if equipmentList}}
               <p class="centered">{{equipmentList}}</p>
@@ -58,7 +58,7 @@
         {{/if}}
 
         {{#if context.faction.system.character.talents.options.length}}
-        <p class="centered">{{localize "Talents"}} {{#if talentList}}<a class="choice-reset" data-path="talents"><i class="fas fa-rotate-left"></i></a>{{/if}}</p>
+        <p class="centered">{{localize "IMPMAL.Talents"}} {{#if talentList}}<a class="choice-reset" data-path="talents"><i class="fas fa-rotate-left"></i></a>{{/if}}</p>
         <div class="choices">
                       {{#if talentList}}
               <p class="centered">{{talentList}}</p>
@@ -73,7 +73,7 @@
 
       {{#unless context.faction}}
     <div class="buttons">
-      <button type="button" data-action='rollFaction'>{{localize "Roll"}}</button>
+      <button type="button" data-action='rollFaction'>{{localize "IMPMAL.Roll"}}</button>
     </div>
     {{/unless}}
 
@@ -81,9 +81,9 @@
 
     <div class="result">
       <p><b>{{localize "IMPMAL.CHARGEN.StageTitle.Faction"}}</b>: {{context.faction.name}}</p>
-      <p class="xp">{{localize "XP"}}: {{context.exp}}</p>
+      <p class="xp">{{localize "IMPMAL.XP"}}: {{context.exp}}</p>
     </div>
     <div class="controls">
-      <button type="submit">{{localize "Submit"}}</button>
+      <button type="submit">{{localize "IMPMAL.Submit"}}</button>
     </div>
 </form>
