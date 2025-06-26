@@ -18,7 +18,38 @@ export class StandardCombatModel extends foundry.abstract.DataModel
                 notes : new fields.StringField()
             })
         });
-        schema.hitLocations = new fields.ObjectField();
+        schema.hitLocations = new fields.ObjectField({initial: {
+            head: {
+                range: [1,1],
+                label: "IMPMAL.Head",
+                abbrev: "IMPMAL.HeadAbbrev"
+              },
+              leftArm: {
+                range: [2,2],
+                label: "IMPMAL.LeftArm",
+                abbrev: "IMPMAL.LeftArmAbbrev"
+              },
+              rightArm: {
+                range: [3,3],
+                label: "IMPMAL.RightArm",
+                abbrev: "IMPMAL.RightArmAbbrev"
+              },
+              leftLeg: {
+                range: [4,4],
+                label: "IMPMAL.LeftLeg",
+                abbrev: "IMPMAL.LeftLegAbbrev"
+              },
+              rightLeg: {
+                range: [5,5],
+                label: "IMPMAL.RightLeg",
+                abbrev: "IMPMAL.RightLegAbbrev"
+              },
+              body: {
+                range: [6,10],
+                label: "IMPMAL.Body",
+                abbrev: "IMPMAL.BodyAbbrev"
+              }
+        }});
         schema.armourModifier = new fields.NumberField({initial : 0});
         schema.initiative = new fields.NumberField()
         schema.wounds = new fields.SchemaField({

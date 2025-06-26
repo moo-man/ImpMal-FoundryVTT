@@ -2,6 +2,8 @@ let fields = foundry.data.fields;
 
 export class DamageModel extends foundry.abstract.DataModel 
 {
+    static LOCALIZATION_PREFIXES = ["WH.Models.damage"];
+
     static defineSchema() 
     {
         let schema = {};

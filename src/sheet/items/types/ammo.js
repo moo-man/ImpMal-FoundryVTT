@@ -15,4 +15,16 @@ export default class AmmoSheet extends IMItemSheet
       details: { scrollable: [""], template: `systems/impmal/templates/item/types/${this.type}.hbs` },
       effects: { scrollable: [""], template: 'systems/impmal/templates/item/item-effects.hbs' },
     }
+
+    async _onDropItem(data, ev)
+    {
+      let item = await Item.implementation.fromDropData(data);
+      switch(item?.type)
+      {
+        case "ammo":
+          this.document.system.applyCustomAmmo(item);
+          break;
+      }
+    }
+
 }

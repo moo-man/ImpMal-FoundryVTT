@@ -189,7 +189,7 @@ export class TraitListModel extends ListModel
             if (effectData)
             {
                 let effect = new ActiveEffect.implementation(effectData, {parent: this.parent.parent});
-                effect.updateSource({"flags.impmal.path" : `${this.schema.fieldPath}.effects.${t.key}`})
+                effect.updateSource({img : this.parent.parent.img, "flags.impmal.path" : `${this.schema.fieldPath}.effects.${t.key}`})
                 obj[t.key] = effect
             }
             return obj;

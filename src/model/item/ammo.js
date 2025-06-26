@@ -44,4 +44,25 @@ export class AmmoModel extends PhysicalItemModel
         }
         return allowed;
     }
+
+    async applyCustomAmmo(ammo)
+    {
+        // Abort if this ammo is also custom, or if the applied ammo is not custom
+        if (this.custom || !ammo.system.custom) 
+        {
+            return ui.notifications.error("IMPMAL.ErrorApplyCustomAmmo", {localize : true});
+        }
+         
+        return this.parent.update({
+            name: this.parent.name += ` (${ammo.name})`,
+            system : {
+                cost : ammo.system.priceMultiplier * this.cost,
+                availability : ammo.system.availability,
+                addedTraits : ammo.system.addedTraits,
+                removedTraits : ammo.system.removedTraits,
+                usedWith : ammo.system.usedWith,
+                damage : ammo.system.damage
+            }
+        }).then(item => item.createEmbeddedDocuments("ActiveEffect", ammo.effects.contents));
+    }
 }

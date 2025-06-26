@@ -1,13 +1,13 @@
-export default class RewardDialog extends HandlebarsApplicationMixin(ApplicationV2) 
+export default class RewardDialog extends WHFormApplication
 {
 
     static DEFAULT_OPTIONS = {
-        classes: ["reward-dialog", "warhammer", "impmal"],
+        classes: ["reward-dialog", "impmal"],
         tag : "form",
         form : {
             handler : this.submit,
             submitOnChange : false,
-            closeOnSubmit : true
+            closeOnSubmit : true,
         },
         window: {
             resizable : true,
@@ -23,13 +23,17 @@ export default class RewardDialog extends HandlebarsApplicationMixin(Application
 
     static PARTS = {
         form: {
-            template: "systems/impmal/templates/apps/reward-dialog.hbs"
+            template: "systems/impmal/templates/apps/reward-dialog.hbs",
+            classes : ["standard-form"]
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
         }
     };
 
     constructor(data, options)
     {
-        super(options);
+        super(null, options);
         this.data = data;
     }
 

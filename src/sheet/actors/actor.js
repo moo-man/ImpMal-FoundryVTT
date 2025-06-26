@@ -370,10 +370,10 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         }
     }
 
-    static _onTraitClick(ev)
+    static _onTraitClick(ev, target)
     {
         let itemId = this._getId(ev);      
-        if(ev.currentTarget.dataset.action == "attack")
+        if(target.dataset.action == "attack")
         {
             this.actor.setupTraitTest(itemId);
         }

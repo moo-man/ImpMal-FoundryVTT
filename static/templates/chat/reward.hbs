@@ -1,10 +1,23 @@
 <div class="impmal reward">
-    {{reason}}
-    {{#if solars}}
-    <p>Solars: {{solars}}</p>
-    {{/if}}
-    {{#if xp}}
-    <p>XP: {{xp}}</p>
-    {{/if}}
+    <p class="reason">{{reason}}</p>
+
+    <div class="rewards">
+        {{#if solars}}
+        <div>
+            <p>Solars</p>
+            <div class="amount">
+                {{solars}}
+            </div>
+        </div>
+        {{/if}}
+        {{#if xp}}
+        <div>
+            <p>XP</p>
+            <div class="amount">
+                {{xp}}
+            </div>
+        </div>
+        {{/if}}
+    </div>
     <button type="button" data-action="receiveReward">{{localize "IMPMAL.Receive"}}</button>
 </div>

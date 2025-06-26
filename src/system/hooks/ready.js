@@ -32,14 +32,7 @@ export default function()
                 callback : (exposure, corruption, source) => CorruptionMessageModel.postCorruption(exposure, {corruption, source})
             },
         })
-
-        let tables = game.settings.get("impmal", "tableSettings") || {};
-        if (!tables?.origin)
-        {
-            tables.origin = "nyaEnNOrR8Sq8Wf4";
-            game.settings.set("impmal", "tableSettings", tables);
-        }
-
+        
         if(game.impmal.migration.shouldMigrate())
         {
 

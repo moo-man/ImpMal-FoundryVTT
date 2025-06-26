@@ -170,13 +170,13 @@ export class OpposedTestMessageModel extends WarhammerMessageModel
         {
             if (!this.target?.actor.isOwner)
             {
-                html.querySelector(".response-buttons").remove();
+                html.querySelector(".response-buttons")?.remove();
             }
         }
 
         if (!this.attackerTest?.actor?.isOwner)
         {
-            html.querySelector(".damage-breakdown").remove();
+            html.querySelector(".damage-breakdown")?.remove();
         }
     }
 

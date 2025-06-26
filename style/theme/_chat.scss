@@ -244,6 +244,34 @@ body.impmal-theme {
             }
         }
     }
+
+    .message-content .reward {
+      .reason {
+          @include gradient-border(var(--impmal-lightgreen));
+      }
+      .rewards {
+          > * {
+            flex: 1;
+          }
+          p {
+          }
+          .amount {
+                width: 5rem;
+                height: 3rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: var(--font-size-20);
+                background-image: url(./assets/ui/grid.webp);
+                background-size: cover;
+                border: 1px solid var(--impmal-lightgreen);
+                position: relative;
+                @include scan;
+                font-family: monospace;
+          }
+
+      }
+  }
     }
   }
 

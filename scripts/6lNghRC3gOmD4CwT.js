@@ -3,5 +3,5 @@
 // So it's easier to toggle
 if (this.item.uuid == args.uuid)
 {
-	args.system.encumbrance.value = 0;
+	args.system.encumbrance.total = 0;
 }

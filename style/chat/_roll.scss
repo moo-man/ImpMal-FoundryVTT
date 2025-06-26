@@ -96,13 +96,18 @@
         flex-wrap: wrap;
         justify-content: center;
         margin-bottom: 5px;
+        gap: 0.5rem;
+        align-items: center;
 
         >* {
+            i {
+                margin-right: 0.2rem;
+            }
+            line-height: 1.2rem;
             border: 1px solid #555;
             border-radius: 10px;
             background: rgba(0, 0, 0, 0.05);
-            padding: 1px 3px;
-            margin: 0px 3px 3px 3px;
+            padding: 0px 0.5rem;
         }
     }
 

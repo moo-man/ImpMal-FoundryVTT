@@ -63,7 +63,7 @@
 
             </div>
             {{#if applied}}
-            <button type="button" class="apply-damage applied"><i class="fa-solid fa-check"></i></a>
+            <button data-action="applyDamage" type="button" class="apply-damage applied"><i class="fa-solid fa-check"></i></a>
             {{else}}
                 <button data-action="applyDamage" class="apply-damage" data-tooltip="{{localize 'IMPMAL.ApplyDamage'}}"><i class="fa-solid fa-user-minus"></i></button>
             {{/if}}

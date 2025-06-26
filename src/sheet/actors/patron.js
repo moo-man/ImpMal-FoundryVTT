@@ -1,3 +1,5 @@
+import RewardDialog from "../../apps/reward-dialog";
+import { RewardMessageModel } from "../../model/message/reward";
 import IMActorSheet from "./actor";
 
 export default class PatronSheet extends IMActorSheet
@@ -8,7 +10,8 @@ export default class PatronSheet extends IMActorSheet
     static DEFAULT_OPTIONS = {
         classes: ["patron"],
         actions : {
-          createItem : this._onCreateItem
+          createItem : this._onCreateItem,
+          postReward : this._onPostReward
         },
         defaultTab : "main"
       }
@@ -85,4 +88,15 @@ export default class PatronSheet extends IMActorSheet
         }
         return foundry.utils.mergeObject(await super._handleEnrichment(), enriched);
       }       
+
+      static async _onPostReward()
+      {
+          let patron = this.actor;
+          let defaultPay = patron.system.payment.value;
+          
+          let reward = await RewardDialog.prompt({solars: defaultPay, reason : `Payment from ${patron.name}`});
+          reward.patron = patron;
+          
+          RewardMessageModel.postReward(reward);
+      }
 }

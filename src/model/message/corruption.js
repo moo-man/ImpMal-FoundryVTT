@@ -32,7 +32,7 @@ export class CorruptionMessageModel extends WarhammerMessageModel
         }
     }
 
-    static resistCorruption(ev, target)
+    static _onResistCorruption(ev, target)
     {
 
         let actors = warhammer.utility.targetedOrAssignedActors();
