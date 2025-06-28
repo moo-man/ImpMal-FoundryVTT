@@ -9,9 +9,9 @@
 
 <div>
     {{#if (eq this.actor.type "patron")}}
-        <a class="editEmbedded" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
+        <a data-action="editEmbedded" data-uuid="{{this.actor.uuid}}"><i class="fas fa-handshake-angle"></i>{{this.actor.name}}</a>
     {{else if this.item}}
-        <a class="editEmbedded" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
+        <a data-action="editEmbedded" data-uuid="{{this.item.uuid}}"><i class="fas fa-suitcase"></i>{{this.source}}</a>
     {{else if this.flags.impmal.fromZone}}
         <i class="fa-solid fa-game-board-simple"></i>{{this.source}}
     {{else}}

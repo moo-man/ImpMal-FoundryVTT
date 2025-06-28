@@ -15,13 +15,17 @@ export class BaseTest extends WarhammerTestBase
     {
         super();
 
+        this.class = this.constructor.name;
         this.data = foundry.utils.mergeObject(data, this._defaultData(), {overwrite : false, recursive : true});
         this.context = new this.constructor.contextClass(context);
-        if (this.context.breakdownData)
+        if (this.context.breakdownData && !this.context.breakdown)
         {
             this.context.breakdown = this._formatBreakdown(this.context.breakdownData);
         }
-        this.data.target = this.computeTarget();
+        if (!this.data.target)
+        {
+            this.data.target = this.computeTarget();
+        }
         if (!result)
         {
             this.result = new this.constructor.evaluatorClass(data);

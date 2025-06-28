@@ -97,12 +97,6 @@ export class ImpMalEffect extends WarhammerActiveEffect
         }
     }
 
-    // Need to override base getter because IM doesn't have a `data` property holding all the test data
-    get sourceTest() 
-    {
-        return this.system.sourceData.test;
-    }
-
     get isCondition() 
     {
         return !!game.impmal.config.conditions.find(i =>i.id == this.key);
@@ -134,5 +128,16 @@ export class ImpMalEffect extends WarhammerActiveEffect
             effect = effects.find(i => i.id == key);
         }
         return effect;
+    }
+
+    
+    get sourceTest() 
+    {
+        let testData = this.system.sourceData.test;
+        let message = game.messages.get(testData.context?.messageId);
+        if (testData)
+        {
+            return message ? message.system.test : new (game.impmal.testClasses[testData.class])(testData);
+        }
     }
 }

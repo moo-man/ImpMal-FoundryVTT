@@ -25,18 +25,18 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
      * @param {string} options.title.append Append to dialog title
      * @param {object} options.fields Predefine dialog fields
      */
-    setupCharacteristicTest(characteristic, options={}, roll=true)
+    setupCharacteristicTest(characteristic, context={}, options, roll=true)
     {
-        return this._setupTest(CharacteristicTestDialog, CharacteristicTest, characteristic, options, roll, false);
+        return this._setupTest(CharacteristicTestDialog, CharacteristicTest, characteristic, context, options, roll, false);
     }
 
-    setupSkillTest({itemId, name, key}={}, options={}, roll=true)
+    setupSkillTest({itemId, name, key}={}, context={}, options, roll=true)
     {
 
         // Not sure I like this here but it will do for now
         // Warp State = 2 means you just roll on the Perils table
         // Warp State = 1 is handled in postRoll() of a skill test
-        if (options.warp == 2)
+        if (context.warp == 2)
         {
             let formula = `1d100 + ${10 * (this.system.warp.charge - this.system.warp.threshold)}`;
             ImpMalTables.rollTable("perils", formula);
@@ -44,28 +44,28 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
         else 
         {
-            return this._setupTest(SkillTestDialog, SkillTest, {itemId, name, key}, options, roll, false);
+            return this._setupTest(SkillTestDialog, SkillTest, {itemId, name, key}, context, options, roll, false);
         }
     }
 
-    setupWeaponTest(id, options={}, roll=true)
+    setupWeaponTest(id, context={}, options, roll=true)
     {
-        return this._setupTest(WeaponTestDialog, WeaponTest, id, options, roll, false);
+        return this._setupTest(WeaponTestDialog, WeaponTest, id, context, options, roll, false);
     }
 
-    setupGenericTest(target, options={}, roll=true)
+    setupGenericTest(target, context={}, options, roll=true)
     {
-        return this._setupTest(TestDialog, BaseTest, target, options, roll, false);
+        return this._setupTest(TestDialog, BaseTest, target, context, options, roll, false);
     }
 
-    setupPowerTest(id, options={}, roll=true)
+    setupPowerTest(id, context={}, options, roll=true)
     {
-        return this._setupTest(PowerTestDialog, PowerTest, id, options, roll, false);
+        return this._setupTest(PowerTestDialog, PowerTest, id, context, options, roll, false);
     }
 
-    setupTraitTest(id, options={}, roll=true)
+    setupTraitTest(id, context={}, options, roll=true)
     {
-        return this._setupTest(TraitTestDialog, TraitTest, id, options, roll, false);
+        return this._setupTest(TraitTestDialog, TraitTest, id, context, options, roll, false);
     }
 
     async useItem({id, uuid})
@@ -98,7 +98,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
     }
 
-    async setupTestFromItem(item, options={})
+    async setupTestFromItem(item, context={}, options)
     {
         if (typeof item == "string")
         {
@@ -118,11 +118,11 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
         let itemTestData = item.getTestData();
 
-        options.resist = options.resist ? options.resist.concat(item.type) : [item.type];
+        context.resist = context.resist ? context.resist.concat(item.type) : [item.type];
 
-        options.appendTitle = ` - ${item.name}`;
+        context.appendTitle = ` - ${item.name}`;
 
-        return this.setupTestFromData(itemTestData, options);
+        return this.setupTestFromData(itemTestData, context, options);
     }
 
 
@@ -136,38 +136,38 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
      * @param {string} [data.difficulty] difficulty key to set the initial difficulty, default is "challenging"
      * @returns 
      */
-    async setupTestFromData(data, options)
+    async setupTestFromData(data, context, options)
     {
         let testData = {};
-        let testOptions;
+        let testContext;
         let testFunction;
 
         // Most specific - provide a specialisation name
         if (data.skill.specialisation)
         {
             testData = {name : data.skill.specialisation, key : data.skill.key};
-            testOptions = {fields: {characteristic: data.characteristic, difficulty : data.difficulty}};
+            testContext = {fields: {characteristic: data.characteristic, difficulty : data.difficulty}};
             testFunction = this.setupSkillTest.bind(this);
         }
         // If no specialisation, roll a test simply using the general skill
         else if (data.skill.key)
         {
             testData = {key : data.skill.key};
-            testOptions = {fields: {characteristic: data.characteristic, difficulty : data.difficulty}};
+            testContext = {fields: {characteristic: data.characteristic, difficulty : data.difficulty}};
             testFunction = this.setupSkillTest.bind(this);
         }
         // If no skill key, test with the provided characteristic
         else if (data.characteristic)
         {
             testData = data.characteristic;
-            testOptions = {fields: {difficulty : data.difficulty}};
+            testContext = {fields: {difficulty : data.difficulty}};
             testFunction = this.setupCharacteristicTest.bind(this);
         }
         else // Not enough information to do a test if no skill or characteristic provided
         {
             return ui.notifications.error("Item does not provide sufficient data to perform a Test. It must specify at least a Skill or Characteristic");
         }
-        return testFunction(testData, foundry.utils.mergeObject(testOptions, options));
+        return testFunction(testData, foundry.utils.mergeObject(testContext, context), options);
     }
 
     async purge(roll=false)
