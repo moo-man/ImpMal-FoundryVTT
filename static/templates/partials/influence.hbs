@@ -13,7 +13,7 @@
                         <a class="list-control inactive" data-action="toggleProperty" data-tooltip="{{localize 'IMPMAL.UsePatronInfluence'}}" data-path="system.influence.usePatron"><i class="fas fa-handshake-angle"></i></a>
                     {{/if}}
                 {{/if}}
-                <a class="list-control" data-action="createFaction" data-path="system.influence"><i class="fa-solid fa-plus"></i></a>
+                <a class="list-control" data-action="createFaction" data-path="{{path}}"><i class="fa-solid fa-plus"></i></a>
             </div>
         </div>
         <div class="list-content">
@@ -32,8 +32,12 @@
                                 <input type="text" name="{{../path}}.factions.{{@key}}.notes" {{#if this.patron}}disabled{{/if}} value="{{this.notes}}">
                             </div>
                         {{/if}}
+                        <div class="list-controls">
+                            <a class="list-control" data-action="deleteFaction" data-path="{{../path}}"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
                     </div>
                     <div class="{{#if (lookup ../factionsExpanded @key)}}expanded{{else}}collapsed{{/if}} influence-sources dropdown-content">
+                    <div class="dropdown-container">
                     {{#each this.items}}
                         <div class="source row-content">
                             <div class="flex"></div>
@@ -70,6 +74,7 @@
                     {{#unless this.patron}}
                     <button type="button" data-action="createSource"><i class="fa-solid fa-plus"></i> Add Source</button>
                     {{/unless}}
+                    </div>
                     </div>
                 </div>
             {{/each}}

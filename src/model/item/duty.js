@@ -31,7 +31,7 @@ export class DutyModel extends DualItemModel
                 name : new fields.StringField(),
                 advances : new fields.NumberField()
             }), {}, {name : "specialisations"}),
-            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence"}),
+            influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence", parent : schema.character}),
             items : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "items"}),
             solars : new fields.NumberField({min : 0}, {}, {name : "solars"}),
         });
@@ -133,7 +133,7 @@ export class DutyModel extends DualItemModel
                 }
             }
         }
-        await actor.update(data);
+        await actor.update({system : data.system});
         await actor.createEmbeddedDocuments("Item", items, {skipRequirement : true});
         ui.notifications.notify(game.i18n.format("IMPMAL.DutyApplied", {name : this.parent.name}));
     }

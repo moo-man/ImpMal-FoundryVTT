@@ -127,7 +127,7 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
                 newList = this.actorCopy.system.xp.other.edit(index, other);
             }
 
-            this.actorCopy.updateSource({ "system.==xp": newList });
+            this.actorCopy.updateSource({ "system.xp": newList });
         }
         else if (target.dataset.type == "log")
         {

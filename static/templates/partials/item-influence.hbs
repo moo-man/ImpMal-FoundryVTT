@@ -3,7 +3,7 @@
             <div class="flex">{{localize "IMPMAL.Faction"}}</div>
             <div class="small">{{localize "IMPMAL.Infl"}}</div>
             <div class="list-controls">
-                <a class="list-control" data-action="createFaction" data-path="system.influence"><i class="fa-solid fa-plus"></i></a>
+                <a class="list-control" data-action="createFaction" data-path="{{path}}"><i class="fa-solid fa-plus"></i></a>
             </div>
         </div>
         <div class="list-content">
@@ -17,7 +17,7 @@
                             <input type="number" name="{{../path}}.factions.{{@key}}.value" value="{{this.value}}">
                         </div>
                     <div class="list-controls">
-                        <a class="list-control"><i class="fa-solid fa-xmark"></i></a>
+                        <a class="list-control" data-action="deleteFaction" data-path="{{../path}}"><i class="fa-solid fa-xmark"></i></a>
                     </div>
                     </div>
                 </div>
