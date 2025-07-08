@@ -37,7 +37,8 @@ export default class IMThemeConfig extends HandlebarsApplicationMixin(Applicatio
   static #schema = new foundry.data.fields.SchemaField({
 
     enabled: new foundry.data.fields.BooleanField({ initial: true },  {label : "Enabled"}),
-    font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" }},  {label : "Font"})
+    font: new foundry.data.fields.StringField({ required: true, initial: "classic", choices: { "classic": "WH.Theme.Font.Classic", "readable": "WH.Theme.Font.Readable" }},  {label : "Font"}),
+    scan: new foundry.data.fields.BooleanField({ required: true, initial: true}, {label : "Scan Effect"})
 
 
     // actor: new foundry.data.fields.SchemaField({
@@ -134,6 +135,15 @@ export default class IMThemeConfig extends HandlebarsApplicationMixin(Applicatio
       else 
       {
         document.body.classList.remove("impmal-font");
+      }
+
+      if (setting.scan)
+      {
+        document.body.classList.add("impmal-scan");
+      }
+      else 
+      {
+        document.body.classList.remove("impmal-scan");
       }
     }
     else document.body.classList.remove("impmal-theme", "impmal-font")

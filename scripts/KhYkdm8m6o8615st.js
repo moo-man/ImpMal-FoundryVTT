@@ -2,25 +2,10 @@
         {
             return;
         }
-        let applyBleeding = await Dialog.wait({
-            title : this.effect.label,
-            content : `<p><strong>${this.effect.label}</strong>: Inflict Bleeding intead of Damage?`,
-            buttons : {
-                yes : {
-                    label : game.i18n.localize("Yes"),
-                    callback : () => 
-                    {
-                        return true;
-                    }
-                },
-                no : {
-                    label : game.i18n.localize("No"),
-                    callback : () => 
-                    {
-                        return false;
-                    }
-                }
-            }
+
+        let applyBleeding = await foundry.applications.api.Dialog.confirm({
+            window : {title : this.effect.name},
+            content : `Inflict Bleeding intead of Damage?`,
         });
 
         if (applyBleeding)

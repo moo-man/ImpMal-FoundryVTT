@@ -26,20 +26,17 @@ export class LocationChoice extends foundry.abstract.DataModel
         }
         else 
         {
-            let buttons = {};
+            let buttons = [];
             for(let choice of this.choices)
             {
-                buttons[choice] = {
+                buttons.push({
+                    action : choice,
                     label : game.i18n.localize(actor.system.combat.hitLocations[choice]?.label),
-                    callback : () => 
-                    {
-                        return choice;
-                    }
-                };
+                });
             }
 
-            choice = await Dialog.wait({
-                label : "Choose Location",
+            choice = await foundry.applications.api.Dialog.wait({
+                window : {title : this.parent.parent.name},
                 content : "Choose Location",
                 buttons : buttons
             });

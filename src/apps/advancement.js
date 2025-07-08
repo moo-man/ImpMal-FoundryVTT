@@ -44,7 +44,7 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
 
         form: {
             template: "systems/impmal/templates/apps/advancement.hbs",
-            scrollable: [],
+            scrollable: ["[data-tab='skills'] .advancement-list", "[data-tab='log'] .advancement-list", "[data-tab='other'] .advancement-list"],
         },
         footer: {
             template: "templates/generic/form-footer.hbs"
@@ -127,7 +127,7 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
                 newList = this.actorCopy.system.xp.other.edit(index, other);
             }
 
-            this.actorCopy.updateSource({ "system.==xp": newList });
+            this.actorCopy.updateSource({ "system.xp": newList });
         }
         else if (target.dataset.type == "log")
         {

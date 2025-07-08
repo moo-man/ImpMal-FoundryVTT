@@ -59,7 +59,7 @@ export default SheetMixin = (cls) => class extends cls
       {
           ev.stopPropagation();
           let path = this._getPath(ev);
-          let faction = this._getType(ev);
+          let faction = this._getKey(ev);
   
           foundry.applications.api.Dialog.confirm({
               window : {title: game.i18n.localize(`IMPMAL.DeleteFaction`)},

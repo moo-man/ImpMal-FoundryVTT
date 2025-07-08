@@ -1,20 +1,16 @@
-let choice = await Dialog.wait({
-    title : "Advance Skill",
+let choice = await foundry.applications.api.Dialog.wait({
+    window : {title : "Advance Skill"},
     content : "Choose which skill to advance. This will cost double XP.",
-    buttons : {
-        athletics : {
+    buttons : [
+        {
+            action : "athletics",
             label : game.i18n.localize("IMPMAL.Athletics"),
-            callback : () => {
-                return "athletics";
-            }
         },
-        fortitude : {
+        {
+            action : "fortitude",
             label : game.i18n.localize("IMPMAL.Fortitude"),
-            callback : () => {
-                return "fortitude";
-            }
         }
-    }
+    ]
 });
 
 let advances = this.actor.system.skills[choice].advances + 1

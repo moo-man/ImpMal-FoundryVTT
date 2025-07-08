@@ -2,25 +2,10 @@
         {
             return;
         }
-        let applyRestrained = await Dialog.wait({
-            title : this.effect.label,
-            content : `<p><strong>${this.effect.label}</strong>: Attempt to inflict Restrained intead of Damage?`,
-            buttons : {
-                yes : {
-                    label : game.i18n.localize("Yes"),
-                    callback : () => 
-                    {
-                        return true;
-                    }
-                },
-                no : {
-                    label : game.i18n.localize("No"),
-                    callback : () => 
-                    {
-                        return false;
-                    }
-                }
-            }
+
+        let applyRestrained = await foundry.applications.api.Dialog.confirm({
+            window : {title : this.effect.name},
+            content : `Attempt to inflict Restrained intead of Damage?`,
         });
 
         if (applyRestrained)
