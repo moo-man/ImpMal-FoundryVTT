@@ -35,7 +35,7 @@ export default class WeaponSheet extends IMItemSheet
     async _onDropItem(data, ev)
     {
         let document = await Item.fromDropData(data);
-        if (document.type == "modification")
+        if (document.type == "modification" && document.system.type == "weapon")
         {
           this.item.update(this.item.system.mods.add(document.toObject()));
         }

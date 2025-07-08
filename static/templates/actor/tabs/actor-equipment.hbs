@@ -2,19 +2,23 @@
 
 
 
-<div class="flexrow">
+    <div class="flexrow">
 
-    <div class="attribute-box single solars">
-        <div class="label" style="grid-column: 1 / span 4"><label class="centered">{{localize "IMPMAL.Solars"}}</label></div>
-        <div class="field" style="grid-column: 5 / span 8"><input type="number" name="system.solars" value="{{system.solars}}"></div>
-    </div>
-    <div class="bar-section">
-        <div class="bar-container">
-            <div class="threshold" style="margin-left: {{pct system.encumbrance.overburdened system.encumbrance.restrained}}%"></div>
-            <div class="bar state{{system.encumbrance.state}}" style="width : {{pct system.encumbrance.value system.encumbrance.restrained}}%"></div>
+        <div class="attribute-box single solars">
+            <div class="label" style="grid-column: 1 / span 4"><label
+                    class="centered">{{localize "IMPMAL.Solars"}}</label></div>
+            <div class="field" style="grid-column: 5 / span 8"><input type="number" name="system.solars"
+                    value="{{system.solars}}"></div>
+        </div>
+        <div class="bar-section">
+            <div class="bar-container">
+                <div class="threshold"
+                    style="margin-left: {{pct system.encumbrance.overburdened system.encumbrance.restrained}}%"></div>
+                <div class="bar state{{system.encumbrance.state}}"
+                    style="width : {{pct system.encumbrance.value system.encumbrance.restrained}}%"></div>
+            </div>
         </div>
     </div>
-</div>
 
     <div class="sheet-list">
         <div class="list-header row-content">
@@ -37,17 +41,25 @@
 
                         <div class="small">
                             {{#if (eq ../actor.type "character")}}
-                            
+
                                 {{#if this.system.equipped.hands.left}}
-                                    <a data-action="equip" class="equip {{#if this.system.equipped.offhand}}offhand{{/if}}" data-hand="left" data-target="system.equipped.value"><i class="fa-solid fa-hand"></i></a>
+                                    <a data-action="equip"
+                                        class="equip {{#if this.system.equipped.offhand}}offhand{{/if}}"
+                                        data-hand="left" data-target="system.equipped.value"><i
+                                            class="fa-solid fa-hand"></i></a>
                                 {{else}}
-                                    <a data-action="equip" class="equip" data-hand="left" data-target="system.equipped.value"><i class="fa-regular fa-hand"></i></a>
+                                    <a data-action="equip" class="equip" data-hand="left"
+                                        data-target="system.equipped.value"><i class="fa-regular fa-hand"></i></a>
                                 {{/if}}
 
                                 {{#if this.system.equipped.hands.right}}
-                                    <a data-action="equip" class="equip {{#if this.system.equipped.offhand}}offhand{{/if}}" data-hand="right" data-target="system.equipped.value"><i class="fa-solid fa-hand"></i></a>
+                                    <a data-action="equip"
+                                        class="equip {{#if this.system.equipped.offhand}}offhand{{/if}}"
+                                        data-hand="right" data-target="system.equipped.value"><i
+                                            class="fa-solid fa-hand"></i></a>
                                 {{else}}
-                                    <a data-action="equip" class="equip" data-hand="right" data-target="system.equipped.value"><i class="fa-regular fa-hand"></i></a>
+                                    <a data-action="equip" class="equip" data-hand="right"
+                                        data-target="system.equipped.value"><i class="fa-regular fa-hand"></i></a>
                                 {{/if}}
                             {{else}}
                                 <a data-action="toggleProperty" data-path="system.equipped.value">
@@ -60,7 +72,8 @@
                             {{/if}}
                         </div>
 
-                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty"
+                            data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
@@ -80,8 +93,8 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Ammo"}}</div>
-        <div class="small">{{localize "IMPMAL.Qty."}}</div>
-        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+            <div class="small">{{localize "IMPMAL.Qty."}}</div>
+            <div class="small">{{localize "IMPMAL.Enc."}}</div>
             <div class="list-controls">
                 <a class="list-control" data-action="createItem" data-type="ammo"><i class="fas fa-plus"></i></a>
             </div>
@@ -95,7 +108,8 @@
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
-                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty"
+                            data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
@@ -115,10 +129,11 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Modification"}}</div>
-        <div class="small">{{localize "IMPMAL.Qty."}}</div>
-        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+            <div class="small">{{localize "IMPMAL.Qty."}}</div>
+            <div class="small">{{localize "IMPMAL.Enc."}}</div>
             <div class="list-controls">
-                <a class="list-control" data-action="createItem" data-type="modification"><i class="fas fa-plus"></i></a>
+                <a class="list-control" data-action="createItem" data-type="modification"><i
+                        class="fas fa-plus"></i></a>
             </div>
         </div>
         <div class="list-content">
@@ -130,7 +145,8 @@
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
-                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty"
+                            data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
@@ -150,10 +166,10 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Protection"}}</div>
-        <div class="small"></div>
-        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
-        <div class="small">{{localize "IMPMAL.Qty."}}</div>
-        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+            <div class="small"></div>
+            <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+            <div class="small">{{localize "IMPMAL.Qty."}}</div>
+            <div class="small">{{localize "IMPMAL.Enc."}}</div>
             <div class="list-controls">
                 <a class="list-control" data-action="createItem" data-type="protection"><i class="fas fa-plus"></i></a>
             </div>
@@ -168,24 +184,25 @@
                         </div>
 
                         {{#if this.system.uses}}
-                        <div class="small">
-                            {{this.system.uses.value}}
-                            {{#if this.system.uses.max}}
-                            / {{this.system.uses.max}}
-                            {{/if}}
-                        </div>
+                            <div class="small">
+                                {{this.system.uses.value}}
+                                {{#if this.system.uses.max}}
+                                    / {{this.system.uses.max}}
+                                {{/if}}
+                            </div>
                         {{/if}}
                         <div class="small">
-                        <a data-action="toggleProperty" data-path="system.equipped.value">
-                            {{#if this.system.equipped.value}}
-                                <i class="fa-regular fa-circle-check"></i>
-                            {{else}}
-                                <i class="fa-regular fa-circle"></i>
-                            {{/if}}
-                        </a>
+                            <a data-action="toggleProperty" data-path="system.equipped.value">
+                                {{#if this.system.equipped.value}}
+                                    <i class="fa-regular fa-circle-check"></i>
+                                {{else}}
+                                    <i class="fa-regular fa-circle"></i>
+                                {{/if}}
+                            </a>
                         </div>
 
-                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty"
+                            data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
@@ -202,13 +219,13 @@
         </div>
     </div>
 
-        <div class="sheet-list">
+    <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Forcefield"}}</div>
-        <div class="small"></div>
-        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
-        <div class="small">{{localize "IMPMAL.Qty."}}</div>
-        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+            <div class="small"></div>
+            <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+            <div class="small">{{localize "IMPMAL.Qty."}}</div>
+            <div class="small">{{localize "IMPMAL.Enc."}}</div>
             <div class="list-controls">
                 <a class="list-control" data-action="createItem" data-type="forceField"><i class="fas fa-plus"></i></a>
             </div>
@@ -217,30 +234,31 @@
             {{#each items.forceField}}
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
-                        <div class="list-name" {{#if this.system.overload.collapsed}}style="color: darkred"{{/if}}>
+                        <div class="list-name" {{#if this.system.overload.collapsed}}style="color: darkred" {{/if}}>
                             <img src="{{this.img}}" class="rollable" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
                         {{#if this.system.uses}}
-                        <div class="small">
-                            {{this.system.uses.value}}
-                            {{#if this.system.uses.max}}
-                            / {{this.system.uses.max}}
-                            {{/if}}
-                        </div>
+                            <div class="small">
+                                {{this.system.uses.value}}
+                                {{#if this.system.uses.max}}
+                                    / {{this.system.uses.max}}
+                                {{/if}}
+                            </div>
                         {{/if}}
                         <div class="small">
-                        <a data-action="toggleProperty" data-path="system.equipped.value">
-                            {{#if this.system.equipped.value}}
-                                <i class="fa-regular fa-circle-check"></i>
-                            {{else}}
-                                <i class="fa-regular fa-circle"></i>
-                            {{/if}}
-                        </a>
+                            <a data-action="toggleProperty" data-path="system.equipped.value">
+                                {{#if this.system.equipped.value}}
+                                    <i class="fa-regular fa-circle-check"></i>
+                                {{else}}
+                                    <i class="fa-regular fa-circle"></i>
+                                {{/if}}
+                            </a>
                         </div>
 
-                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty"
+                            data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
@@ -257,14 +275,14 @@
         </div>
     </div>
 
-    
+
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Equipment"}}</div>
-        <div class="small"></div>
-        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
-        <div class="small">{{localize "IMPMAL.Qty."}}</div>
-        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+            <div class="small"></div>
+            <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+            <div class="small">{{localize "IMPMAL.Qty."}}</div>
+            <div class="small">{{localize "IMPMAL.Enc."}}</div>
             <div class="list-controls">
                 <a class="list-control" data-action="createItem" data-type="equipment"><i class="fas fa-plus"></i></a>
             </div>
@@ -279,24 +297,25 @@
                         </div>
 
                         {{#if this.system.uses}}
-                        <div class="small">
-                            {{this.system.uses.value}}
-                            {{#if this.system.uses.max}}
-                            / {{this.system.uses.max}}
-                            {{/if}}
-                        </div>
+                            <div class="small">
+                                {{this.system.uses.value}}
+                                {{#if this.system.uses.max}}
+                                    / {{this.system.uses.max}}
+                                {{/if}}
+                            </div>
                         {{/if}}
                         <div class="small">
-                        <a data-action="toggleProperty" data-path="system.equipped.value">
-                            {{#if this.system.equipped.value}}
-                                <i class="fa-regular fa-circle-check"></i>
-                            {{else}}
-                                <i class="fa-regular fa-circle"></i>
-                            {{/if}}
-                        </a>
+                            <a data-action="toggleProperty" data-path="system.equipped.value">
+                                {{#if this.system.equipped.value}}
+                                    <i class="fa-regular fa-circle-check"></i>
+                                {{else}}
+                                    <i class="fa-regular fa-circle"></i>
+                                {{/if}}
+                            </a>
                         </div>
 
-                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty"
+                            data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
@@ -316,10 +335,10 @@
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Augmetic"}}</div>
-        <div class="small"></div>
-        <div class="small">{{localize "IMPMAL.Eqp."}}</div>
-        <div class="small">{{localize "IMPMAL.Qty."}}</div>
-        <div class="small">{{localize "IMPMAL.Enc."}}</div>
+            <div class="small"></div>
+            <div class="small">{{localize "IMPMAL.Eqp."}}</div>
+            <div class="small">{{localize "IMPMAL.Qty."}}</div>
+            <div class="small">{{localize "IMPMAL.Enc."}}</div>
             <div class="list-controls">
                 <a class="list-control" data-action="createItem" data-type="augmetic"><i class="fas fa-plus"></i></a>
             </div>
@@ -334,24 +353,25 @@
                         </div>
 
                         {{#if this.system.uses}}
-                        <div class="small">
-                            {{this.system.uses.value}}
-                            {{#if this.system.uses.max}}
-                            / {{this.system.uses.max}}
-                            {{/if}}
-                        </div>
+                            <div class="small">
+                                {{this.system.uses.value}}
+                                {{#if this.system.uses.max}}
+                                    / {{this.system.uses.max}}
+                                {{/if}}
+                            </div>
                         {{/if}}
                         <div class="small">
-                        <a data-action="toggleProperty" data-path="system.equipped.value">
-                            {{#if this.system.equipped.value}}
-                                <i class="fa-regular fa-circle-check"></i>
-                            {{else}}
-                                <i class="fa-regular fa-circle"></i>
-                            {{/if}}
-                        </a>
+                            <a data-action="toggleProperty" data-path="system.equipped.value">
+                                {{#if this.system.equipped.value}}
+                                    <i class="fa-regular fa-circle-check"></i>
+                                {{else}}
+                                    <i class="fa-regular fa-circle"></i>
+                                {{/if}}
+                            </a>
                         </div>
 
-                        <a class="small prevent-context" data-action="stepProperty" data-path="system.quantity">{{this.system.quantity}}</a>
+                        <a class="small prevent-context" data-action="stepProperty"
+                            data-path="system.quantity">{{this.system.quantity}}</a>
                         <div class="small">{{this.system.encumbrance.total}}</div>
 
                         <div class="list-controls">
@@ -368,4 +388,57 @@
         </div>
     </div>
 
-<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Packs"}}</div>
+            <div class="large">{{localize "IMPMAL.IgnoreEncumbrance"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="pack"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.pack}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                        </div>
+
+                        <div class="large">
+                            <a data-action="toggleProperty" data-path="system.ignoreEncumbrance">
+                                {{#if this.system.ignoreEncumbrance}}
+                                    <i class="fa-regular fa-circle-check"></i>
+                                {{else}}
+                                    <i class="fa-regular fa-circle"></i>
+                                {{/if}}
+                            </a>
+                        </div>
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+                    </div>
+                    <div class="pack-contents droppable" data-id="{{this.id}}">
+                        {{#each this.system.actorItems.documents}}
+                        <div class="row-content prevent-context" data-uuid="{{this.uuid}}">
+                            <div class="list-name">
+                                <img src="{{this.img}}">
+                                <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                            </div>
+
+                            <div class="list-controls">
+                                <a class="list-control" data-action="removeFromPack" data-tooltip-direction="RIGHT" data-tooltip="IMPMAL.RemoveFromPack"><i class="fa-solid fa-arrow-up-from-bracket"></i></a>
+                            </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">

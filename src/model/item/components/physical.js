@@ -20,7 +20,7 @@ export class PhysicalItemModel extends StandardItemModel
         return schema;
     }
 
-    isPhysical() 
+    get isPhysical() 
     {
         return true;
     }
@@ -28,6 +28,11 @@ export class PhysicalItemModel extends StandardItemModel
     get isSlotted()
     {
         return this.parent.actor?.system.slots?.find(i => i.id == this.parent.id)?.source;
+    }
+
+    get inPack()
+    {
+        return this.parent.actor?.itemTypes.pack.find(i => i.system.actorItems.list.find(item => item.uuid == this.parent.uuid))
     }
 
     computeBase() 

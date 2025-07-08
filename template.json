@@ -389,7 +389,8 @@
       "corruption",
       "critical",
       "injury",
-      "trait"
+      "trait",
+      "pack"
     ],
     "templates": {
       "physical": {

@@ -197,7 +197,7 @@ export class FactionStage extends ChargenStage {
             this.setFaction(faction);
             if (this.context.faction)
             {
-                this.context.exp = 25
+                this.context.exp = 75
                 this.updateMessage("Rolled", {rolled : faction.name})
             }
             else 

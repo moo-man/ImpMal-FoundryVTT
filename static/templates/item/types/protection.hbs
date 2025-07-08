@@ -16,4 +16,30 @@
         {{/if}}
     </div>
 
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name" data-tooltip="{{localize "IMPMAL.DragModifications"}}">{{localize "IMPMAL.Modifications"}} <i class="fa-regular fa-circle-question"></i></div>
+        </div>
+        <div class="list-content">
+            {{#each item.system.mods.documents}}
+                <div class="list-row {{#if this.system.disabled}}inactive{{/if}}" data-index="{{@key}}" data-target="system.mods">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a class="label" data-action="openMod">{{this.name}}</a>
+                        </div>
+                       <div class="list-controls" data-path="system.mods">
+                            {{#if this.system.disabled}}
+                                <a data-action="toggleMod"><i class="fa-regular fa-circle"></i></a>
+                            {{else}}
+                                <a data-action="toggleMod"><i class="fa-regular fa-circle-check"></i></a>
+                            {{/if}}
+                            <a class="list-control" data-action="listDelete"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
 </section>

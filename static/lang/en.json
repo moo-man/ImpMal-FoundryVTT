@@ -25,6 +25,7 @@
     "TYPES.Item.critical" : "Critical",
     "TYPES.Item.injury" : "Injury",
     "TYPES.Item.trait" : "Trait",
+    "TYPES.Item.pack" : "Pack",
     
     "IMPMAL.Aim" : "Aim",
     "IMPMAL.AddPatron" : "Add a Patron by either dragging and dropping from the sidebar or right clicking and choosing 'Set as Patron'",
@@ -332,6 +333,7 @@
     "IMPMAL.ErrorSlotItemActor" : "Both this and the slotted Item must be owned by an Actor.",
     "IMPMAL.ErrorNoActorBuyItem" : "No assigned Actor to buy this Item.",
     "IMPMAL.ErrorNotEnoughSolars" : "{name} does not have enough Solars!",
+    "IMPMAL.ErrorOwnedItemInPack" : "Owned Items cannot be placed in a pack that is not owned.",
     "IMPMAL.Excellent" : "Excellent",
     "IMPMAL.ExposureMinor" : "Minor Exposure to Corruption",
     "IMPMAL.ExposureModerate" : "Moderate Exposure to Corruption",
@@ -387,6 +389,7 @@
     "IMPMAL.HowManyMags" : "How many magazines?",
     "IMPMAL.Hunted" : "Hunted",
     "IMPMAL.IgnoreAP" : "Ignore AP",
+    "IMPMAL.IgnoreEncumbrance" : "Ignore Encumbrance",
     "IMPMAL.IgnorePrerequisite" : "Ignore Prerequisite",
     "IMPMAL.IgnorePrerequisiteContent" : "<p>This Actor does not meet the prerequisite for this Talent. Continue anyway?</p>",
     "IMPMAL.Immediate" : "Immediate",
@@ -520,6 +523,7 @@
     "IMPMAL.Passengers" : "Passengers",
     "IMPMAL.Patron" : "Patron",
     "IMPMAL.Path" : "Path",
+    "IMPMAL.Packs" : "Packs",
     "IMPMAL.LightCover" : "Light Cover",
     "IMPMAL.MediumCover" : "Medium Cover",
     "IMPMAL.HeavyCover" : "Heavy Cover",
@@ -595,6 +599,7 @@
     "IMPMAL.Restricted" : "Restricted",
     "IMPMAL.Reversed" : "Reversed",
     "IMPMAL.Reward" : "Reward",
+    "IMPMAL.RemoveFromPack" : "Remove from Pack",
     "IMPMAL.Right" : "Right",
     "IMPMAL.RightArm" : "Right Arm",
     "IMPMAL.RightArmAbbrev" : "RA",
@@ -884,6 +889,9 @@
             },
             "modification" : {
                 "FIELDS" : {
+                    "type" : {
+                        "label" : "Type"
+                    },
                     "category" : {
                         "label" : "Category"
                     },
@@ -1019,6 +1027,13 @@
                         "range" : {
                             "label" : "Range"
                         }
+                    }
+                }
+            },
+            "pack" : {
+                "FIELDS" : {
+                    "ignoreEncumbrance" : {
+                        "label" : "Ignore Encumbrance"
                     }
                 }
             }

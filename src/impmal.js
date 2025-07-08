@@ -77,6 +77,8 @@ import RoleSheet from "./sheet/items/types/role.js";
 import TraitSheet from "./sheet/items/types/trait.js";
 import CriticalSheet from "./sheet/items/types/critical.js";
 import InjurySheet from "./sheet/items/types/injury.js";
+import PackSheet from "./sheet/items/types/pack.js";
+import { PackModel } from "./model/item/pack.js";
 
 Hooks.once("init", () => 
 {
@@ -118,6 +120,7 @@ Hooks.once("init", () =>
     DocumentSheetConfig.registerSheet(Item, "impmal", TraitSheet, { types: ["trait"], makeDefault: true, label : "Trait Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", CriticalSheet, { types: ["critical"], makeDefault: true, label : "Critical Sheet" });
     DocumentSheetConfig.registerSheet(Item, "impmal", InjurySheet, { types: ["injury"], makeDefault: true, label : "Injury Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "impmal", PackSheet, { types: ["pack"], makeDefault: true, label : "Pack Sheet" });
     DocumentSheetConfig.registerSheet(ActiveEffect, "impmal", ImpmalActiveEffectConfig, {makeDefault : true});
 
     // CONFIG.ActiveEffect.sheetClass = undefined;
@@ -147,6 +150,7 @@ Hooks.once("init", () =>
     CONFIG.Item.dataModels["injury"] = InjuryModel;
     CONFIG.Item.dataModels["critical"] = CriticalModel;
     CONFIG.Item.dataModels["trait"] = TraitModel;
+    CONFIG.Item.dataModels["pack"] = PackModel;
 
     CONFIG.ActiveEffect.dataModels["base"] = ImpMalActiveEffectModel
     CONFIG.ChatMessage.dataModels["test"] = ImpMalTestMessageModel;

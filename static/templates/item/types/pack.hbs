@@ -1,0 +1,26 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    {{formGroup fields.ignoreEncumbrance value=source.system.ignoreEncumbrance}}
+    <div class="sheet-list">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Items"}}</div>
+        </div>
+        <div class="list-content" {{#if document.isOwned}}data-path="system.actorItems"{{else}}data-path="system.items"{{/if}}>
+            {{#each items}}
+                <div class="list-row" data-id="{{this.id}}" data-uuid="{{this.uuid}}" data-index="{{@key}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.img}}">
+                            <a data-action="openDocument" class="label">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            {{#unless ../document.isOwned}}
+                            <a class="list-control" data-document="this" data-action="editDiff"><i class="fa-solid fa-file-plus-minus"></i></a>
+                            {{/unless}}
+                            <a class="list-control"  data-document="this" data-action="listDelete"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</section>

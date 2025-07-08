@@ -1,5 +1,7 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
-    {{formGroup fields.category value=source.system.category choices=(config "modificationTypes")}}
+        {{formGroup fields.type value=source.system.type localize=true}}
+
+        {{formGroup fields.category value=source.system.category choices=(config "modificationTypes")}}
 
         {{formGroup fields.usedWith value=source.system.usedWith}}
         {{> itemTraits traits=document.system.addedTraits path="system.addedTraits" label="IMPMAL.TraitsAdded"}}

@@ -130,7 +130,18 @@ export class StandardActorModel extends BaseActorModel
 
         this.encumbrance.overburdened += this.characteristics.str.bonus + this.characteristics.tgh.bonus; 
         this.encumbrance.restrained += (this.characteristics.str.bonus + this.characteristics.tgh.bonus) * 2;
-        this.encumbrance.value += list.reduce((acc, item) => acc += item.system.encumbrance.total, 0);
+
+        this.encumbrance.value += list.reduce((acc, item) => 
+        {
+            if (item.system.inPack && item.system.inPack.system.ignoreEncumbrance)
+            {
+                return acc;
+            }
+            else
+            {
+                return acc + item.system.encumbrance.total
+            }
+        }, 0);
     }
 
     computeEncumbranceState()

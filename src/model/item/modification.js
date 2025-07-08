@@ -9,6 +9,7 @@ export class ModificationModel extends PhysicalItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
+        schema.type = new fields.StringField({initial: "weapon", choices : {weapon : "IMPMAL.Weapon", protection : "IMPMAL.Armour"}});
         schema.category = new fields.StringField();
         schema.usedWith = new fields.StringField();
         schema.addedTraits = new fields.EmbeddedDataField(TraitListModel);
@@ -39,7 +40,7 @@ export class ModificationModel extends PhysicalItemModel
 
     shouldTransferEffect(effect)
     {
-        return super.shouldTransferEffect(effect) && this.weapon?.system?.shouldTransferEffect(effect);
+        return super.shouldTransferEffect(effect) && this.onDocument?.system?.shouldTransferEffect(effect);
     }
 }
 
@@ -47,12 +48,12 @@ export class ModListModel extends ListModel
 {
     static get listSchema() {return new foundry.data.fields.ObjectField()};
 
-    prepareMods(weapon)
+    prepareMods(document)
     {
         this.documents = this.list.map(e => new ImpMalItem(e));
         for(let mod of this.documents)
         {
-            mod.system.weapon = weapon;
+            mod.system.onDocument = document;
             // If a mod is disabled, make sure all its effects are disabled
             mod.effects.contents.forEach(e => 
             {
@@ -60,4 +61,5 @@ export class ModListModel extends ListModel
             });
         }
     }
+
 }

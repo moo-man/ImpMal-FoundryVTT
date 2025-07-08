@@ -1,5 +1,6 @@
 import { EquipSlots } from "./components/equip-slots";
 import { EquippableItemModel } from "./components/equippable";
+import { TraitListModel } from "./components/traits";
 let fields = foundry.data.fields;
 
 export class AugmeticModel extends EquippableItemModel
@@ -9,7 +10,14 @@ export class AugmeticModel extends EquippableItemModel
     {
         let schema = super.defineSchema();
         schema.slots = new fields.EmbeddedDataField(EquipSlots);
+        schema.traits = new fields.EmbeddedDataField(TraitListModel);
         return schema;
+    }
+
+    computeBase() 
+    {
+        super.computeBase();
+        this.traits.compute();
     }
 
     _addModelProperties()

@@ -72,6 +72,20 @@ export class HandsModel extends foundry.abstract.DataModel
         return update;
     }
 
+    unequip(item)
+    {
+        let update = {};
+        let path = this.schema.fieldPath
+        for(let hand in this)
+        {
+            if (this[hand].id == item.id)
+            {
+                foundry.utils.mergeObject(update, this[hand].unset())
+            }
+        }
+        return {"system.hands" : update};
+    }   
+
     isHolding(id)
     {
         let hands = {};

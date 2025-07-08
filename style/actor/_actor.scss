@@ -540,4 +540,11 @@ body.theme-light .application.impmal.actor {
         }
     }
 
+    .list-row .pack-contents {
+        min-height: 2rem;
+        border: 1px dashed var(--slot-border);
+        border-radius: 5px;
+        padding: 0.5rem;
+    }
+
 }

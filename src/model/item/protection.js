@@ -2,6 +2,7 @@ import { EquipSlots } from "./components/equip-slots";
 import { EquippableItemModel } from "./components/equippable";
 import { HitLocationsModel } from "./components/hit-locations";
 import { TraitListModel } from "./components/traits";
+import { ModListModel } from "./modification";
 let fields = foundry.data.fields;
 
 export class ProtectionModel extends EquippableItemModel
@@ -17,6 +18,7 @@ export class ProtectionModel extends EquippableItemModel
         schema.damage = new fields.ObjectField({});
         schema.rended = new fields.ObjectField({});
         schema.slots = new fields.EmbeddedDataField(EquipSlots);
+        schema.mods = new fields.EmbeddedDataField(ModListModel);
         return schema;
     }
 
@@ -31,18 +33,25 @@ export class ProtectionModel extends EquippableItemModel
     computeBase() 
     {
         super.computeBase();
+        this.mods.prepareMods(this.parent);
         this.traits.compute();
     }
 
     getOtherEffects()
     {
-        return super.getOtherEffects().concat(Object.values(this.traits.traitEffects("protection")));
+        return super.getOtherEffects()
+        .concat(Object.values(this.traits.traitEffects("protection")))
+        .concat((this.mods.documents || [])
+            .reduce((prev, current) => prev.concat(current.effects.contents), []));
     }
 
     computeOwned(actor) 
     {
         // Must put this in OwnerDerived, as normal preparation applies double
         // See https://github.com/foundryvtt/foundryvtt/issues/7987
+        
+        this._applyModifications();
+
         if (this.traits.has("mastercrafted"))
         {
             this.armour += 2;

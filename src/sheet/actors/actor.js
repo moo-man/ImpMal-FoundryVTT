@@ -49,6 +49,7 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
             createSource : this._onInfluenceSourceCreate,
             deleteSource : this._onInfluenceSourceDelete,
             editSource : this._onInfluenceSourceEdit,
+            removeFromPack : this._onRemoveFromPack,
             clickMag : this._onClickMag
 
         },
@@ -65,7 +66,8 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         let context = await super._prepareContext(options);
         context.conditions = this.formatConditions();
         context.factionsExpanded = this.factionsExpanded;
-        context.items.equipped = this.getEquippedItems();
+        context.items = this.filterPackedItems(context.items)
+        context.items.equipped = this.getEquippedItems(context.items);
         context.hitLocations = this.formatHitLocations();
         return context;
     }
@@ -85,17 +87,28 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
     }
 
 
-    getEquippedItems()
+    getEquippedItems(items)
     {
-        let sheetItems = this.actor.itemTypes;
         return {
-            melee : sheetItems.weapon.filter(i => i.system.equipped.value && i.system.isMelee),
-            ranged : sheetItems.weapon.filter(i => i.system.equipped.value && i.system.isRanged),
-            protection : sheetItems.protection.filter(i => i.system.equipped.value).filter(i => i.system.category != "shield"),
-            shield : sheetItems.protection.filter(i => i.system.equipped.value).filter(i => i.system.category == "shield"),
-            equipment : sheetItems.equipment.filter(i => i.system.equipped.value)
+            melee : items.weapon.filter(i => i.system.equipped.value && i.system.isMelee),
+            ranged : items.weapon.filter(i => i.system.equipped.value && i.system.isRanged),
+            protection : items.protection.filter(i => i.system.equipped.value).filter(i => i.system.category != "shield"),
+            shield : items.protection.filter(i => i.system.equipped.value).filter(i => i.system.category == "shield"),
+            equipment : items.equipment.filter(i => i.system.equipped.value)
             // vehicle : data.system.vehicle?.itemTypes.weapon
         };
+    }
+
+    filterPackedItems(items)
+    {
+        items.weapon = items.weapon.filter(i => !i.system.inPack);
+        items.equipment = items.equipment.filter(i => !i.system.inPack);
+        items.protection = items.protection.filter(i => !i.system.inPack);
+        items.ammo = items.ammo.filter(i => !i.system.inPack);
+        items.forceField = items.forceField.filter(i => !i.system.inPack);
+        items.modification = items.modification.filter(i => !i.system.inPack);
+        items.augmetic = items.augmetic.filter(i => !i.system.inPack);
+        return items;
     }
 
     _prepareTabs(options) 
@@ -113,18 +126,23 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         let document = await Item.fromDropData(data);
         let sustaining = ev.target.closest(".sustaining")
         let slot = ev.target.closest(".slot")
-
-        // If dropped into a sustained power section, or a slot. 
+        let pack = ev.target.closest(".pack-contents")
+        let isAlreadyOwned = document.parent?.uuid == this.actor.uuid;
+        // If dropped into a sustained power section or a slot or a pack. 
         // Only applies to items already owned by the actor
-        if ((sustaining || slot) && document.actor?.uuid == this.actor.uuid)
+        if ((sustaining || slot || pack))
         {
             // If power, add power to sustained list of powers
-            if (sustaining && document.type == "power" && document.parent?.uuid == this.actor.uuid)
+            if (sustaining && document.type == "power" && isAlreadyOwned)
             {
                 this.document.update(this.document.system.warp.sustaining.add(document));
             }
             // If physical item, slot into whatever item dropped into
-            else if (slot && document.system.isPhysical)
+            else if (pack && document.system.isPhysical)
+            {
+                this.document.items.get(pack.dataset.id).system.addItem(document);
+            }
+            else if (slot && document.system.isPhysical && isAlreadyOwned)
             {
                 let index = slot.dataset.index;
                 let dropItem = this.actor.items.get(ev.target.closest(".list-row")?.dataset.id);
@@ -518,6 +536,16 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         let summaryData = await document?.system?.summaryData();
         let summaryHTML = await renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", summaryData);
         this._toggleDropdown(ev, summaryHTML);
+    }
+
+    static async _onRemoveFromPack(ev)
+    {
+        let item = this._getDocument(ev);
+        if (item)
+        {
+            let pack = item.system.inPack;
+            pack.update(pack.system.actorItems.remove(pack.system.actorItems.list.findIndex(i => i.uuid == item.uuid)));
+        }
     }
 
     
