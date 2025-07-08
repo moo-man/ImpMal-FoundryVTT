@@ -3,5 +3,6 @@
         <legend>Imperium Maledictum Theme</legend>
         {{formGroup fields.enabled value=setting.enabled localize=true label="Enabled"}}
         {{formGroup fields.font value=setting.font localize=true disabled=(not setting.enabled) label="Font"}}
+        {{formGroup fields.scan value=setting.scan localize=true disabled=(not setting.enabled) label="Scan Effect"}}
     </fieldset>
 </section>

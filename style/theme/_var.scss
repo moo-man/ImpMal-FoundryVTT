@@ -22,11 +22,23 @@
 
   scrollbar-color: initial;
   scrollbar-width: initial;
+
 }
 
 body.impmal-font {
   --header-font: "Novarese";
   --type-font : "MinionPro"
+}
+
+body.impmal-scan {
+  --im-flicker-anim: flicker 0.15s infinite; 
+  --im-shadow-anim: textShadow 1.6s infinite; 
+  --im-scan-bg: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+  linear-gradient(90deg,
+    rgba(255, 0, 0, 0.06),
+    rgba(0, 255, 0, 0.02),
+    rgba(0, 0, 255, 0.06));
+
 }
 
 @mixin terminal-input {
@@ -325,7 +337,7 @@ body.impmal-font {
     opacity: 0;
     z-index: 2;
     pointer-events: none;
-    animation: flicker 0.15s infinite;
+    animation: var(--im-flicker-anim)//flicker 0.15s infinite;
   }
 
   &::before {
@@ -338,11 +350,7 @@ body.impmal-font {
     right: 0;
 
     @if $bg {
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-        linear-gradient(90deg,
-          rgba(255, 0, 0, 0.06),
-          rgba(0, 255, 0, 0.02),
-          rgba(0, 0, 255, 0.06));
+      background: var(--im-scan-bg)
     }
 
     z-index: 2;
@@ -351,7 +359,7 @@ body.impmal-font {
     pointer-events: none;
   }
 
-  animation: textShadow 1.6s infinite;
+  animation: var(--im-shadow-anim)
 }
 
 @mixin impmal-button($border: 2px) {
