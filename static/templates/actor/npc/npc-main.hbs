@@ -34,9 +34,6 @@
                         <div class="flex" data-tooltip="{{localize this.system.attackData.specialisation}} ({{this.system.attackData.skillTotal}})">{{localize this.system.attackData.specialisation}} ({{this.system.attackData.skillTotal}})</div>
                         <div>{{this.system.attackData.damage.value}} {{localize "IMPMAL.Damage"}}</div>
                         {{#if this.system.isRanged}}
-                        <div>{{configLookup "ranges" this.system.range}}</div>
-                        {{/if}}
-                        {{#if this.system.isRanged}}
                             <div>{{configLookup "ranges" this.system.attackData.range}} {{localize "IMPMAL.Range"}}</div>
                         {{/if}}
                     </div>

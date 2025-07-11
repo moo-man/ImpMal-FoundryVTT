@@ -1,0 +1,76 @@
+<div>
+    {{#unless (eq options.description "bottom")}}
+        {{{html}}}
+    {{/unless}}
+    <table border="1" style="{{options.style}}" class="impmal-actor">
+        <thead>
+            <tr class="title">
+                <td colspan="9">
+                    <p class="name">@UUID[{{actor.uuid}}]{{fallback label actor.name}}</p>
+                    <p class="subtitle">{{configLookup "sizes" actor.system.combat.size}} {{actor.system.species}} ({{actor.system.faction.name}}), {{configLookup "npcRoles" actor.system.role}}</p>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="characteristics">
+                {{#each (config "characteristicAbbrev")}}
+                    <th>
+                        {{this}}
+                    </th>
+                {{/each}}
+            </tr>
+            <tr class="characteristics">
+                {{#each actor.system.characteristics}}
+                    <td>
+                        {{this.total}}
+                    </td>
+                {{/each}}
+            </tr>
+            <tr class="npc-attributes">
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Armour"}}</p>
+                    <p>{{armour}}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Wounds"}}</p>
+                    <p>{{actor.system.combat.wounds.max}}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.CriticalWounds"}}</p>
+                    <p>{{actor.system.combat.criticals.max}}</p>
+                </td>
+            </tr>
+            <tr class="npc-attributes">
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Initiative"}}</p>
+                    <p>{{actor.system.combat.initiative}}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Speed"}}</p>
+                    <p>{{configLookup "speeds" actor.system.combat.speed.land.value}}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Resolve"}}</p>
+                    <p>{{actor.system.combat.resolve}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9"><strong>{{localize "IMPMAL.Skills"}}</strong>: {{{skills}}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <p class="item-header">{{localize "IMPMAL.Traits"}}</p>{{{traits}}}
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9"><strong>{{localize "IMPMAL.Possessions"}}</strong>: {{{possessions}}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {{#if (eq options.description "bottom")}}
+        {{{html}}}
+    {{/if}}
+</div>

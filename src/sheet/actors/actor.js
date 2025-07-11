@@ -50,7 +50,7 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
             deleteSource : this._onInfluenceSourceDelete,
             editSource : this._onInfluenceSourceEdit,
             removeFromPack : this._onRemoveFromPack,
-            clickMag : this._onClickMag
+            clickMag : {buttons : [0, 2], handler : this._onClickMag}
 
         },
         defaultTab : "main"
@@ -335,13 +335,6 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
             }
             })
         });
-
-        this.element.querySelectorAll(".droppable").forEach(e => e.addEventListener("dragenter", ev => {
-            ev.target.classList.add("hover")
-        }))
-        this.element.querySelectorAll(".droppable").forEach(e => e.addEventListener("dragleave", ev => {
-            ev.target.classList.remove("hover")
-        }))
     }
   
 
@@ -528,6 +521,26 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         this.actor.clearOpposed();
     }
 
+    static _onClickMag(ev, target)
+    {
+      if (ev.button == 0)
+      {
+        let id = this._getId(ev);
+        let item = this.actor.items.get(id);
+
+        item.update(item.system.reload(!!item.system.ammo.document)).then(() => 
+        {
+            ui.notifications.notify(game.i18n.localize("IMPMAL.Reloaded"));
+        });
+      }
+      else if (ev.button == 2)
+      {
+        let id = this._getId(ev);
+        let item = this.actor.items.get(id);
+
+        item.update(item.system.useAmmo());
+      }
+    }
     
     static async _toggleSummary(ev) 
     {

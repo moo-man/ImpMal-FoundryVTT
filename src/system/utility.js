@@ -209,69 +209,10 @@ export default class ImpMalUtility
                     }
                 }
             }
-
-            let physicalTypes = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical"));
-            let possessions = actor.items.filter(i => physicalTypes.includes(i.type));
-
-            let traits = actor.itemTypes.trait.filter(i => i.system.notes.player).map(i => {
-                return i.system.notes.player.replace("<p>", `<p><strong>${i.name}</strong>: `)
-            });
         
-            return await TextEditor.enrichHTML(`<div>${options.description != "bottom" ? html : ""}<table border="1" style="${options.style || ""}" class="impmal-actor">
-            <thead>
-            <tr class="title">
-                <td colspan="9"><p class="name">@UUID[${actor.uuid}]{${label || actor.name}}</p><p class="subtitle">${game.impmal.config.sizes[actor.system.combat.size]} ${actor.system.species} (${actor.system.faction.name}), ${game.impmal.config.npcRoles[actor.system.role]}</p></td>
-            </tr>
-            </thead>
-            <tbody>
-                <tr class="characteristics">
-                    <th>${Object.keys(actor.system.characteristics).map(key => game.impmal.config.characteristicAbbrev[key]).join("</th><th>")}</th>
-                </tr>
-                <tr class="characteristics">
-                    <td>${Object.values(actor.system.characteristics).map(c => c.total).join("</td><td>")}</td>
-                </tr>
-                <tr class="npc-attributes">
-                    <td colspan="3">
-                        <p>${game.i18n.localize("IMPMAL.Armour")}</p>
-                        <p>${armour}</p>
-                    </td>
-                    <td colspan="3">
-                        <p>${game.i18n.localize("IMPMAL.Wounds")}</p>
-                        <p>${actor.system.combat.wounds.max}</p>
-                    </td>
-                    <td colspan="3">
-                        <p>${game.i18n.localize("IMPMAL.CriticalWounds")}</p>
-                        <p>${actor.system.combat.criticals.max}</p>
-                    </td>
-                </tr>
-                <tr class="npc-attributes">
-                    <td colspan="3">
-                        <p>${game.i18n.localize("IMPMAL.Initiative")}</p>
-                        <p>${actor.system.combat.initiative}</p>
-                    </td>
-                    <td colspan="3">
-                        <p>${game.i18n.localize("IMPMAL.Speed")}</p>
-                        <p>${game.impmal.config.speeds[actor.system.combat.speed.land.value]}</p>
-                    </td>
-                    <td colspan="3">
-                        <p>${game.i18n.localize("IMPMAL.Resolve")}</p>
-                        <p>${actor.system.combat.resolve}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="9"><strong>${game.i18n.localize("IMPMAL.Skills")}</strong>: ${skills.join(", ")}</td>
-                </tr>
-                <tr>
-                    <td colspan="9">
-                    <p class="item-header">${game.i18n.localize("IMPMAL.Traits")}</p>${traits.join("")}
+            let template = await renderTemplate(`systems/impmal/templates/embeds/${actor.type}.hbs`, actor.system.embedData(options))
 
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="9"><strong>${game.i18n.localize("IMPMAL.Possessions")}</strong>: ${possessions.map(i => `@UUID[${i.uuid}]`).join(", ")}</td>
-                </tr>   
-            </tbody>
-        </table>${options.description == "bottom" ? html : ""}</div>`, {relativeTo : actor, async: true});
+            return await TextEditor.enrichHTML(template, {relativeTo : actor, async: true, secrets : actor.isOwner});
         }
         else 
         {
@@ -291,7 +232,7 @@ export default class ImpMalUtility
                 html += actor.system.notes.player || ""
             }
         }   
-        return await TextEditor.enrichHTML(`<div>${html}</div>`, {relativeTo : actor, async: true});
+        return await TextEditor.enrichHTML(`<div>${html}</div>`, {relativeTo : actor, async: true, secrets : actor.isOwner});
     }
 
     static listeners(html) 

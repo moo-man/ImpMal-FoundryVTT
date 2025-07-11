@@ -688,6 +688,14 @@ body.impmal-scan {
   table.impmal-actor {
     border: 1px solid var(--impmal-darkblue);
     table-layout: fixed;
+    background: none;
+
+    tr {
+      background-color: white;
+    }
+    tr:nth-of-type(even) {
+      background-color: #e9ecec;
+    }
 
     .title {
       text-align: center;
@@ -724,15 +732,24 @@ body.impmal-scan {
 
     tbody {
       .characteristics {
+        font-size: var(--font-size-16);
         font-family: "Novarese";
         text-align: center;
+        font-weight: bold;
+        th {
+          padding: 0.5rem;
+        }
       }
     }
 
     .npc-attributes {
-      font-size: var(--font-size-14);
+      font-size: var(--font-size-16);
       font-family: "Novarese";
       text-align: center;
+      font-weight: bold;
+      p {
+        margin: 0.2rem;
+      }
 
       p:first-of-type {
         word-wrap: unset;
@@ -749,6 +766,8 @@ body.impmal-scan {
 
       font-family: "Novarese";
       font-weight: bold;
+      text-transform: uppercase;
+      margin: 0px;
       font-size: var(--font-size-24);
       color: var(--impmal-lightblue);
       margin: 5px 0px 0px 0px;

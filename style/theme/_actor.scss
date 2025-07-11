@@ -9,6 +9,7 @@ body.impmal-theme {
 
         --actors: transparent;
         --dropshadow  : var(--impmal-lightgreen);
+        --drop: var(--impmal-lightgreen);
 
         --characteristic-border: var(--impmal-lightblue);
         --patron-border: var(--impmal-lightblue);
@@ -56,7 +57,7 @@ body.impmal-theme {
 
             .gradient-border {
                 height: 1px;
-                background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, var(--impmal-lightgreen) 50%, rgba(255, 255, 255, 0) 100%);
+                @include gradient-border(var(--impmal-lightgreen));
             }
         }
 

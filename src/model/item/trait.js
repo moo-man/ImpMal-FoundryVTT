@@ -9,6 +9,7 @@ export class TraitModel extends StandardItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
+        schema.category = new fields.StringField({initial : "standard", choices : {"standard" : "IMPMAL.Standard", "vehicle" : "IMPMAL.Vehicle"}})
         schema.attack = new fields.EmbeddedDataField(AttackDataModel);
         schema.test = new fields.EmbeddedDataField(TestDataModel);
         schema.roll = new fields.SchemaField({
@@ -17,6 +18,23 @@ export class TraitModel extends StandardItemModel
             label :  new fields.StringField()
         });
         return schema;
+    }
+
+    async allowCreation(data, options, user)
+    {
+        let allowed = await super.allowCreation(data, options, user);
+
+        let actor = this.parent.actor;
+        if ((this.category == "vehicle" && actor.type != "vehicle")  || (this.category != "vehicle" && actor.type == "vehicle")) // can add character duties to npcs for quick stats
+        {
+            allowed = false;
+            ui.notifications.error("IMPMAL.ErrorTraitType", {localize : true});
+        }
+        else 
+        {
+            allowed = true;
+        }
+        return allowed;
     }
 
     computeBase() 

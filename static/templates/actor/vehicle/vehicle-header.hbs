@@ -14,9 +14,7 @@
                         data-action="armourConfig"><i class="fa-solid fa-gear"></i></a></label></div>
             <div class="field" style="grid-column: 1 / span 12">
                 <select name="system.category">
-                    {{#select system.category}}
-                        <option value="wheeled">{{localize "IMPMAL.Wheeled"}}</option>
-                    {{/select}}
+                    {{selectOptions (config "vehicleCategory") selected=system.category}}
                 </select>
             </div>
         </div>

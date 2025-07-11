@@ -231,6 +231,13 @@ const IMPMAL = {
         engineering : "IMPMAL.Engineering",
     },
 
+    vehicleCategory : {
+        wheeled : "Wheeled",
+        tracked : "Tracked",
+        flyer : "Flyer",
+        walker : "Walker"
+    },
+
     paymentGrade : {
         poor : "IMPMAL.Poor",
         standard : "IMPMAL.Standard",

@@ -11,7 +11,6 @@ export default class NPCSheet extends IMActorSheet
         actions : {
           armourConfig : this._onArmourConfig,
           ammoChange : this._onAmmoChange,
-          clickMag : {buttons : [0, 2], handler : this._onClickMag}
 
         },
         defaultTab : "main"
@@ -105,26 +104,6 @@ export default class NPCSheet extends IMActorSheet
           });
       }
 
-      static _onClickMag(ev, target)
-      {
-        if (ev.button == 0)
-        {
-          let id = this._getId(ev);
-          let item = this.actor.items.get(id);
-
-          item.update(item.system.reload(!!item.system.ammo.document)).then(() => 
-          {
-              ui.notifications.notify(game.i18n.localize("IMPMAL.Reloaded"));
-          });
-        }
-        else if (ev.button == 2)
-        {
-          let id = this._getId(ev);
-          let item = this.actor.items.get(id);
-
-          item.update(item.system.useAmmo());
-        }
-      }
 
       _addEventListeners()
       {

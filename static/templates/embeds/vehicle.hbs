@@ -1,0 +1,60 @@
+<div>
+    {{log this}}
+    {{#unless (eq options.description "bottom")}}
+        {{{html}}}
+    {{/unless}}
+    <table border="1" style="{{options.style}}" class="impmal-actor">
+        <thead>
+            <tr class="title">
+                <td colspan="9">
+                    <p class="name">@UUID[{{actor.uuid}}]{{fallback label actor.name}}</p>
+                    <p class="subtitle">Vehicle, {{configLookup "vehicleCategory" actor.system.category}}</p>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="npc-attributes">
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Armour"}}</p>
+                    <p>{{actor.system.combat.armour.front}}/{{actor.system.combat.armour.back}}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Speed"}}</p>
+                    <p>{{configLookup "speeds" actor.system.combat.speed.land.value}}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Crew"}}</p>
+                    <p>{{actor.system.crew.number}}</p>
+                </td>
+            </tr>
+            <tr class="npc-attributes">
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Passengers"}}</p>
+                    <p>{{actor.system.passengers.number}}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Size"}}</p>
+                    <p>{{configLookup "sizes" actor.system.combat.size}}</p>
+                </td>
+                <td colspan="3">
+                    <p>{{localize "IMPMAL.Cost"}}</p>
+                    <p>{{actor.system.cost}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <p class="item-header">{{localize "IMPMAL.Traits"}}</p>{{{traits}}}
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <p class="item-header">{{localize "IMPMAL.Weapons"}}</p>{{{weapons}}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {{#if (eq options.description "bottom")}}
+        {{{html}}}
+    {{/if}}
+</div>

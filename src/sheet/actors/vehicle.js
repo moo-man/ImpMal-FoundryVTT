@@ -10,7 +10,10 @@ export default class VehicleSheet extends IMActorSheet
         classes: ["vehicle"],
         actions : {
           actorDelete : this._onActorDelete,
-          showPassenger : this._onShowPassenger
+          showPassenger : this._onShowPassenger,
+          createItem : this._onCreateItem,
+          deleteEmbedded : this._onDeleteEmbeddedDoc,
+          rollTest : this._onRollTest
         },
         defaultTab : "main"
       }
@@ -45,8 +48,26 @@ export default class VehicleSheet extends IMActorSheet
       async _prepareContext(options)
       {
         let context = await super._prepareContext(options)
+        context.items.weapon = context.items.weapon.filter(w => !context.system.crew.weapons.has({id : w.id}) && !context.system.passengers.weapons.has({id : w.id}))
         return context;
       }
+
+      async _handleEnrichment() 
+      {
+          let traitHTML = {};
+          for(let t of this.actor.items.filter(i => i.type == "trait"))
+          {
+            let html = await foundry.applications.ux.TextEditor.enrichHTML(t.system.notes.player, {async: true, relativeTo: this.document, secrets : this.document.isOwner}) || `<p></p>`;
+            if (game.user.isGM)
+            {
+                html += await foundry.applications.ux.TextEditor.enrichHTML(t.system.notes.gm, {async: true, relativeTo: this.document, secrets : this.document.isOwner});
+            } 
+            traitHTML[t.id] = html;
+          }
+          return foundry.utils.mergeObject(await super._handleEnrichment(), foundry.utils.expandObject({
+            traits : traitHTML
+          }));
+      } 
 
       _onDragStart(ev)
       {
@@ -63,24 +84,38 @@ export default class VehicleSheet extends IMActorSheet
           }
       }
 
+      static async _onCreateItem(ev, target) 
+      {
+          let type = this._getType(ev);
+          let category = target.dataset.category;
+          this.document.createEmbeddedDocuments("Item", [{type, name : `New ${game.i18n.localize(CONFIG.Item.typeLabels[type])}`, system : {category}}]).then(item => item[0].sheet.render(true));
+      }
+  
 
       async _onDropActor(data, ev)
       {
         let actor = await Actor.fromDropData(data);
-        if (actor.type == "character" || actor.type == "npc")
+        let position = this._getDataAttribute(ev, "position");
+
+        // If this actor was dragged from a different position onto an actor in the new position, swap the actors
+        let previous = data.previousPosition
+        let ontoUuid = this._getUUID(ev);
+
+        this.actor.system.addActor(actor, position, {switchUuid : ontoUuid, previousPosition: previous})
+      }
+
+      async _onDropItem(data, ev)
+      {
+        let item = await Item.fromDropData(data);
+        let position = this._getDataAttribute(ev, "position");
+
+        if (item.type == "weapon" || !position)
         {
-            let position = this._getDataAttribute(ev, "position");
-            let newList = Object.values(this.document.system.actors.add(actor, position))[0];
-
-            let ontoActorId = this._getUUID(ev);
-            // If this actor was dragged from a different position onto an actor in the new position, swap the actors
-            if (ontoActorId && data.previousPosition)
-            {
-                let ontoActor = newList.find(i => i.uuid == ontoActorId);
-                ontoActor.updateSource({position : data.previousPosition});
-            }
-
-            this.document.update({"system.actors.list" : newList});
+          this.actor.system.addWeapon(item, position)
+        }
+        else 
+        {
+          super._onDropItem(data, ev);
         }
       }
 
@@ -95,4 +130,68 @@ export default class VehicleSheet extends IMActorSheet
         let id = this._getUUID(ev);
         fromUuid(id).then(actor => actor.sheet.render(true));
       }
+
+      static async _onDeleteEmbeddedDoc(ev, target)
+      {
+          let doc = await this._getDocumentAsync(ev, target);
+          let position = this._getDataAttribute(ev, "position");
+
+          if (position)
+          {
+            let choice = await foundry.applications.api.Dialog.wait({
+              window: {title : doc.name},
+              content : game.i18n.localize("IMPMAL.DeleteVehicleWeapon"),
+              buttons : [
+                {
+                  action : "cargo",
+                  label : "IMPMAL.Cargo"
+                },
+                {
+                  action : "delete",
+                  label : "IMPMAL.Delete"
+                }
+              ]
+            })
+
+            if (position)
+            {
+              await this.document.update(this.document.system[position].weapons.removeId(doc.id));
+            }
+
+            if (choice == "delete")
+            {
+              await doc?.delete();
+            }
+          }
+          else 
+          {
+            doc?.delete();
+          }
+
+      }
+
+      static async _onRollTest(ev, target)
+      {
+          let type = target.dataset.type;  // characteristic, skill, etc.
+          let itemId = this._getId(ev);                   // Item ids, if using skill items or weapons
+          let position = this._getDataAttribute(ev, "position");
+          let item = this.actor.items.get(itemId);
+          let actor = await this.actor.system.choose(position);
+
+          if (!actor)
+          {
+            return;
+          }
+
+          switch(type)
+          {
+          case "weapon":
+              return actor.setupWeaponTest(item.uuid);
+          case "trait":
+              return actor.setupTraitTest(item.uuid);
+          case "item":
+              return actor.setupTestFromItem(item.uuid);
+          }
+      }
+  
 }

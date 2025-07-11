@@ -12,11 +12,86 @@
                             <a class="label" data-action="showPassenger">{{this.name}}</a>
                         </div>
                         <div class="list-controls">
-                            <a class="list-control" data-action="actorDelete"><i class="fa-solid fa-trash"></i></a>
+                            <a class="list-control" data-action="actorDelete"><i class="fa-solid fa-xmark"></i></a>
                         </div>
                     </div>
                 </div>
             {{/each}}
+            {{#if actor.system.crew.weapons.documents.length}}
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "IMPMAL.Weapons"}}</div>
+                    <div>{{localize "IMPMAL.Damage"}}</div>
+                    <div>{{localize "IMPMAL.Range"}}</div>
+                    <div class="list-controls">
+
+                    </div>
+                </div>
+                <div class="list-content weapons" data-path="system.crew.weapons">
+                    {{#each actor.system.crew.weapons.documents}}
+                        <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}" data-index="{{@key}}">
+                            <div class="row-content">
+                                <div class="list-name rollable">
+                                    <img src="{{this.img}}" data-action="rollTest" data-type="weapon">
+                                    <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                                </div>
+
+                                <div>{{this.system.specialisation}}</div>
+                                <div>{{this.system.damage.base}}</div>
+
+
+                                {{#if this.system.isRanged}}
+                                    <div>{{configLookup "ranges" this.system.attackData.range}}</div>
+                                {{/if}}
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-xmark"></i></a>
+                                </div>
+                            </div>
+                            {{#if (or this.system.traits.list.length this.system.isRanged)}}
+                                <div class="row-content weapon-aux">
+                                    {{#if this.system.traits.list.length}}
+                                        <div class="weapon-traits">
+                                            <div class="trait-list">
+                                                {{this.system.traits.displayString}}
+                                            </div>
+                                        </div>
+                                    {{/if}}
+
+                                    {{#if this.system.isRanged}}
+                                        {{#unless this.system.selfAmmo}}
+                                            <button type="button" class="mag prevent-context" data-action="clickMag">
+                                                <label>{{localize "IMPMAL.Mag"}}</label>
+                                                <div class="values">
+                                                    <div class="current">{{this.system.mag.current}}</div>
+                                                    <div>/</div>
+                                                    <div class="value">{{this.system.mag.value}}</div>
+                                                </div>
+                                            </button>
+                                            <button data-action="ammoChange" class="large">
+                                                {{#if this.system.ammo.document}}
+                                                    {{this.system.ammo.document.name}}
+                                                    ({{this.system.ammo.document.system.quantity}})
+                                                {{else}}
+                                                    {{localize "IMPMAL.NoAmmoLoaded"}}
+                                                {{/if}}
+                                            </button>
+                                        {{else}}
+                                            <a data-action="stepProperty" data-path="system.quantity" class="prevent-context">
+                                                <label>{{localize "IMPMAL.Qty."}}</label>
+                                                {{this.system.quantity}}
+                                            </a>
+                                        {{/unless}}
+                                    {{/if}}
+                                </div>
+                            {{/if}}
+                            {{> sheetButtons document=this}}
+                            <div class="dropdown-content collapsed">
+
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            {{/if}}
+            <div class="droppable" data-tooltip="IMPMAL.VehicleDropTT"><i class="fa-solid fa-plus"></i></div>
         </div>
     </div>
     <div class="sheet-list vehicle-actors droppable" data-position="passengers">
@@ -32,8 +107,115 @@
                             <a class="label" data-action="showPassenger">{{this.name}}</a>
                         </div>
                         <div class="list-controls">
-                            <a class="list-control" data-action="actorDelete"><i class="fa-solid fa-trash"></i></a>
+                            <a class="list-control" data-action="actorDelete"><i class="fa-solid fa-xmark"></i></a>
                         </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+        {{#if actor.system.passengers.weapons.documents}}
+            <div class="list-header row-content">
+                <div class="list-name">{{localize "IMPMAL.Weapons"}}</div>
+            </div>
+            <div class="list-content weapons" data-path="system.passengers.weapons">
+                {{#each actor.system.passengers.weapons.documents}}
+  <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}" data-index="{{@key}}">
+                            <div class="row-content">
+                                <div class="list-name rollable">
+                                    <img src="{{this.img}}" data-action="rollTest" data-type="weapon">
+                                    <a class="label" data-action="toggleSummary">{{this.name}}</a>
+                                </div>
+
+
+                                <div>{{this.system.specialisation}}</div>
+
+                                <div>{{this.system.damage.base}}</div>
+
+
+                                {{#if this.system.isRanged}}
+                                    <div>{{configLookup "ranges" this.system.attackData.range}}</div>
+                                {{/if}}
+                                <div class="list-controls">
+                                    <a class="list-control" data-action="deleteEmbedded"><i class="fa-solid fa-xmark"></i></a>
+                                </div>
+                            </div>
+                            {{#if (or this.system.traits.list.length this.system.isRanged)}}
+                                <div class="row-content weapon-aux">
+                                    {{#if this.system.traits.list.length}}
+                                        <div class="weapon-traits">
+                                            <div class="trait-list">
+                                                {{this.system.traits.displayString}}
+                                            </div>
+                                        </div>
+                                    {{/if}}
+
+                                    {{#if this.system.isRanged}}
+                                        {{#unless this.system.selfAmmo}}
+                                            <button type="button" class="mag prevent-context" data-action="clickMag">
+                                                <label>{{localize "IMPMAL.Mag"}}</label>
+                                                <div class="values">
+                                                    <div class="current">{{this.system.mag.current}}</div>
+                                                    <div>/</div>
+                                                    <div class="value">{{this.system.mag.value}}</div>
+                                                </div>
+                                            </button>
+                                            <button data-action="ammoChange" class="large">
+                                                {{#if this.system.ammo.document}}
+                                                    {{this.system.ammo.document.name}}
+                                                    ({{this.system.ammo.document.system.quantity}})
+                                                {{else}}
+                                                    {{localize "IMPMAL.NoAmmoLoaded"}}
+                                                {{/if}}
+                                            </button>
+                                        {{else}}
+                                            <a data-action="stepProperty" data-path="system.quantity" class="prevent-context">
+                                                <label>{{localize "IMPMAL.Qty."}}</label>
+                                                {{this.system.quantity}}
+                                            </a>
+                                        {{/unless}}
+                                    {{/if}}
+                                </div>
+                            {{/if}}
+                            {{> sheetButtons document=this}}
+                            <div class="dropdown-content collapsed">
+
+                            </div>
+                        </div>
+                {{/each}}
+            </div>
+        {{/if}}
+        <div class="droppable" data-tooltip="IMPMAL.VehicleDropTT"><i class="fa-solid fa-plus"></i></div>
+
+    </div>
+
+
+    <div class="sheet-list traits">
+        <div class="list-header row-content">
+            <div class="list-name">{{localize "IMPMAL.Traits"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="trait" data-category="vehicle"><i class="fa-solid fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.trait}}
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name rollable" data-action="useItem">
+                            <img src="{{this.img}}">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                    </div>
+                    {{#if (lookup ../enriched.traits this.id)}}
+                        <div class="description">
+                            {{{lookup ../enriched.traits this.id}}}
+                        </div>
+                    {{/if}}
+                    <div>
+
+                    </div>
+                    {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
                     </div>
                 </div>
             {{/each}}

@@ -46,5 +46,58 @@ export class NPCModel extends StandardActorModel
         }
     }
 
+    embedData(options)
+    {
+        try 
+        {
+            let data = super.embedData(options);
+
+            let armour = this.combat.armour.value;
+            if (this.combat.armour.formula)
+            {
+                armour = `${this.combat.armour.formula} + ${armour}`;
+            }
+
+            let skills = [];
+            for (let skillKey in this.skills)
+            {
+                let skill = this.skills[skillKey];
+                // Only include skills in the main tab if they have advances
+                if (skill.advances > 0)
+                {
+                    skills.push(`${game.impmal.config.skills[skillKey]} ${skill.total}`);
+                }
+
+                for(let skillItem of skill.specialisations)
+                {
+                    if (skillItem.system.advances > 0)
+                    {
+                        skills.push(`${skillItem.system.skillNameAndTotal}`);
+                    }
+                }
+            }
+
+            let physicalTypes = Object.keys(game.template.Item).filter(i => game.template.Item[i].templates?.includes("physical"));
+            let possessions = this.parent.items.filter(i => physicalTypes.includes(i.type));
+
+            let traits = this.parent.itemTypes.trait.filter(i => i.system.notes.player).map(i => {
+                return i.system.notes.player.replace("<p>", `<p><strong>${i.name}</strong>: `)
+            });
+        
+
+            return foundry.utils.mergeObject(data, {
+                armour, 
+                skills: skills.join(", "), 
+                traits : traits.join(""),
+                possessions: possessions.map(i => `@UUID[${i.uuid}]`).join(", ")
+            })
+        }
+        catch(e)
+        {
+            return "Error getting embed data for " + this.parent.name
+        }
+
+    }
+
 }
 

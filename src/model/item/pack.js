@@ -8,6 +8,7 @@ export class PackModel extends PhysicalItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
+        schema.solars = new fields.NumberField({min: 0});
         schema.ignoreEncumbrance = new fields.BooleanField();
         schema.items = new fields.EmbeddedDataField(DiffReferenceListModel);
         schema.actorItems = new fields.EmbeddedDataField(DocumentReferenceListModel);
@@ -23,6 +24,12 @@ export class PackModel extends PhysicalItemModel
         {
             let items = await this.parent.actor.createEmbeddedDocuments("Item", (await this.items.documents).map(i => i.toObject()));
             this.updateSource({"actorItems.list" : items.map(i => {return {uuid : i.uuid, name : i.name}})});
+            if (this.solars)
+            {
+                await this.parent.actor.update({"system.solars" : this.parent.actor.system.solars + this.solars});
+                ui.notifications.info("IMPMAL.SolarsAdded", {format : {solars : this.solars}});
+                this.updateSource({"solars" : 0});
+            }
         }
     }
 

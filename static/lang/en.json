@@ -122,6 +122,7 @@
     "IMPMAL.ChooseSpecialisation" : "Choose a Specialisation. If no selection is made, a blank specialisation will be created.",
     "IMPMAL.ChooseNum" : "Choose {num}",
     "IMPMAL.Choose" : "Choose",
+    "IMPMAL.ChooseActor" : "Choose Actor",
     "IMPMAL.ChooseFaction" : "Choose Faction",
     "IMPMAL.Close" : "Close",
     "IMPMAL.ClearRended" : "Clear Rended",
@@ -222,7 +223,8 @@
             "CriticalWounds" : "Auto-Calculate Critical Wounds",
             "Initiative" : "Auto-Calculate Initiative",
             "Corruption" : "Auto-Calculate Critical Corruption"
-        }
+        },
+        "ShowPassengers" : "Show Passenger Tokens"
     },
 
     "IMPMAL.CountEveryBullet" : "Count Every Bullet",
@@ -253,12 +255,14 @@
     "IMPMAL.Defended" : "Defended",
     "IMPMAL.Defensive" : "Defensive",
     "IMPMAL.Defend" : "Defend",
+    "IMPMAL.Delete" : "Delete",
     "IMPMAL.DeleteItem" : "Delete Item",
     "IMPMAL.DeleteItemConfirmation" : "Are you sure you wish to delete this Item?",
     "IMPMAL.DeleteActiveEffect" : "Delete Active Effect",
     "IMPMAL.DeleteActiveEffectConfirmation" : "Are you sure you wish to delete this Active Effect?",
     "IMPMAL.DeleteFaction" : "Delete Faction",
     "IMPMAL.DeleteFactionConfirmation" : "Are you sure you wish to delete this Faction?",
+    "IMPMAL.DeleteVehicleWeapon" : "Delete or store in Cargo?",
     "IMPMAL.DeletingEffectItems" : "Deleting Effect Items: {items}",
     "IMPMAL.Demeanor" : "Demeanor",
     "IMPMAL.Description" : "Description",
@@ -334,6 +338,8 @@
     "IMPMAL.ErrorNoActorBuyItem" : "No assigned Actor to buy this Item.",
     "IMPMAL.ErrorNotEnoughSolars" : "{name} does not have enough Solars!",
     "IMPMAL.ErrorOwnedItemInPack" : "Owned Items cannot be placed in a pack that is not owned.",
+    "IMPMAL.ErrorTraitType" : "Wrong Trait type",
+    "IMPMAL.ErrorNoAvailableActors" : "No available Actors to choose from.",
     "IMPMAL.Excellent" : "Excellent",
     "IMPMAL.ExposureMinor" : "Minor Exposure to Corruption",
     "IMPMAL.ExposureModerate" : "Moderate Exposure to Corruption",
@@ -642,6 +648,7 @@
     "IMPMAL.Slots" : "Slow",
     "IMPMAL.Small" : "Small",
     "IMPMAL.Solars" : "Solars",
+    "IMPMAL.SolarsAdded" : "{solars} Solars added",
     "IMPMAL.Solid" : "Solid",
     "IMPMAL.Source" : "Source",
     "IMPMAL.Special" : "Special",
@@ -788,7 +795,9 @@
     "IMPMAL.Value" : "Value",
     "IMPMAL.VeryEasy" : "Very Easy",
     "IMPMAL.VeryHard" : "Very Hard",
+    "IMPMAL.Vehicle" : "Vehicle",
     "IMPMAL.VehicleWeapons" : "Vehicle Weapons",
+    "IMPMAL.VehicleDropTT" : "Drag and drop an Actor or Weapon",
     "IMPMAL.Vilified" : "Vilified",
     "IMPMAL.WR" : "WR",
     "IMPMAL.WS" : "WS",
@@ -1009,6 +1018,9 @@
             },
             "trait" : {
                 "FIELDS" : {
+                    "category" : {
+                        "label" : "Category"
+                    },
                     "attack": {
                         "type" : {
                             "label" : "Attack Type"
@@ -1034,6 +1046,9 @@
                 "FIELDS" : {
                     "ignoreEncumbrance" : {
                         "label" : "Ignore Encumbrance"
+                    },
+                    "solars" : {
+                        "label" : "Solars"
                     }
                 }
             }

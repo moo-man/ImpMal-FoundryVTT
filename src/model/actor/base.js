@@ -41,4 +41,19 @@ export class BaseActorModel extends BaseWarhammerActorModel
         this.initialize();
         super.computeBase();
     }
+
+    embedData(options)
+    {
+
+        let html = "";
+        if (options.description)
+        {
+            html += this.notes.player;
+            if (game.user.isGM)
+                html += this.notes.gm;
+        }
+        
+
+        return {actor : this.parent, html, options}
+    }
 }
