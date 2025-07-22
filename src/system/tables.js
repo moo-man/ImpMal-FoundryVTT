@@ -2,8 +2,7 @@ export default class ImpMalTables
 {
     static async rollTable(key, formula, {modifier=0, showRoll=true, showResult=true, chatData={}, actor}={})
     {
-        let id = game.settings.get("impmal", "tableSettings")[key];
-        let table = game.tables.get(id);
+        let table = this.findTable(key);
         
         if (!table && !formula)
         {
@@ -79,6 +78,12 @@ export default class ImpMalTables
             }
             return result;
         }
+    }
+
+    static findTable(key)
+    {
+        let id = game.settings.get("impmal", "tableSettings")[key];
+        return game.tables.get(id);
     }
 
     static listeners(html)

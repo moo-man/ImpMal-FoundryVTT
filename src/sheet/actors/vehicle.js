@@ -13,7 +13,10 @@ export default class VehicleSheet extends IMActorSheet
           showPassenger : this._onShowPassenger,
           createItem : this._onCreateItem,
           deleteEmbedded : this._onDeleteEmbeddedDoc,
-          rollTest : this._onRollTest
+          rollTest : this._onRollTest,
+          useAction : this._onActionClick,
+          toggleDriver : this._onToggleDriver
+
         },
         defaultTab : "main"
       }
@@ -23,6 +26,7 @@ export default class VehicleSheet extends IMActorSheet
         tabs: { scrollable: [""], template: 'templates/generic/tab-navigation.hbs' },
         main: { scrollable: [""], template: 'systems/impmal/templates/actor/vehicle/vehicle-main.hbs' },
         cargo: { scrollable: [""], template: 'systems/impmal/templates/actor/vehicle/vehicle-cargo.hbs' },
+        effects: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-effects.hbs' },
         notes: { scrollable: [""], template: 'systems/impmal/templates/actor/vehicle/vehicle-notes.hbs' },
       }
 
@@ -38,6 +42,11 @@ export default class VehicleSheet extends IMActorSheet
           group: "primary",
           label: "IMPMAL.Cargo",
         },
+        effects: {
+          id: "effects",
+          group: "primary",
+          label: "IMPMAL.Effects",
+        },
         notes: {
           id: "notes",
           group: "primary",
@@ -49,6 +58,22 @@ export default class VehicleSheet extends IMActorSheet
       {
         let context = await super._prepareContext(options)
         context.items.weapon = context.items.weapon.filter(w => !context.system.crew.weapons.has({id : w.id}) && !context.system.passengers.weapons.has({id : w.id}))
+        context.driver = this.actor.system.driver;
+        context.actions = Object.keys(game.impmal.config.vehicleActions).map(a => {
+          let action = foundry.utils.deepClone(game.impmal.config.vehicleActions)[a];
+          action.key = a;
+          return action
+        }).filter(action => {
+
+          if (action.restriction)
+            {
+              return action.restriction(this.document)
+            }
+            else 
+            {
+              return true;
+            }
+        })
         return context;
       }
 
@@ -193,5 +218,18 @@ export default class VehicleSheet extends IMActorSheet
               return actor.setupTestFromItem(item.uuid);
           }
       }
+
+      
+    static _onActionClick(ev)
+    {
+        this.actor.useAction(ev.target.dataset.actionKey);
+    }
+
+    static _onToggleDriver(ev, target)
+    {
+      let uuid = this._getUUID(ev, target);
+      this.actor.system.assignDriver(uuid);
+    }
+
   
 }

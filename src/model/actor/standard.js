@@ -234,5 +234,173 @@ export class StandardActorModel extends BaseActorModel
         super._addModelProperties();
         this.warp.sustaining.relative = this.parent.items;
     }
+
+    async useAction(action)
+    {
+        let actionData = game.impmal.config.actions[action];
+        let effectAdded = false; // Flag effect being added so scrolling text doesn't overlap
+
+        if (action == "twf")
+        {
+            return this.parent.useTWF();
+        }
+
+        if (actionData.execute)
+        {
+            actionData.execute(this.parent);
+        }
+        else if (actionData.effect)
+        {
+            effectAdded = await ImpMalEffect.create(actionData.effect, {parent : this.parent});
+        }
+        else if (actionData.test)
+        {
+            this.parent.setupTestFromData(actionData.test, {appendTitle : ` – ${actionData.label}`});
+        }
+        this.parent.update({"system.combat.action" : action}, {showActionText : !effectAdded});
+    }
+
+    async applyDamage(value, {ignoreAP=false, location="roll", message=false, opposed, update=true}={})
+    {   
+        let modifiers = [];
+        let traits = opposed?.attackerTest?.itemTraits;
+        let locationKey;
+        if (typeof location == "string")
+        {
+            if (location == "roll")
+            {
+                locationKey  = this.combat.randomHitLoc();
+            }
+            else // if location is some other string, assume it is the location key
+            {
+                locationKey = location;
+            }
+        }
+        else if (typeof location == "number")
+        {
+            locationKey  = this.combat.hitLocAt(location);
+        }
+        let locationData = this.combat.hitLocations[locationKey];
+
+        let args = {actor : this.parent, value, ignoreAP, modifiers, locationData, opposed, traits};
+        await Promise.all(opposed?.attackerTest?.actor.runScripts("preApplyDamage", args) || []);
+        await Promise.all(opposed?.attackerTest?.item?.runScripts?.("preApplyDamage", args) || []);
+        await Promise.all(this.parent.runScripts("preTakeDamage", args)); 
+        // Reassign primitive values that might've changed in the scripts
+        value = args.value;
+        ignoreAP = args.ignoreAP;
+
+        let woundsGained = value;
+        let armourRoll;
+
+        if (locationData.field)
+        {
+            woundsGained = await locationData.field.system.applyField(value, modifiers);
+        }
+
+        if (!ignoreAP && (locationData.armour || locationData.formula))
+        {
+            let armourValue = locationData.armour || 0;
+            if (locationData.formula)
+            {
+                armourRoll = new Roll(locationData.formula);
+                await armourRoll.roll();
+                if (game.dice3d)
+                {
+                    game.dice3d.showForRoll(armourRoll);
+                }
+                armourValue += armourRoll.total;
+            }
+            let penetrating = traits?.has("penetrating");
+            if (penetrating)
+            {
+                armourValue = Math.max(0, armourValue - Number(penetrating.value || 0));
+                modifiers.push({value : penetrating.value, label : game.i18n.localize("IMPMAL.Penetrating"), applied : true});
+            }
+            modifiers.push({value : -armourValue, label : game.i18n.localize("IMPMAL.Protection"), armour : true});
+            if (traits?.has("ineffective"))
+            {
+                modifiers.push({value : -armourValue, label : game.i18n.localize("IMPMAL.Ineffective"), armour : true});
+            }
+        }
+        
+        for (let modifier of modifiers)
+        {
+            // Skip modifier if it's from armour when ignoreAP is true, or if the modifier has already been applied
+            if (!modifier.applied && (!modifier.armour || !ignoreAP))
+            {
+                woundsGained += Number(modifier.value || 0);
+            }
+        }
+        woundsGained = Math.max(0, woundsGained);
+
+
+        let excess = 0;
+        let critical = false;
+        if ((woundsGained + this.combat.wounds.value) > this.combat.wounds.max)
+        {
+            excess = (woundsGained + this.combat.wounds.value) - this.combat.wounds.max;
+            critical = true;
+        }
+
+        let critModifier = opposed?.attackerTest?.result.critModifier;
+        let text = "";
+        args = {actor : this.parent, woundsGained, locationData, opposed, critModifier, excess, critical, text, modifiers};
+        await Promise.all(opposed?.attackerTest?.actor.runScripts("applyDamage", args) || []);
+        await Promise.all(opposed?.attackerTest?.item?.runScripts?.("applyDamage", args) || []);
+        await Promise.all(this.parent.runScripts("takeDamage", args)); 
+        woundsGained = args.woundsGained;
+        critModifier = args.critModifier;
+        excess = args.excess;
+        critical = args.critical;
+        text = args.text;
+        // A script might replace text
+        text = text || game.i18n.format("IMPMAL.WoundsTaken", {wounds : woundsGained, location : game.i18n.localize(locationData.label)});
+        let critFormula = ``;
+        if (excess)
+        {
+            critFormula += " + " + excess;
+        }
+        if (critModifier)
+        {
+            critFormula +=  " + " + critModifier;
+        }
+        let critString;
+        if (critical)
+        {
+            critString = ` <a class="table-roll" data-table="crit${game.impmal.config.generalizedHitLocations[locationKey]}" data-formula="1d10 + ${critFormula}"><i class="fa-solid fa-dice-d10"></i>Critical ${critFormula}</a>`;
+        }
+
+        let updateData = {"system.combat.wounds.value" : this.combat.wounds.value + woundsGained};
+
+        let damageData = {
+            damage : value,
+            text, 
+            woundsGained, 
+            message : message ? ChatMessage.create({content : (text + (critString ? critString : "")), speaker : ChatMessage.getSpeaker({actor : this.parent})}) : null,
+            modifiers,
+            critical : critString,
+            excess,
+            location,
+            updateData,
+            armourRoll
+        };
+
+        if (update)
+        {
+            await this.parent.update(updateData);
+        }
+        if (traits?.has("rend"))
+        {
+            damageData.rend = traits.has("rend").value;
+            // TODO: this isn't supported if update flag is false
+            if (update)
+            {
+                await this.parent.damageArmour(locationKey, damageData.rend, null, {prompt : true, rend : true});
+            }
+        }
+        return damageData;
+    }
+
 }
 

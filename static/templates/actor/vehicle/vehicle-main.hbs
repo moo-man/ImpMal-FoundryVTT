@@ -1,7 +1,19 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+
+    <div class="action-list">
+        {{#each actions}}
+            <button type="button" class="action" data-action="useAction" data-action-key="{{this.key}}">{{localize this.name}}</button>
+        {{/each}}
+    </div>
+
+
     <div class="sheet-list vehicle-actors droppable" data-position="crew">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Crew"}}</div>
+            <div>{{localize "IMPMAL.Driver/Pilot"}}</div>
+            <div class="list-controls">
+
+            </div>
         </div>
         <div class="list-content">
             {{#each actor.system.crew.actors}}
@@ -10,6 +22,15 @@
                         <div class="list-name">
                             <img src="{{tokenImg this}}">
                             <a class="label" data-action="showPassenger">{{this.name}}</a>
+                        </div>
+
+                        <div>
+                            {{#if (lookup (lookup ../system.actors.list @key) "driver")}}
+                                <a data-action="toggleDriver"><i class="fa-solid fa-dharmachakra"></i></a>
+                            {{else if @root.driver}}
+                            {{else}}
+                                <a data-action="toggleDriver"><i class="fa-regular fa-circle"></i></a>
+                            {{/if}}
                         </div>
                         <div class="list-controls">
                             <a class="list-control" data-action="actorDelete"><i class="fa-solid fa-xmark"></i></a>

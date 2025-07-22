@@ -577,6 +577,112 @@ const IMPMAL = {
     },
 
 
+    vehicleActions : {
+        crush : {
+            name : "Crush",
+            difficulty : "difficult",
+            restriction : function(actor) { return ["wheeled", "walker"].includes(actor.system.category) },
+            // execute : function(actor)
+            // {
+            //     let crush =  {
+            //         name : "Crush",
+            //         type : "weapon",
+            //         system : {
+            //             attackType : "melee",
+            //             damage : {
+            //                 base : 0
+            //             }
+            //         }
+            //     }
+            //     actor.driver.setupWeaponTest(null, {
+            //         weaponData: crush,
+            //         fields : {
+            //             difficulty : "difficult",
+            //         }
+            //     })
+            // }
+        },
+        emergencyLanding : {
+            name : "Emergency Landing",
+            restriction : function(actor) { return ["flyer"].includes(actor.system.category) }
+        },
+        evasiveManeuvers : {
+            name : "Evasive Maneuvers",
+            effect : {
+                name: "Evasive Maneuvers",
+                img : "modules/warhammer-lib/assets/blank.png",
+                system : {
+                    scriptData : [{
+                        trigger : "immediate",
+                        label : "Pilot Test",
+                        script : `
+                            let test = await this.actor.system.driver.setupSkillTest({key : "piloting"}, {appendTitle : " - " + this.effect.name, vehicle: this.actor})
+                            this.effect.updateSource({"system.sourceData.test" : {...test}, name : this.effect.setSpecifier("-" + test.result.SL )});
+                            return test.succeeded
+                        `
+                    },
+                    {
+                        trigger : "dialog",
+                        label : "Evasive Maneuvers Penalty",
+                        script : "args.fields.SL += Math.min(0, -1 * Number(this.effect.sourceTest.result.SL))",
+                        options : {
+                            hideScript : "return !args.weapon || args.weapon.system.isMelee",
+                            activateScript : "return args.weapon.system.isRanged",
+                            targeter: true
+                        }
+                    }
+                ]
+                }
+            }
+        },
+        getInClose : {
+            name : "Get In Close"
+        },
+        makeTheJump : {
+            name : "Make the Jump",
+            skill : "athletics",
+            position: "any"
+        },
+        ram : {
+            name : "Ram",
+            execute : async function(vehicle)
+            {
+                let test = await vehicle.system.driver.setupSkillTest({key : "piloting"}, {appendTitle : " - Ram", vehicle})
+
+                let damage = {
+                    small : 1,
+                    medium : 5,
+                    large : 10,
+                    enormous : 15,
+                    monstrous : 20
+                }[vehicle.system.combat.size] || 1;
+
+                damage += Number(test.result.SL);
+
+                new Roll(damage.toString()).toMessage({flavor : "Ram Damage", speaker : {alias : vehicle.name}});
+            },
+        },
+        takeTheWheel : {
+            name : "Take the Wheel",
+            position: "passengers",
+            execute : async function(vehicle)
+            {
+                let actor = await vehicle.system.choose("passengers");
+                if (actor)
+                {
+                    let test = await actor.setupSkillTest({key : "piloting"}, {appendTitle : " - Take the Wheel", vehicle})
+                    if (test.succeeded)
+                    {
+                        vehicle.system.assignDriver(actor.uuid);
+                    }
+                }
+            },
+        },
+        threadTheNeedle : {
+            name : "Thread the Needle",
+            difficulty : "difficult"
+        }
+    },
 
     actions : {
         aim : {

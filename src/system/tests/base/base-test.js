@@ -187,6 +187,7 @@ export class BaseTest extends WarhammerTestBase
             let id = randomID();
             chatData._id = id;
             chatData.system.context.messageId = id;
+            this.context.messageId = id;
             let msg = await ChatMessage.create(chatData, {keepId : true});
             // Cannot assign message until after message is created, so save again
             // await this.save();

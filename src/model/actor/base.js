@@ -56,4 +56,9 @@ export class BaseActorModel extends BaseWarhammerActorModel
 
         return {actor : this.parent, html, options}
     }
+
+    applyDamage()
+    {
+        
+    }
 }
