@@ -24,5 +24,9 @@
                 </div>
             {{/each}}
         </div>
+
+        {{#unless document.isOwned}}
+            {{> choiceDisplay system.choices label='IMPMAL.Choices' display=item.system.choices.textDisplay path='choices'}}
+        {{/unless}}
     </div>
 </section>

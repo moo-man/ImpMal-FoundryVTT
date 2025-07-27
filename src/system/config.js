@@ -537,6 +537,7 @@ const IMPMAL = {
         deleteEffect : "IMPMAL.TriggerDeleteEffect",
 
         rollTable : "IMPMAL.TriggerRollTable",
+        equipToggle : "IMPMAL.TriggerEquipToggle",
 
         startRound : "IMPMAL.TriggerStartRound",
         endRound : "IMPMAL.TriggerEndRound",
@@ -616,7 +617,7 @@ const IMPMAL = {
                         trigger : "immediate",
                         label : "Pilot Test",
                         script : `
-                            let test = await this.actor.system.driver.setupSkillTest({key : "piloting"}, {appendTitle : " - " + this.effect.name, vehicle: this.actor})
+                            let test = await this.actor.system.driver.setupSkillTest({key : "piloting"}, {appendTitle : " - " + this.effect.name, vehicle: {actor : this.actor, action : "evasiveManeuvers"}})
                             this.effect.updateSource({"system.sourceData.test" : {...test}, name : this.effect.setSpecifier("-" + test.result.SL )});
                             return test.succeeded
                         `
@@ -647,7 +648,7 @@ const IMPMAL = {
             name : "Ram",
             execute : async function(vehicle)
             {
-                let test = await vehicle.system.driver.setupSkillTest({key : "piloting"}, {appendTitle : " - Ram", vehicle})
+                let test = await vehicle.system.driver.setupSkillTest({key : "piloting"}, {appendTitle : " - Ram", vehicle : {actor : this.actor, action : "ram"}})
 
                 let damage = {
                     small : 1,
@@ -670,7 +671,7 @@ const IMPMAL = {
                 let actor = await vehicle.system.choose("passengers");
                 if (actor)
                 {
-                    let test = await actor.setupSkillTest({key : "piloting"}, {appendTitle : " - Take the Wheel", vehicle})
+                    let test = await actor.setupSkillTest({key : "piloting"}, {appendTitle : " - Take the Wheel", vehicle : {actor : this.actor, action : "takeTheWheel"}})
                     if (test.succeeded)
                     {
                         vehicle.system.assignDriver(actor.uuid);
@@ -1025,6 +1026,13 @@ const IMPMAL = {
                             })
                             `,
                             trigger: "startTurn",
+                        },
+                        {
+                            label: "Remove",
+                            script: `
+                            this.actor.setupSkillTest({key : "athletics"}, {appendTitle : " - " + this.effect.name, resist : ["ablaze"] })
+                            `,
+                            trigger: "manual",
                         }
                     ]
             }
@@ -1617,7 +1625,7 @@ const IMPMAL = {
                     scriptData: [
                         {
                             label: "Hazard Damage",
-                            script: `this.actor.applyDamage(5).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(5, {context : {hazard : "minor"}}).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "immediate",
                             options : {
                                     deleteEffect : false
@@ -1625,7 +1633,7 @@ const IMPMAL = {
                         },
                         {
                             label: "Hazard Damage",
-                            script: `this.actor.applyDamage(5).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(5, {context : {hazard : "minor"}}).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "startTurn"
                         }
                     ]
@@ -1641,7 +1649,7 @@ const IMPMAL = {
                     scriptData: [
                         {
                             label: "Hazard Damage",
-                            script: `this.actor.applyDamage(10).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(10, {context : {hazard : "major"}}).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "immediate",
                             options : {
                                     deleteEffect : false
@@ -1649,7 +1657,7 @@ const IMPMAL = {
                         },
                         {
                             label: "Hazard Damage",
-                            script: `this.actor.applyDamage(10).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(10, {context : {hazard : "major"}}).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "startTurn"
                         }
                     ]
@@ -1665,7 +1673,7 @@ const IMPMAL = {
                     scriptData: [
                         {
                             label: "Hazard Damage",
-                            script: `this.actor.applyDamage(15).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(15, {context : {hazard : "deadly"}}).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "immediate",
                             options : {
                                     deleteEffect : false
@@ -1673,7 +1681,7 @@ const IMPMAL = {
                         },
                         {
                             label: "Hazard Damage",
-                            script: `this.actor.applyDamage(15).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
+                            script: `this.actor.applyDamage(15, {context : {hazard : "deadly"}}).then(data => ui.notifications.notify("Took " + data.woundsGained + " Damage from Hazard"));`,
                             trigger: "startTurn"
                         }
                     ]
@@ -1805,7 +1813,6 @@ const IMPMAL = {
     
     // foundry.utils.mergeObject(scriptTriggers, {
     
-    //     equipToggle : "WH.Trigger.EquipToggle",
     
     //     takeDamageMod : "WH.Trigger.TakeDamageMod",
     //     applyDamageMod : "WH.Trigger.ApplyDamageMod",
@@ -1832,7 +1839,8 @@ const IMPMAL = {
         "impmal-core" : "Core Rulebook",
         "impmal-starter-set" : "Starter Set",
         "impmal-inquisition" : "Inquisition Guide",
-    },
+        "impmal-requisition" : "Requisition Guide"
+     },
 
     
     badgeInfo : {

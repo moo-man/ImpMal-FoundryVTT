@@ -1,1 +1,1 @@
-return args.data.other.resist == "prone"
+return args.context.resist?.includes("prone");

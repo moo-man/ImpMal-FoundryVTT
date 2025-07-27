@@ -1,1 +1,1 @@
-return !args.data.other.resist != "frightened";
+return !args.context.resist?.includes("frightened")

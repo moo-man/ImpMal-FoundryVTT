@@ -62,7 +62,15 @@ export class WeaponTestDialog extends AttackDialog
     {   
         log(`${this.prototype.constructor.name} - Setup Dialog Data`, {args : Array.from(arguments).slice(2)});
 
-        let weapon = id.includes(".") ? fromUuidSync(id) : actor.items.get(id); // Could be a vehicle weapon, in which case it's a uuid
+        let weapon 
+        if (id)
+        {
+            weapon = id.includes(".") ? fromUuidSync(id) : actor.items.get(id); // Could be a vehicle weapon, in which case it's a uuid
+        }
+        else if (context.weaponData) 
+        {
+            weapon = new Item.implementation(context.weaponData);
+        }
         if (weapon.actor?.type == "vehicle")
         {
             weapon.system.computeOwned(actor);

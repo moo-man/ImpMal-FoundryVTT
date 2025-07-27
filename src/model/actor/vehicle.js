@@ -207,7 +207,7 @@ export class VehicleModel extends BaseActorModel
 
     }
 
-    async applyDamage(value, {ignoreAP=false, location="", message=false, opposed}={})
+    async applyDamage(value, {ignoreAP=false, location="", message=false, opposed, context={}}={})
     {   
         let modifiers = [];
         let traits = opposed?.attackerTest?.itemTraits;
@@ -229,7 +229,7 @@ export class VehicleModel extends BaseActorModel
             })
         }
 
-        let args = {actor : this.parent, value, ignoreAP, modifiers, locationData: {direction: location}, opposed, traits, vehicle : true};
+        let args = {actor : this.parent, value, ignoreAP, modifiers, locationData: {direction: location}, opposed, traits, vehicle : true, context};
         await Promise.all(opposed?.attackerTest?.actor.runScripts("preApplyDamage", args) || []);
         await Promise.all(opposed?.attackerTest?.item?.runScripts?.("preApplyDamage", args) || []);
         await Promise.all(this.parent.runScripts("preTakeDamage", args)); 
@@ -258,7 +258,7 @@ export class VehicleModel extends BaseActorModel
 
         let critModifier = opposed?.attackerTest?.result.critModifier;
         let text = "";
-        args = {actor : this.parent, woundsGained : 0, damage, opposed, critModifier, locationData: {direction: location}, excess, critical, text, modifiers, vehicle : true};
+        args = {actor : this.parent, woundsGained : 0, damage, opposed, critModifier, locationData: {direction: location}, excess, critical, text, modifiers, vehicle : true, context};
         await Promise.all(opposed?.attackerTest?.actor.runScripts("applyDamage", args) || []);
         await Promise.all(opposed?.attackerTest?.item?.runScripts?.("applyDamage", args) || []);
         await Promise.all(this.parent.runScripts("takeDamage", args)); 
@@ -290,7 +290,7 @@ export class VehicleModel extends BaseActorModel
         let damageData = {
             damage : value,
             text, 
-            message : message ? ChatMessage.create({content : (text + (critString ? critString : "")), speaker : ChatMessage.getSpeaker({actor : this.parent})}) : null,
+            message : message ? ChatMessage.create({content : (`<p>${text}</p>` + `<p>${(critString ? critString : "")}</p>`), speaker : ChatMessage.getSpeaker({actor : this.parent})}) : null,
             modifiers,
             critical : critString,
             excess,

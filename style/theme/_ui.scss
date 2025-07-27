@@ -39,6 +39,12 @@ body.impmal-theme {
       --button-hover-text-color: var(--color-light-1);
   }
 
+  
+  input[type="search"] {
+    @include terminal-input;
+}
+
+
     #settings section,
     .action-buttons {
 

@@ -32,6 +32,7 @@
         </div>
         <div class="list-content">
             {{#each items.weapon}}
+            {{#unless this.system.isSlotted}}
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name">
@@ -86,6 +87,7 @@
 
                     </div>
                 </div>
+                {{/unless}}
             {{/each}}
         </div>
     </div>
@@ -400,8 +402,8 @@
             {{#each items.pack}}
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
-                        <div class="list-name">
-                            <img src="{{this.img}}">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="useItem">
                             <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 

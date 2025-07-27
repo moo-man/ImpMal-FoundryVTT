@@ -46,6 +46,13 @@ export class ImpMalChatMessage extends WarhammerChatMessage
             return message.type == "test";
         };
 
+        let hasRoll = li =>
+        {
+            let message = game.messages.get(li.dataset.messageId)
+            return message.rolls?.length;
+        };
+    
+
         let canEdit = li =>
         {
             return hasTest(li) && game.user.isGM;
@@ -95,7 +102,7 @@ export class ImpMalChatMessage extends WarhammerChatMessage
             {
                 name: game.i18n.localize("IMPMAL.AddTargets"),
                 icon: '<i class="fa-solid fa-crosshairs"></i>',
-                condition: () => game.user.targets.size > 0,
+                condition: (li) => (hasTest(li) && game.user.targets.size > 0),
                 callback: li =>
                 {
                     let message = game.messages.get(li.dataset.messageId)
@@ -110,6 +117,22 @@ export class ImpMalChatMessage extends WarhammerChatMessage
                     test.roll();
                 }
             },
+            {
+                name: game.i18n.localize("IMPMAL.ApplyDamage"),
+                icon: '<i class="fa-solid fa-user-minus"></i>',
+                condition: hasRoll,
+                callback: li =>
+                {
+                    let message = game.messages.get(li.dataset.messageId)
+                    let roll = message.rolls[0];
+
+                    let targets = Array.from(game.user.targets).map(i => i.actor).filter(i => i);
+
+                    targets.forEach(a => {
+                        let damageResult = a.applyDamage(roll.total, {message: true});
+                    })
+                }
+            }
         );
     }
 }

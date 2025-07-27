@@ -12,6 +12,8 @@ export class PackModel extends PhysicalItemModel
         schema.ignoreEncumbrance = new fields.BooleanField();
         schema.items = new fields.EmbeddedDataField(DiffReferenceListModel);
         schema.actorItems = new fields.EmbeddedDataField(DocumentReferenceListModel);
+        schema.choices = new fields.EmbeddedDataField(ChoiceModel);
+
         return schema;
     }
 
@@ -22,7 +24,12 @@ export class PackModel extends PhysicalItemModel
 
         if (this.parent.actor)
         {
-            let items = await this.parent.actor.createEmbeddedDocuments("Item", (await this.items.documents).map(i => i.toObject()));
+            let choiceItems = (await this.choices.promptDecision()).map(i => i.toObject())
+
+            let itemData = (await Promise.all(this.items.documents)).map(i => i.toObject()).concat(choiceItems);
+
+            let items = await this.parent.actor.createEmbeddedDocuments("Item", itemData);
+            
             this.updateSource({"actorItems.list" : items.map(i => {return {uuid : i.uuid, name : i.name}})});
             if (this.solars)
             {

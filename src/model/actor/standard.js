@@ -251,7 +251,7 @@ export class StandardActorModel extends BaseActorModel
         }
         else if (actionData.effect)
         {
-            effectAdded = await ImpMalEffect.create(actionData.effect, {parent : this.parent});
+            effectAdded = await ActiveEffect.implementation.create(actionData.effect, {parent : this.parent});
         }
         else if (actionData.test)
         {
@@ -260,7 +260,7 @@ export class StandardActorModel extends BaseActorModel
         this.parent.update({"system.combat.action" : action}, {showActionText : !effectAdded});
     }
 
-    async applyDamage(value, {ignoreAP=false, location="roll", message=false, opposed, update=true}={})
+    async applyDamage(value, {ignoreAP=false, location="roll", message=false, opposed, update=true, context={}}={})
     {   
         let modifiers = [];
         let traits = opposed?.attackerTest?.itemTraits;
@@ -282,7 +282,7 @@ export class StandardActorModel extends BaseActorModel
         }
         let locationData = this.combat.hitLocations[locationKey];
 
-        let args = {actor : this.parent, value, ignoreAP, modifiers, locationData, opposed, traits};
+        let args = {actor : this.parent, value, ignoreAP, modifiers, locationData, opposed, traits, context};
         await Promise.all(opposed?.attackerTest?.actor.runScripts("preApplyDamage", args) || []);
         await Promise.all(opposed?.attackerTest?.item?.runScripts?.("preApplyDamage", args) || []);
         await Promise.all(this.parent.runScripts("preTakeDamage", args)); 
@@ -345,7 +345,7 @@ export class StandardActorModel extends BaseActorModel
 
         let critModifier = opposed?.attackerTest?.result.critModifier;
         let text = "";
-        args = {actor : this.parent, woundsGained, locationData, opposed, critModifier, excess, critical, text, modifiers};
+        args = {actor : this.parent, woundsGained, locationData, opposed, critModifier, excess, critical, text, modifiers, context};
         await Promise.all(opposed?.attackerTest?.actor.runScripts("applyDamage", args) || []);
         await Promise.all(opposed?.attackerTest?.item?.runScripts?.("applyDamage", args) || []);
         await Promise.all(this.parent.runScripts("takeDamage", args)); 
@@ -377,7 +377,7 @@ export class StandardActorModel extends BaseActorModel
             damage : value,
             text, 
             woundsGained, 
-            message : message ? ChatMessage.create({content : (text + (critString ? critString : "")), speaker : ChatMessage.getSpeaker({actor : this.parent})}) : null,
+            message : message ? ChatMessage.create({content : (`<p>${text}</p>` + `<p>${(critString ? critString : "")}</p>`), speaker : ChatMessage.getSpeaker({actor : this.parent})}) : null,
             modifiers,
             critical : critString,
             excess,

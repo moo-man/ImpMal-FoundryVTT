@@ -5,7 +5,7 @@
             <div class="slot-details" data-id="{{this.id}}">
                 {{#if this.document}}
                     <img src="{{document.img}}"/>
-                    <a class="slotted-item">{{document.name}}</a>
+                    <a class="slotted-item" data-action="editEmbedded" data-uuid="{{document.uuid}}">{{document.name}}</a>
                 {{else}}
                     <label><a class="empty-slot" data-action="slotItem">Empty</a></label>
                 {{/if}}

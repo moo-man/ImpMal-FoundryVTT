@@ -643,7 +643,7 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
     {
         let document = this._getDocument(ev);
         let index = this._getIndex(ev);
-        document.update(document.system.slots.edit(index, {id : ""}));
+        document.update(document.system.slots.edit(index, {name : "", uuid: "", id : ""}));
     }
 
     static _onUseItem(ev)

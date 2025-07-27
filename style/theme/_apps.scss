@@ -427,4 +427,8 @@ body.impmal-theme .application:not(.journal-sheet) {
         }
     }
 
+    &.drag-dialog {
+        --border : var(--impmal-lightgreen);
+    }
+
 }

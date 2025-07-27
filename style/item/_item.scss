@@ -16,6 +16,11 @@ body.theme-light .application.impmal.item {
     .tab.effects {
         > div {
             align-items: start;
+            .effect-lists {
+                flex-direction: column;
+                display: flex;
+                gap: 0.5rem;
+            }
             .sheet-list {
                 margin: 0px;
             }

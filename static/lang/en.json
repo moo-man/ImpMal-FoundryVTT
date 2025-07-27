@@ -771,6 +771,7 @@
     "IMPMAL.TriggerStartTurn" : "Start Turn",
     "IMPMAL.TriggerEndTurn" : "End Turn",
     "IMPMAL.TriggerRollTable" : "Roll Table",
+    "IMPMAL.TriggerEquipToggle" : "Equip Toggle",
     "IMPMAL.Troop" : "Troop",
     "IMPMAL.Trusted" : "Trusted",
     "IMPMAL.TwoHanded" : "Two Handed",

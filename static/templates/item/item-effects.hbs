@@ -14,15 +14,15 @@
             {{/each}}
         </div>
 
-        <div class="sheet-list">
-            <div class="list-header row-content">
-                <div class="list-name">{{localize "IMPMAL.Effects"}}</div>
-                <div class="list-controls">
-                    <a class="list-control" data-action="createEffect" data-type="effect"><i
-                            class="fa-solid fa-plus"></i></a>
+        <div class="effect-lists">
+            <div class="sheet-list">
+                <div class="list-header row-content">
+                    <div class="list-name">{{localize "IMPMAL.Effects"}}</div>
+                    <div class="list-controls">
+                        <a class="list-control" data-action="createEffect" data-type="effect"><i class="fa-solid fa-plus"></i></a>
+                    </div>
                 </div>
-            </div>
-            {{#each item.effects}}
+                {{#each item.effects}}
                     <div class="list-row {{#if this.disabled}}inactive{{/if}}" data-uuid="{{this.uuid}}">
                         <div class="row-content">
                             <div class="list-name">
@@ -39,70 +39,73 @@
                             </div>
                         </div>
                     </div>
-            {{/each}}
-        </div>
-
-{{#if item.system.ammo.document.effects.contents.length}}
-    <div class="sheet-list">
-        <div class="list-header row-content">
-            <div class="list-name">{{localize "IMPMAL.AmmoEffects"}}</div>
-        </div>
-            <div class="list-content">
-                {{#each item.system.ammo.document.effects.contents}}
-                    <div class="list-row" data-uuid="{{this.uuid}}">
-                        <div class="row-content">
-                            <div class="list-name">
-                                <img src="{{this.img}}">
-                                <div>{{this.name}}</div>
-                            </div>
-                        </div>
-                    </div>
                 {{/each}}
             </div>
-        </div>
-{{/if}}
 
-{{#if modificationEffects.length}}
-    <div class="sheet-list">
-        <div class="list-header row-content">
-            <div class="list-name">{{localize "IMPMAL.ModificationEffects"}}</div>
-        </div>
-            <div class="list-content">
-                {{#each modificationEffects}}
-                    <div class="list-row" data-uuid="{{this.uuid}}">
-                        <div class="row-content">
-                            <div class="list-name">
-                                <img src="{{this.img}}">
-                                <div>{{this.name}}</div>
-                            </div>
-                        </div>
+            {{#if item.system.ammo.document.effects.contents.length}}
+                <div class="sheet-list">
+                    <div class="list-header row-content">
+                        <div class="list-name">{{localize "IMPMAL.AmmoEffects"}}</div>
                     </div>
-                {{/each}}
-            </div>
-            </div>
-{{/if}}
-
-{{#if effectsFromActor.length}}
-    <div class="sheet-list">
-        <div class="list-header row-content">
-            <div class="list-name">{{localize "IMPMAL.EffectsFromActor"}}</div>
-        </div>
-            <div class="list-content">
-                {{#each effectsFromActor}}
-                    <div class="list-row" data-uuid="{{this.uuid}}">
-                        <div class="row-content">
-                            <div class="list-name">
-                                <img src="{{this.img}}">
-                                <div>{{this.name}}</div>
+                    <div class="list-content">
+                        {{#each item.system.ammo.document.effects.contents}}
+                            <div class="list-row" data-uuid="{{this.uuid}}">
+                                <div class="row-content">
+                                    <div class="list-name">
+                                        <img src="{{this.img}}">
+                                        <div>{{this.name}}</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        {{/each}}
                     </div>
-                {{/each}}
-            </div>
-            </div>
-{{/if}}
-</div>
+                </div>
+            {{/if}}
+
+            {{#if item.system.mods.list.length}}
+                <div class="sheet-list">
+                    <div class="list-header row-content">
+                        <div class="list-name">{{localize "IMPMAL.ModificationEffects"}}</div>
+                    </div>
+                    <div class="list-content">
+                        {{#each item.system.mods.documents}}
+                        {{#each this.effects}}
+                            <div class="list-row" data-uuid="{{this.uuid}}">
+                                <div class="row-content">
+                                    <div class="list-name">
+                                        <img src="{{this.img}}">
+                                        <div>{{this.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                        {{/each}}
+                    </div>
+                </div>
+            {{/if}}
+
+            {{#if effectsFromActor.length}}
+                <div class="sheet-list">
+                    <div class="list-header row-content">
+                        <div class="list-name">{{localize "IMPMAL.EffectsFromActor"}}</div>
+                    </div>
+                    <div class="list-content">
+                        {{#each effectsFromActor}}
+                            <div class="list-row" data-uuid="{{this.uuid}}">
+                                <div class="row-content">
+                                    <div class="list-name">
+                                        <img src="{{this.img}}">
+                                        <div>{{this.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            {{/if}}
+        </div>
 
 
+    </div>
 
 </section>

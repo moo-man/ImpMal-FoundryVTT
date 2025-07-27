@@ -1,1 +1,1 @@
-returned args.data.other.resist == "restrained"
+return args.context.resist?.includes("restrained");
