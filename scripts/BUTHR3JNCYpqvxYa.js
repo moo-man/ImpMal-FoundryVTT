@@ -1,0 +1,1 @@
+this.actor.effects.find(i => i.statuses.has("charge"))?.delete();

@@ -1,0 +1,1 @@
+this.actor.hasCondition("stunned")?.delete()

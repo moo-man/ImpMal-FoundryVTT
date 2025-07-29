@@ -1,0 +1,1 @@
+this.actor.addEffectItems("Compendium.impmal-core.items.Item.tNz22cmtCLm6XPLs", this.effect, [{name: "Void Armour Mag Boots"}])

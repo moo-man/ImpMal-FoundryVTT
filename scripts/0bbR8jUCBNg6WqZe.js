@@ -1,0 +1,1 @@
+return args.context.resist?.includes("fatigued");

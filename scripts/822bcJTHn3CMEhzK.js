@@ -1,0 +1,1 @@
+return (args.item.system.isRanged && args.actor.system.combat.action == "aim") || (args.item.system.isMelee && args.actor.system.combat.action == "charge");

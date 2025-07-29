@@ -1,0 +1,1 @@
+return ["str", "tgh", "ag", "wil"].includes(args.characteristic)

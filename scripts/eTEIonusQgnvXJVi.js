@@ -1,0 +1,1 @@
+return (args.data.skill != "athletics" && args.data.skill != "dexterity" && args.data.skill != "stealth")

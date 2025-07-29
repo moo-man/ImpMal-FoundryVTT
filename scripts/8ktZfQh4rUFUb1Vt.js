@@ -1,0 +1,1 @@
+return (args.skillItem?.name == "Sight" && args.skillItem?.name == "Surroundings" && args.skillItem?.name == "Investigation")

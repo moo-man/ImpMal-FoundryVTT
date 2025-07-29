@@ -1,0 +1,1 @@
+return ["difficult", "hard", "veryHard"].includes(args.fields.difficulty) && !["easy", "veryEasy", "routine", "challenging"].includes(args.fields.difficulty)

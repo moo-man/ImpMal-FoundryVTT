@@ -1,0 +1,1 @@
+(await new Roll("30").roll()).toMessage(this.script.getChatData({flavor: "Damage"}))

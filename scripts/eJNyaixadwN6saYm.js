@@ -1,0 +1,1 @@
+return args.item.getFlag("impmal", "collapsed")

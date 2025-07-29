@@ -1,0 +1,1 @@
+return (args.data.skill != "awareness" && args.data.skill != "intuition" && args.data.skill != "logic" && args.data.skill != "investigation" && args.data.skill != "lore")

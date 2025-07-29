@@ -1,0 +1,1 @@
+return args.context.vehicle?.action != this.item.getFlag("impmal", "action")
