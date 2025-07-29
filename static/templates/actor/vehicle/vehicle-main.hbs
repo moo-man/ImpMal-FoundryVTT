@@ -2,7 +2,7 @@
 
     <div class="action-list">
         {{#each actions}}
-            <button type="button" class="action" data-action="useAction" data-action-key="{{this.key}}">{{localize this.name}}</button>
+            <button type="button" class="action" data-tooltip="{{this.description}}" data-tooltip-direction="LEFT" data-action="useAction" data-action-key="{{this.key}}">{{localize this.name}}</button>
         {{/each}}
     </div>
 
@@ -10,6 +10,7 @@
     <div class="sheet-list vehicle-actors droppable" data-position="crew">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Crew"}}</div>
+            <div class="large"></div>
             <div>{{localize "IMPMAL.Driver/Pilot"}}</div>
             <div class="list-controls">
 
@@ -22,6 +23,12 @@
                         <div class="list-name">
                             <img src="{{tokenImg this}}">
                             <a class="label" data-action="showPassenger">{{this.name}}</a>
+                        </div>
+
+                        <div class="large">
+                            {{#if (lookup (lookup ../system.actors.list @key) "driver")}}
+                            <button data-action="vehicleControl">{{localize "IMPMAL.VehicleControl"}}</button>
+                            {{/if}}
                         </div>
 
                         <div>

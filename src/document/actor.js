@@ -27,11 +27,19 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
      */
     setupCharacteristicTest(characteristic, context={}, options, roll=true)
     {
+        if (!this.checkVehicle("setupCharacteristicTest", [...arguments]))
+        {
+            return;
+        }
         return this._setupTest(CharacteristicTestDialog, CharacteristicTest, characteristic, context, options, roll, false);
     }
 
     setupSkillTest({itemId, name, key}={}, context={}, options, roll=true)
     {
+        if (!this.checkVehicle("setupSkillTest", [...arguments]))
+        {
+            return;
+        }
 
         // Not sure I like this here but it will do for now
         // Warp State = 2 means you just roll on the Perils table
@@ -50,22 +58,54 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
 
     setupWeaponTest(id, context={}, options, roll=true)
     {
+        if (!this.checkVehicle("setupWeaponTest", [...arguments]))
+        {
+            return;
+        }
         return this._setupTest(WeaponTestDialog, WeaponTest, id, context, options, roll, false);
     }
 
     setupGenericTest(target, context={}, options, roll=true)
     {
+        if (!this.checkVehicle("setupGenericTest", [...arguments]))
+        {
+            return;
+        }
         return this._setupTest(TestDialog, BaseTest, target, context, options, roll, false);
     }
 
     setupPowerTest(id, context={}, options, roll=true)
     {
+        if (!this.checkVehicle("setupPowerTest", [...arguments]))
+        {
+            return;
+        }
         return this._setupTest(PowerTestDialog, PowerTest, id, context, options, roll, false);
     }
 
     setupTraitTest(id, context={}, options, roll=true)
     {
+        if (!this.checkVehicle("setupTraitTest", [...arguments]))
+        {
+            return;
+        }
         return this._setupTest(TraitTestDialog, TraitTest, id, context, options, roll, false);
+    }
+
+    checkVehicle(setupFn, args)
+    {
+        if (this.type == "vehicle" && this.system.actors.documents.length)
+        {
+            this.system.choose().then(actor => {
+                actor[setupFn](args[0], args[1], args[2], args[3]);
+            })
+            return false;
+        }
+        else if (this.type == "vehicle")
+        {
+            throw new Error("Vehicles cannot perform Tests.")
+        }
+        return true;
     }
 
     async useItem({id, uuid})

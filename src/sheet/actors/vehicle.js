@@ -15,7 +15,8 @@ export default class VehicleSheet extends IMActorSheet
           deleteEmbedded : this._onDeleteEmbeddedDoc,
           rollTest : this._onRollTest,
           useAction : this._onActionClick,
-          toggleDriver : this._onToggleDriver
+          toggleDriver : this._onToggleDriver,
+          vehicleControl : this._onVehicleControl
 
         },
         defaultTab : "main"
@@ -229,6 +230,11 @@ export default class VehicleSheet extends IMActorSheet
     {
       let uuid = this._getUUID(ev, target);
       this.actor.system.assignDriver(uuid);
+    }
+
+    static _onVehicleControl(ev, target)
+    {
+      this.actor.system.vehicleControl();
     }
 
   

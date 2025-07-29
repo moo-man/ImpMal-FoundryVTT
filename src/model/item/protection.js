@@ -41,6 +41,7 @@ export class ProtectionModel extends EquippableItemModel
     {
         return super.getOtherEffects()
         .concat(Object.values(this.traits.traitEffects("protection")))
+        .concat(this.categoryEffect || [])
         .concat((this.mods.documents || [])
             .reduce((prev, current) => prev.concat(current.effects.contents), []));
     }
@@ -97,6 +98,18 @@ export class ProtectionModel extends EquippableItemModel
     {
         return Object.values(this.rended).some(i => i);
     }
+
+    get categoryEffect()
+    {
+        let effectData = game.impmal.config.protectionCategoryEffects[this.category];
+        if (effectData)
+        {
+            let effect = new ActiveEffect.implementation(effectData, {parent: this.parent});
+            effect.updateSource({img : this.parent.img, "flags.impmal.path" : `${this.schema.fieldPath}.categoryEffect`})
+            return effect;
+        }
+    }
+
 
     
     async summaryData()

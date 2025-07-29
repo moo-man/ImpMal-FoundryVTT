@@ -64,21 +64,17 @@ export default function()
 }
 
 
-function _addImpmalStatusEffects(html, actor)
-{
-    let effects = html.find(".status-effects");
-    let sheetConditions = actor.sheet.formatConditions({actor : actor});
+function _addImpmalStatusEffects(html, actor) {
+    let effects = html.querySelector(".status-effects");
+    let sheetConditions = actor.sheet.formatConditions({ actor: actor });
 
     let newEffects = "<div class='status-effects impmal'>";
 
-    for(let c of sheetConditions)
-    {
+    for (let c of sheetConditions) {
         let pipHTML = "";
 
-        if (!c.boolean)
-        {
-            for(let pip of c.pips)
-            {
+        if (!c.boolean) {
+            for (let pip of c.pips) {
                 pipHTML += `<div class="pip ${pip.filled ? "filled" : ""}"></div>`;
             }
         }
@@ -95,23 +91,19 @@ function _addImpmalStatusEffects(html, actor)
 
     newEffects += "</div>";
 
-    effects.replaceWith(newEffects);
-    effects = html.find(".status-effects");
+    effects.innerHTML = newEffects;
 
-    effects.find(".effect-control").on("mousedown", ev => 
-    {
+
+    effects.querySelectorAll(".effect-control").forEach(control => control.addEventListener("mousedown", ev => {
         ev.preventDefault();
         ev.stopPropagation();
         let existing = actor.hasCondition(ev.currentTarget.dataset.statusId);
-        if (!existing || existing.isMinor)
-        {
+        if (!existing || existing.isMinor) {
             actor.addCondition(ev.currentTarget.dataset.statusId);
         }
-        else 
-        {
+        else {
             existing.delete();
         }
 
-    });
-
+    }));
 }

@@ -17,6 +17,10 @@ export class TraitModel extends StandardItemModel
             formula :  new fields.StringField(),
             label :  new fields.StringField()
         });
+
+        schema.vehicle = new fields.SchemaField({
+            maneuverable : new fields.NumberField({integer: true, initial: 0})
+        })
         return schema;
     }
 

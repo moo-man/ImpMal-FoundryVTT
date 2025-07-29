@@ -2,6 +2,11 @@
     {{#unless document.isOwned}}
     {{formGroup fields.category value=system.category localize=true}}
     {{/unless}}
+
+    {{#if (eq system.category "vehicle")}}
+        {{formGroup fields.vehicle.fields.maneuverable value=system.vehicle.maneuverable}}
+    {{/if}}
+
     <fieldset>
         <legend>Test</legend>
         {{> itemTest data=system.test path="system.test"}}

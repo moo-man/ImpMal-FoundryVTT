@@ -252,10 +252,8 @@ export class WeaponModel extends EquippableItemModel
         return super.getOtherEffects()
         .concat(this.categoryEffect || [])
         .concat(Object.values(this.traits.traitEffects("weapon")))
-        .concat(
-            (this.mods.documents || []).concat(
-                this.ammo.document || [])
-                .reduce((prev, current) => prev.concat(current.effects.contents), []));
+        .concat(this.ammo.document?.effects.contents || [])
+        .concat(Object.values(this.mods.effects) || []);
         // .filter(e => e.applicationData.documentType == "Item"));
     }
 
@@ -265,7 +263,7 @@ export class WeaponModel extends EquippableItemModel
         if (effectData)
         {
             let effect = new ActiveEffect.implementation(effectData, {parent: this.parent});
-            effect.updateSource({"flags.impmal.path" : `${this.schema.fieldPath}.categoryEffect`})
+            effect.updateSource({img : this.parent.img, "flags.impmal.path" : `${this.schema.fieldPath}.categoryEffect`})
             return effect;
         }
     }

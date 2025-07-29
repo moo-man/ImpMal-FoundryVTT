@@ -427,6 +427,12 @@ body.impmal-theme .application:not(.journal-sheet) {
         }
     }
 
+    &.choice-config {
+        .choice {
+            border-color: var(--impmal-lightgreen);
+        }
+    }
+
     &.drag-dialog {
         --border : var(--impmal-lightgreen);
     }

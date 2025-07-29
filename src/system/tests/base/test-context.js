@@ -279,7 +279,6 @@ export class TestContext
             targetSpeakers : data.targets,
             rollMode : data.rollMode,
             itemUsed : data.itemUsed?.uuid,
-            breakdownData : data.context.breakdown,
             superiorityUsed : data.useSuperiority
         }, data.context);
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});

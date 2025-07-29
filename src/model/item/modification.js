@@ -40,7 +40,12 @@ export class ModificationModel extends PhysicalItemModel
 
     shouldTransferEffect(effect)
     {
-        return super.shouldTransferEffect(effect) && this.onDocument?.system?.shouldTransferEffect(effect);
+        return super.shouldTransferEffect(effect);// && this.onDocument?.system?.shouldTransferEffect(effect);
+    }
+
+    effectIsApplicable(effect)
+    {
+        return false;
     }
 }
 
@@ -48,16 +53,21 @@ export class ModListModel extends ListModel
 {
     static get listSchema() {return new foundry.data.fields.ObjectField()};
 
+    effects={};
+
     prepareMods(document)
     {
         this.documents = this.list.map(e => new ImpMalItem(e));
-        for(let mod of this.documents)
+        for(let mod of this.list)
         {
-            mod.system.onDocument = document;
-            // If a mod is disabled, make sure all its effects are disabled
-            mod.effects.contents.forEach(e => 
+            // Store mod effects in a object (with id as keys) so manual scripts can work
+            mod.effects.forEach(e => 
             {
-                e.disabled = mod.system.disabled;
+                let modEffect = new ActiveEffect.implementation(e, {parent : document});
+                foundry.utils.setProperty(modEffect, "flags.impmal.path", "system.mods.effects." + modEffect.id);
+                
+                modEffect.disabled = mod.system.disabled;
+                this.effects[modEffect.id] = modEffect;
             });
         }
     }

@@ -42,6 +42,29 @@ export class VehicleModel extends BaseActorModel
         return schema;
     }
 
+    async _onUpdate(data, options, user)
+    {
+        await super._onUpdate(data, options, user);
+        if (user != game.user.id)
+        {
+            return;
+        }
+
+        this.checkActors()
+        
+    }
+
+    checkActors()
+    {
+        let list = this.actors.list.filter(i => i.document);
+
+        if (this.actors.list.length != list.length)
+        {
+            ui.notifications.error("Non-existing Actors found in Vehicle Actor list. Removing " + this.actors.list.filter(i => !i.document).map(i => i.name).join(", "));
+            this.parent.update({"system.actors.list" : list.map(i => i.toObject())});
+        }
+    }
+
     _addModelProperties()
     {
         super._addModelProperties();
@@ -56,7 +79,7 @@ export class VehicleModel extends BaseActorModel
         this.passengers.actors = this.actors.list.filter(i => i.position == "passengers").map(i => this.actors.documents.find(actor => actor.uuid == i.uuid)).filter(i => i);
     }
 
-    async choose(position, filter)
+    async choose(position="any", {filter, number=1}={})
     {
         let actors;
         if (position == "any")
@@ -84,7 +107,7 @@ export class VehicleModel extends BaseActorModel
             return actors[0];
         }
 
-        return (await ItemDialog.create(actors, 1, {title: game.i18n.localize("IMPMAL.ChooseActor")}))[0]
+        return (await ItemDialog.create(actors, number, {title: game.i18n.localize("IMPMAL.ChooseActor")}))[0]
     }
 
     get driver()
@@ -143,6 +166,15 @@ export class VehicleModel extends BaseActorModel
         this.parent.update(this[position].weapons.add(weapon));
     }
 
+    async vehicleControl(actor, {skill}={})
+    {
+        actor = actor || this.driver;
+        let manBonus = this.parent.itemTypes.trait.reduce((bonus, trait) => bonus + trait.system.vehicle.maneuverable, 0)
+        let testData = {key: skill || "piloting"};
+        let testOptions = {appendTitle : ` - Vehicle Control`, vehicle : {control: true, actor : this.parent}, fields : {SL : manBonus}};
+        actor.setupSkillTest(testData, testOptions)
+    }
+
     async useAction(action)
     {
         let actionData = game.impmal.config.vehicleActions[action];
@@ -160,7 +192,7 @@ export class VehicleModel extends BaseActorModel
         {
             let actor;
             let testData = {key: actionData.skill || "piloting"};
-            let testOptions = {appendTitle : ` - ${actionData.name}`, fields : {difficulty : actionData.difficulty}};
+            let testOptions = {appendTitle : ` - ${actionData.name}`, fields : {difficulty : actionData.difficulty}, vehicle : {action, actor : this.parent}};
 
             if (actionData.position)
             {

@@ -265,6 +265,8 @@
     "IMPMAL.DeleteFaction" : "Delete Faction",
     "IMPMAL.DeleteFactionConfirmation" : "Are you sure you wish to delete this Faction?",
     "IMPMAL.DeleteVehicleWeapon" : "Delete or store in Cargo?",
+    "IMPMAL.DeletePackContents" : "Delete Pack Contents",
+    "IMPMAL.DeletePackContentsPrompt" : "Delete all the Items within this Pack from the Actor?",
     "IMPMAL.DeletingEffectItems" : "Deleting Effect Items: {items}",
     "IMPMAL.Demeanor" : "Demeanor",
     "IMPMAL.Description" : "Description",
@@ -683,6 +685,7 @@
     "IMPMAL.Superiority" : "Superiority",
     "IMPMAL.SupportAttachment" : "Support Attachment",
     "IMPMAL.Sustained" : "Sustained",
+    "IMPMAL.Swift" : "Swift",
     "IMPMAL.TableSettings" : "Table Settings",
     "IMPMAL.TableConfigure" : "Configure Tables",
     "IMPMAL.TableSettingsHint" : "Configure which tables the system uses in contextual links.",
@@ -807,6 +810,7 @@
     "IMPMAL.Vehicle" : "Vehicle",
     "IMPMAL.VehicleWeapons" : "Vehicle Weapons",
     "IMPMAL.VehicleDropTT" : "Drag and drop an Actor or Weapon",
+    "IMPMAL.VehicleControl" : "Vehicle Control",
     "IMPMAL.Vilified" : "Vilified",
     "IMPMAL.WR" : "WR",
     "IMPMAL.WS" : "WS",
@@ -1047,6 +1051,12 @@
                         },
                         "range" : {
                             "label" : "Range"
+                        }
+                    },
+                    "vehicle" : {
+                        "maneuverable" : {
+                            "label" : "Maneuverable",
+                            "hint" : "Bonus to Vehicle Control Tests"
                         }
                     }
                 }

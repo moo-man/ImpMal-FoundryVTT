@@ -255,33 +255,6 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
             }
         },
         {
-          name: "Remove",
-          icon: '<i class="fas fa-times"></i>',
-          condition: li => {
-            let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid
-            if (uuid)
-            {
-              let parsed = foundry.utils.parseUuid(uuid);
-              if (parsed.type == "ActiveEffect")
-              {
-                return parsed.primaryId == this.document.id; // If an effect's parent is not this document, don't show the delete option
-              }
-              else if (parsed.type)
-              {
-                return true;
-              }
-              return false;
-            }
-            else return false;
-          },
-          callback: async li => 
-          {
-            let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
-            const document = await fromUuid(uuid);
-            document.delete();
-          }
-        },
-        {
             name: "Duplicate",
             icon: '<i class="fa-solid fa-copy"></i>',
             condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),
@@ -292,6 +265,33 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
                 this.actor.createEmbeddedDocuments("Item", [document.toObject()]);
             }
           },
+          {
+            name: "Remove",
+            icon: '<i class="fas fa-times"></i>',
+            condition: li => {
+              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid
+              if (uuid)
+              {
+                let parsed = foundry.utils.parseUuid(uuid);
+                if (parsed.type == "ActiveEffect")
+                {
+                  return parsed.primaryId == this.document.id; // If an effect's parent is not this document, don't show the delete option
+                }
+                else if (parsed.type)
+                {
+                  return true;
+                }
+                return false;
+              }
+              else return false;
+            },
+            callback: async li => 
+            {
+              let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+              const document = await fromUuid(uuid);
+              document.delete();
+            }
+          }
       ];
     }
 

@@ -40,6 +40,15 @@ export class PackModel extends PhysicalItemModel
         }
     }
 
+    async _preDelete(options, user)
+    {
+        if (this.parent.isOwned && (await foundry.applications.api.Dialog.confirm({window: {title : "IMPMAL.DeletePackContents"}, content : game.i18n.localize("IMPMAL.DeletePackContentsPrompt")})))
+        {
+            this.parent.actor?.deleteEmbeddedDocuments("Item", this.actorItems.documents.map(i => i.id))
+        }
+
+    }
+
     /**
      * Adds an item to the pack's list. If the pack is owned by the actor, also make sure that item is added to the actor if it wasn't already, also unequip it.
      * If the pack is not owned by the actor, ensure that the item added is not owned

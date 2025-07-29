@@ -102,6 +102,7 @@ const IMPMAL = {
         slow : "IMPMAL.Slow",
         normal : "IMPMAL.Normal",
         fast : "IMPMAL.Fast",
+        swift : "IMPMAL.Swift"
     },
 
     npcRoles : {
@@ -1008,6 +1009,30 @@ const IMPMAL = {
         },
     },
 
+    protectionCategoryEffects : {
+        flak: {
+            name: "IMPMAL.Flak",
+            system: {
+                transferData : {
+                    documentType: "Actor",
+                    equipTransfer : true,
+                },
+                scriptData : [{
+                    label : "Reduce Damage",
+                    trigger : "preTakeDamage",
+                    script : `
+                    let weapon = args.opposed.attackerTest.item
+                    if (
+                        args.opposed && weapon?.system.category == "grenadesExplosives" &&  // Grenade or Explosive
+                        ["spread", "blast"].some(trait => weapon.system.traits.has(trait)) && // Has spread or blast
+                        this.item.system.locations.list.includes(args.opposed.attackerTest.result.hitLocation)) // This armour is protecting hit location
+                    {
+                        args.modifiers.push({value : -1, label : this.effect.name, armour : true})
+                    }`,
+                }]
+            }
+        },
+    },
 
     conditions : [
         {
