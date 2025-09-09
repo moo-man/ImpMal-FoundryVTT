@@ -1,11 +1,10 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
 
-
     <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Talents"}}</div>
             <div class="small">
-                <input type="number"  name="system.talents.number" value="{{system.talents.number}}" placeholder="#">
+                <input type="number" name="system.talents.number" value="{{system.talents.number}}" placeholder="#">
             </div>
         </div>
         <div class="list-content">
@@ -25,7 +24,6 @@
         </div>
     </div>
 
-
     <div class="form-group stacked input-list skills">
         <label><input type="number" name="system.skills.value" value="{{system.skills.value}}">
             {{localize 'IMPMAL.SkillAdvances'}} </label>
@@ -38,9 +36,6 @@
             {{/each}}
         </div>
     </div>
-
-
-
 
     <div class="form-group stacked input-list skills">
         <label><input type="number" name="system.specialisations.value" value="{{system.specialisations.value}}">
@@ -55,7 +50,7 @@
         </div>
     </div>
 
-        <div class="sheet-list">
+    <div class="sheet-list">
         <div class="list-header row-content">
             <div class="list-name">{{localize "IMPMAL.Specialisations"}}</div>
         </div>
@@ -76,7 +71,6 @@
         </div>
     </div>
 
-
-
+    {{> choiceDisplay system.character.equipment label='IMPMAL.Equipment' display=item.system.equipment.textDisplay path='equipment'}}
 
 </section>
