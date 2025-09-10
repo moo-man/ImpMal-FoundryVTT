@@ -581,7 +581,7 @@ const IMPMAL = {
 
     vehicleActions : {
         crush : {
-            name : "Crush",
+            name : "IMPMAL.Crush",
             difficulty : "difficult",
             restriction : function(actor) { return ["wheeled", "walker"].includes(actor.system.category) },
             // execute : function(actor)
@@ -605,11 +605,11 @@ const IMPMAL = {
             // }
         },
         emergencyLanding : {
-            name : "Emergency Landing",
+            name : "IMPMAL.EmergencyLanding",
             restriction : function(actor) { return ["flyer"].includes(actor.system.category) }
         },
         evasiveManeuvers : {
-            name : "Evasive Maneuvers",
+            name : "IMPMAL.EvasiveManeuvers",
             effect : {
                 name: "Evasive Maneuvers",
                 img : "modules/warhammer-lib/assets/blank.png",
@@ -638,15 +638,15 @@ const IMPMAL = {
             }
         },
         getInClose : {
-            name : "Get In Close"
+            name : "IMPMAL.GetInClose"
         },
         makeTheJump : {
-            name : "Make the Jump",
+            name : "IMPMAL.MakeTheJump",
             skill : "athletics",
             position: "any"
         },
         ram : {
-            name : "Ram",
+            name : "IMPMAL.Ram",
             execute : async function(vehicle)
             {
                 let test = await vehicle.system.driver.setupSkillTest({key : "piloting"}, {appendTitle : " - Ram", vehicle : {actor : this.actor, action : "ram"}})
@@ -665,7 +665,7 @@ const IMPMAL = {
             },
         },
         takeTheWheel : {
-            name : "Take the Wheel",
+            name : "IMPMAL.TakeTheWheel",
             position: "passengers",
             execute : async function(vehicle)
             {
@@ -681,7 +681,7 @@ const IMPMAL = {
             },
         },
         threadTheNeedle : {
-            name : "Thread the Needle",
+            name : "IMPMAL.ThreadTheNeedle",
             difficulty : "difficult"
         }
     },
