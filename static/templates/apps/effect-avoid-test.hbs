@@ -2,12 +2,7 @@
     <label>{{localize "IMPMAL.Characteristic"}}</label>
     <div class="form-fields">
         <select name="system.transferData.avoidTest.characteristic">
-            {{#select system.transferData.avoidTest.characteristic}}
-                <option value=""></option>
-                {{#each (config "characteristics")}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions (config "characteristics") selected=system.transferData.avoidTest.characteristic blank=""}}
         </select>
     </div>
 </div>
@@ -15,12 +10,7 @@
     <label>{{localize "IMPMAL.Skill"}}</label>
     <div class="form-fields">
         <select type="text" name="system.transferData.avoidTest.skill.key" value="{{system.transferData.avoidTest.skill.key}}">
-            {{#select system.transferData.avoidTest.skill.key}}
-                <option value=""></option>
-                {{#each (config "skills")}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions (config "skills") selected=system.transferData.avoidTest.skill.key blank=""}}
         </select>
         <input type="text" name="system.transferData.avoidTest.skill.specialisation" value="{{system.transferData.avoidTest.skill.specialisation}}">
         </select>

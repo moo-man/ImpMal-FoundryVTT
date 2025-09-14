@@ -28,12 +28,7 @@
     <label>{{localize "IMPMAL.Characteristic"}}</label>
     <div class="form-fields">
         <select name="{{path}}.characteristic">
-            {{#select data.characteristic}}
-                <option value=""></option>
-                {{#each (config "characteristics")}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions (config "characteristics") selected=data.characteristic blank=""}}
         </select>
     </div>
 </div>
@@ -42,12 +37,7 @@
     <label>{{localize "IMPMAL.Skill"}}</label>
     <div class="form-fields">
         <select name="{{path}}.skill.key">
-            {{#select data.skill.key}}
-                <option value=""></option>
-                {{#each (config "skills")}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions (config "skills") selected=data.skill.key blank=""}}
         </select>
         <input type="text" name="{{path}}.skill.specialisation" value="{{data.skill.specialisation}}" placeholder="{{localize 'IMPMAL.Specialisation'}}">
     </div>

@@ -220,14 +220,14 @@ export class BaseTest extends WarhammerTestBase
         {
             this.itemSummary = await this.context.formatItemSummary()
         }
-        this.effectButtons = await renderTemplate("modules/warhammer-lib/templates/partials/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
+        this.effectButtons = await foundry.applications.handlebars.renderTemplate("modules/warhammer-lib/templates/partials/effect-buttons.hbs", {targetEffects : this.targetEffects, zoneEffects : this.zoneEffects});
 
         if (this.testDetailsTemplate)
         {
-            this.testDetails = await renderTemplate(this.testDetailsTemplate, this);
+            this.testDetails = await foundry.applications.handlebars.renderTemplate(this.testDetailsTemplate, this);
         }
         let chatData = ChatMessage.applyRollMode({}, this.context.rollMode);
-        let content = await renderTemplate(this.rollTemplate, this);
+        let content = await foundry.applications.handlebars.renderTemplate(this.rollTemplate, this);
         return foundry.utils.mergeObject( chatData, {
             content,
             speaker : this.context.speaker,

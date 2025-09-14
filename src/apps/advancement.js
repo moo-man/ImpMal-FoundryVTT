@@ -1,3 +1,5 @@
+import { XPModel } from "../model/actor/components/xp";
+
 export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
 {
     static DEFAULT_OPTIONS = {
@@ -86,6 +88,9 @@ export class AdvancementForm extends HandlebarsApplicationMixin(ApplicationV2)
         if (itemId) {
             let item = this.actorCopy.items.get(itemId);
             item.updateSource({ "system.advances": item.system.advances + value });
+            this.actorCopy.system.xp.spent = XPModel.computeSpentFor(this.actorCopy);
+            this.actorCopy.system.xp.available = this.actorCopy.system.xp.total - this.actorCopy.system.xp.spent;
+
         }
         else if (skillKey) {
             this.actorCopy.updateSource({ [`system.skills.${skillKey}.advances`]: this.actorCopy.system.skills[skillKey].advances + value });

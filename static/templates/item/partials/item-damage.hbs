@@ -4,12 +4,7 @@
         <input type="text" value="{{system.damage.base}}" name="system.damage.base">
         +
         <select name="system.damage.characteristic">
-            {{#select system.damage.characteristic}}
-                <option value=""></option>
-                {{#each (config "characteristicAbbrev")}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions (config "characteristicAbbrev") selected=system.damage.characteristic}}
         </select>
         {{#unless hideSL}}
             <input type="checkbox" name="system.damage.SL" {{checked system.damage.SL}}>

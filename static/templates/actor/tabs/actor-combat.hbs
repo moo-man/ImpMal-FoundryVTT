@@ -128,9 +128,7 @@
                             {{#unless this.system.selfAmmo}}
                                 <select class="ammo-selector" data-action="editProperty" data-path="system.ammo.id"
                                     data-tooltip="{{this.system.ammo.document.name}} ({{this.system.ammo.document.system.quantity}})">
-                                    {{#select this.system.ammo.id}}
                                         {{selectOptions this.system.ammoList selected=this.system.ammo.id nameAttr="_id" labelAttr="name" blank=""}}
-                                    {{/select}}
                                 </select>
                             {{/unless}}
                         </div>

@@ -342,7 +342,7 @@ export default class Migration {
 
             if (item.system.character.equipment.list.some(i => i.id))
             {
-                setProperty(migrated, "system.character.equipment.list", await this._migrateReferenceList(item.system.character.equipment.list))
+                foundry.utils.setProperty(migrated, "system.character.equipment.list", await this._migrateReferenceList(item.system.character.equipment.list))
             }
         }
 
@@ -350,12 +350,12 @@ export default class Migration {
         {
             if (item.system.specialisations.list.some(i => i.id))
             {
-                setProperty(migrated, "system.specialisations.list", await this._migrateReferenceList(item.system.specialisations.list))
+                foundry.utils.setProperty(migrated, "system.specialisations.list", await this._migrateReferenceList(item.system.specialisations.list))
             }
 
             if (item.system.talents.list.some(i => i.id))
             {
-                setProperty(migrated, "system.talents.list", await this._migrateReferenceList(item.system.talents.list))
+                foundry.utils.setProperty(migrated, "system.talents.list", await this._migrateReferenceList(item.system.talents.list))
             }
         }
 
@@ -365,12 +365,12 @@ export default class Migration {
 
             if (item.system.character.duty.list.some(i => i.id))
             {
-                setProperty(migrated, "system.character.duty.list", await this._migrateReferenceList(item.system.character.duty.list))
+                foundry.utils.setProperty(migrated, "system.character.duty.list", await this._migrateReferenceList(item.system.character.duty.list))
             }
 
             if (item.system.patron.duty.list.some(i => i.id))
             {
-                setProperty(migrated, "system.patron.duty.list", await this._migrateReferenceList(item.system.patron.duty.list))
+                foundry.utils.setProperty(migrated, "system.patron.duty.list", await this._migrateReferenceList(item.system.patron.duty.list))
             }
         }
 
@@ -379,7 +379,7 @@ export default class Migration {
 
             if (item.system.equipment.list.some(i => i.id))
             {
-                setProperty(migrated, "system.equipment.list", await this._migrateReferenceList(item.system.equipment.list))
+                foundry.utils.setProperty(migrated, "system.equipment.list", await this._migrateReferenceList(item.system.equipment.list))
             }
 
             await this._migrateReference(item, "factionTable", migrated);
@@ -410,13 +410,13 @@ export default class Migration {
                     traits : applicationData.traits
                 }
             };
-            setProperty(migrated, "system.transferData", transferData);
+            foundry.utils.setProperty(migrated, "system.transferData", transferData);
             migrated["flags.impmal.-=applicationData"] = null;
         }
         let scriptData = effect.getFlag("impmal", "scriptData")
         if (scriptData)
         {
-            setProperty(migrated, "system.scriptData", scriptData);
+            foundry.utils.setProperty(migrated, "system.scriptData", scriptData);
             migrated.system.scriptData.forEach(s => {
                 s.script = s.script || s.string;
                 s.options = s.options || {};
@@ -451,7 +451,7 @@ export default class Migration {
 
             if (referencedDocument)
             {
-                setProperty(migration, `system.${field}`, {uuid : referencedDocument.uuid, id : property.id});
+                foundry.utils.setProperty(migration, `system.${field}`, {uuid : referencedDocument.uuid, id : property.id});
             }
         }
     }

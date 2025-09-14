@@ -102,7 +102,7 @@ export class RewardMessageModel extends WarhammerMessageModel
             reason = reward.reason;
         }
 
-        let content = await renderTemplate("systems/impmal/templates/chat/reward.hbs", {xp, solars, patron, reason});
+        let content = await foundry.applications.handlebars.renderTemplate("systems/impmal/templates/chat/reward.hbs", {xp, solars, patron, reason});
         ChatMessage.create({
             content,
             type : "reward",

@@ -19,6 +19,6 @@
     teethRoll.toMessage({speaker : {alias : this.effect.name}, flavor : "Teeth Lost"});
     
     teeth.name = teeth.name.replace("Teeth", `${teethRoll.total} Teeth`);
-    setProperty(teeth, "flags.impmal.lostTeeth", teethRoll.total)
+    foundry.utils.setProperty(teeth, "flags.impmal.lostTeeth", teethRoll.total)
     
     this.actor.createEmbeddedDocuments("Item", [teeth, injury]);

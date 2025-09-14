@@ -20,7 +20,7 @@
         {
             amputation = (await game.impmal.utility.findId("cHYtB7pCpwTOW1We")).toObject()
             amputation.system.location.value = location;
-            setProperty(amputation, "flags.impmal.lostFingers", roll.total);
+            foundry.utils.setProperty(amputation, "flags.impmal.lostFingers", roll.total);
             amputation.name = amputation.name.replace("Finger", `${roll.total} ${locationName.split(" ")[0]} Finger` + (roll.total > 1 ? "s" : ""));
         }
 

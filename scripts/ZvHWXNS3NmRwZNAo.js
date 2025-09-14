@@ -1,4 +1,4 @@
-        if (args.context.skill == "discipline" && args.result.outcome == "failure" && !hasProperty(args.context, "sanityIsForTheWeak"))
+        if (args.context.skill == "discipline" && args.result.outcome == "failure" && !foundry.utils.hasProperty(args.context, "sanityIsForTheWeak"))
         {
 
             let use = await foundry.applications.api.Dialog.confirm({

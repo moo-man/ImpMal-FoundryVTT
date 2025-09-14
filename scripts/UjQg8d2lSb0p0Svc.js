@@ -2,7 +2,7 @@
 
         if (stunned)
         {
-            let test = await this.actor.setupSkillTest({key : "fortitude", name : "Endurance"}, {appendTitle : " - " + this.effect.label})
+            let test = await this.actor.setupSkillTest({key : "fortitude", name : "Endurance"}, {appendTitle : " - " + this.effect.name})
             if (test.succeeded)
             {
                 this.script.scriptMessage("Removed Stunned");

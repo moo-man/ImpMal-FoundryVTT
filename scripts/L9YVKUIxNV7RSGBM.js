@@ -1,1 +1,1 @@
-return args.data.context.corruption;
+return args.context.corruption;

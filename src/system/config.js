@@ -1867,6 +1867,11 @@ const IMPMAL = {
         "impmal-requisition" : "Requisition Guide"
      },
 
+     bugReporterConfig : {
+        repoEndpoint: "https://api.github.com/repos/moo-man/ImpMal-FoundryVTT",
+        troubleshooting : "https://moo-man.github.io/ImpMal-FoundryVTT/pages/troubleshooting.html",
+        successMessage : "Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: @URL",
+    },
     
     badgeInfo : {
         img : "systems/impmal/assets/ui/badge.webp",

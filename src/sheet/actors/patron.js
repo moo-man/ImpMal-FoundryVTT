@@ -80,10 +80,10 @@ export default class PatronSheet extends IMActorSheet
         let enriched = {}
         for (let i of this.actor.itemTypes.boonLiability)
         {
-            enriched[i.id] = await TextEditor.enrichHTML(i.system.notes.player, {async: true, relativeTo: this.parent, secrets: game.user.isGM});
+            enriched[i.id] = await foundry.applications.ux.TextEditor.enrichHTML(i.system.notes.player, {async: true, relativeTo: this.parent, secrets: game.user.isGM});
             if (game.user.isGM)
             {
-                enriched[i.id] += await TextEditor.enrichHTML(i.system.notes.gm, {async: true, relativeTo: this.parent, secrets: game.user.isGM});
+                enriched[i.id] += await foundry.applications.ux.TextEditor.enrichHTML(i.system.notes.gm, {async: true, relativeTo: this.parent, secrets: game.user.isGM});
             }
         }
         return foundry.utils.mergeObject(await super._handleEnrichment(), enriched);

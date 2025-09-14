@@ -3,11 +3,7 @@
         <label>{{localize "IMPMAL.Characteristic"}}</label>
         <div class="form-fields">
             <select name="characteristic">
-                {{#select fields.characteristic}}
-                    {{#each (config "characteristics")}}
-                        <option value="{{@key}}">{{this}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions (config "characteristics") selected=fields.characteristic}}
             </select>
         </div>
     </div>

@@ -112,7 +112,7 @@ export class TestContext
             player : await foundry.applications.ux.TextEditor.enrichHTML(item.system.notes.player, {async: true, relativeTo: item, secrets : false}),
             gm : await foundry.applications.ux.TextEditor.enrichHTML(item.system.notes.gm, {async: true, relativeTo: item, secrets : false})
         }
-        return await renderTemplate("systems/impmal/templates/chat/rolls/item-use.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item });
+        return await foundry.applications.handlebars.renderTemplate("systems/impmal/templates/chat/rolls/item-use.hbs", {noImage : item.img == "icons/svg/item-bag.svg", enriched, item });
     }
     
     /**

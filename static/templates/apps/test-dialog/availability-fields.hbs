@@ -3,12 +3,7 @@
         <label>{{localize "IMPMAL.World"}}</label>
         <div class="form-fields">
             <select name="world">
-                {{#select fields.world}}
-                    <option value=""></option>
-                    {{#each (config "worlds")}}
-                        <option value="{{@key}}">{{this}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions (config "worlds") selected=fields.world}}
             </select>
         </div>
     </div>
@@ -17,13 +12,7 @@
         <label>{{localize "IMPMAL.Availability"}}</label>
         <div class="form-fields">
             <select name="availability">
-                {{#select fields.availability}}
-                    {{#each (config "availability")}}
-                        {{#if @key}}
-                            <option value="{{@key}}">{{this}}</option>
-                        {{/if}}
-                    {{/each}}
-                {{/select}}
+                {{selectOptions (config "availability") selected=fields.availability}}
             </select>
         </div>
     </div>

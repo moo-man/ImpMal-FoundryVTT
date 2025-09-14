@@ -3,11 +3,7 @@
         <label>{{localize "IMPMAL.HitLocation"}}</label>
         <div class="form-fields">
             <select name="hitLocation">
-                {{#select fields.hitLocation}}
-                    {{#each data.hitLocations}}
-                        <option value="{{@key}}">{{localize this}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions data.hitLocations selected=fields.hitLocation localize="true"}}
             </select>
         </div>
     </div>

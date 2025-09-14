@@ -1,1 +1,1 @@
-return !args.data.context.corruption && !args.data.context.resist?.includes("power")
+return !args.context.corruption && !args.context.resist?.includes("power")

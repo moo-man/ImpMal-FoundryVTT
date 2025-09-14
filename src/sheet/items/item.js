@@ -132,10 +132,10 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
     async _handleEnrichment() 
     {
         return foundry.utils.expandObject({
-            "system.notes.player" : await TextEditor.enrichHTML(this.item.system.notes?.player, {secrets : this.item.isOwner, relativeTo: this.item, async: true}),
-            "system.notes.gm" : await TextEditor.enrichHTML(this.item.system.notes?.gm, {secrets : this.item.isOwner, relativeTo: this.item, async: true}),
-            "system.patron.notes" : await TextEditor.enrichHTML(this.item.system.patron?.notes, {secrets : this.item.isOwner, relativeTo: this.item, async: true}),
-            "system.character.notes" : await TextEditor.enrichHTML(this.item.system.character?.notes, {secrets : this.item.isOwner, relativeTo: this.item, async: true})
+            "system.notes.player" : await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.notes?.player, {secrets : this.item.isOwner, relativeTo: this.item, async: true}),
+            "system.notes.gm" : await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.notes?.gm, {secrets : this.item.isOwner, relativeTo: this.item, async: true}),
+            "system.patron.notes" : await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.patron?.notes, {secrets : this.item.isOwner, relativeTo: this.item, async: true}),
+            "system.character.notes" : await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.character?.notes, {secrets : this.item.isOwner, relativeTo: this.item, async: true})
         });
     }
 

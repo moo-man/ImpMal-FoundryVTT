@@ -1,1 +1,1 @@
-return args.data.context.resist?.includes("power")
+return args.context.resist?.includes("power")

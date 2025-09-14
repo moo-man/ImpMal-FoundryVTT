@@ -31,7 +31,7 @@ export class OriginStage extends ChargenStage {
     async getData() {
         let data = await super.getData()
         if (this.context.origin)
-            data.originDescription = await TextEditor.enrichHTML(this.context.origin.system.notes.player, {async : true})
+            data.originDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.context.origin.system.notes.player, {async : true})
         return data
     }
 

@@ -56,7 +56,7 @@ export class FactionStage extends ChargenStage {
     async getData() {
         let data = await super.getData()
         if (this.context.faction)
-            data.factionDescription = await TextEditor.enrichHTML(this.context.faction.system.character.notes, {async : true})
+            data.factionDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.context.faction.system.character.notes, {async : true})
 
         
         if (this.context.equipment.length)

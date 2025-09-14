@@ -1,1 +1,1 @@
-return args.data.context?.resist?.includes("blinded")
+return args.context?.resist?.includes("blinded")

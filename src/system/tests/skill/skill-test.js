@@ -72,7 +72,7 @@ export class SkillTest extends CharacteristicTest
             this.context.text["corruptionAdded"] = game.i18n.format("IMPMAL.CorruptionAdded", {corruption});
 
             // Record the starting corruption in case this test is edited
-            if (!hasProperty(this.context, "baseCorruption"))
+            if (!foundry.utils.hasProperty(this.context, "baseCorruption"))
             {
                 this.context.baseCorruption = this.actor.system.corruption.value;
             }

@@ -1,1 +1,1 @@
-args.data.context.automaticallySucceed = true;
+args.context.automaticallySucceed = true;

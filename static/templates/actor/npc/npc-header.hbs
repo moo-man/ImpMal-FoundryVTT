@@ -38,11 +38,7 @@
                 <div class="detail-group">
                     <div class="input-group">
                         <select type="text" name="system.role">
-                            {{#select system.role}}
-                                {{#each (config "npcRoles")}}
-                                    <option value="{{@key}}">{{this}}</option>
-                                {{/each}}
-                            {{/select}}
+                            {{selectOptions (config "npcRoles") selected=system.role}}
                         </select>
                     </div>
                     <label>{{localize "IMPMAL.Role"}}</label>

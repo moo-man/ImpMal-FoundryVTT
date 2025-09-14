@@ -59,7 +59,7 @@ export class OpposedTestMessageModel extends WarhammerMessageModel
             attackerTest : attackerTest,
             responseButtons : this._getResponseButtons(defenderToken)
         }
-        let content = await renderTemplate("systems/impmal/templates/chat/opposed.hbs", templateData);
+        let content = await foundry.applications.handlebars.renderTemplate("systems/impmal/templates/chat/opposed.hbs", templateData);
 
         let alias = `${game.i18n.localize("IMPMAL.OpposedTest")} - `
 
@@ -88,7 +88,7 @@ export class OpposedTestMessageModel extends WarhammerMessageModel
             applied : foundry.utils.isEmpty(this.applied) ? false : this.applied,
             responseButtons : this.constructor._getResponseButtons(this.target)
         }
-        let content = await renderTemplate("systems/impmal/templates/chat/opposed.hbs", templateData);
+        let content = await foundry.applications.handlebars.renderTemplate("systems/impmal/templates/chat/opposed.hbs", templateData);
         return content;
     }
 

@@ -36,7 +36,7 @@ export class RoleStage extends ChargenStage {
     async getData() {
         let data = await super.getData()
         if (this.context.role)
-            data.roleDescription = await TextEditor.enrichHTML(this.context.role.system.notes.player, {async : true})
+            data.roleDescription = await foundry.applications.ux.TextEditor.enrichHTML(this.context.role.system.notes.player, {async : true})
 
         if (this.context.equipment.length)
         {

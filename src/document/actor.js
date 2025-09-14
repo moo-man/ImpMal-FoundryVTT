@@ -330,8 +330,8 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
             }
         }
 
-        await this.setupWeaponTest(weapons[0].id, {context : {twf : true}});
-        await this.setupWeaponTest(weapons[1].id, {context : {twf : true}});
+        await this.setupWeaponTest(weapons[0].id, {twf : true});
+        await this.setupWeaponTest(weapons[1].id, {twf : true});
     }
 
 

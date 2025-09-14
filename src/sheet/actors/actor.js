@@ -398,21 +398,6 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         new Roll(item.system.roll.formula).roll({async: true}).then(roll => roll.toMessage({speaker : ChatMessage.getSpeaker({actor : this.actor}), flavor : item.system.roll.label}));
     }
 
-    static _onTargetTest(ev)
-    {
-        if (game.user.targets.size == 0)
-        {
-            ui.notifications.warn(game.i18n.localize("IMPMAL.TargetTokensPrompt"));
-        }
-        let itemId = this._getId(ev);      
-        let item = this.actor.items.get(itemId);
-        Array.from(game.user.targets).forEach(target => 
-        {
-            SocketHandlers.executeOnOwner(target.actor, "rollItemTest",{documentUuid : target.actor.uuid, itemUuid : item.uuid});
-        });
-        game.user.updateTokenTargets([]);
-    }
-
     static async _onCreateSpecialisation(ev)
     {
         let skill = this._getKey(ev);
@@ -547,7 +532,7 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         ev.preventDefault();
         let document = this._getDocument(ev);
         let summaryData = await document?.system?.summaryData();
-        let summaryHTML = await renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", summaryData);
+        let summaryHTML = await foundry.applications.handlebars.renderTemplate("systems/impmal/templates/item/partials/item-summary.hbs", summaryData);
         this._toggleDropdown(ev, summaryHTML);
     }
 

@@ -21,7 +21,7 @@
         amputation = (await game.impmal.utility.findId("wBFH7XeivMbTrjhF")).toObject()
         amputation.system.location.value = location;
         amputation.name = amputation.name.replace("Toes", `${roll.total} ${locationName.split(" ")[0]} Toe` + (roll.total > 1 ? "s" : ""));
-        setProperty(amputation, "flags.impmal.lostToes", roll.total)
+        foundry.utils.setProperty(amputation, "flags.impmal.lostToes", roll.total)
     }
     
     await this.actor.createEmbeddedDocuments("Item", [injury, amputation].filter(i => i));

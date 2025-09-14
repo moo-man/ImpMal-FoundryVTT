@@ -148,7 +148,7 @@ export default class ImpMalUtility
     static async tableToHTML(table, label, options=[]) 
     {
         let noCenter = options.includes("no-center");
-        return await TextEditor.enrichHTML(`<table class="impmal">
+        return await foundry.applications.ux.TextEditor.enrichHTML(`<table class="impmal">
         <thead>
         <tr class="title"><td colspan="2">@UUID[${table.uuid}]{${table.name}}</td></tr>
         <tr class="subheader">
@@ -210,9 +210,9 @@ export default class ImpMalUtility
                 }
             }
         
-            let template = await renderTemplate(`systems/impmal/templates/embeds/${actor.type}.hbs`, actor.system.embedData(options))
+            let template = await foundry.applications.handlebars.renderTemplate(`systems/impmal/templates/embeds/${actor.type}.hbs`, actor.system.embedData(options))
 
-            return await TextEditor.enrichHTML(template, {relativeTo : actor, async: true, secrets : actor.isOwner});
+            return await foundry.applications.ux.TextEditor.enrichHTML(template, {relativeTo : actor, async: true, secrets : actor.isOwner});
         }
         else 
         {
@@ -232,7 +232,7 @@ export default class ImpMalUtility
                 html += actor.system.notes.player || ""
             }
         }   
-        return await TextEditor.enrichHTML(`<div>${html}</div>`, {relativeTo : actor, async: true, secrets : actor.isOwner});
+        return await foundry.applications.ux.TextEditor.enrichHTML(`<div>${html}</div>`, {relativeTo : actor, async: true, secrets : actor.isOwner});
     }
 
     static listeners(html) 

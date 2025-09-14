@@ -1,4 +1,4 @@
-setProperty(this.actor, "flags.impmal.eyesLost", this.actor.flags.impmal?.eyesLost || 0)
+foundry.utils.setProperty(this.actor, "flags.impmal.eyesLost", this.actor.flags.impmal?.eyesLost || 0)
 
 this.actor.flags.impmal.eyesLost++;
 

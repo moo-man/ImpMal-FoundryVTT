@@ -295,7 +295,7 @@ export class StandardActorModel extends BaseActorModel
 
         if (locationData.field)
         {
-            woundsGained = await locationData.field.system.applyField(value, modifiers);
+            await locationData.field.system.applyField(value, modifiers);
         }
 
         if (!ignoreAP && (locationData.armour || locationData.formula))
