@@ -37,7 +37,7 @@ export class AttackTest extends SkillTest
 
     get itemTraits() 
     {
-	return (this.item.system.traits || this.item.system.attack?.traits);
+		return (this.item.system.traits || this.item.system.attack?.traits);
     }
 
 
