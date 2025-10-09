@@ -4,7 +4,6 @@
         <input type="text" value="{{system.damage.base}}" name="system.damage.base">
         +
         <select name="system.damage.characteristic">
-            <option value="">{{localize "IMPMAL.None"}}</option>
             {{selectOptions (config "characteristicAbbrev") selected=system.damage.characteristic}}
         </select>
         {{#unless hideSL}}
