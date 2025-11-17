@@ -233,10 +233,10 @@ const IMPMAL = {
     },
 
     vehicleCategory : {
-        wheeled : "Wheeled",
-        tracked : "Tracked",
-        flyer : "Flyer",
-        walker : "Walker"
+        wheeled : "IMPMAL.Wheeled",
+        tracked : "IMPMAL.Tracked",
+        flyer : "IMPMAL.Flyer",
+        walker : "IMPMAL.Walker"
     },
 
     paymentGrade : {
