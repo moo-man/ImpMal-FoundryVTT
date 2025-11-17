@@ -231,6 +231,8 @@ export class TestDialog extends WarhammerRollDialogV2
         }
 
         dialogData.fields.difficulty = dialogData.fields.difficulty || "challenging";
+        dialogData.data.advantage = context.advantage || 0;
+        dialogData.data.disadvantage = context.disadvantage || 0;
 
         let defendingAgainst = actor?.defendingAgainst
 

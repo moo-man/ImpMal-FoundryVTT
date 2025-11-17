@@ -79,22 +79,22 @@ export class WeaponTest extends AttackTest
 
     computeAmmoUsed()
     {
-
+        let superchargeMultiplier = this.result.supercharge ? 2 : 1;
         if (game.settings.get("impmal", "countEveryBullet"))
         {
             let multiplier = game.settings.get("impmal", "countEveryBullet") ? 5 : 1;
 
             if (this.result.burst)
             {
-                return multiplier;
+                return superchargeMultiplier * multiplier;
             }
             else if (this.result.rapidFire)
             {
-                return this.itemTraits.has("rapidFire").value * multiplier;
+                return superchargeMultiplier * this.itemTraits.has("rapidFire").value * multiplier;
             }
             else 
             {
-                return 1;
+                return superchargeMultiplier * 1;
             }
         }
         else // RAW
@@ -109,7 +109,7 @@ export class WeaponTest extends AttackTest
                 baseAmmoUsed = 1;
             }
 
-            return baseAmmoUsed + (this.result.burst ? 1 : 0) + (this.result.rapidFire ? Number(this.itemTraits.has("rapidFire").value) : 0);
+            return superchargeMultiplier * (baseAmmoUsed + (this.result.burst ? 1 : 0) + (this.result.rapidFire ? Number(this.itemTraits.has("rapidFire").value) : 0));
         }
     }
 
