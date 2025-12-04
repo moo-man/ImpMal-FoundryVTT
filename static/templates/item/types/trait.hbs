@@ -8,11 +8,11 @@
     {{/if}}
 
     <fieldset>
-        <legend>Test</legend>
+        <legend>{{localize "IMPMAL.Test"}}</legend>
         {{> itemTest data=system.test path="system.test"}}
     </fieldset>
     <fieldset>
-        <legend>Attack</legend>
+        <legend>{{localize "IMPMAL.Attack"}}</legend>
         {{formGroup fields.attack.fields.type value=system.attack.type choices=attackTypes localize=true}}
         {{formGroup fields.attack.fields.characteristic value=source.system.attack.characteristic choices=(config "characteristics")}}
         <div class="form-group">
@@ -32,7 +32,7 @@
                 {{formInput fields.attack.fields.damage.fields.base value=source.system.attack.damage.base}}
                 {{formInput fields.attack.fields.damage.fields.SL value=source.system.attack.damage.SL}}
 
-                <label class="{{#unless system.attack.damage.SL}}inactive{{/unless}}">+SL</label>
+                <label class="{{#unless system.attack.damage.SL}}inactive{{/unless}}">+{{localize "IMPMAL.SL"}}</label>
             </div>
         </div>
         {{formGroup fields.attack.fields.damage.fields.ignoreAP value=source.system.attack.damage.ignoreAP}}
