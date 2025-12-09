@@ -1,1 +1,1 @@
-return !["ws", "str"].includes(args.data.characteristic")
+return !["ws", "str"].includes(args.data.characteristic)
