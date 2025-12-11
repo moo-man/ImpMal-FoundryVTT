@@ -4,7 +4,7 @@ export class ImpMalEffect extends WarhammerActiveEffect
 {
 
     static CONFIGURATION = {
-        zones : true,
+        zone : true,
         exclude : {},
         bracket : ["(", ")"]
     };

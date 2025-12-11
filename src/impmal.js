@@ -95,6 +95,7 @@ Hooks.once("init", () =>
     CONFIG.Item.documentClass = ImpMalItem;
     CONFIG.ActiveEffect.documentClass = ImpMalEffect;
     CONFIG.ChatMessage.documentClass = ImpMalChatMessage;
+    CONFIG.RollTable.documentClass = WarhammerRollTable;
 
     DocumentSheetConfig.registerSheet(Actor, "impmal", CharacterSheet, { types: ["character"], makeDefault: true, label : "Character Sheet" });
     DocumentSheetConfig.registerSheet(Actor, "impmal", PatronSheet, { types: ["patron"], makeDefault: true, label : "Patron Sheet" });

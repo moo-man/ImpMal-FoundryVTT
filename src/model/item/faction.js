@@ -20,11 +20,11 @@ export class FactionModel extends DualItemModel
             characteristics : new fields.SchemaField({
                 base : new fields.StringField(),
                 choices : new fields.ArrayField(new fields.StringField())
-            }),
+            }, {}, {name : "characteristics", parent : schema.character}),
             advances : new fields.SchemaField({
                 value : new fields.NumberField({min: 0, initial: 5}),
                 skills : new fields.ArrayField(new fields.StringField())
-            }),
+            }, {}, {name : "advances", parent : schema.character}),
             influence : new fields.EmbeddedDataField(ItemInfluenceModel, {}, {name : "influence", parent : schema.character}),
             talents : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "talents", parent : schema.character}),
             equipment : new fields.EmbeddedDataField(ChoiceModel, {}, {name : "equipment", parent : schema.character}),

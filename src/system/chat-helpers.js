@@ -5,14 +5,14 @@ export default class ChatHelpers
 
     static scrollToMessage(messageId)
     {
-        let message = ui.chat.element.find(`[data-message-id='${messageId}']`)[0];
+        let message = ui.chat.element.querySelector(`[data-message-id='${messageId}']`);
         
         if (!message)
         {
             return;
         }
         
-        ui.chat.element.find("ol").animate({scrollTop: message.offsetTop}, 800);
+        ui.chat.element.querySelector("ol").animate({scrollTop: message.offsetTop}, 800);
         // Scrolling into view will remove the highlight, so add it for 1 second then remove
         message.classList.add("highlight-delayed");
         setTimeout((message) => 
@@ -23,13 +23,13 @@ export default class ChatHelpers
 
     static highlightMessage(messageId)
     {
-        let message = ui.chat.element.find(`[data-message-id='${messageId}']`)[0];
+        let message = ui.chat.element.querySelector(`[data-message-id='${messageId}']`) ;
         message?.classList.add("highlight");
     }
 
     static unhighlightMessage(messageId)
     {
-        let message = ui.chat.element.find(`[data-message-id='${messageId}']`)[0];
+        let message = ui.chat.element.querySelector(`[data-message-id='${messageId}']`);
         message?.classList.remove("highlight");
     }
 
