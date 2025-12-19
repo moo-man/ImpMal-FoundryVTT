@@ -12,6 +12,30 @@
     </div>
 {{/if}}
 
+    
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Skills"}}</div>
+    </div>
+    <div class="list-content">
+        <div class="skills-summary">
+            {{#each system.skills}}
+            {{#if (gt this.advances 0)}}
+            <span>
+                <a class="rollable" data-action="rollTest" data-type="skill" data-key="{{@key}}">{{configLookup "skills" @key}} {{this.total}},</a>
+            </span>
+            {{/if}}
+            {{#each this.specialisations}}
+            {{#if (gt this.system.advances 0)}}
+            <span>
+                <a class="rollable" data-action="rollTest" data-type="skill" data-id="{{this.id}}">{{configLookup "skills" @../key}} ({{this.name}}) {{this.system.total}},</a>
+            </span>
+            {{/if}}
+            {{/each}}
+            {{/each}}
+        </div>
+    </div>
+</div>
 
 <div class="sheet-list">
     <div class="list-header row-content">
