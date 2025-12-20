@@ -46,16 +46,19 @@ export class AttackDialog extends SkillTestDialog
 
         switch (this.fields.fireMode) {
             case "burst":
+                this.fields.burst = true;
                 this.fields.SL++;
                 this.tooltips.add("SL", 1, "Burst");
                 break;
             case "rapidFireAdv":
+                this.fields.rapidFire = true;
                 this.advCount++;               
                 this.tooltips.add("advantage", 1, "Rapid Fire (Advantage + Damage)");
                 this.fields.damage += Number(this.traits.has("rapidFire").value);
                 this.tooltips.add("damage", Number(this.traits.has("rapidFire").value), "Rapid Fire (Advantage + Damage)");
                 break;
             case "rapidFireSpread":
+                this.fields.rapidFire = true;
                 break;
         }
 
@@ -99,6 +102,10 @@ export class AttackDialog extends SkillTestDialog
                     if (this.data.item.type == "weapon" && multiplier > this.data.item.system.mag.current) {
                         ev.currentTarget.value = "normal";
                         ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+                        delete this.userEntry.burst;
+                    }
+                    else {
+                        this.userEntry.burst = true;
                     }
                     break;
                 case "rapidFireSpread":
@@ -106,7 +113,15 @@ export class AttackDialog extends SkillTestDialog
                     if (this.data.item.type == "weapon" && (Number(this.traits.has("rapidFire").value) * multiplier) > this.data.item.system.mag.current) {
                         ev.currentTarget.value = "normal";
                         ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+                        delete this.userEntry.rapidFire;
                     }
+                    else {
+                        this.userEntry.rapidFire = true;
+                    }
+                    break;
+                case "normal":
+                    delete this.userEntry.burst;
+                    delete this.userEntry.rapidFire;
                     break;
             }
         }
