@@ -32,6 +32,14 @@ export class AttackTest extends SkillTest
         {
             tags.push(`${game.i18n.localize("IMPMAL.Supercharge")} (+${this.itemTraits.has("supercharge").value})`);
         }
+        if (this.result.fireMode == "rapidFireSpread")
+        {
+            tags.push(`${game.i18n.localize("IMPMAL.RapidFire")} (${game.i18n.localize("IMPMAL.Spread")})`);
+        }
+        if (this.result.fireMode == "fullfanaticSpread")
+        {
+            tags.push(`${game.i18n.localize("IMPMAL.FullAutoFanatic")} (${game.i18n.localize("IMPMAL.Spread")})`);
+        }
         return tags;
     }
 
@@ -47,6 +55,7 @@ export class AttackTest extends SkillTest
         let testData = super._getDialogTestData(data);
         testData.hitLocation = data.hitLocation;
         testData.supercharge = data.supercharge;
+        testData.fireMode = data.fireMode;
         testData.burst = data.burst;
         testData.rapidFire = data.rapidFire;
         testData.additionalDamage = data.damage;

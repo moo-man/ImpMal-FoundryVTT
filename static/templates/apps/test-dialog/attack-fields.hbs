@@ -15,21 +15,21 @@
             <input type="number" name="damage" value="{{fields.damage}}">
         </div>
     </div>
-
-    {{#if data.showTraits.burst}}
+    
+    {{#if (or data.showTraits.burst data.showTraits.rapidFire)}}
         <div class="form-group">
-            <label>{{localize "IMPMAL.Burst"}}</label>
+            <label>Fire Mode</label>
             <div class="form-fields">
-                <input type="checkbox" name="burst" {{checked fields.burst}}>
-            </div>
-        </div>
-    {{/if}}
-
-    {{#if data.showTraits.rapidFire}}
-        <div class="form-group">
-            <label>{{localize "IMPMAL.RapidFire"}}</label>
-            <div class="form-fields">
-                <input type="checkbox" name="rapidFire" {{checked fields.rapidFire}}>
+                <select name="fireMode">
+                    <option value="normal" {{#if (eq fields.fireMode "normal")}} selected{{/if}}>{{localize "IMPMAL.Normal"}}</option>
+                    <option value="burst" {{#if (eq fields.fireMode "burst")}} selected{{/if}}>{{localize "IMPMAL.Burst"}}</option>
+                    {{#if data.showTraits.rapidFire}}
+                    <option value="rapidFireSpread" {{#if (eq fields.fireMode "rapidFireSpread")}} selected{{/if}}>{{localize "IMPMAL.RapidFire"}} ({{localize "IMPMAL.Spread"}})</option>
+                    <option value="rapidFireAdv" {{#if (eq fields.fireMode "rapidFireAdv")}} selected{{/if}}>{{localize "IMPMAL.RapidFire"}} ({{localize "IMPMAL.Advantage"}} + {{localize "IMPMAL.Damage"}})</option>
+                    <option value="fullfanaticSpread" {{#if (eq fields.fireMode "fullfanaticSpread")}} selected{{/if}}>{{localize "IMPMAL.FullAutoFanatic"}} ({{localize "IMPMAL.Spread"}})</option>
+                    <option value="fullfanaticAdv" {{#if (eq fields.fireMode "rapidFireAdv")}} selected{{/if}}>{{localize "IMPMAL.FullAutoFanatic"}} ({{localize "IMPMAL.Advantage"}} + {{localize "IMPMAL.Damage"}})</option>
+                    {{/if}}
+                </select>
             </div>
         </div>
     {{/if}}
