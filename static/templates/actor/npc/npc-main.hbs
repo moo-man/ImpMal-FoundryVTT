@@ -37,7 +37,7 @@
                             <div>{{configLookup "ranges" this.system.attackData.range}} {{localize "IMPMAL.Range"}}</div>
                         {{/if}}
                     </div>
-                    {{#if (or this.system.traits.list.length this.system.isRanged)}}
+                    {{#if (or this.system.traits.list.length this.system.isRanged this.system.attack.traits.list.length)}}
                     <div class="row-content weapon-aux">
                         {{#if this.system.traits.list.length}}
                             <div class="weapon-traits">
@@ -45,6 +45,14 @@
                                     {{this.system.traits.displayString}}
                                 </div>
                             </div>
+                        {{/if}}
+
+                        {{#if this.system.attack.traits.list.length}}
+                        <div class="weapon-traits">
+                            <div class="trait-list">
+                                {{this.system.attack.traits.displayString}}
+                            </div>
+                        </div>
                         {{/if}}
 
                         {{#if this.system.isRanged}}
