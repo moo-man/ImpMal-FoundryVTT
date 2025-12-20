@@ -18,7 +18,7 @@
     
     {{#if (or data.showTraits.burst data.showTraits.rapidFire)}}
         <div class="form-group">
-            <label>Fire Mode</label>
+            <label>{{localize "IMPMAL.FireMode"}}</label>
             <div class="form-fields">
                 <select name="fireMode">
                     <option value="normal" {{#if (eq fields.fireMode "normal")}} selected{{/if}}>{{localize "IMPMAL.Normal"}}</option>
