@@ -50,16 +50,12 @@ export class AttackDialog extends SkillTestDialog
                 this.tooltips.add("SL", 1, "Burst");
                 break;
             case "rapidFireAdv":
-                this.advCount++;
+                this.advCount++;               
                 this.tooltips.add("advantage", 1, "Rapid Fire (Advantage + Damage)");
+                this.fields.damage += Number(this.traits.has("rapidFire").value);
+                this.tooltips.add("damage", Number(this.traits.has("rapidFire").value), "Rapid Fire (Advantage + Damage)");
                 break;
             case "rapidFireSpread":
-                break;
-            case "fullfanaticAdv":
-                this.advCount++;
-                this.tooltips.add("advantage", 1, "Full-Auto Fanatic (Advantage + Damage)");
-                break;
-            case "fullfanaticSpread":
                 break;
         }
 
@@ -108,13 +104,6 @@ export class AttackDialog extends SkillTestDialog
                 case "rapidFireSpread":
                 case "rapidFireAdv":
                     if (this.data.item.type == "weapon" && (Number(this.traits.has("rapidFire").value) * multiplier) > this.data.item.system.mag.current) {
-                        ev.currentTarget.value = "normal";
-                        ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
-                    }
-                    break;
-                case "fullfanaticSpread":
-                case "fullfanaticAdv":
-                    if (this.data.item.type == "weapon" && (Number(this.traits.has("rapidFire").value) * multiplier * 2) > this.data.item.system.mag.current) {
                         ev.currentTarget.value = "normal";
                         ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
                     }

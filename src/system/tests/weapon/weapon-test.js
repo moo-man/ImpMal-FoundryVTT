@@ -81,9 +81,7 @@ export class WeaponTest extends AttackTest
     {
         let superchargeMultiplier = this.result.supercharge ? 2 : 1;
 
-        let rapidFireUsed = (this.result.fireMode == "rapidFireAdv" || this.result.fireMode == "rapidFireSpread" ||
-            this.result.fireMode == "fullfanaticAdv" || this.result.fireMode == "fullfanaticSpread");
-        let rapidFireMult = (this.result.fireMode == "fullfanaticAdv" || this.result.fireMode == "fullfanaticSpread") ? 2 : 1;
+        let rapidFireUsed = (this.result.fireMode == "rapidFireAdv" || this.result.fireMode == "rapidFireSpread");
 
         if (game.settings.get("impmal", "countEveryBullet"))
         {
@@ -94,7 +92,7 @@ export class WeaponTest extends AttackTest
             }
             else if (rapidFireUsed)
             {
-                return superchargeMultiplier * this.itemTraits.has("rapidFire").value * multiplier * rapidFireMult;
+                return superchargeMultiplier * this.itemTraits.has("rapidFire").value * multiplier;
             }
             else 
             {
@@ -112,7 +110,7 @@ export class WeaponTest extends AttackTest
             {
                 baseAmmoUsed = 1;
             }
-            return superchargeMultiplier * (baseAmmoUsed + (this.result.fireMode == "burst" ? 1 : 0) + (rapidFireUsed ? Number(this.itemTraits.has("rapidFire").value) * rapidFireMult : 0));
+            return superchargeMultiplier * (baseAmmoUsed + (this.result.fireMode == "burst" ? 1 : 0) + (rapidFireUsed ? Number(this.itemTraits.has("rapidFire").value) : 0));
         }
     }
 

@@ -36,10 +36,6 @@ export class AttackTest extends SkillTest
         {
             tags.push(`${game.i18n.localize("IMPMAL.RapidFire")} (${game.i18n.localize("IMPMAL.Spread")})`);
         }
-        if (this.result.fireMode == "fullfanaticSpread")
-        {
-            tags.push(`${game.i18n.localize("IMPMAL.FullAutoFanatic")} (${game.i18n.localize("IMPMAL.Spread")})`);
-        }
         return tags;
     }
 
