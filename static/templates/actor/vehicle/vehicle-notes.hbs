@@ -1,14 +1,24 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
     {{formGroup fields.cost value=system.cost label="IMPMAL.Cost" localize=true}}
     {{#if (isGM)}}
-        <div class="editor-section">
-            <div class="header">{{localize "IMPMAL.GMNotes"}}</div>
+        <details class="editor-section gm-notes-collapsible" open>
+            <summary class="header">
+                <span>{{localize "IMPMAL.GMNotes"}}</span>
+                <span class="collapse-toggle" aria-hidden="true">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </span>
+            </summary>
             {{formInput fields.notes.fields.gm value=source.system.notes.gm enriched=enriched.system.notes.gm toggled=true}}
-        </div>
+        </details>
     {{/if}}
-
-    <div class="editor-section">
-        <div class="header">{{localize "IMPMAL.Biography"}}</div>
-        {{formInput fields.notes.fields.player value=source.system.notes.player enriched=enriched.system.notes.player toggled=true}}
-    </div>
+    
+        <details class="editor-section gm-notes-collapsible" open>
+            <summary class="header">
+                <span>{{localize "IMPMAL.Biography"}}</span>
+                <span class="collapse-toggle" aria-hidden="true">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </span>
+            </summary>
+            {{formInput fields.notes.fields.player value=source.system.notes.player enriched=enriched.system.notes.player toggled=true}}
+        </details>
 </section>

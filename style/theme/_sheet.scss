@@ -117,6 +117,26 @@ body.impmal-theme {
             background: var(--impmal-lightblue);
         }
 
+        .editor-section summary.header {
+            background: var(--impmal-lightblue);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .editor-section summary.header::-webkit-details-marker {
+            display: none;
+        }
+
+        .editor-section .collapse-toggle i {
+            transition: transform 0.2s ease;
+        }
+
+        .editor-section.gm-notes-collapsible:not([open]) .collapse-toggle i {
+            transform: rotate(-90deg);
+        }
+
         .sheet-header {
             .attribute-box.single {
                 background: none;
