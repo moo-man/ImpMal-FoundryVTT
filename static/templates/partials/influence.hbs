@@ -62,7 +62,7 @@
                     {{/each}}
                     {{#each this.sources}}
                         <div class="source row-content {{#if ../this.patron}}disabled inactive{{/if}}" data-index="{{@key}}">
-                            <a class="flex" data-action="deleteSource"><i class="fa-solid fa-xmark"></i></a>
+                            <div class="flex"></div>
                             <div class="small">
                                 <input type="number" data-saction="editSource" data-property="value" value="{{this.value}}">
                             </div>
@@ -72,6 +72,7 @@
                             <div class="flex large">
                                 <input type="text" data-saction="editSource" data-property="reason" value="{{this.reason}}">
                             </div>
+                            <a class="tiny" data-action="deleteSource"><i class="fa-solid fa-xmark"></i></a>
                         </div>
                     {{/each}}
                     {{#unless this.patron}}
