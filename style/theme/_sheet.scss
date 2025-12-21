@@ -123,10 +123,15 @@ body.impmal-theme {
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
+            list-style: none;
         }
 
         .editor-section summary.header::-webkit-details-marker {
             display: none;
+        }
+
+        .editor-section summary.header::marker {
+            content: "";
         }
 
         .editor-section .collapse-toggle i {
