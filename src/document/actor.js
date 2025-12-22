@@ -282,14 +282,14 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
             }
             
             damage[loc] += Number(value);
-            if (damage[loc] > item.armour) {
-                damage[loc] = item.armour;
+            if (damage[loc] > item.system.armour) {
+                damage[loc] = item.system.armour;
             }
             if (damage[loc] < 0) damage[loc] = 0;
             if (damage[loc] == 0) {
                 updateObj["system.rended." + loc] = false;
             }
-            if (damage[loc] == item.armour) {
+            if (damage[loc] == item.system.armour) {
                 updateObj["system.destroyed." + loc] = true;
             } else {
                 updateObj["system.destroyed." + loc] = false;
