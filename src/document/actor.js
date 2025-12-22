@@ -286,8 +286,11 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
                 value = 0;
             }
 
-            damage[loc] += value;
+            damage[loc] += Number(value);
             updateObj["system.damage"] = damage;
+            if (damage[loc] == 0) {
+                updateObj["system.rended." + loc] = false;
+            }
 
             if (update)
             {
