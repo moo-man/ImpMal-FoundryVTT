@@ -342,12 +342,26 @@ body.theme-light .application.impmal.actor {
 
     .sheet-list .weapon-aux {
         gap : 0.5rem;
-        align-items: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
         margin-top: 3px;
+        height: auto;
+        overflow: visible;
         .weapon-traits {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             flex: 1;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            text-align: left;
+            line-height: 1.2;
+            .trait-list {
+                  white-space: normal;
+                  overflow-wrap: anywhere;
+                  word-break: break-word;
+                  text-align: left;
+            }
         }
         .mag {
             display: flex;
