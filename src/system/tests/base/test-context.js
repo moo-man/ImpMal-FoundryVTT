@@ -145,6 +145,15 @@ export class TestContext
             }
             else if (this.targetSpeakers.length) // If attacking
             {
+                // If a failed ranged roll auto-marked targets unopposed, allow a successful reroll to recreate opposed tests.
+                if (this.opposedFlagsAdded) {
+                    if (message?.system?.test?.item?.system?.attackType == "ranged" &&
+                        message?.system?.test?.result?.outcome == "success") {
+                        this.responses = {};
+                        this.opposedFlagsAdded = false;
+                    }
+                }
+
                 if (Object.keys(this.responses).length != this.targetSpeakers.length)
                 {
                     if (!fromUpdate)
