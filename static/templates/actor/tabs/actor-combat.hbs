@@ -77,7 +77,7 @@
                     {{#if this.system.traits.list.length}}
                         <div class="row-content weapon-aux">
                             <div class="weapon-traits">
-                                    {{this.system.traits.displayString}}
+                                    {{{this.system.traits.displayHtml}}}
                             </div>
                         </div>
                     {{/if}}
@@ -138,7 +138,7 @@
                         {{#if this.system.traits.list.length}}
                             <div class="weapon-traits">
                                 <div class="trait-list">
-                                    {{this.system.traits.displayString}}
+                                    {{{this.system.traits.displayHtml}}}
                                 </div>
                             </div>
                         {{/if}}
@@ -204,7 +204,7 @@
 
                                     <label>{{localize 'IMPMAL.TraitsT'}}</label>
                                     <div class="trait-list">
-                                        {{this.system.traits.displayString}}
+                                        {{{this.system.traits.displayHtml}}}
                                     </div>
                                 </div>
                             {{/if}}
@@ -257,7 +257,7 @@
 
                             <div class="flex">
                                 <div class="trait-list">
-                                    {{this.system.traits.displayString}}
+                                    {{{this.system.traits.displayHtml}}}
                                 </div>
                             </div>
 
@@ -298,7 +298,7 @@
                                 {{#if this.system.traits.displayString}}
                                     <div class="armour-traits">
                                         <div class="trait-list">
-                                            {{this.system.traits.displayString}}
+                                            {{{this.system.traits.displayHtml}}}
                                         </div>
                                     </div>
                                 {{/if}}
