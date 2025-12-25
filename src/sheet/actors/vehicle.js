@@ -186,12 +186,12 @@ export default class VehicleSheet extends IMActorSheet
 
             if (choice == "delete")
             {
-              await doc?.delete();
+              await doc?.deleteDialog();
             }
           }
           else 
           {
-            doc?.delete();
+            doc?.deleteDialog();
           }
 
       }
