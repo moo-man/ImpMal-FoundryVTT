@@ -18,6 +18,7 @@ export class AttackDialog extends SkillTestDialog
     {
         super(...args)
         this.data.showTraits = this.showTraits;
+        this.data.fireMode = this.fireMode;
         this.data.hitLocations = {
             "roll" : "IMPMAL.Roll",
             "head" : "IMPMAL.Head",
@@ -43,16 +44,22 @@ export class AttackDialog extends SkillTestDialog
             this.tooltips.add("disadvantage", 1, "Targeting Location");
         }
 
-        if (this.fields.rapidFire)
-        {
-            this.advCount++;
-            this.tooltips.add("advantage", 1, "Rapid Fire");
-        }
-
-        if (this.fields.burst)
-        {
-            this.fields.SL++;
-            this.tooltips.add("SL", 1, "Burst");
+        switch (this.fields.fireMode) {
+            case "burst":
+                this.fields.burst = true;
+                this.fields.SL++;
+                this.tooltips.add("SL", 1, "Burst");
+                break;
+            case "rapidFireAdv":
+                this.fields.rapidFire = true;
+                this.advCount++;               
+                this.tooltips.add("advantage", 1, "Rapid Fire (Advantage + Damage)");
+                this.fields.damage += Number(this.traits.has("rapidFire").value);
+                this.tooltips.add("damage", Number(this.traits.has("rapidFire").value), "Rapid Fire (Advantage + Damage)");
+                break;
+            case "rapidFireSpread":
+                this.fields.rapidFire = true;
+                break;
         }
 
         if (this.context.twf)
@@ -82,35 +89,40 @@ export class AttackDialog extends SkillTestDialog
         let fields = super._defaultFields();
         fields.hitLocation = "roll";
         fields.damage = 0;
+        fields.fireMode = "normal";
         return fields;
     }
 
     _onFieldChange(ev)
     {
-        // Can't have both burst and rapidFire active
         let multiplier = game.settings.get("impmal", "countEveryBullet") ? 5 : 1;
-        if (ev.currentTarget.name == "burst")
-        {
-            if (this.data.item.type == "weapon" &&  multiplier > this.data.item.system.mag.current)
-            {
-                ev.currentTarget.checked = false;
-                ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
-            }
-            else 
-            {
-                delete this.userEntry.rapidFire;
-            }
-        }
-        else if (ev.currentTarget.name == "rapidFire")
-        {
-            if (this.data.item.type == "weapon" && (Number(this.traits.has("rapidFire").value) * multiplier) > this.data.item.system.mag.current)
-            {
-                ev.currentTarget.checked = false;
-                ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
-            }
-            else 
-            {
-                delete this.userEntry.burst;
+        if (ev.currentTarget.name == "fireMode") {
+            switch (ev.currentTarget.value) {
+                case "burst":
+                    if (this.data.item.type == "weapon" && multiplier > this.data.item.system.mag.current) {
+                        ev.currentTarget.value = "normal";
+                        ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+                        delete this.userEntry.burst;
+                    }
+                    else {
+                        this.userEntry.burst = true;
+                    }
+                    break;
+                case "rapidFireSpread":
+                case "rapidFireAdv":
+                    if (this.data.item.type == "weapon" && (Number(this.traits.has("rapidFire").value) * multiplier) > this.data.item.system.mag.current) {
+                        ev.currentTarget.value = "normal";
+                        ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
+                        delete this.userEntry.rapidFire;
+                    }
+                    else {
+                        this.userEntry.rapidFire = true;
+                    }
+                    break;
+                case "normal":
+                    delete this.userEntry.burst;
+                    delete this.userEntry.rapidFire;
+                    break;
             }
         }
         super._onFieldChange(ev);

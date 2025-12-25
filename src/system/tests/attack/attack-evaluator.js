@@ -24,6 +24,7 @@ export class AttackEvaluator extends BaseTestEvaluator
     {
         this.additionalDamage = data.additionalDamage;
         this.supercharge = data.supercharge;
+        this.fireMode = data.fireMode;
         this.burst = data.burst;
         this.rapidFire = data.rapidFire;
         this.critModifier = data.critModifier;
