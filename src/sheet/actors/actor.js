@@ -289,7 +289,7 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
             {
               let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
               const document = await fromUuid(uuid);
-              document.delete();
+              document.deleteDialog();
             }
           }
       ];
