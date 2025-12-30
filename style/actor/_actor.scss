@@ -189,6 +189,12 @@ body.theme-light .application.impmal.actor {
         gap: 0.5rem;
     }
 
+    .skill-summary {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
     .bar-section
     {
         flex: 5;
