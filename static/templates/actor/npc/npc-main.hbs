@@ -12,6 +12,29 @@
     </div>
 {{/if}}
 
+<div class="sheet-list">
+    <div class="list-header row-content">
+        <div class="list-name">{{localize "IMPMAL.Skills"}}</div>
+    </div>
+    <div class="list-content">
+        <div class="skills-summary">
+            {{#each system.skills}}
+            {{#if (gt this.advances 0)}}
+            <span>
+                <a class="rollable" data-action="rollTest" data-type="skill" data-key="{{@key}}">{{configLookup "skills" @key}} {{this.total}},</a>
+            </span>
+            {{/if}}
+            {{#each this.specialisations}}
+            {{#if (gt this.system.advances 0)}}
+            <span>
+                <a class="rollable" data-action="rollTest" data-type="skill" data-id="{{this.id}}">{{configLookup "skills" @../key}} ({{this.name}}) {{this.system.total}},</a>
+            </span>
+            {{/if}}
+            {{/each}}
+            {{/each}}
+        </div>
+    </div>
+</div>
 
 <div class="sheet-list">
     <div class="list-header row-content">
@@ -37,7 +60,7 @@
                             <div>{{configLookup "ranges" this.system.attackData.range}} {{localize "IMPMAL.Range"}}</div>
                         {{/if}}
                     </div>
-                    {{#if (or this.system.traits.list.length this.system.isRanged)}}
+                    {{#if (or this.system.traits.list.length this.system.isRanged this.system.attack.traits.list.length)}}
                     <div class="row-content weapon-aux">
                         {{#if this.system.traits.list.length}}
                             <div class="weapon-traits">
@@ -45,6 +68,14 @@
                                     {{this.system.traits.displayString}}
                                 </div>
                             </div>
+                        {{/if}}
+
+                        {{#if this.system.attack.traits.list.length}}
+                        <div class="weapon-traits">
+                            <div class="trait-list">
+                                {{this.system.attack.traits.displayString}}
+                            </div>
+                        </div>
                         {{/if}}
 
                         {{#if this.system.isRanged}}
