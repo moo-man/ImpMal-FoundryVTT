@@ -5,13 +5,11 @@ body.impmal-theme {
 
     .application.impmal.sheet {
         --color-text-primary: #DDD;
-
         --color-scrollbar: var(--impmal-lightgreen);
         --slot-border: var(--impmal-lightgreen);
         --slot-bg: var(--impmal-lightgreen);
         --slot: var(--impmal-lightgreen);
         --form-group-border: var(--impmal-lightblue);
-
         --name-bg: var(--impmal-lightblue);
         --name-border: var(--impmal-lightblue);
         --name-label: var(--impmal-darkblue);
@@ -23,7 +21,6 @@ body.impmal-theme {
             @include editor-content-alt;
         }
 
-
         font-family: var(--header-font);
 
         hr {
@@ -31,7 +28,7 @@ body.impmal-theme {
             background-image: linear-gradient(90deg, transparent 0%, var(--impmal-lightgreen) 50%, transparent 100%);
         }
 
-        .input-list .fields>* input:not([type=checkbox], [type=range], [type=radio]) {
+        .input-list .fields > * input:not([type=checkbox], [type=range], [type=radio]) {
             border: 1px solid var(--impmal-lightblue);
             border-radius: 4px;
             flex: 0 0 2rem;
@@ -75,7 +72,6 @@ body.impmal-theme {
 
         .attribute-box {
             @include reticule (2px, 7px, var(--impmal-lightblue));
-
             height: unset;
 
             .label,
@@ -117,29 +113,8 @@ body.impmal-theme {
             background: var(--impmal-lightblue);
         }
 
-        .editor-section summary.header {
-            background: var(--impmal-lightblue);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            list-style: none;
-        }
-
-        .editor-section summary.header::-webkit-details-marker {
+        .editor-section .collapsed {
             display: none;
-        }
-
-        .editor-section summary.header::marker {
-            content: "";
-        }
-
-        .editor-section .collapse-toggle i {
-            transition: transform 0.2s ease;
-        }
-
-        .editor-section.gm-notes-collapsible:not([open]) .collapse-toggle i {
-            transform: rotate(-90deg);
         }
 
         .sheet-header {
@@ -166,12 +141,10 @@ body.impmal-theme {
                         border: 0px;
                     }
                 }
-
             }
         }
 
         .tab[data-tab="effects"] {
-
             --condition: var(--impmal-lightblue);
             --pip: var(--impmal-lightgreen);
 

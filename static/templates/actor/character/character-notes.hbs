@@ -43,26 +43,19 @@
         <div class="field" style="grid-column: 1 / span 12"><input type="text" value="{{system.goal.long}}" name="system.goal.long"></div>
     </div>
 </div>
-
     {{#if (isGM)}}
-        <details class="editor-section gm-notes-collapsible" open>
-            <summary class="header">
-                <span>{{localize "IMPMAL.GMNotes"}}</span>
-                <span class="collapse-toggle" aria-hidden="true">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </span>
-            </summary>
+    <div class="editor-section list-row">
+        <div class="header" data-action="expandRow">{{localize "IMPMAL.GMNotes"}}</div>
+        <div class="dropdown-content expanded">
             {{formInput fields.notes.fields.gm value=source.system.notes.gm enriched=enriched.system.notes.gm toggled=true}}
-        </details>
+        </div>
+    </div>
     {{/if}}
-    
-        <details class="editor-section gm-notes-collapsible" open>
-            <summary class="header">
-                <span>{{localize "IMPMAL.Biography"}}</span>
-                <span class="collapse-toggle" aria-hidden="true">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </span>
-            </summary>
+
+    <div class="editor-section list-row">
+        <div class="header" data-action="expandRow">{{localize "IMPMAL.Biography"}}</div>
+        <div class="dropdown-content expanded">
             {{formInput fields.notes.fields.player value=source.system.notes.player enriched=enriched.system.notes.player toggled=true}}
-        </details>
+        </div>
+    </div>
 </section>

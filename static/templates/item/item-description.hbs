@@ -1,23 +1,17 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
     {{#if (isGM)}}
-    <details class="editor-section gm-notes-collapsible" open>
-        <summary class="header">
-            <span>{{localize "IMPMAL.GMNotes"}}</span>
-            <span class="collapse-toggle" aria-hidden="true">
-                <i class="fa-solid fa-chevron-down"></i>
-            </span>
-        </summary>
-        {{formInput fields.notes.fields.gm value=source.system.notes.gm enriched=enriched.system.notes.gm toggled=true}}
-    </details>
+    <div class="editor-section list-row">
+        <div class="header" data-action="expandRow">{{localize "IMPMAL.GMNotes"}}</div>
+        <div class="dropdown-content expanded">
+            {{formInput fields.notes.fields.gm value=source.system.notes.gm enriched=enriched.system.notes.gm toggled=true}}
+        </div>
+    </div>
     {{/if}}
 
-    <details class="editor-section gm-notes-collapsible" open>
-        <summary class="header">
-            <span>{{localize "IMPMAL.Notes"}}</span>
-            <span class="collapse-toggle" aria-hidden="true">
-                <i class="fa-solid fa-chevron-down"></i>
-            </span>
-        </summary>
-        {{formInput fields.notes.fields.player value=source.system.notes.player enriched=enriched.system.notes.player toggled=true}}
-    </details>
+    <div class="editor-section list-row">
+        <div class="header" data-action="expandRow">{{localize "IMPMAL.Biography"}}</div>
+        <div class="dropdown-content expanded">
+            {{formInput fields.notes.fields.player value=source.system.notes.player enriched=enriched.system.notes.player toggled=true}}
+        </div>
+    </div>
 </section>
