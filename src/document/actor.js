@@ -240,7 +240,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
       return this.system.applyDamage(value, options)
     }
 
-    async damageArmour(loc, value, item, {update=true, rend=false, prompt=false}={})
+    async damageArmour(loc, value, item, {update=true, rend=false, prompt=false, attackerItem=null}={})
     {
         let updateObj = {};
         let protectionItems = this.system.combat.hitLocations[loc].items.filter(i => i.type == "protection");
@@ -271,9 +271,15 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         if (item)
         {
             let damage = foundry.utils.deepClone(item.system.damage);
-            if (!Number.isNumeric(damage[loc]))
-            {
+            if (!Number.isNumeric(damage[loc])) {
                 damage[loc] = 0;
+            }
+
+            //We assume that prompt==true means it wasn't a user's click
+            if (prompt) {
+                let currentLocDam = damage[loc]
+                let args = { actor: item.parent, item, loc, value, rend, currentLocDam, attackerItem };
+                await Promise.all(item.parent.runScripts("preDamageArmour", args) || []);
             }
 
             if (rend && value > 0 && item.system.rended[loc] != true)
