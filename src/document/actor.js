@@ -243,7 +243,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
     async damageArmour(loc, value, item, {update=true, rend=false, prompt=false}={})
     {
         let updateObj = {};
-        let protectionItems = this.system.combat.hitLocations[loc].items.filter(i => i.type == "protection" && !i.system.destroyed[loc]);
+        let protectionItems = this.system.combat.hitLocations[loc].items.filter(i => i.type == "protection" && (!i.system.destroyed[loc] || value < 0));
         if (!value)
         {
             return;
