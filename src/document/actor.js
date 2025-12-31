@@ -280,6 +280,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
                 let currentLocDam = damage[loc]
                 let args = { actor: item.parent, item, loc, value, rend, currentLocDam, attackerItem };
                 await Promise.all(item.parent.runScripts("preDamageArmour", args) || []);
+                value = Number(args.value);
             }
 
             if (rend && value > 0 && item.system.rended[loc] != true)
