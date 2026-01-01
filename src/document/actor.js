@@ -300,7 +300,32 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
         }
         else 
         {
-            ui.notifications.notify(game.i18n.localize("IMPMAL.NoItemsToDamage"));
+            if (this.type == "npc" && !this.system.combat.armour.useItems) {
+
+                let damage = foundry.utils.deepClone(this.system.combat.armour.damage);
+                if (!Number.isNumeric(damage[loc])) {
+                    damage[loc] = 0;
+                }
+
+                damage[loc] += Number(value);
+
+                if (damage[loc] > this.system.combat.armour.value) {
+                    damage[loc] = this.system.combat.armour.value;
+                }
+                if (damage[loc] < 0) damage[loc] = 0;
+
+                updateObj["system.combat.armour.damage." + loc] = damage[loc];
+                if (update) {
+                    return this.update(updateObj);
+                }
+                else {
+                    return updateObj;
+                }
+
+            }
+            else {
+                ui.notifications.notify(game.i18n.localize("IMPMAL.NoItemsToDamage"));
+            }
         }
     }
 
