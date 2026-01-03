@@ -80,15 +80,17 @@ export class WeaponTest extends AttackTest
     computeAmmoUsed()
     {
         let superchargeMultiplier = this.result.supercharge ? 2 : 1;
+
+        let rapidFireUsed = (this.result.fireMode == "rapidFireAdv" || this.result.fireMode == "rapidFireSpread");
+
         if (game.settings.get("impmal", "countEveryBullet"))
         {
             let multiplier = game.settings.get("impmal", "countEveryBullet") ? 5 : 1;
-
-            if (this.result.burst)
+            if (this.result.fireMode == "burst")
             {
                 return superchargeMultiplier * multiplier;
             }
-            else if (this.result.rapidFire)
+            else if (rapidFireUsed)
             {
                 return superchargeMultiplier * this.itemTraits.has("rapidFire").value * multiplier;
             }
@@ -108,8 +110,7 @@ export class WeaponTest extends AttackTest
             {
                 baseAmmoUsed = 1;
             }
-
-            return superchargeMultiplier * (baseAmmoUsed + (this.result.burst ? 1 : 0) + (this.result.rapidFire ? Number(this.itemTraits.has("rapidFire").value) : 0));
+            return superchargeMultiplier * (baseAmmoUsed + (this.result.fireMode == "burst" ? 1 : 0) + (rapidFireUsed ? Number(this.itemTraits.has("rapidFire").value) : 0));
         }
     }
 
