@@ -35,6 +35,7 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
         rollAvailability : this._onRollAvailability,
         editTraits : this._onEditTraits,
         editDiff : this._onEditDiff,
+        expandRow : this._onExpandRow,
         
       }
     }
@@ -112,6 +113,16 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
                 let dropItem = this.document.actor.items.get(ev.target.closest(".list-row")?.dataset.id);
                 dropItem?.update(dropItem.system.slots.slotItem(document, index));
             }
+        }
+    }
+
+    static _onExpandRow(ev, target) {
+        let dropdown = target.closest(".list-row").querySelector(".dropdown-content");
+        if (dropdown.classList.contains("expanded")) {
+            dropdown.classList.replace("expanded", "collapsed");
+        }
+        else if (dropdown.classList.contains("collapsed")) {
+            dropdown.classList.replace("collapsed", "expanded");
         }
     }
 
