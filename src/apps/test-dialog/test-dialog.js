@@ -6,6 +6,11 @@ export class TestDialog extends WarhammerRollDialogV2
     static DEFAULT_OPTIONS = {
         position: {
             width: 600
+        },
+        form: {
+            handler: this.submit,
+            submitOnChange: false,
+            closeOnSubmit: true,
         }
     };
 
@@ -173,7 +178,7 @@ export class TestDialog extends WarhammerRollDialogV2
         }
     }
 
-    submit(ev)
+    static submit(ev)
     {
         if (this.fields.fateAdvantage)
         {
