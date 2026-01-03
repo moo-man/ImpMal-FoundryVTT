@@ -141,4 +141,25 @@ body.theme-light .application.impmal.item {
             }
         }
     }
+
+    .form-group.item-traits {
+        .form-fields {
+            align-items: flex-start;
+            padding: 0.5rem;
+        }
+
+        .trait-list {            
+            display: block;
+            width: 100%;
+            min-height: 2.5rem;
+            padding: 2px 4px;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--impmal-lightblue);
+            border-radius: 3px;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            line-height: 1.2;
+        }
+    }
 }
