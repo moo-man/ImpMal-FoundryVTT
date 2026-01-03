@@ -1457,7 +1457,12 @@ const IMPMAL = {
             img: "systems/impmal/assets/icons/conditions/dead.svg",
             id: "dead",
             statuses : ["dead"],
-            name: "IMPMAL.Dead"
+            name: "IMPMAL.Dead",
+            flags: {
+                core: {
+                    overlay: true
+                }
+            }
         },
     ],
 
