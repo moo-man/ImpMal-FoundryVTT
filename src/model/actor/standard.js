@@ -396,7 +396,7 @@ export class StandardActorModel extends BaseActorModel
             // TODO: this isn't supported if update flag is false
             if (update)
             {
-                await this.parent.damageArmour(locationKey, damageData.rend, null, {prompt : true, rend : true, attackerItem: opposed?.attackerTest?.item});
+                await this.parent.damageArmour(locationKey, damageData.rend, null, {prompt : true, rend : true, attackerTest: opposed?.attackerTest });
             }
         }
         return damageData;

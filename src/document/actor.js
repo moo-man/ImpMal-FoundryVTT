@@ -240,7 +240,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
       return this.system.applyDamage(value, options)
     }
 
-    async damageArmour(loc, value, item, {update=true, rend=false, prompt=false, attackerItem=null}={})
+    async damageArmour(loc, value, item, {update=true, rend=false, prompt=false, attackerTest=null}={})
     {
         let updateObj = {};
         let protectionItems = this.system.combat.hitLocations[loc].items.filter(i => i.type == "protection");
@@ -278,8 +278,8 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
             //We assume that prompt==true means it wasn't a user's click
             if (prompt) {
                 let currentLocDam = damage[loc]
-                let args = { actor: item.parent, item, loc, value, rend, currentLocDam, attackerItem };
-                await Promise.all(item.parent.runScripts("preDamageArmour", args) || []);
+                let args = { actor: item.parent, item, loc, value, rend, currentLocDam, attackerTest };
+                await Promise.all(item.parent.runScripts("preItemDamaged", args) || []);
                 value = Number(args.value);
             }
 
