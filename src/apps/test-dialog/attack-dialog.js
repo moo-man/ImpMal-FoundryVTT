@@ -101,10 +101,6 @@ export class AttackDialog extends SkillTestDialog
                     if (this.data.item.type == "weapon" && multiplier > this.data.item.system.mag.current) {
                         ev.currentTarget.value = "normal";
                         ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
-                        delete this.userEntry.burst;
-                    }
-                    else {
-                        this.userEntry.burst = true;
                     }
                     break;
                 case "rapidFireSpread":
@@ -112,15 +108,10 @@ export class AttackDialog extends SkillTestDialog
                     if (this.data.item.type == "weapon" && (Number(this.traits.has("rapidFire").value) * multiplier) > this.data.item.system.mag.current) {
                         ev.currentTarget.value = "normal";
                         ui.notifications.warn(game.i18n.localize("IMPMAL.NotEnoughAmmo"));
-                        delete this.userEntry.rapidFire;
-                    }
-                    else {
-                        this.userEntry.rapidFire = true;
                     }
                     break;
                 case "normal":
-                    delete this.userEntry.burst;
-                    delete this.userEntry.rapidFire;
+                    delete this.userEntry.fireMode;
                     break;
             }
         }
