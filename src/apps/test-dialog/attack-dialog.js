@@ -18,7 +18,6 @@ export class AttackDialog extends SkillTestDialog
     {
         super(...args)
         this.data.showTraits = this.showTraits;
-        this.data.fireMode = this.fireMode;
         this.data.hitLocations = {
             "roll" : "IMPMAL.Roll",
             "head" : "IMPMAL.Head",
