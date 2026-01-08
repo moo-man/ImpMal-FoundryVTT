@@ -5,11 +5,13 @@ body.impmal-theme {
 
     .application.impmal.sheet {
         --color-text-primary: #DDD;
+
         --color-scrollbar: var(--impmal-lightgreen);
         --slot-border: var(--impmal-lightgreen);
         --slot-bg: var(--impmal-lightgreen);
         --slot: var(--impmal-lightgreen);
         --form-group-border: var(--impmal-lightblue);
+
         --name-bg: var(--impmal-lightblue);
         --name-border: var(--impmal-lightblue);
         --name-label: var(--impmal-darkblue);
@@ -21,6 +23,7 @@ body.impmal-theme {
             @include editor-content-alt;
         }
 
+
         font-family: var(--header-font);
 
         hr {
@@ -28,7 +31,7 @@ body.impmal-theme {
             background-image: linear-gradient(90deg, transparent 0%, var(--impmal-lightgreen) 50%, transparent 100%);
         }
 
-        .input-list .fields > * input:not([type=checkbox], [type=range], [type=radio]) {
+        .input-list .fields>* input:not([type=checkbox], [type=range], [type=radio]) {
             border: 1px solid var(--impmal-lightblue);
             border-radius: 4px;
             flex: 0 0 2rem;
@@ -72,6 +75,7 @@ body.impmal-theme {
 
         .attribute-box {
             @include reticule (2px, 7px, var(--impmal-lightblue));
+
             height: unset;
 
             .label,
@@ -113,10 +117,6 @@ body.impmal-theme {
             background: var(--impmal-lightblue);
         }
 
-        .editor-section .collapsed {
-            display: none;
-        }
-
         .sheet-header {
             .attribute-box.single {
                 background: none;
@@ -141,10 +141,12 @@ body.impmal-theme {
                         border: 0px;
                     }
                 }
+
             }
         }
 
         .tab[data-tab="effects"] {
+
             --condition: var(--impmal-lightblue);
             --pip: var(--impmal-lightgreen);
 

@@ -73,6 +73,11 @@ body.theme-light .application.impmal.sheet {
 
 
 .editor-section {
+
+    .collapsed {
+        display: none;
+    }
+
     > .header {
         display: flex;
         align-items: center;
