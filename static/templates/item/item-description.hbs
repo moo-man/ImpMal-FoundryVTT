@@ -1,7 +1,12 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
     {{#if (isGM)}}
     <div class="editor-section list-row">
-        <div class="header" data-action="expandRow">{{localize "IMPMAL.GMNotes"}}</div>
+        <div class="header" data-action="expandRow">
+            {{localize "IMPMAL.GMNotes"}}
+            <span class="collapse-toggle" aria-hidden="true">
+                <i class="fa-solid fa-chevron-down"></i>
+            </span>
+        </div>
         <div class="dropdown-content expanded">
             {{formInput fields.notes.fields.gm value=source.system.notes.gm enriched=enriched.system.notes.gm toggled=true}}
         </div>
@@ -9,7 +14,12 @@
     {{/if}}
 
     <div class="editor-section list-row">
-        <div class="header" data-action="expandRow">{{localize "IMPMAL.Biography"}}</div>
+        <div class="header" data-action="expandRow">
+            {{localize "IMPMAL.Biography"}}
+            <span class="collapse-toggle" aria-hidden="true">
+                <i class="fa-solid fa-chevron-down"></i>
+            </span>
+        </div>
         <div class="dropdown-content expanded">
             {{formInput fields.notes.fields.player value=source.system.notes.player enriched=enriched.system.notes.player toggled=true}}
         </div>

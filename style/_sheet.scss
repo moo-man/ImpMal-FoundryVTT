@@ -70,3 +70,35 @@ body.theme-light .application.impmal.sheet {
     }
 
 }
+
+
+.editor-section {
+    > .header {
+        display: flex;
+        align-items: center;
+
+        .collapse-toggle {
+            margin-left: auto;
+
+            i {
+                color: var(--color-text-primary);
+            }
+        }
+    }
+
+    .header:has(+ .dropdown-content.collapsed) {
+        .collapse-toggle {
+            i {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    .header:has(+ .dropdown-content.expanded) {
+        .collapse-toggle {
+            i {
+                transform: rotate(0deg);
+            }
+        }
+    }
+}
