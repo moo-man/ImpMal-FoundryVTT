@@ -74,8 +74,15 @@ body.theme-light .application.impmal.sheet {
 
 .editor-section {
 
-    .collapsed {
-        display: none;
+    .dropdown-content {
+
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 250ms;
+        > * {overflow:hidden};
+        &.expanded {
+            grid-template-rows:  1fr;
+        }
     }
 
     > .header {
