@@ -87,11 +87,13 @@ body.theme-light .application.impmal.sheet {
 
     > .header {
         display: flex;
-        align-items: center;
+        > * {
+            flex: 1;
+        }
 
         .collapse-toggle {
-            margin-left: auto;
-
+            flex: 0 0 1.5rem;
+            text-align: center;
             i {
                 color: var(--color-text-primary);
             }
