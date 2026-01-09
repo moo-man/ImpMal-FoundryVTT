@@ -8,6 +8,8 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
 
     static hasConditionEffects = false
   
+    collapsed = {};
+
     static DEFAULT_OPTIONS = {
       classes: ["impmal"],
       defaultTab : "description",
@@ -120,9 +122,17 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
         let dropdown = target.closest(".list-row").querySelector(".dropdown-content");
         if (dropdown.classList.contains("expanded")) {
             dropdown.classList.replace("expanded", "collapsed");
+            if (target.dataset.type)
+            {
+              this.collapsed[target.dataset.type] = true;
+            }
         }
         else if (dropdown.classList.contains("collapsed")) {
             dropdown.classList.replace("collapsed", "expanded");
+            if (target.dataset.type)
+            {
+              this.collapsed[target.dataset.type] = false;
+            }
         }
     }
 
@@ -136,6 +146,7 @@ export default class IMItemSheet extends SheetMixin(WarhammerItemSheetV2)
     {
         let data = await super._prepareContext(options);
         data.conditions = this.formatConditions(data);
+        data.collapsed = this.collapsed;
         return data;
     }
 

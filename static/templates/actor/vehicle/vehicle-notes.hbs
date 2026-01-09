@@ -2,13 +2,13 @@
     {{formGroup fields.cost value=system.cost label="IMPMAL.Cost" localize=true}}
     {{#if (isGM)}}
     <div class="editor-section list-row">
-        <div class="header" data-action="expandRow">
+        <div class="header" data-action="expandRow" data-type="gm">
             <div>{{localize "IMPMAL.GMNotes"}}</div>
             <a class="collapse-toggle {{#unless enriched.system.notes.gm}}inactive{{/unless}}" aria-hidden="true">
                 <i class="fa-solid fa-chevron-down"></i>
             </a>
         </div>
-        <div class="dropdown-content expanded">
+        <div class="dropdown-content {{#unless collapsed.gm}}expanded{{else}}collapsed{{/unless}}">
             <div class="expander">
                 {{formInput fields.notes.fields.gm value=source.system.notes.gm enriched=enriched.system.notes.gm toggled=true}}
             </div>
@@ -17,13 +17,13 @@
     {{/if}}
 
     <div class="editor-section list-row">
-        <div class="header" data-action="expandRow">
+        <div class="header" data-action="expandRow" data-type="player">
             <div>{{localize "IMPMAL.Biography"}}</div>
             <a class="collapse-toggle {{#unless enriched.system.notes.player}}inactive{{/unless}}" aria-hidden="true">
                 <i class="fa-solid fa-chevron-down"></i>
             </a>
         </div>
-        <div class="dropdown-content expanded">
+        <div class="dropdown-content {{#unless collapsed.player}}expanded{{else}}collapsed{{/unless}}">
             <div class="expander">
                 {{formInput fields.notes.fields.player value=source.system.notes.player enriched=enriched.system.notes.player toggled=true}}
             </div>
