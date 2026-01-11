@@ -37,7 +37,34 @@ export class AttackTest extends SkillTest
 
     get itemTraits() 
     {
-        return (this.item.system.traits || this.item.system.attack?.traits)?.clone();
+        let cloned = (this.item.system.traits || this.item.system.attack?.traits)?.clone();
+        if (this.item.system.mods?.list)
+            for (let mod of this.item.system.mods.documents) {
+                // Add traits
+                cloned.combine(mod.system.addedTraits);
+
+                // Remove Traits
+                cloned.list = cloned.list.filter(t => {
+                    let removed = mod.system.removedTraits.has(t.key);
+                    if (removed) {
+                        if (Number.isNumeric(t.value)) {
+                            t.value -= (removed.value || 0);
+                        }
+
+                        // If boolean trait, or trait has negative value (after subtracting above), remove it
+                        if (!Number.isNumeric(t.value) || t.value <= 0) {
+                            return false;
+                        }
+                        else {
+                            return true;
+                        }
+                    }
+                    else {
+                        return true;
+                    }
+                });
+            }
+        return cloned;
     }
 
 
