@@ -8,6 +8,7 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
 {
 
     factionsExpanded={}; // Retain expanded influence sections on rerender;
+    collapsed = {};
 
     static DEFAULT_OPTIONS = {
         classes: ["impmal"],
@@ -289,7 +290,7 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
             {
               let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
               const document = await fromUuid(uuid);
-              document.delete();
+              document.deleteDialog();
             }
           }
       ];
@@ -427,17 +428,23 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
             
     }
 
-    static _onExpandRow(ev, target)
+    static _onExpandRow(ev, target) 
     {
-      let dropdown = target.closest(".list-row").querySelector(".dropdown-content");
-      if (dropdown.classList.contains("expanded"))
-      {
-          dropdown.classList.replace("expanded", "collapsed");
-      }
-      else if (dropdown.classList.contains("collapsed"))
-      {
-          dropdown.classList.replace("collapsed", "expanded");
-      }
+        let dropdown = target.closest(".list-row").querySelector(".dropdown-content");
+        if (dropdown.classList.contains("expanded")) {
+            dropdown.classList.replace("expanded", "collapsed");
+            if (target.dataset.type)
+            {
+              this.collapsed[target.dataset.type] = true;
+            }
+        }
+        else if (dropdown.classList.contains("collapsed")) {
+            dropdown.classList.replace("collapsed", "expanded");
+            if (target.dataset.type)
+            {
+              this.collapsed[target.dataset.type] = false;
+            }
+        }
     }
 
     static _onFactionExpand(ev, target)

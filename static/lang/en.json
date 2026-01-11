@@ -763,6 +763,7 @@
     "IMPMAL.TriggerPrepareOwnedData" : "Prepare Owned Data",
     "IMPMAL.TriggerPreApplyDamage" : "Pre-Apply Damage",
     "IMPMAL.TriggerPreTakeDamage" : "Pre-Take Damage",
+    "IMPMAL.TriggerPreItemDamaged" : "Pre-Item Damaged",
     "IMPMAL.TriggerPreRollTest" : "Pre-Roll Test",
     "IMPMAL.TriggerPreRollSkillTest" : "Pre-Roll Skill Test",
     "IMPMAL.TriggerPreRollWeaponTest" : "Pre-Roll Weapon Test",
