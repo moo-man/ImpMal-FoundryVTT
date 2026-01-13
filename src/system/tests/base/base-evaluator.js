@@ -59,11 +59,19 @@ export class BaseTestEvaluator
         
         this.SL = Number.isNumeric(this.SL) ? this.SL : this.calculateSL(this.roll, this.target, data.SL);
 
-        if (this.SL > 0 || (this.SL == 0 && this.roll <= this.target) || this.roll <= automaticSuccess)
+        if (this.roll <= automaticSuccess)
         {
             this.outcome = "success";
         }
-        else if (this.SL < 0 || (this.SL == 0 && this.roll > this.target) || this.roll >= automaticFailure)
+        else if (this.roll >= automaticFailure)
+        {
+            this.outcome = "failure";
+        }
+        else if (this.SL > 0 || (this.SL == 0 && this.roll <= this.target))
+        {
+            this.outcome = "success";
+        }
+        else if (this.SL < 0 || (this.SL == 0 && this.roll > this.target))
         {
             this.outcome = "failure";
         }

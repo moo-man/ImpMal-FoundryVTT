@@ -29,6 +29,12 @@ export class AttackEvaluator extends BaseTestEvaluator
         this.critModifier = data.critModifier;
         this.computeHitLocation(data);
         super.computeOther(data);
+        // If critical, reroll hit location because you shouldn't use ones in that case
+        if (this.critical && !this.calledShot)
+        {
+            this.hitLocationRoll = Math.ceil(CONFIG.Dice.randomUniform() * 10);
+            this.hitLocation = this.constructor.standardHitLocationMap[this.hitLocationRoll]; 
+        }
     }
 
     computeTagsAndText()
@@ -37,6 +43,10 @@ export class AttackEvaluator extends BaseTestEvaluator
         if (this.hitLocation)
         {
             this.tags.hitLocation = (`${game.impmal.config.hitLocations[this.hitLocation]}`);
+            if (this.hitLocationRoll)
+            {
+                this.tags.hitLocation += ` (${this.hitLocationRoll})`;
+            }
         }
         if (this.calledShot)
         {
@@ -62,7 +72,6 @@ export class AttackEvaluator extends BaseTestEvaluator
         }
         
         // The test data can specify "roll" or a hit location key
-        // 
         if (data.hitLocation == "roll")
         {
             let ones = Number(this.roll.toString().split("").pop());
