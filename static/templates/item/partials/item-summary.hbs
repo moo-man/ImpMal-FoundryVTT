@@ -2,6 +2,11 @@
     <div class="gm-only">
         {{{gmnotes}}}
     </div>
+    {{#if traits}}
+    <div>
+        <b>{{localize 'IMPMAL.Traits'}}: </b>{{{traits}}}
+    </div>
+    {{/if}}
 
 {{!-- {{#unless hideDetails}}
     {{#with details}}

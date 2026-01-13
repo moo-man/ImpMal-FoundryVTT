@@ -28,7 +28,9 @@ export class StandardItemModel extends BaseItemModel
     {
         let data = await super.summaryData();
         data.notes = await foundry.applications.ux.TextEditor.enrichHTML(this.notes.player, {async: true, relativeTo: this.parent});
-        data.gmnotes = await foundry.applications.ux.TextEditor.enrichHTML(this.notes.gm, {async: true, relativeTo: this.parent});
+        data.gmnotes = await foundry.applications.ux.TextEditor.enrichHTML(this.notes.gm, { async: true, relativeTo: this.parent });
+        if (this.traits?.list.length)
+            data.traits = this.traits.displayHtml;     
         return data;
     }
 }
