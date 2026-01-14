@@ -258,7 +258,14 @@ export class TestDialog extends WarhammerRollDialogV2
 
         // Defending scripts are dialog scripts coming from the attacker and/or the weapon used in the attack.
         // e.g. "Dodge tests to defend against this attack have disadvantage"
-        let defendingScripts = defendingAgainst ? ((defendingAgainst.item?.getScripts("dialog").concat(defendingAgainst.actor?.getScripts("dialog"))).filter(s => s.options?.defending)) : []
+        let defendingScripts = [];
+        if (defendingAgainst?.item) {
+            defendingScripts = defendingScripts.concat(defendingAgainst.item.getScripts("dialog"));
+        }
+        if (defendingAgainst?.actor) {
+            defendingScripts = defendingScripts.concat(defendingAgainst.actor.getScripts("dialog"));
+        }
+        defendingScripts = defendingScripts.filter(s => s.options?.defending);
 
 
         if (!context.skipTargets) 
