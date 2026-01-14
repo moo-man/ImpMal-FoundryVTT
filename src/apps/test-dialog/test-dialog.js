@@ -260,12 +260,12 @@ export class TestDialog extends WarhammerRollDialogV2
         // e.g. "Dodge tests to defend against this attack have disadvantage"let scripts = [];
         let defendingScripts = [];
         if (defendingAgainst?.item) {
-            defendingScripts.concat(defendingAgainst.item.getScripts("dialog"));
+            defendingScripts = defendingScripts.concat(defendingAgainst.item.getScripts("dialog"));
         }
         if (defendingAgainst?.actor) {
-            defendingScripts.concat(defendingAgainst.actor.getScripts("dialog"));
+            defendingScripts = defendingScripts.concat(defendingAgainst.actor.getScripts("dialog"));
         }
-        defendingScripts.filter(s => s.options?.defending);
+        defendingScripts = defendingScripts.filter(s => s.options?.defending);
 
 
         if (!context.skipTargets) 
