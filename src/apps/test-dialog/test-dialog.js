@@ -257,7 +257,7 @@ export class TestDialog extends WarhammerRollDialogV2
         dialogData.data.targets = (defendingAgainst || context.skipTargets) ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
 
         // Defending scripts are dialog scripts coming from the attacker and/or the weapon used in the attack.
-        // e.g. "Dodge tests to defend against this attack have disadvantage"let scripts = [];
+        // e.g. "Dodge tests to defend against this attack have disadvantage"
         let defendingScripts = [];
         if (defendingAgainst?.item) {
             defendingScripts = defendingScripts.concat(defendingAgainst.item.getScripts("dialog"));
