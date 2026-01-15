@@ -1,3 +1,4 @@
+import { TraitListModel } from "../../../model/item/components/traits";
 import { SkillTest } from "../skill/skill-test";
 import { AttackEvaluator } from "./attack-evaluator";
 
@@ -41,7 +42,7 @@ export class AttackTest extends SkillTest
 
     get itemTraits() 
     {
-        return (this.item.system.traits || this.item.system.attack?.traits)?.clone();
+        return new TraitListModel(this.item.system.traits?.toObject(false) || this.item.system.attack?.traits.toObject(false))
     }
 
 
