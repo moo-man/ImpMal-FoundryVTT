@@ -160,6 +160,7 @@
     "IMPMAL.ConditionStunnedMinor" : "Stunned (Minor)",
     "IMPMAL.ConditionUnconscious" : "Unconscious",
     "IMPMAL.Connections" : "Connections",
+    "IMPMAL.Contact" : "Contact",
 
     "IMPMAL.CHARGEN" : {
         "NoGMWarning" : "",

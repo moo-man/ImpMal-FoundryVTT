@@ -470,7 +470,11 @@ export default class IMActorSheet extends IMSheetMixin(WarhammerActorSheetV2)
         let faction = this._getKey(ev);
         let property = ev.target.dataset.property;
         let value = ev.target.value;
-        if (!isNaN(value))
+        if (ev.target.type == "checkbox")
+        {
+            value = ev.target.checked;
+        }
+        else if (!isNaN(value))
         {
             value = Number(value);
         }

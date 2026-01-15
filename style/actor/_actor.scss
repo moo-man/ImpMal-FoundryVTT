@@ -146,6 +146,20 @@ body.theme-light .application.impmal.actor {
         input {
             text-align: center;
         }
+
+        .contact {
+            font-size: 0.7rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 0.7rem;
+            input[type=checkbox]
+            {
+                height: 0.7rem;
+                width: 0.7rem;
+                --checkbox-size: 0.7rem;
+            }
+        }
     }
 
     .characteristic-table {

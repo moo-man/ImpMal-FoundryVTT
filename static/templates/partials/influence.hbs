@@ -74,12 +74,17 @@
                         <div class="source row-content {{#if ../this.patron}}disabled inactive{{/if}}" data-index="{{@key}}">
                             <a class="flex" data-action="deleteSource"><i class="fa-solid fa-xmark"></i></a>
                             <div class="small">
-                                <input type="number" data-saction="editSource" data-property="value" value="{{this.value}}">
+                                <input type="number" data-action="editSource" data-property="value" value="{{this.value}}">
                             </div>
                             <div class="flex large">
-                                <input type="text" data-saction="editSource" data-property="reason" value="{{this.reason}}">
+                                <input type="text" data-action="editSource" data-property="reason" value="{{this.reason}}">
                             </div>
-                            <div class="list-controls"></div>
+                            <div class="list-controls">
+                                <div class="list-control contact">
+                                    {{localize "IMPMAL.Contact"}}
+                                    <input type="checkbox" data-action="editSource" data-property="contact" {{checked this.contact}}>
+                                </div>
+                            </div>
                         </div>
                     {{/each}}
                     {{#unless this.patron}}

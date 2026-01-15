@@ -5,7 +5,7 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
     static defineSchema() 
     {
         let schema = {};
-        schema.factions = new fields.ObjectField(); // {"adeptus-mechanicus : {name : "Adeptus Mechanices", sources : [{value: 1, reason : ""}] modifier : 0, effects : [], items : [], notes : "", hidden : false (patron only)}}
+        schema.factions = new fields.ObjectField(); // {"adeptus-mechanicus : {name : "Adeptus Mechanices", sources : [{value: 1, reason : "", contact: false}] modifier : 0, effects : [], items : [], notes : "", hidden : false (patron only)}}
         schema.usePatron = new fields.BooleanField({initial: false});
         return schema;
     }
@@ -22,8 +22,11 @@ export class ActorInfluenceModel extends foundry.abstract.DataModel
         
         for(let f in this.factions)
         {
-            let faction = this.factions[f];
-            faction.total = faction.sources.reduce((prev, current) => prev += current.value, 0) + faction.items.reduce((prev, current) => prev += current.value, 0) + (faction.modifier || 0);
+            let faction = this.factions[f];                           
+            faction.total = faction.sources.reduce((prev, current) => 
+                prev += (current.contact ? 0 : current.value), 0) + // Contacts do not contribute to the overall faction influence
+                faction.items.reduce((prev, current) => prev += current.value, 0) + 
+                (faction.modifier || 0);
         }
 
         this._computePatron(patronInfluence);
