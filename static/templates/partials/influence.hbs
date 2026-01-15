@@ -18,6 +18,7 @@
         </div>
         <div class="list-content">
             {{#each factions}}
+                {{#if (or (isGM) (not this.hidden))}}
                 <div class="list-row" data-key="{{@key}}">
                     <div class="row-content">
                         <div class="flex">
@@ -33,6 +34,13 @@
                             </div>
                         {{/if}}
                         <div class="list-controls">
+                            {{#if (and ../showVisibility (isGM))}}
+                                {{#if this.hidden}}  
+                                        <a class="list-control" data-action="toggleFactionVisibility" style="color: var(--impmal-orange)" data-tooltip="Not visible to Players"><i class="fa-solid fa-eye-slash"></i></a>
+                                {{else}}
+                                        <a class="list-control" data-action="toggleFactionVisibility" data-tooltip="Visible to Players"><i class="fa-solid fa-eye"></i></a> 
+                                {{/if}}
+                            {{/if}}
                             <a class="list-control" data-action="deleteFaction" data-path="{{../path}}"><i class="fa-solid fa-xmark"></i></a>
                         </div>
                     </div>
@@ -47,6 +55,7 @@
                             <div class="flex large">
                                 <input type="text" disabled data-property="reason" value="{{this.reason}}">
                             </div>
+                            <div class="list-controls"></div>
                         </div>
                     {{/each}}
                     {{#each this.effects}}
@@ -58,6 +67,7 @@
                             <div class="flex large">
                                 <input type="text" disabled data-property="reason" value="{{this.reason}}">
                             </div>
+                            <div class="list-controls"></div>
                         </div>
                     {{/each}}
                     {{#each this.sources}}
@@ -69,6 +79,7 @@
                             <div class="flex large">
                                 <input type="text" data-saction="editSource" data-property="reason" value="{{this.reason}}">
                             </div>
+                            <div class="list-controls"></div>
                         </div>
                     {{/each}}
                     {{#unless this.patron}}
@@ -77,6 +88,7 @@
                     </div>
                     </div>
                 </div>
+                {{/if}}
             {{/each}}
         </div>
 </section>

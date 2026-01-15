@@ -119,6 +119,12 @@ body.theme-light .application.impmal.actor {
             }
         }
 
+        .row-content {
+            .list-controls {
+                flex: 0 0 3rem;
+            }
+        }
+
         .dropdown-content {
             padding: 0px;
         }
