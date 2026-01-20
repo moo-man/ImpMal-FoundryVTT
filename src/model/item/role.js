@@ -20,6 +20,22 @@ export class RoleModel extends StandardItemModel
     computeDerived()
     {
     }
+
+    async toEmbed(config, options)
+    {
+        let html = `
+        <section class="box-text dark">
+            <p class="box-header">@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</p>
+            ${this.notes.player}
+        </section>
+        `;
+        
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(warhammer.utility.removeSelfUUID(html, options.relativeTo), {relativeTo : this.parent, async: true, secrets : options.secrets});
+        return div;
+    }
 }
 
 class TalentListModel extends DocumentReferenceListModel 

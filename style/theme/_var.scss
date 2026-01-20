@@ -406,6 +406,23 @@ body.impmal-scan {
       filter: invert(26%) sepia(31%) saturate(2005%) hue-rotate(145deg) brightness(94%) contrast(95%);
     }
   }
+  
+  .impmal-embed {
+    &.role,
+    &.faction {
+      section.box-text.dark {
+        .box-header {
+          a.content-link {
+            color: white;
+            i  {
+              color: white
+            }
+          }
+
+        }
+      }
+    }
+  }
 }
 
 @mixin editor-content() {
@@ -485,6 +502,11 @@ body.impmal-scan {
 
   .blue {
     color: var(--impmal-lightblue);
+  }
+
+  hr {
+    color: var(--impmal-lightblue);
+    background-image: linear-gradient(90deg, transparent 0%, var(--impmal-lightblue) 50%, transparent 100%);
   }
 
 

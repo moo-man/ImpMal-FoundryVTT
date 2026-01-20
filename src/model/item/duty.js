@@ -162,5 +162,69 @@ export class DutyModel extends DualItemModel
         return allowed;
     }
 
+    
+    async toEmbed(config, options)
+    {
+        let html = "";
+        if (config.patron)
+        {
+
+            html = `
+                <h5>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h5>
+                ${this.patron.notes}
+            `;
+
+            if (config.tables)
+            {
+                let boonTable = await this.patron.boonTable.document;
+                let liabilityTable = await this.patron.liabilityTable.document;
+
+                let boonTableHTML = "";
+                let liabilityTableHTML = "";
+
+                if (boonTable)
+                {
+                    boonTableHTML += (await boonTable.toEmbed(config, options)).innerHTML;
+                }
+                if (liabilityTable)
+                {
+                    liabilityTableHTML += (await liabilityTable.toEmbed(config, options)).innerHTML;
+                }
+
+                html += `<div style="display: flex; gap: 0.5rem;">
+                ${boonTableHTML}
+                ${liabilityTableHTML}
+                </div>
+                `
+            }
+
+
+            // Commented because boon is already in the descriptions
+            // let boon = await this.patron.boon.document;
+            // if (boon)
+            // {
+            //     html += `<p><strong>Duty Boon: </strong> @UUID[${boon.uuid}]{${boon.name}}</p> 
+            //     ${boon.system.notes.player}`
+
+            //     if (game.user.isGM)
+            //     {
+            //         html += boon.system.notes.gm;
+            //     }
+            // }
+        }
+        else 
+        {
+
+            html = `
+                <h4 data-no-toc=true>@UUID[${this.parent.uuid}]{${this.parent.name}}</h4>
+                ${this.character.notes}
+            `;
+        }
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this.parent, async: true, secrets : options.secrets});
+        return div;
+    }
 
 }
