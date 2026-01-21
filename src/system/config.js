@@ -1023,6 +1023,7 @@ const IMPMAL = {
                     label : "Reduce Damage",
                     trigger : "preTakeDamage",
                     script : `
+                    if (!args.opposed) return;
                     let weapon = args.opposed.attackerTest.item
                     if (
                         args.opposed && weapon?.system.category == "grenadesExplosives" &&  // Grenade or Explosive
