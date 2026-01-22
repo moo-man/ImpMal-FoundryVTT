@@ -162,18 +162,23 @@ export class TraitListModel extends ListModel
             });
     }
 
-    get htmlArray()
-    {
+    get htmlArray() {
         return this.list
-            .map(i => 
-            {
+            .map(i => {
                 let display = game.impmal.config.weaponArmourTraits[i.key] || game.impmal.config.itemTraits[i.key];
-                if (i.value) 
-                {
+                if (i.value) {
                     display += ` (${i.value})`;
                 }
-                return `<a data-key=${i.key} data-value=${i.value}>${display}</a>`;
+
+                let showDesc = "";
+                if (game.impmal.config.traitDescriptions[i.key])
+                    showDesc += `data-tooltip="${game.impmal.config.traitDescriptions[i.key]}"`;
+
+                return `<a data-key=${i.key} data-value=${i.value} ${showDesc}>${display}</a>`;
             });
+    }
+    get displayHtml() {
+        return this.htmlArray.join(", ");
     }
 
     get displayString() 

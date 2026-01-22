@@ -70,3 +70,49 @@ body.theme-light .application.impmal.sheet {
     }
 
 }
+
+
+.editor-section {
+
+    .dropdown-content {
+
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 250ms;
+        > * {overflow:hidden};
+        &.expanded {
+            grid-template-rows:  1fr;
+        }
+    }
+
+    > .header {
+        display: flex;
+        > * {
+            flex: 1;
+        }
+
+        .collapse-toggle {
+            flex: 0 0 1.5rem;
+            text-align: center;
+            i {
+                color: var(--color-text-primary);
+            }
+        }
+    }
+
+    .header:has(+ .dropdown-content.collapsed) {
+        .collapse-toggle {
+            i {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    .header:has(+ .dropdown-content.expanded) {
+        .collapse-toggle {
+            i {
+                transform: rotate(0deg);
+            }
+        }
+    }
+}

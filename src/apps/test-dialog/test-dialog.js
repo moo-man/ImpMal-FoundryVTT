@@ -6,6 +6,11 @@ export class TestDialog extends WarhammerRollDialogV2
     static DEFAULT_OPTIONS = {
         position: {
             width: 600
+        },
+        form: {
+            handler: this.submit,
+            submitOnChange: false,
+            closeOnSubmit: true,
         }
     };
 
@@ -84,9 +89,26 @@ export class TestDialog extends WarhammerRollDialogV2
         this.disadvantage = value;
     }
 
-    advantage = 0;
-    disadvantage = 0;
-    forceState = "";
+    get advantage()
+    {
+        return this.fields.advantage;
+    }
+
+    set advantage(value)
+    {
+        this.fields.advantage = value;
+    }
+
+    get disadvantage()
+    {
+        return this.fields.disadvantage;
+    }
+
+    set disadvantage(value)
+    {
+        this.fields.disadvantage = value;
+    }
+
 
     _defaultFields() 
     {
@@ -95,17 +117,14 @@ export class TestDialog extends WarhammerRollDialogV2
             SL : 0,
             difficulty : "challenging",
             state : "none",
-            fateAdvantage : false
+            fateAdvantage : false,
+            advantage: 0,
+            disadvantage: 0
         });
     }
     async _prepareContext(options) 
     {
-        this.advantage = 0;
-        this.disadvantage = 0;
         let context = await super._prepareContext(options);
-        
-        context.advantage = this.advantage;
-        context.disadvantage = this.disadvantage;
         this.fields.state = this.computeState();
         context.showSuperiority = this.actor?.inCombat && this.actor?.hasPlayerOwner;
         return context
@@ -131,9 +150,9 @@ export class TestDialog extends WarhammerRollDialogV2
      */
     computeState()
     {
-        if (this.forceState) //"adv" "dis" and "none"
+        if (this.data.forceState) //"adv" "dis" and "none"
         {
-            return this.forceState;
+            return this.data.forceState;
         }
 
         else if (this.advantage > this.disadvantage && this.advantage > 0)
@@ -159,7 +178,7 @@ export class TestDialog extends WarhammerRollDialogV2
         }
     }
 
-    submit(ev)
+    static submit(ev)
     {
         if (this.fields.fateAdvantage)
         {
@@ -173,7 +192,7 @@ export class TestDialog extends WarhammerRollDialogV2
         // If the user clicks advantage or disadvantage, force that state to be true despite calculations
         if (ev.currentTarget.name == "state")
         {
-            this.forceState = ev.currentTarget.value;
+            this.data.forceState = ev.currentTarget.value;
             this.render(true);
         }
         else return super._onFieldChange(ev);
@@ -187,8 +206,8 @@ export class TestDialog extends WarhammerRollDialogV2
         breakdown.modifier = `<p>${game.i18n.localize("IMPMAL.Modifier")}: ${HandlebarsHelpers.numberFormat(this.fields.modifier, {hash : {sign: true}})}</p>`;
         breakdown.difficulty = `<p>${game.i18n.localize("IMPMAL.Difficulty")}: ${game.i18n.localize(difficulty.name)} (${HandlebarsHelpers.numberFormat(difficulty.modifier, {hash : {sign: true}})})</p>`;
         breakdown.SL = `<p>${game.i18n.localize("IMPMAL.SL")}: ${HandlebarsHelpers.numberFormat(this.fields.SL, {hash : {sign: true}})}</p>`;
-        breakdown.advantage = `<p>${game.i18n.localize("IMPMAL.Advantage")}: ${this.advCount} ${this.userEntry.state == "adv" ? "(" + "Forced" + ")" : "" }</p>`;
-        breakdown.disadvantage = `<p>${game.i18n.localize("IMPMAL.Disadvantage")}: ${this.disCount} ${this.userEntry.state == "dis" ? "(" + "Forced" + ")" : "" }</p>`;
+        breakdown.advantage = `<p>${game.i18n.localize("IMPMAL.Advantage")}: ${this.advantage} ${this.userEntry.state == "adv" ? "(" + "Forced" + ")" : "" }</p>`;
+        breakdown.disadvantage = `<p>${game.i18n.localize("IMPMAL.Disadvantage")}: ${this.disadvantage} ${this.userEntry.state == "dis" ? "(" + "Forced" + ")" : "" }</p>`;
 
         breakdown.modifiersBreakdown = this.tooltips.getCollectedTooltips();
         return breakdown;
@@ -231,16 +250,22 @@ export class TestDialog extends WarhammerRollDialogV2
         }
 
         dialogData.fields.difficulty = dialogData.fields.difficulty || "challenging";
-        dialogData.data.advantage = context.advantage || 0;
-        dialogData.data.disadvantage = context.disadvantage || 0;
-
+        dialogData.data.forceState = "";
+        
         let defendingAgainst = actor?.defendingAgainst
 
         dialogData.data.targets = (defendingAgainst || context.skipTargets) ? [] : Array.from(game.user.targets).filter(t => t.document.id != dialogData.data.speaker.token); // Remove self from targets
 
         // Defending scripts are dialog scripts coming from the attacker and/or the weapon used in the attack.
         // e.g. "Dodge tests to defend against this attack have disadvantage"
-        let defendingScripts = defendingAgainst ? ((defendingAgainst.item?.getScripts("dialog").concat(defendingAgainst.actor?.getScripts("dialog"))).filter(s => s.options?.defending)) : []
+        let defendingScripts = [];
+        if (defendingAgainst?.item) {
+            defendingScripts = defendingScripts.concat(defendingAgainst.item.getScripts("dialog"));
+        }
+        if (defendingAgainst?.actor) {
+            defendingScripts = defendingScripts.concat(defendingAgainst.actor.getScripts("dialog"));
+        }
+        defendingScripts = defendingScripts.filter(s => s.options?.defending);
 
 
         if (!context.skipTargets) 

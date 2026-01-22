@@ -71,10 +71,10 @@ export default class NPCSheet extends IMActorSheet
           let traitHTML = {};
           for(let t of traits)
           {
-            let html = await foundry.applications.ux.TextEditor.enrichHTML(t.system.notes.player, {async: true, relativeTo: this.document, secrets : this.document.isOwner}) || `<p></p>`;
+            let html = await foundry.applications.ux.TextEditor.enrichHTML(t.system.notes.player, {async: true, relativeTo: t, secrets : this.document.isOwner}) || `<p></p>`;
             if (game.user.isGM)
             {
-                html += await foundry.applications.ux.TextEditor.enrichHTML(t.system.notes.gm, {async: true, relativeTo: this.document, secrets : this.document.isOwner});
+                html += await foundry.applications.ux.TextEditor.enrichHTML(t.system.notes.gm, {async: true, relativeTo: t, secrets : this.document.isOwner});
             } 
             traitHTML[t.id] = html;
           }

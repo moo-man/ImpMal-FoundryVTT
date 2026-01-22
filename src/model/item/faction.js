@@ -52,4 +52,43 @@ export class FactionModel extends DualItemModel
             }
         }
     }
+
+    async toEmbed(config, options)
+    {
+        let html = "";
+        if (config.patron)
+        {
+
+            html = `
+                
+                <h3>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h3>
+                ${this.patron.notes}
+            `;
+
+            if (config.duties)
+            {
+                let duties = await this.patron.duty.awaitDocuments();
+                for(let duty of duties.filter(i => i))
+                {
+                    html += (await duty.system.toEmbed({patron: true, tables: false}, options)).innerHTML;
+                }
+            }
+    
+        }
+        else 
+        {
+
+            html = `
+            <section class="box-text dark">
+                <p class="box-header">@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</p>
+                ${this.character.notes}
+            </section>
+            `;
+        }
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(warhammer.utility.removeSelfUUID(html, options.relativeTo), {relativeTo : this.parent, async: true, secrets : options.secrets});
+        return div;
+    }
 }

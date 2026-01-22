@@ -11,7 +11,8 @@ export default class PatronSheet extends IMActorSheet
         classes: ["patron"],
         actions : {
           createItem : this._onCreateItem,
-          postReward : this._onPostReward
+          postReward : this._onPostReward,
+          toggleFactionVisibility : this._onToggleFactionVisibility
         },
         defaultTab : "main"
       }
@@ -98,5 +99,15 @@ export default class PatronSheet extends IMActorSheet
           reward.patron = patron;
           
           RewardMessageModel.postReward(reward);
+      }
+
+      static async _onToggleFactionVisibility(ev, target)
+      {
+        let faction = this._getKey(ev, target);
+
+        if (faction)
+        {
+          this.actor.update(this.actor.system.influence.toggleFactionVisibility(faction));
+        }
       }
 }
