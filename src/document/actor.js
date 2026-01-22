@@ -282,20 +282,14 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
                 await Promise.all(item.parent.runScripts("preItemDamaged", args) || []);
                 value = Number(args.value);
             }
-
-            if (rend && value > 0 && item.system.rended[loc] != true)
-            {
-                updateObj["system.rended." + loc] = true;
-            }
             
             damage[loc] += Number(value);
             if (damage[loc] > item.system.armour) {
                 damage[loc] = item.system.armour;
             }
+
             if (damage[loc] < 0) damage[loc] = 0;
-            if (damage[loc] == 0) {
-                updateObj["system.rended." + loc] = false;
-            }
+
             if (damage[loc] == item.system.armour) {
                 updateObj["system.destroyed." + loc] = true;
             } else {
