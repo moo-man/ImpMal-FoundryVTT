@@ -243,7 +243,7 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
     async damageArmour(loc, value, item, {update=true, rend=false, prompt=false, attackerTest=null}={})
     {
         let updateObj = {};
-        let protectionItems = this.system.combat.hitLocations[loc].items.filter(i => i.type == "protection");
+        let protectionItems = this.system.combat.hitLocations[loc].items.filter(i => i.type == "protection" && (!i.system.destroyed[loc] || value < 0));
         if (!value)
         {
             return;
@@ -282,18 +282,19 @@ export class ImpMalActor extends ImpMalDocumentMixin(WarhammerActor)
                 await Promise.all(item.parent.runScripts("preItemDamaged", args) || []);
                 value = Number(args.value);
             }
-
-            if (rend && value > 0 && item.system.rended[loc] != true)
-            {
-                updateObj["system.rended." + loc] = true;
-            }
-            else if (rend && value > 0) // If rended has already been applied here, don't apply it again
-            {
-                ui.notifications.notify(game.i18n.localize("IMPMAL.RendAlreadyApplied"));
-                value = 0;
+            
+            damage[loc] += Number(value);
+            if (damage[loc] > item.system.armour) {
+                damage[loc] = item.system.armour;
             }
 
-            damage[loc] += value;
+            if (damage[loc] < 0) damage[loc] = 0;
+
+            if (damage[loc] == item.system.armour) {
+                updateObj["system.destroyed." + loc] = true;
+            } else {
+                updateObj["system.destroyed." + loc] = false;
+            }
             updateObj["system.damage"] = damage;
 
             if (update)

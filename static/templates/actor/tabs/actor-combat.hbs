@@ -292,10 +292,11 @@
                         </div>
                         <div class="location-details dropdown-content collapsed">
                             {{#each this.items}}
-                                <div class="protection-item" data-id="{{this.id}}">
-                                    <label>– {{this.name}} </label>
-                                    <a data-action="damageArmour" class="damage-armour {{#if (lookup this.system.damage ../this.key)}}damaged{{/if}}">{{calc this.system.armour "-" (lookup this.system.damage ../this.key)}}{{#if (lookup this.system.rended ../this.key)}}R{{/if}}</a>
-                                    {{!-- <div class="traits">{{this.system.traits.displayString}}</div> --}}
+                            <div class="protection-item" data-id="{{this.id}}">
+                                <label>– {{this.name}} </label>
+                                <a data-action="damageArmour" class="damage-armour {{#if (lookup this.system.damage ../this.key)}}damaged{{/if}}">{{#if (lookup this.system.destroyed ../this.key)}}Destroyed{{else}}{{calc this.system.armour "-" (lookup this.system.damage ../this.key)}}{{/if}}</a>
+                                {{!-- <div class="traits">{{this.system.traits.displayString}}
+                            </div> --}}
                                 </div>
                                 {{#if this.system.traits.displayString}}
                                     <div class="armour-traits">
