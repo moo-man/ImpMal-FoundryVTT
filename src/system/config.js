@@ -529,6 +529,7 @@ const IMPMAL = {
         applyDamage : "IMPMAL.TriggerApplyDamage",
         preTakeDamage : "IMPMAL.TriggerPreTakeDamage",
         takeDamage : "IMPMAL.TriggerTakeDamage",
+        preItemDamaged : "IMPMAL.TriggerPreItemDamaged",
 
         createToken : "IMPMAL.TriggerCreateToken",
         createItem : "IMPMAL.TriggerCreateItem",
@@ -567,6 +568,7 @@ const IMPMAL = {
         "createItem" : true,
         "preApplyDamage" : true,
         "preTakeDamage" : true,
+        "preItemDamaged" : true,
         "applyDamage" : true,
         "takeDamage" : true,
         "createToken" : true,
@@ -1021,6 +1023,7 @@ const IMPMAL = {
                     label : "Reduce Damage",
                     trigger : "preTakeDamage",
                     script : `
+                    if (!args.opposed) return;
                     let weapon = args.opposed.attackerTest.item
                     if (
                         args.opposed && weapon?.system.category == "grenadesExplosives" &&  // Grenade or Explosive
@@ -1457,7 +1460,12 @@ const IMPMAL = {
             img: "systems/impmal/assets/icons/conditions/dead.svg",
             id: "dead",
             statuses : ["dead"],
-            name: "IMPMAL.Dead"
+            name: "IMPMAL.Dead",
+            flags: {
+                core: {
+                    overlay: true
+                }
+            }
         },
     ],
 

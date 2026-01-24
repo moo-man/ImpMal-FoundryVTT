@@ -7,7 +7,8 @@ export default class ProtectionSheet extends IMItemSheet
     static DEFAULT_OPTIONS = {
       classes: [this.type],
       actions : {
-        toggleMod : this._onToggleMod
+          toggleMod: this._onToggleMod,
+          clearDamage: this._onClearDamage,
       }
     }
     
@@ -33,5 +34,15 @@ export default class ProtectionSheet extends IMItemSheet
     {
       let index = this._getIndex(ev);
       this.item.update(this.item.system.mods.edit(index, {"system.disabled" : !this.item.system.mods.documents[index].system.disabled}));
+    }
+
+    static _onClearDamage(ev, target) {
+        let damage = foundry.utils.deepClone(this.item.system.damage);
+        if (damage) {
+            for (let index in damage) {
+                damage[index] = 0;
+            }
+            this.item.update({ "system.damage": damage });
+        }
     }
 }

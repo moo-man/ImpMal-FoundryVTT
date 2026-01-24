@@ -71,4 +71,30 @@ export class PowerModel extends StandardItemModel
         return data;
     }
 
+    async toEmbed(config, options)
+    {
+
+
+        let difficultyData = game.impmal.config.difficulties[this.difficulty]
+
+        let html = `
+            <h4>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h4>
+            ${this.notes.player}
+            ${game.user.isGM ? this.notes.gm : ""}
+            <p><strong>Warp Rating</strong>: ${this.rating}</p>
+            <p><strong>Difficulty</strong>: ${difficultyData.name} (${difficultyData.modifier >= 0 ? "+" + difficultyData.modifier : difficultyData.modifier})</p>
+            <p><strong>Range</strong>: ${game.impmal.config.powerRanges[this.range]}</p>
+            <p><strong>Target</strong>: ${this.target}</p>
+            <p><strong>Duration</strong>: ${game.impmal.config.powerDurations[this.duration]}</p>
+            ${this.notes.player}
+            ${game.user.isGM ? this.notes.gm : ""}
+        `;
+
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this.parent, async: true, secrets : options.secrets});
+        return div;
+    }
+
 }

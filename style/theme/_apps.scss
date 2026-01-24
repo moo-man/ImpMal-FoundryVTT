@@ -42,11 +42,6 @@ body.impmal-theme {
         }
 
 
-        .form-group {
-            gap: 0px;
-        }
-
-
         input[type="range"] {
             border: none;
 
@@ -125,7 +120,6 @@ body.impmal-theme {
                     border-radius: 3px;
                     height: unset;
                     line-height: 1.5rem;
-                    margin: 0.2rem;
                     border: 1px solid var(--impmal-lightblue);
 
                     &:disabled {

@@ -85,6 +85,12 @@ export class PowerTest extends SkillTest
                 added *= 2;
             }
 
+            if (this.context.doubleWarp)
+            {
+                added *= 2;
+            }
+    
+
             charge += added;
             this.context.warpAdded = added;
 
@@ -93,6 +99,7 @@ export class PowerTest extends SkillTest
                 this.context.pushRoll = Math.ceil(CONFIG.Dice.randomUniform() * 10);
                 charge += this.context.pushRoll;
             }
+
 
             this.actor.update({"system.warp.charge" : charge});
 

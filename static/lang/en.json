@@ -126,7 +126,6 @@
     "IMPMAL.ChooseActor" : "Choose Actor",
     "IMPMAL.ChooseFaction" : "Choose Faction",
     "IMPMAL.Close" : "Close",
-    "IMPMAL.ClearRended" : "Clear Rended",
     "IMPMAL.ClearDamage" : "Clear Damage",
     "IMPMAL.Collapsed" : "Collapsed",
     "IMPMAL.Combat" : "Combat",
@@ -160,6 +159,7 @@
     "IMPMAL.ConditionStunnedMinor" : "Stunned (Minor)",
     "IMPMAL.ConditionUnconscious" : "Unconscious",
     "IMPMAL.Connections" : "Connections",
+    "IMPMAL.Contact" : "Contact",
 
     "IMPMAL.CHARGEN" : {
         "NoGMWarning" : "",
@@ -365,6 +365,7 @@
     "IMPMAL.Fellowship" : "Fellowship",
     "IMPMAL.Filter" : "Filter",
     "IMPMAL.Filters" : "Filters",
+    "IMPMAL.FireMode" : "Fire Mode",
     "IMPMAL.Flak" : "Flak",
     "IMPMAL.Flame" : "Flame",
     "IMPMAL.Flamer" : "Flamer",
@@ -763,6 +764,7 @@
     "IMPMAL.TriggerPrepareOwnedData" : "Prepare Owned Data",
     "IMPMAL.TriggerPreApplyDamage" : "Pre-Apply Damage",
     "IMPMAL.TriggerPreTakeDamage" : "Pre-Take Damage",
+    "IMPMAL.TriggerPreItemDamaged" : "Pre-Item Damaged",
     "IMPMAL.TriggerPreRollTest" : "Pre-Roll Test",
     "IMPMAL.TriggerPreRollSkillTest" : "Pre-Roll Skill Test",
     "IMPMAL.TriggerPreRollWeaponTest" : "Pre-Roll Weapon Test",

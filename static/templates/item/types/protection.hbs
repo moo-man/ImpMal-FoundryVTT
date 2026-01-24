@@ -8,11 +8,8 @@
     <!--TODO-->
     <div class="item-actions">
 
-        {{#if item.system.isRended}}
-            <button type="button" class="fix-rended">{{localize "IMPMAL.ClearRended"}}</button>
-        {{/if}}
         {{#if item.system.isDamaged}}
-            <button type="button" class="fix-damage">{{localize "IMPMAL.ClearDamage"}}</button>
+            <button type="button" data-action="clearDamage">{{localize "IMPMAL.ClearDamage"}}</button>
         {{/if}}
     </div>
 
