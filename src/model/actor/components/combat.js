@@ -276,13 +276,13 @@ export class NPCCombatModel extends StandardCombatModel
             formula : new fields.StringField(),
             value : new fields.NumberField({min : 0}),
             useItems: new fields.BooleanField(),
-            damage: new fields$E.SchemaField({
-                head: new fields$E.NumberField({ min: 0, initial: 0 }),
-                leftArm: new fields$E.NumberField({ min: 0, initial: 0 }),
-                rightArm: new fields$E.NumberField({ min: 0, initial: 0 }),
-                leftLeg: new fields$E.NumberField({ min: 0, initial: 0 }),
-                rightLeg: new fields$E.NumberField({ min: 0, initial: 0 }),
-                body: new fields$E.NumberField({ min: 0, initial: 0 }),
+            damage: new fields.SchemaField({
+                head: new fields.NumberField({ min: 0, initial: 0 }),
+                leftArm: new fields.NumberField({ min: 0, initial: 0 }),
+                rightArm: new fields.NumberField({ min: 0, initial: 0 }),
+                leftLeg: new fields.NumberField({ min: 0, initial: 0 }),
+                rightLeg: new fields.NumberField({ min: 0, initial: 0 }),
+                body: new fields.NumberField({ min: 0, initial: 0 }),
             })
         });
         return schema;
