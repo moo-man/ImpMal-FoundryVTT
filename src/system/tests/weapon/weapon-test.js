@@ -44,6 +44,29 @@ export class WeaponTest extends AttackTest
         await Promise.all(this.item.runScripts("rollWeaponTest", this));
     }
 
+    async roll() 
+    {
+        // If rolling with this flag, it indicates some sort of reroll, so clear filled responses for new ones
+        if (this.context.failedRanged)
+        {
+            // Foundry syntax needed to replace existing object with blank object, instead of merging (TODO: likely needs replacing in V14)
+            this.context["==responses"] = {};
+            this.context["-=failedRanged"] = null;
+
+            // Local updates
+            this.context.responses = {};
+            delete this.context.failedRanged;
+
+            await this.save({skipOpposed: true}); // Since we are rolling after this, opposed will be handled (prevents two opposed messages)
+            
+            // Remove these flags so the roll update doesn't delete them again
+            // (probably can be removed after converting to v14 method)
+            delete this.context["==responses"] 
+            delete this.context["-=failedRanged"] 
+        }
+        return await super.roll();
+    }
+
     async postRoll()
     {
         await super.postRoll();
@@ -68,11 +91,15 @@ export class WeaponTest extends AttackTest
         }
 
         // If this test is with a ranged weapon and fails, no defender test is needed
-        if (this.item.system.attackType == "ranged" && this.result.outcome == "failure")
+        if (this.item.system.isRanged && this.failed)
         {
             await this.context.fillUnopposed();
-            this.context.opposedFlagsAdded = true;
+            this.context.failedRanged = true;
             this.result.text["failedRanged"] = game.i18n.localize("IMPMAL.FailedRanged");
+        }
+        else 
+        {
+            this.context.failedRanged = false;
         }
     }
 

@@ -199,9 +199,9 @@ export class BaseTest extends WarhammerTestBase
         }
     }
 
-    save() 
+    save(options={}) 
     {
-        return this.message?.update({system : this._saveData()});
+        return this.message?.update({system : this._saveData()}, options);
     }
 
     _saveData()
