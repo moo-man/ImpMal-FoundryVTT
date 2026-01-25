@@ -30,7 +30,7 @@ export class BaseTestEvaluator
         this.clear();
         this.tags = {};
         this.text = {};
-        let roll = await new Roll("1d100").evaluate({async: true});
+        let roll = await new Roll("1d100").roll();
         data.result.roll = data.result.roll || roll.total;
         data.result.rollObject = roll;
         this.computeResult(data);

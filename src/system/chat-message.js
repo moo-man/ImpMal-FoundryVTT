@@ -24,7 +24,10 @@ export class ImpMalChatMessage extends WarhammerChatMessage
     async _onUpdate(data, options, userId)
     {
         await super._onUpdate(data, options, userId);
-        await this.system.test?.context?.handleOpposed(this, true);
+        if (!options.skipOpposed)
+        {
+            await this.system.test?.context?.handleOpposed(this, true);
+        }
     }
 
 

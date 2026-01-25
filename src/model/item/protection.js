@@ -16,7 +16,7 @@ export class ProtectionModel extends EquippableItemModel
         schema.armour = new fields.NumberField();
         schema.locations = new fields.EmbeddedDataField(HitLocationsModel);
         schema.damage = new fields.ObjectField({});
-        schema.destroyed = new fields$d.ObjectField({});
+        schema.destroyed = new fields.ObjectField({});
         schema.slots = new fields.EmbeddedDataField(EquipSlots);
         schema.mods = new fields.EmbeddedDataField(ModListModel);
         return schema;

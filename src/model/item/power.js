@@ -79,8 +79,6 @@ export class PowerModel extends StandardItemModel
 
         let html = `
             <h4>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h4>
-            ${this.notes.player}
-            ${game.user.isGM ? this.notes.gm : ""}
             <p><strong>Warp Rating</strong>: ${this.rating}</p>
             <p><strong>Difficulty</strong>: ${difficultyData.name} (${difficultyData.modifier >= 0 ? "+" + difficultyData.modifier : difficultyData.modifier})</p>
             <p><strong>Range</strong>: ${game.impmal.config.powerRanges[this.range]}</p>
