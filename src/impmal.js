@@ -80,16 +80,19 @@ import InjurySheet from "./sheet/items/types/injury.js";
 import PackSheet from "./sheet/items/types/pack.js";
 import { PackModel } from "./model/item/pack.js";
 
+import {NODE_ENV} from "process.env";
+
 Hooks.once("init", () => 
 {
 
     //shorten names
     const DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig
 
-    // #if _ENV == "development"
-    CONFIG.debug.impmal = true;
-    debug();
-    // #endif
+    if (NODE_ENV == "development")
+    {
+        CONFIG.debug.impmal = true;
+        debug();
+    }
     
     CONFIG.Actor.documentClass = ImpMalActor;
     CONFIG.Item.documentClass = ImpMalItem;
