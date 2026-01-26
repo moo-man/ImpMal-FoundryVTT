@@ -2090,6 +2090,20 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             a.innerHTML = `<img src="systems/impmal/assets/icons/chaos.svg"><span>${match[2] || value}</span>`;
             return a;
         }
+    },
+    {
+        pattern : /@Reward\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : async (match) => 
+        {
+            let value = match[1];
+
+            const a = document.createElement("a");
+            a.classList.add("reward-link");
+            a.classList.add("custom-link");
+            a.dataset.value = value;
+            a.innerHTML = `<i class="fa-solid fa-plus"></i> ${match[2]}`;
+            return a;
+        }
     }
 ]);
 

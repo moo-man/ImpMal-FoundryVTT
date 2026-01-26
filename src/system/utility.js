@@ -1,5 +1,4 @@
 import { CorruptionMessageModel } from "../model/message/corruption";
-import { ImpMalChatMessage } from "./chat-message";
 
 export default class ImpMalUtility
 {
@@ -241,6 +240,12 @@ export default class ImpMalUtility
         {
             let corruptionValue = ev.currentTarget.dataset.value;
             CorruptionMessageModel.postCorruption(corruptionValue);
+        }));
+
+        html.querySelectorAll(".reward-link").forEach(e => e.addEventListener("click", ev => 
+        {
+            let rewardData = ev.currentTarget.dataset.value;
+            game.impmal.commands.call("reward", rewardData);
         }));
     }
 
