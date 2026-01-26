@@ -93,7 +93,10 @@ export class WeaponModel extends EquippableItemModel
         this._applyShieldMods(actor.items);
         this.computeRange();
         this.skill = this.getSkill(actor);
-        this.skillTotal = this.skill instanceof Item ? this.skill?.system?.total : actor.system.skills[this.skill].total;
+        if (actor.system.skills)
+        {
+            this.skillTotal = this.skill instanceof Item ? this.skill?.system?.total : actor.system.skills[this.skill].total;
+        }
     }
 
     // For characters, equipped is determined if the item is held is left or right hand
@@ -121,8 +124,8 @@ export class WeaponModel extends EquippableItemModel
     getSkill(actor)
     {
         let skill = this.attackType;
-        let skillObject = actor.system.skills[skill];
-        let skillItem = skillObject.specialisations.find(i => i.name.slugify() == this.specialisation?.slugify());
+        let skillObject = actor.system.skills?.[skill];
+        let skillItem = skillObject?.specialisations.find(i => i.name.slugify() == this.specialisation?.slugify());
 
         return skillItem ?? skill;
     }
