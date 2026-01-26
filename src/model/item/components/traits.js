@@ -154,6 +154,7 @@ export class TraitListModel extends ListModel
             .map(i => 
             {
                 let display = game.impmal.config.weaponArmourTraits[i.key] || game.impmal.config.itemTraits[i.key];
+                if (!display) return "";
                 if (i.value)
                 {
                     display += ` (${i.value})`;
@@ -166,6 +167,7 @@ export class TraitListModel extends ListModel
         return this.list
             .map(i => {
                 let display = game.impmal.config.weaponArmourTraits[i.key] || game.impmal.config.itemTraits[i.key];
+                if (!display) return "";
                 if (i.value) {
                     display += ` (${i.value})`;
                 }
