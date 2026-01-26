@@ -186,15 +186,15 @@ export class TraitListModel extends ListModel
         return this.displayArray.join(", ");
     }
 
-    traitEffects(type)
+    traitEffects(type, parent)
     {
         return this.list.reduce((obj, t) => 
         {
             let effectData = type == "weapon" ? game.impmal.config.weaponTraitEffects[t.key] : game.impmal.config.protectionTraitEffects[t.key];
             if (effectData)
             {
-                let effect = new ActiveEffect.implementation(effectData, {parent: this.parent.parent});
-                effect.updateSource({img : this.parent.parent.img, "flags.impmal.path" : `${this.schema.fieldPath}.effects.${t.key}`})
+                let effect = new ActiveEffect.implementation(effectData, {parent});
+                effect.updateSource({img : parent.img, "flags.impmal.path" : `${this.schema.fieldPath}.effects.${t.key}`})
                 obj[t.key] = effect
             }
             return obj;

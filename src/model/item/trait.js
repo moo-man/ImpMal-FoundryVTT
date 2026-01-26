@@ -67,6 +67,12 @@ export class TraitModel extends StandardItemModel
         }
     }
 
+    getOtherEffects()
+    {
+        return super.getOtherEffects()
+        .concat(Object.values(this.attack.traits.traitEffects("weapon", this.parent)))
+    }
+
     get attackData() 
     {
         return {

@@ -40,7 +40,7 @@ export class ProtectionModel extends EquippableItemModel
     getOtherEffects()
     {
         return super.getOtherEffects()
-        .concat(Object.values(this.traits.traitEffects("protection")))
+        .concat(Object.values(this.traits.traitEffects("protection", this.parent)))
         .concat(this.categoryEffect || [])
         .concat((this.mods.documents || [])
             .reduce((prev, current) => prev.concat(current.effects.contents), []));
