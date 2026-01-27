@@ -1872,7 +1872,8 @@ const IMPMAL = {
         "impmal-core" : "Core Rulebook",
         "impmal-starter-set" : "Starter Set",
         "impmal-inquisition" : "Inquisition Guide",
-        "impmal-requisition" : "Requisition Guide"
+        "impmal-requisition" : "Requisition Guide",
+        "impmal-voll" : "Voll Adventures"
      },
 
      bugReporterConfig : {
