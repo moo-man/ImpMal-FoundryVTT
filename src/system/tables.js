@@ -31,7 +31,7 @@ export default class ImpMalTables
         }
         let dice = new Roll(formula);
         let rollMode;
-        if (chatData.whisper)
+        if (chatData.whisper?.length)
         {
             rollMode = "gmroll";
         }
@@ -97,9 +97,10 @@ export default class ImpMalTables
                 let messageId = ev.target.closest(".message").dataset.messageId
                 let test = game.messages.get(messageId)?.system.test;
             
-    
+                let chatData = {}
+                ChatMessage.applyRollMode(chatData, game.settings.get("core", "rollMode"));
                 // TODO: the test actor may not be the one we want to pass here
-                ImpMalTables.rollTable(key, formula, {modifier, actor : test?.actor});
+                ImpMalTables.rollTable(key, formula, {chatData, modifier, actor : test?.actor});
             });
         })
     }
