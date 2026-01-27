@@ -104,12 +104,6 @@ export class BaseTest extends WarhammerTestBase
     {
         if (fate)
         {
-            if (this.context.fateReroll)
-            {
-                ui.notifications.error("IMPMAL.ErrorFateRerollUsed", {localize : true});
-                throw game.i18n.localize("IMPMAL.ErrorFateRerollUsed");
-            }
-
             if(this.actor.system.fate.value <= 0)
             {
                 ui.notifications.error("IMPMAL.ErrorNoFateLeft", {localize : true});
