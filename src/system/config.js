@@ -1639,7 +1639,7 @@ const IMPMAL = {
                         },
                         {
                             label: "Blinded",
-                            script: `await this.actor.addCondition("blinded").then(condition => if (condition) condition?.setFlag("impmal", "fromZone", this.effect.getFlag("impmal", "fromZone")))`,
+                            script: `await this.actor.addCondition("blinded").then(condition => {if (condition) condition?.update({"system.sourceData.zone" : this.effect.system.sourceData.zone})});`,
                             trigger: "immediate",
                             options : {
                                     deleteEffect : false

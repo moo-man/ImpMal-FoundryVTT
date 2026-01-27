@@ -166,7 +166,7 @@ export class TalentModel extends StandardItemModel
 
         if (effectOptions.length > 0)
         {
-            let choice = await ItemDialog.create(effectOptions, 1);
+            let choice = await ItemDialog.create(effectOptions, 1, {title : "Talent Effect", text: "Choose Talent Option"});
             if (choice.length)
             {
                 // If repeatable effect chosen again, recreate that effect

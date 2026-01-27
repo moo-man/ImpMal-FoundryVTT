@@ -1,1 +1,1 @@
-await this.actor.addCondition("blinded").then(condition => condition.setFlag("impmal", "fromZone", this.effect.getFlag("impmal", "fromZone")))
+await this.actor.addCondition("blinded").then(condition => {if (condition) condition?.update({"system.sourceData.zone" : this.effect.system.sourceData.zone})});
