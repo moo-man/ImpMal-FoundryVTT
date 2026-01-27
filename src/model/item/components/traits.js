@@ -174,7 +174,7 @@ export class TraitListModel extends ListModel
                 if (game.impmal.config.traitDescriptions[i.key])
                     showDesc += `data-tooltip="${game.impmal.config.traitDescriptions[i.key]}"`;
 
-                return `<a data-key=${i.key} data-value=${i.value} ${showDesc}>${display}</a>`;
+                return `<a data-key=${i.key} data-value="${i.value}" ${showDesc}>${display}</a>`;
             });
     }
     get displayHtml() {

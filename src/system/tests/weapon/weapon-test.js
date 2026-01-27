@@ -91,7 +91,7 @@ export class WeaponTest extends AttackTest
         }
 
         // If this test is with a ranged weapon and fails, no defender test is needed
-        if (this.item.system.isRanged && this.failed)
+        if (this.item.system.isRanged && !this.item.system.traits.has("blast") && this.failed)
         {
             await this.context.fillUnopposed();
             this.context.failedRanged = true;
