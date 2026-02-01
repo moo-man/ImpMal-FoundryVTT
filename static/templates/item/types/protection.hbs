@@ -2,6 +2,9 @@
     {{formGroup fields.category value=source.system.category choices=(config  "protectionTypes")}}
     {{formGroup fields.armour value=source.system.armour}}
     {{formGroup fields.locations.fields.label value=source.system.locations.label}}
+
+    {{> nameListInput label="IMPMAL.LocationKeys" list=system.locations.list path="system.locations"}}
+
     {{> itemTraits traits=document.system.traits path="system.traits" label="IMPMAL.Traits"}}
     {{> slotsDisplay}}
 
