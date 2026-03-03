@@ -1639,7 +1639,7 @@ const IMPMAL = {
                         },
                         {
                             label: "Blinded",
-                            script: `await this.actor.addCondition("blinded").then(condition => if (condition) condition?.setFlag("impmal", "fromZone", this.effect.getFlag("impmal", "fromZone")))`,
+                            script: `await this.actor.addCondition("blinded").then(condition => {if (condition) condition?.update({"system.sourceData.zone" : this.effect.system.sourceData.zone})});`,
                             trigger: "immediate",
                             options : {
                                     deleteEffect : false
@@ -1872,7 +1872,8 @@ const IMPMAL = {
         "impmal-core" : "Core Rulebook",
         "impmal-starter-set" : "Starter Set",
         "impmal-inquisition" : "Inquisition Guide",
-        "impmal-requisition" : "Requisition Guide"
+        "impmal-requisition" : "Requisition Guide",
+        "impmal-voll" : "Voll Adventures"
      },
 
      bugReporterConfig : {
@@ -2088,6 +2089,20 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             a.classList.add("custom-link");
             a.dataset.value = value;
             a.innerHTML = `<img src="systems/impmal/assets/icons/chaos.svg"><span>${match[2] || value}</span>`;
+            return a;
+        }
+    },
+    {
+        pattern : /@Reward\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : async (match) => 
+        {
+            let value = match[1];
+
+            const a = document.createElement("a");
+            a.classList.add("reward-link");
+            a.classList.add("custom-link");
+            a.dataset.value = value;
+            a.innerHTML = `<i class="fa-solid fa-plus"></i> ${match[2]}`;
             return a;
         }
     }

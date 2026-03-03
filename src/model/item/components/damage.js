@@ -16,6 +16,6 @@ export class DamageModel extends foundry.abstract.DataModel
 
     compute(actor)
     {
-        this.value = (Number(this.base) || 0) + (actor.system.characteristics[this.characteristic]?.bonus || 0);
+        this.value = (Number(this.base) || 0) + (actor.system.characteristics?.[this.characteristic]?.bonus || 0);
     }
 }

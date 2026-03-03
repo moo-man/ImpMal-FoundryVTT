@@ -215,8 +215,8 @@ export class OpposedTestResult
             this._tooltips.damage.SL = {label : "IMPMAL.SL", value : attackerTest.result.SL};
         }
 
-        // melee always takes the difference in SL, ranged only takes the difference if the defence won
-        if (item?.system.isMelee || defenderTest?.result?.SL > 0)
+        // melee always takes the difference in SL, ranged only takes the difference if the defence won, or if it's blast
+        if (item?.system.isMelee || defenderTest?.result?.SL > 0 || item.system.traits.has("blast"))
         {
             let opposed = (defenderTest?.result?.SL || 0);
             this._tooltips.damage.opposed = {label : "IMPMAL.Opposed", value : -opposed};

@@ -41,6 +41,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
                     e._displayScrollingStatus(true);
                 }
                 e.handleImmediateScripts({}, {}, game.user.id); // If a minor condition goes to major, run any immediate conditions for major
+                return e;
             });
         }
         else 
@@ -49,6 +50,7 @@ export default ImpMalDocumentMixin = (cls) => class extends cls
             return cls.create(createData, {parent: this, condition: true}).then(e => // condition flag tells the creation flow that this has gone through addCondition
             {
                 this.runScripts("createCondition", e);
+                return e;
             }); 
         }
     }

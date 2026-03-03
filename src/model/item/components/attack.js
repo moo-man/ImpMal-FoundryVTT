@@ -32,13 +32,13 @@ export class AttackDataModel extends TestDataModel
         {
             this.target = skill.system.total;
         }
-        else if (actor.system.skills[skill])
+        else if (actor.system.skills?.[skill])
         {
             this.target = actor.system.skills[skill].total;
         }
         else 
         {
-            this.target = actor.system.characteristics[characteristic]?.total || 0;
+            this.target = actor.system.characteristics?.[characteristic]?.total || 0;
         }
     }
 

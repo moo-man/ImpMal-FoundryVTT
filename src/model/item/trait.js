@@ -57,14 +57,20 @@ export class TraitModel extends StandardItemModel
         {
             this.attack.target = skill.system.total;
         }
-        else if (actor.system.skills[skill])
+        else if (actor.system.skills?.[skill])
         {
             this.attack.target = actor.system.skills[skill].total;
         }
         else 
         {
-            this.attack.target = actor.system.characteristics[characteristic]?.total || 0;
+            this.attack.target = actor.system.characteristics?.[characteristic]?.total || 0;
         }
+    }
+
+    getOtherEffects()
+    {
+        return super.getOtherEffects()
+        .concat(Object.values(this.attack.traits.traitEffects("weapon", this.parent)))
     }
 
     get attackData() 
