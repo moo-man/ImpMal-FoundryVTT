@@ -24,6 +24,8 @@ export default class ArmourConfig extends WHFormApplication
         let context = await super._prepareContext(options);
         context.values = this.document.system.combat.armour;
         context.fields = this.document.system.schema.fields.combat.fields.armour.fields;
+        context.damageValues = this.document.system.combat.armour.damage;
+        context.damages = this.document.system.schema.fields.combat.fields.armour.fields.damage.fields;
         return context;
     }
 

@@ -3,5 +3,18 @@
     <div class="armour-fields {{#if values.useItems}}disabled inactive{{/if}}">
         {{formGroup fields.value value=values.value label="IMPMAL.Armour" localize=true}}
         {{formGroup fields.formula value=values.formula label="IMPMAL.Formula" localize=true}}
+        <div>
+            <label data-tooltip="{{localize 'IMPMAL.Damage'}}">
+                {{localize 'IMPMAL.Damage'}}
+            </label>
+            <fieldset>
+                {{formGroup damages.head value=damageValues.head label="IMPMAL.Head" localize=true}}
+                {{formGroup damages.leftArm value=damageValues.leftArm label="IMPMAL.LeftArm" localize=true}}
+                {{formGroup damages.rightArm value=damageValues.rightArm label="IMPMAL.RightArm" localize=true}}
+                {{formGroup damages.leftLeg value=damageValues.leftLeg label="IMPMAL.LeftLeg" localize=true}}
+                {{formGroup damages.rightLeg value=damageValues.rightLeg label="IMPMAL.RightLeg" localize=true}}
+                {{formGroup damages.body value=damageValues.body label="IMPMAL.Body" localize=true}}
+            </fieldset> 
+        </div>
     </div>
 </div>
