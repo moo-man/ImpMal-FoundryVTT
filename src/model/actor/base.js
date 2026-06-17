@@ -69,7 +69,7 @@ export class BaseActorModel extends BaseWarhammerActorModel
 
         let actor = this.parent;
 
-        if (config.description)
+        if (config.description == "top")
         {
             html += actor.system.notes.player;
             if (game.user.isGM)
@@ -117,7 +117,7 @@ export class BaseActorModel extends BaseWarhammerActorModel
             }
             html += `<div class="journal-image centered" ><img src="${image}" width="200" height="200"></div>`
             html += `<p style="text-align:center">@UUID[${actor.uuid}]{${config.label || actor.name}}</p>`
-            if (config.description)
+            if (config.description == "bottom")
             {
                 if (game.user.isGM)
                 {

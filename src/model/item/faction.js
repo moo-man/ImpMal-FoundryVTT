@@ -39,7 +39,7 @@ export class FactionModel extends DualItemModel
     {
         if (["character", "npc"].includes(this.parent.actor?.type) && !options.skipFaction)
         {
-            let duties = await this.character.duty.documents;
+            let duties = await this.character.duty.awaitDocuments();
             if (duties.length >= 1)
             {
                 ItemDialog.create(duties, 1, {text : game.i18n.localize("IMPMAL.DutyChoice"), title : game.i18n.localize("IMPMAL.ApplyDuty")}).then(duty => 
