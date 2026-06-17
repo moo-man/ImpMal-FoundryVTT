@@ -222,4 +222,12 @@ export class BaseTestEvaluator
             delete this[property];
         }
     }
+
+    // Needed for effect sourceData handling, result data will be thrown away by ObjectField if this isn't defined
+    toObject()
+    {
+        let data = foundry.utils.deepClone({...this});
+        data.signedSL = this.signedSL;
+        return data;
+    }
 }

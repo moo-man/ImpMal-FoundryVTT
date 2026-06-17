@@ -284,4 +284,11 @@ export class TestContext
         log(`${this.prototype.constructor.name} - Context Data Retrieved`, {args : context});
         return context;
     }
+
+    // Needed for effect sourceData handling, context data will be thrown away by ObjectField if this isn't defined
+    toObject()
+    {
+        let data = foundry.utils.deepClone({...this});
+        return data;
+    }
 }
