@@ -104,12 +104,17 @@ export class ImpMalEffect extends WarhammerActiveEffect
 
     get isMinor()
     {
-        return this.system.type == "minor"; 
+        return this.system.type == "minor";
     }
 
     get isMajor()
     {
-        return this.system.type == "major"; 
+        return this.system.type == "major";
+    }
+
+    get conditionValue()
+    {
+        return this.system.type || this.flags?.impmal?.type;
     }
 
     // Computed effects mean flagged to know that they came from a calculation, notably encumbrance causing overburdened or restrained
