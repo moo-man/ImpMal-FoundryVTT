@@ -12,6 +12,7 @@ export class FamiliarModel extends NPCModel
       combat : new fields.StringField(),
       preservation : new fields.StringField()
     })
+    schema.handler = new fields.EmbeddedDataField(DocumentReferenceListModel);
     return schema;
   }
 }
