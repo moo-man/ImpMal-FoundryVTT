@@ -1,3 +1,4 @@
+import { AdvancementForm } from "../../apps/advancement";
 import NPCSheet from "./npc"
 
 export class FamiliarSheet extends NPCSheet
@@ -5,8 +6,19 @@ export class FamiliarSheet extends NPCSheet
 
       static DEFAULT_OPTIONS = {
           classes : ["familiar"],
+          window : {
+            controls : [
+              {
+                icon : 'fa-solid fa-chevron-up',
+                label : "Advancement",
+                action : "advancement",
+                visible: function () { return this.document.system.handler.list.length > 0 }
+              }
+            ],
+          },
           actions : {
             removeHandler : this._removeHandler,
+            advancement : this._onAdvancement,
         },
       }
 
@@ -67,6 +79,11 @@ export class FamiliarSheet extends NPCSheet
         {
           return this.document.update(this.document.system.handler.add(actor));
         }
+      }
+
+      static _onAdvancement(ev, target)
+      {
+        new AdvancementForm(this.actor).render(true);
       }
 
 }
