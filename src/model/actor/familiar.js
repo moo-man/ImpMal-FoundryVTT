@@ -31,4 +31,20 @@ export class FamiliarModel extends NPCModel
       this.xp.spent = XPModel.computeSpentFor(this.parent);
       this.xp.available = this.xp.total - this.xp.spent;
   }
+
+  applyReward({xp, solars, reason})
+  {
+      let update = { system : {}};
+
+      if (xp)
+      {
+          // Add to log
+          foundry.utils.mergeObject(update, this.xp.log.add({reason : reason || "Unspecified Reason", xp, total : this.xp.total + xp}));
+
+          // Add to actual numerical total
+          update.system.xp.total = this.xp.total + xp;
+      }
+
+      return update;
+  }
 }

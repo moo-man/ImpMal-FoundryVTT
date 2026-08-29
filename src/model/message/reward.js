@@ -59,7 +59,8 @@ export class RewardMessageModel extends WarhammerMessageModel
 
     async applyRewardTo(actor)
     {
-        if (actor.type != "character")
+        let eligibleFamiliar = actor.type == "familiar" && actor.system.handler.list.length > 0
+        if (actor.type != "character" && !eligibleFamiliar)
         {
             return;
         }
@@ -85,6 +86,10 @@ export class RewardMessageModel extends WarhammerMessageModel
             // Modify data locally so we don't have to wait for the GM to add to the received array
             // This prevents quickly clicking on bad connections from possibly receiving multiple rewards
             this.receivedBy.push(actor.id);
+
+            if(actor.type == "familiar") {
+                this.solars = 0;
+            }
 
             let str = [this.xp && `${this.xp} XP`, this.solars && `${this.solars} Solars`].filter(i => i);
             ChatMessage.create({content : `<p><strong>${actor.name}</strong> received ${str.join(" and ")}`, flavor : "Reward", speaker : {alias : game.user.name}, "flags.impmal.rewardReceived" : {actor : actor.id, source : this.parent.id}});
