@@ -10,6 +10,7 @@ export default function () {
             let old = a.system.combat.superiority || 0;
             TokenHelpers.displayScrollingText((superiority - old) > 0 ? `+${superiority - old}` : `${superiority - old}`, a, { fill: "#065c63" });
             try {
+                a.initialize();
                 a.prepareData();
             }
             catch(e)
