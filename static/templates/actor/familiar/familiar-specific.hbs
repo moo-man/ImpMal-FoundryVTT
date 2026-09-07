@@ -46,6 +46,18 @@
                     <a data-action="removeHandler" data-uuid="{{handler.uuid}}"><i class="fa-solid fa-xmark"></i></a>
                     <img src="{{tokenImg handler.document}}">
                     <label class="name">{{handler.name}}</label>
+                    <div class="attribute-box top-label experience">
+                        <div class="label" style="grid-column: 1 / span 3"><label
+                                class="centered">{{localize "IMPMAL.XP"}}</label>
+                        </div>
+                        <div class="label" style="grid-column: 4 / span 3"><label
+                                class="centered">{{localize "IMPMAL.Available"}}</label>
+                        </div>
+                        <div class="label" style="grid-column: 1 / span 3"></div>
+                        <div class="field" style="grid-column: 4 / span 3"><input type="number"
+                                value="{{handler.document.system.xp.available}}" disabled>
+                        </div>
+                    </div>
                 </div>
             {{/each}}
         {{else}}
