@@ -275,7 +275,15 @@ export class NPCCombatModel extends StandardCombatModel
         schema.armour = new fields.SchemaField({
             formula : new fields.StringField(),
             value : new fields.NumberField({min : 0}),
-            useItems : new fields.BooleanField()
+            useItems: new fields.BooleanField(),
+            damage: new fields.SchemaField({
+                head: new fields.NumberField({ min: 0, initial: 0 }),
+                leftArm: new fields.NumberField({ min: 0, initial: 0 }),
+                rightArm: new fields.NumberField({ min: 0, initial: 0 }),
+                leftLeg: new fields.NumberField({ min: 0, initial: 0 }),
+                rightLeg: new fields.NumberField({ min: 0, initial: 0 }),
+                body: new fields.NumberField({ min: 0, initial: 0 }),
+            })
         });
         return schema;
     }
@@ -294,7 +302,10 @@ export class NPCCombatModel extends StandardCombatModel
             {
                 if (this.hitLocations[loc])
                 {
-                    this.hitLocations[loc].armour += (this.armour.value || 0);
+                    let armourValue = (this.armour.value || 0)
+                    let damageValue = (this.armour.damage[loc] || 0)
+                    this.hitLocations[loc].damage += damageValue;
+                    this.hitLocations[loc].armour += Math.max(armourValue - damageValue, 0);
                     this.hitLocations[loc].formula = this.armour.formula;
                 }
             }
