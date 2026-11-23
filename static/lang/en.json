@@ -386,7 +386,7 @@
     "IMPMAL.Faction" : "Faction",
     "IMPMAL.Failure" : "Failure",
     "IMPMAL.FailedRanged" : "<strong>Failed Ranged Test</strong>: Cancelling Opposed Test",
-    "IMPMAL.FamiliarSpecific": "Familiar Specific",
+    "IMPMAL.Familiar": "Familiar",
     "IMPMAL.Fast" : "Fast",
     "IMPMAL.Fate" : "Fate",
     "IMPMAL.FateAdvantage" : "Spend Fate",

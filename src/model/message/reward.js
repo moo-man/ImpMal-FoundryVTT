@@ -87,13 +87,14 @@ export class RewardMessageModel extends WarhammerMessageModel
             // This prevents quickly clicking on bad connections from possibly receiving multiple rewards
             this.receivedBy.push(actor.id);
 
+            let receivedSolars = this.solars;
             if(actor.type == "familiar") {
-                this.solars = 0;
+                receivedSolars = this.solars ? 0 : null;
             }
 
-            let str = [this.xp && `${this.xp} XP`, this.solars && `${this.solars} Solars`].filter(i => i);
+            let str = [this.xp && `${this.xp} XP`, receivedSolars && `${receivedSolars} Solars`].filter(i => i);
             ChatMessage.create({content : `<p><strong>${actor.name}</strong> received ${str.join(" and ")}`, flavor : "Reward", speaker : {alias : game.user.name}, "flags.impmal.rewardReceived" : {actor : actor.id, source : this.parent.id}});
-            actor.update(actor.system.applyReward({xp : this.xp, solars : this.solars, reason : this.reason}), {skipXPReason : true})
+            actor.update(actor.system.applyReward({xp : this.xp, solars : receivedSolars, reason : this.reason}), {skipXPReason : true})
         }
     }
 

@@ -28,7 +28,7 @@ export class FamiliarSheet extends NPCSheet
         main: { scrollable: [""], template: 'systems/impmal/templates/actor/npc/npc-main.hbs' },
         skills: { scrollable: [".sheet-list.skills .list-content"], template: 'systems/impmal/templates/actor/tabs/actor-skills.hbs' },
         powers: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-powers.hbs' },
-        familiarSpecific: { scrollable: [""], template: 'systems/impmal/templates/actor/familiar/familiar-specific.hbs' },
+        familiar: { scrollable: [""], template: 'systems/impmal/templates/actor/familiar/familiar.hbs' },
         effects: { scrollable: [""], template: 'systems/impmal/templates/actor/tabs/actor-effects.hbs' },
         notes: { scrollable: [""], template: 'systems/impmal/templates/actor/npc/npc-notes.hbs' },
       }
@@ -49,10 +49,10 @@ export class FamiliarSheet extends NPCSheet
           group: "primary",
           label: "IMPMAL.Powers",
         },
-        familiarSpecific: {
-          id: "familiarSpecific",
+        familiar: {
+          id: "familiar",
           group: "primary",
-          label: "IMPMAL.FamiliarSpecific",
+          label: "IMPMAL.Familiar",
         },
         effects: {
           id: "effects",
