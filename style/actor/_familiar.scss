@@ -16,4 +16,32 @@
     .window-content form .tab-section {
         height: calc(100% - 185px);
     }
+
+    
+}
+
+.application.actor.impmal.familiar
+{
+    .handler {
+            &.hover {
+                box-shadow: 0 0 10px inset var(--patron-border);    
+            }
+            border: 1px solid var(--patron-border); 
+            height: 120px;
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0px;
+            cursor: pointer;
+            img {
+                height: 100px;
+                width: 100px;
+            }
+
+            position: relative;
+            a[data-action="removeHandler"] {
+                position: absolute;
+                right: 5px;
+                top: 3px;
+            }
+        }
 }
